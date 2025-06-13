@@ -6,7 +6,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { MedicineWheelLogo } from "@/components/MedicineWheelLogo";
-import { MyONESizing } from "@/components/MyONESizing";
+import { PrecisionSizing } from "@/components/MyONESizing";
 import { 
   ShoppingCart, 
   Shield, 
@@ -64,7 +64,7 @@ export default function InclusiveOrdering() {
     {
       id: "external-protection",
       name: "fluck External Protection",
-      description: "Custom-fit external protection with MyONE-inspired sizing",
+      description: "Custom-fit external protection with precision sizing for better love-making",
       priceRange: "$12-18 per unit",
       customization: "60+ size options, multiple materials"
     },
@@ -237,7 +237,7 @@ export default function InclusiveOrdering() {
                 </div>
               </CardHeader>
               <CardContent>
-                <MyONESizing />
+                <PrecisionSizing />
               </CardContent>
             </Card>
 

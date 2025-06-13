@@ -15,7 +15,7 @@ interface SizeData {
   fitCategory: string;
 }
 
-export function MyONESizing() {
+export function PrecisionSizing() {
   const [measurements, setMeasurements] = useState({
     length: "",
     baseGirth: "",
@@ -25,7 +25,7 @@ export function MyONESizing() {
   const [recommendedSize, setRecommendedSize] = useState<SizeData | null>(null);
   const [activeTab, setActiveTab] = useState("measure");
 
-  // MyONE sizing system with 60+ sizes
+  // fluck precision sizing system with 60+ sizes
   const sizeChart: SizeData[] = [
     { nominal: "A1", width: 45, length: 160, description: "Ultra snug fit, shorter length", fitCategory: "Snug" },
     { nominal: "A3", width: 45, length: 170, description: "Ultra snug fit, standard length", fitCategory: "Snug" },

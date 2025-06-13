@@ -81,7 +81,7 @@ export default function Home() {
                 </Badge>
                 <Badge variant="secondary" className="bg-green-100 text-green-800 px-3 py-1">
                   <Ruler className="w-4 h-4 mr-1" />
-                  MyONE Sizing
+                  Precision Sizing
                 </Badge>
                 <Badge variant="secondary" className="bg-purple-100 text-purple-800 px-3 py-1">
                   <Palette className="w-4 h-4 mr-1" />

@@ -50,13 +50,13 @@ export default function Wiki() {
 
   const wikiArticles: WikiArticle[] = [
     {
-      id: "myone-sizing-guide",
-      title: "MyONE-Inspired Sizing: Complete Guide to 60+ Custom Fits",
+      id: "precision-sizing-guide",
+      title: "fluck Precision Sizing: Complete Guide to 60+ Custom Fits",
       category: "sizing",
       content: `# Complete Custom Sizing Guide
 
 ## Introduction
-fluck's sizing system is inspired by MyONE's revolutionary approach to custom-fit protection, expanding beyond traditional sizing limitations.
+fluck's precision sizing system delivers custom-fit protection for better love-making, expanding beyond traditional sizing limitations.
 
 ## The 60+ Size System
 
@@ -126,7 +126,7 @@ fluck's sizing system is inspired by MyONE's revolutionary approach to custom-fi
 - Privacy considerations
 - Community-specific needs
 - Religious/cultural requirements`,
-      tags: ["sizing", "measurement", "myone", "custom-fit", "inclusive"],
+      tags: ["sizing", "measurement", "precision", "custom-fit", "inclusive", "love-making"],
       lastUpdated: "2024-01-15",
       author: "fluck Health Team",
       difficulty: "Beginner",
