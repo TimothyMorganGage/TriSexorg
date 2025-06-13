@@ -277,7 +277,7 @@ export default function InteractiveStories() {
           <div className="flex items-center justify-center mb-6">
             <Book className="h-12 w-12 text-primary mr-4" />
             <div>
-              <h1 className="text-4xl font-bold text-foreground">
+              <h1 className="text-4xl font-bold text-foreground font-recoleta">
                 Interactive Story Knowledge Sharing
               </h1>
               <p className="text-xl text-muted-foreground mt-2 font-coolvetica">

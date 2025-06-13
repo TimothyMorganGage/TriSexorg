@@ -75,7 +75,7 @@ export default function Home() {
                 </div>
               </div>
               
-              <h2 className="text-2xl lg:text-3xl font-bold leading-tight mb-6 text-white font-cinzel">
+              <h2 className="text-2xl lg:text-3xl font-bold leading-tight mb-6 text-white font-recoleta">
                 Protection for Sexual Creativity & Reproductive Justice
               </h2>
               <p className="text-xl lg:text-2xl text-blue-100 mb-8 leading-relaxed font-coolvetica">

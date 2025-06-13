@@ -285,7 +285,7 @@ export default function Newsletter() {
           <div className="flex items-center justify-center mb-6">
             <Mail className="h-12 w-12 text-primary mr-4" />
             <div>
-              <h1 className="text-4xl font-bold text-foreground">
+              <h1 className="text-4xl font-bold text-foreground font-recoleta">
                 Good Flucking Newsletter
               </h1>
               <p className="text-xl text-muted-foreground mt-2 font-coolvetica">

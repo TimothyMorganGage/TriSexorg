@@ -60,6 +60,7 @@ function Router() {
           <Route path="/peer-mentor" component={PeerMentor} />
           <Route path="/analytics" component={Analytics} />
           <Route path="/interactive-stories" component={InteractiveStories} />
+          <Route path="/newsletter" component={Newsletter} />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
           <Route component={NotFound} />

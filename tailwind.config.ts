@@ -6,9 +6,10 @@ export default {
   theme: {
     extend: {
       fontFamily: {
+        'recoleta': ['Recoleta', 'serif'],
         'coolvetica': ['Coolvetica', 'sans-serif'],
         'sans': ['Coolvetica', 'ui-sans-serif', 'system-ui'],
-        'serif': ['ui-serif', 'Georgia', 'serif'],
+        'serif': ['Recoleta', 'ui-serif', 'Georgia', 'serif'],
       },
       borderRadius: {
         lg: "var(--radius)",
