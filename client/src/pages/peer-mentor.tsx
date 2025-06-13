@@ -169,7 +169,7 @@ export default function PeerMentor() {
           <div className="flex items-center justify-center mb-6">
             <MessageCircle className="h-12 w-12 text-primary mr-4" />
             <div>
-              <h1 className="text-4xl font-bold text-foreground font-cinzel">
+              <h1 className="text-4xl font-bold text-foreground">
                 Peer Chat Mentor Network
               </h1>
               <p className="text-xl text-muted-foreground mt-2 font-coolvetica">

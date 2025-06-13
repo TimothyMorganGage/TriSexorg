@@ -6,10 +6,9 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        'cinzel': ['Cinzel', 'serif'],
         'coolvetica': ['Coolvetica', 'sans-serif'],
         'sans': ['Coolvetica', 'ui-sans-serif', 'system-ui'],
-        'serif': ['Cinzel', 'ui-serif', 'Georgia'],
+        'serif': ['ui-serif', 'Georgia', 'serif'],
       },
       borderRadius: {
         lg: "var(--radius)",

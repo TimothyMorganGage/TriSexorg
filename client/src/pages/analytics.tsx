@@ -106,7 +106,7 @@ export default function Analytics() {
           <div className="flex items-center justify-center mb-6">
             <BarChart3 className="h-12 w-12 text-primary mr-4" />
             <div>
-              <h1 className="text-4xl font-bold text-foreground font-cinzel">
+              <h1 className="text-4xl font-bold text-foreground">
                 Advanced Analytics & Reporting
               </h1>
               <p className="text-xl text-muted-foreground mt-2 font-coolvetica">

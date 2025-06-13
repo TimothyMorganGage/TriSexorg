@@ -31,6 +31,7 @@ import InclusiveOrdering from "@/pages/inclusive-ordering";
 import PeerMentor from "@/pages/peer-mentor";
 import Analytics from "@/pages/analytics";
 import InteractiveStories from "@/pages/interactive-stories";
+import Newsletter from "@/pages/newsletter";
 import { TabNavigation } from "@/components/TabNavigation";
 
 function Router() {
