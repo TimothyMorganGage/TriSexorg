@@ -37,26 +37,26 @@ export default function InclusiveOrdering() {
     {
       id: "pride-inclusive",
       name: "Pride Inclusive (Default)",
-      description: "Full Progress Pride flag integration with 2SLGBTIQ+ community messaging",
+      description: "Full Progress Pride flag integration supporting 2SLGBTIQ+ sexual creativity and reproductive justice",
       logoVariant: true,
-      packaging: "Progress Pride packaging with community messaging",
-      messaging: "Inclusive health for every body and identity"
+      packaging: "Progress Pride packaging celebrating anatomical diversity",
+      messaging: "Supporting sexual creativity and reproductive autonomy for all identities"
     },
     {
       id: "health-focused",
       name: "Health-Focused Neutral",
-      description: "Medical and health-focused branding without pride-specific elements",
+      description: "Medical and reproductive justice messaging without pride-specific visual elements",
       logoVariant: false,
-      packaging: "Clean medical packaging with health messaging",
-      messaging: "Advanced sexual health protection"
+      packaging: "Clean medical packaging with reproductive health messaging",
+      messaging: "Advancing reproductive justice through precision sexual health"
     },
     {
       id: "minimalist",
       name: "Minimalist Design",
-      description: "Simple, professional design suitable for all customers",
+      description: "Simple, professional design honoring anatomical diversity for all customers",
       logoVariant: false,
-      packaging: "Minimal design with product information only",
-      messaging: "Custom-fit protection technology"
+      packaging: "Minimal design with inclusive sizing information",
+      messaging: "Precision-fit protection supporting sexual creativity"
     }
   ];
 
@@ -346,11 +346,11 @@ export default function InclusiveOrdering() {
               showPride={getCurrentBranding().logoVariant} 
             />
           </div>
-          <h1 className="text-4xl font-bold text-foreground mb-4">
-            Inclusive Ordering Experience
+          <h1 className="text-4xl font-bold text-foreground mb-4 font-cinzel">
+            Sexual Creativity & Reproductive Justice Ordering
           </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            {getCurrentBranding().messaging}
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto font-coolvetica">
+            Supporting anatomical diversity and reproductive autonomy through precision sizing. {getCurrentBranding().messaging}
           </p>
         </div>
 
@@ -391,11 +391,11 @@ export default function InclusiveOrdering() {
             <div className="flex items-start space-x-3">
               <Heart className="h-5 w-5 text-primary mt-0.5" />
               <div>
-                <h4 className="font-medium mb-1">Inclusive by Design</h4>
-                <p className="text-sm text-muted-foreground">
-                  fluck is committed to serving all customers with respect and dignity. 
-                  Our inclusive ordering system ensures everyone can access our products 
-                  in a way that feels comfortable and affirming for them.
+                <h4 className="font-medium mb-1 font-cinzel">Sexual Creativity & Reproductive Justice</h4>
+                <p className="text-sm text-muted-foreground font-coolvetica">
+                  fluck champions sexual creativity through precision sizing that honors anatomical diversity. 
+                  Our reproductive justice approach ensures everyone can access products that support 
+                  their bodily autonomy, sexual expression, and reproductive choices with dignity and respect.
                 </p>
               </div>
             </div>

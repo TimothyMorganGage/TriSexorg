@@ -65,12 +65,13 @@ export default function Home() {
               </div>
               
               <h2 className="text-2xl lg:text-3xl font-bold leading-tight mb-6 text-white font-cinzel">
-                Protection for Every Body & Anatomy
+                Protection for Sexual Creativity & Reproductive Justice
               </h2>
               <p className="text-xl lg:text-2xl text-blue-100 mb-8 leading-relaxed font-coolvetica">
-                Precision sizing with 60+ custom fits for better love-making. 4D STI intervention 
-                through bioregional sewer & water sampling. Sustainable ocean plastic materials 
-                with cooperative sexual health principles for the full 2SLGBTIQ+ community.
+                Precision sizing with 60+ custom fits supporting sexual creativity and anatomical diversity. 
+                4D STI intervention through bioregional monitoring advances reproductive justice. 
+                Sustainable ocean plastic materials with cooperative sexual health principles 
+                ensuring bodily autonomy for the full 2SLGBTIQ+ community.
               </p>
               
               {/* Feature Badges */}

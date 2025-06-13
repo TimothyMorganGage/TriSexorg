@@ -39,9 +39,9 @@ export default function Wiki() {
   const [activeCategory, setActiveCategory] = useState("all");
 
   const categories = [
-    { id: "all", name: "All Topics", icon: BookOpen, count: 8 },
+    { id: "all", name: "All Topics", icon: BookOpen, count: 9 },
     { id: "sizing", name: "Custom Sizing", icon: Ruler, count: 1 },
-    { id: "health", name: "Sexual Health", icon: Heart, count: 2 },
+    { id: "health", name: "Sexual Health", icon: Heart, count: 3 },
     { id: "sti", name: "STI Prevention", icon: Droplets, count: 1 },
     { id: "cooperative", name: "Cooperative Principles", icon: Users, count: 1 },
     { id: "technical", name: "Technical Guide", icon: TestTube, count: 2 },
@@ -857,6 +857,140 @@ Certain medications, therapies, and health conditions can affect the performance
       author: "Medical Advisory Board",
       difficulty: "Advanced",
       readTime: "25 min"
+    },
+    {
+      id: "sexual-anatomy-reproductive-justice",
+      title: "Sexual Anatomy Education & Reproductive Justice Frameworks",
+      category: "health",
+      content: `# Sexual Anatomy Education & Reproductive Justice
+
+## Introduction
+Sexual anatomy education and reproductive justice are fundamental to fluck's mission of supporting sexual creativity while ensuring bodily autonomy and reproductive rights for all individuals.
+
+## Sexual Anatomy Diversity
+
+### External Genital Anatomy
+- **Vulva variations**: Natural diversity in labia size, clitoral structure, and vestibular configuration
+- **Penis anatomy**: Variations in size, shape, foreskin presence, and urethral placement
+- **Intersex anatomy**: Natural chromosomal, gonadal, or anatomical variations affecting sexual development
+- **Post-surgical anatomy**: Considerations for gender-affirming surgical outcomes
+
+### Internal Reproductive Anatomy
+- **Uterine variations**: Bicornuate, septate, and other müllerian duct variations
+- **Vaginal anatomy**: Length, width, and elasticity differences
+- **Prostate considerations**: Size, sensitivity, and accessibility variations
+- **Hormonal influences**: Impact of natural and medical hormone levels on anatomy
+
+### Anatomical Changes Over Time
+- **Puberty variations**: Different timelines and outcomes of sexual development
+- **Pregnancy and childbirth**: Anatomical changes and postpartum considerations
+- **Aging effects**: Natural changes in sensitivity, lubrication, and erectile function
+- **Medical influences**: Medication and treatment effects on sexual anatomy
+
+## Reproductive Justice Framework
+
+### Core Principles
+1. **Right to have children**: Access to fertility treatments, adoption, and family planning
+2. **Right not to have children**: Contraception access, abortion rights, and sterilization choices
+3. **Right to parent children**: Safe communities, economic support, and freedom from violence
+4. **Right to sexual autonomy**: Bodily integrity, consent education, and pleasure rights
+
+### Historical Context
+- **Forced sterilization**: Historical abuses targeting disabled, Indigenous, and marginalized communities
+- **Contraceptive access**: Struggles for birth control legalization and insurance coverage
+- **Abortion rights**: Legal battles and ongoing threats to reproductive autonomy
+- **LGBTQ+ family rights**: Marriage equality, adoption rights, and fertility access
+
+### Intersectional Considerations
+- **Race and ethnicity**: Maternal mortality disparities and healthcare access barriers
+- **Economic class**: Insurance coverage gaps and cost barriers to reproductive care
+- **Disability rights**: Autonomy in reproductive decisions and accessible healthcare
+- **Geographic location**: Rural healthcare deserts and state-level policy variations
+
+## Sexual Creativity and Expression
+
+### Defining Sexual Creativity
+- **Beyond penetration**: Diverse sexual practices and pleasure exploration
+- **Adaptive techniques**: Creative solutions for different abilities and anatomies
+- **Communication skills**: Expressing desires, boundaries, and preferences
+- **Pleasure activism**: Advocating for joy, consent, and sexual liberation
+
+### Supporting Anatomical Diversity
+- **Custom-fit products**: fluck's precision sizing accommodates all anatomies
+- **Inclusive design**: Products that work with surgical scars, prosthetics, and mobility aids
+- **Educational resources**: Anatomy-positive information about sexual function
+- **Community support**: Peer networks for sharing experiences and advice
+
+### Consent and Communication
+- **Enthusiastic consent**: Ongoing, informed agreement in all sexual encounters
+- **Boundary setting**: Clear communication about comfort levels and limits
+- **Safer sex practices**: STI prevention strategies for all types of sexual contact
+- **Trauma-informed approaches**: Sensitivity to sexual violence survivors
+
+## Policy and Advocacy
+
+### Legislative Priorities
+- **Comprehensive sex education**: Age-appropriate, inclusive curriculum in schools
+- **Healthcare access**: Insurance coverage for contraception, abortion, and fertility treatments
+- **Anti-discrimination laws**: Protection for LGBTQ+ individuals in healthcare settings
+- **Research funding**: Support for sexual health and reproductive justice studies
+
+### Community Organizing
+- **Grassroots advocacy**: Local campaigns for reproductive rights and sexual health access
+- **Coalition building**: Partnerships across movements for social justice
+- **Direct action**: Protests, clinic escorting, and community defense
+- **Mutual aid**: Community-supported reproductive care and emergency assistance
+
+### Corporate Responsibility
+- **Employee benefits**: Comprehensive reproductive healthcare coverage
+- **Supply chain ethics**: Ensuring fair labor practices in healthcare manufacturing
+- **Community investment**: Supporting local reproductive justice organizations
+- **Product accessibility**: Affordable pricing and distribution strategies
+
+## Implementation in Healthcare
+
+### Provider Training
+- **Cultural competency**: Understanding diverse sexual practices and identities
+- **Trauma-informed care**: Recognizing and responding to sexual violence histories
+- **Anatomical inclusivity**: Examination techniques for all body types
+- **Communication skills**: Respectful language and patient-centered approaches
+
+### Service Delivery
+- **Comprehensive care**: Integrating sexual health into primary healthcare
+- **Accessibility standards**: Physical and communication accommodations
+- **Privacy protection**: Confidentiality for minors and marginalized populations
+- **Emergency protocols**: Rapid response for sexual assault and reproductive emergencies
+
+### Quality Improvement
+- **Patient feedback**: Regular assessment of care quality and cultural responsiveness
+- **Outcome tracking**: Monitoring reproductive health disparities and interventions
+- **Staff development**: Ongoing education about sexual anatomy and reproductive justice
+- **Community partnerships**: Collaboration with advocacy organizations and peer educators
+
+## Educational Applications
+
+### Curriculum Development
+- **Age-appropriate content**: Progressive sexual anatomy education from childhood through adulthood
+- **Inclusive representation**: Materials featuring diverse bodies, relationships, and families
+- **Interactive learning**: Hands-on activities and peer discussion opportunities
+- **Assessment methods**: Evaluating knowledge without shame or judgment
+
+### Community Education
+- **Workshop series**: Public education about reproductive rights and sexual anatomy
+- **Peer educator training**: Empowering community members as health advocates
+- **Resource libraries**: Accessible information in multiple languages and formats
+- **Online platforms**: Digital tools for sexual health education and support
+
+### Professional Development
+- **Medical training**: Integration of reproductive justice into healthcare education
+- **Legal education**: Training lawyers and advocates on reproductive rights law
+- **Social work practice**: Reproductive justice approaches in family services
+- **Research methodology**: Ethical approaches to sexual health and reproductive research`,
+      tags: ["sexual-anatomy", "reproductive-justice", "education", "diversity", "rights"],
+      lastUpdated: "2024-01-16",
+      author: "Reproductive Justice Collective",
+      difficulty: "Intermediate",
+      readTime: "18 min"
     },
     {
       id: "inclusive-terminology",
