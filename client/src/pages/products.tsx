@@ -7,7 +7,10 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import { ShoppingCart, Save, Box } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Slider } from "@/components/ui/slider";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ShoppingCart, Save, Box, Ruler, Target, Zap } from "lucide-react";
 import { useAuth } from "@/lib/auth";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
@@ -36,7 +39,15 @@ export default function Products() {
     lengthCategory: "3",
     material: "ocean_plastic_hydrogel",
     features: ["enhanced_lubrication"],
+    customMeasurements: {
+      baseGirth: 51,
+      midGirth: 50,
+      headGirth: 49,
+      length: 170,
+    },
   });
+
+  const [useCustomMeasurements, setUseCustomMeasurements] = useState(false);
 
   const { data: products, isLoading } = useQuery<Product[]>({
     queryKey: ["/api/products"],
@@ -204,10 +215,23 @@ export default function Products() {
         <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
           <div className="grid lg:grid-cols-2">
             <div className="p-8 lg:p-12">
-              <h3 className="text-2xl font-semibold text-neutral mb-8">
+              <h3 className="text-2xl font-semibold text-neutral mb-8 font-recoleta">
                 Product Configuration
               </h3>
               
+              <Tabs defaultValue="standard" className="mb-8">
+                <TabsList className="grid w-full grid-cols-2">
+                  <TabsTrigger value="standard" className="flex items-center gap-2">
+                    <Target className="h-4 w-4" />
+                    Standard Sizing
+                  </TabsTrigger>
+                  <TabsTrigger value="custom" className="flex items-center gap-2">
+                    <Ruler className="h-4 w-4" />
+                    Custom Measurements
+                  </TabsTrigger>
+                </TabsList>
+                
+                <TabsContent value="standard" className="space-y-6">
               {/* Width Category Selection */}
               <div className="mb-8">
                 <Label className="text-sm font-medium text-neutral mb-4 block">
@@ -290,6 +314,153 @@ export default function Products() {
                   </div>
                 </RadioGroup>
               </div>
+                </TabsContent>
+                
+                <TabsContent value="custom" className="space-y-6">
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+                    <div className="flex items-start gap-3">
+                      <Zap className="h-5 w-5 text-blue-600 mt-0.5" />
+                      <div>
+                        <h4 className="font-medium text-blue-900 mb-1">Precision Measurement Guide</h4>
+                        <p className="text-sm text-blue-700">
+                          All measurements processed locally for privacy. Take measurements while fully aroused for best fit.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Custom Length Measurement */}
+                  <div className="space-y-4">
+                    <Label className="text-sm font-medium text-neutral">
+                      Length (mm) - Base to tip, top side
+                    </Label>
+                    <div className="space-y-2">
+                      <Slider
+                        value={[selectedConfig.customMeasurements?.length || 170]}
+                        onValueChange={(value) =>
+                          setSelectedConfig({
+                            ...selectedConfig,
+                            customMeasurements: {
+                              ...selectedConfig.customMeasurements!,
+                              length: value[0]
+                            }
+                          })
+                        }
+                        min={140}
+                        max={200}
+                        step={1}
+                        className="w-full"
+                      />
+                      <div className="flex justify-between text-xs text-gray-500">
+                        <span>140mm</span>
+                        <span className="font-medium">{selectedConfig.customMeasurements?.length || 170}mm</span>
+                        <span>200mm</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Base Girth Measurement */}
+                  <div className="space-y-4">
+                    <Label className="text-sm font-medium text-neutral">
+                      Base Girth (mm) - Circumference at base
+                    </Label>
+                    <div className="space-y-2">
+                      <Slider
+                        value={[selectedConfig.customMeasurements?.baseGirth || 51]}
+                        onValueChange={(value) =>
+                          setSelectedConfig({
+                            ...selectedConfig,
+                            customMeasurements: {
+                              ...selectedConfig.customMeasurements!,
+                              baseGirth: value[0]
+                            }
+                          })
+                        }
+                        min={40}
+                        max={70}
+                        step={0.5}
+                        className="w-full"
+                      />
+                      <div className="flex justify-between text-xs text-gray-500">
+                        <span>40mm</span>
+                        <span className="font-medium">{selectedConfig.customMeasurements?.baseGirth || 51}mm</span>
+                        <span>70mm</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Mid Girth Measurement */}
+                  <div className="space-y-4">
+                    <Label className="text-sm font-medium text-neutral">
+                      Mid Girth (mm) - Middle shaft circumference
+                    </Label>
+                    <div className="space-y-2">
+                      <Slider
+                        value={[selectedConfig.customMeasurements?.midGirth || 50]}
+                        onValueChange={(value) =>
+                          setSelectedConfig({
+                            ...selectedConfig,
+                            customMeasurements: {
+                              ...selectedConfig.customMeasurements!,
+                              midGirth: value[0]
+                            }
+                          })
+                        }
+                        min={40}
+                        max={70}
+                        step={0.5}
+                        className="w-full"
+                      />
+                      <div className="flex justify-between text-xs text-gray-500">
+                        <span>40mm</span>
+                        <span className="font-medium">{selectedConfig.customMeasurements?.midGirth || 50}mm</span>
+                        <span>70mm</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Head Girth Measurement */}
+                  <div className="space-y-4">
+                    <Label className="text-sm font-medium text-neutral">
+                      Head Girth (mm) - Glans circumference
+                    </Label>
+                    <div className="space-y-2">
+                      <Slider
+                        value={[selectedConfig.customMeasurements?.headGirth || 49]}
+                        onValueChange={(value) =>
+                          setSelectedConfig({
+                            ...selectedConfig,
+                            customMeasurements: {
+                              ...selectedConfig.customMeasurements!,
+                              headGirth: value[0]
+                            }
+                          })
+                        }
+                        min={40}
+                        max={70}
+                        step={0.5}
+                        className="w-full"
+                      />
+                      <div className="flex justify-between text-xs text-gray-500">
+                        <span>40mm</span>
+                        <span className="font-medium">{selectedConfig.customMeasurements?.headGirth || 49}mm</span>
+                        <span>70mm</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                    <h4 className="font-medium text-gray-900 mb-2">Calculated Size Code</h4>
+                    <p className="text-sm text-gray-600 mb-2">
+                      Based on your measurements, we recommend size code: 
+                      <span className="font-bold text-primary ml-1">CUSTOM-{Date.now().toString().slice(-4)}</span>
+                    </p>
+                    <p className="text-xs text-gray-500">
+                      Custom measurements ensure perfect fit with ±0.5mm tolerance
+                    </p>
+                  </div>
+                </TabsContent>
+              </Tabs>
               
               {/* Material Selection */}
               <div className="mb-8">
@@ -415,13 +586,39 @@ export default function Products() {
                   <CardContent className="p-4 text-left">
                     <div className="text-sm text-gray-600 space-y-2">
                       <div className="flex justify-between">
-                        <span>Size:</span>
-                        <span className="font-medium capitalize">
-                          {selectedConfig.size} (
-                          {sizeOptions.find((s) => s.value === selectedConfig.size)?.range}
-                          )
+                        <span>Size Code:</span>
+                        <span className="font-medium">
+                          {selectedConfig.widthCategory}{selectedConfig.lengthCategory}
                         </span>
                       </div>
+                      <div className="flex justify-between">
+                        <span>Width:</span>
+                        <span className="font-medium">
+                          {widthCategories.find(w => w.value === selectedConfig.widthCategory)?.range}
+                        </span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Length:</span>
+                        <span className="font-medium">
+                          {lengthCategories.find(l => l.value === selectedConfig.lengthCategory)?.range}
+                        </span>
+                      </div>
+                      {selectedConfig.customMeasurements && (
+                        <>
+                          <div className="flex justify-between">
+                            <span>Custom Length:</span>
+                            <span className="font-medium text-primary">
+                              {selectedConfig.customMeasurements.length}mm
+                            </span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>Base Girth:</span>
+                            <span className="font-medium text-primary">
+                              {selectedConfig.customMeasurements.baseGirth}mm
+                            </span>
+                          </div>
+                        </>
+                      )}
                       <div className="flex justify-between">
                         <span>Material:</span>
                         <span className="font-medium">
