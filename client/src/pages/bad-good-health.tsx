@@ -309,6 +309,88 @@ export default function BadGoodHealth() {
             <div className="space-y-6">
               <Card>
                 <CardHeader>
+                  <CardTitle>Core BAD Co-op Directives</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="bg-muted/30 p-6 rounded-lg space-y-6">
+                    <h3 className="text-lg font-semibold mb-4 font-cinzel">Required Directive Information</h3>
+                    
+                    <div className="grid md:grid-cols-3 gap-6">
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium">Biological Sex</label>
+                        <select className="w-full p-2 border rounded-md">
+                          <option value="">Select biological sex</option>
+                          <option value="male">Male</option>
+                          <option value="female">Female</option>
+                          <option value="intersex">Intersex</option>
+                        </select>
+                      </div>
+
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium">Religious Community</label>
+                        <select className="w-full p-2 border rounded-md">
+                          <option value="">Select religious community</option>
+                          <option value="native_american_church">Native American Church</option>
+                          <option value="christian">Christian</option>
+                          <option value="muslim">Muslim</option>
+                          <option value="jewish">Jewish</option>
+                          <option value="buddhist">Buddhist</option>
+                          <option value="hindu">Hindu</option>
+                          <option value="sikh">Sikh</option>
+                          <option value="secular">Secular/Non-religious</option>
+                          <option value="spiritual_not_religious">Spiritual but not religious</option>
+                          <option value="other">Other</option>
+                        </select>
+                      </div>
+
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium">Race & Ethnicity</label>
+                        <select className="w-full p-2 border rounded-md">
+                          <option value="">Select race/ethnicity</option>
+                          <option value="indigenous_native_american">Indigenous/Native American</option>
+                          <option value="african_american_black">African American/Black</option>
+                          <option value="asian_pacific_islander">Asian/Pacific Islander</option>
+                          <option value="hispanic_latino">Hispanic/Latino</option>
+                          <option value="white_caucasian">White/Caucasian</option>
+                          <option value="middle_eastern">Middle Eastern</option>
+                          <option value="multiracial">Multiracial</option>
+                          <option value="other">Other</option>
+                          <option value="prefer_not_to_say">Prefer not to say</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div className="space-y-4">
+                      <h4 className="font-medium">Accessibility Affirmations</h4>
+                      <div className="grid md:grid-cols-2 gap-3">
+                        {[
+                          "I affirm my right to accessible healthcare services",
+                          "I request communication accommodations as needed",
+                          "I affirm my right to dignity in all healthcare interactions",
+                          "I request physical accessibility accommodations",
+                          "I affirm my autonomy in healthcare decisions",
+                          "I request language interpretation services if needed",
+                          "I affirm my right to culturally competent care",
+                          "I request assistive technology accommodations"
+                        ].map((item, index) => (
+                          <div key={index} className="flex items-start space-x-3">
+                            <input type="checkbox" className="mt-1" />
+                            <label className="text-sm">{item}</label>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="flex justify-end space-x-4">
+                      <Button variant="outline">Save Draft</Button>
+                      <Button className="bg-primary hover:bg-primary/90 text-black">Update Directives</Button>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
                   <CardTitle>Advance Directives Overview</CardTitle>
                 </CardHeader>
                 <CardContent>

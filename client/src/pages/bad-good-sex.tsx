@@ -28,6 +28,13 @@ import {
 } from "lucide-react";
 
 const sexualHealthPreferencesSchema = z.object({
+  // Core Directives
+  biologicalSex: z.enum(["male", "female", "intersex"]),
+  religiousCommunity: z.string(),
+  raceEthnicity: z.string(),
+  accessibilityAffirmations: z.array(z.string()),
+  
+  // Sexual Health Preferences
   consentProtocols: z.array(z.string()),
   communicationPreferences: z.array(z.string()),
   boundarySettings: z.string(),
@@ -76,6 +83,13 @@ export default function BadGoodSex() {
   const form = useForm({
     resolver: zodResolver(sexualHealthPreferencesSchema),
     defaultValues: {
+      // Core Directives
+      biologicalSex: "male",
+      religiousCommunity: "",
+      raceEthnicity: "",
+      accessibilityAffirmations: [],
+      
+      // Sexual Health Preferences
       consentProtocols: [],
       communicationPreferences: [],
       boundarySettings: "",
@@ -304,6 +318,150 @@ export default function BadGoodSex() {
                 <Form {...form}>
                   <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                     
+                    {/* Core BAD Co-op Directives */}
+                    <div className="bg-muted/30 p-6 rounded-lg space-y-6">
+                      <h3 className="text-lg font-semibold mb-4 font-cinzel">BAD Co-op Core Directives</h3>
+                      
+                      <div className="grid md:grid-cols-3 gap-6">
+                        <FormField
+                          control={form.control}
+                          name="biologicalSex"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Biological Sex</FormLabel>
+                              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                <FormControl>
+                                  <SelectTrigger>
+                                    <SelectValue placeholder="Select biological sex" />
+                                  </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                  <SelectItem value="male">Male</SelectItem>
+                                  <SelectItem value="female">Female</SelectItem>
+                                  <SelectItem value="intersex">Intersex</SelectItem>
+                                </SelectContent>
+                              </Select>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+
+                        <FormField
+                          control={form.control}
+                          name="religiousCommunity"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Religious Community</FormLabel>
+                              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                <FormControl>
+                                  <SelectTrigger>
+                                    <SelectValue placeholder="Select religious community" />
+                                  </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                  <SelectItem value="native_american_church">Native American Church</SelectItem>
+                                  <SelectItem value="christian">Christian</SelectItem>
+                                  <SelectItem value="muslim">Muslim</SelectItem>
+                                  <SelectItem value="jewish">Jewish</SelectItem>
+                                  <SelectItem value="buddhist">Buddhist</SelectItem>
+                                  <SelectItem value="hindu">Hindu</SelectItem>
+                                  <SelectItem value="sikh">Sikh</SelectItem>
+                                  <SelectItem value="secular">Secular/Non-religious</SelectItem>
+                                  <SelectItem value="spiritual_not_religious">Spiritual but not religious</SelectItem>
+                                  <SelectItem value="other">Other</SelectItem>
+                                </SelectContent>
+                              </Select>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+
+                        <FormField
+                          control={form.control}
+                          name="raceEthnicity"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Race & Ethnicity</FormLabel>
+                              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                <FormControl>
+                                  <SelectTrigger>
+                                    <SelectValue placeholder="Select race/ethnicity" />
+                                  </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                  <SelectItem value="indigenous_native_american">Indigenous/Native American</SelectItem>
+                                  <SelectItem value="african_american_black">African American/Black</SelectItem>
+                                  <SelectItem value="asian_pacific_islander">Asian/Pacific Islander</SelectItem>
+                                  <SelectItem value="hispanic_latino">Hispanic/Latino</SelectItem>
+                                  <SelectItem value="white_caucasian">White/Caucasian</SelectItem>
+                                  <SelectItem value="middle_eastern">Middle Eastern</SelectItem>
+                                  <SelectItem value="multiracial">Multiracial</SelectItem>
+                                  <SelectItem value="other">Other</SelectItem>
+                                  <SelectItem value="prefer_not_to_say">Prefer not to say</SelectItem>
+                                </SelectContent>
+                              </Select>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+
+                      <FormField
+                        control={form.control}
+                        name="accessibilityAffirmations"
+                        render={() => (
+                          <FormItem>
+                            <FormLabel>Accessibility Affirmations</FormLabel>
+                            <div className="grid md:grid-cols-2 gap-3 mt-2">
+                              {[
+                                "I affirm my right to accessible sexual health services",
+                                "I request communication accommodations as needed",
+                                "I affirm my right to dignity in all healthcare interactions",
+                                "I request physical accessibility accommodations",
+                                "I affirm my autonomy in sexual health decisions",
+                                "I request language interpretation services if needed",
+                                "I affirm my right to culturally competent care",
+                                "I request assistive technology accommodations"
+                              ].map((item) => (
+                                <FormField
+                                  key={item}
+                                  control={form.control}
+                                  name="accessibilityAffirmations"
+                                  render={({ field }) => {
+                                    return (
+                                      <FormItem
+                                        key={item}
+                                        className="flex flex-row items-start space-x-3 space-y-0"
+                                      >
+                                        <FormControl>
+                                          <Checkbox
+                                            checked={field.value?.includes(item)}
+                                            onCheckedChange={(checked) => {
+                                              return checked
+                                                ? field.onChange([...field.value, item])
+                                                : field.onChange(
+                                                    field.value?.filter(
+                                                      (value) => value !== item
+                                                    )
+                                                  )
+                                            }}
+                                          />
+                                        </FormControl>
+                                        <FormLabel className="text-sm font-normal">
+                                          {item}
+                                        </FormLabel>
+                                      </FormItem>
+                                    )
+                                  }}
+                                />
+                              ))}
+                            </div>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+
                     <div className="grid md:grid-cols-2 gap-6">
                       <FormField
                         control={form.control}
