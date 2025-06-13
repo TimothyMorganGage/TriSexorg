@@ -21,6 +21,7 @@ import BadGoodSex from "@/pages/bad-good-sex";
 import BadGoodHealth from "@/pages/bad-good-health";
 import GoodPeople from "@/pages/good-people";
 import AnatomyScanning from "@/pages/anatomy-scanning";
+import FourDSTIIntervention from "@/pages/4d-sti-intervention";
 import { TabNavigation } from "@/components/TabNavigation";
 
 function Router() {
@@ -39,6 +40,7 @@ function Router() {
           <Route path="/bad-good-health" component={BadGoodHealth} />
           <Route path="/good-people" component={GoodPeople} />
           <Route path="/anatomy-scanning" component={AnatomyScanning} />
+          <Route path="/4d-sti-intervention" component={FourDSTIIntervention} />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
           <Route component={NotFound} />

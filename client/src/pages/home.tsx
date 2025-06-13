@@ -67,24 +67,55 @@ export default function Home() {
                 Protection for Every Body & Anatomy
               </h2>
               <p className="text-xl lg:text-2xl text-blue-100 mb-8 leading-relaxed">
-                Custom-fit protection for all anatomies through advanced 3D scanning technology. 
-                Made from recycled ocean plastic with multilingual 2SLGBTIQ+ terminology support.
+                MyONE-inspired precision sizing with 60+ custom fits. 4D STI intervention 
+                through bioregional sewer & water sampling. Sustainable ocean plastic materials 
+                with cooperative sexual health principles for the full 2SLGBTIQ+ community.
               </p>
+              
+              {/* Feature Badges */}
+              <div className="flex flex-wrap justify-center lg:justify-start gap-3 mb-8">
+                <Badge variant="secondary" className="bg-blue-100 text-blue-800 px-3 py-1">
+                  <Droplets className="w-4 h-4 mr-1" />
+                  4D STI Analytics
+                </Badge>
+                <Badge variant="secondary" className="bg-green-100 text-green-800 px-3 py-1">
+                  <Ruler className="w-4 h-4 mr-1" />
+                  MyONE Sizing
+                </Badge>
+                <Badge variant="secondary" className="bg-purple-100 text-purple-800 px-3 py-1">
+                  <Palette className="w-4 h-4 mr-1" />
+                  Color Wheel
+                </Badge>
+                <Badge variant="secondary" className="bg-orange-100 text-orange-800 px-3 py-1">
+                  <TestTube className="w-4 h-4 mr-1" />
+                  3D Scanning
+                </Badge>
+              </div>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <Link href="/products">
                   <Button size="lg" className="bg-accent hover:bg-accent/90 text-neutral">
                     <Ruler className="mr-2 h-5 w-5" />
-                    Start Custom Fitting
+                    MyONE Custom Sizing
                   </Button>
                 </Link>
-                <Link href="/education">
+                <Link href="/4d-sti-intervention">
+                  <Button 
+                    size="lg" 
+                    variant="outline" 
+                    className="bg-blue-500/20 backdrop-blur-sm text-white border-blue-300/30 hover:bg-blue-500/30"
+                  >
+                    <Droplets className="mr-2 h-4 w-4" />
+                    4D STI System
+                  </Button>
+                </Link>
+                <Link href="/anatomy-scanning">
                   <Button 
                     size="lg" 
                     variant="outline" 
                     className="bg-white/10 backdrop-blur-sm text-white border-white/20 hover:bg-white/20"
                   >
-                    <Play className="mr-2 h-4 w-4" />
-                    Learn More
+                    <TestTube className="mr-2 h-4 w-4" />
+                    3D Scanning
                   </Button>
                 </Link>
               </div>
