@@ -37,7 +37,7 @@ export default function InclusiveOrdering() {
     {
       id: "pride-inclusive",
       name: "Pride Inclusive (Default)",
-      description: "Full Progress Pride flag integration supporting 2SLGBTIQ+ sexual creativity and reproductive justice",
+      description: "Full Progress Pride flag integration supporting 2SLGBTIQA+ sexual creativity and reproductive justice",
       logoVariant: true,
       packaging: "Progress Pride packaging celebrating anatomical diversity",
       messaging: "Supporting sexual creativity and reproductive autonomy for all identities"

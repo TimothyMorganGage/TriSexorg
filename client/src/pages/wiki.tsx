@@ -1026,7 +1026,7 @@ Sexual anatomy education and reproductive justice are fundamental to fluck's mis
 - **Relationship styles**: Monogamy to polyamory
 - **Cultural identity**: Intersectional awareness
 
-## 2SLGBTIQ+ Terminology
+## 2SLGBTIQA+ Terminology
 
 ### Expanded Acronym
 - **2S**: Two-Spirit (Indigenous identity)
@@ -1036,6 +1036,7 @@ Sexual anatomy education and reproductive justice are fundamental to fluck's mis
 - **T**: Transgender
 - **I**: Intersex
 - **Q**: Queer/Questioning
+- **A**: Asexual/Aromantic
 - **+**: Additional identities
 
 ### Evolving Language

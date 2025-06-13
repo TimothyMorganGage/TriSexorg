@@ -15,7 +15,7 @@ export function Footer() {
               <span className="text-2xl font-bold">fluck</span>
             </div>
             <p className="text-gray-300 text-sm leading-relaxed">
-              Custom-fit protection for every body. Made from sustainable materials with inclusive design for the full 2SLGBTIQ+ community.
+              Custom-fit protection for every body. Made from sustainable materials with inclusive design for the full 2SLGBTIQA+ community.
             </p>
             <div className="flex items-center space-x-2 text-sm text-gray-400">
               <Heart className="h-4 w-4 text-primary" />
@@ -66,7 +66,7 @@ export function Footer() {
               </li>
               <li>
                 <Link href="/education" className="text-gray-300 hover:text-primary transition-colors">
-                  2SLGBTIQ+ Terminology
+                  2SLGBTIQA+ Terminology
                 </Link>
               </li>
               <li>

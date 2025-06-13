@@ -71,7 +71,7 @@ export default function Home() {
                 Precision sizing with 60+ custom fits supporting sexual creativity and anatomical diversity. 
                 4D STI intervention through bioregional monitoring advances reproductive justice. 
                 Sustainable ocean plastic materials with cooperative sexual health principles 
-                ensuring bodily autonomy for the full 2SLGBTIQ+ community.
+                ensuring bodily autonomy for the full 2SLGBTIQA+ community.
               </p>
               
               {/* Feature Badges */}

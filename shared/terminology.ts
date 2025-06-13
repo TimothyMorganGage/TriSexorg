@@ -1,4 +1,4 @@
-// Multilingual and multicultural terminology database for 2SLGBTIQ+ inclusive language
+// Multilingual and multicultural terminology database for 2SLGBTIQA+ inclusive language
 export const anatomyTerminology = {
   penis: {
     en: ["penis", "cock", "dick", "member", "shaft"],
