@@ -26,6 +26,8 @@ import DomainPurchase from "@/pages/domain-purchase";
 import SocialIntegration from "@/pages/social-integration";
 import MetaPlatforms from "@/pages/meta-platforms";
 import EconomicImpact from "@/pages/economic-impact";
+import Wiki from "@/pages/wiki";
+import InclusiveOrdering from "@/pages/inclusive-ordering";
 import { TabNavigation } from "@/components/TabNavigation";
 
 function Router() {
@@ -49,6 +51,8 @@ function Router() {
           <Route path="/social-integration" component={SocialIntegration} />
           <Route path="/meta-platforms" component={MetaPlatforms} />
           <Route path="/economic-impact" component={EconomicImpact} />
+          <Route path="/wiki" component={Wiki} />
+          <Route path="/inclusive-ordering" component={InclusiveOrdering} />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
           <Route component={NotFound} />

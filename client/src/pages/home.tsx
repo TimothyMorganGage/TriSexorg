@@ -7,7 +7,7 @@ import {
   ShieldCheck, Leaf, Heart, Box, CheckCircle, 
   Printer, Truck, Hospital, UserCheck, Store, 
   Building, Play, Ruler, Droplets, Palette, TestTube,
-  Coins, Share2
+  Coins, Share2, BookOpen
 } from "lucide-react";
 
 export default function Home() {
@@ -101,16 +101,22 @@ export default function Home() {
                 </Badge>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-center lg:justify-start">
+                <Link href="/inclusive-ordering">
+                  <Button size="lg" className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white shadow-lg w-full">
+                    <ShieldCheck className="mr-2 h-5 w-5" />
+                    Start Inclusive Order
+                  </Button>
+                </Link>
                 <Link href="/domain-purchase">
                   <Button size="lg" className="bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white shadow-lg w-full">
                     <ShieldCheck className="mr-2 h-5 w-5" />
                     Register fluck.wtf
                   </Button>
                 </Link>
-                <Link href="/products">
+                <Link href="/wiki">
                   <Button size="lg" className="bg-accent hover:bg-accent/90 text-neutral w-full">
-                    <Ruler className="mr-2 h-5 w-5" />
-                    MyONE Custom Sizing
+                    <BookOpen className="mr-2 h-5 w-5" />
+                    Knowledge Wiki
                   </Button>
                 </Link>
                 <Link href="/4d-sti-intervention">
@@ -141,16 +147,6 @@ export default function Home() {
                   >
                     <Heart className="mr-2 h-4 w-4" />
                     DALY Dashboard
-                  </Button>
-                </Link>
-                <Link href="/social-integration">
-                  <Button 
-                    size="lg" 
-                    variant="outline" 
-                    className="bg-purple-500/20 backdrop-blur-sm text-white border-purple-300/30 hover:bg-purple-500/30 w-full"
-                  >
-                    <Share2 className="mr-2 h-4 w-4" />
-                    Social Media
                   </Button>
                 </Link>
               </div>

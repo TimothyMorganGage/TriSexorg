@@ -1,4 +1,38 @@
-export function MedicineWheelLogo({ size = 120 }: { size?: number }) {
+export function MedicineWheelLogo({ 
+  size = 120, 
+  showPride = true 
+}: { 
+  size?: number; 
+  showPride?: boolean;
+}) {
+  const prideColors = showPride ? {
+    // Progress Pride Flag colors from the provided artwork
+    red: "#E40303",
+    orange: "#FF8C00", 
+    yellow: "#FFED00",
+    green: "#008018",
+    blue: "#0066FF",
+    purple: "#732982",
+    transBlue: "#5BCEFA",
+    transPink: "#F5A9B8",
+    brown: "#613915",
+    black: "#000000",
+    white: "#FFFFFF"
+  } : {
+    // Neutral earth tones for non-pride version
+    red: "#8B4513",
+    orange: "#CD853F", 
+    yellow: "#F4A460",
+    green: "#6B8E23",
+    blue: "#4682B4",
+    purple: "#9370DB",
+    transBlue: "#87CEEB",
+    transPink: "#F5DEB3",
+    brown: "#8B4513",
+    black: "#2F4F4F",
+    white: "#F5F5F5"
+  };
+
   return (
     <svg 
       width={size} 
@@ -23,59 +57,71 @@ export function MedicineWheelLogo({ size = 120 }: { size?: number }) {
       
       {/* Progress Pride Flag Colors in Medicine Wheel Segments */}
       
+      {/* Intersex Circle (if pride version) */}
+      {showPride && (
+        <circle 
+          cx="100" 
+          cy="60" 
+          r="8" 
+          fill="none" 
+          stroke="#7902AA" 
+          strokeWidth="2"
+        />
+      )}
+      
       {/* Light Blue (Trans) - East */}
       <path 
         d="M 100 100 L 100 5 A 95 95 0 0 1 167 33 Z" 
-        fill="#5BCEFA"
+        fill={prideColors.transBlue}
         opacity="0.9"
       />
       
       {/* Pink (Trans) - Northeast */}
       <path 
         d="M 100 100 L 167 33 A 95 95 0 0 1 195 100 Z" 
-        fill="#F5A9B8"
+        fill={prideColors.transPink}
         opacity="0.9"
       />
       
-      {/* White (Trans/Intersex) - South */}
+      {/* White (Trans/Intersex) - East-Southeast */}
       <path 
         d="M 100 100 L 195 100 A 95 95 0 0 1 167 167 Z" 
-        fill="#FFFFFF"
+        fill={prideColors.white}
         opacity="0.9"
       />
       
       {/* Brown (BIPOC) - Southeast */}
       <path 
         d="M 100 100 L 167 167 A 95 95 0 0 1 100 195 Z" 
-        fill="#613915"
+        fill={prideColors.brown}
         opacity="0.9"
       />
       
-      {/* Black (BIPOC) - West */}
+      {/* Black (BIPOC) - South */}
       <path 
         d="M 100 100 L 100 195 A 95 95 0 0 1 33 167 Z" 
-        fill="#000000"
+        fill={prideColors.black}
         opacity="0.9"
       />
       
-      {/* Red (Traditional Pride) - Southwest */}
+      {/* Purple (Traditional Pride) - Southwest */}
       <path 
         d="M 100 100 L 33 167 A 95 95 0 0 1 5 100 Z" 
-        fill="#E40303"
+        fill={prideColors.purple}
         opacity="0.9"
       />
       
-      {/* Orange (Traditional Pride) - North */}
+      {/* Blue (Traditional Pride) - West */}
       <path 
         d="M 100 100 L 5 100 A 95 95 0 0 1 33 33 Z" 
-        fill="#FF8C00"
+        fill={prideColors.blue}
         opacity="0.9"
       />
       
-      {/* Yellow (Traditional Pride) - Northwest */}
+      {/* Green (Traditional Pride) - Northwest */}
       <path 
         d="M 100 100 L 33 33 A 95 95 0 0 1 100 5 Z" 
-        fill="#FFED00"
+        fill={prideColors.green}
         opacity="0.9"
       />
       
@@ -91,10 +137,10 @@ export function MedicineWheelLogo({ size = 120 }: { size?: number }) {
       />
       
       {/* Four Sacred Colors in Center */}
-      <circle cx="100" cy="85" r="6" fill="#FFED00" /> {/* Yellow - East */}
-      <circle cx="115" cy="100" r="6" fill="#E40303" /> {/* Red - South */}
-      <circle cx="100" cy="115" r="6" fill="#000000" /> {/* Black - West */}
-      <circle cx="85" cy="100" r="6" fill="#FFFFFF" stroke="#000" strokeWidth="1" /> {/* White - North */}
+      <circle cx="100" cy="85" r="6" fill={prideColors.yellow} /> {/* Yellow - East */}
+      <circle cx="115" cy="100" r="6" fill={prideColors.red} /> {/* Red - South */}
+      <circle cx="100" cy="115" r="6" fill={prideColors.black} /> {/* Black - West */}
+      <circle cx="85" cy="100" r="6" fill={prideColors.white} stroke="#000" strokeWidth="1" /> {/* White - North */}
       
       {/* Center Point - Unity */}
       <circle 
