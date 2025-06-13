@@ -1,10 +1,12 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { MedicineWheelLogo } from "@/components/MedicineWheelLogo";
 import { 
   ShieldCheck, Leaf, Heart, Box, CheckCircle, 
   Printer, Truck, Hospital, UserCheck, Store, 
-  Building, Play, Ruler 
+  Building, Play, Ruler, Droplets, Palette, TestTube
 } from "lucide-react";
 
 export default function Home() {
@@ -29,10 +31,41 @@ export default function Home() {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="text-center lg:text-left">
-              <h1 className="text-4xl lg:text-6xl font-bold leading-tight mb-6">
-                <span className="text-accent">fluck</span> Protection for{" "}
-                <span className="block">Every Body & Anatomy</span>
-              </h1>
+              {/* Medicine Wheel Logo */}
+              <div className="flex justify-center lg:justify-start mb-8">
+                <MedicineWheelLogo size={120} />
+              </div>
+              
+              {/* Black and White Spectrum Typography Prototypes */}
+              <div className="space-y-4 mb-6">
+                {/* Prototype 1: Bold Gradient */}
+                <h1 className="text-5xl lg:text-7xl font-black leading-tight">
+                  <span className="bg-gradient-to-r from-black via-gray-500 to-white bg-clip-text text-transparent">
+                    fluck
+                  </span>
+                  <span className="text-accent">.wtf</span>
+                </h1>
+                
+                {/* Prototype 2: Outlined White */}
+                <div className="text-4xl lg:text-6xl font-bold leading-tight opacity-80">
+                  <span className="text-white" style={{ textShadow: '2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000' }}>
+                    fluck
+                  </span>
+                  <span className="text-accent">.wtf</span>
+                </div>
+                
+                {/* Prototype 3: Spectrum Fill */}
+                <div className="text-3xl lg:text-5xl font-extrabold leading-tight opacity-60">
+                  <span className="bg-gradient-to-r from-gray-300 to-gray-700 bg-clip-text text-transparent">
+                    fluck
+                  </span>
+                  <span className="text-accent">.wtf</span>
+                </div>
+              </div>
+              
+              <h2 className="text-2xl lg:text-3xl font-bold leading-tight mb-6 text-white">
+                Protection for Every Body & Anatomy
+              </h2>
               <p className="text-xl lg:text-2xl text-blue-100 mb-8 leading-relaxed">
                 Custom-fit protection for all anatomies through advanced 3D scanning technology. 
                 Made from recycled ocean plastic with multilingual 2SLGBTIQ+ terminology support.
