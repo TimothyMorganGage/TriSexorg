@@ -34,7 +34,7 @@ export default function Home() {
                 <span className="block">Every Body & Anatomy</span>
               </h1>
               <p className="text-xl lg:text-2xl text-blue-100 mb-8 leading-relaxed">
-                Custom-fit protection for penis (4.5-11.5"), vaginal, anal, and intersex anatomy. 
+                Custom-fit protection for all anatomies through advanced 3D scanning technology. 
                 Made from recycled ocean plastic with multilingual 2SLGBTIQ+ terminology support.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">

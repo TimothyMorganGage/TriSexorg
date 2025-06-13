@@ -3,28 +3,33 @@
 @tailwind utilities;
 
 :root {
-  --background: hsl(0, 0%, 100%);
-  --foreground: hsl(222, 84%, 4.9%);
-  --muted: hsl(210, 40%, 98%);
-  --muted-foreground: hsl(215.4, 16.3%, 46.9%);
-  --popover: hsl(0, 0%, 100%);
-  --popover-foreground: hsl(222, 84%, 4.9%);
-  --card: hsl(0, 0%, 100%);
-  --card-foreground: hsl(222, 84%, 4.9%);
-  --border: hsl(214.3, 31.8%, 91.4%);
-  --input: hsl(214.3, 31.8%, 91.4%);
-  --primary: hsl(221, 83%, 53%);
-  --primary-foreground: hsl(210, 40%, 98%);
-  --secondary: hsl(160, 84%, 39%);
-  --secondary-foreground: hsl(210, 40%, 98%);
-  --accent: hsl(43, 96%, 56%);
-  --accent-foreground: hsl(222, 84%, 4.9%);
+  --background: hsl(0, 0%, 0%);
+  --foreground: hsl(0, 0%, 100%);
+  --muted: hsl(0, 0%, 10%);
+  --muted-foreground: hsl(0, 0%, 70%);
+  --popover: hsl(0, 0%, 5%);
+  --popover-foreground: hsl(0, 0%, 100%);
+  --card: hsl(0, 0%, 5%);
+  --card-foreground: hsl(0, 0%, 100%);
+  --border: hsl(0, 0%, 20%);
+  --input: hsl(0, 0%, 10%);
+  --primary: hsl(330, 100%, 60%);
+  --primary-foreground: hsl(0, 0%, 0%);
+  --secondary: hsl(180, 100%, 40%);
+  --secondary-foreground: hsl(0, 0%, 0%);
+  --accent: hsl(330, 100%, 60%);
+  --accent-foreground: hsl(0, 0%, 0%);
   --destructive: hsl(0, 84%, 60%);
-  --destructive-foreground: hsl(210, 40%, 98%);
-  --ring: hsl(222, 84%, 4.9%);
+  --destructive-foreground: hsl(0, 0%, 100%);
+  --ring: hsl(330, 100%, 60%);
   --radius: 0.5rem;
-  --surface: hsl(210, 20%, 98%);
-  --neutral: hsl(215, 25%, 27%);
+  --surface: hsl(0, 0%, 3%);
+  --neutral: hsl(0, 0%, 90%);
+  
+  /* fluck brand colors */
+  --neon-pink: hsl(330, 100%, 60%);
+  --aquamarine: hsl(180, 100%, 40%);
+  --black-base: hsl(0, 0%, 0%);
 }
 
 .dark {
@@ -105,6 +110,26 @@
   }
 
   .gradient-hero {
-    background: linear-gradient(135deg, var(--primary) 0%, hsl(221, 83%, 43%) 100%);
+    background: linear-gradient(135deg, var(--neon-pink) 0%, var(--aquamarine) 100%);
+  }
+  
+  .text-neon-pink {
+    color: var(--neon-pink);
+  }
+  
+  .text-aquamarine {
+    color: var(--aquamarine);
+  }
+  
+  .bg-neon-pink {
+    background-color: var(--neon-pink);
+  }
+  
+  .bg-aquamarine {
+    background-color: var(--aquamarine);
+  }
+  
+  .fluck-gradient {
+    background: linear-gradient(45deg, var(--neon-pink), var(--aquamarine));
   }
 }
