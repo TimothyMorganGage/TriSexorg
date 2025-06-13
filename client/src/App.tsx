@@ -14,8 +14,8 @@ import Education from "@/pages/education";
 import Clinics from "@/pages/clinics";
 import ClinicDashboard from "@/pages/clinic-dashboard";
 import Partnership from "@/pages/partnership";
-import Login from "@/pages/login";
-import Register from "@/pages/register";
+import Login from "./pages/login";
+import Register from "./pages/register";
 import NotFound from "@/pages/not-found";
 
 function Router() {

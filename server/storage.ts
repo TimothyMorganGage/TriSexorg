@@ -242,7 +242,16 @@ export class MemStorage implements IStorage {
     const id = this.currentConfigId++;
     const config: ProductConfiguration = { 
       ...insertConfig, 
-      id, 
+      id,
+      lengthMm: insertConfig.lengthMm || null,
+      girthMm: insertConfig.girthMm || null,
+      widthMm: insertConfig.widthMm || null,
+      depthMm: insertConfig.depthMm || null,
+      customMeasurements: insertConfig.customMeasurements || null,
+      features: insertConfig.features || null,
+      culturalTerms: insertConfig.culturalTerms || null,
+      languagePreference: insertConfig.languagePreference || "en",
+      status: insertConfig.status || "draft",
       createdAt: new Date() 
     };
     this.productConfigurations.set(id, config);
@@ -278,12 +287,16 @@ export class MemStorage implements IStorage {
 
   async createOrder(insertOrder: InsertOrder): Promise<Order> {
     const id = this.currentOrderId++;
-    const orderNumber = `CFH-${new Date().getFullYear()}-${String(id).padStart(4, '0')}`;
+    const orderNumber = `FLK-${new Date().getFullYear()}-${String(id).padStart(4, '0')}`;
     const now = new Date();
     const order: Order = { 
       ...insertOrder, 
       id, 
       orderNumber,
+      status: insertOrder.status || "pending",
+      clinicId: insertOrder.clinicId || null,
+      shippingAddress: insertOrder.shippingAddress || null,
+      notes: insertOrder.notes || null,
       createdAt: now,
       updatedAt: now 
     };
@@ -323,6 +336,8 @@ export class MemStorage implements IStorage {
     const content: EducationalContent = { 
       ...insertContent, 
       id,
+      tags: insertContent.tags || null,
+      isPublished: insertContent.isPublished ?? false,
       createdAt: now,
       updatedAt: now 
     };
@@ -339,7 +354,11 @@ export class MemStorage implements IStorage {
     const id = this.currentRequestId++;
     const request: PartnershipRequest = { 
       ...insertRequest, 
-      id, 
+      id,
+      phone: insertRequest.phone || null,
+      status: insertRequest.status || "pending",
+      interests: insertRequest.interests || null,
+      additionalInfo: insertRequest.additionalInfo || null,
       createdAt: new Date() 
     };
     this.partnershipRequests.set(id, request);
