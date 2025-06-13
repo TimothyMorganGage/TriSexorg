@@ -88,24 +88,51 @@ export class MemStorage implements IStorage {
     // Create default products
     const defaultProducts: InsertProduct[] = [
       {
-        name: "CustomFit Protection - Ocean Plastic",
-        description: "3D-printed custom-fit protection made from recycled ocean plastic and hydrogel",
-        category: "protection",
+        name: "fluck External Protection - Ocean Plastic",
+        description: "3D-printed custom-fit external protection made from recycled ocean plastic and hydrogel. Fits penis anatomy 4.5-11.5 inches.",
+        category: "penis_protection",
+        bodyCompatibility: ["penis"],
+        sizeRange: "custom",
         basePrice: "29.99",
         isActive: true,
       },
       {
-        name: "CustomFit Protection - Natural Blend",
-        description: "3D-printed custom-fit protection made from natural plant-based materials",
-        category: "protection",
+        name: "fluck Internal Protection - Natural Blend",
+        description: "3D-printed custom-fit internal protection made from natural plant-based materials. Compatible with vaginal and anal anatomy.",
+        category: "multi_anatomical",
+        bodyCompatibility: ["vagina", "anus", "front_hole"],
+        sizeRange: "custom",
         basePrice: "34.99",
+        isActive: true,
+      },
+      {
+        name: "fluck Multi-Anatomy Kit - Bio Silicone",
+        description: "Complete kit for intersex and trans bodies. Includes external, internal, and barrier protection options.",
+        category: "multi_anatomical",
+        bodyCompatibility: ["penis", "vagina", "anus", "front_hole", "multi_anatomy"],
+        sizeRange: "custom",
+        basePrice: "49.99",
+        isActive: true,
+      },
+      {
+        name: "fluck Barrier Dams - Ocean Plastic",
+        description: "Custom-sized dental dams and barrier sheets made from recycled ocean plastic.",
+        category: "barrier_dams",
+        bodyCompatibility: ["vagina", "anus", "front_hole"],
+        sizeRange: "custom",
+        basePrice: "19.99",
         isActive: true,
       },
     ];
 
     defaultProducts.forEach(product => {
       const id = this.currentProductId++;
-      this.products.set(id, { ...product, id });
+      this.products.set(id, { 
+        ...product, 
+        id,
+        bodyCompatibility: product.bodyCompatibility || null,
+        isActive: product.isActive ?? true 
+      });
     });
 
     // Create sample educational content
@@ -138,6 +165,8 @@ export class MemStorage implements IStorage {
       this.educationalContent.set(id, { 
         ...content, 
         id, 
+        tags: content.tags || null,
+        isPublished: content.isPublished ?? true,
         createdAt: now,
         updatedAt: now 
       });
@@ -162,6 +191,12 @@ export class MemStorage implements IStorage {
     const user: User = { 
       ...insertUser, 
       id, 
+      role: insertUser.role || "consumer",
+      organizationName: insertUser.organizationName || null,
+      organizationType: insertUser.organizationType || null,
+      contactName: insertUser.contactName || null,
+      title: insertUser.title || null,
+      phone: insertUser.phone || null,
       createdAt: new Date() 
     };
     this.users.set(id, user);
@@ -183,7 +218,12 @@ export class MemStorage implements IStorage {
 
   async createProduct(insertProduct: InsertProduct): Promise<Product> {
     const id = this.currentProductId++;
-    const product: Product = { ...insertProduct, id };
+    const product: Product = { 
+      ...insertProduct, 
+      id,
+      bodyCompatibility: insertProduct.bodyCompatibility || null,
+      isActive: insertProduct.isActive ?? true
+    };
     this.products.set(id, product);
     return product;
   }

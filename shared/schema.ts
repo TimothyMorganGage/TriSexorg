@@ -20,7 +20,9 @@ export const products = pgTable("products", {
   id: serial("id").primaryKey(),
   name: text("name").notNull(),
   description: text("description").notNull(),
-  category: text("category").notNull(),
+  category: text("category").notNull(), // penis_protection, vaginal_protection, anal_protection, multi_anatomical, barrier_dams
+  bodyCompatibility: text("body_compatibility").array(), // penis, vagina, anus, front_hole, multi_anatomy
+  sizeRange: text("size_range").notNull(), // custom, small, medium, large, extra_large
   basePrice: decimal("base_price", { precision: 10, scale: 2 }).notNull(),
   isActive: boolean("is_active").default(true).notNull(),
 });
@@ -29,10 +31,16 @@ export const productConfigurations = pgTable("product_configurations", {
   id: serial("id").primaryKey(),
   userId: integer("user_id").references(() => users.id).notNull(),
   productId: integer("product_id").references(() => products.id).notNull(),
-  size: text("size").notNull(), // small, medium, large
-  material: text("material").notNull(), // ocean_plastic_hydrogel, natural_blend
-  features: text("features").array(), // enhanced_lubrication, durability_coating, textured_surface
+  anatomyType: text("anatomy_type").notNull(), // penis, vagina, anus, front_hole, multi_anatomy
+  lengthMm: integer("length_mm"), // 114-292mm (4.5-11.5 inches) for penis
+  girthMm: integer("girth_mm"), // circumference measurements
+  widthMm: integer("width_mm"), // for vaginal/anal measurements  
+  depthMm: integer("depth_mm"), // for internal anatomy
   customMeasurements: text("custom_measurements"), // JSON string for detailed measurements
+  material: text("material").notNull(), // ocean_plastic_hydrogel, natural_blend, bio_silicone
+  features: text("features").array(), // enhanced_lubrication, durability_coating, textured_surface, antimicrobial
+  culturalTerms: text("cultural_terms").array(), // user-preferred terminology
+  languagePreference: text("language_preference").default("en").notNull(),
   status: text("status").default("draft").notNull(), // draft, ordered, in_production, completed
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
