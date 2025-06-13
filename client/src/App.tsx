@@ -28,6 +28,7 @@ import MetaPlatforms from "@/pages/meta-platforms";
 import EconomicImpact from "@/pages/economic-impact";
 import Wiki from "@/pages/wiki";
 import InclusiveOrdering from "@/pages/inclusive-ordering";
+import PeerMentor from "@/pages/peer-mentor";
 import { TabNavigation } from "@/components/TabNavigation";
 
 function Router() {
@@ -53,6 +54,7 @@ function Router() {
           <Route path="/economic-impact" component={EconomicImpact} />
           <Route path="/wiki" component={Wiki} />
           <Route path="/inclusive-ordering" component={InclusiveOrdering} />
+          <Route path="/peer-mentor" component={PeerMentor} />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
           <Route component={NotFound} />

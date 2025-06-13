@@ -993,6 +993,249 @@ Sexual anatomy education and reproductive justice are fundamental to fluck's mis
       readTime: "18 min"
     },
     {
+      id: "intelligence-frameworks",
+      title: "Intelligence Frameworks: Infinite, Multigenerational, Multicultural & Racial Intelligence",
+      category: "health",
+      content: `# Intelligence Frameworks for Holistic Health
+
+## Introduction
+fluck's peer mentor network operates on expanded intelligence frameworks that recognize diverse forms of wisdom and knowledge beyond traditional IQ measurements. These frameworks ensure equitable representation and value all forms of human intelligence in healthcare decision-making.
+
+## Infinite Intelligence
+
+### Definition
+Infinite Intelligence transcends individual cognitive capacity, accessing collective wisdom through interconnected knowledge networks and emergent understanding.
+
+### Core Principles
+- **Collective Wisdom Access**: Drawing from community knowledge pools and shared experiences
+- **Pattern Recognition Across Domains**: Identifying connections between seemingly unrelated fields
+- **Emergent Problem-Solving**: Solutions arising from collaborative thinking processes
+- **Intuitive Insight Synthesis**: Integrating rational analysis with intuitive understanding
+
+### Applications in Healthcare
+- **Community Health Networks**: Leveraging collective experience for health solutions
+- **Cross-Pollination**: Applying insights from one health domain to another
+- **Emergent Treatments**: Discovering new approaches through collaborative exploration
+- **Holistic Assessment**: Considering multiple perspectives simultaneously
+
+### Time Banking Integration
+Contributors demonstrating infinite intelligence receive enhanced dividend multipliers based on:
+- Cross-domain knowledge connections
+- Innovative solution synthesis
+- Community wisdom facilitation
+- Pattern recognition contributions
+
+## Multigenerational Intelligence
+
+### Definition
+Multigenerational Intelligence integrates wisdom across age groups, combining elder knowledge with youth innovation and middle-generation bridge-building.
+
+### Generational Wisdom Types
+
+#### Elder Intelligence (65+)
+- **Historical Pattern Recognition**: Understanding long-term health trends and cycles
+- **Traditional Knowledge Systems**: Indigenous and cultural healing practices
+- **Life Experience Integration**: Practical wisdom from lived experiences
+- **Mentorship Capacity**: Ability to guide and teach younger generations
+
+#### Adult Intelligence (44-64)
+- **Bridge-Building**: Connecting generational perspectives and technologies
+- **Resource Management**: Experienced navigation of healthcare systems
+- **Career-Health Balance**: Managing health across professional responsibilities
+- **Family Advocacy**: Coordinating multi-generational family health needs
+
+#### Millennial Intelligence (28-43)
+- **Technology Integration**: Digital health tool proficiency and innovation
+- **Systems Thinking**: Understanding complex healthcare interconnections
+- **Advocacy Skills**: Organizing for healthcare reform and access
+- **Work-Life Integration**: Balancing career demands with health priorities
+
+#### Gen Z Intelligence (18-27)
+- **Digital Native Insights**: Intuitive understanding of online health communities
+- **Social Justice Awareness**: Connecting health to broader equity issues
+- **Innovation Mindset**: Creative approaches to traditional health challenges
+- **Global Perspective**: Understanding health as interconnected worldwide issue
+
+### Implementation in Peer Mentoring
+- **Age-Diverse Matching**: Pairing mentors and mentees across generations
+- **Knowledge Exchange Programs**: Structured sharing between age groups
+- **Technology Training**: Youth teaching elders digital tools; elders sharing traditional wisdom
+- **Succession Planning**: Ensuring knowledge transfer and continuity
+
+## Multicultural Intelligence
+
+### Definition
+Multicultural Intelligence encompasses the ability to understand, respect, and integrate diverse cultural approaches to health, healing, and wellness.
+
+### Cultural Knowledge Systems
+
+#### Indigenous Wisdom Traditions
+- **Holistic Health Concepts**: Understanding body-mind-spirit-community interconnections
+- **Plant Medicine Knowledge**: Traditional herbal and natural healing approaches
+- **Ceremonial Healing**: Ritual and spiritual components of wellness
+- **Land-Based Health**: Connection between environmental and human health
+
+#### Eastern Medical Systems
+- **Traditional Chinese Medicine**: Qi, meridians, and energy-based healing
+- **Ayurvedic Principles**: Dosha balance and constitutional health approaches
+- **Yoga and Meditation**: Mind-body practices for wellness
+- **Acupuncture and Bodywork**: Physical intervention for energy flow
+
+#### African Diaspora Healing
+- **Community-Centered Wellness**: Collective approaches to individual health
+- **Spiritual Healing Practices**: Integration of faith and physical wellness
+- **Herbal Medicine Traditions**: Plant-based healing knowledge
+- **Music and Movement Therapy**: Rhythm and dance for healing
+
+#### Latin American Curanderismo
+- **Sobadoras/Parteras**: Traditional bodywork and birth attendance
+- **Herbal Medicine**: Extensive plant knowledge for health conditions
+- **Spiritual Cleansing**: Limpias and energy clearing practices
+- **Family-Centered Care**: Extended family involvement in healing
+
+### Cross-Cultural Health Navigation
+- **Language Accessibility**: Understanding health concepts across languages
+- **Cultural Competency**: Respectful integration of diverse healing approaches
+- **Religious Integration**: Incorporating faith-based healing where appropriate
+- **Dietary Wisdom**: Understanding cultural nutrition and food medicine
+
+## Racial & Ethnic Intelligence
+
+### Definition
+Racial & Ethnic Intelligence involves deep understanding of how race and ethnicity impact health outcomes, healthcare access, and healing approaches, while recognizing and addressing systemic inequities.
+
+### Health Equity Awareness
+
+#### Structural Racism in Healthcare
+- **Historical Medical Trauma**: Understanding impacts of unethical medical experimentation
+- **Implicit Bias Recognition**: Identifying unconscious prejudices in healthcare delivery
+- **Access Barriers**: Recognizing geographic, economic, and cultural barriers to care
+- **Quality Disparities**: Understanding differences in care quality across racial groups
+
+#### Intersectional Health Impacts
+- **Race-Gender Intersections**: Understanding unique challenges for women of color
+- **Socioeconomic Factors**: How poverty and racism compound health challenges
+- **Immigration Status**: Healthcare access challenges for undocumented communities
+- **LGBTQ+ Identity**: Additional challenges for queer and trans people of color
+
+### Community-Specific Knowledge
+
+#### African American Health Intelligence
+- **Historical Health Resilience**: Survival strategies under systemic oppression
+- **Church-Based Wellness**: Faith community health support systems
+- **Hair and Skin Care**: Specific health considerations for Black bodies
+- **Hypertension and Diabetes**: Community-specific prevention and management
+
+#### Latino/Hispanic Health Intelligence
+- **Familismo**: Family-centered approach to health decision-making
+- **Traditional Healing**: Curanderismo and folk medicine integration
+- **Migration Health**: Understanding health impacts of displacement
+- **Language Barriers**: Navigating healthcare with limited English proficiency
+
+#### Asian American Health Intelligence
+- **Model Minority Myth**: Understanding hidden health struggles and needs
+- **Intergenerational Trauma**: Impacts of war, displacement, and discrimination
+- **Traditional Medicine Integration**: Balancing Eastern and Western approaches
+- **Mental Health Stigma**: Cultural barriers to seeking psychological support
+
+#### Indigenous Health Intelligence
+- **Historical Trauma**: Understanding impacts of colonization on health
+- **Traditional Ecological Knowledge**: Connection between land and health
+- **Tribal Sovereignty**: Respecting Indigenous healthcare governance
+- **Cultural Revitalization**: Health benefits of cultural practice restoration
+
+### Advocacy and Action
+
+#### Community Health Advocacy
+- **Data Collection**: Ensuring accurate representation in health research
+- **Policy Reform**: Advocating for healthcare policies that address racial disparities
+- **Community Organizing**: Building power for health equity
+- **Cultural Preservation**: Maintaining traditional healing knowledge
+
+#### Healthcare System Reform
+- **Diversifying Healthcare Workforce**: Increasing representation in medical fields
+- **Bias Training**: Educating healthcare providers about unconscious bias
+- **Community Health Workers**: Training and supporting community-based health advocates
+- **Culturally Adapted Interventions**: Developing health programs for specific communities
+
+## Integration in fluck's Peer Mentor Network
+
+### Matching Algorithm
+The peer mentor matching system considers all intelligence types to create optimal pairings:
+- **Cultural Background Alignment**: Matching based on shared or complementary cultural experiences
+- **Generational Balance**: Pairing across age groups for knowledge exchange
+- **Intelligence Type Complementarity**: Combining different intelligence strengths
+- **Racial/Ethnic Sensitivity**: Ensuring culturally competent mentoring relationships
+
+### Time Banking Equity Measures
+The stablecoin dividend system incorporates intelligence equity through:
+- **Cultural Knowledge Bonuses**: Extra compensation for sharing traditional healing knowledge
+- **Language Services**: Additional payments for interpretation and translation
+- **Community Organizing**: Bonuses for health advocacy and system navigation assistance
+- **Mentorship Quality**: Higher dividends for demonstrating cultural competency and inclusive practices
+
+### Training and Development
+All peer mentors complete training in:
+- **Cultural Humility**: Ongoing learning about diverse health approaches
+- **Racial Equity**: Understanding systemic racism's impact on health
+- **Generational Communication**: Effective cross-age interaction strategies
+- **Infinite Intelligence Practices**: Accessing and contributing to collective wisdom
+
+### Quality Assurance
+The network maintains quality through:
+- **Community Feedback**: Regular assessment from mentees and community members
+- **Cultural Advisory Boards**: Oversight from diverse community leaders
+- **Outcome Tracking**: Monitoring health equity improvements
+- **Continuous Learning**: Ongoing education about evolving cultural competency standards
+
+## Research and Evidence Base
+
+### Academic Foundations
+- **Howard Gardner's Multiple Intelligences**: Recognition of diverse cognitive abilities
+- **Cultural Psychology Research**: Understanding culture's impact on cognition and health
+- **Critical Race Theory**: Analyzing systemic racism's health impacts
+- **Indigenous Research Methodologies**: Incorporating traditional knowledge validation
+
+### Outcome Measurements
+- **Health Equity Metrics**: Tracking disparities reduction across racial/ethnic groups
+- **Cultural Competency Assessments**: Measuring mentor effectiveness across cultures
+- **Generational Satisfaction**: Evaluating cross-age mentoring success
+- **Community Health Indicators**: Monitoring overall community wellness improvements
+
+### Continuous Innovation
+- **Community-Participatory Research**: Involving communities in defining and measuring success
+- **Traditional Knowledge Integration**: Formal recognition and incorporation of indigenous wisdom
+- **Technology Adaptation**: Ensuring digital tools work across cultural and generational lines
+- **Global Health Perspectives**: Learning from international community health models
+
+## Implementation Guidelines
+
+### For Healthcare Providers
+- **Assessment Tools**: Incorporating cultural and generational factors in health evaluations
+- **Treatment Planning**: Developing culturally appropriate and age-sensitive interventions
+- **Communication Strategies**: Adapting interaction styles for diverse intelligence types
+- **Resource Navigation**: Connecting patients with culturally competent community resources
+
+### For Community Organizations
+- **Program Design**: Creating initiatives that honor diverse intelligence types
+- **Leadership Development**: Cultivating leaders across cultural and generational lines
+- **Partnership Building**: Collaborating across racial, ethnic, and age boundaries
+- **Advocacy Coordination**: Uniting diverse voices for health equity
+
+### For Individual Users
+- **Self-Assessment**: Understanding your own intelligence strengths and cultural background
+- **Mentor Selection**: Choosing mentors who complement your knowledge and experience
+- **Learning Opportunities**: Seeking education about other cultural and generational perspectives
+- **Community Contribution**: Sharing your unique intelligence types with the network
+
+This comprehensive intelligence framework ensures that fluck's peer mentor network values and utilizes the full spectrum of human wisdom, creating more equitable and effective health support for all community members.`,
+      tags: ["intelligence", "cultural-competency", "multigenerational", "racial-equity", "peer-mentoring"],
+      lastUpdated: "2024-01-16",
+      author: "Peer Mentor Intelligence Collective",
+      difficulty: "Advanced",
+      readTime: "22 min"
+    },
+    {
       id: "inclusive-terminology",
       title: "Inclusive Sexual Health Terminology and Cultural Competency",
       category: "health",
