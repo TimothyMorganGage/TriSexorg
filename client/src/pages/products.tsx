@@ -43,7 +43,7 @@ export default function Products() {
       baseGirth: 51,
       midGirth: 50,
       headGirth: 49,
-      length: 170,
+      length: 6,
     },
   });
 
@@ -163,9 +163,21 @@ export default function Products() {
   ];
 
   const lengthCategories = [
-    { value: "1", label: "1 Series", range: "160mm", description: "Shorter" },
-    { value: "3", label: "3 Series", range: "170mm", description: "Standard" },
-    { value: "5", label: "5 Series", range: "180mm", description: "Longer" },
+    { value: "1", label: "1\"", range: "1 inch", description: "Ultra compact" },
+    { value: "2", label: "2\"", range: "2 inches", description: "Very short" },
+    { value: "3", label: "3\"", range: "3 inches", description: "Short" },
+    { value: "4", label: "4\"", range: "4 inches", description: "Below average" },
+    { value: "5", label: "5\"", range: "5 inches", description: "Average start" },
+    { value: "6", label: "6\"", range: "6 inches", description: "Average" },
+    { value: "7", label: "7\"", range: "7 inches", description: "Above average" },
+    { value: "8", label: "8\"", range: "8 inches", description: "Large" },
+    { value: "9", label: "9\"", range: "9 inches", description: "Very large" },
+    { value: "10", label: "10\"", range: "10 inches", description: "Extra large" },
+    { value: "11", label: "11\"", range: "11 inches", description: "XXL" },
+    { value: "12", label: "12\"", range: "12 inches", description: "XXXL" },
+    { value: "13", label: "13\"", range: "13 inches", description: "Exceptional" },
+    { value: "14", label: "14\"", range: "14 inches", description: "Extraordinary" },
+    { value: "15", label: "15\"", range: "15 inches", description: "Maximum" },
   ];
 
   const materialOptions = [
@@ -284,7 +296,7 @@ export default function Products() {
                     setSelectedConfig({ ...selectedConfig, lengthCategory: value })
                   }
                 >
-                  <div className="grid grid-cols-3 gap-3">
+                  <div className="grid grid-cols-5 gap-2">
                     {lengthCategories.map((option) => (
                       <div key={option.value} className="relative">
                         <RadioGroupItem
@@ -332,11 +344,11 @@ export default function Products() {
                   {/* Custom Length Measurement */}
                   <div className="space-y-4">
                     <Label className="text-sm font-medium text-neutral">
-                      Length (mm) - Base to tip, top side
+                      Length (inches) - Base to tip, top side
                     </Label>
                     <div className="space-y-2">
                       <Slider
-                        value={[selectedConfig.customMeasurements?.length || 170]}
+                        value={[selectedConfig.customMeasurements?.length || 6]}
                         onValueChange={(value) =>
                           setSelectedConfig({
                             ...selectedConfig,
@@ -346,15 +358,15 @@ export default function Products() {
                             }
                           })
                         }
-                        min={140}
-                        max={200}
-                        step={1}
+                        min={1}
+                        max={15}
+                        step={0.25}
                         className="w-full"
                       />
                       <div className="flex justify-between text-xs text-gray-500">
-                        <span>140mm</span>
-                        <span className="font-medium">{selectedConfig.customMeasurements?.length || 170}mm</span>
-                        <span>200mm</span>
+                        <span>1"</span>
+                        <span className="font-medium">{selectedConfig.customMeasurements?.length || 6}"</span>
+                        <span>15"</span>
                       </div>
                     </div>
                   </div>
@@ -608,7 +620,7 @@ export default function Products() {
                           <div className="flex justify-between">
                             <span>Custom Length:</span>
                             <span className="font-medium text-primary">
-                              {selectedConfig.customMeasurements.length}mm
+                              {selectedConfig.customMeasurements.length}"
                             </span>
                           </div>
                           <div className="flex justify-between">
