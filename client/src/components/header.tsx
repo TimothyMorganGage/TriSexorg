@@ -11,10 +11,10 @@ export function Header() {
 
   const navigation = [
     { name: "Products", href: "/products" },
-    { name: "Education", href: "/education" },
-    { name: "Clinics", href: "/clinics" },
+    { name: "Stories", href: "/interactive-stories" },
     { name: "Peer Mentor", href: "/peer-mentor" },
     { name: "Wiki", href: "/wiki" },
+    { name: "Analytics", href: "/analytics" },
     { name: "Partnership", href: "/partnership" },
   ];
 

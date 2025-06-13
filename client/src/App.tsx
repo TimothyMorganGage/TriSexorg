@@ -29,6 +29,8 @@ import EconomicImpact from "@/pages/economic-impact";
 import Wiki from "@/pages/wiki";
 import InclusiveOrdering from "@/pages/inclusive-ordering";
 import PeerMentor from "@/pages/peer-mentor";
+import Analytics from "@/pages/analytics";
+import InteractiveStories from "@/pages/interactive-stories";
 import { TabNavigation } from "@/components/TabNavigation";
 
 function Router() {
@@ -55,6 +57,8 @@ function Router() {
           <Route path="/wiki" component={Wiki} />
           <Route path="/inclusive-ordering" component={InclusiveOrdering} />
           <Route path="/peer-mentor" component={PeerMentor} />
+          <Route path="/analytics" component={Analytics} />
+          <Route path="/interactive-stories" component={InteractiveStories} />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
           <Route component={NotFound} />
