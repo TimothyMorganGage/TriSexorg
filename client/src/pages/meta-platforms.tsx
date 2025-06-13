@@ -101,11 +101,11 @@ export default function MetaPlatforms() {
     {
       id: "meta-1",
       platform: "instagram",
-      content: "Medicine Wheel logo celebrating 2SLGBTIQ+ pride with sustainable custom protection 🏳️‍⚧️🏳️‍🌈 #Pride #SustainableHealth #CustomFit",
+      content: "Medicine Wheel logo celebrating 2SLGBTIQA+ pride with sustainable custom protection 🏳️‍⚧️🏳️‍🌈 #Pride #SustainableHealth #CustomFit",
       mediaType: "image",
       engagement: { likes: 2847, shares: 456, comments: 234, views: 12847 },
       timestamp: "3 hours ago",
-      hashtags: ["Pride", "SustainableHealth", "CustomFit", "2SLGBTIQ"],
+      hashtags: ["Pride", "SustainableHealth", "CustomFit", "2SLGBTIQA"],
       audience: "18-45, Health Conscious"
     },
     {
