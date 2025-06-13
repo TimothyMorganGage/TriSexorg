@@ -17,6 +17,11 @@ import Partnership from "@/pages/partnership";
 import Login from "./pages/login";
 import Register from "./pages/register";
 import NotFound from "@/pages/not-found";
+import BadGoodSex from "@/pages/bad-good-sex";
+import BadGoodHealth from "@/pages/bad-good-health";
+import GoodPeople from "@/pages/good-people";
+import AnatomyScanning from "@/pages/anatomy-scanning";
+import { TabNavigation } from "@/components/TabNavigation";
 
 function Router() {
   return (
@@ -30,6 +35,10 @@ function Router() {
           <Route path="/clinics" component={Clinics} />
           <Route path="/clinic-dashboard" component={ClinicDashboard} />
           <Route path="/partnership" component={Partnership} />
+          <Route path="/bad-good-sex" component={BadGoodSex} />
+          <Route path="/bad-good-health" component={BadGoodHealth} />
+          <Route path="/good-people" component={GoodPeople} />
+          <Route path="/anatomy-scanning" component={AnatomyScanning} />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
           <Route component={NotFound} />
@@ -46,7 +55,9 @@ function App() {
       <AuthProvider>
         <TooltipProvider>
           <Toaster />
-          <Router />
+          <TabNavigation>
+            <Router />
+          </TabNavigation>
         </TooltipProvider>
       </AuthProvider>
     </QueryClientProvider>
