@@ -15,9 +15,16 @@ import type { Product } from "@shared/schema";
 
 interface ProductConfig {
   productId: number;
-  size: string;
+  widthCategory: string;
+  lengthCategory: string;
   material: string;
   features: string[];
+  customMeasurements?: {
+    baseGirth: number;
+    midGirth: number;
+    headGirth: number;
+    length: number;
+  };
 }
 
 export default function Products() {
@@ -25,7 +32,8 @@ export default function Products() {
   const { toast } = useToast();
   const [selectedConfig, setSelectedConfig] = useState<ProductConfig>({
     productId: 1,
-    size: "small",
+    widthCategory: "C",
+    lengthCategory: "3",
     material: "ocean_plastic_hydrogel",
     features: ["enhanced_lubrication"],
   });
@@ -61,7 +69,7 @@ export default function Products() {
       const configResponse = await apiRequest("POST", "/api/configurations", {
         userId: user?.id,
         productId: selectedConfig.productId,
-        size: selectedConfig.size,
+        size: `${selectedConfig.widthCategory}${selectedConfig.lengthCategory}`,
         material: selectedConfig.material,
         features: selectedConfig.features,
         status: "ordered",
@@ -112,7 +120,7 @@ export default function Products() {
     configurationMutation.mutate({
       userId: user.id,
       productId: selectedConfig.productId,
-      size: selectedConfig.size,
+      size: `${selectedConfig.widthCategory}${selectedConfig.lengthCategory}`,
       material: selectedConfig.material,
       features: selectedConfig.features,
       status: "draft",
@@ -132,10 +140,21 @@ export default function Products() {
     orderMutation.mutate({});
   };
 
-  const sizeOptions = [
-    { value: "small", label: "Small", range: "45-52mm" },
-    { value: "medium", label: "Medium", range: "53-56mm" },
-    { value: "large", label: "Large", range: "57-64mm" },
+  const widthCategories = [
+    { value: "A", label: "A Series", range: "45-47mm", description: "Ultra snug" },
+    { value: "B", label: "B Series", range: "47-49mm", description: "Snug" },
+    { value: "C", label: "C Series", range: "49-51mm", description: "Standard" },
+    { value: "D", label: "D Series", range: "51-53mm", description: "Comfortable" },
+    { value: "E", label: "E Series", range: "53-55mm", description: "Roomy" },
+    { value: "F", label: "F Series", range: "55-57mm", description: "Extra roomy" },
+    { value: "G", label: "G Series", range: "57-60mm", description: "Ultra roomy" },
+    { value: "H", label: "H Series", range: "60mm+", description: "Maximum" },
+  ];
+
+  const lengthCategories = [
+    { value: "1", label: "1 Series", range: "160mm", description: "Shorter" },
+    { value: "3", label: "3 Series", range: "170mm", description: "Standard" },
+    { value: "5", label: "5 Series", range: "180mm", description: "Longer" },
   ];
 
   const materialOptions = [
@@ -189,36 +208,81 @@ export default function Products() {
                 Product Configuration
               </h3>
               
-              {/* Size Selection */}
+              {/* Width Category Selection */}
               <div className="mb-8">
                 <Label className="text-sm font-medium text-neutral mb-4 block">
-                  Size Category
+                  Width Category (Girth)
                 </Label>
                 <RadioGroup
-                  value={selectedConfig.size}
+                  value={selectedConfig.widthCategory}
                   onValueChange={(value) =>
-                    setSelectedConfig({ ...selectedConfig, size: value })
+                    setSelectedConfig({ ...selectedConfig, widthCategory: value })
                   }
                 >
-                  <div className="grid grid-cols-3 gap-3">
-                    {sizeOptions.map((option) => (
+                  <div className="grid grid-cols-4 gap-2">
+                    {widthCategories.map((option) => (
                       <div key={option.value} className="relative">
                         <RadioGroupItem
                           value={option.value}
-                          id={option.value}
+                          id={`width-${option.value}`}
                           className="peer sr-only"
                         />
                         <Label
-                          htmlFor={option.value}
-                          className={`p-4 border-2 rounded-xl text-center cursor-pointer transition-colors block ${
-                            selectedConfig.size === option.value
+                          htmlFor={`width-${option.value}`}
+                          className={`p-3 border-2 rounded-xl text-center cursor-pointer transition-colors block ${
+                            selectedConfig.widthCategory === option.value
                               ? "border-primary bg-primary/5"
                               : "border-gray-200 hover:border-primary"
                           }`}
                         >
-                          <div className="font-medium">{option.label}</div>
-                          <div className="text-xs text-gray-500 mt-1">
+                          <div className="font-bold text-lg">{option.value}</div>
+                          <div className="text-xs text-gray-600 mt-1">
                             {option.range}
+                          </div>
+                          <div className="text-xs text-gray-500">
+                            {option.description}
+                          </div>
+                        </Label>
+                      </div>
+                    ))}
+                  </div>
+                </RadioGroup>
+              </div>
+
+              {/* Length Category Selection */}
+              <div className="mb-8">
+                <Label className="text-sm font-medium text-neutral mb-4 block">
+                  Length Category
+                </Label>
+                <RadioGroup
+                  value={selectedConfig.lengthCategory}
+                  onValueChange={(value) =>
+                    setSelectedConfig({ ...selectedConfig, lengthCategory: value })
+                  }
+                >
+                  <div className="grid grid-cols-3 gap-3">
+                    {lengthCategories.map((option) => (
+                      <div key={option.value} className="relative">
+                        <RadioGroupItem
+                          value={option.value}
+                          id={`length-${option.value}`}
+                          className="peer sr-only"
+                        />
+                        <Label
+                          htmlFor={`length-${option.value}`}
+                          className={`p-4 border-2 rounded-xl text-center cursor-pointer transition-colors block ${
+                            selectedConfig.lengthCategory === option.value
+                              ? "border-primary bg-primary/5"
+                              : "border-gray-200 hover:border-primary"
+                          }`}
+                        >
+                          <div className="font-bold text-lg">{option.value}</div>
+                          <div className="text-sm font-medium">{option.label}</div>
+                          <div className="text-xs text-gray-600 mt-1">
+                            {option.range}
+                          </div>
+                          <div className="text-xs text-gray-500">
+                            {option.description}
                           </div>
                         </Label>
                       </div>
