@@ -158,6 +158,7 @@ export function MedicineWheelLogo({
         textAnchor="middle" 
         className="fill-current text-foreground font-bold text-sm"
         fontSize="14"
+        fontFamily="Cinzel, serif"
       >
         fluck
       </text>

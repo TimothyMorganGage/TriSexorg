@@ -5,6 +5,12 @@ export default {
   content: ["./client/index.html", "./client/src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
+      fontFamily: {
+        'cinzel': ['Cinzel', 'serif'],
+        'coolvetica': ['Coolvetica', 'sans-serif'],
+        'sans': ['Coolvetica', 'ui-sans-serif', 'system-ui'],
+        'serif': ['Cinzel', 'ui-serif', 'Georgia'],
+      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
