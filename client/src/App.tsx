@@ -23,6 +23,9 @@ import GoodPeople from "@/pages/good-people";
 import AnatomyScanning from "@/pages/anatomy-scanning";
 import FourDSTIIntervention from "@/pages/4d-sti-intervention";
 import DomainPurchase from "@/pages/domain-purchase";
+import SocialIntegration from "@/pages/social-integration";
+import MetaPlatforms from "@/pages/meta-platforms";
+import EconomicImpact from "@/pages/economic-impact";
 import { TabNavigation } from "@/components/TabNavigation";
 
 function Router() {
@@ -43,6 +46,9 @@ function Router() {
           <Route path="/anatomy-scanning" component={AnatomyScanning} />
           <Route path="/4d-sti-intervention" component={FourDSTIIntervention} />
           <Route path="/domain-purchase" component={DomainPurchase} />
+          <Route path="/social-integration" component={SocialIntegration} />
+          <Route path="/meta-platforms" component={MetaPlatforms} />
+          <Route path="/economic-impact" component={EconomicImpact} />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
           <Route component={NotFound} />

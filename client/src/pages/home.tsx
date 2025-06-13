@@ -6,7 +6,8 @@ import { MedicineWheelLogo } from "@/components/MedicineWheelLogo";
 import { 
   ShieldCheck, Leaf, Heart, Box, CheckCircle, 
   Printer, Truck, Hospital, UserCheck, Store, 
-  Building, Play, Ruler, Droplets, Palette, TestTube
+  Building, Play, Ruler, Droplets, Palette, TestTube,
+  Coins, Share2
 } from "lucide-react";
 
 export default function Home() {
@@ -90,16 +91,24 @@ export default function Home() {
                   <TestTube className="w-4 h-4 mr-1" />
                   3D Scanning
                 </Badge>
+                <Badge variant="secondary" className="bg-cyan-100 text-cyan-800 px-3 py-1">
+                  <Heart className="w-4 h-4 mr-1" />
+                  DALY Tracking
+                </Badge>
+                <Badge variant="secondary" className="bg-yellow-100 text-yellow-800 px-3 py-1">
+                  <Coins className="w-4 h-4 mr-1" />
+                  Stablecoin Dividends
+                </Badge>
               </div>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-center lg:justify-start">
                 <Link href="/domain-purchase">
-                  <Button size="lg" className="bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white shadow-lg">
+                  <Button size="lg" className="bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white shadow-lg w-full">
                     <ShieldCheck className="mr-2 h-5 w-5" />
                     Register fluck.wtf
                   </Button>
                 </Link>
                 <Link href="/products">
-                  <Button size="lg" className="bg-accent hover:bg-accent/90 text-neutral">
+                  <Button size="lg" className="bg-accent hover:bg-accent/90 text-neutral w-full">
                     <Ruler className="mr-2 h-5 w-5" />
                     MyONE Custom Sizing
                   </Button>
@@ -108,7 +117,7 @@ export default function Home() {
                   <Button 
                     size="lg" 
                     variant="outline" 
-                    className="bg-blue-500/20 backdrop-blur-sm text-white border-blue-300/30 hover:bg-blue-500/30"
+                    className="bg-blue-500/20 backdrop-blur-sm text-white border-blue-300/30 hover:bg-blue-500/30 w-full"
                   >
                     <Droplets className="mr-2 h-4 w-4" />
                     4D STI System
@@ -118,10 +127,30 @@ export default function Home() {
                   <Button 
                     size="lg" 
                     variant="outline" 
-                    className="bg-white/10 backdrop-blur-sm text-white border-white/20 hover:bg-white/20"
+                    className="bg-white/10 backdrop-blur-sm text-white border-white/20 hover:bg-white/20 w-full"
                   >
                     <TestTube className="mr-2 h-4 w-4" />
                     3D Scanning
+                  </Button>
+                </Link>
+                <Link href="/economic-impact">
+                  <Button 
+                    size="lg" 
+                    variant="outline" 
+                    className="bg-gradient-to-r from-yellow-500/20 to-green-500/20 backdrop-blur-sm text-white border-yellow-300/30 hover:bg-yellow-500/30 w-full"
+                  >
+                    <Heart className="mr-2 h-4 w-4" />
+                    DALY Dashboard
+                  </Button>
+                </Link>
+                <Link href="/social-integration">
+                  <Button 
+                    size="lg" 
+                    variant="outline" 
+                    className="bg-purple-500/20 backdrop-blur-sm text-white border-purple-300/30 hover:bg-purple-500/30 w-full"
+                  >
+                    <Share2 className="mr-2 h-4 w-4" />
+                    Social Media
                   </Button>
                 </Link>
               </div>
