@@ -92,6 +92,12 @@ export default function Home() {
                 </Badge>
               </div>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                <Link href="/domain-purchase">
+                  <Button size="lg" className="bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white shadow-lg">
+                    <ShieldCheck className="mr-2 h-5 w-5" />
+                    Register fluck.wtf
+                  </Button>
+                </Link>
                 <Link href="/products">
                   <Button size="lg" className="bg-accent hover:bg-accent/90 text-neutral">
                     <Ruler className="mr-2 h-5 w-5" />

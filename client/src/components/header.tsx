@@ -14,6 +14,7 @@ export function Header() {
     { name: "Education", href: "/education" },
     { name: "Clinics", href: "/clinics" },
     { name: "Partnership", href: "/partnership" },
+    { name: "Register Domain", href: "/domain-purchase" },
   ];
 
   const isActive = (path: string) => location === path;
