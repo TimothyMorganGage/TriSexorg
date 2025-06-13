@@ -30,12 +30,12 @@ export default function Home() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="text-center lg:text-left">
               <h1 className="text-4xl lg:text-6xl font-bold leading-tight mb-6">
-                Personalized Protection for{" "}
-                <span className="text-accent">Everyone</span>
+                <span className="text-accent">fluck</span> Protection for{" "}
+                <span className="block">Every Body & Anatomy</span>
               </h1>
               <p className="text-xl lg:text-2xl text-blue-100 mb-8 leading-relaxed">
-                3D-printed custom-fit protection made from recycled ocean plastic and natural 
-                materials. Designed inclusively for all bodies and relationships.
+                Custom-fit protection for penis (4.5-11.5"), vaginal, anal, and intersex anatomy. 
+                Made from recycled ocean plastic with multilingual 2SLGBTIQ+ terminology support.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <Link href="/products">
