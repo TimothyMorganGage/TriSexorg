@@ -34,7 +34,6 @@ interface TutorialStep {
   description: string;
   component: "gboard" | "stories" | "mentor" | "analytics" | "completion";
   objectives: string[];
-  xpReward: number;
   estimatedTime: number;
   gboardFeatures?: string[];
   practicePrompts?: string[];
@@ -45,7 +44,6 @@ interface TutorialStep {
 interface OnboardingProgress {
   currentStep: number;
   completedSteps: string[];
-  totalXP: number;
   tutorialStarted: boolean;
   gboardConnected: boolean;
   firstStoryCompleted: boolean;
