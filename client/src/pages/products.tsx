@@ -177,7 +177,8 @@ export default function Products() {
     { value: "12", label: "12\"", range: "12 inches", description: "XXXL" },
     { value: "13", label: "13\"", range: "13 inches", description: "Exceptional" },
     { value: "14", label: "14\"", range: "14 inches", description: "Extraordinary" },
-    { value: "15", label: "15\"", range: "15 inches", description: "Maximum" },
+    { value: "15", label: "15\"", range: "15 inches", description: "Extraordinary" },
+    { value: "16", label: "16\"", range: "16 inches", description: "Maximum" },
   ];
 
   const materialOptions = [
@@ -296,7 +297,7 @@ export default function Products() {
                     setSelectedConfig({ ...selectedConfig, lengthCategory: value })
                   }
                 >
-                  <div className="grid grid-cols-5 gap-2">
+                  <div className="grid grid-cols-4 gap-2">
                     {lengthCategories.map((option) => (
                       <div key={option.value} className="relative">
                         <RadioGroupItem
@@ -359,14 +360,14 @@ export default function Products() {
                           })
                         }
                         min={1}
-                        max={15}
+                        max={16}
                         step={0.25}
                         className="w-full"
                       />
                       <div className="flex justify-between text-xs text-gray-500">
                         <span>1"</span>
                         <span className="font-medium">{selectedConfig.customMeasurements?.length || 6}"</span>
-                        <span>15"</span>
+                        <span>16"</span>
                       </div>
                     </div>
                   </div>
