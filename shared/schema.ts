@@ -1,4 +1,4 @@
-import { pgTable, text, serial, integer, boolean, timestamp, decimal } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, integer, boolean, timestamp, decimal, date } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -472,3 +472,93 @@ export type MatchingPreferences = typeof matchingPreferences.$inferSelect;
 
 export type InsertMatch = z.infer<typeof insertMatchSchema>;
 export type Match = typeof matches.$inferSelect;
+
+// Financial Management Tables
+export const financialRecords = pgTable("financial_records", {
+  id: serial("id").primaryKey(),
+  date: text("date").notNull(),
+  category: text("category").notNull(),
+  description: text("description").notNull(),
+  amount: decimal("amount", { precision: 10, scale: 2 }).notNull(),
+  type: text("type").notNull(), // "income" or "expense"
+  status: text("status").notNull().default("pending"), // "confirmed", "pending", "projected"
+  transactionHash: text("transaction_hash"),
+  approvedBy: integer("approved_by"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const budgetItems = pgTable("budget_items", {
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  description: text("description").notNull(),
+  category: text("category").notNull(),
+  requestedAmount: decimal("requested_amount", { precision: 10, scale: 2 }).notNull(),
+  allocatedAmount: decimal("allocated_amount", { precision: 10, scale: 2 }).default("0").notNull(),
+  votes: integer("votes").default(0).notNull(),
+  priority: text("priority").notNull().default("medium"), // "high", "medium", "low"
+  status: text("status").notNull().default("voting"), // "voting", "approved", "funded", "completed"
+  proposedBy: text("proposed_by").notNull(),
+  deadline: text("deadline").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const budgetVotes = pgTable("budget_votes", {
+  id: serial("id").primaryKey(),
+  budgetItemId: integer("budget_item_id").references(() => budgetItems.id).notNull(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  voteType: text("vote_type").notNull(), // "for", "against", "abstain"
+  votingPower: integer("voting_power").default(1).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const communityDividends = pgTable("community_dividends", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  amount: decimal("amount", { precision: 10, scale: 2 }).notNull(),
+  period: text("period").notNull(), // "2024-Q4", "2024-12", etc.
+  contributionHours: decimal("contribution_hours", { precision: 8, scale: 2 }).default("0").notNull(),
+  equityMultiplier: decimal("equity_multiplier", { precision: 4, scale: 2 }).default("1.0").notNull(),
+  status: text("status").notNull().default("pending"), // "pending", "paid", "cancelled"
+  paidAt: timestamp("paid_at"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+// Schema validation
+export const insertFinancialRecordSchema = createInsertSchema(financialRecords).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertBudgetItemSchema = createInsertSchema(budgetItems).omit({
+  id: true,
+  votes: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertBudgetVoteSchema = createInsertSchema(budgetVotes).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertCommunityDividendSchema = createInsertSchema(communityDividends).omit({
+  id: true,
+  paidAt: true,
+  createdAt: true,
+});
+
+// Types
+export type InsertFinancialRecord = z.infer<typeof insertFinancialRecordSchema>;
+export type FinancialRecord = typeof financialRecords.$inferSelect;
+
+export type InsertBudgetItem = z.infer<typeof insertBudgetItemSchema>;
+export type BudgetItem = typeof budgetItems.$inferSelect;
+
+export type InsertBudgetVote = z.infer<typeof insertBudgetVoteSchema>;
+export type BudgetVote = typeof budgetVotes.$inferSelect;
+
+export type InsertCommunityDividend = z.infer<typeof insertCommunityDividendSchema>;
+export type CommunityDividend = typeof communityDividends.$inferSelect;

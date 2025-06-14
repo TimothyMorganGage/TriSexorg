@@ -51,6 +51,23 @@ export interface IStorage {
     monthlyOrders: number;
     completedOrders: number;
   }>;
+
+  // Financial Management methods
+  getFinancialRecords(): Promise<FinancialRecord[]>;
+  getFinancialRecordsByPeriod(period: string): Promise<FinancialRecord[]>;
+  createFinancialRecord(record: InsertFinancialRecord): Promise<FinancialRecord>;
+  
+  getBudgetItems(): Promise<BudgetItem[]>;
+  getBudgetItem(id: number): Promise<BudgetItem | undefined>;
+  createBudgetItem(item: InsertBudgetItem): Promise<BudgetItem>;
+  updateBudgetItemStatus(id: number, status: string): Promise<BudgetItem | undefined>;
+  
+  getBudgetVotes(budgetItemId: number): Promise<BudgetVote[]>;
+  createBudgetVote(vote: InsertBudgetVote): Promise<BudgetVote>;
+  
+  getCommunityDividends(): Promise<CommunityDividend[]>;
+  getCommunityDividendsByUser(userId: number): Promise<CommunityDividend[]>;
+  createCommunityDividend(dividend: InsertCommunityDividend): Promise<CommunityDividend>;
 }
 
 export class MemStorage implements IStorage {

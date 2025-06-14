@@ -32,6 +32,7 @@ import PeerMentor from "@/pages/peer-mentor";
 import Analytics from "@/pages/analytics";
 import InteractiveStories from "@/pages/interactive-stories";
 import Newsletter from "@/pages/newsletter";
+import OpenBooks from "@/pages/open-books";
 import { TabNavigation } from "@/components/TabNavigation";
 
 function Router() {
@@ -61,6 +62,7 @@ function Router() {
           <Route path="/analytics" component={Analytics} />
           <Route path="/interactive-stories" component={InteractiveStories} />
           <Route path="/newsletter" component={Newsletter} />
+          <Route path="/open-books" component={OpenBooks} />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
           <Route component={NotFound} />
