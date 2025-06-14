@@ -12,15 +12,11 @@ import {
   Brain,
   Heart,
   Users,
-  Star,
   CheckCircle,
   ArrowRight,
   ArrowLeft,
   X,
   Lightbulb,
-  Target,
-  Award,
-  Zap,
   Volume2,
   Hand,
   Eye,
@@ -54,7 +50,7 @@ interface OnboardingProgress {
 interface OnboardingTutorialProps {
   isOpen: boolean;
   onClose: () => void;
-  onComplete: (progress: OnboardingProgress) => void;
+  onComplete: () => void;
 }
 
 export function OnboardingTutorial({ isOpen, onClose, onComplete }: OnboardingTutorialProps) {
@@ -62,7 +58,6 @@ export function OnboardingTutorial({ isOpen, onClose, onComplete }: OnboardingTu
   const [progress, setProgress] = useState<OnboardingProgress>({
     currentStep: 0,
     completedSteps: [],
-    totalXP: 0,
     tutorialStarted: false,
     gboardConnected: false,
     firstStoryCompleted: false,
@@ -83,7 +78,6 @@ export function OnboardingTutorial({ isOpen, onClose, onComplete }: OnboardingTu
         "Learn about our cultural wisdom approach",
         "See how technology supports human connection"
       ],
-      xpReward: 50,
       estimatedTime: 3,
       culturalFocus: ["Indigenous Wisdom", "Reproductive Justice", "Community Healing"],
       accessibilityTips: [
@@ -104,7 +98,6 @@ export function OnboardingTutorial({ isOpen, onClose, onComplete }: OnboardingTu
         "Test voice input for anatomy terms",
         "Explore emoji options for diverse relationships"
       ],
-      xpReward: 100,
       estimatedTime: 5,
       gboardFeatures: [
         "Inclusive Language Suggestions",
@@ -118,79 +111,64 @@ export function OnboardingTutorial({ isOpen, onClose, onComplete }: OnboardingTu
         "Try 'reproductive justice' for cultural context",
         "Use voice input: 'vulva health education'",
         "Explore relationship emoji options",
-        "Practice anatomy terms in your preferred language"
+        "Practice typing in your preferred language"
       ],
       accessibilityTips: [
-        "Voice input works with screen readers",
-        "Haptic feedback for typing confirmation",
-        "Large key mode available",
-        "Swipe gestures for faster navigation"
+        "Voice input works in all supported languages",
+        "Haptic feedback available for typing assistance",
+        "Large key mode for better visibility",
+        "Switch access compatible"
       ]
     },
     {
-      id: "story-introduction",
-      title: "Interactive Story Learning System",
-      description: "Experience cultural wisdom through interactive stories from Indigenous elders, curanderas, and traditional healers worldwide.",
+      id: "interactive-stories",
+      title: "Cultural Stories & Wisdom Learning",
+      description: "Explore interactive stories that honor diverse cultural perspectives on sexual health, relationships, and community wisdom.",
       component: "stories",
       objectives: [
-        "Start your first cultural wisdom story",
-        "Make meaningful choices in story progression",
-        "Earn XP and cultural competency badges",
-        "Connect with community through story discussions"
+        "Read your first cultural wisdom story",
+        "Practice making choices in interactive narratives",
+        "Connect with diverse perspectives on health",
+        "Learn about inclusive terminology"
       ],
-      xpReward: 150,
       estimatedTime: 8,
-      culturalFocus: [
-        "Medicine Wheel Teachings",
-        "Curanderismo Practices", 
-        "African Traditional Healing",
-        "Ayurvedic Wisdom"
-      ],
+      culturalFocus: ["Indigenous Teachings", "Ubuntu Philosophy", "Reproductive Justice", "Community Care"],
       accessibilityTips: [
-        "Audio narration available for all stories",
+        "Stories available in audio format",
         "Text can be enlarged for better reading",
-        "Story choices clearly marked and numbered",
-        "Progress saved automatically"
+        "Voice navigation through story choices",
+        "Alternative text for all visual elements"
       ]
     },
     {
-      id: "peer-mentor-matching",
-      title: "Peer Mentor Network Connection",
-      description: "Connect with peer mentors using our intelligence framework matching system that values infinite, multicultural, multigenerational, and racial & ethnic intelligence.",
+      id: "peer-mentor",
+      title: "Connect with Peer Mentors",
+      description: "Join our time banking community where you can both give and receive support from peers who understand your health journey.",
       component: "mentor",
       objectives: [
-        "Complete cultural background profile",
-        "Set intelligence framework preferences",
-        "Connect with your first peer mentor",
-        "Understand time banking and stablecoin rewards"
+        "Understand the peer mentor matching system",
+        "Learn about time banking for mutual support",
+        "See how to request help or offer assistance",
+        "Explore communication preferences"
       ],
-      xpReward: 125,
       estimatedTime: 6,
-      culturalFocus: [
-        "Cross-cultural mentorship",
-        "Generational wisdom exchange",
-        "Community healing practices",
-        "Equitable compensation systems"
-      ],
       accessibilityTips: [
-        "Video calls with live captions",
-        "Text-based mentoring available",
-        "Translation services provided",
-        "Flexible scheduling accommodations"
+        "Video calls include ASL interpretation options",
+        "Text-only communication available",
+        "Audio calls with transcription",
+        "Flexible scheduling accommodates different needs"
       ]
     },
     {
       id: "analytics-dashboard",
-      title: "Personal Learning Analytics",
-      description: "Track your health equity journey, cultural competency growth, and community impact through comprehensive analytics.",
+      title: "Your Health Journey Analytics",
+      description: "Discover insights about your learning progress, cultural competency growth, and community engagement through respectful data visualization.",
       component: "analytics",
       objectives: [
-        "Explore your personal learning dashboard",
-        "Understand health equity metrics",
+        "Understand your learning progress tracking",
         "Review cultural competency progress",
         "See community impact measurements"
       ],
-      xpReward: 75,
       estimatedTime: 4,
       accessibilityTips: [
         "Charts include text descriptions",
@@ -202,251 +180,230 @@ export function OnboardingTutorial({ isOpen, onClose, onComplete }: OnboardingTu
     {
       id: "completion",
       title: "Welcome to Your Health Equity Journey!",
-      description: "You've completed the onboarding tutorial and earned your first badges. Your journey toward inclusive health and cultural wisdom begins now.",
+      description: "You've completed the onboarding tutorial and are ready to begin. Your journey toward inclusive health and cultural wisdom starts now.",
       component: "completion",
       objectives: [
         "Celebrate completing the tutorial",
-        "Receive welcome badges and XP",
         "Set personal learning goals",
         "Join the community discussion"
       ],
-      xpReward: 200,
       estimatedTime: 2
     }
   ];
 
-  const simulateGboardConnection = () => {
-    setGboardActive(true);
-    setProgress(prev => ({ ...prev, gboardConnected: true }));
-    
-    // Simulate haptic feedback
-    if ('vibrate' in navigator) {
-      navigator.vibrate([100, 50, 100]);
-    }
-    
-    // Simulate typing suggestions appearing
-    setTimeout(() => {
-      if (practiceText.includes("sexual")) {
-        // Show inclusive language suggestions
-        console.log("Gboard suggestion: sexual creativity, sexual wellness, sexual autonomy");
-      }
-    }, 1000);
-  };
+  const handleStepComplete = () => {
+    const currentStepData = tutorialSteps[currentStep];
+    setProgress(prev => ({
+      ...prev,
+      completedSteps: [...prev.completedSteps, currentStepData.id]
+    }));
 
-  const completeStep = () => {
-    const step = tutorialSteps[currentStep];
-    const newProgress = {
-      ...progress,
-      completedSteps: [...progress.completedSteps, step.id],
-      totalXP: progress.totalXP + step.xpReward,
-      currentStep: currentStep + 1
-    };
-    
-    setProgress(newProgress);
-    
     if (currentStep < tutorialSteps.length - 1) {
       setCurrentStep(currentStep + 1);
     } else {
-      onComplete(newProgress);
+      onComplete();
       onClose();
     }
   };
 
-  const calculateOverallProgress = () => {
-    return (progress.completedSteps.length / tutorialSteps.length) * 100;
+  const handlePrevStep = () => {
+    if (currentStep > 0) {
+      setCurrentStep(currentStep - 1);
+    }
   };
+
+  const handleSkipStep = () => {
+    handleStepComplete();
+  };
+
+  const currentStepData = tutorialSteps[currentStep];
+  const progressPercentage = ((currentStep + 1) / tutorialSteps.length) * 100;
 
   if (!isOpen) return null;
 
-  const currentTutorialStep = tutorialSteps[currentStep];
-
   return (
-    <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-      <Card className="w-full max-w-4xl max-h-[90vh] overflow-y-auto">
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <div>
-              <CardTitle className="flex items-center">
-                <Lightbulb className="mr-2 h-6 w-6 text-primary" />
-                {currentTutorialStep.title}
-              </CardTitle>
-              <p className="text-muted-foreground mt-1">
-                Step {currentStep + 1} of {tutorialSteps.length} • {currentTutorialStep.estimatedTime} min
-              </p>
-            </div>
-            <Button variant="ghost" size="sm" onClick={onClose}>
-              <X className="h-4 w-4" />
-            </Button>
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+      <Card className="w-full max-w-4xl max-h-[90vh] overflow-hidden">
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
+          <div className="space-y-1">
+            <CardTitle className="text-2xl font-recoleta">
+              {currentStepData.title}
+            </CardTitle>
+            <p className="text-sm text-muted-foreground">
+              Step {currentStep + 1} of {tutorialSteps.length} • ~{currentStepData.estimatedTime} minutes
+            </p>
           </div>
-          
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={onClose}
+            className="h-8 w-8"
+          >
+            <X className="h-4 w-4" />
+          </Button>
+        </CardHeader>
+
+        <CardContent className="space-y-6 overflow-y-auto max-h-[calc(90vh-200px)]">
           <div className="space-y-2">
             <div className="flex justify-between text-sm">
               <span>Tutorial Progress</span>
-              <span>{Math.round(calculateOverallProgress())}% complete</span>
+              <span>{Math.round(progressPercentage)}%</span>
             </div>
-            <Progress value={calculateOverallProgress()} className="h-2" />
-          </div>
-        </CardHeader>
-
-        <CardContent className="space-y-6">
-          {/* Step Description */}
-          <div className="text-center">
-            <p className="text-lg">{currentTutorialStep.description}</p>
+            <Progress value={progressPercentage} className="w-full" />
           </div>
 
-          {/* Step-specific Content */}
-          {currentTutorialStep.component === "gboard" && (
+          <div className="prose max-w-none">
+            <p className="text-base leading-relaxed">{currentStepData.description}</p>
+          </div>
+
+          {currentStepData.objectives && (
+            <div className="bg-blue-50 p-4 rounded-lg">
+              <h4 className="font-medium mb-3 flex items-center">
+                <Lightbulb className="h-4 w-4 mr-2" />
+                Learning Objectives
+              </h4>
+              <ul className="space-y-2">
+                {currentStepData.objectives.map((objective, index) => (
+                  <li key={index} className="flex items-start">
+                    <CheckCircle className="h-4 w-4 text-green-600 mr-2 mt-0.5 flex-shrink-0" />
+                    <span className="text-sm">{objective}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* Gboard Tutorial Component */}
+          {currentStepData.component === "gboard" && (
             <div className="space-y-6">
-              <Card className="bg-gradient-to-r from-purple-50 to-blue-50 dark:from-purple-900/20 dark:to-blue-900/20">
-                <CardHeader>
-                  <CardTitle className="flex items-center text-lg">
-                    <Keyboard className="mr-2 h-5 w-5 text-purple-600" />
-                    <Smartphone className="mr-2 h-5 w-5 text-blue-600" />
-                    Gboard Integration Features
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    {currentTutorialStep.gboardFeatures?.map((feature, index) => (
-                      <div key={index} className="flex items-center space-x-2">
-                        <CheckCircle className="h-4 w-4 text-green-500" />
-                        <span className="text-sm">{feature}</span>
-                      </div>
-                    ))}
-                  </div>
-                  
-                  <Button 
-                    onClick={simulateGboardConnection}
-                    className="w-full mt-4 bg-gradient-to-r from-purple-600 to-blue-600"
-                    disabled={gboardActive}
-                  >
-                    {gboardActive ? (
-                      <>
-                        <CheckCircle className="mr-2 h-4 w-4" />
-                        Gboard Connected!
-                      </>
-                    ) : (
-                      <>
-                        <Hand className="mr-2 h-4 w-4" />
-                        Connect Gboard
-                      </>
-                    )}
-                  </Button>
-                </CardContent>
-              </Card>
-
-              {gboardActive && (
+              <div className="grid md:grid-cols-2 gap-4">
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-lg">Practice Typing with Inclusive Suggestions</CardTitle>
+                    <CardTitle className="text-lg flex items-center">
+                      <Keyboard className="h-5 w-5 mr-2" />
+                      Gboard Features
+                    </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="space-y-4">
-                      <Input
-                        placeholder="Start typing to see inclusive language suggestions..."
-                        value={practiceText}
-                        onChange={(e) => setPracticeText(e.target.value)}
-                        className="text-lg"
-                      />
-                      
-                      <div className="space-y-2">
-                        <h4 className="font-medium">Try these practice prompts:</h4>
-                        <div className="grid gap-2">
-                          {currentTutorialStep.practicePrompts?.map((prompt, index) => (
-                            <div key={index} className="flex items-start space-x-2 text-sm bg-muted/30 p-2 rounded">
-                              <Target className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
-                              <span>{prompt}</span>
-                            </div>
-                          ))}
+                    <div className="space-y-3">
+                      {currentStepData.gboardFeatures?.map((feature, index) => (
+                        <div key={index} className="flex items-center">
+                          <CheckCircle className="h-4 w-4 text-green-600 mr-2" />
+                          <span className="text-sm">{feature}</span>
                         </div>
-                      </div>
+                      ))}
                     </div>
                   </CardContent>
                 </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="text-lg flex items-center">
+                      <Hand className="h-5 w-5 mr-2" />
+                      Practice Typing
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-3">
+                      <Input
+                        placeholder="Practice typing inclusive terminology here..."
+                        value={practiceText}
+                        onChange={(e) => setPracticeText(e.target.value)}
+                        className="mb-2"
+                      />
+                      <Button 
+                        onClick={() => setGboardActive(!gboardActive)}
+                        variant={gboardActive ? "default" : "outline"}
+                        className="w-full"
+                      >
+                        <Volume2 className="h-4 w-4 mr-2" />
+                        {gboardActive ? "Voice Input Active" : "Enable Voice Input"}
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {currentStepData.practicePrompts && (
+                <div className="bg-purple-50 p-4 rounded-lg">
+                  <h4 className="font-medium mb-3">Try These Practice Prompts:</h4>
+                  <div className="space-y-2">
+                    {currentStepData.practicePrompts.map((prompt, index) => (
+                      <div key={index} className="text-sm bg-white p-2 rounded border">
+                        {prompt}
+                      </div>
+                    ))}
+                  </div>
+                </div>
               )}
             </div>
           )}
 
-          {currentTutorialStep.component === "stories" && (
-            <div className="space-y-6">
+          {/* Stories Tutorial Component */}
+          {currentStepData.component === "stories" && (
+            <div className="space-y-4">
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center">
-                    <Heart className="mr-2 h-5 w-5 text-primary" />
-                    Featured Cultural Wisdom Stories
+                    <Brain className="h-5 w-5 mr-2" />
+                    Cultural Wisdom Stories
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    {currentTutorialStep.culturalFocus?.map((culture, index) => (
-                      <div key={index} className="p-4 bg-muted/30 rounded-lg">
-                        <h4 className="font-medium mb-2">{culture}</h4>
-                        <p className="text-sm text-muted-foreground mb-3">
-                          Learn from traditional healers and cultural wisdom keepers
-                        </p>
-                        <Badge variant="secondary">
-                          <Star className="w-3 h-3 mr-1" />
-                          Interactive Learning
-                        </Badge>
-                      </div>
-                    ))}
-                  </div>
-                  
-                  <div className="mt-4 p-4 bg-primary/10 rounded-lg">
-                    <div className="flex items-center mb-2">
-                      <Play className="h-4 w-4 text-primary mr-2" />
-                      <span className="font-medium">Ready to start your first story?</span>
-                    </div>
-                    <p className="text-sm text-muted-foreground">
-                      Choose "Journey Through the Medicine Wheel" to begin learning about Indigenous approaches to holistic health.
+                  <div className="space-y-4">
+                    <p className="text-sm">
+                      Our interactive stories come from community elders, cultural practitioners, and 
+                      health advocates who share wisdom about sexual health through their cultural lens.
                     </p>
+                    
+                    {currentStepData.culturalFocus && (
+                      <div className="flex flex-wrap gap-2">
+                        {currentStepData.culturalFocus.map((focus, index) => (
+                          <Badge key={index} variant="secondary">
+                            {focus}
+                          </Badge>
+                        ))}
+                      </div>
+                    )}
+
+                    <Button className="w-full">
+                      <Play className="h-4 w-4 mr-2" />
+                      Start Your First Story: "Medicine Wheel Teachings"
+                    </Button>
                   </div>
                 </CardContent>
               </Card>
             </div>
           )}
 
-          {currentTutorialStep.component === "mentor" && (
-            <div className="space-y-6">
+          {/* Mentor Tutorial Component */}
+          {currentStepData.component === "mentor" && (
+            <div className="space-y-4">
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center">
-                    <Brain className="mr-2 h-5 w-5 text-purple-500" />
-                    Intelligence Framework Matching
+                    <Users className="h-5 w-5 mr-2" />
+                    Peer Mentor Network
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <div className="flex items-center space-x-2">
-                        <Zap className="h-4 w-4 text-purple-500" />
-                        <span className="font-medium text-sm">Infinite Intelligence</span>
-                      </div>
-                      <p className="text-xs text-muted-foreground">Collective wisdom and pattern recognition</p>
-                    </div>
+                  <div className="space-y-4">
+                    <p className="text-sm">
+                      Connect with peer mentors who understand your journey. Our time banking system 
+                      ensures mutual support where everyone both gives and receives help.
+                    </p>
                     
-                    <div className="space-y-2">
-                      <div className="flex items-center space-x-2">
-                        <Globe className="h-4 w-4 text-cyan-500" />
-                        <span className="font-medium text-sm">Multicultural Intelligence</span>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="text-center p-4 bg-blue-50 rounded-lg">
+                        <Heart className="h-8 w-8 mx-auto mb-2 text-blue-600" />
+                        <h4 className="font-medium">Give Support</h4>
+                        <p className="text-xs text-muted-foreground">Share your knowledge and experiences</p>
                       </div>
-                      <p className="text-xs text-muted-foreground">Cross-cultural understanding and healing</p>
-                    </div>
-                    
-                    <div className="space-y-2">
-                      <div className="flex items-center space-x-2">
-                        <Users className="h-4 w-4 text-green-500" />
-                        <span className="font-medium text-sm">Multigenerational Intelligence</span>
+                      <div className="text-center p-4 bg-green-50 rounded-lg">
+                        <Users className="h-8 w-8 mx-auto mb-2 text-green-600" />
+                        <h4 className="font-medium">Receive Support</h4>
+                        <p className="text-xs text-muted-foreground">Get help when you need it</p>
                       </div>
-                      <p className="text-xs text-muted-foreground">Wisdom across age groups and generations</p>
-                    </div>
-                    
-                    <div className="space-y-2">
-                      <div className="flex items-center space-x-2">
-                        <Heart className="h-4 w-4 text-amber-500" />
-                        <span className="font-medium text-sm">Racial & Ethnic Intelligence</span>
-                      </div>
-                      <p className="text-xs text-muted-foreground">Health equity and cultural competency</p>
                     </div>
                   </div>
                 </CardContent>
@@ -454,28 +411,35 @@ export function OnboardingTutorial({ isOpen, onClose, onComplete }: OnboardingTu
             </div>
           )}
 
-          {currentTutorialStep.component === "analytics" && (
-            <div className="space-y-6">
+          {/* Analytics Tutorial Component */}
+          {currentStepData.component === "analytics" && (
+            <div className="space-y-4">
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center">
-                    <Target className="mr-2 h-5 w-5 text-primary" />
-                    Your Learning Analytics Dashboard
+                    <Brain className="h-5 w-5 mr-2" />
+                    Learning Analytics
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="grid grid-cols-3 gap-4 text-center">
-                    <div>
-                      <p className="text-2xl font-bold text-primary">{progress.totalXP}</p>
-                      <p className="text-sm text-muted-foreground">XP Earned</p>
-                    </div>
-                    <div>
-                      <p className="text-2xl font-bold text-aquamarine">{progress.completedSteps.length}</p>
-                      <p className="text-sm text-muted-foreground">Steps Completed</p>
-                    </div>
-                    <div>
-                      <p className="text-2xl font-bold text-secondary">1</p>
-                      <p className="text-sm text-muted-foreground">Tutorial Level</p>
+                  <div className="space-y-4">
+                    <p className="text-sm">
+                      Track your growth in cultural competency, story completion, and community engagement 
+                      while maintaining complete privacy and control over your data.
+                    </p>
+                    
+                    <div className="space-y-3">
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm">Cultural Competency</span>
+                        <Badge variant="outline">Growing</Badge>
+                      </div>
+                      <Progress value={65} className="h-2" />
+                      
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm">Story Completion</span>
+                        <Badge variant="outline">Active</Badge>
+                      </div>
+                      <Progress value={30} className="h-2" />
                     </div>
                   </div>
                 </CardContent>
@@ -483,103 +447,68 @@ export function OnboardingTutorial({ isOpen, onClose, onComplete }: OnboardingTu
             </div>
           )}
 
-          {currentTutorialStep.component === "completion" && (
+          {/* Completion Component */}
+          {currentStepData.component === "completion" && (
             <div className="text-center space-y-6">
-              <div className="text-6xl">🎉</div>
-              <div>
-                <h3 className="text-2xl font-bold mb-2">Congratulations!</h3>
+              <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto">
+                <CheckCircle className="h-10 w-10 text-green-600" />
+              </div>
+              <div className="space-y-2">
+                <h3 className="text-xl font-semibold">Welcome to the Community!</h3>
                 <p className="text-muted-foreground">
-                  You've completed the fluck onboarding tutorial and earned {progress.totalXP} XP!
+                  You're now ready to explore fluck's inclusive health platform. Start with whatever feels most comfortable to you.
                 </p>
               </div>
-              
-              <Card>
-                <CardContent className="p-6">
-                  <h4 className="font-medium mb-4">Your Tutorial Achievements:</h4>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div className="flex items-center space-x-2">
-                      <Award className="h-5 w-5 text-yellow-500" />
-                      <span>Tutorial Completion Badge</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <Keyboard className="h-5 w-5 text-purple-500" />
-                      <span>Gboard Integration Master</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <Heart className="h-5 w-5 text-primary" />
-                      <span>Cultural Wisdom Seeker</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <Users className="h-5 w-5 text-aquamarine" />
-                      <span>Community Member</span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
             </div>
           )}
 
-          {/* Learning Objectives */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg">Learning Objectives</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-2">
-                {currentTutorialStep.objectives.map((objective, index) => (
-                  <div key={index} className="flex items-start space-x-2">
-                    <Target className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
-                    <span className="text-sm">{objective}</span>
-                  </div>
+          {currentStepData.accessibilityTips && (
+            <div className="bg-green-50 p-4 rounded-lg">
+              <h4 className="font-medium mb-3 flex items-center">
+                <Eye className="h-4 w-4 mr-2" />
+                Accessibility Features
+              </h4>
+              <ul className="space-y-1">
+                {currentStepData.accessibilityTips.map((tip, index) => (
+                  <li key={index} className="text-sm flex items-start">
+                    <CheckCircle className="h-4 w-4 text-green-600 mr-2 mt-0.5 flex-shrink-0" />
+                    {tip}
+                  </li>
                 ))}
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Accessibility Tips */}
-          {currentTutorialStep.accessibilityTips && (
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center text-lg">
-                  <Eye className="mr-2 h-5 w-5 text-green-600" />
-                  Accessibility Features
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-2">
-                  {currentTutorialStep.accessibilityTips.map((tip, index) => (
-                    <div key={index} className="flex items-start space-x-2">
-                      <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                      <span className="text-sm">{tip}</span>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          )}
-
-          {/* Navigation */}
-          <div className="flex justify-between items-center pt-6">
-            <Button 
-              variant="outline"
-              onClick={() => currentStep > 0 && setCurrentStep(currentStep - 1)}
-              disabled={currentStep === 0}
-            >
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Previous
-            </Button>
-            
-            <div className="flex items-center space-x-2">
-              <Star className="h-4 w-4 text-yellow-500" />
-              <span className="text-sm font-medium">+{currentTutorialStep.xpReward} XP</span>
+              </ul>
             </div>
-            
-            <Button onClick={completeStep}>
-              {currentStep === tutorialSteps.length - 1 ? "Complete Tutorial" : "Continue"}
-              <ArrowRight className="ml-2 h-4 w-4" />
+          )}
+        </CardContent>
+
+        <div className="flex justify-between p-6 border-t">
+          <Button
+            variant="outline"
+            onClick={handlePrevStep}
+            disabled={currentStep === 0}
+          >
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Previous
+          </Button>
+
+          <div className="flex space-x-2">
+            <Button
+              variant="ghost"
+              onClick={handleSkipStep}
+            >
+              Skip
+            </Button>
+            <Button onClick={handleStepComplete}>
+              {currentStep === tutorialSteps.length - 1 ? (
+                "Complete Tutorial"
+              ) : (
+                <>
+                  Next
+                  <ArrowRight className="h-4 w-4 ml-2" />
+                </>
+              )}
             </Button>
           </div>
-        </CardContent>
+        </div>
       </Card>
     </div>
   );

@@ -301,15 +301,15 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Gamified Learning Section */}
+      {/* Learning Resources Section */}
       <section className="py-20 bg-gradient-to-br from-purple-50 via-blue-50 to-cyan-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl lg:text-5xl font-bold text-neutral mb-6">
-              Interactive Learning Journey
+              Cultural Wisdom & Learning
             </h2>
             <p className="text-xl text-gray-600 mb-8">
-              Experience cultural wisdom through stories, connect with peer mentors, and track your health equity progress
+              Access cultural wisdom through stories, connect with peer mentors, and explore health equity resources
             </p>
             
             <Button 
@@ -318,7 +318,7 @@ export default function Home() {
               className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white shadow-lg"
             >
               <Lightbulb className="mr-2 h-5 w-5" />
-              Start Tutorial Journey
+              Start Learning Tutorial
             </Button>
           </div>
 
