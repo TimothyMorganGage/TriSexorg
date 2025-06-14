@@ -1,9 +1,14 @@
 import { 
   users, products, productConfigurations, orders, educationalContent, partnershipRequests,
+  financialRecords, budgetItems, budgetVotes, communityDividends,
   type User, type InsertUser, type Product, type InsertProduct,
   type ProductConfiguration, type InsertProductConfiguration,
   type Order, type InsertOrder, type EducationalContent, type InsertEducationalContent,
-  type PartnershipRequest, type InsertPartnershipRequest
+  type PartnershipRequest, type InsertPartnershipRequest,
+  type FinancialRecord, type InsertFinancialRecord,
+  type BudgetItem, type InsertBudgetItem,
+  type BudgetVote, type InsertBudgetVote,
+  type CommunityDividend, type InsertCommunityDividend
 } from "@shared/schema";
 
 export interface IStorage {
@@ -77,12 +82,20 @@ export class MemStorage implements IStorage {
   private orders: Map<number, Order>;
   private educationalContent: Map<number, EducationalContent>;
   private partnershipRequests: Map<number, PartnershipRequest>;
+  private financialRecords: Map<number, FinancialRecord>;
+  private budgetItems: Map<number, BudgetItem>;
+  private budgetVotes: Map<number, BudgetVote>;
+  private communityDividends: Map<number, CommunityDividend>;
   private currentUserId: number;
   private currentProductId: number;
   private currentConfigId: number;
   private currentOrderId: number;
   private currentContentId: number;
   private currentRequestId: number;
+  private currentFinancialRecordId: number;
+  private currentBudgetItemId: number;
+  private currentBudgetVoteId: number;
+  private currentCommunityDividendId: number;
 
   constructor() {
     this.users = new Map();
@@ -91,12 +104,20 @@ export class MemStorage implements IStorage {
     this.orders = new Map();
     this.educationalContent = new Map();
     this.partnershipRequests = new Map();
+    this.financialRecords = new Map();
+    this.budgetItems = new Map();
+    this.budgetVotes = new Map();
+    this.communityDividends = new Map();
     this.currentUserId = 1;
     this.currentProductId = 1;
     this.currentConfigId = 1;
     this.currentOrderId = 1;
     this.currentContentId = 1;
     this.currentRequestId = 1;
+    this.currentFinancialRecordId = 1;
+    this.currentBudgetItemId = 1;
+    this.currentBudgetVoteId = 1;
+    this.currentCommunityDividendId = 1;
 
     this.initializeData();
   }
@@ -415,6 +436,103 @@ export class MemStorage implements IStorage {
       }).length,
       completedOrders: orders.filter(order => order.status === 'delivered').length,
     };
+  }
+
+  // Financial Management methods
+  async getFinancialRecords(): Promise<FinancialRecord[]> {
+    return Array.from(this.financialRecords.values());
+  }
+
+  async getFinancialRecordsByPeriod(period: string): Promise<FinancialRecord[]> {
+    return Array.from(this.financialRecords.values()).filter(record => {
+      // Simple period matching - in real implementation would parse period more robustly
+      return record.date.includes(period);
+    });
+  }
+
+  async createFinancialRecord(insertRecord: InsertFinancialRecord): Promise<FinancialRecord> {
+    const id = this.currentFinancialRecordId++;
+    const record: FinancialRecord = { 
+      id, 
+      ...insertRecord,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
+    this.financialRecords.set(id, record);
+    return record;
+  }
+
+  async getBudgetItems(): Promise<BudgetItem[]> {
+    return Array.from(this.budgetItems.values());
+  }
+
+  async getBudgetItem(id: number): Promise<BudgetItem | undefined> {
+    return this.budgetItems.get(id);
+  }
+
+  async createBudgetItem(insertItem: InsertBudgetItem): Promise<BudgetItem> {
+    const id = this.currentBudgetItemId++;
+    const item: BudgetItem = { 
+      id, 
+      ...insertItem,
+      votes: 0,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
+    this.budgetItems.set(id, item);
+    return item;
+  }
+
+  async updateBudgetItemStatus(id: number, status: string): Promise<BudgetItem | undefined> {
+    const item = this.budgetItems.get(id);
+    if (item) {
+      const updatedItem = { ...item, status, updatedAt: new Date() };
+      this.budgetItems.set(id, updatedItem);
+      return updatedItem;
+    }
+    return undefined;
+  }
+
+  async getBudgetVotes(budgetItemId: number): Promise<BudgetVote[]> {
+    return Array.from(this.budgetVotes.values()).filter(vote => vote.budgetItemId === budgetItemId);
+  }
+
+  async createBudgetVote(insertVote: InsertBudgetVote): Promise<BudgetVote> {
+    const id = this.currentBudgetVoteId++;
+    const vote: BudgetVote = { 
+      id, 
+      ...insertVote,
+      createdAt: new Date()
+    };
+    this.budgetVotes.set(id, vote);
+    
+    // Update vote count on budget item
+    const budgetItem = this.budgetItems.get(insertVote.budgetItemId);
+    if (budgetItem) {
+      budgetItem.votes += insertVote.votingPower || 1;
+      this.budgetItems.set(insertVote.budgetItemId, budgetItem);
+    }
+    
+    return vote;
+  }
+
+  async getCommunityDividends(): Promise<CommunityDividend[]> {
+    return Array.from(this.communityDividends.values());
+  }
+
+  async getCommunityDividendsByUser(userId: number): Promise<CommunityDividend[]> {
+    return Array.from(this.communityDividends.values()).filter(dividend => dividend.userId === userId);
+  }
+
+  async createCommunityDividend(insertDividend: InsertCommunityDividend): Promise<CommunityDividend> {
+    const id = this.currentCommunityDividendId++;
+    const dividend: CommunityDividend = { 
+      id, 
+      ...insertDividend,
+      createdAt: new Date()
+    };
+    this.communityDividends.set(id, dividend);
+    return dividend;
   }
 }
 
