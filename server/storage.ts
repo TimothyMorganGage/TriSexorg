@@ -104,6 +104,12 @@ export class MemStorage implements IStorage {
   private currentBudgetItemId: number;
   private currentBudgetVoteId: number;
   private currentCommunityDividendId: number;
+  private clinicInventory: Map<number, any>;
+  private stockAlerts: Map<number, any>;
+  private restockOrders: Map<number, any>;
+  private currentInventoryId: number;
+  private currentAlertId: number;
+  private currentRestockOrderId: number;
 
   constructor() {
     this.users = new Map();
@@ -126,6 +132,12 @@ export class MemStorage implements IStorage {
     this.currentBudgetItemId = 1;
     this.currentBudgetVoteId = 1;
     this.currentCommunityDividendId = 1;
+    this.clinicInventory = new Map();
+    this.stockAlerts = new Map();
+    this.restockOrders = new Map();
+    this.currentInventoryId = 1;
+    this.currentAlertId = 1;
+    this.currentRestockOrderId = 1;
 
     this.initializeData();
   }
@@ -537,10 +549,249 @@ export class MemStorage implements IStorage {
     const dividend: CommunityDividend = { 
       id, 
       ...insertDividend,
-      createdAt: new Date()
+      createdAt: new Date(),
+      status: insertDividend.status || "pending",
+      contributionHours: insertDividend.contributionHours || "0",
+      equityMultiplier: insertDividend.equityMultiplier || "1.0",
+      paidAt: null
     };
     this.communityDividends.set(id, dividend);
     return dividend;
+  }
+
+  // Clinic Inventory Management methods
+  async getClinicInventory(): Promise<any[]> {
+    if (this.clinicInventory.size === 0) {
+      // Initialize sample inventory data
+      const sampleInventory = [
+        {
+          id: 1,
+          productId: 1,
+          productName: "Universal Recycled Plastic Protection - Size S",
+          category: "external_protection",
+          currentStock: 45,
+          minimumThreshold: 10,
+          maximumCapacity: 100,
+          unitCost: 29.99,
+          lastRestock: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
+          expirationDate: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString(),
+          batchNumber: "URP-2024-001",
+          supplier: "Sustainable Materials Co.",
+          location: "Storage Room A, Shelf 3",
+          status: "in_stock",
+          customConfiguration: {
+            lengthRange: "4-6 inches",
+            material: "Ocean Plastic + Hydrogel",
+            features: ["Antimicrobial coating", "Temperature responsive"]
+          }
+        },
+        {
+          id: 2,
+          productId: 1,
+          productName: "Universal Recycled Plastic Protection - Size M",
+          category: "external_protection",
+          currentStock: 8,
+          minimumThreshold: 15,
+          maximumCapacity: 100,
+          unitCost: 29.99,
+          lastRestock: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString(),
+          expirationDate: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString(),
+          batchNumber: "URP-2024-002",
+          supplier: "Sustainable Materials Co.",
+          location: "Storage Room A, Shelf 4",
+          status: "low_stock",
+          customConfiguration: {
+            lengthRange: "6-8 inches",
+            material: "Ocean Plastic + Hydrogel",
+            features: ["Antimicrobial coating", "Flexible walls"]
+          }
+        },
+        {
+          id: 3,
+          productId: 2,
+          productName: "Custom Lubricant - Plant-Based Formula",
+          category: "lubricants",
+          currentStock: 120,
+          minimumThreshold: 25,
+          maximumCapacity: 200,
+          unitCost: 15.99,
+          lastRestock: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+          expirationDate: new Date(Date.now() + 180 * 24 * 60 * 60 * 1000).toISOString(),
+          batchNumber: "LUB-PB-2024-015",
+          supplier: "Natural Health Solutions",
+          location: "Refrigerated Storage B",
+          status: "in_stock"
+        },
+        {
+          id: 4,
+          productId: 3,
+          productName: "4D STI Testing Kit - Comprehensive Panel",
+          category: "testing_kits",
+          currentStock: 0,
+          minimumThreshold: 5,
+          maximumCapacity: 50,
+          unitCost: 85.00,
+          lastRestock: new Date(Date.now() - 21 * 24 * 60 * 60 * 1000).toISOString(),
+          batchNumber: "STI-4D-2024-008",
+          supplier: "BioMedical Diagnostics",
+          location: "Medical Supply Cabinet",
+          status: "out_of_stock"
+        }
+      ];
+
+      sampleInventory.forEach(item => {
+        this.clinicInventory.set(item.id, item);
+      });
+
+      // Generate stock alerts for low/out of stock items
+      this.generateStockAlerts();
+    }
+
+    return Array.from(this.clinicInventory.values());
+  }
+
+  async updateInventoryStock(itemId: number, quantity: number, notes?: string): Promise<any> {
+    const item = this.clinicInventory.get(itemId);
+    if (!item) return null;
+
+    item.currentStock = quantity;
+    
+    // Update status based on stock levels
+    if (quantity === 0) {
+      item.status = "out_of_stock";
+    } else if (quantity <= item.minimumThreshold) {
+      item.status = "low_stock";
+    } else {
+      item.status = "in_stock";
+    }
+
+    this.clinicInventory.set(itemId, item);
+
+    // Generate new alerts if needed
+    this.generateStockAlerts();
+
+    return item;
+  }
+
+  async getStockAlerts(): Promise<any[]> {
+    return Array.from(this.stockAlerts.values());
+  }
+
+  async acknowledgeStockAlert(alertId: number): Promise<any> {
+    const alert = this.stockAlerts.get(alertId);
+    if (!alert) return null;
+
+    alert.acknowledged = true;
+    this.stockAlerts.set(alertId, alert);
+    return alert;
+  }
+
+  async getRestockOrders(): Promise<any[]> {
+    if (this.restockOrders.size === 0) {
+      // Initialize sample restock orders
+      const sampleOrders = [
+        {
+          id: 1,
+          items: [
+            { itemId: 2, itemName: "Universal Recycled Plastic Protection - Size M", quantity: 50, unitCost: 29.99 },
+            { itemId: 4, itemName: "4D STI Testing Kit - Comprehensive Panel", quantity: 20, unitCost: 85.00 }
+          ],
+          supplier: "Sustainable Materials Co.",
+          orderDate: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+          expectedDelivery: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString(),
+          status: "confirmed",
+          totalCost: 3199.50
+        }
+      ];
+
+      sampleOrders.forEach(order => {
+        this.restockOrders.set(order.id, order);
+      });
+    }
+
+    return Array.from(this.restockOrders.values());
+  }
+
+  async createRestockOrder(orderData: { items: { itemId: number; quantity: number }[]; supplier: string }): Promise<any> {
+    const id = this.currentRestockOrderId++;
+    
+    // Calculate order details
+    const items = orderData.items.map(item => {
+      const inventoryItem = this.clinicInventory.get(item.itemId);
+      return {
+        itemId: item.itemId,
+        itemName: inventoryItem?.productName || "Unknown Item",
+        quantity: item.quantity,
+        unitCost: inventoryItem?.unitCost || 0
+      };
+    });
+
+    const totalCost = items.reduce((sum, item) => sum + (item.quantity * item.unitCost), 0);
+
+    const order = {
+      id,
+      items,
+      supplier: orderData.supplier,
+      orderDate: new Date().toISOString(),
+      expectedDelivery: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
+      status: "pending",
+      totalCost
+    };
+
+    this.restockOrders.set(id, order);
+    return order;
+  }
+
+  private generateStockAlerts(): void {
+    // Clear existing alerts
+    this.stockAlerts.clear();
+    this.currentAlertId = 1;
+
+    Array.from(this.clinicInventory.values()).forEach(item => {
+      if (item.status === "out_of_stock") {
+        const alert = {
+          id: this.currentAlertId++,
+          itemId: item.id,
+          itemName: item.productName,
+          alertType: "reorder_needed",
+          severity: "critical",
+          message: `${item.productName} is completely out of stock. Immediate reorder required.`,
+          createdAt: new Date().toISOString(),
+          acknowledged: false
+        };
+        this.stockAlerts.set(alert.id, alert);
+      } else if (item.status === "low_stock") {
+        const alert = {
+          id: this.currentAlertId++,
+          itemId: item.id,
+          itemName: item.productName,
+          alertType: "low_stock",
+          severity: "high",
+          message: `${item.productName} is running low (${item.currentStock} remaining, minimum: ${item.minimumThreshold}).`,
+          createdAt: new Date().toISOString(),
+          acknowledged: false
+        };
+        this.stockAlerts.set(alert.id, alert);
+      }
+
+      // Check for expiring items (within 30 days)
+      if (item.expirationDate) {
+        const daysUntilExpiry = Math.ceil((new Date(item.expirationDate).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24));
+        if (daysUntilExpiry <= 30 && daysUntilExpiry > 0) {
+          const alert = {
+            id: this.currentAlertId++,
+            itemId: item.id,
+            itemName: item.productName,
+            alertType: "expiring",
+            severity: daysUntilExpiry <= 7 ? "high" : "medium",
+            message: `${item.productName} expires in ${daysUntilExpiry} days (Batch: ${item.batchNumber}).`,
+            createdAt: new Date().toISOString(),
+            acknowledged: false
+          };
+          this.stockAlerts.set(alert.id, alert);
+        }
+      }
+    });
   }
 }
 
