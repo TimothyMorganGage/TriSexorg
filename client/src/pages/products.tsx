@@ -163,6 +163,10 @@ export default function Products() {
   ];
 
   const lengthCategories = [
+    { value: "0", label: "0\"", range: "0 inches", description: "Minimal" },
+    { value: "1", label: "1\"", range: "1 inch", description: "Ultra compact" },
+    { value: "2", label: "2\"", range: "2 inches", description: "Very short" },
+    { value: "3", label: "3\"", range: "3 inches", description: "Short" },
     { value: "4", label: "4\"", range: "4 inches", description: "Compact" },
     { value: "5", label: "5\"", range: "5 inches", description: "Standard" },
     { value: "6", label: "6\"", range: "6 inches", description: "Average" },
@@ -170,14 +174,22 @@ export default function Products() {
     { value: "8", label: "8\"", range: "8 inches", description: "Large" },
     { value: "9", label: "9\"", range: "9 inches", description: "Extra large" },
     { value: "10", label: "10\"", range: "10 inches", description: "XXL" },
+    { value: "11", label: "11\"", range: "11 inches", description: "XXXL" },
+    { value: "12", label: "12\"", range: "12 inches", description: "Exceptional" },
+    { value: "13", label: "13\"", range: "13 inches", description: "Extraordinary" },
+    { value: "14", label: "14\"", range: "14 inches", description: "Ultra" },
+    { value: "15", label: "15\"", range: "15 inches", description: "Maximum" },
+    { value: "16", label: "16\"", range: "16 inches", description: "Ultimate" },
   ];
 
   const materialOptions = [
     {
       value: "ocean_plastic_hydrogel",
-      label: "Ocean Plastic + Hydrogel",
-      description: "Eco-friendly with enhanced comfort",
+      label: "Ocean Plastic + Hydrogel Composite",
+      description: "Reprocessed ocean microplastics with bio-hydrogel matrix",
       price: 29.99,
+      sustainability: "95% recycled ocean waste",
+      process: "Advanced microplastic filtration and bio-polymer integration"
     },
     {
       value: "natural_blend",
@@ -403,15 +415,15 @@ export default function Products() {
                             }
                           })
                         }
-                        min={4}
-                        max={10}
+                        min={0}
+                        max={16}
                         step={0.25}
                         className="w-full"
                       />
                       <div className="flex justify-between text-xs text-gray-500">
-                        <span>4"</span>
+                        <span>0"</span>
                         <span className="font-medium">{selectedConfig.customMeasurements?.length || 6}"</span>
-                        <span>10"</span>
+                        <span>16"</span>
                       </div>
                     </div>
                   </div>
