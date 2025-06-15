@@ -184,12 +184,22 @@ export default function Products() {
 
   const materialOptions = [
     {
-      value: "ocean_plastic_hydrogel",
-      label: "Ocean Plastic + Hydrogel Composite",
-      description: "Reprocessed ocean microplastics with bio-hydrogel matrix",
+      value: "universal_plastic_hydrogel",
+      label: "Universal Recycled Plastic + Hydrogel Composite",
+      description: "All plastic waste types transformed into medical-grade materials",
       price: 29.99,
-      sustainability: "95% recycled ocean waste",
-      process: "Advanced microplastic filtration and bio-polymer integration"
+      sustainability: "95% recycled from ocean, municipal, industrial, and electronic waste",
+      process: "Multi-source plastic collection with advanced depolymerization",
+      sources: [
+        "Ocean microplastics (PET, microfibers, packaging)",
+        "Municipal plastic waste (bottles, containers, films)",
+        "Industrial manufacturing scrap (injection molding waste)",
+        "Post-consumer packaging (food containers, wrapping)",
+        "Electronic waste plastics (device housings, cables)",
+        "Automotive plastic components (bumpers, interior parts)",
+        "Textile microfibers (synthetic clothing waste)",
+        "Medical device plastic waste (sterilized collection)"
+      ]
     },
     {
       value: "natural_blend",
