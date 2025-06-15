@@ -163,22 +163,13 @@ export default function Products() {
   ];
 
   const lengthCategories = [
-    { value: "1", label: "1\"", range: "1 inch", description: "Ultra compact" },
-    { value: "2", label: "2\"", range: "2 inches", description: "Very short" },
-    { value: "3", label: "3\"", range: "3 inches", description: "Short" },
-    { value: "4", label: "4\"", range: "4 inches", description: "Below average" },
-    { value: "5", label: "5\"", range: "5 inches", description: "Average start" },
+    { value: "4", label: "4\"", range: "4 inches", description: "Compact" },
+    { value: "5", label: "5\"", range: "5 inches", description: "Standard" },
     { value: "6", label: "6\"", range: "6 inches", description: "Average" },
     { value: "7", label: "7\"", range: "7 inches", description: "Above average" },
     { value: "8", label: "8\"", range: "8 inches", description: "Large" },
-    { value: "9", label: "9\"", range: "9 inches", description: "Very large" },
-    { value: "10", label: "10\"", range: "10 inches", description: "Extra large" },
-    { value: "11", label: "11\"", range: "11 inches", description: "XXL" },
-    { value: "12", label: "12\"", range: "12 inches", description: "XXXL" },
-    { value: "13", label: "13\"", range: "13 inches", description: "Exceptional" },
-    { value: "14", label: "14\"", range: "14 inches", description: "Extraordinary" },
-    { value: "15", label: "15\"", range: "15 inches", description: "Extraordinary" },
-    { value: "16", label: "16\"", range: "16 inches", description: "Maximum" },
+    { value: "9", label: "9\"", range: "9 inches", description: "Extra large" },
+    { value: "10", label: "10\"", range: "10 inches", description: "XXL" },
   ];
 
   const materialOptions = [
@@ -194,12 +185,65 @@ export default function Products() {
       description: "Plant-based materials only",
       price: 34.99,
     },
+    {
+      value: "medical_silicone_platinum",
+      label: "Medical Silicone (Platinum)",
+      description: "Platinum-cured medical grade for sensitive anal areas",
+      price: 42.99,
+    },
+    {
+      value: "latex_free_polymer",
+      label: "Latex-Free Advanced Polymer",
+      description: "Hypoallergenic polymer for latex sensitivities",
+      price: 38.99,
+    },
+    {
+      value: "smart_conductive",
+      label: "Smart Temperature Material",
+      description: "Conductive fibers for temperature regulation",
+      price: 54.99,
+    },
+    {
+      value: "biodegradable_hemp",
+      label: "Hemp Fiber Composite",
+      description: "Industrial hemp fibers in biocompatible matrix",
+      price: 36.99,
+    },
+    {
+      value: "graphene_enhanced",
+      label: "Graphene Enhanced",
+      description: "Graphene particles for enhanced durability",
+      price: 64.99,
+    },
+    {
+      value: "antimicrobial_silver",
+      label: "Silver Ion Antimicrobial",
+      description: "Silver nanoparticles for infection prevention",
+      price: 48.99,
+    }
   ];
 
   const featureOptions = [
-    { value: "enhanced_lubrication", label: "Enhanced lubrication", price: 5.00 },
+    { value: "enhanced_lubrication", label: "Enhanced long-lasting lubrication", price: 5.00 },
     { value: "durability_coating", label: "Extra durability coating", price: 5.00 },
     { value: "textured_surface", label: "Textured surface options", price: 5.00 },
+    { value: "anal_comfort_ring", label: "Anal comfort ring design", price: 8.00 },
+    { value: "tapered_tip", label: "Tapered insertion tip", price: 6.00 },
+    { value: "flexible_shaft", label: "Ultra-flexible shaft", price: 7.00 },
+    { value: "temperature_responsive", label: "Body temperature responsive", price: 12.00 },
+    { value: "antimicrobial_coating", label: "Antimicrobial surface coating", price: 9.00 },
+    { value: "ph_balancing", label: "pH balancing formula", price: 8.00 },
+    { value: "easy_removal_tab", label: "Easy removal safety tab", price: 4.00 },
+    { value: "gradual_expansion", label: "Gradual expansion design", price: 10.00 },
+    { value: "nerve_numbing", label: "Mild nerve desensitizing", price: 7.00 },
+    { value: "vibration_compatible", label: "Vibration device compatible", price: 15.00 },
+    { value: "glow_in_dark", label: "Glow-in-the-dark material", price: 6.00 },
+    { value: "custom_color", label: "Custom color selection", price: 8.00 },
+    { value: "scented_options", label: "Natural scent options", price: 5.00 },
+    { value: "biodegradable_rapid", label: "Rapid biodegradable formula", price: 9.00 },
+    { value: "extra_thin_walls", label: "Ultra-thin wall construction", price: 11.00 },
+    { value: "ribbed_texture", label: "Internal ribbed texture", price: 8.00 },
+    { value: "warming_sensation", label: "Gentle warming sensation", price: 9.00 }
   ];
 
   if (isLoading) {
@@ -359,15 +403,15 @@ export default function Products() {
                             }
                           })
                         }
-                        min={1}
-                        max={16}
+                        min={4}
+                        max={10}
                         step={0.25}
                         className="w-full"
                       />
                       <div className="flex justify-between text-xs text-gray-500">
-                        <span>1"</span>
+                        <span>4"</span>
                         <span className="font-medium">{selectedConfig.customMeasurements?.length || 6}"</span>
-                        <span>16"</span>
+                        <span>10"</span>
                       </div>
                     </div>
                   </div>
@@ -458,6 +502,126 @@ export default function Products() {
                         <span>40mm</span>
                         <span className="font-medium">{selectedConfig.customMeasurements?.headGirth || 49}mm</span>
                         <span>70mm</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Anal Diameter Measurement */}
+                  <div className="space-y-4">
+                    <Label className="text-sm font-medium text-neutral">
+                      Anal Opening Diameter (mm) - Relaxed state
+                    </Label>
+                    <div className="space-y-2">
+                      <Slider
+                        value={[selectedConfig.customMeasurements?.analDiameter || 25]}
+                        onValueChange={(value) =>
+                          setSelectedConfig({
+                            ...selectedConfig,
+                            customMeasurements: {
+                              ...selectedConfig.customMeasurements!,
+                              analDiameter: value[0]
+                            }
+                          })
+                        }
+                        min={15}
+                        max={45}
+                        step={0.5}
+                        className="w-full"
+                      />
+                      <div className="flex justify-between text-xs text-gray-500">
+                        <span>15mm</span>
+                        <span className="font-medium">{selectedConfig.customMeasurements?.analDiameter || 25}mm</span>
+                        <span>45mm</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Insertion Depth Preference */}
+                  <div className="space-y-4">
+                    <Label className="text-sm font-medium text-neutral">
+                      Maximum Insertion Depth (mm)
+                    </Label>
+                    <div className="space-y-2">
+                      <Slider
+                        value={[selectedConfig.customMeasurements?.insertionDepth || 80]}
+                        onValueChange={(value) =>
+                          setSelectedConfig({
+                            ...selectedConfig,
+                            customMeasurements: {
+                              ...selectedConfig.customMeasurements!,
+                              insertionDepth: value[0]
+                            }
+                          })
+                        }
+                        min={40}
+                        max={150}
+                        step={2}
+                        className="w-full"
+                      />
+                      <div className="flex justify-between text-xs text-gray-500">
+                        <span>40mm</span>
+                        <span className="font-medium">{selectedConfig.customMeasurements?.insertionDepth || 80}mm</span>
+                        <span>150mm</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Flexibility Preference */}
+                  <div className="space-y-4">
+                    <Label className="text-sm font-medium text-neutral">
+                      Material Flexibility (Shore Hardness)
+                    </Label>
+                    <div className="space-y-2">
+                      <Slider
+                        value={[selectedConfig.customMeasurements?.flexibility || 25]}
+                        onValueChange={(value) =>
+                          setSelectedConfig({
+                            ...selectedConfig,
+                            customMeasurements: {
+                              ...selectedConfig.customMeasurements!,
+                              flexibility: value[0]
+                            }
+                          })
+                        }
+                        min={10}
+                        max={40}
+                        step={1}
+                        className="w-full"
+                      />
+                      <div className="flex justify-between text-xs text-gray-500">
+                        <span>10 (Ultra Soft)</span>
+                        <span className="font-medium">{selectedConfig.customMeasurements?.flexibility || 25} Shore A</span>
+                        <span>40 (Firm)</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Wall Thickness Control */}
+                  <div className="space-y-4">
+                    <Label className="text-sm font-medium text-neutral">
+                      Wall Thickness (mm) - Barrier thickness
+                    </Label>
+                    <div className="space-y-2">
+                      <Slider
+                        value={[selectedConfig.customMeasurements?.wallThickness || 0.8]}
+                        onValueChange={(value) =>
+                          setSelectedConfig({
+                            ...selectedConfig,
+                            customMeasurements: {
+                              ...selectedConfig.customMeasurements!,
+                              wallThickness: value[0]
+                            }
+                          })
+                        }
+                        min={0.3}
+                        max={2.0}
+                        step={0.1}
+                        className="w-full"
+                      />
+                      <div className="flex justify-between text-xs text-gray-500">
+                        <span>0.3mm (Ultra Thin)</span>
+                        <span className="font-medium">{selectedConfig.customMeasurements?.wallThickness || 0.8}mm</span>
+                        <span>2.0mm (Thick)</span>
                       </div>
                     </div>
                   </div>
