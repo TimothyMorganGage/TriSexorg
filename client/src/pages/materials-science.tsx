@@ -33,45 +33,57 @@ export default function MaterialsScience() {
   const processSteps = [
     {
       id: "collection",
-      title: "Ocean Microplastic Collection",
+      title: "Universal Plastic Waste Collection",
       icon: Waves,
-      description: "Advanced filtration systems collect microplastics from ocean water",
+      description: "Comprehensive collection of all plastic waste sources including microplastics and scrap",
       details: [
-        "Deep-sea collection vessels with 0.1μm filtration systems",
-        "Partnership with ocean cleanup organizations",
-        "Selective harvesting to preserve marine ecosystems",
-        "GPS tracking for contamination source mapping"
+        "Ocean microplastic filtration with 0.1μm precision systems",
+        "Municipal plastic waste collection partnerships",
+        "Industrial scrap plastic sourcing from manufacturing",
+        "Post-consumer plastic bottle and packaging recovery",
+        "Textile microfiber capture from laundry systems",
+        "Electronic waste plastic component extraction",
+        "Automotive plastic waste from recycling centers",
+        "Medical device plastic waste (sterilized collection)"
       ],
-      timeframe: "24-48 hours",
-      yield: "2-5kg microplastics per 1000L ocean water"
+      timeframe: "Continuous collection networks",
+      yield: "50-200kg mixed plastic waste per day per collection point"
     },
     {
       id: "sorting",
-      title: "Microplastic Sorting & Classification",
+      title: "Universal Plastic Sorting & Classification",
       icon: Filter,
-      description: "AI-powered sorting separates plastic types and removes contaminants",
+      description: "Advanced AI-powered sorting handles all plastic waste types from micro to macro scale",
       details: [
-        "Spectroscopic analysis identifies plastic polymer types",
-        "Density separation removes organic matter",
-        "Size classification: 0.1μm to 5mm particles",
-        "Chemical composition verification"
+        "Near-infrared spectroscopy identifies 15+ polymer types (PET, HDPE, PVC, LDPE, PP, PS, etc.)",
+        "Density separation removes organic matter and metal contaminants",
+        "Multi-scale classification: 0.1μm microplastics to large scrap pieces",
+        "X-ray fluorescence removes hazardous additives and heavy metals",
+        "Color sorting separates clear, colored, and UV-degraded plastics",
+        "Automated removal of labels, adhesives, and composite materials",
+        "Quality grading: virgin-like, lightly degraded, heavily weathered",
+        "Contamination level assessment and batch tracking"
       ],
-      timeframe: "12-24 hours",
-      yield: "85% pure plastic by polymer type"
+      timeframe: "8-16 hours for mixed waste batches",
+      yield: "90% pure plastic by polymer type, 95% contaminant removal"
     },
     {
       id: "breakdown",
-      title: "Molecular Depolymerization", 
+      title: "Multi-Polymer Depolymerization", 
       icon: Atom,
-      description: "Controlled breakdown of plastic polymers into base monomers",
+      description: "Advanced breakdown processes handle all plastic types from any source",
       details: [
-        "Enzymatic depolymerization using engineered bacteria",
-        "Temperature-controlled pyrolysis at 200-400°C",
-        "Chemical catalysts break polymer chains",
-        "Purification removes additives and dyes"
+        "Enzymatic depolymerization for PET using engineered PETase and MHETase",
+        "Solvolysis for polyurethanes and complex composites",
+        "Glycolysis for polyester-based materials and textiles",
+        "Pyrolysis at 350-500°C for mixed polymer batches",
+        "Hydrogenolysis for cross-linked and thermoset plastics",
+        "Chemical recycling for degraded ocean-weathered polymers",
+        "Methanolysis for polycarbonate and acrylic materials",
+        "Advanced purification removes all additives, colorants, and degradation products"
       ],
-      timeframe: "6-12 hours",
-      yield: "75% monomer recovery rate"
+      timeframe: "4-10 hours depending on polymer complexity",
+      yield: "80-95% monomer recovery across all plastic types"
     },
     {
       id: "biopolymer",
@@ -118,10 +130,10 @@ export default function MaterialsScience() {
   ];
 
   const materialComposition = {
-    oceanPlastic: {
+    recycledPlastic: {
       percentage: 35,
-      sources: ["PET bottles", "Microfibers", "Packaging films", "Fishing nets"],
-      properties: ["Chemical resistance", "Durability", "Structural integrity"]
+      sources: ["Ocean microplastics", "Municipal plastic waste", "Industrial scrap", "Post-consumer packaging", "Electronic waste plastics", "Automotive components", "Textile microfibers", "Medical device plastics"],
+      properties: ["Chemical resistance", "Durability", "Structural integrity", "Contamination-free processing"]
     },
     hydrogel: {
       percentage: 25,
@@ -136,11 +148,14 @@ export default function MaterialsScience() {
   };
 
   const sustainabilityMetrics = [
-    { metric: "Ocean plastic diverted", value: "2.5 tons/month", impact: "Prevents marine ecosystem damage" },
-    { metric: "Carbon footprint reduction", value: "78% vs virgin plastic", impact: "Lower greenhouse gas emissions" },
-    { metric: "Water usage efficiency", value: "85% less than traditional", impact: "Conserves freshwater resources" },
-    { metric: "Biodegradation timeline", value: "6-12 months", impact: "Reduces long-term waste accumulation" },
-    { metric: "Energy consumption", value: "45% renewable sources", impact: "Sustainable manufacturing process" }
+    { metric: "Total plastic waste diverted", value: "15+ tons/month", impact: "Prevents landfill and environmental contamination" },
+    { metric: "Ocean microplastic recovery", value: "2.5 tons/month", impact: "Prevents marine ecosystem damage" },
+    { metric: "Municipal waste reduction", value: "8 tons/month", impact: "Reduces landfill burden and incineration" },
+    { metric: "Industrial scrap utilization", value: "5 tons/month", impact: "Circular economy integration" },
+    { metric: "Carbon footprint reduction", value: "85% vs virgin plastic", impact: "Lower greenhouse gas emissions" },
+    { metric: "Water usage efficiency", value: "90% less than traditional", impact: "Conserves freshwater resources" },
+    { metric: "Energy from renewable sources", value: "60% renewable energy", impact: "Sustainable manufacturing process" },
+    { metric: "Biodegradation timeline", value: "6-12 months", impact: "Reduces long-term waste accumulation" }
   ];
 
   const qualityStandards = [
@@ -291,14 +306,14 @@ export default function MaterialsScience() {
                     <div className="space-y-2">
                       <div className="flex justify-between items-center">
                         <span className="font-medium flex items-center">
-                          <Waves className="h-4 w-4 mr-2 text-blue-600" />
-                          Ocean Plastic
+                          <Recycle className="h-4 w-4 mr-2 text-blue-600" />
+                          Recycled Plastic (All Sources)
                         </span>
-                        <span className="text-lg font-bold">{materialComposition.oceanPlastic.percentage}%</span>
+                        <span className="text-lg font-bold">{materialComposition.recycledPlastic.percentage}%</span>
                       </div>
-                      <Progress value={materialComposition.oceanPlastic.percentage} className="h-2" />
+                      <Progress value={materialComposition.recycledPlastic.percentage} className="h-2" />
                       <div className="text-sm text-muted-foreground">
-                        Sources: {materialComposition.oceanPlastic.sources.join(", ")}
+                        Sources: {materialComposition.recycledPlastic.sources.slice(0, 4).join(", ")} + 4 more
                       </div>
                     </div>
 
@@ -341,11 +356,11 @@ export default function MaterialsScience() {
                   <div className="space-y-4">
                     <div className="p-4 border rounded-lg">
                       <h4 className="font-medium mb-2 flex items-center text-blue-600">
-                        <Waves className="h-4 w-4 mr-2" />
-                        Ocean Plastic Contribution
+                        <Recycle className="h-4 w-4 mr-2" />
+                        Recycled Plastic Benefits
                       </h4>
                       <ul className="space-y-1">
-                        {materialComposition.oceanPlastic.properties.map((prop, index) => (
+                        {materialComposition.recycledPlastic.properties.map((prop: string, index: number) => (
                           <li key={index} className="text-sm flex items-center">
                             <CheckCircle className="h-3 w-3 mr-2 text-green-600" />
                             {prop}
@@ -360,7 +375,7 @@ export default function MaterialsScience() {
                         Hydrogel Benefits
                       </h4>
                       <ul className="space-y-1">
-                        {materialComposition.hydrogel.properties.map((prop, index) => (
+                        {materialComposition.hydrogel.properties.map((prop: string, index: number) => (
                           <li key={index} className="text-sm flex items-center">
                             <CheckCircle className="h-3 w-3 mr-2 text-green-600" />
                             {prop}
@@ -375,7 +390,7 @@ export default function MaterialsScience() {
                         Plant-Based Advantages
                       </h4>
                       <ul className="space-y-1">
-                        {materialComposition.plantBased.properties.map((prop, index) => (
+                        {materialComposition.plantBased.properties.map((prop: string, index: number) => (
                           <li key={index} className="text-sm flex items-center">
                             <CheckCircle className="h-3 w-3 mr-2 text-green-600" />
                             {prop}
