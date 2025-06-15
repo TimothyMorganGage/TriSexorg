@@ -65,6 +65,7 @@ function Router() {
           <Route path="/newsletter" component={Newsletter} />
           <Route path="/open-books" component={OpenBooks} />
           <Route path="/materials-science" component={MaterialsScience} />
+          <Route path="/clinic-dashboard" component={ClinicDashboard} />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
           <Route component={NotFound} />

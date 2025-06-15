@@ -73,6 +73,14 @@ export interface IStorage {
   getCommunityDividends(): Promise<CommunityDividend[]>;
   getCommunityDividendsByUser(userId: number): Promise<CommunityDividend[]>;
   createCommunityDividend(dividend: InsertCommunityDividend): Promise<CommunityDividend>;
+
+  // Clinic Inventory methods
+  getClinicInventory(): Promise<any[]>;
+  updateInventoryStock(itemId: number, quantity: number, notes?: string): Promise<any>;
+  getStockAlerts(): Promise<any[]>;
+  acknowledgeStockAlert(alertId: number): Promise<any>;
+  getRestockOrders(): Promise<any[]>;
+  createRestockOrder(orderData: { items: { itemId: number; quantity: number }[]; supplier: string }): Promise<any>;
 }
 
 export class MemStorage implements IStorage {

@@ -230,6 +230,75 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Clinic Inventory Management routes
+  app.get("/api/clinic-inventory", async (req, res) => {
+    try {
+      const inventory = await storage.getClinicInventory();
+      res.json(inventory);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch clinic inventory" });
+    }
+  });
+
+  app.post("/api/clinic-inventory/:id/update-stock", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { quantity, notes } = req.body;
+      
+      const updatedItem = await storage.updateInventoryStock(parseInt(id), quantity, notes);
+      if (!updatedItem) {
+        return res.status(404).json({ message: "Inventory item not found" });
+      }
+      
+      res.json(updatedItem);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to update inventory stock" });
+    }
+  });
+
+  app.get("/api/stock-alerts", async (req, res) => {
+    try {
+      const alerts = await storage.getStockAlerts();
+      res.json(alerts);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch stock alerts" });
+    }
+  });
+
+  app.post("/api/stock-alerts/:id/acknowledge", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const acknowledgedAlert = await storage.acknowledgeStockAlert(parseInt(id));
+      
+      if (!acknowledgedAlert) {
+        return res.status(404).json({ message: "Stock alert not found" });
+      }
+      
+      res.json(acknowledgedAlert);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to acknowledge stock alert" });
+    }
+  });
+
+  app.get("/api/restock-orders", async (req, res) => {
+    try {
+      const orders = await storage.getRestockOrders();
+      res.json(orders);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch restock orders" });
+    }
+  });
+
+  app.post("/api/restock-orders", async (req, res) => {
+    try {
+      const { items, supplier } = req.body;
+      const newOrder = await storage.createRestockOrder({ items, supplier });
+      res.json(newOrder);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to create restock order" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
