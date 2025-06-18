@@ -10,7 +10,8 @@ import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ShoppingCart, Save, Box, Ruler, Target, Zap } from "lucide-react";
+import { ShoppingCart, Save, Box, Ruler, Target, Zap, BookOpen, ArrowRight } from "lucide-react";
+import { Link } from "wouter";
 import { useAuth } from "@/lib/auth";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
@@ -834,6 +835,100 @@ export default function Products() {
                   </CardContent>
                 </Card>
               </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Related Wiki Articles */}
+        <div className="mt-16 bg-gray-50 py-12">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-8">
+              <h2 className="text-3xl font-bold text-gray-900 mb-4">
+                Educational Resources
+              </h2>
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                Learn more about custom sizing, materials, and sexual health with our comprehensive guides
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+              <Card className="hover:shadow-lg transition-shadow">
+                <CardHeader>
+                  <div className="flex items-center space-x-2 mb-2">
+                    <Ruler className="h-5 w-5 text-primary" />
+                    <Badge variant="outline" className="text-xs">Custom Sizing</Badge>
+                  </div>
+                  <CardTitle className="text-lg">Precision Sizing Guide</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-gray-600 mb-4">
+                    Complete guide to fluck's 60+ custom sizes with measurement techniques and best practices.
+                  </p>
+                  <div className="flex justify-between items-center">
+                    <span className="text-xs text-gray-500">18 min read</span>
+                    <Link href="/wiki">
+                      <Button variant="outline" size="sm" className="text-xs">
+                        Read Article <ArrowRight className="ml-1 h-3 w-3" />
+                      </Button>
+                    </Link>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="hover:shadow-lg transition-shadow">
+                <CardHeader>
+                  <div className="flex items-center space-x-2 mb-2">
+                    <Target className="h-5 w-5 text-primary" />
+                    <Badge variant="outline" className="text-xs">Materials</Badge>
+                  </div>
+                  <CardTitle className="text-lg">Sustainable Materials</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-gray-600 mb-4">
+                    Learn about ocean plastic recovery, biodegradable options, and material science innovations.
+                  </p>
+                  <div className="flex justify-between items-center">
+                    <span className="text-xs text-gray-500">15 min read</span>
+                    <Link href="/wiki">
+                      <Button variant="outline" size="sm" className="text-xs">
+                        Read Article <ArrowRight className="ml-1 h-3 w-3" />
+                      </Button>
+                    </Link>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="hover:shadow-lg transition-shadow">
+                <CardHeader>
+                  <div className="flex items-center space-x-2 mb-2">
+                    <Zap className="h-5 w-5 text-primary" />
+                    <Badge variant="outline" className="text-xs">Health</Badge>
+                  </div>
+                  <CardTitle className="text-lg">Sexual Health Education</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-gray-600 mb-4">
+                    Comprehensive guide to anatomy diversity, inclusive terminology, and health best practices.
+                  </p>
+                  <div className="flex justify-between items-center">
+                    <span className="text-xs text-gray-500">22 min read</span>
+                    <Link href="/wiki">
+                      <Button variant="outline" size="sm" className="text-xs">
+                        Read Article <ArrowRight className="ml-1 h-3 w-3" />
+                      </Button>
+                    </Link>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            <div className="text-center">
+              <Link href="/wiki">
+                <Button size="lg" className="bg-primary hover:bg-primary/90">
+                  <BookOpen className="mr-2 h-5 w-5" />
+                  Browse All Wiki Articles
+                </Button>
+              </Link>
             </div>
           </div>
         </div>

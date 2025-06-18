@@ -8,8 +8,9 @@ import { Button } from "@/components/ui/button";
 import { 
   ShieldCheck, Heart, Leaf, MessageCircle, 
   Users, FlaskConical, Search, ArrowRight,
-  BookOpen, Clock, User
+  BookOpen, Clock, User, Droplets, Target, Zap
 } from "lucide-react";
+import { Link } from "wouter";
 import type { EducationalContent } from "@shared/schema";
 
 const categoryIcons = {
@@ -219,6 +220,123 @@ export default function Education() {
               })}
             </div>
           )}
+
+          {/* Featured Wiki Articles */}
+          <div className="mt-16 bg-gradient-to-br from-blue-50 to-indigo-50 py-12">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="text-center mb-8">
+                <h2 className="text-3xl font-bold text-gray-900 mb-4">
+                  Knowledge Wiki
+                </h2>
+                <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                  Comprehensive guides covering sexual health, inclusive practices, and community resources
+                </p>
+              </div>
+
+              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <Card className="hover:shadow-lg transition-shadow border-primary/20">
+                  <CardHeader>
+                    <div className="flex items-center space-x-2 mb-2">
+                      <Heart className="h-5 w-5 text-pink-600" />
+                      <Badge variant="outline" className="text-xs">Sexual Health</Badge>
+                    </div>
+                    <CardTitle className="text-lg">Anatomy Education</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-gray-600 mb-4">
+                      Comprehensive guide to sexual anatomy diversity and reproductive justice frameworks.
+                    </p>
+                    <div className="flex justify-between items-center">
+                      <span className="text-xs text-gray-500">22 min read</span>
+                      <Link href="/wiki">
+                        <Button variant="outline" size="sm" className="text-xs">
+                          Read <ArrowRight className="ml-1 h-3 w-3" />
+                        </Button>
+                      </Link>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card className="hover:shadow-lg transition-shadow border-primary/20">
+                  <CardHeader>
+                    <div className="flex items-center space-x-2 mb-2">
+                      <Droplets className="h-5 w-5 text-blue-600" />
+                      <Badge variant="outline" className="text-xs">STI Prevention</Badge>
+                    </div>
+                    <CardTitle className="text-lg">4D STI Intervention</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-gray-600 mb-4">
+                      Advanced bioregional intervention strategies for sexually transmitted infection prevention.
+                    </p>
+                    <div className="flex justify-between items-center">
+                      <span className="text-xs text-gray-500">18 min read</span>
+                      <Link href="/wiki">
+                        <Button variant="outline" size="sm" className="text-xs">
+                          Read <ArrowRight className="ml-1 h-3 w-3" />
+                        </Button>
+                      </Link>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card className="hover:shadow-lg transition-shadow border-primary/20">
+                  <CardHeader>
+                    <div className="flex items-center space-x-2 mb-2">
+                      <Users className="h-5 w-5 text-purple-600" />
+                      <Badge variant="outline" className="text-xs">Community</Badge>
+                    </div>
+                    <CardTitle className="text-lg">Inclusive Terminology</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-gray-600 mb-4">
+                      Cultural competency guide for 2SLGBTIQA+ terminology and inclusive communication.
+                    </p>
+                    <div className="flex justify-between items-center">
+                      <span className="text-xs text-gray-500">14 min read</span>
+                      <Link href="/wiki">
+                        <Button variant="outline" size="sm" className="text-xs">
+                          Read <ArrowRight className="ml-1 h-3 w-3" />
+                        </Button>
+                      </Link>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card className="hover:shadow-lg transition-shadow border-primary/20">
+                  <CardHeader>
+                    <div className="flex items-center space-x-2 mb-2">
+                      <Target className="h-5 w-5 text-green-600" />
+                      <Badge variant="outline" className="text-xs">Intelligence</Badge>
+                    </div>
+                    <CardTitle className="text-lg">Peer Mentor Network</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-gray-600 mb-4">
+                      Multigenerational intelligence framework for culturally competent health mentoring.
+                    </p>
+                    <div className="flex justify-between items-center">
+                      <span className="text-xs text-gray-500">22 min read</span>
+                      <Link href="/wiki">
+                        <Button variant="outline" size="sm" className="text-xs">
+                          Read <ArrowRight className="ml-1 h-3 w-3" />
+                        </Button>
+                      </Link>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              <div className="text-center">
+                <Link href="/wiki">
+                  <Button size="lg" className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white">
+                    <BookOpen className="mr-2 h-5 w-5" />
+                    Explore Complete Wiki Library
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
