@@ -1363,6 +1363,42 @@ This comprehensive intelligence framework ensures that fluck's peer mentor netwo
     return categoryData ? categoryData.icon : BookOpen;
   };
 
+  const renderMarkdownContent = (content: string) => {
+    return content
+      .split('\n')
+      .map((line, index) => {
+        // Headers
+        if (line.startsWith('# ')) {
+          return <h1 key={index} className="text-3xl font-bold mt-8 mb-4 first:mt-0">{line.substring(2)}</h1>;
+        }
+        if (line.startsWith('## ')) {
+          return <h2 key={index} className="text-2xl font-semibold mt-6 mb-3">{line.substring(3)}</h2>;
+        }
+        if (line.startsWith('### ')) {
+          return <h3 key={index} className="text-xl font-semibold mt-5 mb-2">{line.substring(4)}</h3>;
+        }
+        if (line.startsWith('#### ')) {
+          return <h4 key={index} className="text-lg font-medium mt-4 mb-2">{line.substring(5)}</h4>;
+        }
+        
+        // Lists
+        if (line.startsWith('- ')) {
+          return <li key={index} className="ml-4 mb-1">{line.substring(2)}</li>;
+        }
+        
+        // Bold text
+        const boldText = line.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        
+        // Empty lines
+        if (line.trim() === '') {
+          return <br key={index} />;
+        }
+        
+        // Regular paragraphs
+        return <p key={index} className="mb-3" dangerouslySetInnerHTML={{ __html: boldText }} />;
+      });
+  };
+
   if (selectedArticle) {
     return (
       <div className="min-h-screen bg-background py-12 px-4 sm:px-6 lg:px-8">
@@ -1409,8 +1445,10 @@ This comprehensive intelligence framework ensures that fluck's peer mentor netwo
               </div>
             </CardHeader>
             <CardContent>
-              <div className="prose prose-lg max-w-none">
-                <div className="whitespace-pre-wrap">{selectedArticle.content}</div>
+              <div className="prose prose-lg max-w-none text-foreground">
+                <div className="leading-relaxed">
+                  {renderMarkdownContent(selectedArticle.content)}
+                </div>
               </div>
             </CardContent>
           </Card>
