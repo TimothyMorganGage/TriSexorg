@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
   BookOpen, 
@@ -19,7 +20,8 @@ import {
   Info,
   Star,
   Target,
-  Zap
+  Zap,
+  ArrowLeft
 } from "lucide-react";
 
 interface WikiArticle {
@@ -37,6 +39,7 @@ interface WikiArticle {
 export default function Wiki() {
   const [searchTerm, setSearchTerm] = useState("");
   const [activeCategory, setActiveCategory] = useState("all");
+  const [selectedArticle, setSelectedArticle] = useState<WikiArticle | null>(null);
 
   const categories = [
     { id: "all", name: "All Topics", icon: BookOpen, count: 9 },
@@ -1360,6 +1363,62 @@ This comprehensive intelligence framework ensures that fluck's peer mentor netwo
     return categoryData ? categoryData.icon : BookOpen;
   };
 
+  if (selectedArticle) {
+    return (
+      <div className="min-h-screen bg-background py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto">
+          {/* Back Button */}
+          <div className="mb-6">
+            <Button 
+              variant="outline" 
+              onClick={() => setSelectedArticle(null)}
+              className="flex items-center space-x-2"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              <span>Back to Articles</span>
+            </Button>
+          </div>
+
+          {/* Article Content */}
+          <Card>
+            <CardHeader>
+              <div className="flex items-center space-x-2 mb-4">
+                {(() => {
+                  const IconComponent = getCategoryIcon(selectedArticle.category);
+                  return <IconComponent className="h-5 w-5 text-primary" />;
+                })()}
+                <Badge variant="outline" className="text-xs">
+                  {categories.find(c => c.id === selectedArticle.category)?.name}
+                </Badge>
+                <Badge className={getDifficultyColor(selectedArticle.difficulty) + " text-xs"}>
+                  {selectedArticle.difficulty}
+                </Badge>
+              </div>
+              <CardTitle className="text-3xl mb-4">{selectedArticle.title}</CardTitle>
+              <div className="flex items-center space-x-4 text-sm text-muted-foreground mb-4">
+                <span>By {selectedArticle.author}</span>
+                <span>Updated {selectedArticle.lastUpdated}</span>
+                <span>{selectedArticle.readTime} read</span>
+              </div>
+              <div className="flex flex-wrap gap-1">
+                {selectedArticle.tags.map((tag) => (
+                  <Badge key={tag} variant="secondary" className="text-xs">
+                    {tag}
+                  </Badge>
+                ))}
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="prose prose-lg max-w-none">
+                <div className="whitespace-pre-wrap">{selectedArticle.content}</div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-background py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
@@ -1504,7 +1563,10 @@ This comprehensive intelligence framework ensures that fluck's peer mentor netwo
                             <CheckCircle className="h-4 w-4 text-green-500" />
                             <span className="text-sm text-muted-foreground">Community Verified</span>
                           </div>
-                          <button className="text-primary hover:underline text-sm font-medium">
+                          <button 
+                            onClick={() => setSelectedArticle(article)}
+                            className="text-primary hover:underline text-sm font-medium"
+                          >
                             Read Full Article →
                           </button>
                         </div>
