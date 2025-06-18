@@ -110,7 +110,8 @@ export function Footer() {
               <ul className="text-xs text-gray-400 space-y-1">
                 <li>• Health clinics & hospitals</li>
                 <li>• 2SLGBTIQ+ community centers</li>
-                <li>• Progressive sex shops</li>
+                <li>• Sex shops</li>
+                <li>• Religious centers</li>
                 <li>• Bathhouses & wellness centers</li>
               </ul>
             </div>
