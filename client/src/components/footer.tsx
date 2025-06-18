@@ -26,29 +26,29 @@ export function Footer() {
           {/* Products */}
           <div>
             <h3 className="text-lg font-semibold mb-4">Products</h3>
-            <ul className="space-y-2 text-sm">
+            <ul className="space-y-3 text-sm">
               <li>
-                <Link href="/products" className="text-gray-300 hover:text-primary transition-colors">
+                <Link href="/products" className="text-gray-200 hover:text-primary transition-colors block py-1">
                   External Protection
                 </Link>
               </li>
               <li>
-                <Link href="/products" className="text-gray-300 hover:text-primary transition-colors">
+                <Link href="/products" className="text-gray-200 hover:text-primary transition-colors block py-1">
                   Internal Protection
                 </Link>
               </li>
               <li>
-                <Link href="/products" className="text-gray-300 hover:text-primary transition-colors">
+                <Link href="/products" className="text-gray-200 hover:text-primary transition-colors block py-1">
                   Multi-Anatomy Kits
                 </Link>
               </li>
               <li>
-                <Link href="/products" className="text-gray-300 hover:text-primary transition-colors">
+                <Link href="/products" className="text-gray-200 hover:text-primary transition-colors block py-1">
                   Barrier Dams
                 </Link>
               </li>
               <li>
-                <Link href="/products" className="text-gray-300 hover:text-primary transition-colors">
+                <Link href="/products" className="text-gray-200 hover:text-primary transition-colors block py-1">
                   Custom Sizing
                 </Link>
               </li>
@@ -58,29 +58,29 @@ export function Footer() {
           {/* Resources */}
           <div>
             <h3 className="text-lg font-semibold mb-4">Resources</h3>
-            <ul className="space-y-2 text-sm">
+            <ul className="space-y-3 text-sm">
               <li>
-                <Link href="/education" className="text-gray-300 hover:text-primary transition-colors">
+                <Link href="/education" className="text-gray-200 hover:text-primary transition-colors block py-1">
                   Sexual Health Education
                 </Link>
               </li>
               <li>
-                <Link href="/education" className="text-gray-300 hover:text-primary transition-colors">
+                <Link href="/education" className="text-gray-200 hover:text-primary transition-colors block py-1">
                   2SLGBTIQA+ Terminology
                 </Link>
               </li>
               <li>
-                <Link href="/education" className="text-gray-300 hover:text-primary transition-colors">
+                <Link href="/education" className="text-gray-200 hover:text-primary transition-colors block py-1">
                   Anatomy Guides
                 </Link>
               </li>
               <li>
-                <Link href="/clinics" className="text-gray-300 hover:text-primary transition-colors">
+                <Link href="/clinics" className="text-gray-200 hover:text-primary transition-colors block py-1">
                   Healthcare Providers
                 </Link>
               </li>
               <li>
-                <Link href="/partnership" className="text-gray-300 hover:text-primary transition-colors">
+                <Link href="/partnership" className="text-gray-200 hover:text-primary transition-colors block py-1">
                   Partner with Us
                 </Link>
               </li>
