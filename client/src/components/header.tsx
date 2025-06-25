@@ -29,7 +29,16 @@ export function Header() {
             <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
               <ShieldHalf className="h-6 w-6 text-white" />
             </div>
-            <span className="text-2xl font-bold text-neutral">fluck</span>
+            <span 
+              className="text-2xl font-bold text-neutral"
+              style={{ 
+                fontFamily: 'cursive',
+                textShadow: '2px 2px 4px rgba(0,0,0,0.3), -1px -1px 2px rgba(255,255,255,0.5)',
+                filter: 'contrast(1.2)'
+              }}
+            >
+              Fluck‽
+            </span>
           </Link>
 
           {/* Desktop Navigation */}
