@@ -93,7 +93,19 @@ export function Footer() {
             <div className="space-y-3 text-sm">
               <div className="flex items-center space-x-3 text-gray-300">
                 <Mail className="h-4 w-4 text-primary" />
-                <span>hello@fluck.wtf</span>
+                <span>
+                  <span 
+                    className="font-bold text-white" 
+                    style={{ 
+                      fontFamily: 'cursive',
+                      textShadow: '2px 2px 4px rgba(0,0,0,0.8), -1px -1px 2px rgba(255,255,255,0.3)',
+                      filter: 'contrast(1.5)'
+                    }}
+                  >
+                    Fluck
+                  </span>
+                  {' ‽'}
+                </span>
               </div>
               <div className="flex items-center space-x-3 text-gray-300">
                 <Phone className="h-4 w-4 text-primary" />
