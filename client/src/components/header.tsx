@@ -13,6 +13,7 @@ export function Header() {
     { name: "Products", href: "/products" },
     { name: "Stories", href: "/interactive-stories" },
     { name: "Mood Tracker", href: "/mood-logging" },
+    { name: "Time Tracker", href: "/time-tracker" },
     { name: "Peer Mentor", href: "/peer-mentor" },
     { name: "Wiki", href: "/wiki" },
     { name: "Analytics", href: "/analytics" },

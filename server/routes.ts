@@ -276,6 +276,88 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Time Management routes - "Wise Time Flucks" system
+  app.get("/api/time-entries", async (req, res) => {
+    try {
+      // For now, use a mock user ID (in real app, get from session)
+      const userId = 1;
+      const entries = await storage.getTimeEntries(userId);
+      res.json(entries);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch time entries" });
+    }
+  });
+
+  app.post("/api/time-entries", async (req, res) => {
+    try {
+      // For now, use a mock user ID (in real app, get from session)
+      const userId = 1;
+      const entryData = { ...req.body, userId };
+      const entry = await storage.createTimeEntry(entryData);
+      res.json(entry);
+    } catch (error) {
+      res.status(400).json({ message: error instanceof Error ? error.message : "Failed to create time entry" });
+    }
+  });
+
+  app.put("/api/time-entries/:id", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const entry = await storage.updateTimeEntry(parseInt(id), req.body);
+      if (!entry) {
+        return res.status(404).json({ message: "Time entry not found" });
+      }
+      res.json(entry);
+    } catch (error) {
+      res.status(400).json({ message: error instanceof Error ? error.message : "Failed to update time entry" });
+    }
+  });
+
+  app.get("/api/time-entries/active", async (req, res) => {
+    try {
+      // For now, use a mock user ID (in real app, get from session)
+      const userId = 1;
+      const activeEntry = await storage.getActiveTimeEntry(userId);
+      res.json(activeEntry);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch active time entry" });
+    }
+  });
+
+  app.get("/api/time-goals", async (req, res) => {
+    try {
+      // For now, use a mock user ID (in real app, get from session)
+      const userId = 1;
+      const goals = await storage.getTimeGoals(userId);
+      res.json(goals);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch time goals" });
+    }
+  });
+
+  app.post("/api/time-goals", async (req, res) => {
+    try {
+      // For now, use a mock user ID (in real app, get from session)
+      const userId = 1;
+      const goalData = { ...req.body, userId };
+      const goal = await storage.createTimeGoal(goalData);
+      res.json(goal);
+    } catch (error) {
+      res.status(400).json({ message: error instanceof Error ? error.message : "Failed to create time goal" });
+    }
+  });
+
+  app.get("/api/time-insights", async (req, res) => {
+    try {
+      // For now, use a mock user ID (in real app, get from session)
+      const userId = 1;
+      const insights = await storage.getTimeInsights(userId);
+      res.json(insights);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch time insights" });
+    }
+  });
+
   // Clinic Inventory Management routes
   app.get("/api/clinic-inventory", async (req, res) => {
     try {

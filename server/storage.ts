@@ -1,7 +1,7 @@
 import { 
   users, products, productConfigurations, orders, educationalContent, partnershipRequests,
   financialRecords, budgetItems, budgetVotes, communityDividends,
-  moodEntries, wellnessGoals, moodInsights,
+  moodEntries, wellnessGoals, moodInsights, timeEntries, timeGoals, timeInsights,
   type User, type InsertUser, type Product, type InsertProduct,
   type ProductConfiguration, type InsertProductConfiguration,
   type Order, type InsertOrder, type EducationalContent, type InsertEducationalContent,
@@ -12,7 +12,10 @@ import {
   type CommunityDividend, type InsertCommunityDividend,
   type MoodEntry, type InsertMoodEntry,
   type WellnessGoal, type InsertWellnessGoal,
-  type MoodInsight, type InsertMoodInsight
+  type MoodInsight, type InsertMoodInsight,
+  type TimeEntry, type InsertTimeEntry,
+  type TimeGoal, type InsertTimeGoal,
+  type TimeInsight, type InsertTimeInsight
 } from "@shared/schema";
 
 export interface IStorage {
@@ -96,6 +99,25 @@ export interface IStorage {
   createMoodInsight(insight: InsertMoodInsight): Promise<MoodInsight>;
   acknowledgeMoodInsight(id: number): Promise<MoodInsight | undefined>;
 
+  // Time Management methods - "Wise Time Flucks" system
+  getTimeEntries(userId: number): Promise<TimeEntry[]>;
+  getTimeEntry(id: number): Promise<TimeEntry | undefined>;
+  createTimeEntry(entry: InsertTimeEntry): Promise<TimeEntry>;
+  updateTimeEntry(id: number, entry: Partial<InsertTimeEntry>): Promise<TimeEntry | undefined>;
+  deleteTimeEntry(id: number): Promise<boolean>;
+  getTimeEntriesByDateRange(userId: number, startDate: string, endDate: string): Promise<TimeEntry[]>;
+  getActiveTimeEntry(userId: number): Promise<TimeEntry | undefined>;
+  
+  getTimeGoals(userId: number): Promise<TimeGoal[]>;
+  getTimeGoal(id: number): Promise<TimeGoal | undefined>;
+  createTimeGoal(goal: InsertTimeGoal): Promise<TimeGoal>;
+  updateTimeGoal(id: number, goal: Partial<InsertTimeGoal>): Promise<TimeGoal | undefined>;
+  deleteTimeGoal(id: number): Promise<boolean>;
+  
+  getTimeInsights(userId: number): Promise<TimeInsight[]>;
+  createTimeInsight(insight: InsertTimeInsight): Promise<TimeInsight>;
+  acknowledgeTimeInsight(id: number): Promise<TimeInsight | undefined>;
+
   // Clinic Inventory methods
   getClinicInventory(): Promise<any[]>;
   updateInventoryStock(itemId: number, quantity: number, notes?: string): Promise<any>;
@@ -119,6 +141,9 @@ export class MemStorage implements IStorage {
   private moodEntries: Map<number, MoodEntry>;
   private wellnessGoals: Map<number, WellnessGoal>;
   private moodInsights: Map<number, MoodInsight>;
+  private timeEntries: Map<number, TimeEntry>;
+  private timeGoals: Map<number, TimeGoal>;
+  private timeInsights: Map<number, TimeInsight>;
   private currentUserId: number;
   private currentProductId: number;
   private currentConfigId: number;
@@ -132,6 +157,9 @@ export class MemStorage implements IStorage {
   private currentMoodEntryId: number;
   private currentWellnessGoalId: number;
   private currentMoodInsightId: number;
+  private currentTimeEntryId: number;
+  private currentTimeGoalId: number;
+  private currentTimeInsightId: number;
   private clinicInventory: Map<number, any>;
   private stockAlerts: Map<number, any>;
   private restockOrders: Map<number, any>;
@@ -153,6 +181,9 @@ export class MemStorage implements IStorage {
     this.moodEntries = new Map();
     this.wellnessGoals = new Map();
     this.moodInsights = new Map();
+    this.timeEntries = new Map();
+    this.timeGoals = new Map();
+    this.timeInsights = new Map();
     this.currentUserId = 1;
     this.currentProductId = 1;
     this.currentConfigId = 1;
@@ -166,6 +197,9 @@ export class MemStorage implements IStorage {
     this.currentMoodEntryId = 1;
     this.currentWellnessGoalId = 1;
     this.currentMoodInsightId = 1;
+    this.currentTimeEntryId = 1;
+    this.currentTimeGoalId = 1;
+    this.currentTimeInsightId = 1;
     this.clinicInventory = new Map();
     this.stockAlerts = new Map();
     this.restockOrders = new Map();
@@ -881,6 +915,120 @@ export class MemStorage implements IStorage {
       acknowledgedAt: new Date(),
     };
     this.moodInsights.set(id, updated);
+    return updated;
+  }
+
+  // Time Management methods - "Wise Time Flucks" system
+  async getTimeEntries(userId: number): Promise<TimeEntry[]> {
+    return Array.from(this.timeEntries.values()).filter(entry => entry.userId === userId);
+  }
+
+  async getTimeEntry(id: number): Promise<TimeEntry | undefined> {
+    return this.timeEntries.get(id);
+  }
+
+  async createTimeEntry(entry: InsertTimeEntry): Promise<TimeEntry> {
+    const newEntry: TimeEntry = {
+      ...entry,
+      id: this.currentTimeEntryId++,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+    this.timeEntries.set(newEntry.id, newEntry);
+    return newEntry;
+  }
+
+  async updateTimeEntry(id: number, entry: Partial<InsertTimeEntry>): Promise<TimeEntry | undefined> {
+    const existing = this.timeEntries.get(id);
+    if (!existing) return undefined;
+    
+    const updated: TimeEntry = {
+      ...existing,
+      ...entry,
+      updatedAt: new Date(),
+    };
+    this.timeEntries.set(id, updated);
+    return updated;
+  }
+
+  async deleteTimeEntry(id: number): Promise<boolean> {
+    return this.timeEntries.delete(id);
+  }
+
+  async getTimeEntriesByDateRange(userId: number, startDate: string, endDate: string): Promise<TimeEntry[]> {
+    return Array.from(this.timeEntries.values()).filter(entry => 
+      entry.userId === userId && 
+      entry.date >= startDate && 
+      entry.date <= endDate
+    );
+  }
+
+  async getActiveTimeEntry(userId: number): Promise<TimeEntry | undefined> {
+    return Array.from(this.timeEntries.values()).find(entry => 
+      entry.userId === userId && entry.endTime === null
+    );
+  }
+
+  async getTimeGoals(userId: number): Promise<TimeGoal[]> {
+    return Array.from(this.timeGoals.values()).filter(goal => goal.userId === userId);
+  }
+
+  async getTimeGoal(id: number): Promise<TimeGoal | undefined> {
+    return this.timeGoals.get(id);
+  }
+
+  async createTimeGoal(goal: InsertTimeGoal): Promise<TimeGoal> {
+    const newGoal: TimeGoal = {
+      ...goal,
+      id: this.currentTimeGoalId++,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+    this.timeGoals.set(newGoal.id, newGoal);
+    return newGoal;
+  }
+
+  async updateTimeGoal(id: number, goal: Partial<InsertTimeGoal>): Promise<TimeGoal | undefined> {
+    const existing = this.timeGoals.get(id);
+    if (!existing) return undefined;
+    
+    const updated: TimeGoal = {
+      ...existing,
+      ...goal,
+      updatedAt: new Date(),
+    };
+    this.timeGoals.set(id, updated);
+    return updated;
+  }
+
+  async deleteTimeGoal(id: number): Promise<boolean> {
+    return this.timeGoals.delete(id);
+  }
+
+  async getTimeInsights(userId: number): Promise<TimeInsight[]> {
+    return Array.from(this.timeInsights.values()).filter(insight => insight.userId === userId);
+  }
+
+  async createTimeInsight(insight: InsertTimeInsight): Promise<TimeInsight> {
+    const newInsight: TimeInsight = {
+      ...insight,
+      id: this.currentTimeInsightId++,
+      generatedAt: new Date(),
+    };
+    this.timeInsights.set(newInsight.id, newInsight);
+    return newInsight;
+  }
+
+  async acknowledgeTimeInsight(id: number): Promise<TimeInsight | undefined> {
+    const existing = this.timeInsights.get(id);
+    if (!existing) return undefined;
+    
+    const updated: TimeInsight = {
+      ...existing,
+      isAcknowledged: true,
+      acknowledgedAt: new Date(),
+    };
+    this.timeInsights.set(id, updated);
     return updated;
   }
 

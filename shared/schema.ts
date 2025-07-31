@@ -641,3 +641,89 @@ export type WellnessGoal = typeof wellnessGoals.$inferSelect;
 
 export type InsertMoodInsight = z.infer<typeof insertMoodInsightSchema>;
 export type MoodInsight = typeof moodInsights.$inferSelect;
+
+// Time Management Tables - "Wise Time Flucks" Creative Commons System
+export const timeEntries = pgTable("time_entries", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  date: date("date").notNull(),
+  startTime: text("start_time").notNull(), // HH:MM format
+  endTime: text("end_time"), // HH:MM format, null if still running
+  duration: integer("duration_minutes"), // calculated duration in minutes
+  category: text("category").notNull(), // work, wellness, personal, creative, etc.
+  project: text("project"), // specific project or activity name
+  description: text("description"),
+  energyBefore: integer("energy_before"), // 1-5 scale
+  energyAfter: integer("energy_after"), // 1-5 scale
+  focusQuality: integer("focus_quality"), // 1-5 scale
+  satisfaction: integer("satisfaction"), // 1-5 scale
+  tags: text("tags").array(), // productivity, flow_state, distracted, etc.
+  timeWisdom: text("time_wisdom"), // personal reflection on time use
+  isCreativeCommons: boolean("is_creative_commons").default(false), // if work can be shared
+  wiseTimeFluck: text("wise_time_fluck"), // personal mantra or insight
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const timeGoals = pgTable("time_goals", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  title: text("title").notNull(),
+  description: text("description"),
+  category: text("category").notNull(), // same categories as time entries
+  targetHoursDaily: integer("target_hours_daily"), // daily target in hours
+  targetHoursWeekly: integer("target_hours_weekly"), // weekly target in hours
+  targetHoursMonthly: integer("target_hours_monthly"), // monthly target in hours
+  priority: text("priority").default("medium").notNull(), // high, medium, low
+  reminderTime: text("reminder_time"), // HH:MM format
+  status: text("status").default("active").notNull(), // active, paused, completed, cancelled
+  startDate: date("start_date").notNull(),
+  endDate: date("end_date"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const timeInsights = pgTable("time_insights", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  insightType: text("insight_type").notNull(), // pattern, productivity_peak, time_waste, balance
+  title: text("title").notNull(),
+  description: text("description").notNull(),
+  category: text("category"), // which time category this insight relates to
+  timePattern: text("time_pattern"), // morning_person, night_owl, afternoon_slump, etc.
+  recommendation: text("recommendation"), // suggested improvements
+  wiseTimeFluck: text("wise_time_fluck"), // wisdom gained about time management
+  confidence: integer("confidence").notNull(), // 1-100 percentage
+  dataPoints: text("data_points").array(), // referenced time entry IDs
+  generatedAt: timestamp("generated_at").defaultNow().notNull(),
+  acknowledgedAt: timestamp("acknowledged_at"),
+  isAcknowledged: boolean("is_acknowledged").default(false).notNull(),
+});
+
+// Schema validation for time management
+export const insertTimeEntrySchema = createInsertSchema(timeEntries).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertTimeGoalSchema = createInsertSchema(timeGoals).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertTimeInsightSchema = createInsertSchema(timeInsights).omit({
+  id: true,
+  generatedAt: true,
+});
+
+// Types for time management
+export type InsertTimeEntry = z.infer<typeof insertTimeEntrySchema>;
+export type TimeEntry = typeof timeEntries.$inferSelect;
+
+export type InsertTimeGoal = z.infer<typeof insertTimeGoalSchema>;
+export type TimeGoal = typeof timeGoals.$inferSelect;
+
+export type InsertTimeInsight = z.infer<typeof insertTimeInsightSchema>;
+export type TimeInsight = typeof timeInsights.$inferSelect;
