@@ -142,7 +142,7 @@ export function Footer() {
         <div className="border-t border-gray-800 mt-8 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="text-sm text-gray-400">
-              <p>&copy; 2025 fluck.wtf. All rights reserved.</p>
+              <p>© 2025 Fluck‽ - Licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">Creative Commons BY-SA 4.0</a></p>
               <p className="mt-1">Sustainable protection. Inclusive design. Body-positive healthcare.</p>
             </div>
             
