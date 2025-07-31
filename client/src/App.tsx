@@ -34,6 +34,7 @@ import InteractiveStories from "@/pages/interactive-stories";
 import Newsletter from "@/pages/newsletter";
 import OpenBooks from "@/pages/open-books";
 import MaterialsScience from "@/pages/materials-science";
+import MoodLogging from "@/pages/mood-logging";
 import { TabNavigation } from "@/components/TabNavigation";
 
 function Router() {
@@ -65,6 +66,7 @@ function Router() {
           <Route path="/newsletter" component={Newsletter} />
           <Route path="/open-books" component={OpenBooks} />
           <Route path="/materials-science" component={MaterialsScience} />
+          <Route path="/mood-logging" component={MoodLogging} />
           <Route path="/clinic-dashboard" component={ClinicDashboard} />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />

@@ -12,6 +12,7 @@ export function Header() {
   const navigation = [
     { name: "Products", href: "/products" },
     { name: "Stories", href: "/interactive-stories" },
+    { name: "Mood Tracker", href: "/mood-logging" },
     { name: "Peer Mentor", href: "/peer-mentor" },
     { name: "Wiki", href: "/wiki" },
     { name: "Analytics", href: "/analytics" },

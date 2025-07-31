@@ -1,6 +1,7 @@
 import { 
   users, products, productConfigurations, orders, educationalContent, partnershipRequests,
   financialRecords, budgetItems, budgetVotes, communityDividends,
+  moodEntries, wellnessGoals, moodInsights,
   type User, type InsertUser, type Product, type InsertProduct,
   type ProductConfiguration, type InsertProductConfiguration,
   type Order, type InsertOrder, type EducationalContent, type InsertEducationalContent,
@@ -8,7 +9,10 @@ import {
   type FinancialRecord, type InsertFinancialRecord,
   type BudgetItem, type InsertBudgetItem,
   type BudgetVote, type InsertBudgetVote,
-  type CommunityDividend, type InsertCommunityDividend
+  type CommunityDividend, type InsertCommunityDividend,
+  type MoodEntry, type InsertMoodEntry,
+  type WellnessGoal, type InsertWellnessGoal,
+  type MoodInsight, type InsertMoodInsight
 } from "@shared/schema";
 
 export interface IStorage {
@@ -74,6 +78,24 @@ export interface IStorage {
   getCommunityDividendsByUser(userId: number): Promise<CommunityDividend[]>;
   createCommunityDividend(dividend: InsertCommunityDividend): Promise<CommunityDividend>;
 
+  // Mood and Wellness Logging methods
+  getMoodEntries(userId: number): Promise<MoodEntry[]>;
+  getMoodEntry(id: number): Promise<MoodEntry | undefined>;
+  createMoodEntry(entry: InsertMoodEntry): Promise<MoodEntry>;
+  updateMoodEntry(id: number, entry: Partial<InsertMoodEntry>): Promise<MoodEntry | undefined>;
+  deleteMoodEntry(id: number): Promise<boolean>;
+  getMoodEntriesByDateRange(userId: number, startDate: string, endDate: string): Promise<MoodEntry[]>;
+  
+  getWellnessGoals(userId: number): Promise<WellnessGoal[]>;
+  getWellnessGoal(id: number): Promise<WellnessGoal | undefined>;
+  createWellnessGoal(goal: InsertWellnessGoal): Promise<WellnessGoal>;
+  updateWellnessGoal(id: number, goal: Partial<InsertWellnessGoal>): Promise<WellnessGoal | undefined>;
+  deleteWellnessGoal(id: number): Promise<boolean>;
+  
+  getMoodInsights(userId: number): Promise<MoodInsight[]>;
+  createMoodInsight(insight: InsertMoodInsight): Promise<MoodInsight>;
+  acknowledgeMoodInsight(id: number): Promise<MoodInsight | undefined>;
+
   // Clinic Inventory methods
   getClinicInventory(): Promise<any[]>;
   updateInventoryStock(itemId: number, quantity: number, notes?: string): Promise<any>;
@@ -94,6 +116,9 @@ export class MemStorage implements IStorage {
   private budgetItems: Map<number, BudgetItem>;
   private budgetVotes: Map<number, BudgetVote>;
   private communityDividends: Map<number, CommunityDividend>;
+  private moodEntries: Map<number, MoodEntry>;
+  private wellnessGoals: Map<number, WellnessGoal>;
+  private moodInsights: Map<number, MoodInsight>;
   private currentUserId: number;
   private currentProductId: number;
   private currentConfigId: number;
@@ -104,6 +129,9 @@ export class MemStorage implements IStorage {
   private currentBudgetItemId: number;
   private currentBudgetVoteId: number;
   private currentCommunityDividendId: number;
+  private currentMoodEntryId: number;
+  private currentWellnessGoalId: number;
+  private currentMoodInsightId: number;
   private clinicInventory: Map<number, any>;
   private stockAlerts: Map<number, any>;
   private restockOrders: Map<number, any>;
@@ -122,6 +150,9 @@ export class MemStorage implements IStorage {
     this.budgetItems = new Map();
     this.budgetVotes = new Map();
     this.communityDividends = new Map();
+    this.moodEntries = new Map();
+    this.wellnessGoals = new Map();
+    this.moodInsights = new Map();
     this.currentUserId = 1;
     this.currentProductId = 1;
     this.currentConfigId = 1;
@@ -132,6 +163,9 @@ export class MemStorage implements IStorage {
     this.currentBudgetItemId = 1;
     this.currentBudgetVoteId = 1;
     this.currentCommunityDividendId = 1;
+    this.currentMoodEntryId = 1;
+    this.currentWellnessGoalId = 1;
+    this.currentMoodInsightId = 1;
     this.clinicInventory = new Map();
     this.stockAlerts = new Map();
     this.restockOrders = new Map();
@@ -740,6 +774,114 @@ export class MemStorage implements IStorage {
 
     this.restockOrders.set(id, order);
     return order;
+  }
+
+  // Mood and Wellness Logging methods
+  async getMoodEntries(userId: number): Promise<MoodEntry[]> {
+    return Array.from(this.moodEntries.values()).filter(entry => entry.userId === userId);
+  }
+
+  async getMoodEntry(id: number): Promise<MoodEntry | undefined> {
+    return this.moodEntries.get(id);
+  }
+
+  async createMoodEntry(entry: InsertMoodEntry): Promise<MoodEntry> {
+    const newEntry: MoodEntry = {
+      ...entry,
+      id: this.currentMoodEntryId++,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+    this.moodEntries.set(newEntry.id, newEntry);
+    return newEntry;
+  }
+
+  async updateMoodEntry(id: number, entry: Partial<InsertMoodEntry>): Promise<MoodEntry | undefined> {
+    const existing = this.moodEntries.get(id);
+    if (!existing) return undefined;
+    
+    const updated: MoodEntry = {
+      ...existing,
+      ...entry,
+      updatedAt: new Date(),
+    };
+    this.moodEntries.set(id, updated);
+    return updated;
+  }
+
+  async deleteMoodEntry(id: number): Promise<boolean> {
+    return this.moodEntries.delete(id);
+  }
+
+  async getMoodEntriesByDateRange(userId: number, startDate: string, endDate: string): Promise<MoodEntry[]> {
+    return Array.from(this.moodEntries.values()).filter(entry => 
+      entry.userId === userId && 
+      entry.date >= startDate && 
+      entry.date <= endDate
+    );
+  }
+
+  async getWellnessGoals(userId: number): Promise<WellnessGoal[]> {
+    return Array.from(this.wellnessGoals.values()).filter(goal => goal.userId === userId);
+  }
+
+  async getWellnessGoal(id: number): Promise<WellnessGoal | undefined> {
+    return this.wellnessGoals.get(id);
+  }
+
+  async createWellnessGoal(goal: InsertWellnessGoal): Promise<WellnessGoal> {
+    const newGoal: WellnessGoal = {
+      ...goal,
+      id: this.currentWellnessGoalId++,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+    this.wellnessGoals.set(newGoal.id, newGoal);
+    return newGoal;
+  }
+
+  async updateWellnessGoal(id: number, goal: Partial<InsertWellnessGoal>): Promise<WellnessGoal | undefined> {
+    const existing = this.wellnessGoals.get(id);
+    if (!existing) return undefined;
+    
+    const updated: WellnessGoal = {
+      ...existing,
+      ...goal,
+      updatedAt: new Date(),
+    };
+    this.wellnessGoals.set(id, updated);
+    return updated;
+  }
+
+  async deleteWellnessGoal(id: number): Promise<boolean> {
+    return this.wellnessGoals.delete(id);
+  }
+
+  async getMoodInsights(userId: number): Promise<MoodInsight[]> {
+    return Array.from(this.moodInsights.values()).filter(insight => insight.userId === userId);
+  }
+
+  async createMoodInsight(insight: InsertMoodInsight): Promise<MoodInsight> {
+    const newInsight: MoodInsight = {
+      ...insight,
+      id: this.currentMoodInsightId++,
+      generatedAt: new Date(),
+    };
+    this.moodInsights.set(newInsight.id, newInsight);
+    return newInsight;
+  }
+
+  async acknowledgeMoodInsight(id: number): Promise<MoodInsight | undefined> {
+    const existing = this.moodInsights.get(id);
+    if (!existing) return undefined;
+    
+    const updated: MoodInsight = {
+      ...existing,
+      isAcknowledged: true,
+      acknowledgedAt: new Date(),
+    };
+    this.moodInsights.set(id, updated);
+    return updated;
   }
 
   private generateStockAlerts(): void {

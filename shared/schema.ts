@@ -562,3 +562,82 @@ export type BudgetVote = typeof budgetVotes.$inferSelect;
 
 export type InsertCommunityDividend = z.infer<typeof insertCommunityDividendSchema>;
 export type CommunityDividend = typeof communityDividends.$inferSelect;
+
+// Mood and Wellness Logging Tables
+export const moodEntries = pgTable("mood_entries", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  date: date("date").notNull(),
+  moodEmoji: text("mood_emoji").notNull(), // 😊, 😔, 😡, etc.
+  energyLevel: integer("energy_level").notNull(), // 1-5 scale
+  stressLevel: integer("stress_level").notNull(), // 1-5 scale
+  sleepQuality: integer("sleep_quality"), // 1-5 scale
+  physicalSymptoms: text("physical_symptoms").array(), // headache, fatigue, etc.
+  emotionalState: text("emotional_state").array(), // anxious, happy, sad, etc.
+  notes: text("notes"),
+  tags: text("tags").array(), // work, relationship, health, etc.
+  isPrivate: boolean("is_private").default(true).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const wellnessGoals = pgTable("wellness_goals", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  title: text("title").notNull(),
+  description: text("description"),
+  category: text("category").notNull(), // mental_health, physical_health, sexual_health, etc.
+  targetEmoji: text("target_emoji"), // Goal mood emoji
+  targetValue: integer("target_value"), // Target score for metrics
+  frequency: text("frequency").notNull(), // daily, weekly, monthly
+  startDate: date("start_date").notNull(),
+  endDate: date("end_date"),
+  status: text("status").default("active").notNull(), // active, paused, completed
+  reminderTime: text("reminder_time"), // HH:MM format
+  isActive: boolean("is_active").default(true).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const moodInsights = pgTable("mood_insights", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  insightType: text("insight_type").notNull(), // pattern, trend, correlation
+  title: text("title").notNull(),
+  description: text("description").notNull(),
+  dataPoints: text("data_points").array(), // Referenced mood entry IDs or dates
+  confidence: integer("confidence").notNull(), // 1-100 percentage
+  isPositive: boolean("is_positive"), // Whether it's a positive or concerning insight
+  suggestedActions: text("suggested_actions").array(),
+  generatedAt: timestamp("generated_at").defaultNow().notNull(),
+  acknowledgedAt: timestamp("acknowledged_at"),
+  isAcknowledged: boolean("is_acknowledged").default(false).notNull(),
+});
+
+// Schema validation
+export const insertMoodEntrySchema = createInsertSchema(moodEntries).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertWellnessGoalSchema = createInsertSchema(wellnessGoals).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertMoodInsightSchema = createInsertSchema(moodInsights).omit({
+  id: true,
+  generatedAt: true,
+});
+
+// Types
+export type InsertMoodEntry = z.infer<typeof insertMoodEntrySchema>;
+export type MoodEntry = typeof moodEntries.$inferSelect;
+
+export type InsertWellnessGoal = z.infer<typeof insertWellnessGoalSchema>;
+export type WellnessGoal = typeof wellnessGoals.$inferSelect;
+
+export type InsertMoodInsight = z.infer<typeof insertMoodInsightSchema>;
+export type MoodInsight = typeof moodInsights.$inferSelect;

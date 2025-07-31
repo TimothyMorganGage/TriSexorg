@@ -230,6 +230,52 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Mood and Wellness Logging routes
+  app.get("/api/mood-entries", async (req, res) => {
+    try {
+      // For now, use a mock user ID (in real app, get from session)
+      const userId = 1;
+      const entries = await storage.getMoodEntries(userId);
+      res.json(entries);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch mood entries" });
+    }
+  });
+
+  app.post("/api/mood-entries", async (req, res) => {
+    try {
+      // For now, use a mock user ID (in real app, get from session)
+      const userId = 1;
+      const entryData = { ...req.body, userId };
+      const entry = await storage.createMoodEntry(entryData);
+      res.json(entry);
+    } catch (error) {
+      res.status(400).json({ message: error instanceof Error ? error.message : "Failed to create mood entry" });
+    }
+  });
+
+  app.get("/api/wellness-goals", async (req, res) => {
+    try {
+      // For now, use a mock user ID (in real app, get from session)
+      const userId = 1;
+      const goals = await storage.getWellnessGoals(userId);
+      res.json(goals);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch wellness goals" });
+    }
+  });
+
+  app.get("/api/mood-insights", async (req, res) => {
+    try {
+      // For now, use a mock user ID (in real app, get from session)
+      const userId = 1;
+      const insights = await storage.getMoodInsights(userId);
+      res.json(insights);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch mood insights" });
+    }
+  });
+
   // Clinic Inventory Management routes
   app.get("/api/clinic-inventory", async (req, res) => {
     try {
