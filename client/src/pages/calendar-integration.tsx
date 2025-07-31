@@ -10,13 +10,15 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
-import { Calendar, Download, Upload, Settings, Clock, Smartphone, Globe, Server, Timer } from "lucide-react";
+import { Calendar, Download, Upload, Settings, Clock, Smartphone, Globe, Server, Timer, Wand2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { CalendarSyncWizard } from "@/components/CalendarSyncWizard";
 
 import type { CalendarConnection, ScheduledTask, TaskTemplate } from "@shared/schema";
 
 export default function CalendarIntegration() {
   const [activeTab, setActiveTab] = useState("connections");
+  const [showWizard, setShowWizard] = useState(false);
   const [newConnection, setNewConnection] = useState({
     calendarType: "",
     connectionName: "",
@@ -247,9 +249,29 @@ export default function CalendarIntegration() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
+                {/* Quick Actions */}
+                <div className="flex gap-4 mb-6">
+                  <Button
+                    onClick={() => setShowWizard(true)}
+                    className="flex-1"
+                    size="lg"
+                  >
+                    <Wand2 className="mr-2 h-5 w-5" />
+                    Launch Setup Wizard
+                  </Button>
+                  <Button
+                    variant="outline"
+                    className="flex-1"
+                    size="lg"
+                  >
+                    <Download className="mr-2 h-5 w-5" />
+                    Import Settings
+                  </Button>
+                </div>
+
                 {/* Add New Connection Form */}
                 <div className="border rounded-lg p-4 space-y-4">
-                  <h3 className="font-semibold">Add New Calendar Connection</h3>
+                  <h3 className="font-semibold">Manual Connection Setup</h3>
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
@@ -640,6 +662,12 @@ export default function CalendarIntegration() {
             </div>
           </TabsContent>
         </Tabs>
+
+        {/* Calendar Sync Wizard */}
+        <CalendarSyncWizard 
+          isOpen={showWizard} 
+          onClose={() => setShowWizard(false)} 
+        />
       </div>
     </div>
   );

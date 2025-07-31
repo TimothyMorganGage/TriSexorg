@@ -294,7 +294,7 @@ export default function Home() {
               </div>
               <h3 className="text-lg font-semibold text-neutral mb-2">Community Spaces</h3>
               <p className="text-gray-600 text-sm">
-                LGBTQ+ centers, bathhouses, and community health programs
+                2SLGBTIQA+ 🌈 🏳️‍🌈🏳️‍⚧️⚧️ centers, bathhouses, and community health programs
               </p>
             </div>
           </div>
