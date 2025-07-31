@@ -949,3 +949,181 @@ export type RestSuggestion = typeof restSuggestions.$inferSelect;
 
 export type InsertSmartBreakSession = z.infer<typeof insertSmartBreakSessionSchema>;
 export type SmartBreakSession = typeof smartBreakSessions.$inferSelect;
+
+// Messaging Platform Integration
+export const messagingIntegrations = pgTable("messaging_integrations", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  platform: text("platform").notNull(), // 'imessage', 'google_messages', 'facebook_messenger', 'whatsapp', 'signal'
+  platformUserId: text("platform_user_id").notNull(),
+  accessToken: text("access_token"),
+  refreshToken: text("refresh_token"),
+  phoneNumber: text("phone_number"),
+  isActive: boolean("is_active").default(true),
+  encryptionKey: text("encryption_key"), // for end-to-end encryption
+  preferences: jsonb("preferences").default({}),
+  lastSyncAt: timestamp("last_sync_at"),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Healthcare System Integration
+export const healthcareIntegrations = pgTable("healthcare_integrations", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  system: text("system").notNull(), // 'mychart', 'apple_health', 'openehr', 'epic', 'cerner', 'allscripts'
+  systemUserId: text("system_user_id"),
+  apiKey: text("api_key"),
+  accessToken: text("access_token"),
+  refreshToken: text("refresh_token"),
+  facilityId: text("facility_id"),
+  patientId: text("patient_id"),
+  isActive: boolean("is_active").default(true),
+  dataPermissions: jsonb("data_permissions").default([]), // what data types are accessible
+  lastSyncAt: timestamp("last_sync_at"),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Accessibility & Translation Features
+export const accessibilitySettings = pgTable("accessibility_settings", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  brailleEnabled: boolean("braille_enabled").default(false),
+  brailleGrade: text("braille_grade").default("grade2"), // 'grade1', 'grade2', 'grade3'
+  signLanguageEnabled: boolean("sign_language_enabled").default(false),
+  signLanguageType: text("sign_language_type").default("asl"), // 'asl', 'bsl', 'auslan', 'psl'
+  speechToTextEnabled: boolean("speech_to_text_enabled").default(false),
+  textToSpeechEnabled: boolean("text_to_speech_enabled").default(false),
+  voiceSettings: jsonb("voice_settings").default({}), // speed, pitch, voice type
+  highContrastMode: boolean("high_contrast_mode").default(false),
+  largeFontMode: boolean("large_font_mode").default(false),
+  screenReaderCompatible: boolean("screen_reader_compatible").default(false),
+  keyboardNavigationOnly: boolean("keyboard_navigation_only").default(false),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Mentor & Facilitator Co-editing Sessions
+export const coEditingSessions = pgTable("co_editing_sessions", {
+  id: serial("id").primaryKey(),
+  initiatorId: integer("initiator_id").references(() => users.id).notNull(),
+  mentorId: integer("mentor_id").references(() => users.id),
+  facilitatorId: integer("facilitator_id").references(() => users.id),
+  sessionType: text("session_type").notNull(), // 'peer_mentoring', 'health_guidance', 'accessibility_support'
+  documentId: text("document_id"), // ID of document being co-edited
+  messagingPlatform: text("messaging_platform"), // which platform to use for communication
+  healthcareContext: text("healthcare_context"), // related health data context
+  accessibilityMode: text("accessibility_mode"), // 'braille', 'sign_language', 'voice_only', 'text_only'
+  isActive: boolean("is_active").default(true),
+  sessionData: jsonb("session_data").default({}), // real-time editing state
+  startedAt: timestamp("started_at").defaultNow(),
+  endedAt: timestamp("ended_at"),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// Real-time Messages for Co-editing
+export const coEditingMessages = pgTable("co_editing_messages", {
+  id: serial("id").primaryKey(),
+  sessionId: integer("session_id").references(() => coEditingSessions.id).notNull(),
+  senderId: integer("sender_id").references(() => users.id).notNull(),
+  messageType: text("message_type").notNull(), // 'text', 'voice', 'braille', 'sign_language', 'health_data'
+  content: text("content").notNull(),
+  brailleTranslation: text("braille_translation"),
+  signLanguageTranslation: text("sign_language_translation"),
+  voiceTranscript: text("voice_transcript"),
+  healthDataReference: jsonb("health_data_reference").default({}),
+  platformDeliveryStatus: jsonb("platform_delivery_status").default({}), // delivery status per platform
+  isTranslated: boolean("is_translated").default(false),
+  sentAt: timestamp("sent_at").defaultNow(),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// Translation & Accessibility Services
+export const translationServices = pgTable("translation_services", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  sourceText: text("source_text").notNull(),
+  targetFormat: text("target_format").notNull(), // 'braille', 'sign_language', 'simplified_text', 'audio'
+  translatedContent: text("translated_content"),
+  qualityScore: integer("quality_score"), // 1-5 translation quality
+  isHumanVerified: boolean("is_human_verified").default(false),
+  verifiedBy: integer("verified_by").references(() => users.id),
+  serviceProvider: text("service_provider"), // 'internal_ai', 'human_translator', 'certified_interpreter'
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// Health Data Sync Records
+export const healthDataSync = pgTable("health_data_sync", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  sourceSystem: text("source_system").notNull(),
+  dataType: text("data_type").notNull(), // 'vitals', 'medications', 'appointments', 'lab_results', 'notes'
+  syncStatus: text("sync_status").default("pending"), // 'pending', 'synced', 'failed', 'partial'
+  dataPayload: jsonb("data_payload").default({}),
+  encryptedData: text("encrypted_data"), // HIPAA-compliant encrypted health data
+  lastModified: timestamp("last_modified"),
+  syncedAt: timestamp("synced_at"),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// Validation schemas for messaging integration
+export const insertMessagingIntegrationSchema = createInsertSchema(messagingIntegrations).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertHealthcareIntegrationSchema = createInsertSchema(healthcareIntegrations).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertAccessibilitySettingsSchema = createInsertSchema(accessibilitySettings).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertCoEditingSessionSchema = createInsertSchema(coEditingSessions).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertCoEditingMessageSchema = createInsertSchema(coEditingMessages).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertTranslationServiceSchema = createInsertSchema(translationServices).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertHealthDataSyncSchema = createInsertSchema(healthDataSync).omit({
+  id: true,
+  createdAt: true,
+});
+
+// Types for messaging and healthcare integration
+export type InsertMessagingIntegration = z.infer<typeof insertMessagingIntegrationSchema>;
+export type MessagingIntegration = typeof messagingIntegrations.$inferSelect;
+
+export type InsertHealthcareIntegration = z.infer<typeof insertHealthcareIntegrationSchema>;
+export type HealthcareIntegration = typeof healthcareIntegrations.$inferSelect;
+
+export type InsertAccessibilitySettings = z.infer<typeof insertAccessibilitySettingsSchema>;
+export type AccessibilitySettings = typeof accessibilitySettings.$inferSelect;
+
+export type InsertCoEditingSession = z.infer<typeof insertCoEditingSessionSchema>;
+export type CoEditingSession = typeof coEditingSessions.$inferSelect;
+
+export type InsertCoEditingMessage = z.infer<typeof insertCoEditingMessageSchema>;
+export type CoEditingMessage = typeof coEditingMessages.$inferSelect;
+
+export type InsertTranslationService = z.infer<typeof insertTranslationServiceSchema>;
+export type TranslationService = typeof translationServices.$inferSelect;
+
+export type InsertHealthDataSync = z.infer<typeof insertHealthDataSyncSchema>;
+export type HealthDataSync = typeof healthDataSync.$inferSelect;

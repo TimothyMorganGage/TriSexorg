@@ -174,6 +174,50 @@ export interface IStorage {
   getRecentSmartBreakSessions(userId: number): Promise<any[]>;
   generateSmartBreakSuggestion(userId: number, context: any): Promise<any>;
   scheduleBreakReminders(userId: number, patternId: number, startTime: string): Promise<any[]>;
+
+  // Messaging Platform Integration methods
+  getMessagingIntegrations(userId: number): Promise<any[]>;
+  createMessagingIntegration(integration: any): Promise<any>;
+  updateMessagingIntegration(id: number, integration: any): Promise<any>;
+  syncMessagingPlatform(integrationId: number): Promise<any>;
+
+  // Healthcare System Integration methods
+  getHealthcareIntegrations(userId: number): Promise<any[]>;
+  createHealthcareIntegration(integration: any): Promise<any>;
+  updateHealthcareIntegration(id: number, integration: any): Promise<any>;
+  syncHealthcareData(integrationId: number, dataTypes: string[]): Promise<any>;
+
+  // Accessibility Settings methods
+  getAccessibilitySettings(userId: number): Promise<any>;
+  createAccessibilitySettings(settings: any): Promise<any>;
+  updateAccessibilitySettings(id: number, settings: any): Promise<any>;
+
+  // Co-editing Session methods
+  createCoEditingSession(session: any): Promise<any>;
+  getCoEditingSessions(userId: number): Promise<any[]>;
+  getActiveCoEditingSessions(userId: number): Promise<any[]>;
+  updateCoEditingSession(sessionId: number, updates: any): Promise<any>;
+  endCoEditingSession(sessionId: number): Promise<any>;
+
+  // Co-editing Message methods
+  createCoEditingMessage(message: any): Promise<any>;
+  getCoEditingMessages(sessionId: number): Promise<any[]>;
+  processMessageTranslation(messageId: number): Promise<any>;
+  deliverToPlatforms(messageId: number): Promise<any>;
+
+  // Translation Service methods
+  requestTranslation(request: any): Promise<any>;
+  getTranslations(userId: number, filters?: any): Promise<any[]>;
+  verifyTranslation(translationId: number, verifierId: number): Promise<any>;
+
+  // Health Data Sync methods
+  getHealthDataSync(userId: number, filters?: any): Promise<any[]>;
+  triggerHealthDataSync(userId: number, systems: string[], dataTypes: string[]): Promise<any>;
+  getHealthDataByType(userId: number, dataType: string): Promise<any[]>;
+
+  // Real-time WebSocket methods
+  generateWebSocketToken(userId: number, sessionId: number): Promise<string>;
+  validateWebSocketToken(token: string): Promise<any>;
 }
 
 export class MemStorage implements IStorage {
@@ -1516,6 +1560,399 @@ export class MemStorage implements IStorage {
         platforms: ["web", "desktop", "mobile"],
       }
     ];
+  }
+
+  // Messaging Platform Integration methods
+  async getMessagingIntegrations(userId: number): Promise<any[]> {
+    return [
+      {
+        id: 1,
+        userId,
+        platform: "imessage",
+        platformUserId: "user@icloud.com",
+        isActive: true,
+        preferences: { notifications: true, encryption: true },
+        lastSyncAt: new Date(),
+        createdAt: new Date(),
+      },
+      {
+        id: 2,
+        userId,
+        platform: "whatsapp",
+        platformUserId: "+1234567890",
+        isActive: true,
+        preferences: { notifications: true, businessAccount: false },
+        lastSyncAt: new Date(),
+        createdAt: new Date(),
+      }
+    ];
+  }
+
+  async createMessagingIntegration(integration: any): Promise<any> {
+    return { id: Date.now(), ...integration, createdAt: new Date(), updatedAt: new Date() };
+  }
+
+  async updateMessagingIntegration(id: number, integration: any): Promise<any> {
+    return { id, ...integration, updatedAt: new Date() };
+  }
+
+  async syncMessagingPlatform(integrationId: number): Promise<any> {
+    return { 
+      integrationId, 
+      status: "synced", 
+      messagesSynced: 25, 
+      lastSyncAt: new Date() 
+    };
+  }
+
+  // Healthcare System Integration methods
+  async getHealthcareIntegrations(userId: number): Promise<any[]> {
+    return [
+      {
+        id: 1,
+        userId,
+        system: "mychart",
+        systemUserId: "patient123",
+        facilityId: "hospital_network_1",
+        patientId: "P123456",
+        isActive: true,
+        dataPermissions: ["vitals", "medications", "appointments", "lab_results"],
+        lastSyncAt: new Date(),
+        createdAt: new Date(),
+      },
+      {
+        id: 2,
+        userId,
+        system: "apple_health",
+        systemUserId: "health_user_id",
+        isActive: true,
+        dataPermissions: ["heart_rate", "steps", "sleep", "workout_data"],
+        lastSyncAt: new Date(),
+        createdAt: new Date(),
+      }
+    ];
+  }
+
+  async createHealthcareIntegration(integration: any): Promise<any> {
+    return { id: Date.now(), ...integration, createdAt: new Date(), updatedAt: new Date() };
+  }
+
+  async updateHealthcareIntegration(id: number, integration: any): Promise<any> {
+    return { id, ...integration, updatedAt: new Date() };
+  }
+
+  async syncHealthcareData(integrationId: number, dataTypes: string[]): Promise<any> {
+    return {
+      integrationId,
+      syncedDataTypes: dataTypes,
+      recordsProcessed: 127,
+      status: "completed",
+      syncedAt: new Date()
+    };
+  }
+
+  // Accessibility Settings methods
+  async getAccessibilitySettings(userId: number): Promise<any> {
+    return {
+      id: 1,
+      userId,
+      brailleEnabled: false,
+      brailleGrade: "grade2",
+      signLanguageEnabled: false,
+      signLanguageType: "asl",
+      speechToTextEnabled: false,
+      textToSpeechEnabled: false,
+      voiceSettings: { speed: 1.0, pitch: 1.0, voice: "natural" },
+      highContrastMode: false,
+      largeFontMode: false,
+      screenReaderCompatible: false,
+      keyboardNavigationOnly: false,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+  }
+
+  async createAccessibilitySettings(settings: any): Promise<any> {
+    return { id: Date.now(), ...settings, createdAt: new Date(), updatedAt: new Date() };
+  }
+
+  async updateAccessibilitySettings(id: number, settings: any): Promise<any> {
+    return { id, ...settings, updatedAt: new Date() };
+  }
+
+  // Co-editing Session methods
+  async createCoEditingSession(session: any): Promise<any> {
+    return { 
+      id: Date.now(), 
+      ...session, 
+      isActive: true,
+      sessionData: { participants: [], currentEdit: null },
+      startedAt: new Date(),
+      createdAt: new Date() 
+    };
+  }
+
+  async getCoEditingSessions(userId: number): Promise<any[]> {
+    return [
+      {
+        id: 1,
+        initiatorId: userId,
+        mentorId: 2,
+        facilitatorId: 3,
+        sessionType: "peer_mentoring",
+        documentId: "health_plan_v1",
+        messagingPlatform: "whatsapp",
+        healthcareContext: "reproductive_health",
+        accessibilityMode: "text_only",
+        isActive: true,
+        sessionData: { 
+          participants: [userId, 2, 3],
+          currentEdit: { section: "goals", lastModified: new Date() }
+        },
+        startedAt: new Date(Date.now() - 2 * 60 * 60 * 1000),
+        createdAt: new Date(Date.now() - 2 * 60 * 60 * 1000),
+      }
+    ];
+  }
+
+  async getActiveCoEditingSessions(userId: number): Promise<any[]> {
+    const allSessions = await this.getCoEditingSessions(userId);
+    return allSessions.filter(session => session.isActive);
+  }
+
+  async updateCoEditingSession(sessionId: number, updates: any): Promise<any> {
+    return { id: sessionId, ...updates, updatedAt: new Date() };
+  }
+
+  async endCoEditingSession(sessionId: number): Promise<any> {
+    return { id: sessionId, isActive: false, endedAt: new Date() };
+  }
+
+  // Co-editing Message methods
+  async createCoEditingMessage(message: any): Promise<any> {
+    return { 
+      id: Date.now(), 
+      ...message,
+      platformDeliveryStatus: {},
+      isTranslated: false,
+      sentAt: new Date(),
+      createdAt: new Date() 
+    };
+  }
+
+  async getCoEditingMessages(sessionId: number): Promise<any[]> {
+    return [
+      {
+        id: 1,
+        sessionId,
+        senderId: 1,
+        messageType: "text",
+        content: "Let's review the health goals section together",
+        brailleTranslation: null,
+        signLanguageTranslation: null,
+        voiceTranscript: null,
+        healthDataReference: {},
+        platformDeliveryStatus: { whatsapp: "delivered", imessage: "sent" },
+        isTranslated: false,
+        sentAt: new Date(Date.now() - 10 * 60 * 1000),
+        createdAt: new Date(Date.now() - 10 * 60 * 1000),
+      },
+      {
+        id: 2,
+        sessionId,
+        senderId: 2,
+        messageType: "health_data",
+        content: "I've shared my latest vitals data for context",
+        healthDataReference: { 
+          dataType: "vitals", 
+          source: "mychart",
+          timestamp: new Date(),
+          values: { heartRate: 72, bloodPressure: "120/80" }
+        },
+        platformDeliveryStatus: { whatsapp: "delivered" },
+        isTranslated: false,
+        sentAt: new Date(Date.now() - 5 * 60 * 1000),
+        createdAt: new Date(Date.now() - 5 * 60 * 1000),
+      }
+    ];
+  }
+
+  async processMessageTranslation(messageId: number): Promise<any> {
+    return {
+      messageId,
+      translationsGenerated: ["braille", "sign_language"],
+      processingTime: 1.2,
+      status: "completed"
+    };
+  }
+
+  async deliverToPlatforms(messageId: number): Promise<any> {
+    return {
+      messageId,
+      platforms: ["whatsapp", "imessage", "facebook_messenger"],
+      deliveryStatus: {
+        whatsapp: "delivered",
+        imessage: "sent",
+        facebook_messenger: "pending"
+      },
+      deliveredAt: new Date()
+    };
+  }
+
+  // Translation Service methods
+  async requestTranslation(request: any): Promise<any> {
+    const { sourceText, targetFormat } = request;
+    
+    let translatedContent = "";
+    switch (targetFormat) {
+      case "braille":
+        translatedContent = this.convertToBraille(sourceText);
+        break;
+      case "sign_language":
+        translatedContent = this.convertToSignLanguage(sourceText);
+        break;
+      case "simplified_text":
+        translatedContent = this.simplifyText(sourceText);
+        break;
+      case "audio":
+        translatedContent = this.convertToAudioDescription(sourceText);
+        break;
+      default:
+        translatedContent = sourceText;
+    }
+    
+    return {
+      id: Date.now(),
+      ...request,
+      translatedContent,
+      qualityScore: 4,
+      isHumanVerified: false,
+      serviceProvider: "internal_ai",
+      createdAt: new Date()
+    };
+  }
+
+  async getTranslations(userId: number, filters?: any): Promise<any[]> {
+    return [
+      {
+        id: 1,
+        userId,
+        sourceText: "Your appointment is scheduled for tomorrow at 2 PM",
+        targetFormat: "braille",
+        translatedContent: "⠠⠽⠕⠥⠗ ⠁⠏⠏⠕⠊⠝⠞⠍⠢⠞ ⠊⠎ ⠎⠉⠓⠑⠙⠥⠇⠫ ⠿ ⠞⠕⠍⠕⠗⠗⠕⠺ ⠁⠞ ⠼⠃ ⠠⠏⠍",
+        qualityScore: 5,
+        isHumanVerified: true,
+        verifiedBy: 2,
+        serviceProvider: "certified_interpreter",
+        createdAt: new Date(),
+      }
+    ];
+  }
+
+  async verifyTranslation(translationId: number, verifierId: number): Promise<any> {
+    return {
+      translationId,
+      verifierId,
+      isHumanVerified: true,
+      verificationScore: 5,
+      verifiedAt: new Date()
+    };
+  }
+
+  // Health Data Sync methods
+  async getHealthDataSync(userId: number, filters?: any): Promise<any[]> {
+    return [
+      {
+        id: 1,
+        userId,
+        sourceSystem: "mychart",
+        dataType: "vitals",
+        syncStatus: "synced",
+        dataPayload: {
+          heartRate: 72,
+          bloodPressure: "120/80",
+          temperature: 98.6,
+          weight: 150,
+          recordedAt: new Date()
+        },
+        lastModified: new Date(),
+        syncedAt: new Date(),
+        createdAt: new Date(),
+      },
+      {
+        id: 2,
+        userId,
+        sourceSystem: "apple_health",
+        dataType: "activity",
+        syncStatus: "synced",
+        dataPayload: {
+          steps: 8542,
+          activeMinutes: 45,
+          caloriesBurned: 320,
+          distance: 4.2,
+          recordedAt: new Date()
+        },
+        lastModified: new Date(),
+        syncedAt: new Date(),
+        createdAt: new Date(),
+      }
+    ];
+  }
+
+  async triggerHealthDataSync(userId: number, systems: string[], dataTypes: string[]): Promise<any> {
+    return {
+      userId,
+      systems,
+      dataTypes,
+      syncJobs: systems.map(system => ({
+        system,
+        status: "initiated",
+        estimatedCompletion: new Date(Date.now() + 5 * 60 * 1000)
+      })),
+      initiatedAt: new Date()
+    };
+  }
+
+  async getHealthDataByType(userId: number, dataType: string): Promise<any[]> {
+    const allData = await this.getHealthDataSync(userId);
+    return allData.filter(record => record.dataType === dataType);
+  }
+
+  // Real-time WebSocket methods
+  async generateWebSocketToken(userId: number, sessionId: number): Promise<string> {
+    const token = `ws_token_${userId}_${sessionId}_${Date.now()}`;
+    return token;
+  }
+
+  async validateWebSocketToken(token: string): Promise<any> {
+    return {
+      valid: true,
+      userId: 1,
+      sessionId: 1,
+      permissions: ["read", "write", "translate", "healthcare_access"]
+    };
+  }
+
+  // Helper methods for translation
+  private convertToBraille(text: string): string {
+    // Simplified braille conversion for demo
+    return text.replace(/[a-zA-Z]/g, '⠁⠃⠉⠙⠑⠋⠛⠓⠊⠚⠅⠇⠍⠝⠕⠏⠟⠗⠎⠞⠥⠧⠺⠭⠽⠵'[Math.floor(Math.random() * 26)]);
+  }
+
+  private convertToSignLanguage(text: string): string {
+    // Simplified ASL description for demo
+    return `[ASL] ${text.split(' ').map(word => `${word.toUpperCase()}-SIGN`).join(' ')}`;
+  }
+
+  private simplifyText(text: string): string {
+    return text
+      .replace(/appointment/g, 'meeting')
+      .replace(/scheduled/g, 'planned')
+      .replace(/tomorrow/g, 'next day');
+  }
+
+  private convertToAudioDescription(text: string): string {
+    return `[AUDIO] Spoken message: "${text}" - Duration: ${Math.ceil(text.length / 10)} seconds`;
   }
 }
 

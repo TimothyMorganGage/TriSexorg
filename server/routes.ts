@@ -828,6 +828,233 @@ END:VEVENT
     }
   });
 
+  // Messaging Platform Integration routes
+  app.get("/api/messaging-integrations", async (req, res) => {
+    try {
+      const userId = 1;
+      const integrations = await storage.getMessagingIntegrations(userId);
+      res.json(integrations);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch messaging integrations" });
+    }
+  });
+
+  app.post("/api/messaging-integrations", async (req, res) => {
+    try {
+      const userId = 1;
+      const integrationData = { ...req.body, userId };
+      const integration = await storage.createMessagingIntegration(integrationData);
+      res.json(integration);
+    } catch (error) {
+      res.status(400).json({ message: error instanceof Error ? error.message : "Failed to create messaging integration" });
+    }
+  });
+
+  app.put("/api/messaging-integrations/:id/sync", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const result = await storage.syncMessagingPlatform(parseInt(id));
+      res.json(result);
+    } catch (error) {
+      res.status(400).json({ message: error instanceof Error ? error.message : "Failed to sync messaging platform" });
+    }
+  });
+
+  // Healthcare System Integration routes
+  app.get("/api/healthcare-integrations", async (req, res) => {
+    try {
+      const userId = 1;
+      const integrations = await storage.getHealthcareIntegrations(userId);
+      res.json(integrations);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch healthcare integrations" });
+    }
+  });
+
+  app.post("/api/healthcare-integrations", async (req, res) => {
+    try {
+      const userId = 1;
+      const integrationData = { ...req.body, userId };
+      const integration = await storage.createHealthcareIntegration(integrationData);
+      res.json(integration);
+    } catch (error) {
+      res.status(400).json({ message: error instanceof Error ? error.message : "Failed to create healthcare integration" });
+    }
+  });
+
+  app.post("/api/healthcare-integrations/:id/sync", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { dataTypes } = req.body;
+      const result = await storage.syncHealthcareData(parseInt(id), dataTypes);
+      res.json(result);
+    } catch (error) {
+      res.status(400).json({ message: error instanceof Error ? error.message : "Failed to sync healthcare data" });
+    }
+  });
+
+  // Accessibility Settings routes
+  app.get("/api/accessibility-settings", async (req, res) => {
+    try {
+      const userId = 1;
+      const settings = await storage.getAccessibilitySettings(userId);
+      res.json(settings);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch accessibility settings" });
+    }
+  });
+
+  app.post("/api/accessibility-settings", async (req, res) => {
+    try {
+      const userId = 1;
+      const settingsData = { ...req.body, userId };
+      const settings = await storage.createAccessibilitySettings(settingsData);
+      res.json(settings);
+    } catch (error) {
+      res.status(400).json({ message: error instanceof Error ? error.message : "Failed to create accessibility settings" });
+    }
+  });
+
+  app.put("/api/accessibility-settings/:id", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const settings = await storage.updateAccessibilitySettings(parseInt(id), req.body);
+      res.json(settings);
+    } catch (error) {
+      res.status(400).json({ message: error instanceof Error ? error.message : "Failed to update accessibility settings" });
+    }
+  });
+
+  // Co-editing Session routes
+  app.post("/api/co-editing-sessions", async (req, res) => {
+    try {
+      const userId = 1;
+      const sessionData = { ...req.body, initiatorId: userId };
+      const session = await storage.createCoEditingSession(sessionData);
+      res.json(session);
+    } catch (error) {
+      res.status(400).json({ message: error instanceof Error ? error.message : "Failed to create co-editing session" });
+    }
+  });
+
+  app.get("/api/co-editing-sessions", async (req, res) => {
+    try {
+      const userId = 1;
+      const { active } = req.query;
+      let sessions;
+      if (active === 'true') {
+        sessions = await storage.getActiveCoEditingSessions(userId);
+      } else {
+        sessions = await storage.getCoEditingSessions(userId);
+      }
+      res.json(sessions);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch co-editing sessions" });
+    }
+  });
+
+  app.post("/api/co-editing-sessions/:id/messages", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const userId = 1;
+      const messageData = { ...req.body, sessionId: parseInt(id), senderId: userId };
+      const message = await storage.createCoEditingMessage(messageData);
+      
+      // Trigger real-time translation and cross-platform delivery
+      await storage.processMessageTranslation(message.id);
+      await storage.deliverToPlatforms(message.id);
+      
+      res.json(message);
+    } catch (error) {
+      res.status(400).json({ message: error instanceof Error ? error.message : "Failed to send message" });
+    }
+  });
+
+  app.get("/api/co-editing-sessions/:id/messages", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const messages = await storage.getCoEditingMessages(parseInt(id));
+      res.json(messages);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch messages" });
+    }
+  });
+
+  // Translation Services routes
+  app.post("/api/translate", async (req, res) => {
+    try {
+      const userId = 1;
+      const { sourceText, targetFormat, priority } = req.body;
+      
+      const translation = await storage.requestTranslation({
+        userId,
+        sourceText,
+        targetFormat,
+        priority: priority || 'normal'
+      });
+      
+      res.json(translation);
+    } catch (error) {
+      res.status(400).json({ message: error instanceof Error ? error.message : "Failed to process translation" });
+    }
+  });
+
+  app.get("/api/translations", async (req, res) => {
+    try {
+      const userId = 1;
+      const { targetFormat, verified } = req.query;
+      
+      const translations = await storage.getTranslations(userId, {
+        targetFormat: targetFormat as string,
+        verified: verified === 'true'
+      });
+      res.json(translations);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch translations" });
+    }
+  });
+
+  // Health Data Sync routes
+  app.get("/api/health-data-sync", async (req, res) => {
+    try {
+      const userId = 1;
+      const { dataType, sourceSystem } = req.query;
+      
+      const syncRecords = await storage.getHealthDataSync(userId, {
+        dataType: dataType as string,
+        sourceSystem: sourceSystem as string
+      });
+      res.json(syncRecords);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch health data sync records" });
+    }
+  });
+
+  app.post("/api/health-data-sync/trigger", async (req, res) => {
+    try {
+      const userId = 1;
+      const { systems, dataTypes } = req.body;
+      
+      const syncResults = await storage.triggerHealthDataSync(userId, systems, dataTypes);
+      res.json(syncResults);
+    } catch (error) {
+      res.status(400).json({ message: error instanceof Error ? error.message : "Failed to trigger health data sync" });
+    }
+  });
+
+  // WebSocket endpoint for real-time co-editing
+  app.get("/api/co-editing-sessions/:id/websocket-token", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const userId = 1;
+      
+      const token = await storage.generateWebSocketToken(userId, parseInt(id));
+      res.json({ token, wsUrl: `/ws/co-editing/${id}` });
+    } catch (error) {
+      res.status(400).json({ message: error instanceof Error ? error.message : "Failed to generate WebSocket token" });
+    }
+  });
+
   // Clinic Inventory Management routes
   app.get("/api/clinic-inventory", async (req, res) => {
     try {
