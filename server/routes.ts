@@ -601,6 +601,233 @@ END:VEVENT
     }
   });
 
+  // Cross-Platform Notification System routes
+  app.get("/api/notification-settings", async (req, res) => {
+    try {
+      const userId = 1;
+      const settings = await storage.getNotificationSettings(userId);
+      res.json(settings);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch notification settings" });
+    }
+  });
+
+  app.post("/api/notification-settings", async (req, res) => {
+    try {
+      const userId = 1;
+      const settingsData = { ...req.body, userId };
+      const settings = await storage.createNotificationSettings(settingsData);
+      res.json(settings);
+    } catch (error) {
+      res.status(400).json({ message: error instanceof Error ? error.message : "Failed to create notification settings" });
+    }
+  });
+
+  app.put("/api/notification-settings/:id", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const settings = await storage.updateNotificationSettings(parseInt(id), req.body);
+      if (!settings) {
+        return res.status(404).json({ message: "Notification settings not found" });
+      }
+      res.json(settings);
+    } catch (error) {
+      res.status(400).json({ message: error instanceof Error ? error.message : "Failed to update notification settings" });
+    }
+  });
+
+  app.post("/api/notifications/send", async (req, res) => {
+    try {
+      const userId = 1;
+      const notificationData = { ...req.body, userId };
+      const notification = await storage.createCrossPlatformNotification(notificationData);
+      
+      // Here we would integrate with actual notification services
+      // For now, just mark as sent
+      await storage.markNotificationAsSent(notification.id);
+      
+      res.json({ success: true, notificationId: notification.id });
+    } catch (error) {
+      res.status(400).json({ message: error instanceof Error ? error.message : "Failed to send notification" });
+    }
+  });
+
+  app.get("/api/notifications", async (req, res) => {
+    try {
+      const userId = 1;
+      const { unreadOnly } = req.query;
+      
+      let notifications;
+      if (unreadOnly === 'true') {
+        notifications = await storage.getUnreadNotifications(userId);
+      } else {
+        notifications = await storage.getNotifications(userId);
+      }
+      res.json(notifications);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch notifications" });
+    }
+  });
+
+  app.put("/api/notifications/:id/read", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const success = await storage.markNotificationAsRead(parseInt(id));
+      if (!success) {
+        return res.status(404).json({ message: "Notification not found" });
+      }
+      res.json({ success: true });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to mark notification as read" });
+    }
+  });
+
+  // Smart Break and Rest Interval routes
+  app.get("/api/break-patterns", async (req, res) => {
+    try {
+      const userId = 1;
+      const patterns = await storage.getBreakPatterns(userId);
+      res.json(patterns);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch break patterns" });
+    }
+  });
+
+  app.post("/api/break-patterns", async (req, res) => {
+    try {
+      const userId = 1;
+      const patternData = { ...req.body, userId };
+      const pattern = await storage.createBreakPattern(patternData);
+      res.json(pattern);
+    } catch (error) {
+      res.status(400).json({ message: error instanceof Error ? error.message : "Failed to create break pattern" });
+    }
+  });
+
+  app.put("/api/break-patterns/:id/activate", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const userId = 1;
+      const pattern = await storage.activateBreakPattern(userId, parseInt(id));
+      if (!pattern) {
+        return res.status(404).json({ message: "Break pattern not found" });
+      }
+      res.json(pattern);
+    } catch (error) {
+      res.status(400).json({ message: error instanceof Error ? error.message : "Failed to activate break pattern" });
+    }
+  });
+
+  app.get("/api/rest-suggestions", async (req, res) => {
+    try {
+      const userId = 1;
+      const { energyLevel, stressLevel, personalizedOnly } = req.query;
+      
+      const suggestions = await storage.getRestSuggestions(userId, {
+        energyLevel: energyLevel ? parseInt(energyLevel as string) : undefined,
+        stressLevel: stressLevel ? parseInt(stressLevel as string) : undefined,
+        personalizedOnly: personalizedOnly === 'true',
+      });
+      res.json(suggestions);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch rest suggestions" });
+    }
+  });
+
+  app.post("/api/rest-suggestions", async (req, res) => {
+    try {
+      const userId = 1;
+      const suggestionData = { ...req.body, userId };
+      const suggestion = await storage.createRestSuggestion(suggestionData);
+      res.json(suggestion);
+    } catch (error) {
+      res.status(400).json({ message: error instanceof Error ? error.message : "Failed to create rest suggestion" });
+    }
+  });
+
+  app.post("/api/smart-break-sessions", async (req, res) => {
+    try {
+      const userId = 1;
+      const sessionData = { ...req.body, userId };
+      const session = await storage.createSmartBreakSession(sessionData);
+      res.json(session);
+    } catch (error) {
+      res.status(400).json({ message: error instanceof Error ? error.message : "Failed to create break session" });
+    }
+  });
+
+  app.put("/api/smart-break-sessions/:id/complete", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { actualDuration, energyAfter, stressAfter, effectiveness, notes } = req.body;
+      
+      const session = await storage.completeSmartBreakSession(parseInt(id), {
+        actualDuration,
+        energyAfter,
+        stressAfter,
+        effectiveness,
+        notes,
+        completedAt: new Date(),
+      });
+      
+      if (!session) {
+        return res.status(404).json({ message: "Break session not found" });
+      }
+      res.json(session);
+    } catch (error) {
+      res.status(400).json({ message: error instanceof Error ? error.message : "Failed to complete break session" });
+    }
+  });
+
+  app.get("/api/smart-break-sessions", async (req, res) => {
+    try {
+      const userId = 1;
+      const { startDate, endDate } = req.query;
+      
+      let sessions;
+      if (startDate && endDate) {
+        sessions = await storage.getSmartBreakSessionsByDateRange(userId, startDate as string, endDate as string);
+      } else {
+        sessions = await storage.getRecentSmartBreakSessions(userId);
+      }
+      res.json(sessions);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch break sessions" });
+    }
+  });
+
+  // Smart suggestions based on current context
+  app.post("/api/suggest-break", async (req, res) => {
+    try {
+      const userId = 1;
+      const { currentEnergy, currentStress, workDuration, lastBreakTime } = req.body;
+      
+      const suggestion = await storage.generateSmartBreakSuggestion(userId, {
+        currentEnergy,
+        currentStress,
+        workDuration,
+        lastBreakTime,
+      });
+      
+      res.json(suggestion);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to generate break suggestion" });
+    }
+  });
+
+  // Notification scheduling for breaks
+  app.post("/api/schedule-break-reminders", async (req, res) => {
+    try {
+      const userId = 1;
+      const { patternId, startTime } = req.body;
+      
+      const reminders = await storage.scheduleBreakReminders(userId, patternId, startTime);
+      res.json({ success: true, reminders });
+    } catch (error) {
+      res.status(400).json({ message: error instanceof Error ? error.message : "Failed to schedule break reminders" });
+    }
+  });
+
   // Clinic Inventory Management routes
   app.get("/api/clinic-inventory", async (req, res) => {
     try {

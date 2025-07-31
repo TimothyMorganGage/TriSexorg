@@ -15,6 +15,7 @@ export function Header() {
     { name: "Mood Tracker", href: "/mood-logging" },
     { name: "Time Tracker", href: "/time-tracker" },
     { name: "Calendar Sync", href: "/calendar-integration" },
+    { name: "Smart Breaks", href: "/smart-break-system" },
     { name: "Peer Mentor", href: "/peer-mentor" },
     { name: "Wiki", href: "/wiki" },
     { name: "Analytics", href: "/analytics" },

@@ -37,6 +37,7 @@ import MaterialsScience from "@/pages/materials-science";
 import MoodLogging from "@/pages/mood-logging";
 import TimeTracker from "@/pages/time-tracker";
 import CalendarIntegration from "@/pages/calendar-integration";
+import SmartBreakSystem from "@/pages/smart-break-system";
 import { TabNavigation } from "@/components/TabNavigation";
 
 function Router() {
@@ -71,6 +72,7 @@ function Router() {
           <Route path="/mood-logging" component={MoodLogging} />
           <Route path="/time-tracker" component={TimeTracker} />
           <Route path="/calendar-integration" component={CalendarIntegration} />
+          <Route path="/smart-break-system" component={SmartBreakSystem} />
           <Route path="/clinic-dashboard" component={ClinicDashboard} />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />

@@ -1,4 +1,4 @@
-import { pgTable, text, serial, integer, boolean, timestamp, decimal, date } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, integer, boolean, timestamp, decimal, date, jsonb } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -824,3 +824,128 @@ export type ScheduledTask = typeof scheduledTasks.$inferSelect;
 
 export type InsertTaskTemplate = z.infer<typeof insertTaskTemplateSchema>;
 export type TaskTemplate = typeof taskTemplates.$inferSelect;
+
+// Notification Sync System
+export const notificationSettings = pgTable("notification_settings", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  platform: text("platform").notNull(), // 'web', 'mobile', 'desktop', 'email', 'sms'
+  isEnabled: boolean("is_enabled").default(true),
+  endpoint: text("endpoint"), // push endpoint for web notifications
+  authKey: text("auth_key"),
+  p256dhKey: text("p256dh_key"),
+  deviceToken: text("device_token"), // for mobile notifications
+  preferences: jsonb("preferences").default({}), // notification type preferences
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const crossPlatformNotifications = pgTable("cross_platform_notifications", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  title: text("title").notNull(),
+  body: text("body").notNull(),
+  type: text("type").notNull(), // 'break_reminder', 'task_reminder', 'rest_suggestion', 'time_wisdom'
+  priority: text("priority").default("normal"), // 'low', 'normal', 'high', 'urgent'
+  scheduledAt: timestamp("scheduled_at"),
+  sentAt: timestamp("sent_at"),
+  platforms: jsonb("platforms").default([]), // platforms this was sent to
+  metadata: jsonb("metadata").default({}), // additional data for the notification
+  isRead: boolean("is_read").default(false),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// Smart Break and Rest System
+export const breakPatterns = pgTable("break_patterns", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  patternName: text("pattern_name").notNull(),
+  workDuration: integer("work_duration").notNull(), // minutes
+  shortBreakDuration: integer("short_break_duration").notNull(), // minutes
+  longBreakDuration: integer("long_break_duration").notNull(), // minutes
+  longBreakInterval: integer("long_break_interval").default(4), // after how many short breaks
+  isActive: boolean("is_active").default(false),
+  customizations: jsonb("customizations").default({}),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const restSuggestions = pgTable("rest_suggestions", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  suggestionType: text("suggestion_type").notNull(), // 'micro_break', 'active_break', 'rest_period', 'energy_boost'
+  title: text("title").notNull(),
+  description: text("description").notNull(),
+  duration: integer("duration"), // suggested duration in minutes
+  energyLevel: integer("energy_level"), // 1-5, what energy level this helps with
+  stressLevel: integer("stress_level"), // 1-5, what stress level this addresses
+  activity: text("activity"), // specific activity suggestion
+  isPersonalized: boolean("is_personalized").default(false),
+  triggerConditions: jsonb("trigger_conditions").default({}), // when to suggest this
+  effectiveness: integer("effectiveness").default(0), // user feedback on effectiveness
+  timesUsed: integer("times_used").default(0),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const smartBreakSessions = pgTable("smart_break_sessions", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  breakType: text("break_type").notNull(), // 'micro', 'short', 'long', 'rest'
+  plannedDuration: integer("planned_duration").notNull(), // minutes
+  actualDuration: integer("actual_duration"), // minutes
+  suggestion: text("suggestion"),
+  activity: text("activity"),
+  energyBefore: integer("energy_before"), // 1-5 scale
+  energyAfter: integer("energy_after"), // 1-5 scale
+  stressBefore: integer("stress_before"), // 1-5 scale
+  stressAfter: integer("stress_after"), // 1-5 scale
+  effectiveness: integer("effectiveness"), // 1-5 user rating
+  notes: text("notes"),
+  startedAt: timestamp("started_at").defaultNow(),
+  completedAt: timestamp("completed_at"),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// Validation schemas for notification system
+export const insertNotificationSettingsSchema = createInsertSchema(notificationSettings).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertCrossPlatformNotificationSchema = createInsertSchema(crossPlatformNotifications).omit({
+  id: true,
+  createdAt: true,
+});
+
+// Validation schemas for break system
+export const insertBreakPatternSchema = createInsertSchema(breakPatterns).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertRestSuggestionSchema = createInsertSchema(restSuggestions).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertSmartBreakSessionSchema = createInsertSchema(smartBreakSessions).omit({
+  id: true,
+  createdAt: true,
+});
+
+// Types for notification system
+export type InsertNotificationSettings = z.infer<typeof insertNotificationSettingsSchema>;
+export type NotificationSettings = typeof notificationSettings.$inferSelect;
+
+export type InsertCrossPlatformNotification = z.infer<typeof insertCrossPlatformNotificationSchema>;
+export type CrossPlatformNotification = typeof crossPlatformNotifications.$inferSelect;
+
+// Types for break system
+export type InsertBreakPattern = z.infer<typeof insertBreakPatternSchema>;
+export type BreakPattern = typeof breakPatterns.$inferSelect;
+
+export type InsertRestSuggestion = z.infer<typeof insertRestSuggestionSchema>;
+export type RestSuggestion = typeof restSuggestions.$inferSelect;
+
+export type InsertSmartBreakSession = z.infer<typeof insertSmartBreakSessionSchema>;
+export type SmartBreakSession = typeof smartBreakSessions.$inferSelect;

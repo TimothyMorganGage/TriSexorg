@@ -151,6 +151,29 @@ export interface IStorage {
   acknowledgeStockAlert(alertId: number): Promise<any>;
   getRestockOrders(): Promise<any[]>;
   createRestockOrder(orderData: { items: { itemId: number; quantity: number }[]; supplier: string }): Promise<any>;
+
+  // Notification System methods
+  getNotificationSettings(userId: number): Promise<any[]>;
+  createNotificationSettings(settings: any): Promise<any>;
+  updateNotificationSettings(id: number, settings: any): Promise<any>;
+  createCrossPlatformNotification(notification: any): Promise<any>;
+  markNotificationAsSent(id: number): Promise<void>;
+  getNotifications(userId: number): Promise<any[]>;
+  getUnreadNotifications(userId: number): Promise<any[]>;
+  markNotificationAsRead(id: number): Promise<boolean>;
+
+  // Smart Break System methods
+  getBreakPatterns(userId: number): Promise<any[]>;
+  createBreakPattern(pattern: any): Promise<any>;
+  activateBreakPattern(userId: number, patternId: number): Promise<any>;
+  getRestSuggestions(userId: number, filters?: any): Promise<any[]>;
+  createRestSuggestion(suggestion: any): Promise<any>;
+  createSmartBreakSession(session: any): Promise<any>;
+  completeSmartBreakSession(sessionId: number, completionData: any): Promise<any>;
+  getSmartBreakSessionsByDateRange(userId: number, startDate: string, endDate: string): Promise<any[]>;
+  getRecentSmartBreakSessions(userId: number): Promise<any[]>;
+  generateSmartBreakSuggestion(userId: number, context: any): Promise<any>;
+  scheduleBreakReminders(userId: number, patternId: number, startTime: string): Promise<any[]>;
 }
 
 export class MemStorage implements IStorage {
@@ -1254,6 +1277,245 @@ export class MemStorage implements IStorage {
         }
       }
     });
+  }
+
+  // Notification System methods (stub implementations)
+  async getNotificationSettings(userId: number): Promise<any[]> {
+    return [];
+  }
+
+  async createNotificationSettings(settings: any): Promise<any> {
+    return { id: 1, ...settings, createdAt: new Date(), updatedAt: new Date() };
+  }
+
+  async updateNotificationSettings(id: number, settings: any): Promise<any> {
+    return { id, ...settings, updatedAt: new Date() };
+  }
+
+  async createCrossPlatformNotification(notification: any): Promise<any> {
+    return { id: 1, ...notification, createdAt: new Date() };
+  }
+
+  async markNotificationAsSent(id: number): Promise<void> {
+    // stub implementation
+  }
+
+  async getNotifications(userId: number): Promise<any[]> {
+    return [];
+  }
+
+  async getUnreadNotifications(userId: number): Promise<any[]> {
+    return [];
+  }
+
+  async markNotificationAsRead(id: number): Promise<boolean> {
+    return true;
+  }
+
+  // Smart Break System methods (stub implementations)
+  async getBreakPatterns(userId: number): Promise<any[]> {
+    return [
+      {
+        id: 1,
+        userId,
+        patternName: "Pomodoro Technique",
+        workDuration: 25,
+        shortBreakDuration: 5,
+        longBreakDuration: 15,
+        longBreakInterval: 4,
+        isActive: false,
+        customizations: {},
+        createdAt: new Date(),
+      },
+      {
+        id: 2,
+        userId,
+        patternName: "Extended Focus",
+        workDuration: 90,
+        shortBreakDuration: 15,
+        longBreakDuration: 30,
+        longBreakInterval: 2,
+        isActive: false,
+        customizations: {},
+        createdAt: new Date(),
+      }
+    ];
+  }
+
+  async createBreakPattern(pattern: any): Promise<any> {
+    return { id: Date.now(), ...pattern, createdAt: new Date() };
+  }
+
+  async activateBreakPattern(userId: number, patternId: number): Promise<any> {
+    return { id: patternId, isActive: true, updatedAt: new Date() };
+  }
+
+  async getRestSuggestions(userId: number, filters?: any): Promise<any[]> {
+    return [
+      {
+        id: 1,
+        userId,
+        suggestionType: "micro_break",
+        title: "Eye Rest Break",
+        description: "Look away from your screen and focus on something 20 feet away for 20 seconds",
+        duration: 1,
+        energyLevel: 3,
+        stressLevel: 2,
+        activity: "20-20-20 eye exercise",
+        isPersonalized: false,
+        triggerConditions: { screenTime: "> 30min" },
+        effectiveness: 4,
+        timesUsed: 12,
+        createdAt: new Date(),
+      },
+      {
+        id: 2,
+        userId,
+        suggestionType: "active_break",
+        title: "Quick Stretch",
+        description: "Stand up and do light stretching to relieve muscle tension",
+        duration: 5,
+        energyLevel: 2,
+        stressLevel: 3,
+        activity: "Neck, shoulder, and back stretches",
+        isPersonalized: false,
+        triggerConditions: { sittingTime: "> 60min" },
+        effectiveness: 4,
+        timesUsed: 8,
+        createdAt: new Date(),
+      },
+      {
+        id: 3,
+        userId,
+        suggestionType: "rest_period",
+        title: "Mindful Breathing",
+        description: "Take a few minutes to practice deep breathing and center yourself",
+        duration: 10,
+        energyLevel: 4,
+        stressLevel: 4,
+        activity: "4-7-8 breathing technique",
+        isPersonalized: true,
+        triggerConditions: { stressLevel: "> 3" },
+        effectiveness: 5,
+        timesUsed: 15,
+        createdAt: new Date(),
+      }
+    ];
+  }
+
+  async createRestSuggestion(suggestion: any): Promise<any> {
+    return { id: Date.now(), ...suggestion, createdAt: new Date() };
+  }
+
+  async createSmartBreakSession(session: any): Promise<any> {
+    return { id: Date.now(), ...session, startedAt: new Date(), createdAt: new Date() };
+  }
+
+  async completeSmartBreakSession(sessionId: number, completionData: any): Promise<any> {
+    return { id: sessionId, ...completionData, completedAt: new Date() };
+  }
+
+  async getSmartBreakSessionsByDateRange(userId: number, startDate: string, endDate: string): Promise<any[]> {
+    return [];
+  }
+
+  async getRecentSmartBreakSessions(userId: number): Promise<any[]> {
+    return [
+      {
+        id: 1,
+        userId,
+        breakType: "short",
+        plannedDuration: 5,
+        actualDuration: 6,
+        suggestion: "Take a quick walk around the room",
+        activity: "Light walking",
+        energyBefore: 3,
+        energyAfter: 4,
+        stressBefore: 4,
+        stressAfter: 2,
+        effectiveness: 4,
+        notes: "Felt refreshed and ready to continue",
+        startedAt: new Date(Date.now() - 2 * 60 * 60 * 1000), // 2 hours ago
+        completedAt: new Date(Date.now() - 2 * 60 * 60 * 1000 + 6 * 60 * 1000),
+        createdAt: new Date(Date.now() - 2 * 60 * 60 * 1000),
+      },
+      {
+        id: 2,
+        userId,
+        breakType: "micro",
+        plannedDuration: 2,
+        actualDuration: 2,
+        suggestion: "Close your eyes and take deep breaths",
+        activity: "Deep breathing",
+        energyBefore: 2,
+        energyAfter: 3,
+        stressBefore: 3,
+        stressAfter: 2,
+        effectiveness: 3,
+        notes: "Quick refresh",
+        startedAt: new Date(Date.now() - 4 * 60 * 60 * 1000), // 4 hours ago
+        completedAt: new Date(Date.now() - 4 * 60 * 60 * 1000 + 2 * 60 * 1000),
+        createdAt: new Date(Date.now() - 4 * 60 * 60 * 1000),
+      }
+    ];
+  }
+
+  async generateSmartBreakSuggestion(userId: number, context: any): Promise<any> {
+    const { currentEnergy, currentStress, workDuration } = context;
+    
+    // Simple AI logic for break suggestions
+    if (currentEnergy <= 2) {
+      return {
+        type: "energy_boost",
+        duration: 10,
+        suggestion: "Take an energizing break with light movement or hydration. Consider stepping outside for fresh air or doing some jumping jacks.",
+        priority: "high"
+      };
+    } else if (currentStress >= 4) {
+      return {
+        type: "rest_period",
+        duration: 15,
+        suggestion: "Take a stress-relief break with deep breathing or meditation. Find a quiet space and practice mindful breathing.",
+        priority: "high"
+      };
+    } else if (workDuration >= 90) {
+      return {
+        type: "long",
+        duration: 20,
+        suggestion: "You've been focused for a while! Take a longer break to recharge. Consider a walk, stretch session, or healthy snack.",
+        priority: "medium"
+      };
+    } else {
+      return {
+        type: "short",
+        duration: 5,
+        suggestion: "Perfect time for a quick refresh! Try the 20-20-20 rule or a brief stretch to maintain your energy.",
+        priority: "normal"
+      };
+    }
+  }
+
+  async scheduleBreakReminders(userId: number, patternId: number, startTime: string): Promise<any[]> {
+    return [
+      {
+        id: 1,
+        userId,
+        patternId,
+        reminderType: "work_session_start",
+        scheduledAt: startTime,
+        message: "Time to start your focused work session!",
+        platforms: ["web", "desktop"],
+      },
+      {
+        id: 2,
+        userId,
+        patternId,
+        reminderType: "break_reminder",
+        scheduledAt: new Date(new Date(startTime).getTime() + 25 * 60 * 1000).toISOString(),
+        message: "Time for a short break! You've earned it.",
+        platforms: ["web", "desktop", "mobile"],
+      }
+    ];
   }
 }
 
