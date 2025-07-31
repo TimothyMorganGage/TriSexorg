@@ -10,8 +10,10 @@ export function Header() {
   const { user, logout } = useAuth();
 
   const navigation = [
-    { name: "Products", href: "/products" },
-    { name: "Stories", href: "/interactive-stories" },
+    { name: "Generative Fluck Protection", href: "/products" },
+    { name: "Good Flucking Sex", href: "/interactive-stories" },
+    { name: "Great Flucking Health", href: "/education" },
+    { name: "Groovy Flucking People", href: "/partnership" },
     { name: "Mood Tracker", href: "/mood-logging" },
     { name: "Time Tracker", href: "/time-tracker" },
     { name: "Calendar Sync", href: "/calendar-integration" },
@@ -20,7 +22,6 @@ export function Header() {
     { name: "4D STI Tracking", href: "/partner-sti-tracking" },
     { name: "Wiki", href: "/wiki" },
     { name: "Analytics", href: "/analytics" },
-    { name: "Partnership", href: "/partnership" },
   ];
 
   const isActive = (path: string) => location === path;
