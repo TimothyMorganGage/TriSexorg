@@ -17,6 +17,7 @@ export function Header() {
     { name: "Calendar Sync", href: "/calendar-integration" },
     { name: "Smart Breaks", href: "/smart-break-system" },
     { name: "Mentor & Facilitator", href: "/mentor-facilitator" },
+    { name: "4D STI Tracking", href: "/partner-sti-tracking" },
     { name: "Wiki", href: "/wiki" },
     { name: "Analytics", href: "/analytics" },
     { name: "Partnership", href: "/partnership" },

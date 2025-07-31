@@ -218,6 +218,48 @@ export interface IStorage {
   // Real-time WebSocket methods
   generateWebSocketToken(userId: number, sessionId: number): Promise<string>;
   validateWebSocketToken(token: string): Promise<any>;
+
+  // Partner Network methods
+  getPartnerNetworks(userId: number): Promise<any[]>;
+  createPartnerNetwork(network: any): Promise<any>;
+  updatePartnerNetwork(id: number, network: any): Promise<any>;
+  deletePartnerNetwork(id: number): Promise<boolean>;
+
+  // Partner Connection methods
+  getPartnerConnections(networkId: number): Promise<any[]>;
+  createPartnerConnection(connection: any): Promise<any>;
+  updatePartnerConnection(id: number, connection: any): Promise<any>;
+  removePartnerConnection(id: number): Promise<boolean>;
+
+  // 4D STI Tracking methods
+  getStiTrackingEvents(userId: number, filters?: any): Promise<any[]>;
+  createStiTrackingEvent(event: any): Promise<any>;
+  updateStiTrackingEvent(id: number, event: any): Promise<any>;
+  generatePartnerNotifications(eventId: number): Promise<any[]>;
+  getNetworkExposureAnalysis(networkId: number, stiType: string): Promise<any>;
+
+  // Sexual Product Customization methods
+  getSexualProductCustomizations(userId: number): Promise<any[]>;
+  createSexualProductCustomization(customization: any): Promise<any>;
+  updateSexualProductCustomization(id: number, customization: any): Promise<any>;
+  getPartnerCompatibleProducts(networkId: number): Promise<any[]>;
+  
+  // Natural Senses Profile methods
+  getNaturalSensesProfile(userId: number): Promise<any>;
+  createNaturalSensesProfile(profile: any): Promise<any>;
+  updateNaturalSensesProfile(id: number, profile: any): Promise<any>;
+  getOptimalProductRecommendations(userId: number): Promise<any[]>;
+
+  // Product Effectiveness methods
+  getProductEffectivenessReports(customizationId: number): Promise<any[]>;
+  createProductEffectivenessReport(report: any): Promise<any>;
+  getNetworkEffectivenessAnalysis(networkId: number): Promise<any>;
+
+  // Partner Notification methods
+  getPartnerNotifications(userId: number): Promise<any[]>;
+  sendPartnerNotification(notification: any): Promise<any>;
+  markNotificationAsRead(notificationId: number): Promise<any>;
+  respondToNotification(notificationId: number, response: any): Promise<any>;
 }
 
 export class MemStorage implements IStorage {
@@ -1953,6 +1995,496 @@ export class MemStorage implements IStorage {
 
   private convertToAudioDescription(text: string): string {
     return `[AUDIO] Spoken message: "${text}" - Duration: ${Math.ceil(text.length / 10)} seconds`;
+  }
+
+  // Partner Network methods
+  async getPartnerNetworks(userId: number): Promise<any[]> {
+    return [
+      {
+        id: 1,
+        userId,
+        networkName: "Primary Network",
+        isActive: true,
+        privacyLevel: "private",
+        consentGiven: true,
+        dataRetentionDays: 90,
+        emergencyContactId: null,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      }
+    ];
+  }
+
+  async createPartnerNetwork(network: any): Promise<any> {
+    return { id: Date.now(), ...network, createdAt: new Date(), updatedAt: new Date() };
+  }
+
+  async updatePartnerNetwork(id: number, network: any): Promise<any> {
+    return { id, ...network, updatedAt: new Date() };
+  }
+
+  async deletePartnerNetwork(id: number): Promise<boolean> {
+    return true;
+  }
+
+  // Partner Connection methods
+  async getPartnerConnections(networkId: number): Promise<any[]> {
+    return [
+      {
+        id: 1,
+        networkId,
+        partnerUserId: 2,
+        partnerAnonymousId: null,
+        connectionType: "sexual_partner",
+        relationshipStatus: "current",
+        mutualConsent: true,
+        notificationPreferences: { 
+          stiAlerts: true, 
+          testReminders: true, 
+          emergencyNotifications: true 
+        },
+        lastContact: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
+        connectionStrength: 4,
+        isBlocked: false,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: 2,
+        networkId,
+        partnerUserId: null,
+        partnerAnonymousId: "anon_partner_xyz",
+        connectionType: "casual",
+        relationshipStatus: "past",
+        mutualConsent: true,
+        notificationPreferences: { 
+          stiAlerts: true, 
+          testReminders: false, 
+          emergencyNotifications: true 
+        },
+        lastContact: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000),
+        connectionStrength: 2,
+        isBlocked: false,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      }
+    ];
+  }
+
+  async createPartnerConnection(connection: any): Promise<any> {
+    return { id: Date.now(), ...connection, createdAt: new Date(), updatedAt: new Date() };
+  }
+
+  async updatePartnerConnection(id: number, connection: any): Promise<any> {
+    return { id, ...connection, updatedAt: new Date() };
+  }
+
+  async removePartnerConnection(id: number): Promise<boolean> {
+    return true;
+  }
+
+  // 4D STI Tracking methods
+  async getStiTrackingEvents(userId: number, filters?: any): Promise<any[]> {
+    return [
+      {
+        id: 1,
+        userId,
+        networkId: 1,
+        eventType: "test_result",
+        stiType: "chlamydia",
+        testResult: "negative",
+        severityLevel: null,
+        symptomsReported: [],
+        treatmentProtocol: null,
+        testingLocation: "Health Center Downtown",
+        geographicArea: "Downtown District",
+        exposureTimeframe: {},
+        partnerNotificationStatus: "not_applicable",
+        followUpRequired: false,
+        followUpDate: null,
+        isAnonymized: false,
+        publicHealthReported: false,
+        eventDate: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000),
+        createdAt: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000),
+      },
+      {
+        id: 2,
+        userId,
+        networkId: 1,
+        eventType: "test_result",
+        stiType: "gonorrhea",
+        testResult: "negative",
+        severityLevel: null,
+        symptomsReported: [],
+        treatmentProtocol: null,
+        testingLocation: "Health Center Downtown",
+        geographicArea: "Downtown District",
+        exposureTimeframe: {},
+        partnerNotificationStatus: "not_applicable",
+        followUpRequired: false,
+        followUpDate: null,
+        isAnonymized: false,
+        publicHealthReported: false,
+        eventDate: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000),
+        createdAt: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000),
+      }
+    ];
+  }
+
+  async createStiTrackingEvent(event: any): Promise<any> {
+    return { id: Date.now(), ...event, createdAt: new Date() };
+  }
+
+  async updateStiTrackingEvent(id: number, event: any): Promise<any> {
+    return { id, ...event, updatedAt: new Date() };
+  }
+
+  async generatePartnerNotifications(eventId: number): Promise<any[]> {
+    return [
+      {
+        id: 1,
+        stiEventId: eventId,
+        partnerConnectionId: 1,
+        notificationType: "exposure_alert",
+        message: "A partner in your network has reported a positive STI test. Consider getting tested.",
+        isAnonymous: true,
+        urgencyLevel: "high",
+        deliveryMethod: "app",
+        deliveryStatus: "pending",
+        responseReceived: false,
+        followUpRequired: true,
+        expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+        sentAt: null,
+        readAt: null,
+        createdAt: new Date(),
+      }
+    ];
+  }
+
+  async getNetworkExposureAnalysis(networkId: number, stiType: string): Promise<any> {
+    return {
+      networkId,
+      stiType,
+      totalConnections: 5,
+      recentExposures: 1,
+      riskLevel: "medium",
+      recommendedActions: [
+        "Schedule STI testing within 2 weeks",
+        "Inform recent partners",
+        "Consider temporary protection upgrades"
+      ],
+      timeframe: {
+        analysisStart: new Date(Date.now() - 90 * 24 * 60 * 60 * 1000),
+        analysisEnd: new Date()
+      },
+      geographicCluster: false,
+      trends: {
+        increasing: false,
+        stable: true,
+        decreasing: false
+      }
+    };
+  }
+
+  // Sexual Product Customization methods
+  async getSexualProductCustomizations(userId: number): Promise<any[]> {
+    return [
+      {
+        id: 1,
+        userId,
+        productId: 1,
+        partnerNetworkId: 1,
+        customizationName: "Enhanced Protection Plus",
+        bodyCompatibility: {
+          size: "medium",
+          anatomyType: "standard",
+          sensitivityLevel: "normal"
+        },
+        materialPreferences: {
+          latexFree: false,
+          vegan: true,
+          hypoallergenic: true,
+          biodegradable: true
+        },
+        protectionLevel: "enhanced",
+        partnerCompatibility: {
+          multiPartnerFit: true,
+          variableSizing: true,
+          comfortRating: 4
+        },
+        naturalSensesProfile: {
+          tactileSensitivity: 3,
+          temperaturePreference: "warming",
+          texturePreference: "smooth",
+          aromaProfile: "subtle_natural"
+        },
+        texturePreferences: {
+          surface: "smooth",
+          thickness: "standard",
+          flexibility: "high"
+        },
+        flavorProfile: "unflavored",
+        aromaProfile: "natural",
+        temperatureSensitivity: "warming",
+        durationOptimization: "extended",
+        sensitivityLevel: "medium",
+        accessibilityFeatures: [],
+        sustainabilityRating: 4,
+        sharedWithPartners: true,
+        partnerFeedback: [
+          {
+            partnerId: 2,
+            comfort: 4,
+            effectiveness: 5,
+            naturalFeel: 4,
+            notes: "Very comfortable, great protection"
+          }
+        ],
+        effectivenessRating: 5,
+        isActive: true,
+        lastUsed: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000),
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      }
+    ];
+  }
+
+  async createSexualProductCustomization(customization: any): Promise<any> {
+    return { id: Date.now(), ...customization, createdAt: new Date(), updatedAt: new Date() };
+  }
+
+  async updateSexualProductCustomization(id: number, customization: any): Promise<any> {
+    return { id, ...customization, updatedAt: new Date() };
+  }
+
+  async getPartnerCompatibleProducts(networkId: number): Promise<any[]> {
+    return [
+      {
+        customizationId: 1,
+        productName: "Enhanced Protection Plus",
+        compatibilityScore: 4.8,
+        sharedByPartners: 3,
+        averageEffectiveness: 4.7,
+        networkApprovalRating: 4.9,
+        lastUsedInNetwork: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000)
+      }
+    ];
+  }
+
+  // Natural Senses Profile methods
+  async getNaturalSensesProfile(userId: number): Promise<any> {
+    return {
+      id: 1,
+      userId,
+      visualSensitivity: 3,
+      auditoryPreferences: {
+        volume: "moderate",
+        soundTypes: ["nature", "ambient"],
+        silencePreference: false
+      },
+      tactileSensitivity: 4,
+      olfactoryPreferences: {
+        intensityLevel: "subtle",
+        preferredScents: ["vanilla", "natural"],
+        avoidedScents: ["artificial", "strong_chemical"]
+      },
+      gustatory: {
+        sensitivityLevel: "normal",
+        preferredFlavors: ["natural", "unflavored"],
+        avoidedFlavors: ["artificial", "very_sweet"]
+      },
+      vestibularNeeds: {
+        motionSensitivity: "low",
+        positionPreferences: ["stable", "gradual_changes"]
+      },
+      proprioceptiveNeeds: {
+        bodyAwareness: "high",
+        pressurePreference: "moderate",
+        positionFeedback: "important"
+      },
+      interocetptiveAwareness: 4,
+      environmentalFactors: {
+        lightingPreference: "dim_warm",
+        temperatureRange: "warm",
+        noiseLevel: "quiet"
+      },
+      rhythmAndTiming: {
+        pacePreference: "gradual",
+        consistencyImportance: "high",
+        spontaneityTolerance: "moderate"
+      },
+      socialSensoryNeeds: {
+        touchCommunication: "important",
+        eyeContact: "comfortable",
+        personalSpace: "moderate"
+      },
+      stressResponsePatterns: {
+        triggers: ["sudden_changes", "loud_noises"],
+        calming_strategies: ["deep_breathing", "gentle_touch"]
+      },
+      regulationStrategies: [
+        "progressive_muscle_relaxation",
+        "sensory_grounding",
+        "controlled_breathing"
+      ],
+      sensorySeekingBehaviors: [
+        "gentle_pressure",
+        "consistent_rhythm",
+        "warm_temperatures"
+      ],
+      sensoryAvoidanceBehaviors: [
+        "sudden_temperature_changes",
+        "rough_textures",
+        "bright_lights"
+      ],
+      optimalArousalLevel: "moderate",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+  }
+
+  async createNaturalSensesProfile(profile: any): Promise<any> {
+    return { id: Date.now(), ...profile, createdAt: new Date(), updatedAt: new Date() };
+  }
+
+  async updateNaturalSensesProfile(id: number, profile: any): Promise<any> {
+    return { id, ...profile, updatedAt: new Date() };
+  }
+
+  async getOptimalProductRecommendations(userId: number): Promise<any[]> {
+    return [
+      {
+        productId: 1,
+        productName: "Sensory-Optimized Protection",
+        matchScore: 95,
+        naturalSensesAlignment: {
+          tactile: "excellent",
+          temperature: "perfect",
+          texture: "ideal",
+          aroma: "compatible"
+        },
+        customizationSuggestions: {
+          materialType: "organic_latex",
+          thickness: "ultra_thin",
+          surfaceTexture: "smooth",
+          temperatureControl: "warming"
+        },
+        partnerCompatibility: "high",
+        sustainabilityScore: 5,
+        reason: "Perfectly aligned with your tactile sensitivity and temperature preferences"
+      }
+    ];
+  }
+
+  // Product Effectiveness methods
+  async getProductEffectivenessReports(customizationId: number): Promise<any[]> {
+    return [
+      {
+        id: 1,
+        customizationId,
+        partnerConnectionId: 1,
+        usageDate: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000),
+        protectionEffectiveness: 5,
+        comfortLevel: 4,
+        partnerComfortLevel: 5,
+        naturalFeelRating: 4,
+        durationRating: 5,
+        sensoryExperience: {
+          tactile: "excellent",
+          temperature: "perfect",
+          naturalness: "very_high"
+        },
+        unexpectedIssues: [],
+        improvementSuggestions: "None - perfect as is",
+        wouldRecommend: true,
+        reorderIntention: true,
+        partnerFeedbackIncluded: true,
+        anonymizedForResearch: true,
+        createdAt: new Date(),
+      }
+    ];
+  }
+
+  async createProductEffectivenessReport(report: any): Promise<any> {
+    return { id: Date.now(), ...report, createdAt: new Date() };
+  }
+
+  async getNetworkEffectivenessAnalysis(networkId: number): Promise<any> {
+    return {
+      networkId,
+      averageProtectionEffectiveness: 4.7,
+      averageComfortLevel: 4.5,
+      averageNaturalFeelRating: 4.3,
+      topPerformingCustomizations: [
+        {
+          customizationId: 1,
+          name: "Enhanced Protection Plus",
+          networkRating: 4.8,
+          usageFrequency: "high"
+        }
+      ],
+      improvementAreas: [
+        "Consider softer materials for increased comfort",
+        "Explore warming features for better sensory experience"
+      ],
+      partnerSatisfactionRate: 92,
+      reorderRate: 89,
+      totalReports: 47,
+      timeframe: {
+        start: new Date(Date.now() - 90 * 24 * 60 * 60 * 1000),
+        end: new Date()
+      }
+    };
+  }
+
+  // Partner Notification methods
+  async getPartnerNotifications(userId: number): Promise<any[]> {
+    return [
+      {
+        id: 1,
+        stiEventId: 1,
+        partnerConnectionId: 1,
+        notificationType: "test_recommendation",
+        message: "It's been 3 months since your last STI screening. Consider scheduling a test for optimal health.",
+        isAnonymous: false,
+        urgencyLevel: "medium",
+        deliveryMethod: "app",
+        deliveryStatus: "delivered",
+        responseReceived: false,
+        followUpRequired: true,
+        expiresAt: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
+        sentAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
+        readAt: null,
+        createdAt: new Date(),
+      }
+    ];
+  }
+
+  async sendPartnerNotification(notification: any): Promise<any> {
+    return { 
+      id: Date.now(), 
+      ...notification, 
+      sentAt: new Date(),
+      deliveryStatus: "sent",
+      createdAt: new Date() 
+    };
+  }
+
+  async markNotificationAsRead(notificationId: number): Promise<any> {
+    return { 
+      id: notificationId, 
+      deliveryStatus: "read",
+      readAt: new Date() 
+    };
+  }
+
+  async respondToNotification(notificationId: number, response: any): Promise<any> {
+    return { 
+      notificationId, 
+      response, 
+      responseReceived: true,
+      respondedAt: new Date() 
+    };
   }
 }
 

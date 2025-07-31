@@ -39,6 +39,7 @@ import TimeTracker from "@/pages/time-tracker";
 import CalendarIntegration from "@/pages/calendar-integration";
 import SmartBreakSystem from "@/pages/smart-break-system";
 import MentorFacilitator from "@/pages/mentor-facilitator";
+import PartnerSTITracking from "@/pages/partner-sti-tracking";
 import { TabNavigation } from "@/components/TabNavigation";
 
 function Router() {
@@ -75,6 +76,7 @@ function Router() {
           <Route path="/calendar-integration" component={CalendarIntegration} />
           <Route path="/smart-break-system" component={SmartBreakSystem} />
           <Route path="/mentor-facilitator" component={MentorFacilitator} />
+          <Route path="/partner-sti-tracking" component={PartnerSTITracking} />
           <Route path="/clinic-dashboard" component={ClinicDashboard} />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />

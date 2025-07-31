@@ -1055,6 +1055,258 @@ END:VEVENT
     }
   });
 
+  // Partner Network routes
+  app.get("/api/partner-networks", async (req, res) => {
+    try {
+      const userId = 1;
+      const networks = await storage.getPartnerNetworks(userId);
+      res.json(networks);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch partner networks" });
+    }
+  });
+
+  app.post("/api/partner-networks", async (req, res) => {
+    try {
+      const userId = 1;
+      const networkData = { ...req.body, userId };
+      const network = await storage.createPartnerNetwork(networkData);
+      res.json(network);
+    } catch (error) {
+      res.status(400).json({ message: error instanceof Error ? error.message : "Failed to create partner network" });
+    }
+  });
+
+  app.put("/api/partner-networks/:id", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const network = await storage.updatePartnerNetwork(parseInt(id), req.body);
+      res.json(network);
+    } catch (error) {
+      res.status(400).json({ message: error instanceof Error ? error.message : "Failed to update partner network" });
+    }
+  });
+
+  // Partner Connection routes
+  app.get("/api/partner-networks/:networkId/connections", async (req, res) => {
+    try {
+      const { networkId } = req.params;
+      const connections = await storage.getPartnerConnections(parseInt(networkId));
+      res.json(connections);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch partner connections" });
+    }
+  });
+
+  app.post("/api/partner-networks/:networkId/connections", async (req, res) => {
+    try {
+      const { networkId } = req.params;
+      const connectionData = { ...req.body, networkId: parseInt(networkId) };
+      const connection = await storage.createPartnerConnection(connectionData);
+      res.json(connection);
+    } catch (error) {
+      res.status(400).json({ message: error instanceof Error ? error.message : "Failed to create partner connection" });
+    }
+  });
+
+  // 4D STI Tracking routes
+  app.get("/api/sti-tracking", async (req, res) => {
+    try {
+      const userId = 1;
+      const { stiType, startDate, endDate } = req.query;
+      
+      const events = await storage.getStiTrackingEvents(userId, {
+        stiType: stiType as string,
+        startDate: startDate as string,
+        endDate: endDate as string
+      });
+      res.json(events);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch STI tracking events" });
+    }
+  });
+
+  app.post("/api/sti-tracking", async (req, res) => {
+    try {
+      const userId = 1;
+      const eventData = { ...req.body, userId };
+      const event = await storage.createStiTrackingEvent(eventData);
+      
+      // Generate partner notifications if positive result
+      if (req.body.testResult === 'positive') {
+        await storage.generatePartnerNotifications(event.id);
+      }
+      
+      res.json(event);
+    } catch (error) {
+      res.status(400).json({ message: error instanceof Error ? error.message : "Failed to create STI tracking event" });
+    }
+  });
+
+  app.get("/api/partner-networks/:networkId/exposure-analysis/:stiType", async (req, res) => {
+    try {
+      const { networkId, stiType } = req.params;
+      const analysis = await storage.getNetworkExposureAnalysis(parseInt(networkId), stiType);
+      res.json(analysis);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to generate exposure analysis" });
+    }
+  });
+
+  // Sexual Product Customization routes
+  app.get("/api/sexual-product-customizations", async (req, res) => {
+    try {
+      const userId = 1;
+      const customizations = await storage.getSexualProductCustomizations(userId);
+      res.json(customizations);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch product customizations" });
+    }
+  });
+
+  app.post("/api/sexual-product-customizations", async (req, res) => {
+    try {
+      const userId = 1;
+      const customizationData = { ...req.body, userId };
+      const customization = await storage.createSexualProductCustomization(customizationData);
+      res.json(customization);
+    } catch (error) {
+      res.status(400).json({ message: error instanceof Error ? error.message : "Failed to create product customization" });
+    }
+  });
+
+  app.put("/api/sexual-product-customizations/:id", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const customization = await storage.updateSexualProductCustomization(parseInt(id), req.body);
+      res.json(customization);
+    } catch (error) {
+      res.status(400).json({ message: error instanceof Error ? error.message : "Failed to update product customization" });
+    }
+  });
+
+  app.get("/api/partner-networks/:networkId/compatible-products", async (req, res) => {
+    try {
+      const { networkId } = req.params;
+      const products = await storage.getPartnerCompatibleProducts(parseInt(networkId));
+      res.json(products);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch compatible products" });
+    }
+  });
+
+  // Natural Senses Profile routes
+  app.get("/api/natural-senses-profile", async (req, res) => {
+    try {
+      const userId = 1;
+      const profile = await storage.getNaturalSensesProfile(userId);
+      res.json(profile);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch natural senses profile" });
+    }
+  });
+
+  app.post("/api/natural-senses-profile", async (req, res) => {
+    try {
+      const userId = 1;
+      const profileData = { ...req.body, userId };
+      const profile = await storage.createNaturalSensesProfile(profileData);
+      res.json(profile);
+    } catch (error) {
+      res.status(400).json({ message: error instanceof Error ? error.message : "Failed to create natural senses profile" });
+    }
+  });
+
+  app.put("/api/natural-senses-profile/:id", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const profile = await storage.updateNaturalSensesProfile(parseInt(id), req.body);
+      res.json(profile);
+    } catch (error) {
+      res.status(400).json({ message: error instanceof Error ? error.message : "Failed to update natural senses profile" });
+    }
+  });
+
+  app.get("/api/optimal-product-recommendations", async (req, res) => {
+    try {
+      const userId = 1;
+      const recommendations = await storage.getOptimalProductRecommendations(userId);
+      res.json(recommendations);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch product recommendations" });
+    }
+  });
+
+  // Product Effectiveness routes
+  app.get("/api/sexual-product-customizations/:id/effectiveness-reports", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const reports = await storage.getProductEffectivenessReports(parseInt(id));
+      res.json(reports);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch effectiveness reports" });
+    }
+  });
+
+  app.post("/api/product-effectiveness-reports", async (req, res) => {
+    try {
+      const report = await storage.createProductEffectivenessReport(req.body);
+      res.json(report);
+    } catch (error) {
+      res.status(400).json({ message: error instanceof Error ? error.message : "Failed to create effectiveness report" });
+    }
+  });
+
+  app.get("/api/partner-networks/:networkId/effectiveness-analysis", async (req, res) => {
+    try {
+      const { networkId } = req.params;
+      const analysis = await storage.getNetworkEffectivenessAnalysis(parseInt(networkId));
+      res.json(analysis);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to generate effectiveness analysis" });
+    }
+  });
+
+  // Partner Notification routes
+  app.get("/api/partner-notifications", async (req, res) => {
+    try {
+      const userId = 1;
+      const notifications = await storage.getPartnerNotifications(userId);
+      res.json(notifications);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch partner notifications" });
+    }
+  });
+
+  app.post("/api/partner-notifications", async (req, res) => {
+    try {
+      const notification = await storage.sendPartnerNotification(req.body);
+      res.json(notification);
+    } catch (error) {
+      res.status(400).json({ message: error instanceof Error ? error.message : "Failed to send partner notification" });
+    }
+  });
+
+  app.put("/api/partner-notifications/:id/read", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const notification = await storage.markNotificationAsRead(parseInt(id));
+      res.json(notification);
+    } catch (error) {
+      res.status(400).json({ message: error instanceof Error ? error.message : "Failed to mark notification as read" });
+    }
+  });
+
+  app.post("/api/partner-notifications/:id/respond", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const response = await storage.respondToNotification(parseInt(id), req.body);
+      res.json(response);
+    } catch (error) {
+      res.status(400).json({ message: error instanceof Error ? error.message : "Failed to respond to notification" });
+    }
+  });
+
   // Clinic Inventory Management routes
   app.get("/api/clinic-inventory", async (req, res) => {
     try {

@@ -1127,3 +1127,211 @@ export type TranslationService = typeof translationServices.$inferSelect;
 
 export type InsertHealthDataSync = z.infer<typeof insertHealthDataSyncSchema>;
 export type HealthDataSync = typeof healthDataSync.$inferSelect;
+
+// Sexual Partner Networks for 4D STI Tracking
+export const partnerNetworks = pgTable("partner_networks", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  networkName: text("network_name"), // optional name for the network
+  isActive: boolean("is_active").default(true),
+  privacyLevel: text("privacy_level").default("private"), // 'private', 'network_only', 'anonymous_data'
+  consentGiven: boolean("consent_given").default(false),
+  dataRetentionDays: integer("data_retention_days").default(90), // how long to keep sensitive data
+  emergencyContactId: integer("emergency_contact_id").references(() => users.id),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const partnerConnections = pgTable("partner_connections", {
+  id: serial("id").primaryKey(),
+  networkId: integer("network_id").references(() => partnerNetworks.id).notNull(),
+  partnerUserId: integer("partner_user_id").references(() => users.id),
+  partnerAnonymousId: text("partner_anonymous_id"), // for privacy protection
+  connectionType: text("connection_type").notNull(), // 'sexual_partner', 'testing_partner', 'emergency_contact'
+  relationshipStatus: text("relationship_status"), // 'current', 'past', 'casual', 'regular'
+  mutualConsent: boolean("mutual_consent").default(false),
+  notificationPreferences: jsonb("notification_preferences").default({}),
+  lastContact: timestamp("last_contact"),
+  connectionStrength: integer("connection_strength").default(1), // 1-5 scale for contact frequency/intimacy
+  isBlocked: boolean("is_blocked").default(false),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// 4D STI Tracking (Time, Space, Severity, Network)
+export const stiTrackingEvents = pgTable("sti_tracking_events", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  networkId: integer("network_id").references(() => partnerNetworks.id),
+  eventType: text("event_type").notNull(), // 'test_result', 'symptom_report', 'exposure_alert', 'treatment_start', 'treatment_complete'
+  stiType: text("sti_type"), // 'chlamydia', 'gonorrhea', 'syphilis', 'hiv', 'herpes', 'hpv', etc.
+  testResult: text("test_result"), // 'positive', 'negative', 'inconclusive', 'pending'
+  severityLevel: integer("severity_level"), // 1-5 scale
+  symptomsReported: jsonb("symptoms_reported").default([]),
+  treatmentProtocol: text("treatment_protocol"),
+  testingLocation: text("testing_location"),
+  geographicArea: text("geographic_area"), // for epidemiological tracking
+  exposureTimeframe: jsonb("exposure_timeframe").default({}), // start and end dates
+  partnerNotificationStatus: text("partner_notification_status").default("pending"), // 'pending', 'notified', 'declined'
+  followUpRequired: boolean("follow_up_required").default(false),
+  followUpDate: timestamp("follow_up_date"),
+  isAnonymized: boolean("is_anonymized").default(false),
+  publicHealthReported: boolean("public_health_reported").default(false),
+  eventDate: timestamp("event_date").defaultNow(),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// Sexual Product Customization with Partner Compatibility
+export const sexualProductCustomizations = pgTable("sexual_product_customizations", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  productId: integer("product_id").references(() => products.id).notNull(),
+  partnerNetworkId: integer("partner_network_id").references(() => partnerNetworks.id),
+  customizationName: text("customization_name").notNull(),
+  bodyCompatibility: jsonb("body_compatibility").default({}), // size, anatomy considerations
+  materialPreferences: jsonb("material_preferences").default({}), // latex-free, vegan, etc.
+  protectionLevel: text("protection_level"), // 'standard', 'enhanced', 'ultra', 'specialized'
+  partnerCompatibility: jsonb("partner_compatibility").default({}), // fit for multiple partners
+  naturalSensesProfile: jsonb("natural_senses_profile").default({}), // based on greensong principles
+  texturePreferences: jsonb("texture_preferences").default({}),
+  flavorProfile: text("flavor_profile"),
+  aromaProfile: text("aroma_profile"),
+  temperatureSensitivity: text("temperature_sensitivity"), // 'warming', 'cooling', 'neutral'
+  durationOptimization: text("duration_optimization"), // 'extended', 'standard', 'quick'
+  sensitivityLevel: text("sensitivity_level"), // 'high', 'medium', 'low'
+  accessibilityFeatures: jsonb("accessibility_features").default([]), // for users with disabilities
+  sustainabilityRating: integer("sustainability_rating"), // 1-5 eco-friendliness
+  sharedWithPartners: boolean("shared_with_partners").default(false),
+  partnerFeedback: jsonb("partner_feedback").default([]),
+  effectivenessRating: integer("effectiveness_rating"), // 1-5 user satisfaction
+  isActive: boolean("is_active").default(true),
+  lastUsed: timestamp("last_used"),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Natural Senses Integration (inspired by greensong.info)
+export const naturalSensesProfiles = pgTable("natural_senses_profiles", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  visualSensitivity: integer("visual_sensitivity").default(3), // 1-5 scale
+  auditoryPreferences: jsonb("auditory_preferences").default({}),
+  tactileSensitivity: integer("tactile_sensitivity").default(3),
+  olfactoryPreferences: jsonb("olfactory_preferences").default({}),
+  gustatory: jsonb("gustatory").default({}),
+  vestibularNeeds: jsonb("vestibular_needs").default({}), // balance and spatial orientation
+  proprioceptiveNeeds: jsonb("proprioceptive_needs").default({}), // body awareness
+  interocetptiveAwareness: integer("interoceptive_awareness").default(3), // internal body signals
+  environmentalFactors: jsonb("environmental_factors").default({}), // lighting, temperature, etc.
+  rhythmAndTiming: jsonb("rhythm_and_timing").default({}),
+  socialSensoryNeeds: jsonb("social_sensory_needs").default({}),
+  stressResponsePatterns: jsonb("stress_response_patterns").default({}),
+  regulationStrategies: jsonb("regulation_strategies").default([]),
+  sensorySeekingBehaviors: jsonb("sensory_seeking_behaviors").default([]),
+  sensoryAvoidanceBehaviors: jsonb("sensory_avoiding_behaviors").default([]),
+  optimalArousalLevel: text("optimal_arousal_level"), // 'low', 'moderate', 'high'
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Partner Notification System for STI Alerts
+export const partnerNotifications = pgTable("partner_notifications", {
+  id: serial("id").primaryKey(),
+  stiEventId: integer("sti_event_id").references(() => stiTrackingEvents.id).notNull(),
+  partnerConnectionId: integer("partner_connection_id").references(() => partnerConnections.id).notNull(),
+  notificationType: text("notification_type").notNull(), // 'exposure_alert', 'test_recommendation', 'follow_up'
+  message: text("message").notNull(),
+  isAnonymous: boolean("is_anonymous").default(true),
+  urgencyLevel: text("urgency_level").default("medium"), // 'low', 'medium', 'high', 'urgent'
+  deliveryMethod: text("delivery_method"), // 'app', 'sms', 'email', 'secure_message'
+  deliveryStatus: text("delivery_status").default("pending"), // 'pending', 'sent', 'delivered', 'read'
+  responseReceived: boolean("response_received").default(false),
+  followUpRequired: boolean("follow_up_required").default(false),
+  expiresAt: timestamp("expires_at"),
+  sentAt: timestamp("sent_at"),
+  readAt: timestamp("read_at"),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// Product Effectiveness Tracking with Partner Data
+export const productEffectivenessReports = pgTable("product_effectiveness_reports", {
+  id: serial("id").primaryKey(),
+  customizationId: integer("customization_id").references(() => sexualProductCustomizations.id).notNull(),
+  partnerConnectionId: integer("partner_connection_id").references(() => partnerConnections.id),
+  usageDate: timestamp("usage_date").notNull(),
+  protectionEffectiveness: integer("protection_effectiveness"), // 1-5 scale
+  comfortLevel: integer("comfort_level"), // 1-5 scale
+  partnerComfortLevel: integer("partner_comfort_level"), // 1-5 scale
+  naturalFeelRating: integer("natural_feel_rating"), // 1-5 scale
+  durationRating: integer("duration_rating"), // 1-5 scale
+  sensoryExperience: jsonb("sensory_experience").default({}),
+  unexpectedIssues: jsonb("unexpected_issues").default([]),
+  improvementSuggestions: text("improvement_suggestions"),
+  wouldRecommend: boolean("would_recommend").default(true),
+  reorderIntention: boolean("reorder_intention").default(true),
+  partnerFeedbackIncluded: boolean("partner_feedback_included").default(false),
+  anonymizedForResearch: boolean("anonymized_for_research").default(false),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// Validation schemas
+export const insertPartnerNetworkSchema = createInsertSchema(partnerNetworks).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertPartnerConnectionSchema = createInsertSchema(partnerConnections).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertStiTrackingEventSchema = createInsertSchema(stiTrackingEvents).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertSexualProductCustomizationSchema = createInsertSchema(sexualProductCustomizations).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertNaturalSensesProfileSchema = createInsertSchema(naturalSensesProfiles).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertPartnerNotificationSchema = createInsertSchema(partnerNotifications).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertProductEffectivenessReportSchema = createInsertSchema(productEffectivenessReports).omit({
+  id: true,
+  createdAt: true,
+});
+
+// Types
+export type InsertPartnerNetwork = z.infer<typeof insertPartnerNetworkSchema>;
+export type PartnerNetwork = typeof partnerNetworks.$inferSelect;
+
+export type InsertPartnerConnection = z.infer<typeof insertPartnerConnectionSchema>;
+export type PartnerConnection = typeof partnerConnections.$inferSelect;
+
+export type InsertStiTrackingEvent = z.infer<typeof insertStiTrackingEventSchema>;
+export type StiTrackingEvent = typeof stiTrackingEvents.$inferSelect;
+
+export type InsertSexualProductCustomization = z.infer<typeof insertSexualProductCustomizationSchema>;
+export type SexualProductCustomization = typeof sexualProductCustomizations.$inferSelect;
+
+export type InsertNaturalSensesProfile = z.infer<typeof insertNaturalSensesProfileSchema>;
+export type NaturalSensesProfile = typeof naturalSensesProfiles.$inferSelect;
+
+export type InsertPartnerNotification = z.infer<typeof insertPartnerNotificationSchema>;
+export type PartnerNotification = typeof partnerNotifications.$inferSelect;
+
+export type InsertProductEffectivenessReport = z.infer<typeof insertProductEffectivenessReportSchema>;
+export type ProductEffectivenessReport = typeof productEffectivenessReports.$inferSelect;
