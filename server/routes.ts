@@ -358,6 +358,249 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Calendar Integration routes
+  app.get("/api/calendar-connections", async (req, res) => {
+    try {
+      const userId = 1;
+      const connections = await storage.getCalendarConnections(userId);
+      res.json(connections);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch calendar connections" });
+    }
+  });
+
+  app.post("/api/calendar-connections", async (req, res) => {
+    try {
+      const userId = 1;
+      const connectionData = { ...req.body, userId };
+      const connection = await storage.createCalendarConnection(connectionData);
+      res.json(connection);
+    } catch (error) {
+      res.status(400).json({ message: error instanceof Error ? error.message : "Failed to create calendar connection" });
+    }
+  });
+
+  app.put("/api/calendar-connections/:id", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const connection = await storage.updateCalendarConnection(parseInt(id), req.body);
+      if (!connection) {
+        return res.status(404).json({ message: "Calendar connection not found" });
+      }
+      res.json(connection);
+    } catch (error) {
+      res.status(400).json({ message: error instanceof Error ? error.message : "Failed to update calendar connection" });
+    }
+  });
+
+  app.delete("/api/calendar-connections/:id", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const success = await storage.deleteCalendarConnection(parseInt(id));
+      if (!success) {
+        return res.status(404).json({ message: "Calendar connection not found" });
+      }
+      res.json({ success: true });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to delete calendar connection" });
+    }
+  });
+
+  // Scheduled Tasks routes
+  app.get("/api/scheduled-tasks", async (req, res) => {
+    try {
+      const userId = 1;
+      const { startDate, endDate } = req.query;
+      
+      let tasks;
+      if (startDate && endDate) {
+        tasks = await storage.getScheduledTasksByDateRange(userId, startDate as string, endDate as string);
+      } else {
+        tasks = await storage.getScheduledTasks(userId);
+      }
+      res.json(tasks);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch scheduled tasks" });
+    }
+  });
+
+  app.post("/api/scheduled-tasks", async (req, res) => {
+    try {
+      const userId = 1;
+      const taskData = { ...req.body, userId };
+      const task = await storage.createScheduledTask(taskData);
+      res.json(task);
+    } catch (error) {
+      res.status(400).json({ message: error instanceof Error ? error.message : "Failed to create scheduled task" });
+    }
+  });
+
+  app.put("/api/scheduled-tasks/:id", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const task = await storage.updateScheduledTask(parseInt(id), req.body);
+      if (!task) {
+        return res.status(404).json({ message: "Scheduled task not found" });
+      }
+      res.json(task);
+    } catch (error) {
+      res.status(400).json({ message: error instanceof Error ? error.message : "Failed to update scheduled task" });
+    }
+  });
+
+  app.delete("/api/scheduled-tasks/:id", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const success = await storage.deleteScheduledTask(parseInt(id));
+      if (!success) {
+        return res.status(404).json({ message: "Scheduled task not found" });
+      }
+      res.json({ success: true });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to delete scheduled task" });
+    }
+  });
+
+  // Task Templates routes
+  app.get("/api/task-templates", async (req, res) => {
+    try {
+      const userId = 1;
+      const { includePublic } = req.query;
+      
+      let templates = await storage.getTaskTemplates(userId);
+      if (includePublic === 'true') {
+        const publicTemplates = await storage.getPublicTaskTemplates();
+        templates = [...templates, ...publicTemplates];
+      }
+      res.json(templates);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch task templates" });
+    }
+  });
+
+  app.post("/api/task-templates", async (req, res) => {
+    try {
+      const userId = 1;
+      const templateData = { ...req.body, userId };
+      const template = await storage.createTaskTemplate(templateData);
+      res.json(template);
+    } catch (error) {
+      res.status(400).json({ message: error instanceof Error ? error.message : "Failed to create task template" });
+    }
+  });
+
+  app.put("/api/task-templates/:id", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const template = await storage.updateTaskTemplate(parseInt(id), req.body);
+      if (!template) {
+        return res.status(404).json({ message: "Task template not found" });
+      }
+      res.json(template);
+    } catch (error) {
+      res.status(400).json({ message: error instanceof Error ? error.message : "Failed to update task template" });
+    }
+  });
+
+  app.post("/api/task-templates/:id/use", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const template = await storage.incrementTemplateUsage(parseInt(id));
+      if (!template) {
+        return res.status(404).json({ message: "Task template not found" });
+      }
+      res.json(template);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to increment template usage" });
+    }
+  });
+
+  // Calendar sync endpoints for external integration
+  app.post("/api/calendar-sync/google", async (req, res) => {
+    try {
+      // This would integrate with Google Calendar API
+      // For now, return success with sync status
+      res.json({ 
+        success: true, 
+        message: "Google Calendar sync initiated",
+        syncedEvents: 0 
+      });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to sync with Google Calendar" });
+    }
+  });
+
+  app.post("/api/calendar-sync/ical", async (req, res) => {
+    try {
+      const { icalUrl } = req.body;
+      // This would fetch and parse iCal data
+      // For now, return success with sync status
+      res.json({ 
+        success: true, 
+        message: "iCal sync initiated",
+        url: icalUrl,
+        syncedEvents: 0 
+      });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to sync with iCal" });
+    }
+  });
+
+  app.post("/api/calendar-sync/pureos", async (req, res) => {
+    try {
+      // This would integrate with pureOS calendar systems
+      // For now, return success with sync status
+      res.json({ 
+        success: true, 
+        message: "pureOS calendar sync initiated",
+        syncedEvents: 0 
+      });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to sync with pureOS calendar" });
+    }
+  });
+
+  // Export calendar data in various formats
+  app.get("/api/calendar-export/ical", async (req, res) => {
+    try {
+      const userId = 1;
+      const tasks = await storage.getScheduledTasks(userId);
+      
+      // Generate iCal format
+      let icalData = `BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Fluck//Wise Time Flucks//EN
+NAME:Wise Time Flucks Calendar
+X-WR-CALNAME:Wise Time Flucks Calendar
+`;
+
+      tasks.forEach(task => {
+        const startDate = task.scheduledDate.replace(/-/g, '');
+        const startTime = task.scheduledStartTime ? task.scheduledStartTime.replace(':', '') + '00' : '090000';
+        const endTime = task.scheduledEndTime ? task.scheduledEndTime.replace(':', '') + '00' : '100000';
+        
+        icalData += `BEGIN:VEVENT
+UID:${task.id}@fluck.wtf
+DTSTART:${startDate}T${startTime}
+DTEND:${startDate}T${endTime}
+SUMMARY:${task.title}
+DESCRIPTION:${task.description || ''}${task.wiseTimePrep ? '\\n\\nWise Time Prep: ' + task.wiseTimePrep : ''}
+CATEGORIES:${task.category}
+STATUS:${task.status?.toUpperCase()}
+END:VEVENT
+`;
+      });
+
+      icalData += 'END:VCALENDAR';
+
+      res.setHeader('Content-Type', 'text/calendar');
+      res.setHeader('Content-Disposition', 'attachment; filename="wise-time-flucks.ics"');
+      res.send(icalData);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to export calendar data" });
+    }
+  });
+
   // Clinic Inventory Management routes
   app.get("/api/clinic-inventory", async (req, res) => {
     try {

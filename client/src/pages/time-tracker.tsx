@@ -10,7 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Slider } from "@/components/ui/slider";
-import { Timer, Play, Pause, Square, Clock, Target, TrendingUp, Calendar } from "lucide-react";
+import { Timer, Play, Square, Clock, Target, TrendingUp, Calendar } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import type { TimeEntry, TimeGoal, TimeInsight } from "@shared/schema";
 

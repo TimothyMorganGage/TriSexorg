@@ -661,6 +661,12 @@ export const timeEntries = pgTable("time_entries", {
   timeWisdom: text("time_wisdom"), // personal reflection on time use
   isCreativeCommons: boolean("is_creative_commons").default(false), // if work can be shared
   wiseTimeFluck: text("wise_time_fluck"), // personal mantra or insight
+  // Calendar Integration Fields
+  calendarEventId: text("calendar_event_id"), // Google Calendar/iCal event ID
+  calendarType: text("calendar_type"), // google, ical, outlook, pureos
+  syncStatus: text("sync_status").default("pending"), // pending, synced, failed
+  lastSynced: timestamp("last_synced"),
+  isCalendarBlocked: boolean("is_calendar_blocked").default(false), // creates calendar block
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
@@ -727,3 +733,94 @@ export type TimeGoal = typeof timeGoals.$inferSelect;
 
 export type InsertTimeInsight = z.infer<typeof insertTimeInsightSchema>;
 export type TimeInsight = typeof timeInsights.$inferSelect;
+
+// Calendar Integration Tables
+export const calendarConnections = pgTable("calendar_connections", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  calendarType: text("calendar_type").notNull(), // google, ical, outlook, pureos, caldav
+  connectionName: text("connection_name").notNull(), // user-defined name
+  accessToken: text("access_token"), // encrypted OAuth token
+  refreshToken: text("refresh_token"), // encrypted refresh token
+  calendarUrl: text("calendar_url"), // iCal/CalDAV URL
+  calendarId: text("calendar_id"), // specific calendar within service
+  syncEnabled: boolean("sync_enabled").default(true),
+  autoCreateBlocks: boolean("auto_create_blocks").default(false), // auto-create calendar blocks
+  syncDirection: text("sync_direction").default("bidirectional"), // import, export, bidirectional
+  lastSyncTime: timestamp("last_sync_time"),
+  syncErrors: text("sync_errors").array(),
+  isActive: boolean("is_active").default(true),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const scheduledTasks = pgTable("scheduled_tasks", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  title: text("title").notNull(),
+  description: text("description"),
+  category: text("category").notNull(),
+  scheduledDate: date("scheduled_date").notNull(),
+  scheduledStartTime: text("scheduled_start_time"), // HH:MM format
+  scheduledEndTime: text("scheduled_end_time"), // HH:MM format
+  estimatedDuration: integer("estimated_duration_minutes"),
+  priority: text("priority").default("medium"), // high, medium, low
+  status: text("status").default("scheduled"), // scheduled, in_progress, completed, cancelled
+  linkedTimeEntryId: integer("linked_time_entry_id").references(() => timeEntries.id),
+  calendarEventId: text("calendar_event_id"),
+  calendarConnectionId: integer("calendar_connection_id").references(() => calendarConnections.id),
+  recurrenceRule: text("recurrence_rule"), // iCal RRULE format
+  reminderMinutes: integer("reminder_minutes").array(), // [15, 60] for 15min and 1hr reminders
+  wiseTimePrep: text("wise_time_prep"), // preparation wisdom for the task
+  energyRequirement: integer("energy_requirement"), // 1-5 scale of energy needed
+  focusRequirement: integer("focus_requirement"), // 1-5 scale of focus needed
+  isCreativeCommons: boolean("is_creative_commons").default(false),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const taskTemplates = pgTable("task_templates", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  name: text("name").notNull(),
+  description: text("description"),
+  category: text("category").notNull(),
+  defaultDuration: integer("default_duration_minutes"),
+  defaultEnergyRequirement: integer("default_energy_requirement"),
+  defaultFocusRequirement: integer("default_focus_requirement"),
+  defaultTags: text("default_tags").array(),
+  wiseTimeTemplate: text("wise_time_template"), // template wisdom for this type of task
+  isPublic: boolean("is_public").default(false), // shareable under Creative Commons
+  timesUsed: integer("times_used").default(0),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+// Schema validation for calendar integration
+export const insertCalendarConnectionSchema = createInsertSchema(calendarConnections).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertScheduledTaskSchema = createInsertSchema(scheduledTasks).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertTaskTemplateSchema = createInsertSchema(taskTemplates).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+// Types for calendar integration
+export type InsertCalendarConnection = z.infer<typeof insertCalendarConnectionSchema>;
+export type CalendarConnection = typeof calendarConnections.$inferSelect;
+
+export type InsertScheduledTask = z.infer<typeof insertScheduledTaskSchema>;
+export type ScheduledTask = typeof scheduledTasks.$inferSelect;
+
+export type InsertTaskTemplate = z.infer<typeof insertTaskTemplateSchema>;
+export type TaskTemplate = typeof taskTemplates.$inferSelect;

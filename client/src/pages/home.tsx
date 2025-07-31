@@ -9,7 +9,7 @@ import {
   ShieldCheck, Leaf, Heart, Box, CheckCircle, 
   Printer, Truck, Hospital, UserCheck, Store, 
   Building, Play, Ruler, Droplets, Palette, TestTube,
-  Coins, Share2, BookOpen, Lightbulb, Award, Book, Star, Users
+  Coins, Share2, BookOpen, Lightbulb, Award, Book, Star, Users, Timer
 } from "lucide-react";
 
 export default function Home() {
@@ -119,10 +119,10 @@ export default function Home() {
                     Start Inclusive Order
                   </Button>
                 </Link>
-                <Link href="/domain-purchase">
+                <Link href="/time-tracker">
                   <Button size="lg" className="bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white shadow-lg w-full">
-                    <ShieldCheck className="mr-2 h-5 w-5" />
-                    Register fluck.wtf
+                    <Play className="mr-2 h-5 w-5" />
+                    Wise Time Flucks
                   </Button>
                 </Link>
                 <Link href="/wiki">

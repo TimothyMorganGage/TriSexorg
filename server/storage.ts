@@ -2,6 +2,7 @@ import {
   users, products, productConfigurations, orders, educationalContent, partnershipRequests,
   financialRecords, budgetItems, budgetVotes, communityDividends,
   moodEntries, wellnessGoals, moodInsights, timeEntries, timeGoals, timeInsights,
+  calendarConnections, scheduledTasks, taskTemplates,
   type User, type InsertUser, type Product, type InsertProduct,
   type ProductConfiguration, type InsertProductConfiguration,
   type Order, type InsertOrder, type EducationalContent, type InsertEducationalContent,
@@ -15,7 +16,10 @@ import {
   type MoodInsight, type InsertMoodInsight,
   type TimeEntry, type InsertTimeEntry,
   type TimeGoal, type InsertTimeGoal,
-  type TimeInsight, type InsertTimeInsight
+  type TimeInsight, type InsertTimeInsight,
+  type CalendarConnection, type InsertCalendarConnection,
+  type ScheduledTask, type InsertScheduledTask,
+  type TaskTemplate, type InsertTaskTemplate
 } from "@shared/schema";
 
 export interface IStorage {
@@ -118,6 +122,28 @@ export interface IStorage {
   createTimeInsight(insight: InsertTimeInsight): Promise<TimeInsight>;
   acknowledgeTimeInsight(id: number): Promise<TimeInsight | undefined>;
 
+  // Calendar Integration methods
+  getCalendarConnections(userId: number): Promise<CalendarConnection[]>;
+  getCalendarConnection(id: number): Promise<CalendarConnection | undefined>;
+  createCalendarConnection(connection: InsertCalendarConnection): Promise<CalendarConnection>;
+  updateCalendarConnection(id: number, connection: Partial<InsertCalendarConnection>): Promise<CalendarConnection | undefined>;
+  deleteCalendarConnection(id: number): Promise<boolean>;
+  
+  getScheduledTasks(userId: number): Promise<ScheduledTask[]>;
+  getScheduledTask(id: number): Promise<ScheduledTask | undefined>;
+  createScheduledTask(task: InsertScheduledTask): Promise<ScheduledTask>;
+  updateScheduledTask(id: number, task: Partial<InsertScheduledTask>): Promise<ScheduledTask | undefined>;
+  deleteScheduledTask(id: number): Promise<boolean>;
+  getScheduledTasksByDateRange(userId: number, startDate: string, endDate: string): Promise<ScheduledTask[]>;
+  
+  getTaskTemplates(userId: number): Promise<TaskTemplate[]>;
+  getPublicTaskTemplates(): Promise<TaskTemplate[]>;
+  getTaskTemplate(id: number): Promise<TaskTemplate | undefined>;
+  createTaskTemplate(template: InsertTaskTemplate): Promise<TaskTemplate>;
+  updateTaskTemplate(id: number, template: Partial<InsertTaskTemplate>): Promise<TaskTemplate | undefined>;
+  deleteTaskTemplate(id: number): Promise<boolean>;
+  incrementTemplateUsage(id: number): Promise<TaskTemplate | undefined>;
+
   // Clinic Inventory methods
   getClinicInventory(): Promise<any[]>;
   updateInventoryStock(itemId: number, quantity: number, notes?: string): Promise<any>;
@@ -144,6 +170,9 @@ export class MemStorage implements IStorage {
   private timeEntries: Map<number, TimeEntry>;
   private timeGoals: Map<number, TimeGoal>;
   private timeInsights: Map<number, TimeInsight>;
+  private calendarConnections: Map<number, CalendarConnection>;
+  private scheduledTasks: Map<number, ScheduledTask>;
+  private taskTemplates: Map<number, TaskTemplate>;
   private currentUserId: number;
   private currentProductId: number;
   private currentConfigId: number;
@@ -160,6 +189,9 @@ export class MemStorage implements IStorage {
   private currentTimeEntryId: number;
   private currentTimeGoalId: number;
   private currentTimeInsightId: number;
+  private currentCalendarConnectionId: number;
+  private currentScheduledTaskId: number;
+  private currentTaskTemplateId: number;
   private clinicInventory: Map<number, any>;
   private stockAlerts: Map<number, any>;
   private restockOrders: Map<number, any>;
@@ -184,6 +216,9 @@ export class MemStorage implements IStorage {
     this.timeEntries = new Map();
     this.timeGoals = new Map();
     this.timeInsights = new Map();
+    this.calendarConnections = new Map();
+    this.scheduledTasks = new Map();
+    this.taskTemplates = new Map();
     this.currentUserId = 1;
     this.currentProductId = 1;
     this.currentConfigId = 1;
@@ -200,6 +235,9 @@ export class MemStorage implements IStorage {
     this.currentTimeEntryId = 1;
     this.currentTimeGoalId = 1;
     this.currentTimeInsightId = 1;
+    this.currentCalendarConnectionId = 1;
+    this.currentScheduledTaskId = 1;
+    this.currentTaskTemplateId = 1;
     this.clinicInventory = new Map();
     this.stockAlerts = new Map();
     this.restockOrders = new Map();
@@ -1029,6 +1067,140 @@ export class MemStorage implements IStorage {
       acknowledgedAt: new Date(),
     };
     this.timeInsights.set(id, updated);
+    return updated;
+  }
+
+  // Calendar Integration methods
+  async getCalendarConnections(userId: number): Promise<CalendarConnection[]> {
+    return Array.from(this.calendarConnections.values()).filter(conn => conn.userId === userId);
+  }
+
+  async getCalendarConnection(id: number): Promise<CalendarConnection | undefined> {
+    return this.calendarConnections.get(id);
+  }
+
+  async createCalendarConnection(connection: InsertCalendarConnection): Promise<CalendarConnection> {
+    const newConnection: CalendarConnection = {
+      ...connection,
+      id: this.currentCalendarConnectionId++,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+    this.calendarConnections.set(newConnection.id, newConnection);
+    return newConnection;
+  }
+
+  async updateCalendarConnection(id: number, connection: Partial<InsertCalendarConnection>): Promise<CalendarConnection | undefined> {
+    const existing = this.calendarConnections.get(id);
+    if (!existing) return undefined;
+    
+    const updated: CalendarConnection = {
+      ...existing,
+      ...connection,
+      updatedAt: new Date(),
+    };
+    this.calendarConnections.set(id, updated);
+    return updated;
+  }
+
+  async deleteCalendarConnection(id: number): Promise<boolean> {
+    return this.calendarConnections.delete(id);
+  }
+
+  async getScheduledTasks(userId: number): Promise<ScheduledTask[]> {
+    return Array.from(this.scheduledTasks.values()).filter(task => task.userId === userId);
+  }
+
+  async getScheduledTask(id: number): Promise<ScheduledTask | undefined> {
+    return this.scheduledTasks.get(id);
+  }
+
+  async createScheduledTask(task: InsertScheduledTask): Promise<ScheduledTask> {
+    const newTask: ScheduledTask = {
+      ...task,
+      id: this.currentScheduledTaskId++,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+    this.scheduledTasks.set(newTask.id, newTask);
+    return newTask;
+  }
+
+  async updateScheduledTask(id: number, task: Partial<InsertScheduledTask>): Promise<ScheduledTask | undefined> {
+    const existing = this.scheduledTasks.get(id);
+    if (!existing) return undefined;
+    
+    const updated: ScheduledTask = {
+      ...existing,
+      ...task,
+      updatedAt: new Date(),
+    };
+    this.scheduledTasks.set(id, updated);
+    return updated;
+  }
+
+  async deleteScheduledTask(id: number): Promise<boolean> {
+    return this.scheduledTasks.delete(id);
+  }
+
+  async getScheduledTasksByDateRange(userId: number, startDate: string, endDate: string): Promise<ScheduledTask[]> {
+    return Array.from(this.scheduledTasks.values()).filter(task => 
+      task.userId === userId && 
+      task.scheduledDate >= startDate && 
+      task.scheduledDate <= endDate
+    );
+  }
+
+  async getTaskTemplates(userId: number): Promise<TaskTemplate[]> {
+    return Array.from(this.taskTemplates.values()).filter(template => template.userId === userId);
+  }
+
+  async getPublicTaskTemplates(): Promise<TaskTemplate[]> {
+    return Array.from(this.taskTemplates.values()).filter(template => template.isPublic);
+  }
+
+  async getTaskTemplate(id: number): Promise<TaskTemplate | undefined> {
+    return this.taskTemplates.get(id);
+  }
+
+  async createTaskTemplate(template: InsertTaskTemplate): Promise<TaskTemplate> {
+    const newTemplate: TaskTemplate = {
+      ...template,
+      id: this.currentTaskTemplateId++,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+    this.taskTemplates.set(newTemplate.id, newTemplate);
+    return newTemplate;
+  }
+
+  async updateTaskTemplate(id: number, template: Partial<InsertTaskTemplate>): Promise<TaskTemplate | undefined> {
+    const existing = this.taskTemplates.get(id);
+    if (!existing) return undefined;
+    
+    const updated: TaskTemplate = {
+      ...existing,
+      ...template,
+      updatedAt: new Date(),
+    };
+    this.taskTemplates.set(id, updated);
+    return updated;
+  }
+
+  async deleteTaskTemplate(id: number): Promise<boolean> {
+    return this.taskTemplates.delete(id);
+  }
+
+  async incrementTemplateUsage(id: number): Promise<TaskTemplate | undefined> {
+    const existing = this.taskTemplates.get(id);
+    if (!existing) return undefined;
+    
+    const updated: TaskTemplate = {
+      ...existing,
+      timesUsed: (existing.timesUsed || 0) + 1,
+      updatedAt: new Date(),
+    };
+    this.taskTemplates.set(id, updated);
     return updated;
   }
 
