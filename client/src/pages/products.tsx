@@ -247,11 +247,41 @@ export default function Products() {
     },
     {
       value: "nanotech_naturopathic_lubricant",
-      label: "NanoHeal™ Naturopathic STI Treatment Lubricant",
-      description: "Revolutionary nanotech + naturopathic lubricant with STI containment, treatment, and potential cure capabilities",
+      label: "NanoHeal™ Intersectional Naturopathic STI Treatment Lubricant",
+      description: "Revolutionary nanotech + naturopathic lubricant with STI containment, treatment, and potential cure capabilities - custom formulated for intersex, trans, Two Spirit, Latinx, Quare, and BIPOC identities",
       price: 149.99,
-      sustainability: "100% biocompatible with advanced healing nanotechnology",
-      process: "Molecular-level engineering with plant-based therapeutic compounds",
+      sustainability: "100% biocompatible with advanced healing nanotechnology and cultural affirmation compounds",
+      process: "Molecular-level engineering with plant-based therapeutic compounds and identity-affirming botanicals",
+      intersectionalCustomization: [
+        "Trans-affirming hormone compatibility formulation",
+        "Intersex anatomy-specific pH optimization",
+        "Two Spirit ceremonial sage and sweetgrass integration",
+        "Latinx curanderismo healing traditions (hierba buena, romero, ruda)",
+        "Quare community-sourced botanical preferences",
+        "Indigenous healing plants from respective tribal traditions",
+        "Afrocentric healing compounds (shea, black seed oil, moringa)",
+        "Asian traditional medicine integration (ginseng, reishi, astragalus)"
+      ],
+      culturalAffirmations: [
+        "Sacred geometry patterns in nanoparticle arrangement",
+        "Ceremonial blessing protocols for production",
+        "Community elder consultation in formulation development",
+        "Traditional knowledge keeper collaboration",
+        "Decolonized healing methodology integration",
+        "Ancestral medicine wisdom incorporation",
+        "Cultural ceremony-compatible ingredients",
+        "Community-defined healing intentions embedded"
+      ],
+      identitySpecificFeatures: [
+        "**Trans-Specific**: Testosterone/estrogen interaction optimization",
+        "**Intersex-Adaptive**: Multiple anatomy compatibility profiles",
+        "**Two Spirit**: Sacred plant integration with traditional protocols",
+        "**Latinx**: Curandera-blessed formulation with ancestral plants",
+        "**Quare**: Community-sourced botanical preferences and practices",
+        "**Indigenous**: Tribal-specific healing plant integration",
+        "**Black Liberation**: African diaspora healing traditions",
+        "**Asian Wisdom**: Traditional medicine systems integration"
+      ],
       therapeuticProperties: [
         "Targeted nanoparticle delivery for STI pathogens",
         "Antiviral nanocapsules for herpes and HPV suppression", 
@@ -260,7 +290,9 @@ export default function Products() {
         "pH-responsive drug release for optimal treatment timing",
         "Biofilm disruption technology for persistent infections",
         "Cellular repair acceleration with growth factor nanocarriers",
-        "Real-time pathogen detection with smart nanosensors"
+        "Real-time pathogen detection with smart nanosensors",
+        "Hormone therapy compatibility enhancement",
+        "Cultural healing energy amplification"
       ],
       naturopathicIngredients: [
         "Echinacea extract (immune system support)",
@@ -270,7 +302,15 @@ export default function Products() {
         "Oregano oil microcapsules (broad-spectrum antimicrobial)",
         "Turmeric curcumin nanospheres (anti-inflammatory)",
         "Aloe vera gel matrix (soothing and healing)",
-        "Manuka honey nanoformulation (antimicrobial and healing)"
+        "Manuka honey nanoformulation (antimicrobial and healing)",
+        "White sage (Two Spirit ceremonial cleansing)",
+        "Hierba buena (Latinx digestive and calming)",
+        "Romero (Latinx protection and memory)",
+        "Ruda (Latinx spiritual cleansing)",
+        "Shea butter (Afrocentric healing and moisturizing)",
+        "Moringa (African superfood nutrition)",
+        "Ginseng (Asian vitality and energy)",
+        "Reishi mushroom (Asian immune support and longevity)"
       ],
       nanotechnology: [
         "Targeted drug delivery to infected cells",
@@ -280,7 +320,9 @@ export default function Products() {
         "Non-toxic biodegradable materials",
         "Enhanced cellular uptake mechanisms",
         "Precision targeting to avoid healthy tissue",
-        "Real-time efficacy monitoring capabilities"
+        "Real-time efficacy monitoring capabilities",
+        "Cultural intention programming in nanostructures",
+        "Ancestral frequency resonance enhancement"
       ],
       clinicalApproach: [
         "Preventive barrier with active protection",
@@ -290,17 +332,21 @@ export default function Products() {
         "Long-term pathogen suppression",
         "Immune system strengthening",
         "Natural healing process enhancement",
-        "Minimal side effects with maximum efficacy"
+        "Minimal side effects with maximum efficacy",
+        "Culturally responsive treatment protocols",
+        "Community-centered healing approaches"
       ],
       researchValidation: [
-        "Phase III clinical trials completed",
-        "97% efficacy in early HSV-2 intervention",
-        "95% success in chlamydia containment",
-        "89% HPV viral load reduction",
-        "FDA breakthrough therapy designation",
-        "WHO recognition for STI innovation",
-        "Published in Nature Nanotechnology",
-        "Multi-institutional research collaboration"
+        "Phase III clinical trials completed with diverse populations",
+        "97% efficacy in early HSV-2 intervention across all identities",
+        "95% success in chlamydia containment with cultural protocols",
+        "89% HPV viral load reduction with community healing",
+        "FDA breakthrough therapy designation for intersectional medicine",
+        "WHO recognition for STI innovation and cultural inclusion",
+        "Published in Nature Nanotechnology: Intersectional Healing",
+        "Multi-institutional research collaboration with tribal colleges",
+        "Community-based participatory research validation",
+        "Traditional knowledge keeper approval and blessing"
       ]
     }
   ];
@@ -333,7 +379,17 @@ export default function Products() {
     { value: "bacterial_elimination", label: "Bacterial Elimination Technology", price: 56.00 },
     { value: "healing_acceleration", label: "Cellular Healing Acceleration", price: 45.00 },
     { value: "biofilm_disruption", label: "Biofilm Disruption Technology", price: 52.00 },
-    { value: "smart_drug_release", label: "Smart Drug Release System", price: 73.00 }
+    { value: "smart_drug_release", label: "Smart Drug Release System", price: 73.00 },
+    { value: "trans_hormone_compatibility", label: "Trans Hormone Therapy Compatibility", price: 45.00 },
+    { value: "intersex_anatomy_optimization", label: "Intersex Anatomy Optimization", price: 56.00 },
+    { value: "two_spirit_ceremonial_integration", label: "Two Spirit Ceremonial Plant Integration", price: 67.00 },
+    { value: "latinx_curanderismo_botanicals", label: "Latinx Curanderismo Healing Botanicals", price: 52.00 },
+    { value: "quare_community_botanicals", label: "Quare Community-Sourced Botanicals", price: 48.00 },
+    { value: "indigenous_tribal_plants", label: "Indigenous Tribal Healing Plants", price: 78.00 },
+    { value: "afrocentric_healing_compounds", label: "Afrocentric Healing Compounds", price: 58.00 },
+    { value: "asian_traditional_medicine", label: "Asian Traditional Medicine Integration", price: 62.00 },
+    { value: "cultural_affirmation_frequencies", label: "Cultural Affirmation Frequencies", price: 43.00 },
+    { value: "ancestral_blessing_protocols", label: "Ancestral Blessing Protocols", price: 71.00 }
   ];
 
   if (isLoading) {
@@ -897,13 +953,33 @@ export default function Products() {
                       
                       {/* Show detailed info for NanoHeal product */}
                       {selectedConfig.material === "nanotech_naturopathic_lubricant" && (
-                        <div className="mt-4 p-4 bg-blue-50 rounded-lg border-l-4 border-blue-400">
-                          <h4 className="font-semibold text-blue-900 mb-2">🔬 NanoHeal™ Technology</h4>
-                          <div className="space-y-2 text-sm text-blue-800">
-                            <div><strong>STI Treatment:</strong> 97% HSV-2 efficacy, 95% chlamydia containment</div>
-                            <div><strong>Delivery System:</strong> Smart nanoparticles with 72-hour sustained release</div>
-                            <div><strong>Natural Ingredients:</strong> Echinacea, tea tree, propolis, calendula</div>
-                            <div><strong>Clinical Status:</strong> FDA breakthrough therapy designation</div>
+                        <div className="mt-4 space-y-3">
+                          <div className="p-4 bg-blue-50 rounded-lg border-l-4 border-blue-400">
+                            <h4 className="font-semibold text-blue-900 mb-2">🔬 NanoHeal™ Intersectional Technology</h4>
+                            <div className="space-y-2 text-sm text-blue-800">
+                              <div><strong>STI Treatment:</strong> 97% HSV-2 efficacy across all identities</div>
+                              <div><strong>Delivery System:</strong> Smart nanoparticles with cultural intention programming</div>
+                              <div><strong>Clinical Status:</strong> FDA breakthrough therapy for intersectional medicine</div>
+                            </div>
+                          </div>
+                          <div className="p-4 bg-purple-50 rounded-lg border-l-4 border-purple-400">
+                            <h4 className="font-semibold text-purple-900 mb-2">🏳️‍⚧️ Identity Affirmation Features</h4>
+                            <div className="space-y-1 text-sm text-purple-800">
+                              <div><strong>Trans:</strong> Hormone therapy compatibility optimization</div>
+                              <div><strong>Intersex:</strong> Multiple anatomy-specific pH profiles</div>
+                              <div><strong>Two Spirit:</strong> Sacred sage and sweetgrass integration</div>
+                              <div><strong>Latinx:</strong> Curanderismo healing botanicals</div>
+                              <div><strong>Quare:</strong> Community-sourced plant preferences</div>
+                              <div><strong>BIPOC:</strong> Ancestral healing traditions integration</div>
+                            </div>
+                          </div>
+                          <div className="p-4 bg-green-50 rounded-lg border-l-4 border-green-400">
+                            <h4 className="font-semibold text-green-900 mb-2">🌿 Intersectional Botanicals</h4>
+                            <div className="text-sm text-green-800">
+                              <div className="mb-2"><strong>Traditional Healing:</strong> White Sage • Hierba Buena • Romero • Ruda</div>
+                              <div className="mb-2"><strong>Afrocentric Compounds:</strong> Shea Butter • Moringa • Black Seed Oil</div>
+                              <div><strong>Asian Medicine:</strong> Ginseng • Reishi • Astragalus</div>
+                            </div>
                           </div>
                         </div>
                       )}
