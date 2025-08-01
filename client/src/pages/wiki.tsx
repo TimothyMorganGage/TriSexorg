@@ -1206,7 +1206,7 @@ fluck products can serve as therapeutic tools within comprehensive treatment pro
 
 ### Withdrawal Management Products
 
-#### NanoHeal™ Therapeutic Formulations
+#### NanoHeal Ⓒⓒ Therapeutic Formulations
 - **Stress-Reducing Compounds**: Natural anxiolytics and mood stabilizers
 - **Neurochemical Support**: Ingredients supporting dopamine regulation
 - **Physical Comfort**: Materials addressing withdrawal-related physical symptoms

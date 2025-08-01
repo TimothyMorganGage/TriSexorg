@@ -247,7 +247,7 @@ export default function Products() {
     },
     {
       value: "nanotech_naturopathic_lubricant",
-      label: "NanoHeal™ Intersectional Naturopathic STI Treatment Lubricant",
+      label: "NanoHeal Ⓒⓒ Intersectional Naturopathic STI Treatment Lubricant",
       description: "Revolutionary nanotech + naturopathic lubricant with STI containment, treatment, and potential cure capabilities - custom formulated for intersex, trans, Two Spirit, Latinx, Quare, and BIPOC identities",
       price: 149.99,
       sustainability: "100% biocompatible with advanced healing nanotechnology and cultural affirmation compounds",
@@ -967,7 +967,7 @@ export default function Products() {
                       {selectedConfig.material === "nanotech_naturopathic_lubricant" && (
                         <div className="mt-4 space-y-3">
                           <div className="p-4 bg-blue-50 rounded-lg border-l-4 border-blue-400">
-                            <h4 className="font-semibold text-blue-900 mb-2">🔬 NanoHeal™ Intersectional Technology</h4>
+                            <h4 className="font-semibold text-blue-900 mb-2">🔬 NanoHeal Ⓒⓒ Intersectional Technology</h4>
                             <div className="space-y-2 text-sm text-blue-800">
                               <div><strong>Universal STI Treatment:</strong> 90%+ efficacy against all major STIs</div>
                               <div><strong>Coverage:</strong> Viral, bacterial, parasitic, and fungal infections</div>
