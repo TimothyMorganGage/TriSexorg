@@ -78,10 +78,10 @@ export function BetaDisclaimer({ showExpanded = false }: { showExpanded?: boolea
             <AlertTriangle className="h-5 w-5 text-yellow-600" />
             <div>
               <p className="text-sm font-semibold text-yellow-800">
-                ⚠️ BETA MODE: This work in progress represents idealism in development
+                ⚠️ BETA MODE: Very rough draft with potentially impotent features
               </p>
               <p className="text-xs text-yellow-700">
-                Features are experimental and subject to significant changes
+                This is an early prototype - features may not work properly and content is preliminary
               </p>
             </div>
           </div>
