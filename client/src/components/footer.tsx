@@ -118,7 +118,7 @@ export function Footer() {
               </div>
               <div className="flex items-center space-x-3 text-gray-300">
                 <Phone className="h-4 w-4 text-primary" />
-                <span>1-800-FLUCK-WTF</span>
+                <span>971 206 4171</span>
               </div>
               <div className="flex items-center space-x-3 text-gray-300">
                 <MapPin className="h-4 w-4 text-primary" />
