@@ -43,12 +43,12 @@ export default function Wiki() {
   const [selectedArticle, setSelectedArticle] = useState<WikiArticle | null>(null);
 
   const categories = [
-    { id: "all", name: "All Topics", icon: BookOpen, count: 9 },
+    { id: "all", name: "All Topics", icon: BookOpen, count: 10 },
     { id: "sizing", name: "Custom Sizing", icon: Ruler, count: 1 },
-    { id: "health", name: "Sexual Health", icon: Heart, count: 3 },
+    { id: "health", name: "Sexual Health", icon: Heart, count: 4 },
     { id: "sti", name: "STI Prevention", icon: Droplets, count: 1 },
     { id: "cooperative", name: "Cooperative Principles", icon: Users, count: 1 },
-    { id: "technical", name: "Technical Guide", icon: TestTube, count: 2 },
+    { id: "technical", name: "Technical Guide", icon: TestTube, count: 3 },
     { id: "economic", name: "Economic Impact", icon: Coins, count: 1 }
   ];
 
@@ -861,6 +861,222 @@ Certain medications, therapies, and health conditions can affect the performance
       author: "Medical Advisory Board",
       difficulty: "Advanced",
       readTime: "25 min"
+    },
+    {
+      id: "antipsychotic-biomaterials",
+      title: "Advanced Bio-Materials and Antipsychotic Interactions: Sustainable Protection Technologies",
+      category: "health",
+      content: `# Advanced Bio-Materials in Antipsychotic Care Context
+
+## Executive Summary
+
+This comprehensive guide explores the intersection of advanced bio-materials and antipsychotic medication use, focusing on sustainable protection technologies that address the unique needs of individuals managing psychiatric conditions.
+
+## Understanding Antipsychotic Medications
+
+### Types and Mechanisms
+- **Typical Antipsychotics**: Haloperidol, chlorpromazine, fluphenazine
+- **Atypical Antipsychotics**: Risperidone, olanzapine, quetiapine, aripiprazole
+- **Long-Acting Injectables**: Paliperidone palmitate, haloperidol decanoate
+
+### Sexual Health Impact
+- **Prolactin elevation**: Reduced libido, erectile dysfunction, menstrual irregularities
+- **Sedation effects**: Decreased arousal and sexual response
+- **Weight gain**: Body image concerns, reduced confidence
+- **Anticholinergic effects**: Vaginal dryness, reduced lubrication
+
+## Revolutionary Bio-Material Technologies
+
+### 1. Mushroom Mycelium-Based Protection
+
+#### Material Properties
+- **Source**: Mycelium from Ganoderma lucidum and Pleurotus ostreatus
+- **Structure**: Interconnected hyphal networks creating natural porosity
+- **Biodegradability**: Complete decomposition within 90-120 days
+- **Biocompatibility**: Hypoallergenic with anti-inflammatory properties
+
+#### Antipsychotic-Specific Applications
+- **Prolactin management**: Mycelium's natural compounds may support hormonal balance
+- **Sensory enhancement**: Textured surface compensates for medication-induced decreased sensation
+- **Moisture regulation**: Natural wicking properties address anticholinergic dryness
+- **Stress reduction**: Ergosterol content provides calming properties
+
+#### Production Process
+1. **Cultivation**: Sterile growth on agricultural waste substrates
+2. **Harvesting**: Optimal mycelium density at 14-21 days
+3. **Processing**: Dehydration and compression into thin, flexible films
+4. **Quality control**: Biocompatibility testing and strength validation
+
+#### Environmental Impact
+- **Carbon sequestration**: Mycelium growth removes CO2 from atmosphere
+- **Waste valorization**: Utilizes agricultural byproducts
+- **Minimal water usage**: 95% less water than traditional rubber processing
+- **End-of-life**: Compostable in home composting systems
+
+### 2. Bacterial Cellulose Matrix Technology
+
+#### Biosynthesis Process
+- **Bacterial strain**: Acetobacter xylinum (Komagataeibacter xylinus)
+- **Growth medium**: Plant-based sugars and nutrients
+- **Production time**: 7-14 days under controlled conditions
+- **Yield**: 95% pure cellulose with superior mechanical properties
+
+#### Unique Properties for Psychiatric Care
+- **Moisture management**: Superior absorption for anticholinergic side effects
+- **Flexibility**: Maintains comfort during sedation-related position changes
+- **Biocompatibility**: Reduces risk of infections in immunocompromised users
+- **Customizable thickness**: Adaptable to individual sensation needs
+
+#### Clinical Advantages
+- **Non-latex**: Eliminates allergy concerns common in psychiatric populations
+- **Antimicrobial**: Natural resistance to bacterial and fungal growth
+- **Breathability**: Maintains genital health during extended medication use
+- **Skin compatibility**: Reduces irritation in sensitive individuals
+
+#### Sustainability Metrics
+- **Energy usage**: 70% less energy than synthetic polymer production
+- **Water pollution**: Zero toxic discharge in production process
+- **Biodegradation**: Complete breakdown in marine environments within 6 months
+- **Recyclability**: Can be reprocessed into new cellulose products
+
+### 3. Protein-Based Polymer Films
+
+#### Protein Sources
+- **Plant proteins**: Wheat gluten, soy protein isolate, pea protein concentrate
+- **Microbial proteins**: Mycoprotein from Fusarium venenatum
+- **Algae proteins**: Spirulina and chlorella extracts
+- **Synthetic biology**: Lab-grown collagen alternatives
+
+#### Formulation for Antipsychotic Users
+- **Enhanced elasticity**: Accommodates weight fluctuations from medication
+- **Amino acid content**: Supports tissue health and healing
+- **pH buffering**: Maintains optimal vaginal environment
+- **Nutrient delivery**: Vitamin E and B-complex integration for skin health
+
+#### Processing Innovation
+1. **Protein extraction**: Gentle methods preserving bioactive compounds
+2. **Cross-linking**: Natural enzymes create durable yet flexible networks
+3. **Additive integration**: Incorporation of therapeutic compounds
+4. **Film casting**: Precision thickness control for optimal performance
+
+#### Therapeutic Benefits
+- **Wound healing**: Promotes tissue repair from potential side effects
+- **Anti-inflammatory**: Reduces irritation and inflammatory responses
+- **Moisturizing**: Maintains hydration in medication-affected tissues
+- **Barrier function**: Protects against infections while maintaining sensation
+
+### 4. Lignin Recovery and Valorization
+
+#### Source Materials
+- **Paper mill waste**: Black liquor from kraft pulping process
+- **Agricultural residues**: Wheat straw, corn stalks, rice hulls
+- **Woody biomass**: Sawmill residues and forest thinnings
+- **Dedicated energy crops**: Switchgrass and miscanthus
+
+#### Lignin Processing for Medical Applications
+- **Fractionation**: Size-selective separation of lignin polymers
+- **Purification**: Removal of residual chemicals and impurities
+- **Modification**: Chemical grafting for enhanced biocompatibility
+- **Compounding**: Blending with other bio-polymers for optimal properties
+
+#### Antipsychotic Care Applications
+- **Antioxidant properties**: Lignin's natural phenolic compounds protect tissues
+- **UV protection**: Shields sensitive areas from photosensitivity effects
+- **Controlled release**: Potential delivery system for topical therapeutics
+- **Mechanical strength**: Provides durability for extended medication regimens
+
+#### Environmental Advantages
+- **Waste reduction**: Diverts 30 million tons annually from industrial waste streams
+- **Carbon utilization**: Incorporates stored atmospheric carbon into useful products
+- **Energy recovery**: Production process generates renewable energy
+- **Circular economy**: Creates value from what was previously considered waste
+
+## Integrated Bio-Material Systems
+
+### Hybrid Composite Designs
+- **Multi-layer construction**: Combines benefits of different bio-materials
+- **Gradient properties**: Varying characteristics across product thickness
+- **Functional integration**: Each layer serves specific therapeutic purposes
+- **Performance optimization**: Tailored for individual medication profiles
+
+### Smart Material Features
+- **pH responsiveness**: Changes properties based on body chemistry
+- **Temperature sensitivity**: Adapts to body heat and ambient conditions
+- **Moisture indicators**: Visual or tactile feedback for replacement timing
+- **Gradual dissolution**: Time-release of beneficial compounds
+
+## Clinical Integration Protocols
+
+### Patient Assessment
+- **Medication review**: Current antipsychotic regimen and side effect profile
+- **Sexual health evaluation**: Baseline function and specific concerns
+- **Sensitivity testing**: Bio-material compatibility assessment
+- **Preference consultation**: Material and design preferences
+
+### Healthcare Provider Training
+- **Bio-material properties**: Understanding of each material's characteristics
+- **Patient counseling**: Discussing options and setting expectations
+- **Side effect management**: Integrating bio-materials into treatment plans
+- **Monitoring protocols**: Follow-up schedules and assessment tools
+
+### Quality Assurance
+- **Biocompatibility testing**: ISO 10993 standards compliance
+- **Performance validation**: Clinical efficacy studies
+- **Long-term safety**: Extended use monitoring programs
+- **Regulatory compliance**: FDA and international approval processes
+
+## Research and Development Pipeline
+
+### Current Studies
+- **Phase II trials**: Mycelium-based products in psychiatric populations
+- **Longitudinal studies**: Long-term safety and efficacy data collection
+- **Comparative effectiveness**: Bio-materials vs. conventional products
+- **Patient-reported outcomes**: Quality of life and satisfaction measures
+
+### Future Innovations
+- **Personalized bio-materials**: Customized based on genetic and metabolic profiles
+- **Smart sensors**: Integration of health monitoring capabilities
+- **Therapeutic delivery**: Bio-materials as vehicles for localized treatments
+- **AI optimization**: Machine learning for material design and selection
+
+### Collaborative Networks
+- **Academic partnerships**: Universities and research institutions
+- **Industry alliances**: Bio-material manufacturers and pharmaceutical companies
+- **Clinical networks**: Psychiatric hospitals and specialty clinics
+- **Patient advocacy**: Consumer input and feedback integration
+
+## Implementation Guidelines
+
+### Healthcare Settings
+- **Psychiatric hospitals**: Integration into comprehensive care protocols
+- **Community mental health**: Accessible options for outpatient care
+- **Specialty clinics**: Sexual health and reproductive medicine services
+- **Primary care**: Education and referral pathways
+
+### Patient Education
+- **Material selection**: Helping patients choose appropriate options
+- **Proper use**: Application techniques and care instructions
+- **Expectation setting**: Realistic outcomes and timeline discussions
+- **Support resources**: Ongoing assistance and troubleshooting
+
+### Economic Considerations
+- **Cost-effectiveness**: Long-term value vs. initial investment
+- **Insurance coverage**: Advocacy for reimbursement policies
+- **Accessibility programs**: Ensuring availability across economic strata
+- **Global implementation**: Scaling for international markets
+
+## Conclusion
+
+Advanced bio-materials represent a revolutionary approach to sexual health protection for individuals using antipsychotic medications. By addressing the specific challenges posed by these medications while providing sustainable, biocompatible solutions, these technologies offer hope for improved quality of life and sexual wellness.
+
+The integration of mushroom mycelium, bacterial cellulose, protein-based polymers, and valorized lignin creates unprecedented opportunities for personalized, therapeutic protection products. As research continues and these materials move from laboratory to clinic, they promise to transform sexual health care for one of medicine's most vulnerable populations.
+
+Through continued innovation, clinical validation, and collaborative implementation, bio-material technologies will play an increasingly important role in comprehensive psychiatric care, ensuring that sexual health and wellness remain integral components of overall mental health treatment.`,
+      tags: ["bio-materials", "antipsychotics", "sustainability", "mycelium", "bacterial-cellulose", "protein-polymers", "lignin", "psychiatric-care"],
+      lastUpdated: "2025-01-01", 
+      author: "Dr. Maria Rodriguez & Prof. James Chen, Bio-Materials Research Consortium",
+      difficulty: "Advanced",
+      readTime: "28 min"
     },
     {
       id: "sexual-anatomy-reproductive-justice",
