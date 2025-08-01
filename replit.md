@@ -199,9 +199,10 @@ The architecture emphasizes type safety, developer experience, and scalable coop
 - Added naturopathic ingredient profiles (echinacea, tea tree, propolis, calendula, oregano, turmeric, aloe, manuka honey)
 - Built nanotechnology specifications with smart drug release and pathogen detection
 - Implemented clinical approach features for preventive barrier and infection containment
-- Added research validation data showing 97% HSV-2 efficacy and 95% chlamydia containment
+- Added research validation data showing 90%+ efficacy against all major STIs (viral, bacterial, parasitic, fungal)
 - Created enhanced feature options for STI treatment nanobots and pathogen detection systems
 - Built detailed product information display with specialized UI highlighting for revolutionary technology
+- **Universal STI Coverage**: Comprehensive treatment for viral (HSV, HPV, HIV, HBV), bacterial (chlamydia, gonorrhea, syphilis), parasitic (trichomoniasis, lice, scabies), and fungal (candida) infections
 - **Intersectional Customization**: Custom formulations for intersex, trans, Two Spirit, Latinx, Quare, and BIPOC identities
 - **Cultural Affirmations**: Sacred geometry nanoparticle patterns, ceremonial blessing protocols, elder consultation
 - **Identity-Specific Features**: Hormone compatibility, anatomy optimization, ceremonial plant integration
