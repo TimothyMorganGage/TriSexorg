@@ -247,7 +247,7 @@ export default function Products() {
     },
     {
       value: "nanotech_naturopathic_lubricant",
-      label: "NanoHeal Ⓒⓒ Intersectional Naturopathic STI Treatment Lubricant",
+      label: "NanoHeal ⓒⓒ Intersectional Naturopathic STI Treatment Lubricant",
       description: "Revolutionary nanotech + naturopathic lubricant with STI containment, treatment, and potential cure capabilities - custom formulated for intersex, trans, Two Spirit, Latinx, Quare, and BIPOC identities",
       price: 149.99,
       sustainability: "100% biocompatible with advanced healing nanotechnology and cultural affirmation compounds",
@@ -967,12 +967,25 @@ export default function Products() {
                       {selectedConfig.material === "nanotech_naturopathic_lubricant" && (
                         <div className="mt-4 space-y-3">
                           <div className="p-4 bg-blue-50 rounded-lg border-l-4 border-blue-400">
-                            <h4 className="font-semibold text-blue-900 mb-2">🔬 NanoHeal Ⓒⓒ Intersectional Technology</h4>
+                            <h4 className="font-semibold text-blue-900 mb-2 flex items-center gap-2">
+                              🔬 NanoHeal 
+                              <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="Creative Commons" className="w-5 h-5" />
+                              <img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="Attribution" className="w-5 h-5" />
+                              <img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="Share Alike" className="w-5 h-5" />
+                              Intersectional Technology
+                            </h4>
                             <div className="space-y-2 text-sm text-blue-800">
                               <div><strong>Universal STI Treatment:</strong> 90%+ efficacy against all major STIs</div>
                               <div><strong>Coverage:</strong> Viral, bacterial, parasitic, and fungal infections</div>
                               <div><strong>Delivery System:</strong> Smart nanoparticles with cultural intention programming</div>
                               <div><strong>Clinical Status:</strong> FDA breakthrough therapy for comprehensive STI treatment</div>
+                              <div className="mt-3 pt-2 border-t border-blue-200">
+                                <div className="flex items-center gap-2 text-xs">
+                                  <span>Licensed under</span>
+                                  <img src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-sa.png" alt="CC BY-SA 4.0" className="h-4" />
+                                  <span>for open healing innovation</span>
+                                </div>
+                              </div>
                             </div>
                           </div>
                           <div className="p-4 bg-purple-50 rounded-lg border-l-4 border-purple-400">
