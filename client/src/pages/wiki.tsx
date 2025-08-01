@@ -43,9 +43,9 @@ export default function Wiki() {
   const [selectedArticle, setSelectedArticle] = useState<WikiArticle | null>(null);
 
   const categories = [
-    { id: "all", name: "All Topics", icon: BookOpen, count: 10 },
+    { id: "all", name: "All Topics", icon: BookOpen, count: 11 },
     { id: "sizing", name: "Custom Sizing", icon: Ruler, count: 1 },
-    { id: "health", name: "Sexual Health", icon: Heart, count: 4 },
+    { id: "health", name: "Sexual Health", icon: Heart, count: 5 },
     { id: "sti", name: "STI Prevention", icon: Droplets, count: 1 },
     { id: "cooperative", name: "Cooperative Principles", icon: Users, count: 1 },
     { id: "technical", name: "Technical Guide", icon: TestTube, count: 3 },
@@ -1077,6 +1077,285 @@ Through continued innovation, clinical validation, and collaborative implementat
       author: "Dr. Maria Rodriguez & Prof. James Chen, Bio-Materials Research Consortium",
       difficulty: "Advanced",
       readTime: "28 min"
+    },
+    {
+      id: "sex-addiction-withdrawal-fluck-use",
+      title: "Sexual Addiction & Withdrawal: Therapeutic fluck Product Integration",
+      category: "health",
+      content: `# Sexual Addiction & Withdrawal: Therapeutic fluck Product Integration
+
+## Executive Summary
+
+Sexual addiction and withdrawal represent complex behavioral and physiological challenges that can significantly impact intimate relationships and personal well-being. This comprehensive guide explores how fluck's therapeutic products can be integrated into evidence-based treatment approaches for sexual addiction recovery and withdrawal management.
+
+## Understanding Sexual Addiction
+
+### Clinical Definition
+Sexual addiction, also known as Compulsive Sexual Behavior Disorder (CSBD), is characterized by persistent, repetitive sexual behaviors that cause significant distress or impairment in personal, family, social, educational, occupational, or other important areas of functioning.
+
+### Diagnostic Criteria (ICD-11)
+- **Pattern Duration**: Symptoms present for at least 6 months
+- **Loss of Control**: Inability to control or significantly reduce sexual behaviors
+- **Continued Engagement**: Persistent behavior despite negative consequences
+- **Functional Impairment**: Significant distress or impairment in functioning
+- **Primary Focus**: Sexual behavior becomes central focus of life
+
+### Neurobiological Basis
+- **Dopamine Dysregulation**: Altered reward pathways similar to substance addictions
+- **Neuroplasticity Changes**: Modified brain structure and function
+- **Tolerance Development**: Increasing intensity or frequency needed for satisfaction
+- **Withdrawal Symptoms**: Physical and psychological distress when behavior stops
+
+## Sexual Withdrawal Syndrome
+
+### Physical Symptoms
+- **Autonomic Dysfunction**: Sweating, tremors, elevated heart rate
+- **Sleep Disturbances**: Insomnia, nightmares, fragmented sleep
+- **Appetite Changes**: Increased or decreased food intake
+- **Energy Fluctuations**: Fatigue alternating with restlessness
+- **Somatic Complaints**: Headaches, muscle tension, gastrointestinal issues
+
+### Psychological Symptoms
+- **Mood Dysregulation**: Depression, anxiety, irritability
+- **Cognitive Impairment**: Difficulty concentrating, memory problems
+- **Emotional Lability**: Rapid mood swings, emotional numbness
+- **Intrusive Thoughts**: Obsessive sexual thoughts, fantasies
+- **Behavioral Compulsions**: Urges to engage in sexual behaviors
+
+### Withdrawal Timeline
+- **Phase 1 (0-72 hours)**: Acute physical symptoms, intense cravings
+- **Phase 2 (3-14 days)**: Peak psychological symptoms, mood instability
+- **Phase 3 (2-8 weeks)**: Gradual symptom resolution, emotional regulation improvement
+- **Phase 4 (2-6 months)**: Long-term recovery, neuroplasticity restoration
+
+## fluck Product Integration in Treatment
+
+### Therapeutic Framework
+fluck products can serve as therapeutic tools within comprehensive treatment programs, providing controlled, healthy outlets for sexual expression while supporting recovery goals.
+
+### Product Selection Criteria
+- **Safety First**: Non-addictive materials and designs
+- **Therapeutic Benefit**: Products that support healing and recovery
+- **Professional Guidance**: Selection under healthcare provider supervision
+- **Recovery Stage**: Appropriate for current phase of treatment
+- **Individual Needs**: Customized to personal recovery goals
+
+## Stage-Specific Product Recommendations
+
+### Early Recovery (0-3 months)
+
+#### Primary Goals
+- Reduce compulsive behaviors
+- Establish healthy boundaries
+- Manage withdrawal symptoms
+- Build therapeutic relationship
+
+#### Recommended Products
+- **Mindfulness-Enhanced Barriers**: Products with built-in mindfulness cues
+- **Delayed Gratification Training**: Time-release features for impulse control
+- **Biofeedback Integration**: Products with stress monitoring capabilities
+- **Therapeutic Lubricants**: Calming, anxiety-reducing formulations
+
+#### Clinical Applications
+- **Structured Sessions**: Use only during therapy-supervised interactions
+- **Mindfulness Practice**: Products designed to encourage present-moment awareness
+- **Gradual Exposure**: Controlled introduction to healthy sexual experiences
+- **Symptom Management**: Products that help manage withdrawal symptoms
+
+### Stabilization Phase (3-12 months)
+
+#### Primary Goals
+- Develop healthy sexual practices
+- Strengthen intimate relationships
+- Prevent relapse
+- Build coping strategies
+
+#### Recommended Products
+- **Communication Enhancement**: Products that encourage partner dialogue
+- **Sensory Regulation**: Materials that support healthy arousal patterns
+- **Intimacy Building**: Products designed for couples therapy integration
+- **Recovery Monitoring**: Smart products with usage tracking capabilities
+
+#### Clinical Applications
+- **Couples Therapy Integration**: Products used within relationship counseling
+- **Healthy Habit Formation**: Consistent, structured product use
+- **Relapse Prevention**: Products with built-in safety mechanisms
+- **Progress Tracking**: Monitoring improvement through product engagement
+
+### Long-Term Recovery (12+ months)
+
+#### Primary Goals
+- Maintain recovery gains
+- Support healthy sexuality
+- Prevent future episodes
+- Optimize quality of life
+
+#### Recommended Products
+- **Advanced Therapeutic Lines**: Products with sophisticated therapeutic features
+- **Relationship Enhancement**: Items designed for long-term intimate partnerships
+- **Wellness Integration**: Products supporting overall sexual health
+- **Recovery Maintenance**: Tools for ongoing monitoring and support
+
+#### Clinical Applications
+- **Maintenance Therapy**: Regular but reduced frequency sessions
+- **Relationship Optimization**: Products supporting intimate bond strengthening
+- **Lifestyle Integration**: Seamless incorporation into daily life
+- **Continuous Monitoring**: Long-term progress assessment
+
+## Specialized Product Categories
+
+### Withdrawal Management Products
+
+#### NanoHeal™ Therapeutic Formulations
+- **Stress-Reducing Compounds**: Natural anxiolytics and mood stabilizers
+- **Neurochemical Support**: Ingredients supporting dopamine regulation
+- **Physical Comfort**: Materials addressing withdrawal-related physical symptoms
+- **Sleep Enhancement**: Products promoting restorative sleep patterns
+
+#### Biofeedback-Enabled Products
+- **Heart Rate Monitoring**: Real-time stress level assessment
+- **Cortisol Tracking**: Stress hormone level monitoring
+- **Sleep Quality Measurement**: Recovery sleep pattern analysis
+- **Mood Tracking**: Emotional state monitoring and feedback
+
+### Therapeutic Communication Tools
+- **Partner Dialogue Products**: Items designed to facilitate important conversations
+- **Boundary Setting Aids**: Products supporting healthy limit establishment
+- **Consent Practice Tools**: Items for practicing enthusiastic consent
+- **Intimacy Rebuilding**: Products supporting relationship repair
+
+## Clinical Integration Protocols
+
+### Healthcare Provider Training
+- **Addiction Medicine Basics**: Understanding sexual addiction mechanisms
+- **Product Therapy Guidelines**: Appropriate use of fluck products in treatment
+- **Patient Assessment**: Evaluating readiness for product integration
+- **Safety Protocols**: Managing risks and preventing misuse
+
+### Patient Assessment Tools
+- **Addiction Severity Scale**: Measuring current addiction level
+- **Withdrawal Symptom Inventory**: Tracking withdrawal progress
+- **Recovery Readiness Assessment**: Determining treatment phase appropriateness
+- **Product Safety Evaluation**: Ensuring safe product use
+
+### Treatment Planning
+- **Individualized Protocols**: Customized treatment approaches
+- **Goal Setting**: Specific, measurable recovery objectives
+- **Progress Monitoring**: Regular assessment and plan adjustment
+- **Relapse Prevention**: Strategies for maintaining recovery gains
+
+## Research and Evidence Base
+
+### Clinical Studies
+- **Efficacy Research**: Product integration effectiveness data
+- **Safety Studies**: Long-term safety and side effect monitoring
+- **Outcome Measures**: Recovery success rates with product integration
+- **Comparative Studies**: Product therapy vs. traditional approaches
+
+### Patient-Reported Outcomes
+- **Quality of Life Improvements**: Enhanced well-being measures
+- **Relationship Satisfaction**: Partner relationship quality assessment
+- **Recovery Maintenance**: Long-term sobriety rates
+- **Symptom Management**: Withdrawal symptom reduction
+
+### Emerging Research Areas
+- **Neuroplasticity Studies**: Brain changes with product therapy
+- **Genetic Factors**: Individual variations in treatment response
+- **Technology Integration**: Digital health and AI-assisted therapy
+- **Precision Medicine**: Personalized treatment approaches
+
+## Safety Considerations
+
+### Risk Assessment
+- **Addiction Potential**: Ensuring products don't become new compulsions
+- **Misuse Prevention**: Design features preventing inappropriate use
+- **Medical Contraindications**: Health conditions requiring special consideration
+- **Psychological Readiness**: Mental health status assessment
+
+### Safety Protocols
+- **Professional Supervision**: Healthcare provider oversight requirements
+- **Usage Guidelines**: Clear instructions for appropriate use
+- **Monitoring Systems**: Regular check-ins and progress assessment
+- **Emergency Procedures**: Protocols for managing complications
+
+### Contraindications
+- **Active Addiction Phase**: Products may not be appropriate during acute addiction
+- **Severe Mental Illness**: Untreated psychiatric conditions requiring stabilization
+- **Relationship Instability**: Unsafe or abusive relationship dynamics
+- **Medical Complications**: Health conditions requiring medical clearance
+
+## Support Systems
+
+### Professional Resources
+- **Certified Sex Addiction Therapists (CSAT)**: Specialized addiction treatment
+- **Couples Therapists**: Relationship repair and enhancement
+- **Medical Specialists**: Addressing physical health aspects
+- **Support Groups**: Peer support and accountability
+
+### Family and Partner Support
+- **Education Programs**: Understanding sexual addiction and recovery
+- **Communication Training**: Healthy interaction skill development
+- **Boundary Setting**: Establishing appropriate limits and expectations
+- **Recovery Participation**: Active involvement in treatment process
+
+### Community Resources
+- **Support Groups**: Sex Addicts Anonymous (SAA), Sexual Recovery Anonymous (SRA)
+- **Online Communities**: Digital support networks and resources
+- **Educational Programs**: Workshops and seminars on sexual health
+- **Advocacy Organizations**: Groups promoting sexual addiction awareness
+
+## Implementation Guidelines
+
+### Healthcare Settings
+- **Addiction Treatment Centers**: Integration into existing programs
+- **Mental Health Clinics**: Incorporation into therapy services
+- **Medical Practices**: Primary care provider involvement
+- **Specialized Centers**: Dedicated sexual addiction treatment facilities
+
+### Patient Education
+- **Treatment Orientation**: Understanding product therapy approach
+- **Safety Training**: Proper use and risk management
+- **Recovery Planning**: Setting realistic goals and expectations
+- **Relapse Prevention**: Identifying triggers and coping strategies
+
+### Ongoing Support
+- **Regular Monitoring**: Continued assessment and adjustment
+- **Skill Development**: Building healthy sexual practices
+- **Relationship Work**: Partner involvement and support
+- **Lifestyle Integration**: Incorporating recovery into daily life
+
+## Future Directions
+
+### Technology Integration
+- **AI-Assisted Therapy**: Machine learning for personalized treatment
+- **Telemedicine**: Remote monitoring and support
+- **Digital Health**: App-based tracking and intervention
+- **Virtual Reality**: Immersive therapy experiences
+
+### Research Priorities
+- **Long-Term Outcomes**: Extended follow-up studies
+- **Mechanism Research**: Understanding how product therapy works
+- **Optimization Studies**: Improving treatment effectiveness
+- **Prevention Research**: Early intervention strategies
+
+### Policy Development
+- **Clinical Guidelines**: Professional practice standards
+- **Insurance Coverage**: Reimbursement for product therapy
+- **Regulatory Framework**: Safety and efficacy oversight
+- **Ethics Guidelines**: Appropriate use and boundaries
+
+## Conclusion
+
+Sexual addiction and withdrawal represent significant challenges requiring comprehensive, evidence-based treatment approaches. fluck's therapeutic products, when properly integrated into professional treatment programs, offer innovative tools for supporting recovery and promoting healthy sexuality.
+
+The key to successful integration lies in appropriate patient selection, professional supervision, and careful monitoring throughout the recovery process. By combining cutting-edge product technology with established therapeutic principles, fluck contributes to advancing the field of sexual addiction treatment and improving outcomes for individuals and couples affected by these challenging conditions.
+
+Through continued research, clinical validation, and ethical implementation, product-assisted therapy represents a promising frontier in sexual health and addiction medicine, offering hope for those seeking recovery and renewed intimate wellness.`,
+      tags: ["sexual-addiction", "withdrawal", "therapy", "recovery", "mental-health", "product-integration", "clinical-treatment"],
+      lastUpdated: "2025-01-01",
+      author: "Dr. Sarah Mitchell, CSAT & fluck Clinical Research Team",
+      difficulty: "Advanced",
+      readTime: "32 min"
     },
     {
       id: "sexual-anatomy-reproductive-justice",
