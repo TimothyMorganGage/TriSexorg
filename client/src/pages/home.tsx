@@ -54,32 +54,12 @@ export default function Home() {
                 <MedicineWheelLogo size={120} />
               </div>
               
-              {/* Black and White Spectrum Typography Prototypes */}
-              <div className="space-y-4 mb-6">
-                {/* Prototype 1: Bold Gradient */}
-                <h1 className="text-5xl lg:text-7xl font-black leading-tight">
-                  <span className="bg-gradient-to-r from-black via-gray-500 to-white bg-clip-text text-transparent">
-                    fluck
-                  </span>
-                  <span className="text-accent">.wtf</span>
-                </h1>
-                
-                {/* Prototype 2: Outlined White */}
-                <div className="text-4xl lg:text-6xl font-bold leading-tight opacity-80">
-                  <span className="text-white" style={{ textShadow: '2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000' }}>
-                    fluck
-                  </span>
-                  <span className="text-accent">.wtf</span>
-                </div>
-                
-                {/* Prototype 3: Spectrum Fill */}
-                <div className="text-3xl lg:text-5xl font-extrabold leading-tight opacity-60">
-                  <span className="bg-gradient-to-r from-gray-300 to-gray-700 bg-clip-text text-transparent">
-                    fluck
-                  </span>
-                  <span className="text-accent">.wtf</span>
-                </div>
-              </div>
+              <h1 className="text-5xl lg:text-7xl font-black leading-tight mb-6">
+                <span className="bg-gradient-to-r from-black via-gray-500 to-white bg-clip-text text-transparent">
+                  fluck
+                </span>
+                <span className="text-accent">.wtf</span>
+              </h1>
               
               <h2 className="text-2xl lg:text-3xl font-bold leading-tight mb-6 text-white font-recoleta">
                 Protection for Sexual Creativity & Reproductive Justice

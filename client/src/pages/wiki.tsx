@@ -1651,6 +1651,7 @@ This comprehensive intelligence framework ensures that fluck's peer mentor netwo
           </CardContent>
         </Card>
       </div>
+        </div>
     </div>
   );
 }

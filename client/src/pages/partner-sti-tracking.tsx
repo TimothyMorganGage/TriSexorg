@@ -905,6 +905,7 @@ export default function PartnerSTITracking() {
           </TabsContent>
         </Tabs>
       </div>
+        </div>
     </div>
   );
 }
