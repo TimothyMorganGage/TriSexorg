@@ -40,6 +40,7 @@ import {
   Settings,
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { BetaDisclaimer } from "@/components/BetaDisclaimer";
 
 export default function PartnerSTITracking() {
   const [activeTab, setActiveTab] = useState("networks");
@@ -171,10 +172,12 @@ export default function PartnerSTITracking() {
   const testResults = ["positive", "negative", "inconclusive", "pending"];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50 dark:from-gray-900 dark:to-gray-800 p-4">
-      <div className="max-w-7xl mx-auto space-y-6">
-        {/* Header */}
-        <div className="text-center space-y-2">
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50 dark:from-gray-900 dark:to-gray-800">
+      <BetaDisclaimer />
+      <div className="p-4">
+          <div className="max-w-7xl mx-auto space-y-6">
+            {/* Header */}
+            <div className="text-center space-y-2">
           <h1 
             className="text-4xl font-bold text-primary"
             style={{ 

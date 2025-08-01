@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { BetaDisclaimer } from "@/components/BetaDisclaimer";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -1458,9 +1459,11 @@ This comprehensive intelligence framework ensures that fluck's peer mentor netwo
   }
 
   return (
-    <div className="min-h-screen bg-background py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
+    <div className="min-h-screen bg-background">
+      <BetaDisclaimer />
+      <div className="py-12 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto">
+          {/* Header */}
         <div className="text-center mb-12">
           <div className="flex items-center justify-center mb-6">
             <BookOpen className="h-12 w-12 text-primary mr-4" />

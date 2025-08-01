@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
+import { BetaDisclaimer } from "@/components/BetaDisclaimer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -281,18 +282,20 @@ export default function Products() {
   }
 
   return (
-    <div className="min-h-screen bg-surface py-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h1 className="text-3xl lg:text-4xl font-bold text-neutral mb-4">
-            Customize Your Protection
-          </h1>
-          <p className="text-xl text-gray-600">
-            Personalize every aspect of your protection for optimal comfort and safety
-          </p>
-        </div>
-        
-        <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
+    <div className="min-h-screen bg-surface">
+      <BetaDisclaimer />
+      <div className="py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h1 className="text-3xl lg:text-4xl font-bold text-neutral mb-4">
+              Customize Your Protection
+            </h1>
+            <p className="text-xl text-gray-600">
+              Personalize every aspect of your protection for optimal comfort and safety
+            </p>
+          </div>
+            
+          <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
           <div className="grid lg:grid-cols-2">
             <div className="p-8 lg:p-12">
               <h3 className="text-2xl font-semibold text-neutral mb-8 font-recoleta">

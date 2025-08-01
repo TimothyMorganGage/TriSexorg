@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { BetaDisclaimer } from "@/components/BetaDisclaimer";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -69,20 +70,22 @@ export default function Education() {
   }
 
   return (
-    <div className="min-h-screen bg-surface py-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-3xl lg:text-4xl font-bold text-neutral mb-4">
+    <div className="min-h-screen bg-surface">
+      <BetaDisclaimer />
+      <div className="py-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            {/* Header */}
+            <div className="text-center mb-12">
+              <h1 className="text-3xl lg:text-4xl font-bold text-neutral mb-4">
             Health Education Hub
-          </h1>
-          <p className="text-xl text-gray-600">
-            Evidence-based information for safer, healthier relationships
-          </p>
-        </div>
+              </h1>
+              <p className="text-xl text-gray-600">
+                Evidence-based information for safer, healthier relationships
+              </p>
+            </div>
 
-        {/* Search and Filter */}
-        <div className="mb-8">
+            {/* Search and Filter */}
+            <div className="mb-8">
           <div className="flex flex-col sm:flex-row gap-4 mb-6">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />

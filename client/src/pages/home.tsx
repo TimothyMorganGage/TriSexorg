@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { MedicineWheelLogo } from "@/components/MedicineWheelLogo";
 import { OnboardingTutorial } from "@/components/OnboardingTutorial";
+import { BetaDisclaimer } from "@/components/BetaDisclaimer";
 import { 
   ShieldCheck, Leaf, Heart, Box, CheckCircle, 
   Printer, Truck, Hospital, UserCheck, Store, 
@@ -24,13 +25,9 @@ export default function Home() {
 
   return (
     <div className="min-h-screen">
-      {/* Beta Disclaimer Banner */}
-      <div className="bg-yellow-100 border-b border-yellow-300 px-4 py-2">
-        <div className="max-w-7xl mx-auto">
-          <p className="text-center text-sm text-yellow-800">
-            <span className="font-semibold">⚠️ BETA MODE:</span> This work in progress represents idealism in development
-          </p>
-        </div>
+      {/* Beta Disclaimer */}
+      <div className="sticky top-0 z-50">
+        <BetaDisclaimer />
       </div>
       
       {/* Hero Section */}
