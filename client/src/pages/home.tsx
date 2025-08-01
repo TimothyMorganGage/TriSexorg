@@ -525,7 +525,7 @@ export default function Home() {
       <OnboardingTutorial
         isOpen={showOnboarding}
         onClose={() => setShowOnboarding(false)}
-        onComplete={handleOnboardingComplete}
+        onComplete={() => handleOnboardingComplete({})}
       />
     </div>
   );
