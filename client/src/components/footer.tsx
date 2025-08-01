@@ -144,6 +144,7 @@ export function Footer() {
             <div className="text-sm text-gray-400">
               <p>© 2025 Fluck‽ - Licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">Creative Commons BY-SA 4.0</a></p>
               <p className="mt-1">Sustainable protection. Inclusive design. Body-positive healthcare.</p>
+              <p className="mt-2 text-xs text-yellow-400 font-medium">⚠️ BETA MODE: This work in progress represents idealism in development</p>
             </div>
             
             <div className="flex items-center space-x-6 text-sm">

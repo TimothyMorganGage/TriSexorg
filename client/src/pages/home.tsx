@@ -24,6 +24,15 @@ export default function Home() {
 
   return (
     <div className="min-h-screen">
+      {/* Beta Disclaimer Banner */}
+      <div className="bg-yellow-100 border-b border-yellow-300 px-4 py-2">
+        <div className="max-w-7xl mx-auto">
+          <p className="text-center text-sm text-yellow-800">
+            <span className="font-semibold">⚠️ BETA MODE:</span> This work in progress represents idealism in development
+          </p>
+        </div>
+      </div>
+      
       {/* Hero Section */}
       <section className="relative gradient-hero text-white overflow-hidden">
         <div className="absolute inset-0 bg-black opacity-10"></div>
