@@ -44,6 +44,16 @@ const profileSchema = z.object({
   bio: z.string().max(500, "Bio must be 500 characters or less"),
 });
 
+const sexualHealthDirectivesSchema = z.object({
+  agreedToSafeProgression: z.boolean(),
+  currentStage: z.enum(["nonsexual", "kissing", "manual", "oral", "protected", "equalized"]),
+  stageStartDate: z.string().optional(),
+  monthlyHealthScreening: z.boolean(),
+  stiTestResults: z.string().optional(),
+  contraceptiveMethod: z.string().optional(),
+  fluckBalance: z.number().default(1000), // Starting $FLUCK balance
+});
+
 const matchingPreferencesSchema = z.object({
   ageRangeMin: z.number().min(18),
   ageRangeMax: z.number().max(120),
@@ -53,6 +63,7 @@ const matchingPreferencesSchema = z.object({
   dealBreakers: z.array(z.string()),
   cooperativePrincipleImportance: z.number().min(1).max(10),
   communityInvolvement: z.string(),
+  sexualHealthDirectives: sexualHealthDirectivesSchema,
 }).refine((data) => {
   // Enforce 2-year age range limit
   return (data.ageRangeMax - data.ageRangeMin) <= 4;
@@ -91,6 +102,15 @@ export default function GoodPeople() {
       dealBreakers: [],
       cooperativePrincipleImportance: 7,
       communityInvolvement: "",
+      sexualHealthDirectives: {
+        agreedToSafeProgression: false,
+        currentStage: "nonsexual" as const,
+        stageStartDate: new Date().toISOString(),
+        monthlyHealthScreening: false,
+        stiTestResults: "",
+        contraceptiveMethod: "",
+        fluckBalance: 1000,
+      },
     },
   });
 
@@ -137,7 +157,12 @@ export default function GoodPeople() {
       matchType: "romance",
       compatibilityScore: 92,
       cooperativePrincipleAlignment: 9,
-      connectionStatus: "potential"
+      connectionStatus: "potential",
+      currentStage: "nonsexual",
+      stageStartDate: "2025-02-01",
+      healthStatus: "screened",
+      fluckBalance: 1000,
+      agreedToProgression: true
     },
     {
       id: 2,
@@ -150,7 +175,12 @@ export default function GoodPeople() {
       matchType: "networking",
       compatibilityScore: 88,
       cooperativePrincipleAlignment: 8,
-      connectionStatus: "potential"
+      connectionStatus: "potential",
+      currentStage: "kissing",
+      stageStartDate: "2025-01-15",
+      healthStatus: "pending",
+      fluckBalance: 950,
+      agreedToProgression: true
     },
     {
       id: 3,
@@ -163,7 +193,12 @@ export default function GoodPeople() {
       matchType: "friendship",
       compatibilityScore: 85,
       cooperativePrincipleAlignment: 7,
-      connectionStatus: "potential"
+      connectionStatus: "potential",
+      currentStage: "manual",
+      stageStartDate: "2024-12-01",
+      healthStatus: "screened",
+      fluckBalance: 1000,
+      agreedToProgression: true
     }
   ];
 
@@ -552,6 +587,128 @@ export default function GoodPeople() {
                                 />
                               </FormControl>
                               <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Sexual Health Directives Section */}
+                    <div className="space-y-6 border-t pt-6">
+                      <div className="space-y-4">
+                        <h3 className="text-lg font-semibold text-foreground">Sexual Health Directives</h3>
+                        
+                        <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
+                          <div className="flex items-center gap-2 mb-2">
+                            <Heart className="h-4 w-4 text-red-600" />
+                            <span className="text-sm font-medium text-red-800">Progressive Dating Stages for Safety</span>
+                          </div>
+                          <div className="text-xs text-red-700 space-y-1">
+                            <div><strong>Stage 1:</strong> Nonsexual first date (getting to know each other)</div>
+                            <div><strong>Stage 2:</strong> Kissing allowed, no sexual contact</div>
+                            <div><strong>Stage 3:</strong> Manual sexual contact permitted</div>
+                            <div><strong>Stage 4:</strong> Possible oral sex with health screening</div>
+                            <div><strong>Stage 5:</strong> Protected sex after 1 month of meaningful interactions</div>
+                            <div><strong>Stage 6:</strong> Unprotected sex only after 3+ months AND equalized sexual health risks</div>
+                            <div className="pt-2 border-t border-red-300">
+                              <strong className="text-red-900">⚠️ Violations result in $FLUCK penalties</strong>
+                            </div>
+                          </div>
+                        </div>
+
+                        <FormField
+                          control={preferencesForm.control}
+                          name="sexualHealthDirectives.agreedToSafeProgression"
+                          render={({ field }) => (
+                            <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                              <FormControl>
+                                <Checkbox
+                                  checked={field.value}
+                                  onCheckedChange={field.onChange}
+                                />
+                              </FormControl>
+                              <div className="space-y-1 leading-none">
+                                <FormLabel className="text-sm font-medium">
+                                  I agree to follow the progressive dating stages for sexual health safety
+                                </FormLabel>
+                                <p className="text-xs text-muted-foreground">
+                                  Mandatory compliance with staged progression to protect all community members
+                                </p>
+                              </div>
+                            </FormItem>
+                          )}
+                        />
+
+                        <div className="grid md:grid-cols-2 gap-4">
+                          <FormField
+                            control={preferencesForm.control}
+                            name="sexualHealthDirectives.monthlyHealthScreening"
+                            render={({ field }) => (
+                              <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                                <FormControl>
+                                  <Checkbox
+                                    checked={field.value}
+                                    onCheckedChange={field.onChange}
+                                  />
+                                </FormControl>
+                                <div className="space-y-1 leading-none">
+                                  <FormLabel className="text-sm font-medium">
+                                    Monthly STI Screening
+                                  </FormLabel>
+                                  <p className="text-xs text-muted-foreground">
+                                    Required for stages 4+ progression
+                                  </p>
+                                </div>
+                              </FormItem>
+                            )}
+                          />
+
+                          <FormField
+                            control={preferencesForm.control}
+                            name="sexualHealthDirectives.fluckBalance"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Current $FLUCK Balance</FormLabel>
+                                <FormControl>
+                                  <Input
+                                    type="number"
+                                    {...field}
+                                    readOnly
+                                    className="bg-gray-50"
+                                  />
+                                </FormControl>
+                                <p className="text-xs text-muted-foreground">
+                                  Penalties deducted for safety violations
+                                </p>
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+
+                        <FormField
+                          control={preferencesForm.control}
+                          name="sexualHealthDirectives.contraceptiveMethod"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Preferred Contraceptive Method</FormLabel>
+                              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                <FormControl>
+                                  <SelectTrigger>
+                                    <SelectValue placeholder="Select contraceptive method" />
+                                  </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                  <SelectItem value="condom">Condoms</SelectItem>
+                                  <SelectItem value="iud">IUD</SelectItem>
+                                  <SelectItem value="pill">Birth Control Pill</SelectItem>
+                                  <SelectItem value="implant">Contraceptive Implant</SelectItem>
+                                  <SelectItem value="diaphragm">Diaphragm</SelectItem>
+                                  <SelectItem value="spermicide">Spermicide</SelectItem>
+                                  <SelectItem value="withdrawal">Withdrawal Method</SelectItem>
+                                  <SelectItem value="abstinence">Abstinence</SelectItem>
+                                  <SelectItem value="nanoheal">NanoHeal ⓒⓒ STI Treatment</SelectItem>
+                                </SelectContent>
+                              </Select>
                             </FormItem>
                           )}
                         />
