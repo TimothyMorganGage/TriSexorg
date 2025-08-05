@@ -1,11 +1,14 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
+import multer from "multer";
+import path from "path";
 import { storage } from "./storage";
 import { 
   insertUserSchema, insertProductConfigurationSchema, insertOrderSchema,
   insertEducationalContentSchema, insertPartnershipRequestSchema 
 } from "@shared/schema";
 import { z } from "zod";
+import { genealogyService, RelationshipUtils } from "./genealogy";
 
 const loginSchema = z.object({
   email: z.string().email(),
@@ -17,6 +20,21 @@ const registerSchema = insertUserSchema.extend({
 }).refine((data) => data.password === data.confirmPassword, {
   message: "Passwords don't match",
   path: ["confirmPassword"],
+});
+
+// Configure multer for GEDCOM file uploads
+const upload = multer({
+  dest: 'uploads/genealogy/',
+  fileFilter: (req, file, cb) => {
+    if (file.originalname.match(/\.(ged|gedcom)$/)) {
+      cb(null, true);
+    } else {
+      cb(new Error('Only GEDCOM files are allowed'));
+    }
+  },
+  limits: {
+    fileSize: 10 * 1024 * 1024 // 10MB limit
+  }
 });
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -1373,6 +1391,113 @@ END:VEVENT
       res.json(newOrder);
     } catch (error) {
       res.status(500).json({ message: "Failed to create restock order" });
+    }
+  });
+
+  // Genealogy verification routes
+  app.post("/api/genealogy/upload", upload.single('gedcom'), async (req, res) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ message: "No GEDCOM file uploaded" });
+      }
+
+      const userId = req.body.userId || 'anonymous'; // In real app, get from session
+      const filePath = req.file.path;
+
+      // Parse GEDCOM file
+      const familyTree = await genealogyService.parseGEDCOM(filePath, userId);
+      
+      // Set verification status to pending
+      await genealogyService.setVerificationStatus(userId, 'pending');
+
+      res.json({
+        message: "GEDCOM file uploaded successfully",
+        fileName: req.file.originalname,
+        peopleCount: Object.keys(familyTree.people).length,
+        status: 'pending'
+      });
+
+    } catch (error) {
+      res.status(400).json({ 
+        message: error instanceof Error ? error.message : "Upload failed" 
+      });
+    }
+  });
+
+  app.post("/api/genealogy/check-relationship", async (req, res) => {
+    try {
+      const { userId1, userId2 } = req.body;
+      
+      if (!userId1 || !userId2) {
+        return res.status(400).json({ message: "Both user IDs required" });
+      }
+
+      const relationship = genealogyService.calculateRelationship(userId1, userId2);
+      const isAllowed = genealogyService.isRelationshipAllowed(userId1, userId2);
+
+      res.json({
+        relationship,
+        isAllowed,
+        withinEightCousinLimit: relationship.degree ? 
+          RelationshipUtils.isWithinEightCousinLimit(relationship.degree * 2) : 
+          true
+      });
+
+    } catch (error) {
+      res.status(500).json({ 
+        message: error instanceof Error ? error.message : "Relationship check failed" 
+      });
+    }
+  });
+
+  app.get("/api/genealogy/blocked-matches/:userId", async (req, res) => {
+    try {
+      const { userId } = req.params;
+      const { potentialMatches } = req.query;
+
+      if (!potentialMatches) {
+        return res.status(400).json({ message: "Potential matches list required" });
+      }
+
+      const matchIds = Array.isArray(potentialMatches) ? 
+        potentialMatches as string[] : 
+        [potentialMatches as string];
+
+      const blockedMatches = genealogyService.getBlockedMatches(userId, matchIds);
+
+      res.json({
+        userId,
+        blockedMatches,
+        allowedMatches: matchIds.filter(id => !blockedMatches.includes(id))
+      });
+
+    } catch (error) {
+      res.status(500).json({ 
+        message: error instanceof Error ? error.message : "Failed to check blocked matches" 
+      });
+    }
+  });
+
+  app.post("/api/genealogy/verify-status", async (req, res) => {
+    try {
+      const { userId, status } = req.body;
+      
+      if (!userId || !['pending', 'verified', 'rejected'].includes(status)) {
+        return res.status(400).json({ message: "Invalid user ID or status" });
+      }
+
+      await genealogyService.setVerificationStatus(userId, status);
+
+      res.json({
+        message: `Verification status updated to ${status}`,
+        userId,
+        status
+      });
+
+    } catch (error) {
+      res.status(500).json({ 
+        message: error instanceof Error ? error.message : "Status update failed" 
+      });
     }
   });
 

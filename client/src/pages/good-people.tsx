@@ -30,7 +30,11 @@ import {
   Search,
   Filter,
   Globe,
-  Info
+  Info,
+  Upload,
+  FileText,
+  Shield,
+  AlertTriangle
 } from "lucide-react";
 
 const profileSchema = z.object({
@@ -42,6 +46,15 @@ const profileSchema = z.object({
   cooperativePrinciples: z.array(z.string()),
   values: z.array(z.string()),
   bio: z.string().max(500, "Bio must be 500 characters or less"),
+});
+
+const genealogicalVerificationSchema = z.object({
+  hasUploadedFamilyTree: z.boolean(),
+  gedcomFileName: z.string().optional(),
+  verificationStatus: z.enum(["pending", "verified", "rejected"]),
+  relationshipChecksPassed: z.number().default(0),
+  blockedMatches: z.array(z.string()).default([]), // IDs of matches blocked due to kinship
+  lastVerificationDate: z.string().optional(),
 });
 
 const sexualHealthDirectivesSchema = z.object({
@@ -64,6 +77,7 @@ const matchingPreferencesSchema = z.object({
   cooperativePrincipleImportance: z.number().min(1).max(10),
   communityInvolvement: z.string(),
   sexualHealthDirectives: sexualHealthDirectivesSchema,
+  genealogicalVerification: genealogicalVerificationSchema,
 }).refine((data) => {
   // Enforce 2-year age range limit
   return (data.ageRangeMax - data.ageRangeMin) <= 4;
@@ -110,6 +124,14 @@ export default function GoodPeople() {
         stiTestResults: "",
         contraceptiveMethod: "",
         fluckBalance: 1000,
+      },
+      genealogicalVerification: {
+        hasUploadedFamilyTree: false,
+        gedcomFileName: "",
+        verificationStatus: "pending" as const,
+        relationshipChecksPassed: 0,
+        blockedMatches: [],
+        lastVerificationDate: "",
       },
     },
   });
@@ -162,7 +184,10 @@ export default function GoodPeople() {
       stageStartDate: "2025-02-01",
       healthStatus: "screened",
       fluckBalance: 1000,
-      agreedToProgression: true
+      agreedToProgression: true,
+      genealogicalStatus: "verified",
+      relationshipDegree: null,
+      blockedByGenealogy: false
     },
     {
       id: 2,
@@ -180,7 +205,10 @@ export default function GoodPeople() {
       stageStartDate: "2025-01-15",
       healthStatus: "pending",
       fluckBalance: 950,
-      agreedToProgression: true
+      agreedToProgression: true,
+      genealogicalStatus: "pending",
+      relationshipDegree: "7th cousin",
+      blockedByGenealogy: false
     },
     {
       id: 3,
@@ -198,7 +226,10 @@ export default function GoodPeople() {
       stageStartDate: "2024-12-01",
       healthStatus: "screened",
       fluckBalance: 1000,
-      agreedToProgression: true
+      agreedToProgression: true,
+      genealogicalStatus: "verified",
+      relationshipDegree: null,
+      blockedByGenealogy: false
     }
   ];
 
@@ -712,6 +743,139 @@ export default function GoodPeople() {
                             </FormItem>
                           )}
                         />
+                      </div>
+                    </div>
+
+                    {/* Genealogical Verification Section */}
+                    <div className="space-y-6 border-t pt-6">
+                      <div className="space-y-4">
+                        <h3 className="text-lg font-semibold text-foreground">Genealogical Verification</h3>
+                        
+                        <div className="p-4 bg-orange-50 border border-orange-200 rounded-lg">
+                          <div className="flex items-center gap-2 mb-2">
+                            <Shield className="h-4 w-4 text-orange-600" />
+                            <span className="text-sm font-medium text-orange-800">Incest Prevention System</span>
+                          </div>
+                          <div className="text-xs text-orange-700 space-y-1">
+                            <div>Upload your family tree (GEDCOM format) to verify no blood relations within 8 degrees of cousinship</div>
+                            <div><strong>Protected relationships:</strong> Up to 8th cousins (9th great-grandparents as common ancestors)</div>
+                            <div><strong>Verification process:</strong> Cross-referenced with Gramps genealogy engine and GEDmatch database</div>
+                            <div><strong>Privacy:</strong> Family tree data encrypted and only used for relationship calculations</div>
+                          </div>
+                        </div>
+
+                        <FormField
+                          control={preferencesForm.control}
+                          name="genealogicalVerification.hasUploadedFamilyTree"
+                          render={({ field }) => (
+                            <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                              <FormControl>
+                                <Checkbox
+                                  checked={field.value}
+                                  onCheckedChange={field.onChange}
+                                />
+                              </FormControl>
+                              <div className="space-y-1 leading-none">
+                                <FormLabel className="text-sm font-medium">
+                                  I have uploaded my family tree for genealogical verification
+                                </FormLabel>
+                                <p className="text-xs text-muted-foreground">
+                                  Required to access full matchmaking features and ensure no blood relations
+                                </p>
+                              </div>
+                            </FormItem>
+                          )}
+                        />
+
+                        <div className="space-y-4">
+                          <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+                            <Upload className="mx-auto h-12 w-12 text-gray-400" />
+                            <div className="mt-4">
+                              <label htmlFor="gedcom-upload" className="cursor-pointer">
+                                <span className="mt-2 block text-sm font-medium text-gray-900">
+                                  Upload GEDCOM Family Tree File
+                                </span>
+                                <span className="mt-1 block text-xs text-gray-500">
+                                  Supported formats: .ged, .gedcom (max 10MB)
+                                </span>
+                              </label>
+                              <input
+                                id="gedcom-upload"
+                                type="file"
+                                className="hidden"
+                                accept=".ged,.gedcom"
+                              />
+                            </div>
+                          </div>
+                          
+                          <FormField
+                            control={preferencesForm.control}
+                            name="genealogicalVerification.gedcomFileName"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Uploaded File Name</FormLabel>
+                                <FormControl>
+                                  <Input
+                                    {...field}
+                                    placeholder="No file uploaded"
+                                    readOnly
+                                    className="bg-gray-50"
+                                  />
+                                </FormControl>
+                              </FormItem>
+                            )}
+                          />
+
+                          <div className="grid md:grid-cols-2 gap-4">
+                            <FormField
+                              control={preferencesForm.control}
+                              name="genealogicalVerification.verificationStatus"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Verification Status</FormLabel>
+                                  <FormControl>
+                                    <div className="flex items-center gap-2">
+                                      <Badge 
+                                        variant="outline"
+                                        className={
+                                          field.value === 'verified' ? 'bg-green-50 text-green-700' :
+                                          field.value === 'rejected' ? 'bg-red-50 text-red-700' :
+                                          'bg-yellow-50 text-yellow-700'
+                                        }
+                                      >
+                                        {field.value === 'verified' && <CheckCircle className="w-3 h-3 mr-1" />}
+                                        {field.value === 'rejected' && <AlertTriangle className="w-3 h-3 mr-1" />}
+                                        {field.value === 'pending' && <Info className="w-3 h-3 mr-1" />}
+                                        {field.value}
+                                      </Badge>
+                                    </div>
+                                  </FormControl>
+                                </FormItem>
+                              )}
+                            />
+
+                            <FormField
+                              control={preferencesForm.control}
+                              name="genealogicalVerification.relationshipChecksPassed"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Relationship Checks Passed</FormLabel>
+                                  <FormControl>
+                                    <Input
+                                      type="number"
+                                      {...field}
+                                      readOnly
+                                      className="bg-gray-50"
+                                    />
+                                  </FormControl>
+                                  <p className="text-xs text-muted-foreground">
+                                    Number of matches verified as non-relatives
+                                  </p>
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+                        </div>
                       </div>
                     </div>
 
