@@ -9,6 +9,7 @@ import {
 } from "@shared/schema";
 import { z } from "zod";
 import { genealogyService, RelationshipUtils } from "./genealogy";
+import { ageVerificationService, DocumentType, VerificationStatus, AgeVerificationUtils } from "./ageVerification";
 
 const loginSchema = z.object({
   email: z.string().email(),
@@ -23,13 +24,28 @@ const registerSchema = insertUserSchema.extend({
 });
 
 // Configure multer for GEDCOM file uploads
-const upload = multer({
+const uploadGeneology = multer({
   dest: 'uploads/genealogy/',
   fileFilter: (req, file, cb) => {
     if (file.originalname.match(/\.(ged|gedcom)$/)) {
       cb(null, true);
     } else {
       cb(new Error('Only GEDCOM files are allowed'));
+    }
+  },
+  limits: {
+    fileSize: 10 * 1024 * 1024 // 10MB limit
+  }
+});
+
+// Configure multer for age verification documents
+const uploadVerification = multer({
+  dest: 'uploads/verification/',
+  fileFilter: (req, file, cb) => {
+    if (AgeVerificationUtils.isValidDocumentFile(file.originalname)) {
+      cb(null, true);
+    } else {
+      cb(new Error('Only JPG, PNG, HEIC, and PDF files are allowed'));
     }
   },
   limits: {
@@ -1394,8 +1410,170 @@ END:VEVENT
     }
   });
 
+  // Age Verification routes
+  app.get("/api/age-verification/status", async (req, res) => {
+    try {
+      const userId = req.body.userId || 'test-user'; // In real app, get from session
+      const status = ageVerificationService.getUserVerificationStatus(userId);
+      res.json(status);
+    } catch (error) {
+      res.status(500).json({ 
+        message: error instanceof Error ? error.message : "Failed to get verification status" 
+      });
+    }
+  });
+
+  app.post("/api/age-verification/upload", uploadVerification.single('document'), async (req, res) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ message: "No document file uploaded" });
+      }
+
+      const userId = req.body.userId || 'test-user'; // In real app, get from session
+      const documentType = req.body.documentType as DocumentType;
+
+      if (!documentType || !Object.values(DocumentType).includes(documentType)) {
+        return res.status(400).json({ message: "Valid document type required" });
+      }
+
+      const document = await ageVerificationService.submitVerificationDocument(
+        userId,
+        documentType,
+        req.file.path,
+        req.file.originalname
+      );
+
+      res.json({
+        message: "Document uploaded successfully",
+        documentId: document.id,
+        status: document.verificationStatus,
+        requiresParentalConsent: document.verificationStatus === VerificationStatus.REQUIRES_PARENTAL_CONSENT
+      });
+
+    } catch (error) {
+      res.status(400).json({ 
+        message: error instanceof Error ? error.message : "Upload failed" 
+      });
+    }
+  });
+
+  app.post("/api/age-verification/parental-consent", async (req, res) => {
+    try {
+      const {
+        parentGuardianName,
+        parentGuardianEmail,
+        parentGuardianPhone,
+        relationshipToMinor,
+        consentType
+      } = req.body;
+
+      const minorUserId = req.body.minorUserId || 'test-user'; // In real app, get from session
+      const ipAddress = req.ip || req.connection.remoteAddress || 'unknown';
+      const userAgent = req.get('User-Agent') || 'unknown';
+
+      if (!parentGuardianName || !parentGuardianEmail || !relationshipToMinor || !consentType) {
+        return res.status(400).json({ message: "All required fields must be provided" });
+      }
+
+      const consent = await ageVerificationService.requestParentalConsent(
+        minorUserId,
+        parentGuardianName,
+        parentGuardianEmail,
+        relationshipToMinor,
+        consentType,
+        ipAddress,
+        userAgent,
+        parentGuardianPhone
+      );
+
+      res.json({
+        message: "Parental consent request sent successfully",
+        consentId: consent.id,
+        parentEmail: consent.parentGuardianEmail,
+        expiresAt: consent.expiresAt
+      });
+
+    } catch (error) {
+      res.status(400).json({ 
+        message: error instanceof Error ? error.message : "Consent request failed" 
+      });
+    }
+  });
+
+  app.post("/api/age-verification/parental-consent/:consentId/respond", async (req, res) => {
+    try {
+      const { consentId } = req.params;
+      const { approved, verificationCode, parentSignature } = req.body;
+
+      if (!verificationCode) {
+        return res.status(400).json({ message: "Verification code required" });
+      }
+
+      const consent = await ageVerificationService.processParentalConsent(
+        consentId,
+        approved === true,
+        verificationCode,
+        parentSignature
+      );
+
+      res.json({
+        message: approved ? "Consent approved successfully" : "Consent denied",
+        consentId: consent.id,
+        status: consent.status,
+        respondedAt: consent.respondedAt
+      });
+
+    } catch (error) {
+      res.status(400).json({ 
+        message: error instanceof Error ? error.message : "Consent response failed" 
+      });
+    }
+  });
+
+  app.post("/api/age-verification/admin/verify-document", async (req, res) => {
+    try {
+      const { documentId, approved, rejectionReason } = req.body;
+      const verifiedBy = req.body.verifiedBy || 'admin'; // In real app, get from session
+
+      if (!documentId || approved === undefined) {
+        return res.status(400).json({ message: "Document ID and approval status required" });
+      }
+
+      const document = await ageVerificationService.verifyDocument(
+        documentId,
+        approved,
+        verifiedBy,
+        rejectionReason
+      );
+
+      res.json({
+        message: approved ? "Document verified successfully" : "Document rejected",
+        documentId: document.id,
+        status: document.verificationStatus,
+        verifiedAt: document.verifiedAt
+      });
+
+    } catch (error) {
+      res.status(400).json({ 
+        message: error instanceof Error ? error.message : "Document verification failed" 
+      });
+    }
+  });
+
+  app.get("/api/age-verification/compliance-report/:userId", async (req, res) => {
+    try {
+      const { userId } = req.params;
+      const report = ageVerificationService.generateComplianceReport(userId);
+      res.json(report);
+    } catch (error) {
+      res.status(500).json({ 
+        message: error instanceof Error ? error.message : "Failed to generate compliance report" 
+      });
+    }
+  });
+
   // Genealogy verification routes
-  app.post("/api/genealogy/upload", upload.single('gedcom'), async (req, res) => {
+  app.post("/api/genealogy/upload", uploadGeneology.single('gedcom'), async (req, res) => {
     try {
       if (!req.file) {
         return res.status(400).json({ message: "No GEDCOM file uploaded" });

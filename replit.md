@@ -38,6 +38,9 @@ The application employs a modern full-stack architecture, ensuring a clear separ
     -   Mentor and facilitator co-editing capabilities with multi-platform messaging integration (iMessage, WhatsApp, etc.) and healthcare system connectivity (MyChart, Apple Health).
     -   Deaf and braille translation services with ASL/BSL sign language support.
     -   Calendar integration system for Google Calendar, iCal, Outlook, and pureOS.
+    -   Open source age verification system with Creative Commons licensing, inspired by id.me and login.gov.
+    -   Comprehensive parental consent system for minor users with secure verification workflows.
+    -   Genealogical verification preventing incest within 8 degrees of cousinship using GEDCOM family trees.
 
 ## External Dependencies
 
@@ -50,3 +53,5 @@ The application employs a modern full-stack architecture, ensuring a clear separ
 -   **Carousel**: `embla-carousel-react`
 -   **Data Visualization**: `recharts`
 -   **Form Management**: `react-hook-form`
+-   **File Upload**: `multer` for handling document uploads
+-   **Creative Commons**: All verification systems licensed under CC BY-SA 4.0

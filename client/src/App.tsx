@@ -40,6 +40,8 @@ import CalendarIntegration from "@/pages/calendar-integration";
 import SmartBreakSystem from "@/pages/smart-break-system";
 import MentorFacilitator from "@/pages/mentor-facilitator";
 import PartnerSTITracking from "@/pages/partner-sti-tracking";
+import AgeVerification from "@/pages/age-verification";
+import ParentalConsentResponse from "@/pages/parental-consent-response";
 import { TabNavigation } from "@/components/TabNavigation";
 
 function Router() {
@@ -77,6 +79,8 @@ function Router() {
           <Route path="/smart-break-system" component={SmartBreakSystem} />
           <Route path="/mentor-facilitator" component={MentorFacilitator} />
           <Route path="/partner-sti-tracking" component={PartnerSTITracking} />
+          <Route path="/age-verification" component={AgeVerification} />
+          <Route path="/parental-consent/:consentId" component={ParentalConsentResponse} />
           <Route path="/clinic-dashboard" component={ClinicDashboard} />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
