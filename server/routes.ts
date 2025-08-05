@@ -1500,6 +1500,32 @@ END:VEVENT
     }
   });
 
+  app.get("/api/age-verification/parental-consent/:consentId", async (req, res) => {
+    try {
+      const { consentId } = req.params;
+      const consent = ageVerificationService['parentalConsents'].get(consentId);
+      
+      if (!consent) {
+        return res.status(404).json({ message: "Consent request not found" });
+      }
+
+      res.json({
+        id: consent.id,
+        parentGuardianName: consent.parentGuardianName,
+        parentGuardianEmail: consent.parentGuardianEmail,
+        relationshipToMinor: consent.relationshipToMinor,
+        consentType: consent.consentType,
+        status: consent.status,
+        expiresAt: consent.expiresAt,
+        requestedAt: consent.requestedAt
+      });
+    } catch (error) {
+      res.status(500).json({ 
+        message: error instanceof Error ? error.message : "Failed to get consent details" 
+      });
+    }
+  });
+
   app.post("/api/age-verification/parental-consent/:consentId/respond", async (req, res) => {
     try {
       const { consentId } = req.params;

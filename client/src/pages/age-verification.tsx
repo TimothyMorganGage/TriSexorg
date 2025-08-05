@@ -47,6 +47,30 @@ const parentalConsentSchema = z.object({
 type DocumentUpload = z.infer<typeof documentUploadSchema>;
 type ParentalConsent = z.infer<typeof parentalConsentSchema>;
 
+// Type definitions for API responses
+interface VerificationStatus {
+  isVerified: boolean;
+  age?: number;
+  requiresParentalConsent: boolean;
+  verificationStatus: string;
+  documentsSubmitted: number;
+  documents?: Array<{
+    id: string;
+    documentType: string;
+    fileName: string;
+    verificationStatus: string;
+    uploadedAt: string;
+  }>;
+  parentalConsents?: Array<{
+    id: string;
+    parentGuardianName: string;
+    parentGuardianEmail: string;
+    status: string;
+    consentType: string;
+    requestedAt: string;
+  }>;
+}
+
 export default function AgeVerification() {
   const [activeTab, setActiveTab] = useState<'upload' | 'consent' | 'status'>('status');
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -66,7 +90,7 @@ export default function AgeVerification() {
   });
 
   // Get verification status
-  const { data: verificationStatus, isLoading } = useQuery({
+  const { data: verificationStatus, isLoading } = useQuery<VerificationStatus>({
     queryKey: ['/api/age-verification/status'],
     retry: false
   });
@@ -78,10 +102,17 @@ export default function AgeVerification() {
       formData.append('document', data.file);
       formData.append('documentType', data.documentType);
 
-      return apiRequest('/api/age-verification/upload', {
+      const response = await fetch('/api/age-verification/upload', {
         method: 'POST',
         body: formData
       });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || 'Upload failed');
+      }
+
+      return response.json();
     },
     onSuccess: () => {
       toast({
@@ -100,11 +131,14 @@ export default function AgeVerification() {
     }
   });
 
-  // Parental consent mutation
+  // Parental consent mutation  
   const requestConsentMutation = useMutation({
     mutationFn: async (data: ParentalConsent) => {
       return apiRequest('/api/age-verification/parental-consent', {
         method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
         body: JSON.stringify(data)
       });
     },
@@ -244,10 +278,10 @@ export default function AgeVerification() {
                 <>
                   <div className="flex items-center justify-between">
                     <span className="font-medium">Overall Status:</span>
-                    <Badge className={getStatusColor(verificationStatus.verificationStatus)}>
-                      {getStatusIcon(verificationStatus.verificationStatus)}
+                    <Badge className={getStatusColor(verificationStatus.verificationStatus || '')}>
+                      {getStatusIcon(verificationStatus.verificationStatus || '')}
                       <span className="ml-2 capitalize">
-                        {verificationStatus.verificationStatus.replace(/_/g, ' ')}
+                        {(verificationStatus.verificationStatus || '').replace(/_/g, ' ')}
                       </span>
                     </Badge>
                   </div>
@@ -276,13 +310,13 @@ export default function AgeVerification() {
                     {verificationStatus.documents?.map((doc: any, index: number) => (
                       <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg mb-2">
                         <div>
-                          <div className="font-medium">{doc.documentType.replace(/_/g, ' ')}</div>
+                          <div className="font-medium">{(doc.documentType || '').replace(/_/g, ' ')}</div>
                           <div className="text-sm text-gray-600">{doc.fileName}</div>
                         </div>
-                        <Badge className={getStatusColor(doc.verificationStatus)}>
-                          {getStatusIcon(doc.verificationStatus)}
+                        <Badge className={getStatusColor(doc.verificationStatus || '')}>
+                          {getStatusIcon(doc.verificationStatus || '')}
                           <span className="ml-2 capitalize">
-                            {doc.verificationStatus.replace(/_/g, ' ')}
+                            {(doc.verificationStatus || '').replace(/_/g, ' ')}
                           </span>
                         </Badge>
                       </div>
@@ -297,16 +331,16 @@ export default function AgeVerification() {
                         {verificationStatus.parentalConsents.map((consent: any, index: number) => (
                           <div key={index} className="p-3 bg-gray-50 rounded-lg mb-2">
                             <div className="flex items-center justify-between mb-2">
-                              <span className="font-medium">{consent.parentGuardianName}</span>
-                              <Badge className={getStatusColor(consent.status)}>
-                                {getStatusIcon(consent.status)}
-                                <span className="ml-2 capitalize">{consent.status}</span>
+                              <span className="font-medium">{consent.parentGuardianName || 'Unknown'}</span>
+                              <Badge className={getStatusColor(consent.status || '')}>
+                                {getStatusIcon(consent.status || '')}
+                                <span className="ml-2 capitalize">{consent.status || 'unknown'}</span>
                               </Badge>
                             </div>
                             <div className="text-sm text-gray-600">
-                              <div>Email: {consent.parentGuardianEmail}</div>
-                              <div>Consent Type: {consent.consentType.replace(/_/g, ' ')}</div>
-                              <div>Requested: {new Date(consent.requestedAt).toLocaleDateString()}</div>
+                              <div>Email: {consent.parentGuardianEmail || 'Unknown'}</div>
+                              <div>Consent Type: {(consent.consentType || '').replace(/_/g, ' ')}</div>
+                              <div>Requested: {consent.requestedAt ? new Date(consent.requestedAt).toLocaleDateString() : 'Unknown'}</div>
                             </div>
                           </div>
                         ))}

@@ -29,6 +29,18 @@ const consentResponseSchema = z.object({
 
 type ConsentResponse = z.infer<typeof consentResponseSchema>;
 
+// Type definitions for API responses
+interface ConsentDetails {
+  id: string;
+  parentGuardianName: string;  
+  parentGuardianEmail: string;
+  relationshipToMinor: string;
+  consentType: string;
+  status: string;
+  expiresAt: string;
+  requestedAt: string;
+}
+
 export default function ParentalConsentResponse() {
   const { consentId } = useParams();
   const [showApprovalForm, setShowApprovalForm] = useState(false);
@@ -44,7 +56,7 @@ export default function ParentalConsentResponse() {
   });
 
   // Get consent details
-  const { data: consentDetails, isLoading } = useQuery({
+  const { data: consentDetails, isLoading } = useQuery<ConsentDetails>({
     queryKey: [`/api/age-verification/parental-consent/${consentId}`],
     enabled: !!consentId,
     retry: false
@@ -55,12 +67,15 @@ export default function ParentalConsentResponse() {
     mutationFn: async (data: ConsentResponse) => {
       return apiRequest(`/api/age-verification/parental-consent/${consentId}/respond`, {
         method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        }, 
         body: JSON.stringify(data)
       });
     },
-    onSuccess: (data) => {
+    onSuccess: (data: any) => {
       toast({
-        title: data.approved ? "Consent Approved" : "Consent Denied",
+        title: data.approved ? "Consent Approved" : "Consent Denied", 
         description: data.approved ? 
           "Your child now has access to the requested platform features." :
           "Your response has been recorded. Your child will be notified.",
@@ -156,7 +171,7 @@ export default function ParentalConsentResponse() {
               <div>
                 <Label className="font-medium">Relationship:</Label>
                 <p className="text-gray-700 capitalize">
-                  {consentDetails.relationshipToMinor.replace(/_/g, ' ')}
+                  {(consentDetails.relationshipToMinor || '').replace(/_/g, ' ')}
                 </p>
               </div>
               <div>
@@ -178,7 +193,7 @@ export default function ParentalConsentResponse() {
               <div>
                 <Label className="font-medium">Consent Type:</Label>
                 <p className="text-gray-700 capitalize">
-                  {consentDetails.consentType.replace(/_/g, ' ')}
+                  {(consentDetails.consentType || '').replace(/_/g, ' ')}
                 </p>
               </div>
               <div>
