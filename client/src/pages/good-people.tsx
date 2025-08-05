@@ -29,7 +29,8 @@ import {
   Settings,
   Search,
   Filter,
-  Globe
+  Globe,
+  Info
 } from "lucide-react";
 
 const profileSchema = z.object({
@@ -52,6 +53,12 @@ const matchingPreferencesSchema = z.object({
   dealBreakers: z.array(z.string()),
   cooperativePrincipleImportance: z.number().min(1).max(10),
   communityInvolvement: z.string(),
+}).refine((data) => {
+  // Enforce 2-year age range limit
+  return (data.ageRangeMax - data.ageRangeMin) <= 4;
+}, {
+  message: "Age range cannot exceed 4 years (2 years in each direction)",
+  path: ["ageRangeMax"]
 });
 
 export default function GoodPeople() {
@@ -76,8 +83,8 @@ export default function GoodPeople() {
   const preferencesForm = useForm({
     resolver: zodResolver(matchingPreferencesSchema),
     defaultValues: {
-      ageRangeMin: 18,
-      ageRangeMax: 65,
+      ageRangeMin: 23,
+      ageRangeMax: 27,
       maxDistance: 50,
       lookingForTypes: [],
       requiredValues: [],
@@ -203,9 +210,14 @@ export default function GoodPeople() {
     }
   };
 
-  const filteredMatches = matchType === "all" 
+  // Get current user's age from profile form
+  const currentUserAge = profileForm.watch("age") || 25;
+  
+  // Filter matches by type and enforce 2-year age limit
+  const filteredMatches = (matchType === "all" 
     ? mockMatches 
-    : mockMatches.filter(match => match.matchType === matchType);
+    : mockMatches.filter(match => match.matchType === matchType))
+    .filter(match => Math.abs(match.age - currentUserAge) <= 2);
 
   return (
     <div className="min-h-screen bg-background text-foreground py-12 px-4 sm:px-6 lg:px-8">
@@ -439,7 +451,7 @@ export default function GoodPeople() {
                                       if (checked) {
                                         field.onChange([...currentValue, option.id]);
                                       } else {
-                                        field.onChange(currentValue.filter((item: string) => item !== option.id));
+                                        field.onChange(currentValue.filter((item) => item !== option.id));
                                       }
                                     }}
                                   />
@@ -495,42 +507,55 @@ export default function GoodPeople() {
                 <Form {...preferencesForm}>
                   <form onSubmit={preferencesForm.handleSubmit(onPreferencesSubmit)} className="space-y-6">
                     
-                    <div className="grid md:grid-cols-2 gap-6">
-                      <FormField
-                        control={preferencesForm.control}
-                        name="ageRangeMin"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Minimum Age</FormLabel>
-                            <FormControl>
-                              <Input
-                                type="number"
-                                {...field}
-                                onChange={(e) => field.onChange(Number(e.target.value))}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                    <div className="space-y-4">
+                      <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                        <div className="flex items-center gap-2 mb-2">
+                          <Info className="h-4 w-4 text-blue-600" />
+                          <span className="text-sm font-medium text-blue-800">Age Matching Policy</span>
+                        </div>
+                        <p className="text-xs text-blue-700">
+                          For safety and compatibility, matches are limited to users within 2 years of your age.
+                          Maximum age range setting is 4 years total (2 years in each direction).
+                        </p>
+                      </div>
+                      
+                      <div className="grid md:grid-cols-2 gap-6">
+                        <FormField
+                          control={preferencesForm.control}
+                          name="ageRangeMin"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Minimum Age</FormLabel>
+                              <FormControl>
+                                <Input
+                                  type="number"
+                                  {...field}
+                                  onChange={(e) => field.onChange(Number(e.target.value))}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
 
-                      <FormField
-                        control={preferencesForm.control}
-                        name="ageRangeMax"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Maximum Age</FormLabel>
-                            <FormControl>
-                              <Input
-                                type="number"
-                                {...field}
-                                onChange={(e) => field.onChange(Number(e.target.value))}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                        <FormField
+                          control={preferencesForm.control}
+                          name="ageRangeMax"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Maximum Age</FormLabel>
+                              <FormControl>
+                                <Input
+                                  type="number"
+                                  {...field}
+                                  onChange={(e) => field.onChange(Number(e.target.value))}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
                     </div>
 
                     <FormField
