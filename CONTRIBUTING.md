@@ -1,10 +1,10 @@
-# Contributing to Fluck‽
+# Contributing to ⚧️ TriSex.org
 
-Thank you for your interest in contributing to Fluck‽! This project is dedicated to creating an inclusive, comprehensive sexual health platform that serves diverse communities.
+Thank you for your interest in contributing to ⚧️ TriSex.org! This project is dedicated to creating an inclusive, comprehensive sexual health platform that serves diverse communities.
 
 ## 🌟 Our Mission
 
-Fluck‽ is committed to:
+TriSex.org is committed to:
 - **Reproductive Justice**: Empowering users with personalized protection solutions
 - **2SLGBTIQA+ Inclusivity**: Specialized support for diverse sexual orientations and gender identities
 - **Open Source Ethics**: All verification systems licensed under Creative Commons BY-SA 4.0
@@ -16,8 +16,8 @@ Fluck‽ is committed to:
 
 1. **Fork the Repository**
    ```bash
-   git clone https://github.com/[username]/fluck.git
-   cd fluck
+   git clone https://github.com/[username]/trisex.git
+   cd trisex
    ```
 
 2. **Create a Feature Branch**
@@ -158,8 +158,8 @@ We use:
 
 - **GitHub Issues**: Technical questions and bug reports
 - **Discussions**: Community conversations and feature ideas
-- **Security Issues**: Email security@fluck.example (private disclosure)
-- **Accessibility**: accessibility@fluck.example for a11y improvements
+- **Security Issues**: Email security@trisex.org (private disclosure)
+- **Accessibility**: accessibility@trisex.org for a11y improvements
 
 ## 🎯 Current Priorities
 

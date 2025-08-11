@@ -2,7 +2,7 @@
 
 ## Quick Setup Guide
 
-Your Fluck‽ project is now ready for GitHub! All the necessary files have been created:
+Your ⚧️ TriSex.org project is now ready for GitHub! All the necessary files have been created:
 
 - ✅ `README.md` - Comprehensive project documentation
 - ✅ `LICENSE` - Creative Commons BY-SA 4.0 license
@@ -15,8 +15,8 @@ Your Fluck‽ project is now ready for GitHub! All the necessary files have been
 ### 1. Create Repository on GitHub
 1. Go to [github.com](https://github.com) and sign in
 2. Click the "+" icon and select "New repository"
-3. Repository name: `fluck` (or your preferred name)
-4. Description: "Comprehensive sexual health platform with open source age verification"
+3. Repository name: `trisex` (or your preferred name)
+4. Description: "⚧️ TriSex.org - Comprehensive sexual health platform with open source age verification"
 5. Choose **Public** (for open source) or **Private**
 6. **Do NOT** initialize with README, .gitignore, or license (we already have them)
 7. Click "Create repository"
@@ -47,7 +47,7 @@ git commit -m "Initial commit: Comprehensive sexual health platform
 - Complete accessibility features and 2SLGBTIQA+ inclusive design"
 
 # Add remote origin (replace YOUR_USERNAME with your GitHub username)
-git remote add origin https://github.com/YOUR_USERNAME/fluck.git
+git remote add origin https://github.com/YOUR_USERNAME/trisex.git
 
 # Push to GitHub
 git branch -M main
@@ -95,14 +95,14 @@ To create a project website:
 1. Go to Settings → Pages
 2. Source: Deploy from a branch
 3. Branch: `main` / `docs` (if you create a docs folder)
-4. Your site will be available at: `https://yourusername.github.io/fluck`
+4. Your site will be available at: `https://yourusername.github.io/trisex`
 
 ## Repository Structure
 
 Your repository now includes:
 
 ```
-fluck/
+trisex/
 ├── README.md              # Main project documentation
 ├── LICENSE                # Creative Commons BY-SA 4.0 license
 ├── CONTRIBUTING.md        # How to contribute

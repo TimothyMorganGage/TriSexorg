@@ -11,13 +11,13 @@ We provide security updates for the following versions:
 
 ## Reporting a Vulnerability
 
-The Fluck‽ team takes security seriously. We appreciate your efforts to responsibly disclose your findings.
+The TriSex.org team takes security seriously. We appreciate your efforts to responsibly disclose your findings.
 
 ### How to Report
 
 **For security vulnerabilities, please do NOT use GitHub issues.**
 
-Instead, please report security vulnerabilities by emailing security@fluck.example
+Instead, please report security vulnerabilities by emailing security@trisex.org
 
 Include the following information:
 - Type of issue (e.g. buffer overflow, SQL injection, cross-site scripting, etc.)
@@ -103,7 +103,7 @@ We consider security research conducted under this policy to be:
 - Authorized in accordance with the Computer Fraud and Abuse Act (CFAA)
 - Authorized in accordance with relevant similar laws
 - Exempt from the Digital Millennium Copyright Act (DMCA)
-- Protected from legal action by Fluck‽
+- Protected from legal action by TriSex.org
 
 We will not pursue civil action or initiate a complaint to law enforcement for accidental, good faith security research.
 
@@ -114,4 +114,4 @@ We believe in recognizing the valuable contributions of security researchers. Wi
 - Include your name in our security acknowledgments
 - Provide a letter of recommendation for your research
 
-Thank you for helping keep Fluck‽ and our users safe!
+Thank you for helping keep TriSex.org and our users safe!

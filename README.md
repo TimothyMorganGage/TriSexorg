@@ -1,4 +1,4 @@
-# Fluck‽ - Comprehensive Sexual Health Platform
+# ⚧️ TriSex.org - Comprehensive Sexual Health Platform
 
 [![License: CC BY-SA 4.0](https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-sa/4.0/)
 [![Open Source](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://opensource.org/)
@@ -8,16 +8,16 @@ A comprehensive wellness and sexual health platform designed to support diverse 
 ## 🌟 Features
 
 ### Core Platform Features
-- **Generative Fluck Protection**: Custom-fit products with personalized sizing and materials
-- **Good Flucking Sex**: Interactive educational stories and content
-- **Great Flucking Health**: Categorized educational resources and health tracking
-- **Groovy Flucking People**: Partnership requests and community features
+- **Generative TriSex Protection**: Custom-fit products with personalized sizing and materials
+- **Good TriSex Education**: Interactive educational stories and content
+- **Great TriSex Health**: Categorized educational resources and health tracking
+- **Groovy TriSex Community**: Partnership requests and community features
 
 ### Advanced Health Tracking
 - **4D STI Tracking**: Comprehensive tracking across Time, Space, Severity, and Network dimensions
 - **Sexual Partner Network Management**: Safe relationship tracking and verification
 - **Mood & Wellness Tracking**: Emoji-based logging with DALY metrics
-- **"Wise Time Flucks"**: Creative Commons time tracking system
+- **"Wise Time TriSex"**: Creative Commons time tracking system
 
 ### Safety & Verification Systems
 - **Open Source Age Verification**: Inspired by id.me and login.gov with Creative Commons licensing
@@ -29,7 +29,7 @@ A comprehensive wellness and sexual health platform designed to support diverse 
 ### Cooperative Features
 - **Financial Tracking**: Budget voting and dividend distribution
 - **Mentor & Facilitator System**: Co-editing with multi-platform messaging
-- **Progressive Dating Stages**: Mandatory safety protocols with $FLUCK penalty system
+- **Progressive Dating Stages**: Mandatory safety protocols with $TRISEX penalty system
 - **Cross-Platform Integration**: Google Calendar, iCal, Outlook, healthcare systems
 
 ### Accessibility & Inclusion
@@ -72,8 +72,8 @@ A comprehensive wellness and sexual health platform designed to support diverse 
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/[username]/fluck.git
-cd fluck
+git clone https://github.com/[username]/trisex.git
+cd trisex
 ```
 
 2. Install dependencies:
@@ -170,4 +170,4 @@ For support, feature requests, or contributions, please:
 
 ---
 
-**Fluck‽** - Empowering sexual health through inclusive technology and cooperative community building.
+**⚧️ TriSex.org** - Empowering sexual health through inclusive technology and cooperative community building.

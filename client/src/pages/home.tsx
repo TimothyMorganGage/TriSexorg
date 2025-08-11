@@ -54,11 +54,14 @@ export default function Home() {
                 <MedicineWheelLogo size={120} />
               </div>
               
-              <h1 className="text-5xl lg:text-7xl font-black leading-tight mb-6">
-                <span className="bg-gradient-to-r from-black via-gray-500 to-white bg-clip-text text-transparent">
-                  fluck
-                </span>
-                <span className="text-accent">.wtf</span>
+              <h1 className="text-5xl lg:text-7xl font-black leading-tight mb-6 flex items-center justify-center lg:justify-start gap-4">
+                <span className="text-6xl lg:text-8xl">⚧️</span>
+                <div>
+                  <span className="bg-gradient-to-r from-black via-gray-500 to-white bg-clip-text text-transparent">
+                    TriSex
+                  </span>
+                  <span className="text-accent">.org</span>
+                </div>
               </h1>
               
               <h2 className="text-2xl lg:text-3xl font-bold leading-tight mb-6 text-white font-recoleta">
@@ -108,7 +111,7 @@ export default function Home() {
                 <Link href="/time-tracker">
                   <Button size="lg" className="bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white shadow-lg w-full">
                     <Play className="mr-2 h-5 w-5" />
-                    Wise Time Flucks
+                    Wise Time TriSex
                   </Button>
                 </Link>
                 <Link href="/wiki">

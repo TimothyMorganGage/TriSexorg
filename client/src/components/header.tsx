@@ -10,10 +10,10 @@ export function Header() {
   const { user, logout } = useAuth();
 
   const navigation = [
-    { name: "Generative Fluck Protection", href: "/products" },
-    { name: "Good Flucking Sex", href: "/interactive-stories" },
-    { name: "Great Flucking Health", href: "/education" },
-    { name: "Groovy Flucking People", href: "/partnership" },
+    { name: "Generative TriSex Protection", href: "/products" },
+    { name: "Good TriSex Education", href: "/interactive-stories" },
+    { name: "Great TriSex Health", href: "/education" },
+    { name: "Groovy TriSex Community", href: "/partnership" },
     { name: "Mood Tracker", href: "/mood-logging" },
     { name: "Time Tracker", href: "/time-tracker" },
     { name: "Calendar Sync", href: "/calendar-integration" },
@@ -44,7 +44,7 @@ export function Header() {
                 filter: 'contrast(1.2)'
               }}
             >
-              Fluck‽
+              ⚧️ TriSex.org
             </span>
           </Link>
 
