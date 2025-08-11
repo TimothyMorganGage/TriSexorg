@@ -1705,6 +1705,170 @@ END:VEVENT
     }
   });
 
+  // BAD Co-op Dashboard API routes
+  app.get('/api/bad-coop-dashboard/:userId', async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const dashboardData = {
+        userProgress: {
+          completionRate: 85,
+          activeModules: 6,
+          communityScore: 4.8,
+          nextReviewDate: new Date(Date.now() + 60 * 24 * 60 * 60 * 1000) // 2 months
+        },
+        modules: [
+          {
+            id: "advance-directives",
+            progress: 85,
+            status: "complete",
+            lastUpdated: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
+            priority: "critical"
+          },
+          {
+            id: "sexual-health-integration", 
+            progress: 92,
+            status: "complete",
+            lastUpdated: new Date(Date.now() - 2 * 60 * 60 * 1000),
+            priority: "high"
+          },
+          {
+            id: "cooperative-advocacy",
+            progress: 78,
+            status: "active",
+            lastUpdated: new Date(),
+            priority: "high"
+          },
+          {
+            id: "financial-planning",
+            progress: 45,
+            status: "incomplete",
+            lastUpdated: null,
+            priority: "medium"
+          },
+          {
+            id: "mental-health",
+            progress: 67,
+            status: "in-progress",
+            lastUpdated: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
+            priority: "high"
+          },
+          {
+            id: "family-care",
+            progress: 89,
+            status: "complete",
+            lastUpdated: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
+            priority: "high"
+          }
+        ],
+        recentActivity: [
+          {
+            action: "Sexual health directives updated",
+            module: "Sexual Health Integration",
+            time: new Date(Date.now() - 2 * 60 * 60 * 1000),
+            status: "completed",
+            details: "Integrated new contraception preferences with TriSex.org protection systems"
+          },
+          {
+            action: "Community health council meeting",
+            module: "Cooperative Advocacy",
+            time: new Date(Date.now() - 24 * 60 * 60 * 1000),
+            status: "attended",
+            details: "Participated in democratic healthcare governance session"
+          },
+          {
+            action: "Healthcare proxy verification",
+            module: "Advance Directives",
+            time: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000),
+            status: "verified",
+            details: "Emergency contact confirmed and healthcare proxy signed"
+          },
+          {
+            action: "Mental health crisis plan review",
+            module: "Mental Health",
+            time: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
+            status: "needs-update",
+            details: "Annual review scheduled for psychiatric advance directives"
+          }
+        ],
+        upcomingTasks: [
+          {
+            task: "Annual directive comprehensive review",
+            dueDate: "In 2 months",
+            priority: "critical",
+            module: "Advance Directives"
+          },
+          {
+            task: "Sexual health education workshop",
+            dueDate: "Next week",
+            priority: "medium",
+            module: "Sexual Health Integration"
+          },
+          {
+            task: "Cooperative insurance enrollment",
+            dueDate: "In 3 weeks", 
+            priority: "high",
+            module: "Financial Planning"
+          },
+          {
+            task: "Mental health support group check-in",
+            dueDate: "Tomorrow",
+            priority: "medium",
+            module: "Mental Health"
+          }
+        ]
+      };
+      res.json(dashboardData);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to load dashboard data" });
+    }
+  });
+
+  // BAD Co-op Integration API routes
+  app.get('/api/bad-coop-integration', async (req, res) => {
+    try {
+      const integration = await storage.getBadCoopIntegration(1); // Using demo user ID
+      res.json(integration);
+    } catch (error) {
+      res.status(404).json({ message: "Integration not found" });
+    }
+  });
+
+  app.post('/api/bad-coop-integration', async (req, res) => {
+    try {
+      const integration = await storage.createBadCoopIntegration({
+        userId: 1, // Using demo user ID
+        consentForDataSharing: req.body.consentForDataSharing || false,
+        advanceDirectivesLinked: req.body.advanceDirectivesLinked || false,
+        healthPlanningConnected: req.body.healthPlanningConnected || false,
+        sexualHealthPreferences: req.body.sexualHealthPreferences || '',
+        communicationPreferences: req.body.communicationPreferences || '',
+        emergencyContacts: req.body.emergencyContacts || []
+      });
+      res.json(integration);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to create integration" });
+    }
+  });
+
+  app.put('/api/bad-coop-integration/:id', async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const updatedData = {
+        consentForDataSharing: req.body.consentForDataSharing,
+        advanceDirectivesLinked: req.body.advanceDirectivesLinked,
+        healthPlanningConnected: req.body.healthPlanningConnected,
+        sexualHealthPreferences: req.body.sexualHealthPreferences,
+        communicationPreferences: req.body.communicationPreferences,
+        emergencyContacts: req.body.emergencyContacts
+      };
+      
+      const integration = await storage.updateBadCoopIntegration(id, updatedData);
+      res.json(integration);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to update integration" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
