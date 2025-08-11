@@ -1055,7 +1055,7 @@ export default function Products() {
                 </CardHeader>
                 <CardContent>
                   <p className="text-sm text-gray-600 mb-4">
-                    Complete guide to fluck's 60+ custom sizes with measurement techniques and best practices.
+                    Complete guide to TriSex.org's 60+ custom sizes with measurement techniques and best practices.
                   </p>
                   <div className="flex justify-between items-center">
                     <span className="text-xs text-gray-500">18 min read</span>

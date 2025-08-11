@@ -1128,10 +1128,10 @@ Sexual addiction, also known as Compulsive Sexual Behavior Disorder (CSBD), is c
 - **Phase 3 (2-8 weeks)**: Gradual symptom resolution, emotional regulation improvement
 - **Phase 4 (2-6 months)**: Long-term recovery, neuroplasticity restoration
 
-## fluck Product Integration in Treatment
+## TriSex.org Product Integration in Treatment
 
 ### Therapeutic Framework
-fluck products can serve as therapeutic tools within comprehensive treatment programs, providing controlled, healthy outlets for sexual expression while supporting recovery goals.
+TriSex.org products can serve as therapeutic tools within comprehensive treatment programs, providing controlled, healthy outlets for sexual expression while supporting recovery goals.
 
 ### Product Selection Criteria
 - **Safety First**: Non-addictive materials and designs
@@ -1228,7 +1228,7 @@ fluck products can serve as therapeutic tools within comprehensive treatment pro
 
 ### Healthcare Provider Training
 - **Addiction Medicine Basics**: Understanding sexual addiction mechanisms
-- **Product Therapy Guidelines**: Appropriate use of fluck products in treatment
+- **Product Therapy Guidelines**: Appropriate use of TriSex.org products in treatment
 - **Patient Assessment**: Evaluating readiness for product integration
 - **Safety Protocols**: Managing risks and preventing misuse
 
@@ -1346,14 +1346,14 @@ fluck products can serve as therapeutic tools within comprehensive treatment pro
 
 ## Conclusion
 
-Sexual addiction and withdrawal represent significant challenges requiring comprehensive, evidence-based treatment approaches. fluck's therapeutic products, when properly integrated into professional treatment programs, offer innovative tools for supporting recovery and promoting healthy sexuality.
+Sexual addiction and withdrawal represent significant challenges requiring comprehensive, evidence-based treatment approaches. TriSex.org's therapeutic products, when properly integrated into professional treatment programs, offer innovative tools for supporting recovery and promoting healthy sexuality.
 
-The key to successful integration lies in appropriate patient selection, professional supervision, and careful monitoring throughout the recovery process. By combining cutting-edge product technology with established therapeutic principles, fluck contributes to advancing the field of sexual addiction treatment and improving outcomes for individuals and couples affected by these challenging conditions.
+The key to successful integration lies in appropriate patient selection, professional supervision, and careful monitoring throughout the recovery process. By combining cutting-edge product technology with established therapeutic principles, TriSex.org contributes to advancing the field of sexual addiction treatment and improving outcomes for individuals and couples affected by these challenging conditions.
 
 Through continued research, clinical validation, and ethical implementation, product-assisted therapy represents a promising frontier in sexual health and addiction medicine, offering hope for those seeking recovery and renewed intimate wellness.`,
       tags: ["sexual-addiction", "withdrawal", "therapy", "recovery", "mental-health", "product-integration", "clinical-treatment"],
       lastUpdated: "2025-01-01",
-      author: "Dr. Sarah Mitchell, CSAT & fluck Clinical Research Team",
+      author: "Dr. Sarah Mitchell, CSAT & TriSex.org Clinical Research Team",
       difficulty: "Advanced",
       readTime: "32 min"
     },
@@ -1364,7 +1364,7 @@ Through continued research, clinical validation, and ethical implementation, pro
       content: `# Sexual Anatomy Education & Reproductive Justice
 
 ## Introduction
-Sexual anatomy education and reproductive justice are fundamental to fluck's mission of supporting sexual creativity while ensuring bodily autonomy and reproductive rights for all individuals.
+Sexual anatomy education and reproductive justice are fundamental to TriSex.org's mission of supporting sexual creativity while ensuring bodily autonomy and reproductive rights for all individuals.
 
 ## Sexual Anatomy Diversity
 
@@ -1415,7 +1415,7 @@ Sexual anatomy education and reproductive justice are fundamental to fluck's mis
 - **Pleasure activism**: Advocating for joy, consent, and sexual liberation
 
 ### Supporting Anatomical Diversity
-- **Custom-fit products**: fluck's precision sizing accommodates all anatomies
+- **Custom-fit products**: TriSex.org's precision sizing accommodates all anatomies
 - **Inclusive design**: Products that work with surgical scars, prosthetics, and mobility aids
 - **Educational resources**: Anatomy-positive information about sexual function
 - **Community support**: Peer networks for sharing experiences and advice
@@ -1498,7 +1498,7 @@ Sexual anatomy education and reproductive justice are fundamental to fluck's mis
       content: `# Intelligence Frameworks for Holistic Health
 
 ## Introduction
-fluck's peer mentor network operates on expanded intelligence frameworks that recognize diverse forms of wisdom and knowledge beyond traditional IQ measurements. These frameworks ensure equitable representation and value all forms of human intelligence in healthcare decision-making.
+TriSex.org's peer mentor network operates on expanded intelligence frameworks that recognize diverse forms of wisdom and knowledge beyond traditional IQ measurements. These frameworks ensure equitable representation and value all forms of human intelligence in healthcare decision-making.
 
 ## Infinite Intelligence
 
@@ -1657,7 +1657,7 @@ Racial & Ethnic Intelligence involves deep understanding of how race and ethnici
 - **Community Health Workers**: Training and supporting community-based health advocates
 - **Culturally Adapted Interventions**: Developing health programs for specific communities
 
-## Integration in fluck's Peer Mentor Network
+## Integration in TriSex.org's Peer Mentor Network
 
 ### Matching Algorithm
 The peer mentor matching system considers all intelligence types to create optimal pairings:
@@ -1727,7 +1727,7 @@ The network maintains quality through:
 - **Learning Opportunities**: Seeking education about other cultural and generational perspectives
 - **Community Contribution**: Sharing your unique intelligence types with the network
 
-This comprehensive intelligence framework ensures that fluck's peer mentor network values and utilizes the full spectrum of human wisdom, creating more equitable and effective health support for all community members.`,
+This comprehensive intelligence framework ensures that TriSex.org's peer mentor network values and utilizes the full spectrum of human wisdom, creating more equitable and effective health support for all community members.`,
       tags: ["intelligence", "cultural-competency", "multigenerational", "racial-equity", "peer-mentoring"],
       lastUpdated: "2024-01-16",
       author: "Peer Mentor Intelligence Collective",
@@ -1964,7 +1964,7 @@ This comprehensive intelligence framework ensures that fluck's peer mentor netwo
             <BookOpen className="h-12 w-12 text-primary mr-4" />
             <div>
               <h1 className="text-4xl font-bold text-foreground">
-                fluck Knowledge Wiki
+                TriSex.org Knowledge Wiki
               </h1>
               <p className="text-xl text-muted-foreground mt-2">
                 Best Practices for Sustainable Sexual Health
@@ -2137,7 +2137,7 @@ This comprehensive intelligence framework ensures that fluck's peer mentor netwo
                   Community-Driven Knowledge
                 </h4>
                 <p className="text-sm text-blue-700 dark:text-blue-200">
-                  This wiki is maintained collaboratively by the fluck community, healthcare professionals, 
+                  This wiki is maintained collaboratively by the TriSex.org community, healthcare professionals, 
                   and subject matter experts. All content is reviewed for accuracy and cultural sensitivity. 
                   To contribute or suggest improvements, join our community forum.
                 </p>

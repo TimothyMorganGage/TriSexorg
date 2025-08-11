@@ -298,7 +298,7 @@ export default function SocialIntegration() {
                       </label>
                       <textarea
                         className="w-full p-3 border rounded-lg min-h-[120px] resize-none"
-                        placeholder="Share fluck's mission with the fediverse..."
+                        placeholder="Share TriSex.org's mission with the fediverse..."
                         value={postContent}
                         onChange={(e) => setPostContent(e.target.value)}
                       />

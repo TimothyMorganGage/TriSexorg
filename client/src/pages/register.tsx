@@ -62,7 +62,7 @@ export default function Register() {
       await register(userData);
       toast({
         title: "Account created successfully!",
-        description: "Welcome to fluck. You can now start customizing your protection.",
+        description: "Welcome to TriSex.org. You can now start customizing your protection.",
       });
       navigate("/");
     } catch (error) {
@@ -83,7 +83,7 @@ export default function Register() {
           <div className="w-16 h-16 bg-primary rounded-2xl flex items-center justify-center mx-auto mb-6">
             <ShieldHalf className="h-8 w-8 text-white" />
           </div>
-          <h2 className="text-3xl font-bold text-neutral">Join fluck</h2>
+          <h2 className="text-3xl font-bold text-neutral">Join TriSex.org</h2>
           <p className="mt-2 text-gray-600">Create your account for personalized protection</p>
         </div>
 

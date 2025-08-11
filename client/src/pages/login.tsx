@@ -60,7 +60,7 @@ export default function Login() {
             <ShieldHalf className="h-8 w-8 text-white" />
           </div>
           <h2 className="text-3xl font-bold text-neutral">Welcome back</h2>
-          <p className="mt-2 text-gray-600">Sign in to your fluck account</p>
+          <p className="mt-2 text-gray-600">Sign in to your TriSex.org account</p>
         </div>
 
         <Card className="shadow-xl">

@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ReplitBadge } from "@/components/ReplitBadge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { MedicineWheelLogo } from "@/components/MedicineWheelLogo";
+
 import { OnboardingTutorial } from "@/components/OnboardingTutorial";
 import { BetaDisclaimer } from "@/components/BetaDisclaimer";
 import { 
@@ -50,9 +50,11 @@ export default function Home() {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="text-center lg:text-left">
-              {/* Medicine Wheel Logo */}
+              {/* TriSex.org Logo */}
               <div className="flex justify-center lg:justify-start mb-8">
-                <MedicineWheelLogo size={120} />
+                <div className="text-8xl lg:text-9xl transform hover:scale-110 transition-transform duration-300">
+                  ⚧️
+                </div>
               </div>
               
               <h1 className="text-5xl lg:text-7xl font-black leading-tight mb-6 flex items-center justify-center lg:justify-start gap-4">

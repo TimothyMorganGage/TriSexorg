@@ -70,11 +70,11 @@ export function OnboardingTutorial({ isOpen, onClose, onComplete }: OnboardingTu
   const tutorialSteps: TutorialStep[] = [
     {
       id: "welcome",
-      title: "Welcome to fluck: Your Inclusive Health Journey",
+      title: "Welcome to TriSex.org: Your Inclusive Health Journey",
       description: "Discover a platform designed for the full 2SLGBTIQA+ community with cultural wisdom, peer support, and personalized learning.",
       component: "completion",
       objectives: [
-        "Understand fluck's mission for inclusive sexual health",
+        "Understand TriSex.org's mission for inclusive sexual health",
         "Learn about our cultural wisdom approach",
         "See how technology supports human connection"
       ],
@@ -456,7 +456,7 @@ export function OnboardingTutorial({ isOpen, onClose, onComplete }: OnboardingTu
               <div className="space-y-2">
                 <h3 className="text-xl font-semibold">Welcome to the Community!</h3>
                 <p className="text-muted-foreground">
-                  You're now ready to explore fluck's inclusive health platform. Start with whatever feels most comfortable to you.
+                  You're now ready to explore TriSex.org's inclusive health platform. Start with whatever feels most comfortable to you.
                 </p>
               </div>
             </div>

@@ -64,7 +64,7 @@ const sexualHealthDirectivesSchema = z.object({
   monthlyHealthScreening: z.boolean(),
   stiTestResults: z.string().optional(),
   contraceptiveMethod: z.string().optional(),
-  fluckBalance: z.number().default(1000), // Starting $FLUCK balance
+  trisexBalance: z.number().default(1000), // Starting $TRISEX balance
 });
 
 const matchingPreferencesSchema = z.object({
@@ -123,7 +123,7 @@ export default function GoodPeople() {
         monthlyHealthScreening: false,
         stiTestResults: "",
         contraceptiveMethod: "",
-        fluckBalance: 1000,
+        trisexBalance: 1000,
       },
       genealogicalVerification: {
         hasUploadedFamilyTree: false,
@@ -183,7 +183,7 @@ export default function GoodPeople() {
       currentStage: "nonsexual",
       stageStartDate: "2025-02-01",
       healthStatus: "screened",
-      fluckBalance: 1000,
+      trisexBalance: 1000,
       agreedToProgression: true,
       genealogicalStatus: "verified",
       relationshipDegree: null,
@@ -204,7 +204,7 @@ export default function GoodPeople() {
       currentStage: "kissing",
       stageStartDate: "2025-01-15",
       healthStatus: "pending",
-      fluckBalance: 950,
+      trisexBalance: 950,
       agreedToProgression: true,
       genealogicalStatus: "pending",
       relationshipDegree: "7th cousin",
@@ -225,7 +225,7 @@ export default function GoodPeople() {
       currentStage: "manual",
       stageStartDate: "2024-12-01",
       healthStatus: "screened",
-      fluckBalance: 1000,
+      trisexBalance: 1000,
       agreedToProgression: true,
       genealogicalStatus: "verified",
       relationshipDegree: null,
@@ -696,10 +696,10 @@ export default function GoodPeople() {
 
                           <FormField
                             control={preferencesForm.control}
-                            name="sexualHealthDirectives.fluckBalance"
+                            name="sexualHealthDirectives.trisexBalance"
                             render={({ field }) => (
                               <FormItem>
-                                <FormLabel>Current $FLUCK Balance</FormLabel>
+                                <FormLabel>Current $TRISEX Balance</FormLabel>
                                 <FormControl>
                                   <Input
                                     type="number"

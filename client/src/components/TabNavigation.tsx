@@ -123,7 +123,7 @@ export function TabNavigation({ children }: TabNavigationProps) {
         <div className={getPositionClasses()}>
           <Button
             onClick={() => setIsMinimized(false)}
-            className="w-full h-full fluck-gradient hover:opacity-80"
+            className="w-full h-full trisex-gradient hover:opacity-80"
             size="sm"
           >
             <Maximize2 className="h-4 w-4" />

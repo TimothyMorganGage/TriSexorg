@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import { MedicineWheelLogo } from "@/components/MedicineWheelLogo";
+
 import { PrecisionSizing } from "@/components/MyONESizing";
 import { 
   ShoppingCart, 
@@ -63,21 +63,21 @@ export default function InclusiveOrdering() {
   const products = [
     {
       id: "external-protection",
-      name: "fluck External Protection",
+      name: "TriSex.org External Protection",
       description: "Custom-fit external protection with precision sizing for better love-making",
       priceRange: "$12-18 per unit",
       customization: "60+ size options, multiple materials"
     },
     {
       id: "internal-protection",
-      name: "fluck Internal Protection",
+      name: "TriSex.org Internal Protection",
       description: "Innovative internal protection designed for all anatomies",
       priceRange: "$15-22 per unit",
       customization: "Anatomy-specific sizing, biocompatible materials"
     },
     {
       id: "dental-dams",
-      name: "fluck Dental Protection",
+      name: "TriSex.org Dental Protection",
       description: "Premium dental dams for oral protection",
       priceRange: "$8-12 per unit",
       customization: "Multiple sizes, flavored and unflavored options"
@@ -99,7 +99,7 @@ export default function InclusiveOrdering() {
                 Choose Your Experience
               </CardTitle>
               <p className="text-muted-foreground">
-                Select how you'd like to experience fluck's branding and messaging
+                Select how you'd like to experience TriSex.org's branding and messaging
               </p>
             </CardHeader>
             <CardContent>
@@ -271,10 +271,9 @@ export default function InclusiveOrdering() {
             <CardContent>
               <div className="space-y-6">
                 <div className="flex items-center justify-center">
-                  <MedicineWheelLogo 
-                    size={100} 
-                    showPride={getCurrentBranding().logoVariant} 
-                  />
+                  <div className="text-7xl transform hover:scale-110 transition-transform duration-300">
+                    ⚧️
+                  </div>
                 </div>
 
                 <div className="space-y-4">
@@ -341,10 +340,9 @@ export default function InclusiveOrdering() {
         {/* Header */}
         <div className="text-center mb-12">
           <div className="flex items-center justify-center mb-6">
-            <MedicineWheelLogo 
-              size={120} 
-              showPride={getCurrentBranding().logoVariant} 
-            />
+            <div className="text-6xl transform hover:scale-110 transition-transform duration-300">
+              ⚧️
+            </div>
           </div>
           <h1 className="text-4xl font-bold text-foreground mb-4 font-cinzel">
             Sexual Creativity & Reproductive Justice Ordering
@@ -393,7 +391,7 @@ export default function InclusiveOrdering() {
               <div>
                 <h4 className="font-medium mb-1 font-cinzel">Sexual Creativity & Reproductive Justice</h4>
                 <p className="text-sm text-muted-foreground font-coolvetica">
-                  fluck champions sexual creativity through precision sizing that honors anatomical diversity. 
+                  TriSex.org champions sexual creativity through precision sizing that honors anatomical diversity. 
                   Our reproductive justice approach ensures everyone can access products that support 
                   their bodily autonomy, sexual expression, and reproductive choices with dignity and respect.
                 </p>

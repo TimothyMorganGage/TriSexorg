@@ -416,7 +416,7 @@ export default function ParentalConsentResponse() {
               All code and processes are open source under Creative Commons licensing.
             </p>
             <div className="flex justify-center items-center gap-4 text-xs">
-              <a href="https://github.com/fluck/parental-consent" className="text-blue-600 hover:underline">
+              <a href="https://github.com/trisex/parental-consent" className="text-blue-600 hover:underline">
                 View Source Code
               </a>
               <span>•</span>

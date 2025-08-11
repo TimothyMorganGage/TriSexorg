@@ -25,7 +25,7 @@ export function PrecisionSizing() {
   const [recommendedSize, setRecommendedSize] = useState<SizeData | null>(null);
   const [activeTab, setActiveTab] = useState("measure");
 
-  // fluck precision sizing system with 60+ sizes
+  // TriSex.org precision sizing system with 60+ sizes
   const sizeChart: SizeData[] = [
     { nominal: "A1", width: 45, length: 160, description: "Ultra snug fit, shorter length", fitCategory: "Snug" },
     { nominal: "A3", width: 45, length: 170, description: "Ultra snug fit, standard length", fitCategory: "Snug" },
@@ -59,7 +59,7 @@ export function PrecisionSizing() {
     const lengthMm = parseFloat(measurements.length);
     const girthMm = parseFloat(measurements.baseGirth);
     
-    // Convert to fluck sizing logic
+    // Convert to TriSex.org sizing logic
     const widthNeeded = girthMm / Math.PI; // Approximate flat width from circumference
     
     // Find best fit based on length and width
@@ -97,7 +97,7 @@ export function PrecisionSizing() {
         <CardHeader>
           <CardTitle className="flex items-center">
             <Ruler className="mr-2 h-6 w-6 text-primary" />
-            fluck Custom Sizing System
+            TriSex.org Custom Sizing System
           </CardTitle>
           <p className="text-muted-foreground">
             Inspired by MyONE's precision sizing, adapted for sustainable custom protection
@@ -215,7 +215,7 @@ export function PrecisionSizing() {
                           <div className="space-y-3">
                             <div className="text-center">
                               <div className="text-3xl font-bold text-green-600 mb-2">
-                                fluck {recommendedSize.nominal}
+                                TriSex.org {recommendedSize.nominal}
                               </div>
                               <Badge className={getFitColor(recommendedSize.fitCategory)}>
                                 {recommendedSize.fitCategory} Fit
@@ -356,7 +356,7 @@ export function PrecisionSizing() {
 
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-lg">fluck vs Traditional Sizing</CardTitle>
+                    <CardTitle className="text-lg">TriSex.org vs Traditional Sizing</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="grid md:grid-cols-3 gap-4 text-sm">
@@ -379,7 +379,7 @@ export function PrecisionSizing() {
                         </div>
                       </div>
                       <div className="text-center">
-                        <h4 className="font-medium mb-2">fluck System</h4>
+                        <h4 className="font-medium mb-2">TriSex.org System</h4>
                         <div className="bg-green-50 dark:bg-green-900/20 p-3 rounded">
                           <p>60+ precision sizes</p>
                           <p className="text-green-600 text-xs mt-1">

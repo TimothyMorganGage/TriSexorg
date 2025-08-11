@@ -596,7 +596,7 @@ export default function AgeVerification() {
               Built as a privacy-focused alternative to proprietary identity verification services.
             </p>
             <div className="flex justify-center items-center gap-4 text-xs">
-              <a href="https://github.com/fluck/age-verification" className="text-blue-600 hover:underline">
+              <a href="https://github.com/trisex/age-verification" className="text-blue-600 hover:underline">
                 View Source Code
               </a>
               <span>•</span>

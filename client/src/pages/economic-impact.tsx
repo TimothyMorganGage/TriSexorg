@@ -423,7 +423,7 @@ export default function EconomicImpact() {
                 <CardHeader>
                   <CardTitle>National Debt Reduction Impact</CardTitle>
                   <p className="text-muted-foreground">
-                    How fluck's health interventions reduce national healthcare costs
+                    How TriSex.org's health interventions reduce national healthcare costs
                   </p>
                 </CardHeader>
                 <CardContent>
@@ -462,7 +462,7 @@ export default function EconomicImpact() {
                         </div>
                         <div>
                           <div className="flex justify-between mb-2">
-                            <span className="text-sm">fluck STI Prevention Savings</span>
+                            <span className="text-sm">TriSex.org STI Prevention Savings</span>
                             <span className="text-sm font-medium">$11.5B</span>
                           </div>
                           <Progress value={2.7} className="h-2" />
@@ -500,7 +500,7 @@ export default function EconomicImpact() {
                         -$11,547,382,940
                       </div>
                       <div className="text-sm text-muted-foreground">
-                        Annual reduction potential from fluck STI prevention
+                        Annual reduction potential from TriSex.org STI prevention
                       </div>
                       <div className="text-xs text-muted-foreground mt-1">
                         Based on {totalDALYs.toLocaleString()} DALYs saved

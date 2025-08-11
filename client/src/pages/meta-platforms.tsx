@@ -121,7 +121,7 @@ export default function MetaPlatforms() {
     {
       id: "meta-3",
       platform: "whatsapp",
-      content: "New fluck sizing guide available! Get your custom fit measurement in 3 easy steps. Reply with 'SIZE' to get started.",
+      content: "New TriSex.org sizing guide available! Get your custom fit measurement in 3 easy steps. Reply with 'SIZE' to get started.",
       engagement: { likes: 0, shares: 0, comments: 789, views: 3456 },
       timestamp: "1 day ago",
       hashtags: [],

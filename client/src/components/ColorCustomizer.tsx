@@ -65,7 +65,7 @@ export function ColorCustomizer() {
 
   const predefinedSchemes: ColorScheme[] = [
     {
-      name: "fluck Neon",
+      name: "TriSex Neon",
       primary: "hsl(330, 100%, 60%)",
       secondary: "hsl(180, 100%, 40%)",
       accent: "hsl(330, 100%, 60%)",
@@ -199,11 +199,11 @@ export function ColorCustomizer() {
       fontSettings,
       accessibilitySettings
     };
-    localStorage.setItem('fluck-customization', JSON.stringify(settings));
+    localStorage.setItem('trisex-customization', JSON.stringify(settings));
   };
 
   useEffect(() => {
-    const savedSettings = localStorage.getItem('fluck-customization');
+    const savedSettings = localStorage.getItem('trisex-customization');
     if (savedSettings) {
       const parsed = JSON.parse(savedSettings);
       setSelectedScheme(parsed.colorScheme);
@@ -230,7 +230,7 @@ export function ColorCustomizer() {
       <CardHeader>
         <CardTitle className="flex items-center">
           <Palette className="mr-2 h-6 w-6" />
-          Customize Your fluck Experience
+          Customize Your TriSex.org Experience
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -461,7 +461,7 @@ export function ColorCustomizer() {
                     letterSpacing: `${fontSettings.spacing}px`
                   }}
                 >
-                  <h3 className="text-lg mb-2">fluck: Custom Protection for Every Body</h3>
+                  <h3 className="text-lg mb-2">TriSex.org: Custom Protection for Every Body</h3>
                   <p className="text-sm">
                     This is how your text will appear with the selected typography settings. 
                     Custom-fit protection made from sustainable materials with inclusive design.
@@ -567,7 +567,7 @@ export function ColorCustomizer() {
                       <h4 className="font-medium">Screen Reader Support</h4>
                     </div>
                     <p className="text-sm text-muted-foreground">
-                      fluck is designed with semantic HTML and ARIA labels for 
+                      TriSex.org is designed with semantic HTML and ARIA labels for 
                       compatibility with screen readers and assistive technologies.
                     </p>
                   </div>

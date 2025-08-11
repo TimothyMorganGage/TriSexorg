@@ -22,25 +22,25 @@ export default function DomainPurchase() {
 
   const domainOptions = [
     {
-      domain: "fluck.wtf",
+      domain: "trisex.wtf",
       price: "$12.99/year",
       status: "available",
       description: "Primary brand domain - perfect for the platform"
     },
     {
-      domain: "fluck.coop",
+      domain: "trisex.coop",
       price: "$29.99/year", 
       status: "available",
       description: "Cooperative domain - aligns with BAD Co-op principles"
     },
     {
-      domain: "fluck.health",
+      domain: "trisex.health",
       price: "$59.99/year",
       status: "available", 
       description: "Health-focused domain for medical partnerships"
     },
     {
-      domain: "fluck.lgbt",
+      domain: "trisex.lgbt",
       price: "$49.99/year",
       status: "available",
       description: "Community-focused domain for 2SLGBTIQ+ initiatives"
@@ -127,7 +127,7 @@ export default function DomainPurchase() {
             <Globe className="h-12 w-12 text-primary mr-4" />
             <div>
               <h1 className="text-4xl font-bold text-foreground">
-                Register <span className="text-primary">fluck.wtf</span>
+                Register <span className="text-primary">trisex.wtf</span>
               </h1>
               <p className="text-xl text-muted-foreground mt-2">
                 Secure your domain and launch the platform
@@ -167,7 +167,7 @@ export default function DomainPurchase() {
                       </span>
                       <Button 
                         size="sm"
-                        className={domain.domain === "fluck.wtf" ? "bg-primary" : ""}
+                        className={domain.domain === "trisex.wtf" ? "bg-primary" : ""}
                       >
                         <ShoppingCart className="mr-2 h-4 w-4" />
                         Select
@@ -258,7 +258,7 @@ export default function DomainPurchase() {
                       2
                     </div>
                     <h4 className="font-medium mb-2">Search Domain</h4>
-                    <p className="text-xs text-muted-foreground">Search for "fluck.wtf" on their site</p>
+                    <p className="text-xs text-muted-foreground">Search for "trisex.wtf" on their site</p>
                   </div>
                   <div className="text-center">
                     <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white font-bold text-lg mx-auto mb-3">
@@ -328,7 +328,7 @@ export default function DomainPurchase() {
                               <h4 className="font-medium">Ready to Deploy</h4>
                             </div>
                             <p className="text-sm text-muted-foreground mb-3">
-                              Your fluck platform is already running on Replit. 
+                              Your TriSex.org platform is already running on Replit. 
                               Just add your custom domain after registration.
                             </p>
                             <Button size="sm" className="w-full">
@@ -388,7 +388,7 @@ export default function DomainPurchase() {
         <Card className="bg-gradient-to-r from-primary/10 to-secondary/10 border-primary/20">
           <CardContent className="p-8">
             <div className="text-center">
-              <h3 className="text-2xl font-bold mb-4">Ready to Launch fluck.wtf?</h3>
+              <h3 className="text-2xl font-bold mb-4">Ready to Launch trisex.wtf?</h3>
               <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
                 Your comprehensive sexual health platform is ready for deployment. 
                 Register your domain and connect it to start serving the 2SLGBTIQ+ community 
@@ -398,10 +398,10 @@ export default function DomainPurchase() {
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button 
                   size="lg" 
-                  onClick={() => window.open('https://www.namecheap.com/domains/registration/results/?domain=fluck.wtf', '_blank')}
+                  onClick={() => window.open('https://www.namecheap.com/domains/registration/results/?domain=trisex.wtf', '_blank')}
                 >
                   <ShoppingCart className="mr-2 h-5 w-5" />
-                  Register fluck.wtf Now
+                  Register trisex.wtf Now
                 </Button>
                 <Button variant="outline" size="lg">
                   <CreditCard className="mr-2 h-5 w-5" />
