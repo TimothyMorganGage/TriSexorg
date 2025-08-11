@@ -42,6 +42,7 @@ import MentorFacilitator from "@/pages/mentor-facilitator";
 import PartnerSTITracking from "@/pages/partner-sti-tracking";
 import AgeVerification from "@/pages/age-verification";
 import ParentalConsentResponse from "@/pages/parental-consent-response";
+import BadCoopDashboard from "@/pages/bad-coop-dashboard";
 import { TabNavigation } from "@/components/TabNavigation";
 import { PWAInstallPrompt, PWAStatusBadge } from "@/components/PWAInstallPrompt";
 import { usePWA } from "@/hooks/usePWA";
@@ -100,6 +101,7 @@ function Router() {
           <Route path="/partner-sti-tracking" component={PartnerSTITracking} />
           <Route path="/age-verification" component={AgeVerification} />
           <Route path="/parental-consent/:consentId" component={ParentalConsentResponse} />
+          <Route path="/bad-coop-dashboard" component={BadCoopDashboard} />
           <Route path="/clinic-dashboard" component={ClinicDashboard} />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />

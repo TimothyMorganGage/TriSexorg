@@ -45,6 +45,14 @@ export function TabNavigation({ children }: TabNavigationProps) {
       route: "/bad-good-sex"
     },
     {
+      id: "bad-coop-dashboard",
+      title: "BAD Co-op Dashboard",
+      description: "Complete healthcare planning and cooperative management",
+      icon: FileText,
+      color: "bg-primary",
+      route: "/bad-coop-dashboard"
+    },
+    {
       id: "balanced-directives",
       title: "Balanced Advance Directives",
       description: "Comprehensive healthcare planning and education",
