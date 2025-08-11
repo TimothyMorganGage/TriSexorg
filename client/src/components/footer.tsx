@@ -133,7 +133,7 @@ export function Footer() {
         <div className="border-t border-gray-800 mt-8 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="text-sm text-gray-400">
-              <p>Yours in the Creative Commons courtesy of American Care Planning - Licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">Creative Commons BY-SA 4.0</a></p>
+              <p>Yours courtesy of American Care Planning - Licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">Creative Commons BY-SA 4.0</a></p>
               <p className="mt-1">Sustainable protection. Inclusive design. Body-positive healthcare.</p>
               <p className="mt-2 text-xs text-yellow-400 font-medium">What's up‽ This is an early prototype - features may not work properly and content is preliminary</p>
             </div>
