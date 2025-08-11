@@ -70,7 +70,7 @@ export default function Home() {
               <p className="text-xl lg:text-2xl text-blue-100 mb-8 leading-relaxed font-coolvetica">
                 Precision sizing with 60+ custom fits supporting sexual creativity and anatomical diversity. 
                 4D STI intervention through bioregional monitoring advances reproductive justice. 
-                Sustainable ocean plastic materials with cooperative sexual health principles 
+                Sustainable waterway microplastic materials with cooperative sexual health principles 
                 ensuring bodily autonomy for the full 2SLGBTIQA+ community.
               </p>
               
@@ -160,7 +160,7 @@ export default function Home() {
                   <CardContent className="p-6 text-center">
                     <Leaf className="text-accent h-8 w-8 mb-3 mx-auto" />
                     <h3 className="font-semibold text-lg mb-2 text-white">Eco-Friendly</h3>
-                    <p className="text-blue-100 text-sm">Made from recycled ocean plastic</p>
+                    <p className="text-blue-100 text-sm">Made from recycled waterway microplastics</p>
                   </CardContent>
                 </Card>
                 

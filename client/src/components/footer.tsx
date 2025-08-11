@@ -9,22 +9,13 @@ export function Footer() {
           {/* Brand */}
           <div className="space-y-4">
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
-                <ShieldHalf className="h-6 w-6 text-white" />
-              </div>
-              <span 
-                className="text-2xl font-bold"
-                style={{ 
-                  fontFamily: 'cursive',
-                  textShadow: '2px 2px 4px rgba(0,0,0,0.5), -1px -1px 2px rgba(255,255,255,0.3)',
-                  filter: 'contrast(1.2)'
-                }}
-              >
-                Fluck‽
+              <span className="text-3xl">⚧️</span>
+              <span className="text-2xl font-bold">
+                TriSex.org
               </span>
             </div>
             <p className="text-gray-300 text-sm leading-relaxed">
-              Custom-fit protection for every body. Made from sustainable materials with inclusive design for the full 2SLGBTIQA+ community.
+              Custom-fit protection for every body. Made from sustainable waterway microplastic materials with inclusive design for the full 2SLGBTIQA+ community.
             </p>
             <div className="flex items-center space-x-2 text-sm text-gray-400">
               <Heart className="h-4 w-4 text-primary" />

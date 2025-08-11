@@ -37,7 +37,7 @@ export default function MaterialsScience() {
       icon: Waves,
       description: "Comprehensive collection of all plastic waste sources including microplastics and scrap",
       details: [
-        "Ocean microplastic filtration with 0.1μm precision systems",
+        "Waterway microplastic filtration with 0.1μm precision systems from rivers, lakes, streams, and oceans",
         "Municipal plastic waste collection partnerships",
         "Industrial scrap plastic sourcing from manufacturing",
         "Post-consumer plastic bottle and packaging recovery",
@@ -78,7 +78,7 @@ export default function MaterialsScience() {
         "Glycolysis for polyester-based materials and textiles",
         "Pyrolysis at 350-500°C for mixed polymer batches",
         "Hydrogenolysis for cross-linked and thermoset plastics",
-        "Chemical recycling for degraded ocean-weathered polymers",
+        "Chemical recycling for degraded waterway-weathered polymers from all aquatic environments",
         "Methanolysis for polycarbonate and acrylic materials",
         "Advanced purification removes all additives, colorants, and degradation products"
       ],
@@ -132,7 +132,7 @@ export default function MaterialsScience() {
   const materialComposition = {
     recycledPlastic: {
       percentage: 35,
-      sources: ["Ocean microplastics", "Municipal plastic waste", "Industrial scrap", "Post-consumer packaging", "Electronic waste plastics", "Automotive components", "Textile microfibers", "Medical device plastics"],
+      sources: ["Waterway microplastics (rivers, lakes, streams, oceans)", "Municipal plastic waste", "Industrial scrap", "Post-consumer packaging", "Electronic waste plastics", "Automotive components", "Textile microfibers", "Medical device plastics"],
       properties: ["Chemical resistance", "Durability", "Structural integrity", "Contamination-free processing"]
     },
     hydrogel: {
@@ -149,7 +149,7 @@ export default function MaterialsScience() {
 
   const sustainabilityMetrics = [
     { metric: "Total plastic waste diverted", value: "15+ tons/month", impact: "Prevents landfill and environmental contamination" },
-    { metric: "Ocean microplastic recovery", value: "2.5 tons/month", impact: "Prevents marine ecosystem damage" },
+    { metric: "Waterway microplastic recovery", value: "2.5 tons/month", impact: "Prevents aquatic ecosystem damage across all waterways" },
     { metric: "Municipal waste reduction", value: "8 tons/month", impact: "Reduces landfill burden and incineration" },
     { metric: "Industrial scrap utilization", value: "5 tons/month", impact: "Circular economy integration" },
     { metric: "Carbon footprint reduction", value: "85% vs virgin plastic", impact: "Lower greenhouse gas emissions" },
@@ -171,10 +171,10 @@ export default function MaterialsScience() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-foreground font-recoleta mb-4">
-            Ocean Plastic Reprocessing Technology
+            Waterway Plastic Reprocessing Technology
           </h1>
           <p className="text-xl text-muted-foreground font-coolvetica">
-            Advanced bioengineering transforms ocean waste into medical-grade protection materials
+            Advanced bioengineering transforms waterway microplastics from all aquatic environments into medical-grade protection materials
           </p>
         </div>
 
