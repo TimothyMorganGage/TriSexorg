@@ -43,6 +43,25 @@ import PartnerSTITracking from "@/pages/partner-sti-tracking";
 import AgeVerification from "@/pages/age-verification";
 import ParentalConsentResponse from "@/pages/parental-consent-response";
 import { TabNavigation } from "@/components/TabNavigation";
+import { PWAInstallPrompt, PWAStatusBadge } from "@/components/PWAInstallPrompt";
+import { usePWA } from "@/hooks/usePWA";
+import { useEffect } from "react";
+
+function PWAWrapper({ children }: { children: React.ReactNode }) {
+  const { registerServiceWorker } = usePWA();
+
+  useEffect(() => {
+    registerServiceWorker();
+  }, [registerServiceWorker]);
+
+  return (
+    <>
+      {children}
+      <PWAInstallPrompt />
+      <PWAStatusBadge />
+    </>
+  );
+}
 
 function Router() {
   return (
@@ -97,10 +116,12 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <TooltipProvider>
-          <Toaster />
-          <TabNavigation>
-            <Router />
-          </TabNavigation>
+          <PWAWrapper>
+            <Toaster />
+            <TabNavigation>
+              <Router />
+            </TabNavigation>
+          </PWAWrapper>
         </TooltipProvider>
       </AuthProvider>
     </QueryClientProvider>
