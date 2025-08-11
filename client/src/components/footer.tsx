@@ -135,6 +135,15 @@ export function Footer() {
             <div className="text-sm text-gray-400">
               <p>Yours courtesy of American Care Planning - Licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">Creative Commons BY-SA 4.0</a></p>
               <p className="mt-1">Sustainable protection. Inclusive design. Body-positive healthcare.</p>
+              <p className="mt-1 flex items-center text-xs text-gray-500">
+                <span className="mr-2">Made on</span>
+                <a href="https://replit.com" target="_blank" rel="noopener noreferrer" className="flex items-center hover:text-primary transition-colors">
+                  <svg className="w-4 h-4 mr-1" viewBox="0 0 32 32" fill="currentColor">
+                    <path d="M7 5.5C7 4.67 7.67 4 8.5 4h15C24.33 4 25 4.67 25 5.5v21c0 .83-.67 1.5-1.5 1.5h-15c-.83 0-1.5-.67-1.5-1.5v-21zM14 10v12l6-6-6-6z"/>
+                  </svg>
+                  Replit
+                </a>
+              </p>
               <p className="mt-2 text-xs text-yellow-400 font-medium">What's up‽ This is an early prototype - features may not work properly and content is preliminary</p>
             </div>
             

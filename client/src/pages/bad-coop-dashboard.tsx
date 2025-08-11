@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
+import { ReplitBadge } from "@/components/ReplitBadge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -263,7 +264,7 @@ export default function BadCoopDashboard() {
             </div>
           </div>
           
-          <div className="flex justify-center space-x-4">
+          <div className="flex justify-center space-x-4 mb-4">
             <Badge variant="secondary" className="bg-primary text-white">
               <UserCheck className="w-4 h-4 mr-1" />
               Member Verified
@@ -276,6 +277,10 @@ export default function BadCoopDashboard() {
               <Users className="w-4 h-4 mr-1" />
               Community Active
             </Badge>
+          </div>
+          
+          <div className="flex justify-center">
+            <ReplitBadge variant="default" theme="light" className="text-xs" />
           </div>
         </div>
 

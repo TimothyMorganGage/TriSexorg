@@ -3,6 +3,7 @@ import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { ShieldHalf, Menu, X, User, LogOut } from "lucide-react";
 import { useAuth } from "@/lib/auth";
+import { ReplitBadge } from "@/components/ReplitBadge";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -68,6 +69,7 @@ export function Header() {
 
           {/* User Menu */}
           <div className="hidden md:flex items-center space-x-4">
+            <ReplitBadge variant="compact" theme="light" />
             {user ? (
               <div className="flex items-center space-x-3">
                 {user.role === "clinic_staff" && (

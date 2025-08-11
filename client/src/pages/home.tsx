@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
+import { ReplitBadge } from "@/components/ReplitBadge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { MedicineWheelLogo } from "@/components/MedicineWheelLogo";
@@ -177,6 +178,12 @@ export default function Home() {
                     <Box className="text-accent h-8 w-8 mb-3 mx-auto" />
                     <h3 className="font-semibold text-lg mb-2 text-white">3D Printed</h3>
                     <p className="text-blue-100 text-sm">Custom-fit technology</p>
+                  </CardContent>
+                </Card>
+                
+                <Card className="absolute bottom-8 left-8 bg-white/10 backdrop-blur-sm border-white/20 shadow-xl transform -rotate-1 hover:rotate-0 transition-transform">
+                  <CardContent className="p-4 text-center">
+                    <ReplitBadge variant="compact" theme="dark" className="text-white/80" />
                   </CardContent>
                 </Card>
               </div>
