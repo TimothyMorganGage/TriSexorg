@@ -29,33 +29,33 @@ export function TabNavigation({ children }: TabNavigationProps) {
 
   const tabs = [
     {
-      id: "fluck",
-      title: "fluck Protection",
-      description: "Custom-fit sexual health protection",
+      id: "trillions-protection",
+      title: "Trillions of Protection",
+      description: "Comprehensive protection solutions at scale",
       icon: Shield,
       color: "bg-neon-pink",
       route: "/products"
     },
     {
-      id: "bad-good-sex",
-      title: "BAD co-op for GOOD Sex",
-      description: "Sexual health advance directives & planning",
+      id: "advance-directive",
+      title: "Sexual Health Advance Directive Empowerment",
+      description: "Empowering advance healthcare directives",
       icon: Heart,
       color: "bg-aquamarine",
       route: "/bad-good-sex"
     },
     {
-      id: "bad-good-health", 
-      title: "BAD co-op for GOOD Health",
-      description: "Advanced care planning integration",
+      id: "balanced-directives",
+      title: "Balanced Advance Directives",
+      description: "Comprehensive healthcare planning and education",
       icon: FileText,
       color: "bg-primary",
       route: "/bad-good-health"
     },
     {
-      id: "good-people",
-      title: "for Good People",
-      description: "Cooperative matchmaking & networking",
+      id: "cooperative-matchmaking",
+      title: "Co-operative Matchmaking",
+      description: "Community-driven relationship building",
       icon: Users,
       color: "bg-secondary",
       route: "/good-people"
@@ -131,7 +131,10 @@ export function TabNavigation({ children }: TabNavigationProps) {
       <Card className={getPositionClasses()}>
         <CardContent className="p-4 h-full">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-bold text-neon-pink">fluck ecosystem</h3>
+            <h3 className="text-lg font-bold text-neon-pink flex items-center gap-2">
+              <span className="text-xl">⚧️</span>
+              TriSex.org
+            </h3>
             <div className="flex items-center space-x-2">
               <Button
                 onClick={cyclePosition}
@@ -194,7 +197,7 @@ export function TabNavigation({ children }: TabNavigationProps) {
           {(tabPosition === "left" || tabPosition === "right") && (
             <div className="mt-6 p-3 bg-card/30 rounded-lg">
               <p className="text-xs text-muted-foreground text-center">
-                Integrated cooperative ecosystem for sexual health, advance planning, and community connection
+                Integrated TriSex.org ecosystem for sexual health empowerment, advance directives, and cooperative community building
               </p>
             </div>
           )}
