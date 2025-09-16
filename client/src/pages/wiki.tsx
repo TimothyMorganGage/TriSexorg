@@ -1926,6 +1926,75 @@ The Gaynal Condom System is specifically engineered for men who have sex with me
 - **Versatile Ready**: Quick-change options for vers men who switch roles
 - **Party Pack**: Variety packs popular at gay clubs and circuit parties
 
+### Trans Sex Protection Systems
+
+**Transgender-Specific Designs:**
+- **FTM (Trans Male) Series**: Designed for trans men with varied surgical status
+  - Pre-op compatible: Accommodates original anatomy with NanoHeal coating
+  - Post-phalloplasty: Specialized fit for constructed anatomy
+  - Post-metoidioplasty: Ultra-sensitive materials for enhanced sensation
+- **MTF (Trans Female) Series**: For trans women across transition stages
+  - Pre/Non-op receptive: Internal protection with extended coverage
+  - Post-vaginoplasty: Anatomically contoured for neovaginal tissue
+  - Hormone-adaptive: Materials that adjust to hormonal skin changes
+- **Non-Binary Options**: Flexible designs for diverse anatomical configurations
+  - Adaptable fit systems for various body configurations
+  - Gender-neutral packaging and terminology
+  - Custom sizing for unique anatomical presentations
+
+### Intersex² Protection Solutions
+
+**Intersex-Inclusive Design Philosophy:**
+Recognizing the beautiful diversity of intersex anatomies, our protection systems adapt to unique anatomical presentations rather than forcing conformity to binary assumptions.
+
+**Adaptive Protection Systems:**
+- **Custom Anatomy Mapping**: 3D scanning technology for precise fit
+- **Dual-Function Designs**: Protection that works across anatomical variations
+- **Hormone-Responsive Materials**: Adapts to various hormonal profiles
+- **Sensitivity-Optimized**: Enhanced sensation preservation for varied nerve distributions
+- **Multi-Configuration Options**: Single product works across different anatomical presentations
+
+**Specialized Intersex Options:**
+- **Variable Anatomy Series**: Adjustable protection for changing anatomical needs
+- **Micro-Anatomy Support**: Ultra-precise fit for smaller anatomical features
+- **Enhanced Sensitivity**: Special formulations for varied nerve sensitivity patterns
+- **Dual-Use Systems**: Protection that works for both penetrative and receptive roles
+
+### Male-Female (Penile-Vaginal & Anal) Protection
+
+**Heterosexual Couple-Optimized Systems:**
+
+**Penile-Vaginal Protection:**
+- **Comfort Fit Series**: Traditional sizing with NanoHeal enhancement
+  - Standard sizes: 52mm, 55mm, 58mm base width
+  - Extended length options for varied anatomy
+  - Ultra-thin with maximum sensation preservation
+  - Pre-lubricated with vaginal-compatible NanoHeal formula
+- **Couple's Harmony**: Dual-sensation enhancement
+  - Internal texture for increased pleasure
+  - External warming lubricant integration
+  - Extended foreplay-compatible materials
+  - Pregnancy prevention with STI protection
+
+**Male-Female Anal Protection:**
+- **Anal Comfort Series**: Specialized for heterosexual anal play
+  - Extra lubrication with anal-specific NanoHeal formula
+  - Reinforced base for security during anal penetration
+  - Desensitizing option for comfort during initial penetration
+  - Extended length for deep penetration comfort
+- **Couples' Adventure Pack**: Variety options for exploration
+  - Multiple textures and sensations
+  - His and hers sensation enhancers
+  - Communication cards for consent and preference discussion
+  - Educational materials for safe anal play practices
+
+**Female Pleasure Priority Options:**
+- **Her Pleasure Focus**: Designed to optimize female sensation
+  - Clitoral stimulation ridges
+  - G-spot targeting contours
+  - Extended external coverage for vulvar protection
+  - Compatible with external vibrators and toys
+
 ## Intersectional Customization
 
 ### Cultural Medicine Integration
