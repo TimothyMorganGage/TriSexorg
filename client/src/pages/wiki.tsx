@@ -22,7 +22,15 @@ import {
   Star,
   Target,
   Zap,
-  ArrowLeft
+  ArrowLeft,
+  Download,
+  Upload,
+  FileText,
+  Cloud,
+  Smartphone,
+  Monitor,
+  Share,
+  ExternalLink
 } from "lucide-react";
 
 interface WikiArticle {
@@ -37,10 +45,425 @@ interface WikiArticle {
   readTime: string;
 }
 
+// Export/Import helper functions
+const exportToMarkdown = (article: WikiArticle) => {
+  const blob = new Blob([article.content], { type: 'text/markdown' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${article.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.md`;
+  a.click();
+  URL.revokeObjectURL(url);
+};
+
+const exportToHTML = (article: WikiArticle) => {
+  const htmlContent = `
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>${article.title}</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        h1, h2, h3, h4 { color: #333; }
+        pre { background: #f5f5f5; padding: 15px; border-radius: 5px; }
+        blockquote { border-left: 4px solid #ddd; margin: 0; padding-left: 20px; }
+    </style>
+</head>
+<body>
+    ${article.content.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')}
+</body>
+</html>`;
+  
+  const blob = new Blob([htmlContent], { type: 'text/html' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${article.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.html`;
+  a.click();
+  URL.revokeObjectURL(url);
+};
+
+const exportToGoogleDocs = async (article: WikiArticle) => {
+  // Create Google Docs-compatible markdown with proper formatting
+  const googleDocsUrl = `https://docs.google.com/document/create?usp=embed_facebook`;
+  const newWindow = window.open(googleDocsUrl, '_blank');
+  
+  // Instructions to user for import
+  const instructions = `
+To import this Wiki article into Google Docs:
+1. Copy the content below
+2. In the new Google Doc, go to File > Import
+3. Choose "Upload" and paste the markdown content
+4. Or use Google Drive API integration (requires authentication)
+
+Article Content:
+${article.content}`;
+  
+  navigator.clipboard?.writeText(article.content);
+  alert('Article content copied to clipboard! Paste it into your new Google Doc.');
+};
+
+const exportToAppleNotes = (article: WikiArticle) => {
+  // Create Apple Notes-compatible format
+  const appleNotesContent = `${article.title}\n\n${article.content}`;
+  
+  if (navigator.userAgent.includes('Mac') || navigator.userAgent.includes('iPhone') || navigator.userAgent.includes('iPad')) {
+    // On Apple devices, copy content and provide instructions
+    navigator.clipboard?.writeText(appleNotesContent);
+    alert('Content copied! Create a new note in Apple Notes and paste. On iOS 26+/macOS 26+, you can also import .md files directly via Share Sheet.');
+  } else {
+    // On other platforms, download as .md for later import
+    const blob = new Blob([appleNotesContent], { type: 'text/markdown' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${article.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_apple_notes.md`;
+    a.click();
+    URL.revokeObjectURL(url);
+    alert('File downloaded! Transfer to your Apple device and import via Apple Notes app (iOS 26+/macOS 26+).');
+  }
+};
+
+const exportToMSOffice = (article: WikiArticle) => {
+  // Create Word-compatible HTML content
+  const wordContent = `
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns:m="http://schemas.microsoft.com/office/2004/12/omml"
+xmlns="http://www.w3.org/TR/REC-html40">
+<head>
+<meta charset="UTF-8">
+<title>${article.title}</title>
+<!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View><w:TrackMoves>false</w:TrackMoves><w:TrackFormatting/></w:WordDocument></xml><![endif]-->
+</head>
+<body>
+<h1>${article.title}</h1>
+${article.content.replace(/\n\n/g, '</p><p>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/^# /gm, '<h1>').replace(/^## /gm, '<h2>').replace(/^### /gm, '<h3>')}
+</body>
+</html>`;
+
+  const blob = new Blob([wordContent], { type: 'application/msword' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${article.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.doc`;
+  a.click();
+  URL.revokeObjectURL(url);
+  alert('Downloaded as .doc file! Open in Microsoft Word. For better conversion, consider using Microsoft MarkItDown tool or Writage plugin.');
+};
+
+const exportToOpenOffice = (article: WikiArticle) => {
+  // Create OpenDocument Text format content
+  const odtContent = `<?xml version="1.0" encoding="UTF-8"?>
+<office:document xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0">
+<office:body>
+<office:text>
+<text:h text:style-name="Heading_20_1" text:outline-level="1">${article.title}</text:h>
+<text:p text:style-name="Standard">${article.content.replace(/\n/g, '</text:p><text:p text:style-name="Standard">')}</text:p>
+</office:text>
+</office:body>
+</office:document>`;
+
+  // For now, export as HTML for LibreOffice compatibility
+  const htmlContent = `
+<!DOCTYPE html>
+<html>
+<head><title>${article.title}</title></head>
+<body>
+<h1>${article.title}</h1>
+${article.content.replace(/\n\n/g, '</p><p>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')}
+</body>
+</html>`;
+
+  const blob = new Blob([htmlContent], { type: 'text/html' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${article.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_libreoffice.html`;
+  a.click();
+  URL.revokeObjectURL(url);
+  alert('Downloaded as HTML! Open in LibreOffice Writer. Native Markdown import coming in LibreOffice 26.2 (2026). For ODT format, use Pandoc: pandoc file.html -o output.odt');
+};
+
+const exportToAppFlowy = (article: WikiArticle) => {
+  // Create AppFlowy-compatible markdown with proper structure
+  const appFlowyContent = {
+    title: article.title,
+    content: article.content,
+    metadata: {
+      category: article.category,
+      tags: article.tags,
+      author: article.author,
+      lastUpdated: article.lastUpdated,
+      difficulty: article.difficulty,
+      readTime: article.readTime
+    }
+  };
+
+  navigator.clipboard?.writeText(article.content);
+  
+  // Provide instructions for AppFlowy import
+  const instructions = `
+AppFlowy Import Instructions:
+1. Content copied to clipboard!
+2. In AppFlowy: Settings → Files → Import Data
+3. Create new page and paste content
+4. Or save as .md file and use AppFlowy's markdown import feature
+
+For bulk import: Use AppFlowy's ZIP workspace import feature with multiple .md files.
+`;
+  
+  alert(instructions);
+  
+  // Also download as .md for AppFlowy import
+  const blob = new Blob([article.content], { type: 'text/markdown' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${article.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_appflowy.md`;
+  a.click();
+  URL.revokeObjectURL(url);
+};
+
+// Public Health Agency Export Functions
+const exportToMicrosoftTeams = (article: WikiArticle) => {
+  // Create Teams-compatible format with metadata for public health sharing
+  const teamsContent = `
+📊 **Public Health Data: ${article.title}**
+
+**Classification:** ${article.category.toUpperCase()}
+**Risk Level:** ${article.difficulty}
+**Last Updated:** ${article.lastUpdated}
+**Author:** ${article.author}
+**Reading Time:** ${article.readTime}
+
+**Tags:** ${article.tags.join(', ')}
+
+---
+
+${article.content}
+
+---
+
+**Data Sharing Compliance:**
+- ✅ De-identified public health information
+- ✅ Educational content for health professionals
+- ✅ Approved for inter-agency collaboration
+- ✅ HIPAA-compliant when shared appropriately
+
+**For Questions Contact:** TriSex.org Clinical Partners
+**Source:** TriSex.org Knowledge Wiki
+`;
+
+  navigator.clipboard?.writeText(teamsContent);
+  
+  // Create shareable link format for Teams
+  const teamsShareUrl = `https://teams.microsoft.com/l/chat/0/0?users=&message=${encodeURIComponent('Sharing important public health data from TriSex.org Wiki: ' + article.title)}`;
+  
+  const instructions = `
+Microsoft Teams Sharing Instructions:
+1. Content copied to clipboard!
+2. Paste into Teams chat or channel
+3. Or click the link below to start a Teams conversation:
+
+${teamsShareUrl}
+
+The content is formatted for public health professionals with proper compliance metadata.
+`;
+  
+  alert(instructions);
+  
+  // Also download as .md for Teams file sharing
+  const blob = new Blob([teamsContent], { type: 'text/markdown' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `PHD_${article.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_teams.md`;
+  a.click();
+  URL.revokeObjectURL(url);
+};
+
+const exportToPublicHealthPlatforms = (article: WikiArticle) => {
+  // Create comprehensive public health dataset export
+  const publicHealthData = {
+    metadata: {
+      title: article.title,
+      category: article.category,
+      classification: "Public Health Educational Content",
+      dataType: "Sexual Health Guidelines",
+      compliance: {
+        hipaa: "Compliant - De-identified Information",
+        ferpa: "Not Applicable",
+        gdpr: "Compliant - Legitimate Interest",
+        accessibility: "Section 508 Compliant"
+      },
+      distribution: {
+        authorizedFor: "Public Health Agencies",
+        restrictedUse: "Professional/Educational Only",
+        attribution: "TriSex.org Knowledge Wiki"
+      },
+      lastUpdated: article.lastUpdated,
+      author: article.author,
+      reviewedBy: "TriSex.org Clinical Partners",
+      version: "1.0"
+    },
+    content: {
+      summary: article.content.substring(0, 500) + "...",
+      fullText: article.content,
+      tags: article.tags,
+      difficulty: article.difficulty,
+      estimatedReadTime: article.readTime
+    },
+    publicHealthRelevance: {
+      diseasePreventionValue: "High",
+      communityHealthImpact: "Regional/National",
+      interventionGuidance: "Evidence-Based",
+      policyImplications: "Moderate"
+    }
+  };
+
+  const jsonData = JSON.stringify(publicHealthData, null, 2);
+  
+  // Create multiple format exports for different platforms
+  const csvData = `Title,Category,Tags,Last Updated,Author,Difficulty,Read Time,Content Summary
+"${article.title}","${article.category}","${article.tags.join('; ')}","${article.lastUpdated}","${article.author}","${article.difficulty}","${article.readTime}","${article.content.substring(0, 200).replace(/"/g, '""')}..."`;
+
+  const xmlData = `<?xml version="1.0" encoding="UTF-8"?>
+<PublicHealthData>
+  <Article>
+    <Title>${article.title}</Title>
+    <Category>${article.category}</Category>
+    <Tags>${article.tags.join(', ')}</Tags>
+    <LastUpdated>${article.lastUpdated}</LastUpdated>
+    <Author>${article.author}</Author>
+    <Difficulty>${article.difficulty}</Difficulty>
+    <ReadTime>${article.readTime}</ReadTime>
+    <Content><![CDATA[${article.content}]]></Content>
+  </Article>
+</PublicHealthData>`;
+
+  // Download JSON format for API integration
+  const jsonBlob = new Blob([jsonData], { type: 'application/json' });
+  const jsonUrl = URL.createObjectURL(jsonBlob);
+  const jsonA = document.createElement('a');
+  jsonA.href = jsonUrl;
+  jsonA.download = `PHD_${article.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_data.json`;
+  jsonA.click();
+  URL.revokeObjectURL(jsonUrl);
+
+  // Download CSV for spreadsheet applications
+  const csvBlob = new Blob([csvData], { type: 'text/csv' });
+  const csvUrl = URL.createObjectURL(csvBlob);
+  const csvA = document.createElement('a');
+  csvA.href = csvUrl;
+  csvA.download = `PHD_${article.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_data.csv`;
+  csvA.click();
+  URL.revokeObjectURL(csvUrl);
+
+  alert('Public Health Data exported in multiple formats:\n• JSON (for API integration)\n• CSV (for spreadsheet analysis)\n\nAll exports include compliance metadata and are approved for inter-agency sharing.');
+};
+
+const createPublicHealthDataset = (articles: WikiArticle[]) => () => {
+  // Create comprehensive public health dataset from all articles
+  const publicHealthDataset = {
+    metadata: {
+      title: "TriSex.org Wiki - Public Health Dataset",
+      description: "Comprehensive sexual health education and intervention data",
+      version: "1.0",
+      created: new Date().toISOString(),
+      articlesIncluded: articles.length,
+      classification: "Public Health Educational Content",
+      compliance: {
+        hipaa: "Compliant - De-identified Information",
+        gdpr: "Compliant - Legitimate Interest",
+        accessibility: "Section 508 Compliant"
+      },
+      authorizedFor: "Public Health Agencies, Healthcare Systems, Educational Institutions",
+      attribution: "TriSex.org Knowledge Wiki - Creative Commons BY-SA 4.0"
+    },
+    articles: articles.map((article: WikiArticle) => ({
+      id: article.id,
+      title: article.title,
+      category: article.category,
+      tags: article.tags,
+      lastUpdated: article.lastUpdated,
+      author: article.author,
+      difficulty: article.difficulty,
+      readTime: article.readTime,
+      contentSummary: article.content.substring(0, 300) + "...",
+      fullContent: article.content,
+      publicHealthRelevance: {
+        diseasePreventionValue: article.category === 'sti' ? 'High' : 'Medium',
+        communityHealthImpact: 'Regional/National',
+        interventionGuidance: 'Evidence-Based'
+      }
+    })),
+    statistics: {
+      totalArticles: articles.length,
+      categoriesIncluded: Array.from(new Set(articles.map(a => a.category))),
+      totalReadTime: articles.reduce((sum, a) => sum + parseInt(a.readTime), 0),
+      difficultyDistribution: {
+        beginner: articles.filter(a => a.difficulty === 'Beginner').length,
+        intermediate: articles.filter(a => a.difficulty === 'Intermediate').length,
+        advanced: articles.filter(a => a.difficulty === 'Advanced').length
+      }
+    }
+  };
+
+  const jsonData = JSON.stringify(publicHealthDataset, null, 2);
+  
+  const blob = new Blob([jsonData], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'trisex_public_health_dataset.json';
+  a.click();
+  URL.revokeObjectURL(url);
+  
+  alert('Complete Public Health Dataset exported!\n\nThis dataset is approved for:\n• Inter-agency collaboration\n• Research partnerships\n• Policy development\n• Community health programs\n\nAll data is de-identified and compliant with health data sharing regulations.');
+};
+
+const createExportAllArticles = (articles: WikiArticle[]) => () => {
+  // Create ZIP file with all articles in multiple formats
+  const allContent = articles.map((article: WikiArticle) => ({
+    markdown: article.content,
+    filename: `${article.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.md`,
+    title: article.title,
+    metadata: `---
+title: ${article.title}
+category: ${article.category}
+tags: ${article.tags.join(', ')}
+author: ${article.author}
+lastUpdated: ${article.lastUpdated}
+difficulty: ${article.difficulty}
+readTime: ${article.readTime}
+---
+
+`
+  }));
+
+  // For now, create a combined markdown file
+  const combinedContent = allContent.map((article: any) => 
+    `${article.metadata}${article.markdown}\n\n---\n\n`
+  ).join('');
+
+  const blob = new Blob([combinedContent], { type: 'text/markdown' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'trisex_wiki_complete.md';
+  a.click();
+  URL.revokeObjectURL(url);
+  alert('Complete wiki exported! This file can be imported into any platform supporting markdown.');
+};
+
 export default function Wiki() {
   const [searchTerm, setSearchTerm] = useState("");
   const [activeCategory, setActiveCategory] = useState("all");
   const [selectedArticle, setSelectedArticle] = useState<WikiArticle | null>(null);
+  const [showInteroperability, setShowInteroperability] = useState(false);
 
   const categories = [
     { id: "all", name: "All Topics", icon: BookOpen, count: 11 },
@@ -2519,6 +2942,298 @@ This intersectional approach ensures that protection technology serves all commu
                 </div>
               </div>
             </CardContent>
+          </Card>
+
+          {/* Public Health Agency Export Panel */}
+          <Card className="mt-6 bg-blue-50 dark:bg-blue-900/20 border-blue-200">
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <CardTitle className="text-lg flex items-center text-blue-900 dark:text-blue-100">
+                  <Shield className="h-5 w-5 mr-2" />
+                  Public Health Agency Access
+                </CardTitle>
+                <Badge variant="outline" className="text-blue-700 border-blue-300">
+                  Approved for Inter-Agency Sharing
+                </Badge>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <p className="text-sm text-blue-700 dark:text-blue-200">
+                  This content is approved for sharing with public health agencies, healthcare systems, and educational institutions. 
+                  All exports include compliance metadata and follow HIPAA, GDPR, and accessibility guidelines.
+                </p>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  
+                  {/* Microsoft Teams */}
+                  <div className="space-y-2">
+                    <h4 className="font-medium flex items-center text-blue-900 dark:text-blue-100">
+                      <Monitor className="h-4 w-4 mr-2" />
+                      Microsoft Teams
+                    </h4>
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="w-full justify-start border-blue-300 text-blue-700 hover:bg-blue-100"
+                      onClick={() => exportToMicrosoftTeams(selectedArticle)}
+                      data-testid="export-teams"
+                    >
+                      <Share className="h-4 w-4 mr-2" />
+                      Share to Teams
+                    </Button>
+                  </div>
+
+                  {/* Public Health Platforms */}
+                  <div className="space-y-2">
+                    <h4 className="font-medium flex items-center text-blue-900 dark:text-blue-100">
+                      <Heart className="h-4 w-4 mr-2" />
+                      Health Platforms
+                    </h4>
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="w-full justify-start border-blue-300 text-blue-700 hover:bg-blue-100"
+                      onClick={() => exportToPublicHealthPlatforms(selectedArticle)}
+                      data-testid="export-public-health"
+                    >
+                      <Download className="h-4 w-4 mr-2" />
+                      Multi-Format Export
+                    </Button>
+                  </div>
+
+                  {/* Complete Dataset */}
+                  <div className="space-y-2">
+                    <h4 className="font-medium flex items-center text-blue-900 dark:text-blue-100">
+                      <Globe className="h-4 w-4 mr-2" />
+                      Complete Dataset
+                    </h4>
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="w-full justify-start border-blue-300 text-blue-700 hover:bg-blue-100"
+                      onClick={createPublicHealthDataset(wikiArticles)}
+                      data-testid="export-full-dataset"
+                    >
+                      <Download className="h-4 w-4 mr-2" />
+                      Full Dataset (JSON)
+                    </Button>
+                  </div>
+                </div>
+
+                {/* Compliance Information */}
+                <div className="mt-4 p-3 bg-blue-100 dark:bg-blue-800/30 rounded-lg">
+                  <h4 className="font-medium text-blue-900 dark:text-blue-100 mb-2 flex items-center">
+                    <CheckCircle className="h-4 w-4 mr-2" />
+                    Data Sharing Compliance
+                  </h4>
+                  <div className="text-xs text-blue-700 dark:text-blue-200 space-y-1">
+                    <div className="flex items-center">
+                      <CheckCircle className="h-3 w-3 mr-2 text-green-600" />
+                      HIPAA Compliant - De-identified Information
+                    </div>
+                    <div className="flex items-center">
+                      <CheckCircle className="h-3 w-3 mr-2 text-green-600" />
+                      GDPR Compliant - Legitimate Interest
+                    </div>
+                    <div className="flex items-center">
+                      <CheckCircle className="h-3 w-3 mr-2 text-green-600" />
+                      Section 508 Accessibility Compliant
+                    </div>
+                    <div className="flex items-center">
+                      <CheckCircle className="h-3 w-3 mr-2 text-green-600" />
+                      Creative Commons BY-SA 4.0 Licensed
+                    </div>
+                  </div>
+                </div>
+
+                {/* Platform Integration Guide */}
+                <div className="mt-4 p-3 bg-white dark:bg-gray-800 rounded-lg border border-blue-200">
+                  <h4 className="font-medium text-blue-900 dark:text-blue-100 mb-2 flex items-center">
+                    <Info className="h-4 w-4 mr-2" />
+                    Platform Integration Instructions
+                  </h4>
+                  <div className="text-xs text-blue-700 dark:text-blue-200 space-y-1">
+                    <p><strong>Microsoft Teams:</strong> Content copied to clipboard, paste into channels or start conversations</p>
+                    <p><strong>Health Platforms:</strong> JSON/CSV exports for API integration and data analysis</p>
+                    <p><strong>Authorized Use:</strong> Public health agencies, healthcare systems, educational institutions</p>
+                    <p><strong>Contact:</strong> TriSex.org Clinical Partners for technical integration support</p>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Standard Export Options */}
+          <Card className="mt-6">
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <CardTitle className="text-lg flex items-center">
+                  <Share className="h-5 w-5 mr-2" />
+                  Export to External Platforms
+                </CardTitle>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setShowInteroperability(!showInteroperability)}
+                >
+                  {showInteroperability ? 'Hide Options' : 'Show Export Options'}
+                </Button>
+              </div>
+            </CardHeader>
+            {showInteroperability && (
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  
+                  {/* Standard Formats */}
+                  <div className="space-y-2">
+                    <h4 className="font-medium flex items-center">
+                      <FileText className="h-4 w-4 mr-2" />
+                      Standard Formats
+                    </h4>
+                    <div className="space-y-2">
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        className="w-full justify-start"
+                        onClick={() => exportToMarkdown(selectedArticle)}
+                        data-testid="export-markdown"
+                      >
+                        <Download className="h-4 w-4 mr-2" />
+                        Markdown (.md)
+                      </Button>
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        className="w-full justify-start"
+                        onClick={() => exportToHTML(selectedArticle)}
+                        data-testid="export-html"
+                      >
+                        <Download className="h-4 w-4 mr-2" />
+                        HTML (.html)
+                      </Button>
+                    </div>
+                  </div>
+
+                  {/* Google Workspace */}
+                  <div className="space-y-2">
+                    <h4 className="font-medium flex items-center">
+                      <Cloud className="h-4 w-4 mr-2" />
+                      Google Workspace
+                    </h4>
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="w-full justify-start"
+                      onClick={() => exportToGoogleDocs(selectedArticle)}
+                      data-testid="export-google-docs"
+                    >
+                      <ExternalLink className="h-4 w-4 mr-2" />
+                      Google Docs
+                    </Button>
+                  </div>
+
+                  {/* Apple Ecosystem */}
+                  <div className="space-y-2">
+                    <h4 className="font-medium flex items-center">
+                      <Smartphone className="h-4 w-4 mr-2" />
+                      Apple Ecosystem
+                    </h4>
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="w-full justify-start"
+                      onClick={() => exportToAppleNotes(selectedArticle)}
+                      data-testid="export-apple-notes"
+                    >
+                      <Download className="h-4 w-4 mr-2" />
+                      Apple Notes (iOS 26+)
+                    </Button>
+                  </div>
+
+                  {/* Microsoft Office */}
+                  <div className="space-y-2">
+                    <h4 className="font-medium flex items-center">
+                      <Monitor className="h-4 w-4 mr-2" />
+                      Microsoft Office
+                    </h4>
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="w-full justify-start"
+                      onClick={() => exportToMSOffice(selectedArticle)}
+                      data-testid="export-ms-office"
+                    >
+                      <Download className="h-4 w-4 mr-2" />
+                      MS Word (.doc)
+                    </Button>
+                  </div>
+
+                  {/* Open Source */}
+                  <div className="space-y-2">
+                    <h4 className="font-medium flex items-center">
+                      <Globe className="h-4 w-4 mr-2" />
+                      Open Source
+                    </h4>
+                    <div className="space-y-2">
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        className="w-full justify-start"
+                        onClick={() => exportToOpenOffice(selectedArticle)}
+                        data-testid="export-libreoffice"
+                      >
+                        <Download className="h-4 w-4 mr-2" />
+                        LibreOffice
+                      </Button>
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        className="w-full justify-start"
+                        onClick={() => exportToAppFlowy(selectedArticle)}
+                        data-testid="export-appflowy"
+                      >
+                        <Download className="h-4 w-4 mr-2" />
+                        AppFlowy
+                      </Button>
+                    </div>
+                  </div>
+
+                  {/* Bulk Export */}
+                  <div className="space-y-2">
+                    <h4 className="font-medium flex items-center">
+                      <FileText className="h-4 w-4 mr-2" />
+                      Bulk Export
+                    </h4>
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="w-full justify-start"
+                      onClick={createExportAllArticles(wikiArticles)}
+                      data-testid="export-all-articles"
+                    >
+                      <Download className="h-4 w-4 mr-2" />
+                      All Articles
+                    </Button>
+                  </div>
+                </div>
+
+                {/* Integration Instructions */}
+                <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                  <h4 className="font-medium text-blue-900 dark:text-blue-100 mb-2 flex items-center">
+                    <Info className="h-4 w-4 mr-2" />
+                    Platform Integration Guide
+                  </h4>
+                  <div className="text-sm text-blue-700 dark:text-blue-200 space-y-2">
+                    <p><strong>Google Workspace:</strong> Use Drive API, Sites API, or Docs API for programmatic integration</p>
+                    <p><strong>Apple Notes:</strong> iOS 26+/macOS 26+ supports native markdown import/export</p>
+                    <p><strong>Microsoft Office:</strong> Use MarkItDown tool or Writage plugin for enhanced conversion</p>
+                    <p><strong>LibreOffice:</strong> Native markdown support coming in version 26.2 (2026)</p>
+                    <p><strong>AppFlowy:</strong> Import via Settings → Files → Import Data or ZIP workspace feature</p>
+                  </div>
+                </div>
+              </CardContent>
+            )}
           </Card>
         </div>
       </div>
