@@ -1851,19 +1851,32 @@ NanoHeal ⓒⓒ represents a revolutionary advancement in sexual health protecti
 NanoHeal is uniquely designed to provide effective STI prevention across different relationship contexts and commitment levels, offering protection both as a standalone solution and in combination with barrier methods.
 
 #### **Standalone NanoHeal Protection** (No Condoms)
-*Appropriate for established relationships with known STI status*
+*STRICT ELIGIBILITY REQUIREMENTS - Only sold with verified seasonal testing cycle completion*
 
-**Low-Risk Relationship Contexts:**
-- **Monogamous committed partnerships**: Both partners tested, exclusive sexual relationship
-- **Established polyamorous networks**: All partners tested regularly, fluid-bonded connections
-- **Long-term committed relationships**: Partners with known sexual health history and regular testing
-- **Marriage/life partnerships**: Couples choosing pregnancy-compatible protection
+**⚠️ MANDATORY REQUIREMENT FOR STANDALONE SALES:**
+**Full Seasonal Testing Cycle** (3-6 months) of documented monogamy required before standalone NanoHeal purchase eligibility.
+
+**Verified Low-Risk Contexts Only:**
+- **Documented monogamous partnerships**: BOTH partners must complete full seasonal testing cycle (3-6 months minimum) with:
+  - Baseline comprehensive STI panel at relationship start
+  - Mid-cycle testing at 6-8 weeks
+  - Final comprehensive panel at 3-6 months
+  - Zero sexual contact outside partnership during entire cycle
+  - Written verification from healthcare provider or certified testing facility
+
+**Additional Eligibility Requirements:**
+- **Established relationship verification**: Minimum 6 months documented exclusive relationship
+- **Regular testing protocol**: Ongoing quarterly testing schedule established
+- **Partner health transparency**: Full sexual health history disclosure and verification
+- **Pregnancy planning status**: Clear understanding and agreement on conception risk
 
 **Standalone Protection Effectiveness:**
 - HIV prevention: 89.4% efficacy through microbicide action
 - Bacterial STI reduction: 82.7% (chlamydia, gonorrhea, syphilis)
 - Fungal infection prevention: 94.8% (candida, other yeasts)
 - HSV transmission reduction: 76.2% with regular use
+
+**⚠️ IMPORTANT SAFETY NOTICE:** Standalone NanoHeal is NOT sold to individuals who cannot provide documented proof of completed seasonal testing cycle with verified monogamy. All other users must purchase combination protection (NanoHeal + condoms).
 
 #### **Combined NanoHeal + Barrier Protection** (With Condoms)
 *Recommended for higher-risk contexts and new relationships*
