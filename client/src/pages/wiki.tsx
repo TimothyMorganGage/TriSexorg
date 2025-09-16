@@ -1879,11 +1879,11 @@ NanoHeal ⓒⓒ represents a revolutionary advancement in sexual health protecti
 - Candida species: Tea tree oil and coconut fractions
 - Other yeasts: Nano-silver broad-spectrum activity
 
-## Gaynal Condom Integration System
+## Gaynal Condom Integration System: Designed for Men Who Have Sex With Men
 
 ### Design Philosophy
 
-The Gaynal Condom System recognizes that anal pleasure and safety require specialized protection beyond traditional designs. Our intersectional approach honors diverse anatomies, preferences, and cultural contexts.
+The Gaynal Condom System is specifically engineered for men who have sex with men (MSM), recognizing that gay, bisexual, and other MSM communities require specialized protection designed for male-male sexual practices. Our intersectional approach honors diverse anatomies within MSM communities while addressing the unique safety and pleasure needs of gay men, including bears, twinks, leather enthusiasts, and trans gay men.
 
 ### Technical Specifications
 
@@ -1907,17 +1907,24 @@ The Gaynal Condom System recognizes that anal pleasure and safety require specia
    - Textured external surface options
    - Pre-applied NanoHeal external coating
 
-### Size Matrix & Customization
+### Size Matrix & Customization for MSM Communities
 
-**Receptive-Optimized Sizes:**
-- **Gaynal A-Series**: 60mm base, 220mm length, extra lubrication
-- **Gaynal B-Series**: 65mm base, 240mm length, maximum protection
-- **Gaynal C-Series**: 70mm base, 260mm length, comfort priority
+**Bottom-Optimized Sizes (Anal Receptive):**
+- **Gaynal A-Series**: 60mm base, 220mm length, extra lubrication for comfortable bottoming
+- **Gaynal B-Series**: 65mm base, 240mm length, maximum protection for vigorous play
+- **Gaynal C-Series**: 70mm base, 260mm length, comfort priority for extended sessions
 
-**Insertive-Optimized Sizes:**
-- **Precision G1-G12**: Width range 45-65mm, all 220mm+ length
-- **Comfort Plus**: Roomier tip, natural feel materials
-- **Sensation Ultra**: Ultra-thin with maximum NanoHeal coating
+**Top-Optimized Sizes (Anal Insertive):**
+- **Precision G1-G12**: Width range 45-65mm, all 220mm+ length for diverse gay male anatomy
+- **Bear Strength**: Reinforced variants for larger men and vigorous play
+- **Twink Ultra**: Smaller sizes with enhanced sensitivity for younger/slimmer men
+- **Leather Extreme**: Heavy-duty options for BDSM and kink communities
+- **Circuit Endurance**: Extended-wear formula for multi-partner encounters
+
+**Specialized MSM Options:**
+- **Trans Gay Men**: Anatomically adapted designs for FTM gay men
+- **Versatile Ready**: Quick-change options for vers men who switch roles
+- **Party Pack**: Variety packs popular at gay clubs and circuit parties
 
 ## Intersectional Customization
 
