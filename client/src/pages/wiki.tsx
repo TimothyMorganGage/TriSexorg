@@ -1917,7 +1917,9 @@ The Gaynal Condom System is specifically engineered for men who have sex with me
 **Top-Optimized Sizes (Anal Insertive):**
 - **Precision G1-G12**: Width range 45-65mm, all 220mm+ length for diverse gay male anatomy
 - **Bear Strength**: Reinforced variants for larger men and vigorous play
-- **Twink Ultra**: Smaller sizes with enhanced sensitivity for younger/slimmer men
+- **Slender Fit**: Smaller sizes with enhanced sensitivity for slimmer body types
+- **Plus Size**: Comfortable options for larger body types and varied anatomies
+- **Athletic Fit**: Designed for muscular builds and active lifestyles
 - **Leather Extreme**: Heavy-duty options for BDSM and kink communities
 - **Circuit Endurance**: Extended-wear formula for multi-partner encounters
 
@@ -2049,11 +2051,19 @@ Recognizing the beautiful diversity of intersex anatomies, our protection system
 3. NanoHeal enhances rather than replaces barriers
 4. Reapplication as needed during extended play
 
-**For Oral Play:**
-1. Oral-formula NanoHeal for both partners
-2. Dental dams with NanoHeal coating available
-3. Flavor options: mint, vanilla, unflavored
-4. Safe for ingestion in recommended quantities
+**For Oral Sex Protection:**
+1. **Oral Condoms**: Ultra-thin protection for fellatio across all body sizes
+   - **Slender Oral**: 45-50mm width for smaller anatomy, enhanced sensation
+   - **Standard Oral**: 52-55mm width for average anatomy, balanced comfort
+   - **Plus Size Oral**: 58-65mm width for larger anatomy, secure fit
+   - **Custom Fit**: 3D-measured options for unique anatomical needs
+2. **Flavored Options**: All sizes available in mint, vanilla, strawberry, or unflavored
+3. **Dental Dams with NanoHeal**: For cunnilingus and anilingus protection
+   - Standard size: 6"x10" for most body types
+   - Large size: 8"x12" for fuller body coverage
+   - Textured versions for enhanced sensation
+4. **Body-Inclusive Design**: Protection that works across all body sizes and types
+5. **Safe Oral Formula**: NanoHeal coating safe for ingestion in recommended quantities
 
 ## Safety & Efficacy Data
 
