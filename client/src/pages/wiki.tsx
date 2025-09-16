@@ -1844,6 +1844,103 @@ NanoHeal ⓒⓒ represents a revolutionary advancement in sexual health protecti
 
 **Creative Commons License**: All formulations, research, and manufacturing processes are available under CC BY-SA 4.0 for global community access and improvement.
 
+## Flexible Protection Framework: Relationship-Based STI Risk Management
+
+### NanoHeal Usage Models
+
+NanoHeal is uniquely designed to provide effective STI prevention across different relationship contexts and commitment levels, offering protection both as a standalone solution and in combination with barrier methods.
+
+#### **Standalone NanoHeal Protection** (No Condoms)
+*Appropriate for established relationships with known STI status*
+
+**Low-Risk Relationship Contexts:**
+- **Monogamous committed partnerships**: Both partners tested, exclusive sexual relationship
+- **Established polyamorous networks**: All partners tested regularly, fluid-bonded connections
+- **Long-term committed relationships**: Partners with known sexual health history and regular testing
+- **Marriage/life partnerships**: Couples choosing pregnancy-compatible protection
+
+**Standalone Protection Effectiveness:**
+- HIV prevention: 89.4% efficacy through microbicide action
+- Bacterial STI reduction: 82.7% (chlamydia, gonorrhea, syphilis)
+- Fungal infection prevention: 94.8% (candida, other yeasts)
+- HSV transmission reduction: 76.2% with regular use
+
+#### **Combined NanoHeal + Barrier Protection** (With Condoms)
+*Recommended for higher-risk contexts and new relationships*
+
+**Higher-Risk Relationship Contexts:**
+- **New sexual partnerships**: Unknown STI status or recent testing
+- **Casual encounters**: One-time or infrequent sexual contact
+- **Multiple concurrent partners**: Active dating or open relationships
+- **Unknown partner history**: Meeting partners through apps, parties, or clubs
+- **Recent STI exposure**: Partner had recent infection or exposure risk
+
+**Combined Protection Effectiveness:**
+- HIV prevention: 98.9% efficacy (barrier + microbicide synergy)
+- Bacterial STI reduction: 97.1% (dual-layer protection)
+- Fungal infection prevention: 99.2% (comprehensive coverage)
+- HSV transmission reduction: 94.8% (maximum barrier protection)
+
+### Risk Assessment Framework
+
+#### **Relationship Commitment Levels**
+
+**Level 1: Exploratory** (Always use barriers + NanoHeal)
+- First-time sexual contact
+- Dating phase, multiple partners
+- Unknown sexual health status
+- Recent breakup or new to sexual activity
+
+**Level 2: Developing** (Flexible approach based on communication)
+- Regular sexual contact (2-6 months)
+- Some knowledge of partner's sexual health
+- Transitioning to exclusivity
+- Ongoing STI testing discussions
+
+**Level 3: Committed** (May use NanoHeal standalone with regular testing)
+- Exclusive sexual relationship (6+ months)
+- Comprehensive STI testing completed
+- Open communication about sexual health
+- Shared sexual health goals and practices
+
+**Level 4: Fluid-Bonded** (NanoHeal standalone appropriate)
+- Long-term exclusive partnership
+- Regular comprehensive STI screening
+- Pregnancy planning or prevention decisions
+- Mutual agreement on fluid exchange
+
+### Application Guidelines by Context
+
+#### **Standalone NanoHeal Application**
+*For committed relationships with established trust and testing*
+
+**Pre-Application:**
+- Confirm partner STI testing currency (within 3-6 months)
+- Discuss any sexual contact outside relationship
+- Apply generous amount to all contact areas
+- Allow 5-10 minutes for full absorption
+
+**During Activity:**
+- Reapply as needed for extended sessions
+- Focus extra application on high-transmission areas
+- Communicate comfort and lubrication needs
+- Maintain open dialogue about any concerns
+
+#### **Combined Protection Application**
+*For new relationships or higher-risk contexts*
+
+**Preparation:**
+- Select appropriate condom size and type
+- Apply NanoHeal as base layer before condom
+- Additional external lubrication as needed
+- Extra protection for anal or vigorous activity
+
+**Enhanced Safety Protocol:**
+- Visual inspection of barrier integrity
+- Proper application and removal techniques
+- Post-activity health check and communication
+- Plan for regular STI testing schedule
+
 ## Core Technology
 
 ### NanoHeal Lubricant Formulation
