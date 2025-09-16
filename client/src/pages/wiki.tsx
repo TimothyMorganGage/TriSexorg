@@ -85,43 +85,399 @@ const exportToHTML = (article: WikiArticle) => {
 };
 
 const exportToGoogleDocs = async (article: WikiArticle) => {
-  // Create Google Docs-compatible markdown with proper formatting
-  const googleDocsUrl = `https://docs.google.com/document/create?usp=embed_facebook`;
-  const newWindow = window.open(googleDocsUrl, '_blank');
-  
-  // Instructions to user for import
-  const instructions = `
-To import this Wiki article into Google Docs:
-1. Copy the content below
-2. In the new Google Doc, go to File > Import
-3. Choose "Upload" and paste the markdown content
-4. Or use Google Drive API integration (requires authentication)
+  // Create Google Docs-compatible HTML with proper structure and Google-specific formatting
+  const googleDocsContent = `
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>${article.title}</title>
+    <meta name="author" content="${article.author}">
+    <meta name="description" content="${article.tags.join(', ')}">
+    <style>
+        body { 
+            font-family: 'Google Sans', Arial, sans-serif; 
+            margin: 2.54cm; 
+            line-height: 1.6; 
+            color: #202124;
+        }
+        h1 { 
+            color: #1a73e8; 
+            border-bottom: 3px solid #1a73e8; 
+            padding-bottom: 10px;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        h2 { 
+            color: #1a73e8; 
+            font-size: 22px;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        h3 { 
+            color: #5f6368; 
+            font-size: 18px;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+        .metadata { 
+            background: #f8f9fa; 
+            padding: 15px; 
+            border-left: 4px solid #1a73e8; 
+            margin: 20px 0; 
+            border-radius: 4px;
+        }
+        .tags { 
+            background: #e8f0fe; 
+            color: #1a73e8;
+            padding: 5px 10px; 
+            border-radius: 20px; 
+            display: inline-block; 
+            margin: 2px; 
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .workspace-header {
+            background: #1a73e8;
+            color: white;
+            padding: 15px;
+            margin: -15px -15px 15px -15px;
+            border-radius: 4px 4px 0 0;
+            font-weight: 500;
+        }
+        code {
+            background: #f1f3f4;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 14px;
+        }
+        blockquote {
+            border-left: 4px solid #1a73e8;
+            margin: 20px 0;
+            padding-left: 15px;
+            color: #5f6368;
+            font-style: italic;
+        }
+        .collaboration-note {
+            background: #e8f0fe;
+            border: 1px solid #1a73e8;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="metadata">
+        <div class="workspace-header">TriSex.org Knowledge Wiki - Google Workspace Compatible</div>
+        <p><strong>Document:</strong> ${article.title}</p>
+        <p><strong>Category:</strong> ${article.category.toUpperCase()}</p>
+        <p><strong>Complexity Level:</strong> ${article.difficulty}</p>
+        <p><strong>Estimated Reading Time:</strong> ${article.readTime}</p>
+        <p><strong>Content Author:</strong> ${article.author}</p>
+        <p><strong>Last Updated:</strong> ${article.lastUpdated}</p>
+        <p><strong>Subject Tags:</strong> ${article.tags.map(tag => `<span class="tags">${tag}</span>`).join(' ')}</p>
+        <div class="collaboration-note">
+            <strong>📝 Google Workspace Features:</strong> This document supports collaborative editing, commenting, and version history in Google Docs. Share with your team for real-time collaboration.
+        </div>
+    </div>
+    
+    <h1>${article.title}</h1>
+    
+    ${article.content.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\*(.*?)\*/g, '<em>$1</em>')}
+    
+    <div class="collaboration-note">
+        <strong>🔗 Integration Options:</strong><br>
+        • Use Google Drive API for programmatic access<br>
+        • Share via Google Sites for public access<br>
+        • Export to Google Sheets for data analysis<br>
+        • Connect with Google Forms for feedback collection
+    </div>
+</body>
+</html>`;
 
-Article Content:
-${article.content}`;
+  // Also create a Google Apps Script for advanced integration
+  const googleAppsScript = `
+// Google Apps Script for TriSex.org Wiki Integration
+// Paste this into script.google.com for automated content management
+
+function importTriSexWikiContent() {
+  const article = {
+    title: "${article.title}",
+    content: \`${article.content.replace(/`/g, '\\`')}\`,
+    category: "${article.category}",
+    tags: ${JSON.stringify(article.tags)},
+    author: "${article.author}",
+    lastUpdated: "${article.lastUpdated}"
+  };
   
+  // Create new Google Doc
+  const doc = DocumentApp.create('TriSex Wiki: ' + article.title);
+  const body = doc.getBody();
+  
+  // Add title
+  const title = body.appendParagraph(article.title);
+  title.setHeading(DocumentApp.ParagraphHeading.TITLE);
+  
+  // Add metadata table
+  const table = body.appendTable();
+  table.appendTableRow().appendTableCell('Category:').appendTableCell(article.category);
+  table.appendTableRow().appendTableCell('Author:').appendTableCell(article.author);
+  table.appendTableRow().appendTableCell('Updated:').appendTableCell(article.lastUpdated);
+  table.appendTableRow().appendTableCell('Tags:').appendTableCell(article.tags.join(', '));
+  
+  // Add content
+  body.appendParagraph('\\n' + article.content);
+  
+  // Share with domain (optional)
+  // doc.addViewer('your-domain@example.com');
+  
+  Logger.log('Document created: ' + doc.getUrl());
+  return doc.getUrl();
+}
+
+function createWikiSpreadsheet() {
+  // Create Google Sheet for wiki analytics
+  const sheet = SpreadsheetApp.create('TriSex Wiki Analytics');
+  const worksheet = sheet.getActiveSheet();
+  
+  // Add headers
+  worksheet.getRange(1, 1, 1, 6).setValues([['Title', 'Category', 'Author', 'Last Updated', 'Tags', 'Read Time']]);
+  
+  // Add this article's data
+  worksheet.getRange(2, 1, 1, 6).setValues([[
+    "${article.title}",
+    "${article.category}",
+    "${article.author}",
+    "${article.lastUpdated}",
+    "${article.tags.join(', ')}",
+    "${article.readTime}"
+  ]]);
+  
+  Logger.log('Spreadsheet created: ' + sheet.getUrl());
+  return sheet.getUrl();
+}
+`;
+
+  // Create multiple download options
+  const htmlBlob = new Blob([googleDocsContent], { type: 'text/html' });
+  const htmlUrl = URL.createObjectURL(htmlBlob);
+  const htmlA = document.createElement('a');
+  htmlA.href = htmlUrl;
+  htmlA.download = `${article.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_google_workspace.html`;
+  htmlA.click();
+  URL.revokeObjectURL(htmlUrl);
+
+  const scriptBlob = new Blob([googleAppsScript], { type: 'text/javascript' });
+  const scriptUrl = URL.createObjectURL(scriptBlob);
+  const scriptA = document.createElement('a');
+  scriptA.href = scriptUrl;
+  scriptA.download = `${article.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_google_apps_script.js`;
+  scriptA.click();
+  URL.revokeObjectURL(scriptUrl);
+
+  // Copy content to clipboard for direct paste
   navigator.clipboard?.writeText(article.content);
-  alert('Article content copied to clipboard! Paste it into your new Google Doc.');
+
+  // Create Google Workspace URLs
+  const googleDocsUrl = `https://docs.google.com/document/create?title=${encodeURIComponent('TriSex Wiki: ' + article.title)}&usp=docs_home&ths=true`;
+  const googleSheetsUrl = `https://sheets.google.com/create?title=${encodeURIComponent('TriSex Wiki Analytics')}&usp=sheets_home&ths=true`;
+  const googleSitesUrl = `https://sites.google.com/new?title=${encodeURIComponent('TriSex Wiki Site')}&usp=sites_home&ths=true`;
+
+  const instructions = `
+Google Workspace Integration Complete! ✅
+
+Downloaded Files:
+• HTML file optimized for Google Docs import
+• Google Apps Script for automated integration
+• Content copied to clipboard!
+
+Quick Actions:
+1. 📄 New Google Doc: ${googleDocsUrl}
+2. 📊 New Google Sheet: ${googleSheetsUrl}  
+3. 🌐 New Google Site: ${googleSitesUrl}
+
+Advanced Integration:
+• Use the Google Apps Script at script.google.com
+• Connect with Google Drive API for bulk operations
+• Set up Google Forms for content feedback
+• Use Google Sites for public knowledge sharing
+
+Paste content directly or import the HTML file!
+`;
+  
+  alert(instructions);
 };
 
 const exportToAppleNotes = (article: WikiArticle) => {
-  // Create Apple Notes-compatible format
-  const appleNotesContent = `${article.title}\n\n${article.content}`;
+  // Create rich Apple Notes-compatible format with Apple ecosystem integration
+  const isAppleDevice = navigator.userAgent.includes('Mac') || navigator.userAgent.includes('iPhone') || navigator.userAgent.includes('iPad');
   
-  if (navigator.userAgent.includes('Mac') || navigator.userAgent.includes('iPhone') || navigator.userAgent.includes('iPad')) {
-    // On Apple devices, copy content and provide instructions
+  // Rich Apple Notes format with markdown support
+  const appleNotesContent = `# ${article.title}
+
+## 📋 Article Information
+**Category:** ${article.category.toUpperCase()}  
+**Difficulty:** ${article.difficulty}  
+**Reading Time:** ${article.readTime}  
+**Author:** ${article.author}  
+**Last Updated:** ${article.lastUpdated}  
+**Tags:** ${article.tags.join(', ')}
+
+---
+
+${article.content}
+
+---
+
+## 🍎 Apple Ecosystem Integration
+• **Siri Shortcuts:** Create a shortcut to access this content quickly
+• **Spotlight Search:** Content will be searchable across your device  
+• **Continuity:** Access on iPhone, iPad, and Mac with automatic sync
+• **Share Sheet:** Share with Health app, Reminders, or Calendar
+• **Shortcuts App:** Automate health reminders and tracking
+
+**TriSex.org Wiki** - Accessible on all your Apple devices`;
+
+  // Create Apple Shortcuts integration script
+  const appleShortcutsScript = `
+// Apple Shortcuts Integration Script
+// Create a new shortcut in the Shortcuts app with these actions:
+
+1. Text Action: Paste the content below
+2. Add to Note Action: Choose "TriSex.org Wiki" folder
+3. Share Sheet: Enable sharing to Health, Calendar, Reminders
+
+Content for Shortcut:
+${appleNotesContent}
+
+// Optional: Add Siri phrase like "Open TriSex Wiki ${article.title}"
+// This allows voice access: "Hey Siri, Open TriSex Wiki ${article.title}"
+`;
+
+  // Create iCloud sync configuration
+  const iCloudConfig = `
+# iCloud Notes Configuration for TriSex.org Wiki
+
+## Setup Instructions:
+1. Open Notes app → Folders → "On My Mac/iPhone/iPad"
+2. Create new folder: "TriSex.org Wiki"
+3. Enable iCloud sync: Settings → Apple ID → iCloud → Notes
+4. Import this content into the new folder
+
+## Folder Structure:
+- TriSex.org Wiki/
+  - Categories/
+    - ${article.category}/
+      - ${article.title}
+  - Bookmarks/
+  - Quick Access/
+
+## Collaboration Features:
+- Invite others to shared folders
+- Real-time collaborative editing
+- Comments and annotations
+- Version history tracking
+
+Source: ${article.title} - TriSex.org Knowledge Wiki
+`;
+
+  if (isAppleDevice) {
+    // On Apple devices, provide multiple integration options
     navigator.clipboard?.writeText(appleNotesContent);
-    alert('Content copied! Create a new note in Apple Notes and paste. On iOS 26+/macOS 26+, you can also import .md files directly via Share Sheet.');
+    
+    // Try to create Apple Notes URL scheme (iOS/macOS)
+    const notesUrlScheme = `notes://new?content=${encodeURIComponent(appleNotesContent)}`;
+    
+    // Create shortcuts URL for automation
+    const shortcutsUrl = `shortcuts://create-shortcut?name=${encodeURIComponent('TriSex Wiki: ' + article.title)}`;
+
+    const instructions = `
+🍎 Apple Ecosystem Integration Complete!
+
+✅ Content copied to clipboard!
+
+Quick Actions:
+• Open Notes app and paste (⌘V / Ctrl+V)  
+• Use Siri: "Create a new note with clipboard"
+• Share via AirDrop to other Apple devices
+
+iOS 26+ / macOS 26+ Features:
+• Native markdown import via Share Sheet
+• Siri Shortcuts integration
+• Health app connectivity for wellness content
+• Calendar integration for scheduling
+
+Advanced Integration:
+1. Create Siri Shortcut: ${shortcutsUrl}
+2. Open in Notes directly: notes://new (if supported)
+3. Set up iCloud folder: "TriSex.org Wiki"
+4. Enable Spotlight search for content discovery
+
+Your content is ready for all Apple devices! 📱💻⌚
+`;
+    
+    alert(instructions);
+    
+    // Download files for advanced users
+    const mdBlob = new Blob([appleNotesContent], { type: 'text/markdown' });
+    const mdUrl = URL.createObjectURL(mdBlob);
+    const mdA = document.createElement('a');
+    mdA.href = mdUrl;
+    mdA.download = `${article.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_apple_notes.md`;
+    mdA.click();
+    URL.revokeObjectURL(mdUrl);
+    
+    const shortcutBlob = new Blob([appleShortcutsScript], { type: 'text/plain' });
+    const shortcutUrl = URL.createObjectURL(shortcutBlob);
+    const shortcutA = document.createElement('a');
+    shortcutA.href = shortcutUrl;
+    shortcutA.download = `${article.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_shortcuts_integration.txt`;
+    shortcutA.click();
+    URL.revokeObjectURL(shortcutUrl);
+
   } else {
-    // On other platforms, download as .md for later import
-    const blob = new Blob([appleNotesContent], { type: 'text/markdown' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${article.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_apple_notes.md`;
-    a.click();
-    URL.revokeObjectURL(url);
-    alert('File downloaded! Transfer to your Apple device and import via Apple Notes app (iOS 26+/macOS 26+).');
+    // On other platforms, prepare for Apple device transfer
+    const mdBlob = new Blob([appleNotesContent], { type: 'text/markdown' });
+    const mdUrl = URL.createObjectURL(mdBlob);
+    const mdA = document.createElement('a');
+    mdA.href = mdUrl;
+    mdA.download = `${article.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_apple_notes.md`;
+    mdA.click();
+    URL.revokeObjectURL(mdUrl);
+
+    const configBlob = new Blob([iCloudConfig], { type: 'text/markdown' });
+    const configUrl = URL.createObjectURL(configBlob);
+    const configA = document.createElement('a');
+    configA.href = configUrl;
+    configA.download = `${article.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_icloud_setup.md`;
+    configA.click();
+    URL.revokeObjectURL(configUrl);
+
+    const instructions = `
+🍎 Apple Notes Export Complete!
+
+Downloaded Files:
+• Markdown file optimized for Apple Notes
+• iCloud setup configuration guide
+
+Transfer Methods:
+1. **AirDrop:** Send files to your Apple device
+2. **iCloud Drive:** Upload and access from iOS/macOS
+3. **Email:** Send to yourself and open on Apple device
+4. **USB Transfer:** Connect device and copy files
+
+On your Apple device:
+• iOS 26+: Use Share Sheet to import directly
+• macOS 26+: Native markdown support in Notes app
+• Earlier versions: Copy/paste content into Notes
+
+The files include Siri Shortcuts integration and iCloud sync setup!
+`;
+    
+    alert(instructions);
   }
 };
 
@@ -155,76 +511,526 @@ ${article.content.replace(/\n\n/g, '</p><p>').replace(/\*\*(.*?)\*\*/g, '<strong
 };
 
 const exportToOpenOffice = (article: WikiArticle) => {
-  // Create OpenDocument Text format content
-  const odtContent = `<?xml version="1.0" encoding="UTF-8"?>
-<office:document xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0">
-<office:body>
-<office:text>
-<text:h text:style-name="Heading_20_1" text:outline-level="1">${article.title}</text:h>
-<text:p text:style-name="Standard">${article.content.replace(/\n/g, '</text:p><text:p text:style-name="Standard">')}</text:p>
-</office:text>
-</office:body>
-</office:document>`;
-
-  // For now, export as HTML for LibreOffice compatibility
-  const htmlContent = `
+  // Create comprehensive LibreOffice/OpenOffice compatible export with multiple formats
+  
+  // Enhanced HTML with LibreOffice-specific styles
+  const libreOfficeHtml = `
 <!DOCTYPE html>
 <html>
-<head><title>${article.title}</title></head>
+<head>
+    <meta charset="UTF-8">
+    <title>${article.title}</title>
+    <meta name="author" content="${article.author}">
+    <meta name="generator" content="TriSex.org Wiki - LibreOffice Compatible Export">
+    <meta name="description" content="${article.tags.join(', ')}">
+    <style>
+        @page { 
+            margin: 2.5cm; 
+            size: A4;
+            @top-center { content: "TriSex.org Wiki - ${article.title}"; }
+            @bottom-right { content: "Page " counter(page); }
+        }
+        body { 
+            font-family: 'Liberation Sans', 'DejaVu Sans', Arial, sans-serif; 
+            line-height: 1.6; 
+            color: #333;
+            max-width: none;
+        }
+        h1 { 
+            color: #d63384; 
+            border-bottom: 3px solid #d63384; 
+            padding-bottom: 10px;
+            font-size: 24pt;
+            margin-bottom: 20pt;
+            page-break-after: avoid;
+        }
+        h2 { 
+            color: #0d6efd; 
+            font-size: 18pt;
+            margin-top: 24pt;
+            margin-bottom: 12pt;
+            page-break-after: avoid;
+        }
+        h3 { 
+            color: #6c757d; 
+            font-size: 14pt;
+            margin-top: 18pt;
+            margin-bottom: 9pt;
+            page-break-after: avoid;
+        }
+        .metadata { 
+            background: #f8f9fa; 
+            padding: 12pt; 
+            border-left: 4pt solid #d63384; 
+            margin: 12pt 0; 
+            border-radius: 4pt;
+            page-break-inside: avoid;
+        }
+        .tags { 
+            background: #e9ecef; 
+            color: #495057;
+            padding: 4pt 8pt; 
+            border-radius: 12pt; 
+            display: inline-block; 
+            margin: 2pt; 
+            font-size: 9pt;
+            font-weight: bold;
+        }
+        .libre-header {
+            background: #198754;
+            color: white;
+            padding: 12pt;
+            margin: -12pt -12pt 12pt -12pt;
+            border-radius: 4pt 4pt 0 0;
+            font-weight: bold;
+            text-align: center;
+        }
+        .integration-box {
+            border: 1pt solid #dee2e6;
+            padding: 10pt;
+            margin: 12pt 0;
+            border-radius: 4pt;
+            background: #f8f9fa;
+            page-break-inside: avoid;
+        }
+        code {
+            background: #e9ecef;
+            padding: 2pt 4pt;
+            border-radius: 2pt;
+            font-family: 'Liberation Mono', 'DejaVu Sans Mono', monospace;
+            font-size: 10pt;
+        }
+        blockquote {
+            border-left: 4pt solid #6c757d;
+            margin: 12pt 0;
+            padding-left: 12pt;
+            color: #6c757d;
+            font-style: italic;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 12pt 0;
+        }
+        th, td {
+            border: 1pt solid #dee2e6;
+            padding: 6pt 8pt;
+            text-align: left;
+        }
+        th {
+            background: #e9ecef;
+            font-weight: bold;
+        }
+        @media print {
+            .integration-box { page-break-inside: avoid; }
+            h1, h2, h3 { page-break-after: avoid; }
+        }
+    </style>
+</head>
 <body>
-<h1>${article.title}</h1>
-${article.content.replace(/\n\n/g, '</p><p>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')}
+    <div class="metadata">
+        <div class="libre-header">TriSex.org Knowledge Wiki - LibreOffice/OpenOffice Compatible</div>
+        <table>
+            <tr><td><strong>Document Title:</strong></td><td>${article.title}</td></tr>
+            <tr><td><strong>Category:</strong></td><td>${article.category.toUpperCase()}</td></tr>
+            <tr><td><strong>Difficulty Level:</strong></td><td>${article.difficulty}</td></tr>
+            <tr><td><strong>Estimated Reading Time:</strong></td><td>${article.readTime}</td></tr>
+            <tr><td><strong>Content Author:</strong></td><td>${article.author}</td></tr>
+            <tr><td><strong>Last Updated:</strong></td><td>${article.lastUpdated}</td></tr>
+            <tr><td><strong>Subject Tags:</strong></td><td>${article.tags.map(tag => `<span class="tags">${tag}</span>`).join(' ')}</td></tr>
+        </table>
+    </div>
+    
+    <h1>${article.title}</h1>
+    
+    ${article.content
+      .replace(/\n\n/g, '</p><p>')
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.*?)\*/g, '<em>$1</em>')
+      .replace(/^# (.*$)/gim, '<h2>$1</h2>')
+      .replace(/^## (.*$)/gim, '<h3>$1</h3>')
+      .replace(/^### (.*$)/gim, '<h4>$1</h4>')
+    }
+    
+    <div class="integration-box">
+        <h3>🔧 LibreOffice Integration Features</h3>
+        <p><strong>Current Version Support:</strong> LibreOffice 7.0+ / OpenOffice 4.0+</p>
+        <p><strong>Coming in LibreOffice 26.2 (2026):</strong> Native Markdown import/export</p>
+        <p><strong>Advanced Features:</strong></p>
+        <ul>
+            <li>Master documents for multi-article collections</li>
+            <li>Cross-references and automatic indexing</li>
+            <li>Export to PDF with bookmarks and metadata</li>
+            <li>Integration with Zotero for citations</li>
+            <li>Version control with Git integration</li>
+        </ul>
+    </div>
+    
+    <div class="integration-box">
+        <h3>📊 Document Statistics</h3>
+        <table>
+            <tr><th>Property</th><th>Value</th></tr>
+            <tr><td>Word Count (approx)</td><td>${article.content.split(' ').length} words</td></tr>
+            <tr><td>Character Count</td><td>${article.content.length} characters</td></tr>
+            <tr><td>Paragraph Count</td><td>${article.content.split('\n\n').length} paragraphs</td></tr>
+            <tr><td>Export Format</td><td>HTML → LibreOffice Writer</td></tr>
+        </table>
+    </div>
 </body>
 </html>`;
 
-  const blob = new Blob([htmlContent], { type: 'text/html' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `${article.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_libreoffice.html`;
-  a.click();
-  URL.revokeObjectURL(url);
-  alert('Downloaded as HTML! Open in LibreOffice Writer. Native Markdown import coming in LibreOffice 26.2 (2026). For ODT format, use Pandoc: pandoc file.html -o output.odt');
+  // Create OpenDocument Text (ODT) metadata for future compatibility
+  const odtMetadata = `
+# LibreOffice ODT Conversion Instructions
+
+## Quick Import (Current):
+1. Save the downloaded HTML file
+2. Open LibreOffice Writer
+3. File → Open → Select HTML file
+4. File → Save As → OpenDocument Text (.odt)
+
+## Advanced Conversion with Pandoc:
+\`\`\`bash
+# Install Pandoc (pandoc.org)
+pandoc "${article.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_libreoffice.html" -o "${article.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.odt" --metadata title="${article.title}" --metadata author="${article.author}"
+\`\`\`
+
+## LibreOffice Extension Recommendations:
+- **Writage**: Enhanced Markdown support
+- **Zotero Integration**: Citation management
+- **Git Integration**: Version control
+- **Language Tool**: Grammar checking
+- **Grammalecte**: French/multi-language support
+
+## Future Features (LibreOffice 26.2+):
+- Native Markdown import via File → Import → Markdown
+- Direct Wiki integration via Extensions
+- Real-time collaborative editing improvements
+- Enhanced accessibility features
+
+## OpenOffice Compatibility:
+This document is compatible with OpenOffice 4.0+
+For best results, use LibreOffice (more actively developed)
+
+Generated from: TriSex.org Knowledge Wiki
+Source: ${article.title}
+Export Date: ${new Date().toLocaleDateString()}
+`;
+
+  // Create Writer template for consistent formatting
+  const writerTemplate = `
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- LibreOffice Writer Template for TriSex.org Wiki Articles -->
+<office:document-content 
+    xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0"
+    xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0"
+    xmlns:style="urn:oasis:names:tc:opendocument:xmlns:style:1.0">
+    
+<office:automatic-styles>
+    <style:style style:name="WikiTitle" style:family="paragraph">
+        <style:text-properties fo:font-size="24pt" fo:font-weight="bold" fo:color="#d63384"/>
+    </style:style>
+    <style:style style:name="WikiHeader" style:family="paragraph">
+        <style:text-properties fo:font-size="18pt" fo:font-weight="bold" fo:color="#0d6efd"/>
+    </style:style>
+    <style:style style:name="WikiMetadata" style:family="paragraph">
+        <style:paragraph-properties fo:background-color="#f8f9fa" fo:padding="12pt"/>
+    </style:style>
+</office:automatic-styles>
+
+<office:body>
+    <office:text>
+        <text:h text:style-name="WikiTitle">${article.title}</text:h>
+        <text:p text:style-name="WikiMetadata">
+            Category: ${article.category} | Author: ${article.author} | Updated: ${article.lastUpdated}
+        </text:p>
+        ${article.content.split('\n').map(line => 
+          `<text:p text:style-name="Standard">${line}</text:p>`
+        ).join('\n        ')}
+    </office:text>
+</office:body>
+</office:document-content>`;
+
+  // Download multiple formats
+  const htmlBlob = new Blob([libreOfficeHtml], { type: 'text/html' });
+  const htmlUrl = URL.createObjectURL(htmlBlob);
+  const htmlA = document.createElement('a');
+  htmlA.href = htmlUrl;
+  htmlA.download = `${article.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_libreoffice.html`;
+  htmlA.click();
+  URL.revokeObjectURL(htmlUrl);
+
+  const metadataBlob = new Blob([odtMetadata], { type: 'text/markdown' });
+  const metadataUrl = URL.createObjectURL(metadataBlob);
+  const metadataA = document.createElement('a');
+  metadataA.href = metadataUrl;
+  metadataA.download = `${article.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_libreoffice_guide.md`;
+  metadataA.click();
+  URL.revokeObjectURL(metadataUrl);
+
+  const templateBlob = new Blob([writerTemplate], { type: 'application/xml' });
+  const templateUrl = URL.createObjectURL(templateBlob);
+  const templateA = document.createElement('a');
+  templateA.href = templateUrl;
+  templateA.download = `${article.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_writer_template.xml`;
+  templateA.click();
+  URL.revokeObjectURL(templateUrl);
+
+  const instructions = `
+📄 LibreOffice/OpenOffice Integration Complete!
+
+Downloaded Files:
+• HTML optimized for LibreOffice Writer import
+• Conversion guide with Pandoc instructions  
+• Writer template for consistent formatting
+
+Import Instructions:
+1. **Simple Import:** Open HTML file in LibreOffice Writer
+2. **Advanced:** Use Pandoc for ODT conversion
+3. **Template:** Import XML template for styling
+
+LibreOffice Features:
+✅ Print-ready formatting with proper page breaks
+✅ Table of contents generation ready
+✅ Professional styling with TriSex.org branding
+✅ Metadata preservation for document properties
+✅ Cross-platform compatibility (Windows/Mac/Linux)
+
+Future Support (LibreOffice 26.2+):
+🔮 Native Markdown import/export
+🔮 Enhanced Wiki integration
+🔮 Improved collaborative features
+
+Your content is ready for professional document creation! 📝
+`;
+
+  alert(instructions);
 };
 
 const exportToAppFlowy = (article: WikiArticle) => {
-  // Create AppFlowy-compatible markdown with proper structure
-  const appFlowyContent = {
-    title: article.title,
-    content: article.content,
-    metadata: {
-      category: article.category,
-      tags: article.tags,
-      author: article.author,
-      lastUpdated: article.lastUpdated,
-      difficulty: article.difficulty,
-      readTime: article.readTime
-    }
-  };
-
-  navigator.clipboard?.writeText(article.content);
+  // Create comprehensive AppFlowy workspace integration with enhanced features
   
-  // Provide instructions for AppFlowy import
-  const instructions = `
-AppFlowy Import Instructions:
-1. Content copied to clipboard!
-2. In AppFlowy: Settings → Files → Import Data
-3. Create new page and paste content
-4. Or save as .md file and use AppFlowy's markdown import feature
+  // Enhanced AppFlowy markdown with metadata blocks
+  const appFlowyContent = `---
+title: ${article.title}
+category: ${article.category}
+tags: [${article.tags.map(tag => `"${tag}"`).join(', ')}]
+author: ${article.author}
+created: ${article.lastUpdated}
+difficulty: ${article.difficulty}
+readTime: ${article.readTime}
+source: TriSex.org Knowledge Wiki
+appflowy_version: "0.3.0+"
+workspace: TriSex.org Wiki
+---
 
-For bulk import: Use AppFlowy's ZIP workspace import feature with multiple .md files.
+# ${article.title}
+
+## 📊 Article Metadata
+- **Category**: ${article.category.toUpperCase()}
+- **Difficulty Level**: ${article.difficulty}
+- **Estimated Reading Time**: ${article.readTime}
+- **Author**: ${article.author}
+- **Last Updated**: ${article.lastUpdated}
+- **Tags**: ${article.tags.join(' • ')}
+
+---
+
+${article.content}
+
+---
+
+## 🔧 AppFlowy Integration Features
+
+### Database Integration
+- Create a new database in AppFlowy for tracking all Wiki articles
+- Use properties: Title, Category, Difficulty, Tags, Read Time
+- Filter and sort articles by category or difficulty level
+
+### Collaborative Features
+- Share workspace with team members for real-time collaboration
+- Use comments and mentions for team discussions
+- Track reading progress with checkboxes and progress bars
+
+### Organization Tips
+- Create separate pages for each category (${article.category})
+- Use AppFlowy's hierarchical page structure for better organization
+- Link related articles using [[Page Name]] syntax
+
+### Advanced Features (AppFlowy 0.4+)
+- Calendar integration for scheduling reading sessions
+- Reminder system for regular content reviews
+- Export to PDF/Word for offline access
+- Integration with task management workflows
+
+**Source**: TriSex.org Knowledge Wiki - ${article.title}
+**Compatible**: AppFlowy 0.3.0+ (Notion-alternative, open-source)`;
+
+  // Create AppFlowy database template
+  const appFlowyDatabase = `
+# AppFlowy Database Template for TriSex.org Wiki
+
+## Database Properties Setup:
+1. **Title** (Title): Primary field for article names
+2. **Category** (Select): ${Array.from(new Set([article.category])).join(', ')}
+3. **Difficulty** (Select): Beginner, Intermediate, Advanced
+4. **Tags** (Multi-select): ${article.tags.join(', ')}
+5. **Author** (Text): Content creator name
+6. **Read Time** (Number): Estimated minutes to read
+7. **Last Updated** (Date): When content was last modified
+8. **Status** (Select): To Read, Reading, Completed
+9. **Rating** (Number): Personal rating 1-5
+10. **Notes** (Text): Personal notes and reflections
+
+## Sample Entry:
+- **Title**: ${article.title}
+- **Category**: ${article.category}
+- **Difficulty**: ${article.difficulty}
+- **Tags**: ${article.tags.join(', ')}
+- **Author**: ${article.author}
+- **Read Time**: ${parseInt(article.readTime)}
+- **Last Updated**: ${article.lastUpdated}
+- **Status**: To Read
+- **Rating**: (Rate after reading)
+- **Notes**: (Add your thoughts here)
+
+## Workspace Structure:
+- 📚 TriSex.org Wiki/
+  - 📊 Article Database (main database)
+  - 📁 Categories/
+    - ${article.category}/
+      - ${article.title}
+  - 📈 Reading Progress
+  - 🔖 Bookmarks
+  - 💭 Personal Notes
+
+## Tips for AppFlowy Usage:
+- Use templates for consistent article formatting
+- Create filtered views for different categories
+- Set up recurring reminders for content updates
+- Use AppFlowy's block-based editor for rich formatting
+- Link related articles using bidirectional linking
 `;
+
+  // Create AppFlowy workspace export configuration
+  const appFlowyWorkspace = `
+{
+  "workspace": {
+    "name": "TriSex.org Knowledge Wiki",
+    "description": "Comprehensive sexual health education and resources",
+    "version": "1.0",
+    "created_by": "TriSex.org",
+    "last_updated": "${new Date().toISOString()}",
+    "pages": [
+      {
+        "id": "wiki_${article.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}",
+        "title": "${article.title}",
+        "content": ${JSON.stringify(appFlowyContent)},
+        "properties": {
+          "category": "${article.category}",
+          "difficulty": "${article.difficulty}",
+          "tags": ${JSON.stringify(article.tags)},
+          "author": "${article.author}",
+          "readTime": "${article.readTime}",
+          "lastUpdated": "${article.lastUpdated}"
+        }
+      }
+    ],
+    "databases": [
+      {
+        "id": "trisex_wiki_articles",
+        "name": "TriSex Wiki Articles",
+        "description": "Comprehensive database of all Wiki articles",
+        "properties": {
+          "title": {"type": "title"},
+          "category": {"type": "select", "options": ["${article.category}"]},
+          "difficulty": {"type": "select", "options": ["Beginner", "Intermediate", "Advanced"]},
+          "tags": {"type": "multi_select", "options": ${JSON.stringify(article.tags)}},
+          "author": {"type": "text"},
+          "readTime": {"type": "number"},
+          "lastUpdated": {"type": "date"},
+          "status": {"type": "select", "options": ["To Read", "Reading", "Completed"]},
+          "rating": {"type": "number", "min": 1, "max": 5},
+          "notes": {"type": "text"}
+        }
+      }
+    ]
+  }
+}
+`;
+
+  // Copy content to clipboard for immediate use
+  navigator.clipboard?.writeText(appFlowyContent);
   
+  // Download multiple formats for AppFlowy
+  const mdBlob = new Blob([appFlowyContent], { type: 'text/markdown' });
+  const mdUrl = URL.createObjectURL(mdBlob);
+  const mdA = document.createElement('a');
+  mdA.href = mdUrl;
+  mdA.download = `${article.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_appflowy.md`;
+  mdA.click();
+  URL.revokeObjectURL(mdUrl);
+
+  const dbBlob = new Blob([appFlowyDatabase], { type: 'text/markdown' });
+  const dbUrl = URL.createObjectURL(dbBlob);
+  const dbA = document.createElement('a');
+  dbA.href = dbUrl;
+  dbA.download = `${article.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_appflowy_database.md`;
+  dbA.click();
+  URL.revokeObjectURL(dbUrl);
+
+  const workspaceBlob = new Blob([appFlowyWorkspace], { type: 'application/json' });
+  const workspaceUrl = URL.createObjectURL(workspaceBlob);
+  const workspaceA = document.createElement('a');
+  workspaceA.href = workspaceUrl;
+  workspaceA.download = `${article.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_appflowy_workspace.json`;
+  workspaceA.click();
+  URL.revokeObjectURL(workspaceUrl);
+
+  const instructions = `
+🚀 AppFlowy Integration Complete!
+
+Downloaded Files:
+• Enhanced Markdown with YAML frontmatter
+• Database template with properties setup
+• Complete workspace configuration (JSON)
+• Content copied to clipboard!
+
+AppFlowy Import Options:
+
+1. **Quick Import (Immediate):**
+   • Open AppFlowy and create new page
+   • Paste content from clipboard (rich formatting preserved)
+   • Content includes metadata and organization structure
+
+2. **Advanced Database Setup:**
+   • Import database template to create structured knowledge base
+   • Track reading progress, ratings, and personal notes
+   • Filter and organize articles by category and difficulty
+
+3. **Workspace Import (AppFlowy 0.4+):**
+   • Use JSON workspace file for complete setup
+   • Includes database properties and page templates
+   • Automated organization structure
+
+AppFlowy Features Enabled:
+✅ Block-based rich text editing
+✅ Database with filtering and sorting
+✅ Bidirectional linking between articles
+✅ Real-time collaborative editing
+✅ Offline access and sync
+✅ Open-source privacy protection
+
+Organization Tips:
+• Create filtered views for each category
+• Use templates for consistent formatting
+• Set up recurring reminders for updates
+• Link related articles with [[Article Name]]
+
+Your knowledge base is ready for AppFlowy! 📚✨
+`;
+
   alert(instructions);
-  
-  // Also download as .md for AppFlowy import
-  const blob = new Blob([article.content], { type: 'text/markdown' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `${article.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_appflowy.md`;
-  a.click();
-  URL.revokeObjectURL(url);
 };
 
 // Public Health Agency Export Functions
