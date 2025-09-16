@@ -2994,7 +2994,7 @@ This comprehensive intelligence framework ensures that TriSex.org's peer mentor 
 ### Identity-Affirming Language
 - **Gender identity**: Self-determination priority
 - **Sexual orientation**: Spectrum recognition
-- **Relationship styles**: Monogamy to polyamory
+- **Relationship styles**: Committed monogamous relationships
 - **Cultural identity**: Intersectional awareness
 
 ## 2SLGBTIQA+ Terminology
@@ -3112,9 +3112,9 @@ NanoHeal is uniquely designed to provide effective STI prevention across differe
 
 **Higher-Risk Relationship Contexts:**
 - **New sexual partnerships**: Unknown STI status or recent testing
-- **Casual encounters**: One-time or infrequent sexual contact
-- **Multiple concurrent partners**: Active dating or open relationships
-- **Unknown partner history**: Meeting partners through apps, parties, or clubs
+- **New partnerships**: Building intimacy in developing relationships
+- **New relationship formation**: Transitioning to committed partnership
+- **Unknown partner history**: Meeting partners through dating apps or social settings
 - **Recent STI exposure**: Partner had recent infection or exposure risk
 
 **Combined Protection Effectiveness:**
@@ -3129,7 +3129,7 @@ NanoHeal is uniquely designed to provide effective STI prevention across differe
 
 **Level 1: Exploratory** (Always use barriers + NanoHeal)
 - First-time sexual contact
-- Dating phase, multiple partners
+- Dating phase, getting to know one partner
 - Unknown sexual health status
 - Recent breakup or new to sexual activity
 
@@ -3260,12 +3260,12 @@ The Gaynal Condom System is specifically engineered for men who have sex with me
 - **Plus Size**: Comfortable options for larger body types and varied anatomies
 - **Athletic Fit**: Designed for muscular builds and active lifestyles
 - **Leather Extreme**: Heavy-duty options for BDSM and kink communities
-- **Circuit Endurance**: Extended-wear formula for multi-partner encounters
+- **Extended Intimacy**: Long-lasting formula for committed couples
 
 **Specialized MSM Options:**
 - **Trans Gay Men**: Anatomically adapted designs for FTM gay men
 - **Versatile Ready**: Quick-change options for vers men who switch roles
-- **Party Pack**: Variety packs popular at gay clubs and circuit parties
+- **Relationship Ready**: Variety packs for committed partners exploring together
 
 ### Trans Sex Protection Systems
 
