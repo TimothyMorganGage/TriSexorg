@@ -2,6 +2,11 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import multer from "multer";
 import path from "path";
+import bcrypt from "bcrypt";
+import session from "express-session";
+import helmet from "helmet";
+import cors from "cors";
+import rateLimit from "express-rate-limit";
 import { storage } from "./storage";
 import { 
   insertUserSchema, insertProductConfigurationSchema, insertOrderSchema,
@@ -10,6 +15,7 @@ import {
 import { z } from "zod";
 import { genealogyService, RelationshipUtils } from "./genealogy";
 import { ageVerificationService, DocumentType, VerificationStatus, AgeVerificationUtils } from "./ageVerification";
+import { requireAuth } from "./middleware/auth";
 
 const loginSchema = z.object({
   email: z.string().email(),
@@ -66,7 +72,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ message: "User already exists" });
       }
 
-      const user = await storage.createUser(userData);
+      // Hash password before storing
+      const saltRounds = 10;
+      const hashedPassword = await bcrypt.hash(userData.password, saltRounds);
+      
+      const user = await storage.createUser({
+        ...userData,
+        password: hashedPassword
+      });
+      
+      // Store user in session
+      req.session.userId = user.id;
+      
       const { password, ...userResponse } = user;
       res.json({ user: userResponse });
     } catch (error) {
@@ -79,14 +96,55 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const { email, password } = loginSchema.parse(req.body);
       
       const user = await storage.getUserByEmail(email);
-      if (!user || user.password !== password) {
+      if (!user) {
         return res.status(401).json({ message: "Invalid credentials" });
       }
+
+      // Verify password using bcrypt
+      const passwordMatch = await bcrypt.compare(password, user.password);
+      if (!passwordMatch) {
+        return res.status(401).json({ message: "Invalid credentials" });
+      }
+
+      // Store user in session
+      req.session.userId = user.id;
 
       const { password: _, ...userResponse } = user;
       res.json({ user: userResponse });
     } catch (error) {
       res.status(400).json({ message: "Login failed" });
+    }
+  });
+
+  app.post("/api/auth/logout", async (req, res) => {
+    try {
+      req.session.destroy((err) => {
+        if (err) {
+          return res.status(500).json({ message: "Logout failed" });
+        }
+        res.clearCookie('sessionId');
+        res.json({ message: "Logged out successfully" });
+      });
+    } catch (error) {
+      res.status(500).json({ message: "Logout failed" });
+    }
+  });
+
+  app.get("/api/auth/me", async (req, res) => {
+    try {
+      if (!req.session.userId) {
+        return res.status(401).json({ message: "Not authenticated" });
+      }
+      
+      const user = await storage.getUser(req.session.userId);
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      
+      const { password, ...userResponse } = user;
+      res.json({ user: userResponse });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to get user" });
     }
   });
 
@@ -114,12 +172,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Product Configuration routes
-  app.get("/api/configurations", async (req, res) => {
+  app.get("/api/configurations", requireAuth, async (req, res) => {
     try {
-      const userId = parseInt(req.query.userId as string);
-      if (!userId) {
-        return res.status(400).json({ message: "User ID required" });
-      }
+      const userId = req.session.userId!;
       const configurations = await storage.getProductConfigurations(userId);
       res.json(configurations);
     } catch (error) {
@@ -127,9 +182,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post("/api/configurations", async (req, res) => {
+  app.post("/api/configurations", requireAuth, async (req, res) => {
     try {
-      const configData = insertProductConfigurationSchema.parse(req.body);
+      const userId = req.session.userId!;
+      const configData = insertProductConfigurationSchema.parse({
+        ...req.body,
+        userId
+      });
       const configuration = await storage.createProductConfiguration(configData);
       res.json(configuration);
     } catch (error) {
@@ -137,7 +196,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.patch("/api/configurations/:id/status", async (req, res) => {
+  app.patch("/api/configurations/:id/status", requireAuth, async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       const { status } = req.body;
@@ -265,10 +324,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Mood and Wellness Logging routes
-  app.get("/api/mood-entries", async (req, res) => {
+  app.get("/api/mood-entries", requireAuth, async (req, res) => {
     try {
-      // For now, use a mock user ID (in real app, get from session)
-      const userId = 1;
+      const userId = req.session.userId!;
       const entries = await storage.getMoodEntries(userId);
       res.json(entries);
     } catch (error) {
@@ -276,10 +334,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post("/api/mood-entries", async (req, res) => {
+  app.post("/api/mood-entries", requireAuth, async (req, res) => {
     try {
-      // For now, use a mock user ID (in real app, get from session)
-      const userId = 1;
+      const userId = req.session.userId!;
       const entryData = { ...req.body, userId };
       const entry = await storage.createMoodEntry(entryData);
       res.json(entry);
@@ -288,10 +345,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/wellness-goals", async (req, res) => {
+  app.get("/api/wellness-goals", requireAuth, async (req, res) => {
     try {
-      // For now, use a mock user ID (in real app, get from session)
-      const userId = 1;
+      const userId = req.session.userId!;
       const goals = await storage.getWellnessGoals(userId);
       res.json(goals);
     } catch (error) {
@@ -299,10 +355,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/mood-insights", async (req, res) => {
+  app.get("/api/mood-insights", requireAuth, async (req, res) => {
     try {
-      // For now, use a mock user ID (in real app, get from session)
-      const userId = 1;
+      const userId = req.session.userId!;
       const insights = await storage.getMoodInsights(userId);
       res.json(insights);
     } catch (error) {
@@ -311,10 +366,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Time Management routes - "Wise Time Flucks" system
-  app.get("/api/time-entries", async (req, res) => {
+  app.get("/api/time-entries", requireAuth, async (req, res) => {
     try {
-      // For now, use a mock user ID (in real app, get from session)
-      const userId = 1;
+      const userId = req.session.userId!;
       const entries = await storage.getTimeEntries(userId);
       res.json(entries);
     } catch (error) {
@@ -322,10 +376,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post("/api/time-entries", async (req, res) => {
+  app.post("/api/time-entries", requireAuth, async (req, res) => {
     try {
-      // For now, use a mock user ID (in real app, get from session)
-      const userId = 1;
+      const userId = req.session.userId!;
       const entryData = { ...req.body, userId };
       const entry = await storage.createTimeEntry(entryData);
       res.json(entry);
@@ -334,7 +387,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.put("/api/time-entries/:id", async (req, res) => {
+  app.put("/api/time-entries/:id", requireAuth, async (req, res) => {
     try {
       const { id } = req.params;
       const entry = await storage.updateTimeEntry(parseInt(id), req.body);
@@ -347,10 +400,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/time-entries/active", async (req, res) => {
+  app.get("/api/time-entries/active", requireAuth, async (req, res) => {
     try {
-      // For now, use a mock user ID (in real app, get from session)
-      const userId = 1;
+      const userId = req.session.userId!;
       const activeEntry = await storage.getActiveTimeEntry(userId);
       res.json(activeEntry);
     } catch (error) {
@@ -358,10 +410,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/time-goals", async (req, res) => {
+  app.get("/api/time-goals", requireAuth, async (req, res) => {
     try {
-      // For now, use a mock user ID (in real app, get from session)
-      const userId = 1;
+      const userId = req.session.userId!;
       const goals = await storage.getTimeGoals(userId);
       res.json(goals);
     } catch (error) {
@@ -369,10 +420,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post("/api/time-goals", async (req, res) => {
+  app.post("/api/time-goals", requireAuth, async (req, res) => {
     try {
-      // For now, use a mock user ID (in real app, get from session)
-      const userId = 1;
+      const userId = req.session.userId!;
       const goalData = { ...req.body, userId };
       const goal = await storage.createTimeGoal(goalData);
       res.json(goal);
@@ -381,10 +431,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/time-insights", async (req, res) => {
+  app.get("/api/time-insights", requireAuth, async (req, res) => {
     try {
-      // For now, use a mock user ID (in real app, get from session)
-      const userId = 1;
+      const userId = req.session.userId!;
       const insights = await storage.getTimeInsights(userId);
       res.json(insights);
     } catch (error) {

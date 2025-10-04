@@ -1,4 +1,5 @@
 import { useState } from "react";
+import DOMPurify from "isomorphic-dompurify";
 import { BetaDisclaimer } from "@/components/BetaDisclaimer";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -3691,8 +3692,9 @@ This intersectional approach ensures that protection technology serves all commu
           return <br key={index} />;
         }
         
-        // Regular paragraphs
-        return <p key={index} className="mb-3" dangerouslySetInnerHTML={{ __html: boldText }} />;
+        // Regular paragraphs - sanitize HTML to prevent XSS attacks
+        const sanitizedHtml = DOMPurify.sanitize(boldText);
+        return <p key={index} className="mb-3" dangerouslySetInnerHTML={{ __html: sanitizedHtml }} />;
       });
   };
 
