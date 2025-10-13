@@ -3633,6 +3633,421 @@ This intersectional approach ensures that protection technology serves all commu
       author: "NanoHeal Cooperative Research Team & TriSex.org Clinical Partners",
       difficulty: "Intermediate", 
       readTime: "28 min"
+    },
+    {
+      id: "self-employed-ein-medicaid-epd",
+      title: "Using TriSex.org with Self-Employed EIN & Medicaid Employed Persons with Disabilities Program",
+      category: "health",
+      content: `# Using TriSex.org with Self-Employed EIN & Medicaid Employed Persons with Disabilities Program
+
+## Overview
+
+TriSex.org services can be utilized through self-employed EIN (Employer Identification Number) tax structures and coordinated with the Medicaid Employed Persons with Disabilities (EPD) program, providing comprehensive sexual health care while maximizing financial accessibility and tax benefits. This guide outlines how to effectively leverage both systems for optimal health and financial outcomes.
+
+## Part 1: Self-Employed EIN Integration
+
+### What is a Self-Employed EIN?
+
+An Employer Identification Number (EIN) is a federal tax ID for businesses. Self-employed individuals can obtain an EIN to:
+- Separate personal and business finances
+- Claim business deductions
+- Build business credit
+- Establish professional legitimacy
+
+### Using TriSex.org Services with Your EIN
+
+#### Eligible Business Deductions
+
+**Health & Wellness Services** (100% Deductible):
+- Preventive sexual health screenings
+- STI testing and treatment
+- Reproductive health consultations
+- Mental wellness counseling related to sexual health
+- Addiction recovery support services
+
+**Medical Supplies & Products** (100% Deductible):
+- NanoHeal lubricants for health maintenance
+- Barrier protection (condoms, dental dams)
+- At-home testing kits
+- Health monitoring devices
+- Prescribed treatments and medications
+
+**Educational Resources** (100% Deductible):
+- Sexual health education materials
+- Professional development for health educators
+- Community facilitator training
+- Cultural competency workshops
+
+#### Setting Up Your EIN for TriSex.org Services
+
+**Step 1: Obtain Your EIN**
+- Apply free at IRS.gov (instant approval online)
+- Sole proprietors, LLCs, and partnerships all qualify
+- No cost to obtain or maintain
+
+**Step 2: Establish Your Business Purpose**
+- Health educator
+- Wellness consultant
+- Community advocate
+- Peer support specialist
+- Any legitimate self-employed work qualifies
+
+**Step 3: Document Your Health Expenses**
+- Request invoices with your EIN from TriSex.org
+- Maintain detailed expense records
+- Categorize as "Health & Wellness" or "Medical Supplies"
+- Keep all receipts for 7 years (IRS requirement)
+
+#### Tax Benefits & Deductions
+
+**Schedule C Deductions** (Self-Employed):
+- Line 25: Health insurance premiums (if self-insured)
+- Line 29: Medical and health expenses related to business activities
+
+**Health Savings Account (HSA) Coordination**:
+- Use HSA funds for qualified medical expenses
+- TriSex.org preventive services qualify
+- Triple tax advantage: pre-tax contributions, tax-free growth, tax-free withdrawals
+
+**Self-Employed Health Insurance Deduction**:
+- Deduct 100% of health insurance premiums
+- Includes sexual health coverage
+- Claimed on Form 1040, not Schedule C
+
+### Invoicing & Payment Structure
+
+**Requesting EIN-Based Invoices from TriSex.org**:
+1. Provide your EIN during checkout
+2. Specify business name for proper documentation
+3. Request detailed itemization for tax records
+4. Ask for HSA/FSA eligible item designation
+
+**Payment Methods for Tax Documentation**:
+- Business checking account (best for audit trail)
+- Business credit card (builds business credit)
+- HSA/FSA debit card (for qualified expenses)
+- Avoid cash payments (difficult to document)
+
+## Part 2: Medicaid Employed Persons with Disabilities (EPD) Program
+
+### Understanding Medicaid EPD
+
+The Medicaid EPD (Employed Persons with Disabilities) program extends Medicaid coverage to working individuals with disabilities who:
+- Earn above traditional Medicaid income limits
+- Cannot afford private insurance
+- Need comprehensive health coverage to maintain employment
+
+### TriSex.org Services Covered by Medicaid EPD
+
+#### Covered Services
+
+**Primary Care Sexual Health** (Full Coverage):
+- Annual wellness exams including sexual health
+- STI screening and diagnosis
+- Bacterial, viral, and fungal infection treatment
+- Reproductive health services
+- Family planning counseling
+
+**Preventive Care** (No Cost-Sharing):
+- HIV testing and PrEP medication
+- HPV vaccination
+- Hepatitis A/B vaccination
+- Annual STI screening for high-risk individuals
+- Contraceptive counseling and supplies
+
+**Mental Health Services** (Covered):
+- Sexual health counseling
+- Trauma-informed therapy
+- Addiction recovery support
+- Relationship counseling related to health
+
+**Durable Medical Equipment** (Covered):
+- At-home testing devices
+- Health monitoring equipment
+- Mobility aids for clinic access
+- Assistive devices for sexual health management
+
+#### Services Requiring Prior Authorization
+
+**Specialty Products**:
+- NanoHeal lubricants (may require medical necessity documentation)
+- Specialized barrier protection (standard condoms covered without authorization)
+- Custom-fitted products (require prescription)
+
+**Extended Services**:
+- Intensive outpatient therapy beyond standard limits
+- Specialty consultations with out-of-network providers
+- Experimental or emerging treatments
+
+### EPD Eligibility & Enrollment
+
+#### Qualifying for Medicaid EPD
+
+**Disability Requirements**:
+- Social Security disability determination (SSDI or SSI eligible), OR
+- State disability certification, OR
+- Certain chronic conditions that limit work capacity
+
+**Employment Requirements**:
+- Actively employed (part-time or full-time)
+- Earning income from work
+- Income below 250% of Federal Poverty Level (varies by state)
+
+**Asset Requirements**:
+- Most states allow up to $15,000 in countable assets
+- Home, one vehicle, and retirement accounts typically excluded
+- Work-related equipment and supplies excluded
+
+#### Enrollment Process for TriSex.org Users
+
+**Step 1: Verify EPD Availability**
+- Check your state Medicaid website (not all states offer EPD)
+- Contact local Medicaid office
+- Call TriSex.org billing department for EPD confirmation
+
+**Step 2: Gather Documentation**
+- Proof of disability (SSA award letter or state certification)
+- Pay stubs or tax returns showing employment
+- Asset statements
+- Current insurance information (if any)
+
+**Step 3: Apply**
+- Online application through state Medicaid portal
+- In-person application at local Medicaid office
+- Phone application (some states)
+- Processing time: 45-90 days typically
+
+**Step 4: Coordinate with TriSex.org**
+- Provide Medicaid EPD card once approved
+- Verify coverage for planned services
+- Understand any cost-sharing requirements
+- Request care coordination if available
+
+### Premium & Cost-Sharing Structure
+
+#### Monthly Premiums (Income-Based Sliding Scale)
+
+**Income Level: 150-200% FPL**:
+- Monthly premium: $25-75 typically
+- No premium for preventive services
+- Sliding scale based on household income
+
+**Income Level: 200-250% FPL**:
+- Monthly premium: $75-150 typically
+- Some states charge premiums up to 7.5% of income
+- Payment required to maintain coverage
+
+#### Cost-Sharing for TriSex.org Services
+
+**Preventive Services**: $0 copay
+- Annual exams, STI screening, vaccinations
+
+**Primary Care Visits**: $3-5 copay
+- Sexual health consultations, follow-ups
+
+**Prescription Medications**: $0-8 copay
+- Generic STI treatments: $0-3
+- Brand-name medications: $3-8
+- PrEP medication: Often $0 copay
+
+**Durable Medical Equipment**: 5-10% coinsurance
+- Testing devices, monitoring equipment
+
+### Coordinating EIN Deductions with Medicaid EPD
+
+#### Dual Benefit Strategy
+
+**What You Can Deduct with EPD Coverage**:
+- Copayments and coinsurance (business expense if work-related)
+- Monthly premiums (business or personal tax deduction)
+- Non-covered services (full business deduction)
+- Transportation to medical appointments (business mileage if work-related)
+
+**Optimizing Both Programs**:
+1. Use Medicaid EPD for covered services (reduces out-of-pocket)
+2. Pay any cost-sharing with business account (tax deductible)
+3. Purchase non-covered items with EIN (100% deductible)
+4. Document everything for both Medicaid and tax records
+
+#### Documentation Requirements
+
+**For Medicaid EPD Coordination**:
+- Keep Explanation of Benefits (EOB) statements
+- Track all copayments and coinsurance
+- Document denied claims (may be tax-deductible)
+- Maintain premium payment records
+
+**For Tax Deductions**:
+- Separate covered vs. non-covered expenses
+- Only deduct amounts you personally paid
+- Don't double-dip (can't deduct what Medicaid paid)
+- Keep 7 years of coordinated records
+
+## Part 3: Practical Implementation Guide
+
+### Setting Up Your TriSex.org Account
+
+**Account Configuration for EIN/EPD Users**:
+1. Profile settings: Add your EIN for business purchases
+2. Insurance information: Upload Medicaid EPD card
+3. Billing preferences: Separate business and personal expenses
+4. Payment methods: Link business account and HSA card
+
+**Billing Optimization**:
+- Primary insurance: Medicaid EPD
+- Secondary payment: Business EIN account (for cost-sharing)
+- Tertiary payment: HSA/FSA (if applicable)
+- Itemized invoices for all transactions
+
+### Common Scenarios & Solutions
+
+#### Scenario 1: Self-Employed Health Educator
+**Profile**: Freelance sexual health educator with EPD coverage
+
+**Strategy**:
+- Educational materials → Business expense (EIN)
+- Personal STI screening → Medicaid EPD ($0-5 copay)
+- NanoHeal for workshops → Business expense (EIN)
+- Mental health counseling → Medicaid EPD coverage
+- Professional development → Business expense (EIN)
+
+**Tax Benefit**: $3,000-5,000 annual deductions
+
+#### Scenario 2: Peer Support Specialist
+**Profile**: Part-time peer supporter with disability, EPD enrolled
+
+**Strategy**:
+- Personal health services → Medicaid EPD
+- Peer support training materials → Business expense (EIN)
+- Testing supplies for education → Business expense (EIN)
+- Personal medications → Medicaid EPD ($0-8 copay)
+- Travel to support groups → Business mileage deduction
+
+**Tax Benefit**: $2,000-3,500 annual deductions
+
+#### Scenario 3: Wellness Consultant
+**Profile**: Self-employed consultant using TriSex.org for personal and professional needs
+
+**Strategy**:
+- Client education resources → Business expense (EIN)
+- Personal preventive care → Medicaid EPD
+- Demonstration products → Business expense (EIN)
+- Personal treatment → Medicaid EPD
+- Workshop supplies → Business expense (EIN)
+
+**Tax Benefit**: $4,000-7,000 annual deductions
+
+### Quarterly Planning & Tax Optimization
+
+**Q1 (January-March)**:
+- Review prior year expenses for tax filing
+- Maximize EPD preventive benefits (annual exams)
+- Plan business purchases for new tax year
+- Update EIN documentation if business structure changed
+
+**Q2 (April-June)**:
+- File taxes with documented health deductions
+- Review EPD coverage and benefits usage
+- Stock up on business-use health supplies
+- Evaluate HSA contribution maximization
+
+**Q3 (July-September)**:
+- Mid-year expense review
+- Adjust estimated quarterly tax payments
+- Verify EPD renewal requirements
+- Plan year-end health spending
+
+**Q4 (October-December)**:
+- Final business deduction purchases
+- Use remaining EPD benefits before year-end
+- Maximize HSA contributions before December 31
+- Gather all documentation for upcoming tax season
+
+### State-Specific Considerations
+
+**EPD Program Variations by State**:
+- California (Medi-Cal Working Disabled): Income limit 250% FPL
+- New York (Medicaid Buy-In for Working People with Disabilities): Varies by county
+- Texas: EPD not available, alternative programs limited
+- Pennsylvania (Medicaid for Workers with Disabilities): Income limit 250% FPL
+
+**State Tax Implications**:
+- Some states allow additional health expense deductions
+- State-specific HSA treatment varies
+- Research your state's tax code for additional benefits
+
+## Resources & Support
+
+### TriSex.org Billing Support
+- **Phone**: Contact billing department for EIN setup
+- **Email**: Request EPD coordination assistance
+- **Portal**: Online account management for dual benefits
+
+### Medicaid EPD Resources
+- **CMS Website**: Official EPD program information
+- **State Medicaid Office**: Local enrollment support
+- **Work Incentives Planning**: Free WIPA services for EPD planning
+
+### Tax & Financial Guidance
+- **IRS Publication 535**: Business expense deductions
+- **IRS Publication 502**: Medical expense deductions  
+- **Schedule C Instructions**: Self-employment tax guidance
+- **VITA Program**: Free tax preparation for qualifying individuals
+
+### Disability & Employment
+- **Ticket to Work**: Free employment services for SSDI recipients
+- **Benefits Counseling**: Understanding how work affects benefits
+- **Vocational Rehabilitation**: Job training and support services
+
+## Frequently Asked Questions
+
+**Q: Can I use my EIN for personal health expenses?**
+A: Only if they're legitimately related to your self-employed business activities. Personal-only health expenses should be deducted differently (Schedule A or self-employed health insurance deduction).
+
+**Q: Does Medicaid EPD cover my spouse or dependents?**
+A: EPD covers only the qualified individual with a disability. Family members may qualify for regular Medicaid or marketplace subsidies.
+
+**Q: Will my EPD benefits change if my income increases?**
+A: Possibly. EPD allows higher income limits than traditional Medicaid (up to 250% FPL), but significant increases may affect eligibility or premiums.
+
+**Q: Can I deduct Medicaid EPD premiums?**
+A: Yes, if you're self-employed. Premiums paid for Medicaid EPD may qualify for the self-employed health insurance deduction.
+
+**Q: What if my state doesn't have EPD?**
+A: Contact your state Medicaid office about alternative programs. Some states offer similar benefits under different names.
+
+**Q: How do I prove medical necessity for non-covered items?**
+A: Obtain a prescription or letter of medical necessity from your healthcare provider. Submit with prior authorization request.
+
+**Q: Can I use HSA funds if I have Medicaid EPD?**
+A: You cannot contribute to an HSA while enrolled in Medicaid, but you can use existing HSA funds for qualified expenses not covered by Medicaid.
+
+## Conclusion
+
+Coordinating TriSex.org services with self-employed EIN tax structures and Medicaid EPD coverage creates a powerful strategy for accessible, affordable sexual health care. By understanding both systems, you can:
+
+- Maximize tax deductions for business-related health expenses
+- Access comprehensive Medicaid coverage while maintaining employment
+- Optimize out-of-pocket costs through strategic coordination
+- Build sustainable self-employment while managing disability
+
+**Key Takeaways**:
+✓ Obtain an EIN for legitimate business tax benefits
+✓ Enroll in Medicaid EPD if you qualify (disability + employment)
+✓ Coordinate both programs for maximum financial benefit
+✓ Document everything for tax and insurance purposes
+✓ Consult with tax and benefits specialists for personalized guidance
+
+This integrated approach ensures that sexual health remains accessible and affordable, supporting both your health and your financial wellbeing as you build sustainable self-employment.
+
+---
+
+*For personalized guidance on implementing this strategy, contact TriSex.org billing support and consult with a qualified tax professional or benefits counselor familiar with Medicaid EPD and self-employment taxation.*`,
+      tags: ["medicaid", "epd", "self-employed", "ein", "tax-deductions", "disability", "insurance", "financial-planning"],
+      lastUpdated: "2025-01-13",
+      author: "TriSex.org Financial Access Team",
+      difficulty: "Intermediate",
+      readTime: "18 min"
     }
   ];
 
