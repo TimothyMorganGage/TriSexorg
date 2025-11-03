@@ -13,6 +13,7 @@ export function Header() {
   const navigation = [
     { name: "Generative TriSex Protection", href: "/products" },
     { name: "BAD Co-op Dashboard", href: "/bad-coop-dashboard" },
+    { name: "🌌 Member Reviews", href: "/infinitely-affirmative-protection" },
     { name: "Good TriSex Education", href: "/interactive-stories" },
     { name: "Great TriSex Health", href: "/education" },
     { name: "Groovy TriSex Community", href: "/partnership" },
