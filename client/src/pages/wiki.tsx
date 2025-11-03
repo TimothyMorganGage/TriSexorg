@@ -1274,9 +1274,9 @@ export default function Wiki() {
   const [showInteroperability, setShowInteroperability] = useState(false);
 
   const categories = [
-    { id: "all", name: "All Topics", icon: BookOpen, count: 11 },
+    { id: "all", name: "All Topics", icon: BookOpen, count: 12 },
     { id: "sizing", name: "Custom Sizing", icon: Ruler, count: 1 },
-    { id: "health", name: "Sexual Health", icon: Heart, count: 5 },
+    { id: "health", name: "Sexual Health", icon: Heart, count: 6 },
     { id: "sti", name: "STI Prevention", icon: Droplets, count: 1 },
     { id: "cooperative", name: "Cooperative Principles", icon: Users, count: 1 },
     { id: "technical", name: "Technical Guide", icon: TestTube, count: 3 },
@@ -4162,6 +4162,280 @@ This integrated approach ensures that sexual health remains accessible and affor
       author: "TriSex.org Financial Access Team",
       difficulty: "Intermediate",
       readTime: "18 min"
+    },
+    {
+      id: "gaynal-condoms",
+      title: "Gaynal Condoms: Environmental, Reproductive, Spiritual & Sanitary Value of Gay Sex Byproducts",
+      category: "health",
+      content: `# Gaynal Condoms: The Multidimensional Value of Gay Sex Byproducts
+
+## Introduction: Reframing Sexual Health Through Ecological & Spiritual Lenses
+
+⚧️ This article explores the often-overlooked positive dimensions of gay sexual activity and its byproducts, examining how monogamous gay relationships generate environmental, reproductive, spiritual, and sanitary value for individuals and communities. We center intersex and transgender experiences while honoring all gender configurations within 2SLGBTIQA+ communities.
+
+**Content Note**: This article discusses sexual fluids, bodily processes, and ecological cycles in frank, educational terms. We approach these topics with scientific rigor and spiritual reverence.
+
+## Environmental Value: Closing the Loop
+
+### The Ecological Case for Gay Sex Byproducts
+
+Traditional narratives around sexual activity focus exclusively on reproduction, ignoring the broader ecological role of sexual fluids and energy exchange. Gay sex, particularly when practiced within committed monogamous partnerships, generates unique environmental benefits:
+
+**1. Zero-Waste Intimacy Models**
+- No unwanted pregnancies requiring resource-intensive medical interventions
+- Reduced reliance on hormonal contraceptives that pollute waterways
+- Lower pharmaceutical waste from birth control disposal
+- Minimal medical waste compared to reproductive heterosexual encounters
+
+**2. Fluid Recycling & Nutrient Cycling**
+- Semen contains zinc, calcium, vitamin C, protein, and other nutrients
+- When deposited in the rectal cavity (gaynal sex), these nutrients can be absorbed through the highly vascular rectal wall
+- Creates a closed-loop nutrient exchange system between partners
+- Reduces reliance on external supplement industries
+
+**3. Microbiome Exchange for Ecosystem Health**
+- Sexual contact facilitates beneficial microbial exchange
+- Monogamous gay partners develop synchronized microbiomes
+- Enhanced immune system coordination through regular fluid exchange
+- Parallel to how ecosystems strengthen through biodiversity
+
+**4. Reduced Resource Consumption**
+- Gay sex inherently requires no pregnancy-related medical care
+- No diapers, formula, or child-rearing material footprint
+- Gaynal condoms protect health while minimizing waste compared to alternative family planning methods
+- Reduced pharmaceutical burden on water treatment systems
+
+### Gaynal Condoms: Environmental Protection Technology
+
+**TriSex.org Gaynal Condom Design Philosophy**:
+- Ultra-thin materials minimize waste volume
+- Biodegradable lubricant formulations derived from sustainable sources
+- Recycled ocean plastic in non-contact packaging components
+- Waterway microplastic removal funding (rivers, lakes, streams, oceans)
+
+**Lifecycle Analysis**:
+- Manufacturing: Low-energy precision molding process
+- Use: Facilitates safe fluid exchange while preventing disease transmission
+- Disposal: Composting research initiatives for future biodegradable options
+- Impact: Every purchase removes 100g of microplastics from waterways
+
+## Reproductive Value: Non-Procreative Reproduction
+
+### Redefining "Reproductive Justice" Beyond Biological Reproduction
+
+Reproductive justice traditionally centers childbearing rights. We expand this framework to include **relational reproduction**—the creation and sustaining of loving partnerships, chosen families, and community bonds.
+
+**Gay Sex as Relational Reproduction**:
+1. **Partnership Bonding**: Regular intimate contact strengthens monogamous pair bonds
+2. **Chosen Family Building**: Sexual intimacy creates foundation for non-biological kinship networks
+3. **Community Continuity**: Healthy gay relationships model alternative family structures for younger generations
+4. **Intergenerational Knowledge Transfer**: Mentorship relationships rooted in community care, not bloodlines
+
+**The Reproductive Power of Gaynal Protection**:
+- **Prevents STI Transmission**: Enables lifelong monogamous partnerships to flourish
+- **Supports Aging Together**: Health protection allows partners to grow old together
+- **Creates Safe Experimentation**: Reduces fear, enabling authentic sexual expression
+- **Facilitates Trust**: Physical safety enables emotional vulnerability and deeper bonding
+
+### Intersex & Trans Reproductive Considerations
+
+For intersex and transgender individuals in gay relationships:
+- **Hormone Therapy Compatibility**: Gaynal condoms don't interfere with HRT absorption
+- **Anatomical Flexibility**: TriSex.org sizing accommodates all configurations post-surgery or naturally occurring
+- **Reproductive Autonomy**: Protection enables sexual pleasure without pressure to reproduce biologically
+- **Medical Safety**: Critical barrier protection during immune-suppressing medical transitions
+
+## Spiritual Value: Sacred Intimacy & Energy Exchange
+
+### Tantric & Mystic Traditions of Same-Sex Union
+
+Many spiritual traditions recognize the unique energetic properties of same-sex intimacy:
+
+**1. Polarity Balance**
+- Traditional tantric teaching assumes masculine/feminine polarity
+- Same-sex unions create **parallel polarity**—two similar energies amplifying rather than opposing
+- Results in energy spiraling upward rather than grounding (earth-based reproduction)
+- Facilitates spiritual ascension and consciousness expansion
+
+**2. Kundalini Activation Through Gaynal Practice**
+- Rectal stimulation activates root chakra (Muladhara)
+- Prostate stimulation (in anatomies with prostates) connects root to third eye
+- Fluid exchange creates energetic circuit between partners
+- Monogamous practice builds cumulative spiritual resonance over time
+
+**3. Sacred Masculine & Feminine Divine**
+- Gay male intimacy: Double masculine divine energy (creative force without form)
+- Lesbian intimacy: Double feminine divine energy (creative form without force)
+- Bisexual/pansexual intimacy: Fluid movement between polarities
+- Intersex intimacy: Integration of all polarities in single bodies/relationships
+
+**4. The Alchemy of Semen**
+- Ancient Taoist texts recognize semen as "precious essence" (jing)
+- Retention and recycling of sexual fluids for spiritual cultivation
+- Gaynal sex allows retention (minimal fluid loss) while achieving orgasm
+- Partners exchange and recirculate vital essence rather than expelling it
+
+### Gaynal Condoms as Sacred Technology
+
+**Spiritual Protection Functions**:
+- **Energy Boundary Maintenance**: Prevents unwanted energetic entanglements (STI spirits)
+- **Intentional Exchange**: Conscious choice about when/where to exchange fluids
+- **Monogamy Sanctification**: Physical barrier reinforces emotional fidelity agreements
+- **Chakra Protection**: Prevents energetic depletion from disease or fear
+
+**Ritual Integration**:
+- Condom application as mindful foreplay practice
+- Blessing the barrier before use (protection prayers/affirmations)
+- Disposal as release ritual (letting go of old energy)
+- Purchase as sacred commitment to partnership health
+
+## Sanitary Value: Disease Prevention & Public Health
+
+### The Public Health Case for Gaynal Condoms
+
+**Statistical Reality**:
+- Men who have sex with men (MSM) face disproportionate STI rates
+- Rectal tissue is more vulnerable to infection than vaginal tissue
+- Consistent condom use reduces HIV transmission by 95%+
+- Syphilis, gonorrhea, chlamydia all transmissible through anal sex
+
+**Gaynal-Specific Design Features**:
+- **Thicker Base, Ultra-Thin Tip**: Prevents breakage during anal friction while maintaining sensation
+- **Extra Lubrication**: Pre-lubricated with anal-safe silicone formula
+- **Larger Reservoir**: Accommodates higher ejaculate volume
+- **Visual Inspection Support**: Transparent options for checking barrier integrity
+
+### Monogamy + Condoms = Optimal Protection
+
+**The Dual Protection Model**:
+1. **Structural Monogamy**: Exclusive sexual partnership reduces exposure networks
+2. **Barrier Protection**: Condoms prevent transmission during testing windows/exposure risk
+3. **Combined Efficacy**: Near-100% protection when both strategies employed
+4. **Trust Building**: Testing together + condom use = transparency and care
+
+**Transitioning to Fluid-Bonded Status**:
+- Both partners test negative for all STIs (comprehensive panel)
+- 3-month window period for HIV seroconversion
+- Mutual agreement about monogamy boundaries
+- Continued communication about any exposure risks
+- Optional: Periodic testing as ongoing verification
+
+### Intersex-Specific Sanitary Considerations
+
+Intersex individuals may have:
+- **Unique Anatomical Configurations**: Require custom barrier solutions
+- **Hormonal Variations**: Affect fluid composition and tissue resilience
+- **Medical Histories**: Past surgeries may impact tissue integrity
+- **Specialized Needs**: Non-standard anatomy benefits from TriSex.org's 60+ size system
+
+**TriSex.org Gaynal Condom Sizing for Intersex Bodies**:
+- No assumptions about anatomy based on gender
+- Measurements drive sizing, not identity categories
+- 3D scanning accommodates all configurations
+- Confidential consultation with trained specialists available
+
+## Integration: The Holistic Gaynal Protection Framework
+
+### Bringing It All Together
+
+**Environmental + Reproductive + Spiritual + Sanitary = Holistic Sexual Health**
+
+The TriSex.org approach integrates all four dimensions:
+
+**🌍 Environmental**: Choose protection that sustains ecosystems (ocean plastic removal, minimal waste)
+
+**👨‍👨‍👦 Reproductive**: Build chosen families through safe, bonded intimacy (relational reproduction)
+
+**✨ Spiritual**: Honor sexual union as sacred practice (conscious energy exchange)
+
+**🩺 Sanitary**: Protect physical health as foundation for all other dimensions (STI prevention)
+
+### Practical Application Guide
+
+**For Monogamous Gay Couples**:
+
+1. **Start with Barriers**: Use gaynal condoms during early relationship stages
+2. **Test Together**: Comprehensive STI panel after 3-month exclusive period
+3. **Make Informed Decision**: Discuss fluid-bonding based on risk tolerance and test results
+4. **Maintain Awareness**: Continue condom use if any outside exposure risk exists
+5. **Ritualize Protection**: Treat condom use as act of love and mutual care
+
+**For Intersex & Trans Individuals**:
+
+1. **Get Sized Properly**: Use TriSex.org's 3D scanning for anatomically correct fit
+2. **Consider Hormonal Factors**: HRT may affect tissue elasticity and fluid composition
+3. **Communicate Needs**: Partners should discuss comfort, sensation, and safety openly
+4. **Access Specialized Resources**: TriSex.org offers inclusive sexual health education
+
+**For Community Leaders & Educators**:
+
+1. **Normalize Condom Use**: Discuss gaynal protection without shame or stigma
+2. **Teach All Dimensions**: Environmental, reproductive, spiritual, sanitary value together
+3. **Center Intersex Experiences**: Don't treat as afterthought—build from this foundation
+4. **Provide Access**: Partner with TriSex.org for subsidized protection in underserved communities
+
+## Cultural Resistance & Liberation
+
+### Confronting Anti-Gay Narratives
+
+**Dominant Culture Claims**:
+- "Gay sex is unnatural/dirty"
+- "It serves no purpose (can't make babies)"
+- "It's spiritually corrupt"
+- "It spreads disease"
+
+**Our Counter-Narrative**:
+- Gay sex is ecologically efficient and natural
+- It serves bonding, community, and spiritual purposes
+- It connects to ancient sacred traditions across cultures
+- Disease prevention is possible through proper protection and monogamy
+
+### Gaynal Pride as Resistance
+
+Using gaynal condoms is not just health practice—it's **political and spiritual resistance**:
+
+- **Against Compulsory Reproduction**: Refusing the mandate to procreate
+- **Against Sex Negativity**: Celebrating pleasure as sacred and valuable
+- **Against Medical Gatekeeping**: Accessing protection designed FOR gay bodies, not adapted from straight norms
+- **Against Shame**: Treating our sexual fluids as nutrient-rich, energy-dense, spiritually potent substances
+
+### Building Gaynal-Positive Communities
+
+**Community Practices**:
+- Condom distribution at pride events and queer community centers
+- Workshops on tantric gaynal practice and sacred sexuality
+- Open discussion of fluid-bonding decisions and boundaries
+- Celebration of long-term monogamous gay partnerships as ecological and spiritual models
+
+## Conclusion: The Gaynal Revolution
+
+Reframing gay sex through environmental, reproductive, spiritual, and sanitary lenses reveals its profound value. Gaynal condoms are not just disease prevention tools—they're **technologies of liberation** that enable:
+
+- 🌍 **Ecological Responsibility**: Closed-loop intimacy with minimal environmental impact
+- 👨‍👨‍👦 **Relational Reproduction**: Building chosen families and sustaining community
+- ✨ **Spiritual Ascension**: Sacred energy exchange and consciousness expansion
+- 🩺 **Public Health**: Preventing transmission while honoring bodily autonomy
+
+**TriSex.org's Commitment**:
+
+We design gaynal condoms centered on intersex anatomical diversity, honoring all bodies in the 2SLGBTIQA+ spectrum. Every purchase removes microplastics from waterways, supports cooperative sexual health infrastructure, and funds comprehensive sex education that celebrates gay intimacy as ecologically sound, reproductively generative (in non-biological ways), spiritually powerful, and medically safe.
+
+**Join the Gaynal Revolution**:
+- Use protection designed FOR you, not adapted FROM others
+- Treat your sexual fluids as sacred, nutrient-rich, powerful substances
+- Build monogamous partnerships as ecological and spiritual practice
+- Advocate for comprehensive gay sexual health in your communities
+
+🙏🏼 **Thank you for honoring your body, your partner, and our shared ecosystems through conscious, protected, sacred intimacy.**
+
+---
+
+*For intersex-centered gaynal condom sizing, visit TriSex.org/products. For spiritual practice guidance, see our Tantric Gay Intimacy resources. For STI testing and prevention, consult our 4D STI Intervention system.*`,
+      tags: ["gay-sex", "gaynal", "condoms", "environmental", "spiritual", "reproductive-justice", "sti-prevention", "monogamy", "intersex", "lgbtq", "sexual-health", "ecology", "tantra"],
+      lastUpdated: "2025-01-13",
+      author: "TriSex.org Holistic Sexual Health Team",
+      difficulty: "Intermediate",
+      readTime: "22 min"
     }
   ];
 
