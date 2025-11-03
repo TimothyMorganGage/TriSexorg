@@ -12,6 +12,7 @@ export function Header() {
 
   const navigation = [
     { name: "Generative TriSex Protection", href: "/products" },
+    { name: "👄 Oral Barriers for MSM", href: "/oral-barriers" },
     { name: "BAD Co-op Dashboard", href: "/bad-coop-dashboard" },
     { name: "🌌 Member Reviews", href: "/infinitely-affirmative-protection" },
     { name: "⚧️ Remix to Your Replit", href: "/remix-replit" },
