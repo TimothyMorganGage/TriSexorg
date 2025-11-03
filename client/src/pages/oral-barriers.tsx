@@ -144,10 +144,20 @@ export default function OralBarriers() {
           <h1 className="text-5xl font-bold bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent mb-4">
             Oral Pleasure Barriers for MSM
           </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-6">
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-4">
             Premium oral sex barriers designed specifically for men who have sex with men who exclusively practice fellatio. 
             Intersex-centered sizing, flavored options, and enhanced lubrication for maximum pleasure and protection.
           </p>
+          <div className="bg-gradient-to-r from-pink-100 to-purple-100 dark:from-pink-950 dark:to-purple-950 rounded-lg p-4 max-w-2xl mx-auto mb-6">
+            <p className="text-lg font-semibold text-pink-700 dark:text-pink-300">
+              🥰 Cooperatively Owned by Super Sides
+            </p>
+            <p className="text-sm text-muted-foreground mt-2">
+              This product line is democratically owned and operated by the <strong>Super Sides 🥰</strong> cooperative—
+              MSM community members who identify as oral-focused "sides" (non-penetrative sex practitioners). 
+              Every purchase supports cooperative ownership and community health infrastructure.
+            </p>
+          </div>
           <div className="flex flex-wrap justify-center gap-3">
             <Badge variant="secondary" className="bg-pink-100 text-pink-800 px-4 py-2">
               <Heart className="w-4 h-4 mr-2" />
@@ -508,10 +518,14 @@ export default function OralBarriers() {
                     </Button>
                   </div>
 
-                  <div className="mt-4 p-3 bg-green-50 dark:bg-green-950 rounded-lg">
+                  <div className="mt-4 p-3 bg-pink-50 dark:bg-pink-950 rounded-lg">
+                    <p className="text-xs text-pink-800 dark:text-pink-200 mb-2">
+                      <strong>🥰 Super Sides Co-op Benefits:</strong><br />
+                      You're supporting cooperative ownership by MSM who prioritize oral pleasure
+                    </p>
                     <p className="text-xs text-green-800 dark:text-green-200">
                       <strong>🌍 Sustainability Impact:</strong><br />
-                      Each purchase removes 100g of microplastics from waterways (rivers, lakes, streams, oceans)
+                      Each purchase removes 100g of microplastics from waterways
                     </p>
                   </div>
                 </div>
@@ -521,15 +535,71 @@ export default function OralBarriers() {
                   <ul className="text-xs space-y-1 text-muted-foreground">
                     <li>✓ 12 barriers per box</li>
                     <li>✓ Discreet packaging</li>
-                    <li>✓ Usage guide included</li>
+                    <li>✓ Usage guide by Super Sides 🥰</li>
                     <li>✓ STI prevention tips</li>
                     <li>✓ Recyclable container</li>
+                    <li>✓ Co-op membership info</li>
                   </ul>
                 </div>
               </CardContent>
             </Card>
           </div>
         </div>
+
+        {/* Super Sides Co-op Info */}
+        <Card className="mt-8 border-2 border-pink-200 bg-gradient-to-br from-pink-50 to-purple-50 dark:from-pink-950 dark:to-purple-950">
+          <CardHeader>
+            <CardTitle className="flex items-center">
+              <Heart className="h-6 w-6 mr-2 text-pink-600" />
+              About the Super Sides 🥰 Cooperative
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <p className="text-muted-foreground">
+              The <strong>Super Sides 🥰</strong> are a democratically-owned cooperative of MSM community members who 
+              identify as "sides"—individuals who prioritize oral, manual, and other non-penetrative forms of sexual 
+              expression. We created this product line to serve our specific needs and celebrate oral pleasure as a 
+              complete, valid sexual practice.
+            </p>
+            
+            <div className="grid md:grid-cols-2 gap-4">
+              <div>
+                <h3 className="font-semibold mb-2">Our Values</h3>
+                <ul className="text-sm text-muted-foreground space-y-1">
+                  <li>• Oral sex as primary, not secondary, pleasure</li>
+                  <li>• Destigmatizing "side" identity in MSM communities</li>
+                  <li>• Cooperative ownership and democratic governance</li>
+                  <li>• Intersex and trans-inclusive product design</li>
+                  <li>• Flavored barriers without shame or apology</li>
+                  <li>• STI prevention as community care practice</li>
+                </ul>
+              </div>
+              <div>
+                <h3 className="font-semibold mb-2">Co-op Membership Benefits</h3>
+                <ul className="text-sm text-muted-foreground space-y-1">
+                  <li>• Product development voting rights</li>
+                  <li>• Dividend distributions from sales</li>
+                  <li>• Discounted pricing on all barriers</li>
+                  <li>• Free sexual health education workshops</li>
+                  <li>• Community peer support network</li>
+                  <li>• Representation in TriSex.org governance</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="bg-pink-100 dark:bg-pink-900 p-4 rounded-lg mt-4">
+              <h3 className="font-semibold mb-2">Join the Super Sides 🥰 Co-op</h3>
+              <p className="text-sm text-muted-foreground mb-3">
+                We welcome all MSM who practice or want to explore oral-focused sexuality. Membership is free for 
+                anyone committed to monogamous relationships and cooperative values.
+              </p>
+              <Button className="bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700">
+                <Heart className="mr-2 h-4 w-4" />
+                Join Super Sides Co-op
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
 
         {/* Educational Footer */}
         <Card className="mt-8 border-2 border-blue-200">
@@ -538,6 +608,9 @@ export default function OralBarriers() {
               <Droplets className="h-6 w-6 mr-2 text-blue-600" />
               Oral Sex Safety Education for MSM
             </CardTitle>
+            <p className="text-sm text-muted-foreground mt-2">
+              Educational content curated by Super Sides 🥰 health education committee
+            </p>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid md:grid-cols-2 gap-6">
