@@ -15,6 +15,13 @@ import {
   Move
 } from "lucide-react";
 
+// Custom infinity icon component
+const InfinityIcon = ({ className }: { className?: string }) => (
+  <div className={className} style={{ fontSize: '1.2em', fontWeight: 'bold', lineHeight: 1 }}>
+    ♾️
+  </div>
+);
+
 type TabPosition = "top" | "bottom" | "left" | "right";
 
 interface TabNavigationProps {
@@ -48,7 +55,7 @@ export function TabNavigation({ children }: TabNavigationProps) {
       id: "bad-coop-dashboard",
       title: "BAD Co-op Dashboard",
       description: "Complete healthcare planning and cooperative management",
-      icon: FileText,
+      icon: InfinityIcon,
       color: "bg-primary",
       route: "/bad-coop-dashboard"
     },
