@@ -22,6 +22,13 @@ const InfinityIcon = ({ className }: { className?: string }) => (
   </div>
 );
 
+// Custom yin-yang icon component
+const YinYangIcon = ({ className }: { className?: string }) => (
+  <div className={className} style={{ fontSize: '1.2em', fontWeight: 'bold', lineHeight: 1 }}>
+    ☯️
+  </div>
+);
+
 type TabPosition = "top" | "bottom" | "left" | "right";
 
 interface TabNavigationProps {
@@ -63,7 +70,7 @@ export function TabNavigation({ children }: TabNavigationProps) {
       id: "balanced-directives",
       title: "Balanced Advance Directives",
       description: "Comprehensive healthcare planning and education",
-      icon: FileText,
+      icon: YinYangIcon,
       color: "bg-primary",
       route: "/bad-good-health"
     },
