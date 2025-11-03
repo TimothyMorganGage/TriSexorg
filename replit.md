@@ -150,6 +150,15 @@ The project is fully prepared for open source distribution with comprehensive do
     -   **Monogamy Support**: Guidance for transitioning to fluid-bonded status after testing windows
     -   **Price Range**: $19.99-$80+ depending on material and feature selections
     -   **Sustainability**: Every purchase removes 100g of microplastics from waterways
+-   ✅ **Endosex Women with MSM Partners Wiki Article**: 25-minute comprehensive guide for women in monogamous relationships with bisexual/MSM men
+    -   **Bridge Population Framework**: Understanding STI transmission from MSM networks to heterosexual women through bisexual male partners
+    -   **Comprehensive Testing Protocols**: MSM-specific testing requirements (throat/rectal swabs, full hepatitis panel, herpes antibodies)
+    -   **Intersex-Inclusive Protection**: How intersex-centered barrier design benefits endosex women and their partners
+    -   **Relationship Navigation**: Communication about MSM history, addressing biphobia, monogamy verification strategies
+    -   **4 Health Scenarios**: Partner just came out, historical MSM activity, attracted but never acted, exploring anal sex
+    -   **Product Recommendations**: Internal condoms, dental dams, pH-balanced lubricants, intersex-sized external condoms
+    -   **Cultural Considerations**: Trans/intersex partners, religious contexts, sex-positive frameworks, community support
+    -   **Testing Timeline**: Initial test → 3-month window → confirmatory test → fluid-bonding decision → optional annual monitoring
 -   ✅ **Gaynal Condoms Wiki Article**: Comprehensive 30-minute article exploring multidimensional value of gay sex byproducts
     -   **Environmental Value**: Zero-waste intimacy models, fluid recycling, nutrient cycling, reduced resource consumption
     -   **Reproductive Value**: Relational reproduction, chosen family building, non-procreative partnership bonding

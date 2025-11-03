@@ -1274,9 +1274,9 @@ export default function Wiki() {
   const [showInteroperability, setShowInteroperability] = useState(false);
 
   const categories = [
-    { id: "all", name: "All Topics", icon: BookOpen, count: 12 },
+    { id: "all", name: "All Topics", icon: BookOpen, count: 13 },
     { id: "sizing", name: "Custom Sizing", icon: Ruler, count: 1 },
-    { id: "health", name: "Sexual Health", icon: Heart, count: 6 },
+    { id: "health", name: "Sexual Health", icon: Heart, count: 7 },
     { id: "sti", name: "STI Prevention", icon: Droplets, count: 1 },
     { id: "cooperative", name: "Cooperative Principles", icon: Users, count: 1 },
     { id: "technical", name: "Technical Guide", icon: TestTube, count: 3 },
@@ -4643,6 +4643,412 @@ We design gaynal condoms centered on intersex anatomical diversity, honoring all
       author: "TriSex.org Holistic Sexual Health Team",
       difficulty: "Intermediate",
       readTime: "30 min"
+    },
+    {
+      id: "endosex-women-msm-partners",
+      title: "Sexual Health for Endosex Women with Bisexual/MSM Partners: Navigating Intersex-Inclusive Protection",
+      category: "health",
+      content: `# Sexual Health for Endosex Women with Bisexual/MSM Partners
+
+## Introduction: Centering Endosex Women in MSM Sexual Health Conversations
+
+⚧️ This article addresses the specific needs of **endosex women** (women who are not intersex, with typical binary female anatomy) who are in monogamous sexual relationships with **bisexual or pansexual men** who have sexual histories with, or ongoing interest in, men who have sex with men (MSM).
+
+While TriSex.org centers intersex anatomical diversity and primarily serves MSM communities, we recognize that many bisexual/pansexual men form monogamous partnerships with endosex women. These women face unique sexual health considerations that bridge heterosexual and MSM health frameworks.
+
+**Content Note**: This article discusses STI transmission, anatomical differences, and relationship dynamics in frank, educational terms using a monogamy-affirming, intersex-inclusive framework.
+
+## Understanding the Context
+
+### Who This Article Serves
+
+**Primary Audience**: Endosex women who are:
+- In monogamous relationships with bisexual/pansexual men who have MSM histories
+- Dating men who previously identified as gay but now identify as bisexual
+- Partnered with men who are attracted to multiple genders
+- Married to men who came out as bisexual during the relationship
+
+**Not Covered**: This article does **not** address:
+- Polyamorous or open relationship structures (TriSex.org serves monogamy only)
+- Women in relationships with men who are currently having sex with other men
+- Dating people who are "separated" or in non-monogamous arrangements
+
+### Key Terminology
+
+**Endosex**: A person whose sex characteristics (chromosomes, gonads, hormones, genitals) align with typical male or female binary patterns. Endosex is the counterpart to intersex—it describes people who are **not** intersex.
+
+**MSM (Men Who Have Sex with Men)**: Behavioral category describing sexual activity, not identity. Includes gay, bisexual, pansexual, queer, and straight-identifying men.
+
+**Intersex-Inclusive Protection**: Barrier methods and sexual health protocols designed around intersex anatomical diversity as the foundation, which automatically accommodates endosex anatomies as well.
+
+## The Epidemiological Reality: Why Your Partner's MSM History Matters
+
+### STI Prevalence in MSM vs. Heterosexual Populations
+
+**Statistical Context**:
+- MSM populations have significantly higher rates of HIV, syphilis, gonorrhea, and chlamydia compared to heterosexual men
+- Anal sex (receptive or insertive) carries higher STI transmission risk than vaginal sex
+- Many MSM have multiple lifetime partners before monogamous partnership
+- Testing gaps between partners create windows of unknownStatus
+
+**For Endosex Women**:
+- Your partner's previous MSM activity means potential exposure to STIs with higher baseline prevalence
+- Even if your partner tested negative years ago, reactivation or latent infections are possible
+- Comprehensive testing protocols designed for MSM are more thorough than standard heterosexual STI panels
+
+### Transmission Dynamics: MSM → Bisexual Man → Endosex Woman
+
+**The Bridging Population Concept**:
+
+Bisexual men who have sex with both men and women create an epidemiological "bridge" between MSM and heterosexual populations:
+
+1. **MSM Network Exposure**: Acquires STI through MSM contact (anal, oral)
+2. **Asymptomatic Period**: May not show symptoms for weeks/months
+3. **Heterosexual Transmission**: Passes infection to endosex female partner through vaginal/oral sex
+4. **Broader Network Impact**: Endosex woman may not realize exposure came from MSM network
+
+**Common Infections Transmitted This Way**:
+- HIV (though risk is lower for receptive vaginal sex than receptive anal)
+- Syphilis (especially oral-genital transmission)
+- Gonorrhea (throat, vaginal, rectal)
+- Chlamydia (cervical, urethral)
+- Herpes HSV-1 and HSV-2
+- HPV (high-risk strains linked to cervical cancer)
+- Hepatitis B and C
+
+## Anatomical Considerations: Intersex-Inclusive Design for Endosex Bodies
+
+### Why Intersex-Centered Protection Benefits Endosex Women
+
+TriSex.org's sizing and product design centers **intersex anatomical diversity**, which means:
+
+**For Your Male Partner**:
+- If he has intersex anatomy or post-surgical configurations, products are designed specifically for him
+- If he has endosex male anatomy, he benefits from precision sizing that doesn't assume binary "standard"
+- 60+ size options accommodate all penile configurations (girth, length, shape)
+
+**For You (Endosex Woman)**:
+- Dental dams and barriers for oral sex come in intersex-inclusive sizing (larger surface area options)
+- Internal condoms (FC2-style) available in intersex-affirming sizes
+- Vaginal barriers don't assume "standard" vaginal dimensions—accommodate anatomical variation
+- Lubricants formulated for anal + vaginal + oral use (your partner may prefer anal-safe formulas)
+
+### Specific Product Recommendations
+
+**For Penis-Vagina Intercourse**:
+1. **External Condoms** (for your partner's penis):
+   - Use TriSex.org's 60+ size system based on actual measurements
+   - Choose **ultra-thin** for sensation while maintaining protection
+   - Consider **gynecological-friendly lubrication** (water-based, pH-balanced for vaginal tissue)
+
+2. **Internal Condoms** (inserted into your vagina):
+   - Provides STI protection you control
+   - Safer if you're uncertain about partner's consistent condom use
+   - Can be inserted hours before sex (no interruption)
+
+**For Oral Sex** (you performing fellatio):
+- **Flavored oral barriers** from Super Sides 🥰 cooperative
+- 60+ sizes ensure proper fit for your partner's anatomy
+- Food-safe lubrication enhances your comfort and safety
+
+**For Oral Sex** (you receiving cunnilingus):
+- **Dental dams** or cut-open external condoms
+- Flavored options reduce latex taste
+- Large-surface varieties accommodate anatomical diversity
+
+**For Anal Sex** (if applicable):
+- **Gaynal condoms** with extra lubrication and thicker base
+- Anal-safe silicone lubricant (never oil-based with latex)
+- Rectal-specific STI screening (gonorrhea/chlamydia can infect rectum)
+
+## Testing Protocols for Monogamous Transition
+
+### Comprehensive STI Testing for Bisexual/MSM Men
+
+**Standard Panel is Insufficient**:
+
+When your partner gets tested, ensure he requests **MSM-specific comprehensive panel**:
+
+✅ **Must Include**:
+- HIV (4th generation antigen/antibody test)
+- Syphilis (RPR + confirmatory treponemal test)
+- Gonorrhea (throat, urethra, rectum)
+- Chlamydia (throat, urethra, rectum)
+- Hepatitis B and C
+- Herpes HSV-1 and HSV-2 (IgG antibody test)
+- HPV (if available; otherwise rely on symptoms/vaccine)
+
+❌ **Standard "STI Panel" Often Misses**:
+- Throat and rectal swabs (only tests urethra)
+- Herpes antibody testing (only symptom-based)
+- Hepatitis screening
+- Syphilis in latent stages
+
+**Testing Timeline**:
+1. **Initial Test**: Before establishing monogamy (both partners)
+2. **3-Month Window**: Celibacy or barrier use for HIV seroconversion window
+3. **Confirmatory Test**: Retest both partners at 3-month mark
+4. **Negative Results**: If all clear, discuss fluid-bonding (barrier-free sex)
+5. **Annual Monitoring**: Optional retesting to verify ongoing fidelity
+
+### Your Testing Protocol as an Endosex Woman
+
+**Comprehensive Panel for You**:
+- **Pap smear with HPV testing** (cervical cancer screening)
+- **HIV, syphilis, gonorrhea, chlamydia** (vaginal/cervical swabs)
+- **Hepatitis B and C** (blood test)
+- **Herpes HSV-1/2** (antibody testing if desired)
+- **Bacterial vaginosis/yeast screening** (if symptoms)
+
+**Special Considerations**:
+- If your partner has anal sex history, request **rectal swab for yourself** if you practice anal sex
+- If he has oral sex with men history, request **throat swab for yourself** after oral contact with him
+- Discuss PrEP (HIV prevention medication) with provider if partner's HIV status is unknown/positive
+
+## Navigating Relationship Dynamics
+
+### Communication About MSM History
+
+**Disclosure Expectations**:
+
+Your partner should disclose:
+- ✓ Previous MSM sexual activity (approximate number of partners, timeframe)
+- ✓ Most recent MSM encounter (date)
+- ✓ Last comprehensive STI test results
+- ✓ Any ongoing attraction to men (honesty about desires vs. actions)
+- ✓ Commitment to monogamy moving forward
+
+**You Should Ask**:
+- "When was your last sexual contact with a man?"
+- "Have you been tested for STIs since then? What kind of test?"
+- "Were throat and rectal swabs included?"
+- "Are you attracted to men, women, or all genders?"
+- "Do you feel confident in choosing monogamy with me?"
+
+**Red Flags**:
+- ✗ Refusal to get comprehensive testing
+- ✗ Vague timelines ("it's been a while")
+- ✗ Defensive reactions to questions
+- ✗ Unwillingness to use barriers during testing window
+- ✗ Continued cruising/app usage (Grindr, Scruff, etc.)
+
+### Addressing Stigma and Biphobia
+
+**Your Partner May Face**:
+- Erasure of bisexual identity (assumed gay or straight, not both)
+- Judgment from gay community for dating women
+- Judgment from straight community for MSM history
+- Fear of rejection from you due to MSM past
+
+**You May Experience**:
+- Fear of him "leaving you for a man"
+- Anxiety about STI exposure from his past
+- Confusion about his sexual orientation
+- Pressure to be "cool" with things you're uncomfortable with
+
+**Healthy Framework**:
+- His bisexuality is valid—he's not confused or in denial
+- Attraction to multiple genders doesn't mean inability to be monogamous
+- His MSM history is **his history**—what matters is current fidelity
+- Your feelings and health needs are equally important
+
+### Monogamy Verification Strategies
+
+**Transparent Practices**:
+- Shared phone access (voluntary, not demanded)
+- Open discussion about temptations/attractions
+- Regular STI retesting as mutual reassurance
+- Couples counseling focused on trust-building
+- Joint decision-making about sexual practices
+
+**Behavioral Agreements**:
+- No cruising apps or hookup sites
+- No sex with anyone else (any gender)
+- Immediate disclosure if fidelity is broken
+- Use of barriers if any outside exposure occurs
+- Couples testing after any breach of monogamy
+
+## Specific Health Scenarios
+
+### Scenario 1: Your Partner Just Came Out as Bisexual
+
+**What This Means**:
+- He may have recent MSM activity you didn't know about
+- His most recent "regular checkup" likely wasn't comprehensive
+- You both need immediate, thorough STI testing
+
+**Action Steps**:
+1. Pause penetrative sex until comprehensive testing completed
+2. Both get MSM-level STI panels (throat/rectal swabs for him)
+3. Use barriers for all sexual contact during testing window
+4. Retest at 3 months for HIV seroconversion window
+5. Decide together about continuing relationship based on results
+
+### Scenario 2: He Had MSM Activity Years Ago
+
+**What This Means**:
+- If he's been tested comprehensively since last MSM contact, risk is lower
+- Some infections (herpes, HPV, latent syphilis) can persist asymptomatically
+- Verify testing was actually comprehensive (not just "I got tested")
+
+**Action Steps**:
+1. Request documentation of previous test results
+2. If no throat/rectal swabs were done, get them now
+3. You get tested comprehensively as well
+4. Use barriers until confirmatory testing at 3 months
+5. If all clear, transition to fluid-bonding
+
+### Scenario 3: He's Attracted to Men But Never Acted on It
+
+**What This Means**:
+- Lower epidemiological risk (no actual MSM exposure)
+- Higher psychological/relational complexity
+- May explore MSM activity in future if not addressed
+
+**Action Steps**:
+1. Both get baseline STI testing anyway (good practice)
+2. Discuss his attractions openly without judgment
+3. Establish clear monogamy boundaries
+4. Consider couples therapy to address his sexual identity exploration
+5. Reaffirm commitment to exclusive relationship regardless of attractions
+
+### Scenario 4: You Want to Try Anal Sex
+
+**What This Means**:
+- Anal sex carries higher STI transmission risk than vaginal
+- If he has MSM experience, he may know techniques you don't
+- You need anal-specific protection and preparation
+
+**Action Steps**:
+1. Ensure both partners tested negative for rectal STIs first
+2. Use **gaynal condoms** (extra lubrication, thicker base)
+3. Use abundant anal-safe silicone lubricant
+4. Start slow with finger/toy preparation
+5. Get rectal STI screening 2 weeks after first anal sex
+6. Communicate openly about comfort and boundaries
+
+## Cultural and Identity Considerations
+
+### When Your Partner is Trans or Intersex
+
+If your bisexual/pansexual partner is also **trans or intersex**:
+
+**Anatomical Diversity**:
+- Post-surgical anatomy may require custom barrier sizing
+- Hormone therapy affects genital tissue (HRT changes sensation, lubrication needs)
+- Intersex anatomy may not fit binary condom sizing (use TriSex.org 60+ system)
+
+**Health Considerations**:
+- Trans men on testosterone: May have vaginal dryness requiring extra lubrication
+- Trans women on estrogen: Penile tissue may be more sensitive, require gentle barriers
+- Intersex individuals: May have unique STI screening needs based on anatomy
+
+**Relationship Dynamics**:
+- His MSM activity may include other trans/intersex partners (not just cis men)
+- Community connections may be primarily 2SLGBTIQA+ spaces
+- Your role as endosex woman may require learning queer health frameworks
+
+### Cultural Attitudes Toward Bisexuality
+
+**Conservative/Religious Contexts**:
+- Your partner may face family rejection for MSM history
+- You may face judgment for dating bisexual man
+- May need to navigate disclosure to family/community carefully
+
+**Progressive/Queer Contexts**:
+- May face pressure to be "open" to non-monogamy
+- Bisexual identity may be celebrated but monogamy questioned
+- Resist assumptions that monogamy is "restrictive" or "heteronormative"
+
+**Sex-Positive Frameworks**:
+- Celebrate your partner's full sexual history without shame
+- Recognize your own boundaries without apology
+- Balance acceptance of identity with health safety protocols
+
+## TriSex.org Resources for Endosex Women
+
+### Products Designed for You
+
+**Barriers & Protection**:
+- Internal condoms (FC2-style) for your control
+- Dental dams for cunnilingus safety
+- Vaginal lubricants (pH-balanced, spermicide-free)
+- Emergency contraception (if applicable)
+
+**Products for Your Partner**:
+- 60+ size external condoms (intersex-centered fits endosex too)
+- Oral barriers from Super Sides 🥰 cooperative
+- Gaynal condoms if he practices receptive anal with you
+- Flavored lubricants for oral sex
+
+### Educational Resources
+
+**Wiki Articles**:
+- "Gaynal Condoms" article (understanding MSM sexual practices)
+- "Monogamy Economics" (why TriSex.org serves monogamy only)
+- "4D STI Intervention" (comprehensive tracking system)
+- "Intersex-Centered Sizing" (understanding the sizing system)
+
+**Health Services**:
+- 4D STI tracking for both partners
+- Comprehensive testing protocols
+- Couples counseling referrals
+- Peer support groups for women with bisexual partners
+
+### Community Support
+
+**Finding Your People**:
+- Women partnered with bisexual men support group
+- Intersex-inclusive sexual health education workshops
+- Monogamy-affirming queer relationship counseling
+- STI prevention and testing advocacy
+
+**Avoiding Harmful Spaces**:
+- ✗ Biphobic lesbian/feminist groups that demonize bisexual men
+- ✗ Straight women's groups that stigmatize MSM activity
+- ✗ Poly/open relationship advocates who pressure you to "open up"
+- ✓ Monogamy-affirming, bisexual-positive, health-focused communities
+
+## Conclusion: Your Health, Your Autonomy, Your Partnership
+
+**Key Takeaways**:
+
+1. **Your partner's MSM history is not shameful—it's epidemiologically relevant information**
+2. **Comprehensive testing protocols protect both of you**
+3. **Intersex-inclusive products serve endosex women excellently**
+4. **Monogamy can thrive between endosex women and bisexual/MSM men**
+5. **Your boundaries around testing and protection are valid**
+6. **Bisexuality ≠ inability to commit; attraction ≠ action**
+
+**TriSex.org's Commitment to You**:
+
+We recognize that endosex women with bisexual/MSM partners are often underserved by both heterosexual and MSM sexual health frameworks. Our intersex-centered, monogamy-affirming approach provides:
+
+- 🔬 **Rigorous testing protocols** designed for highest-risk populations
+- 🛡️ **Precision protection** that accommodates all anatomies
+- 💑 **Monogamy support** without judgment about sexual orientation
+- 🏥 **Comprehensive STI prevention** bridging MSM and heterosexual frameworks
+- 🧘 **Relationship tools** for navigating bisexual partnerships
+
+**Your Next Steps**:
+
+1. Get comprehensive STI testing (both partners)
+2. Choose appropriate barriers from TriSex.org product line
+3. Establish clear monogamy agreements
+4. Retest at 3-month mark
+5. Join our community support network
+6. Access our 4D STI tracking system for ongoing monitoring
+
+🙏🏼 **Thank you for prioritizing your sexual health and building a monogamous partnership grounded in honesty, testing, and mutual care.**
+
+---
+
+*For intersex-inclusive barrier sizing, visit TriSex.org/products. For comprehensive STI testing protocols, consult our 4D STI Intervention system. For relationship counseling, see our Community Resources directory.*`,
+      tags: ["endosex", "women", "bisexual-men", "msm", "heterosexual", "sti-prevention", "monogamy", "testing", "relationships", "barriers", "health", "bridge-population"],
+      lastUpdated: "2025-01-13",
+      author: "TriSex.org Women's Health & Bisexual Partnership Team",
+      difficulty: "Intermediate",
+      readTime: "25 min"
     }
   ];
 
