@@ -44,6 +44,7 @@ import AgeVerification from "@/pages/age-verification";
 import ParentalConsentResponse from "@/pages/parental-consent-response";
 import BadCoopDashboard from "@/pages/bad-coop-dashboard";
 import InfinitelyAffirmativeProtection from "@/pages/infinitely-affirmative-protection";
+import RemixReplit from "@/pages/remix-replit";
 import { TabNavigation } from "@/components/TabNavigation";
 import { PWAInstallPrompt, PWAStatusBadge } from "@/components/PWAInstallPrompt";
 import { usePWA } from "@/hooks/usePWA";
@@ -104,6 +105,7 @@ function Router() {
           <Route path="/parental-consent/:consentId" component={ParentalConsentResponse} />
           <Route path="/bad-coop-dashboard" component={BadCoopDashboard} />
           <Route path="/infinitely-affirmative-protection" component={InfinitelyAffirmativeProtection} />
+          <Route path="/remix-replit" component={RemixReplit} />
           <Route path="/clinic-dashboard" component={ClinicDashboard} />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />

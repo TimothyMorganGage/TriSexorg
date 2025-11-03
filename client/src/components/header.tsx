@@ -14,6 +14,7 @@ export function Header() {
     { name: "Generative TriSex Protection", href: "/products" },
     { name: "BAD Co-op Dashboard", href: "/bad-coop-dashboard" },
     { name: "🌌 Member Reviews", href: "/infinitely-affirmative-protection" },
+    { name: "⚧️ Remix to Your Replit", href: "/remix-replit" },
     { name: "Good TriSex Education", href: "/interactive-stories" },
     { name: "Great TriSex Health", href: "/education" },
     { name: "Groovy TriSex Community", href: "/partnership" },

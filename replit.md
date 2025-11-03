@@ -119,3 +119,14 @@ The project is fully prepared for open source distribution with comprehensive do
     -   **Educational Messaging**: Each share dialog explains why federation protects against corporate monopolies
     -   **Copy-to-Clipboard**: Users copy pre-formatted posts and instructions for each platform
     -   **TriSex.org Syndicateable**: All major content is now easily shareable across federated networks
+-   ✅ **Remix to Replit Feature**: Comprehensive "spin-off" system allowing users to create their own copies of TriSex.org
+    -   **Dedicated Remix Page**: Full landing page at `/remix-replit` explaining the remix process and use cases
+    -   **One-Click Template**: Direct link to remix the entire platform to user's own Replit account
+    -   **Complete Package**: Users get full source code, database schema, security features, wiki content, and cooperative tools
+    -   **Regional Chapters**: Enables local co-op chapters to spin off customized versions (TriSex Seattle, TriSex Atlanta, etc.)
+    -   **Specialized Adaptations**: Support for demographic-specific versions (Deaf/HoH, neurodivergent, rural access)
+    -   **Educational Use**: Perfect for teaching sexual health, cooperative economics, or web development
+    -   **CC BY-SA 4.0 License**: Clear Creative Commons licensing with cooperative solidarity principles
+    -   **Setup Guide**: 4-step quick start with secrets configuration, content customization, and deployment instructions
+    -   **6 Use Cases**: Regional chapters, specialized health focus, educational institutions, R&D, international adaptations, allied movements
+    -   **Navigation Integration**: Added to header menu and footer for easy discovery
