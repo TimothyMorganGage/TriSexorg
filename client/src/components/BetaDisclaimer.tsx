@@ -16,6 +16,12 @@ export function BetaDisclaimer({ showExpanded = false }: { showExpanded?: boolea
 
   const teamChanges: TeamChange[] = [
     {
+      date: "2025-02-03",
+      member: "User Request",
+      change: "Contact phone number updated to +1 971 488 8455",
+      category: "Contact"
+    },
+    {
       date: "2025-01-31",
       member: "AI Assistant",
       change: "Comprehensive 4D STI tracking system with sexual partner network management",
