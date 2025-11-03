@@ -33,6 +33,7 @@ import {
   Share,
   ExternalLink
 } from "lucide-react";
+import { FediverseShare } from "@/components/FediverseShare";
 
 interface WikiArticle {
   id: string;
@@ -4263,12 +4264,20 @@ This integrated approach ensures that sexual health remains accessible and affor
                 <span>Updated {selectedArticle.lastUpdated}</span>
                 <span>{selectedArticle.readTime} read</span>
               </div>
-              <div className="flex flex-wrap gap-1">
+              <div className="flex flex-wrap gap-1 mb-4">
                 {selectedArticle.tags.map((tag) => (
                   <Badge key={tag} variant="secondary" className="text-xs">
                     {tag}
                   </Badge>
                 ))}
+              </div>
+              <div>
+                <FediverseShare
+                  title={`📚 ${selectedArticle.title}`}
+                  description={selectedArticle.content.split('\n\n')[1]?.replace(/^#{1,6}\s/, '').substring(0, 200) || ''}
+                  hashtags={selectedArticle.tags}
+                  imagePrompt="Create educational infographic summarizing key points from this article"
+                />
               </div>
             </CardHeader>
             <CardContent>

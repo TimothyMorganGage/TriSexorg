@@ -13,6 +13,7 @@ import {
   Building, Play, Ruler, Droplets, Palette, TestTube,
   Coins, Share2, BookOpen, Lightbulb, Award, Book, Star, Users, Timer
 } from "lucide-react";
+import { FediverseShare } from "@/components/FediverseShare";
 
 export default function Home() {
   const [showOnboarding, setShowOnboarding] = useState(false);

@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Star, Download, Search, Calendar, User, MapPin, FileText, FileJson } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { FediverseShare } from "@/components/FediverseShare";
 
 interface Review {
   id: string;
@@ -460,9 +461,17 @@ export default function InfinitelyAffirmativeProtection() {
           <h1 className="text-5xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">
             🌌 Infinitely Affirmative Protection
           </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-300">
+          <p className="text-xl text-gray-600 dark:text-gray-300 mb-4">
             Real reviews from TriSex.org cooperative members
           </p>
+          <div className="flex justify-center">
+            <FediverseShare
+              title="🌌 Infinitely Affirmative Protection: Real TriSex.org Co-op Member Reviews"
+              description="See what our members say about intersex-centered sizing, NanoHeal treatment, Medicaid EPD integration, and more. 12 verified testimonials • 5.0 ⭐ average rating • 100% verified members"
+              hashtags={["SexualHealth", "Intersex", "CooperativeHealth", "MemberReviews"]}
+              imagePrompt="Design graphic showing review statistics dashboard with galaxy background"
+            />
+          </div>
         </div>
 
         {/* Statistics */}
