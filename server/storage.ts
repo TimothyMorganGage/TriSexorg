@@ -2,7 +2,7 @@ import {
   users, products, productConfigurations, orders, educationalContent, partnershipRequests,
   financialRecords, budgetItems, budgetVotes, communityDividends,
   moodEntries, wellnessGoals, moodInsights, timeEntries, timeGoals, timeInsights,
-  calendarConnections, scheduledTasks, taskTemplates,
+  calendarConnections, scheduledTasks, taskTemplates, savedProductConfigurations,
   type User, type InsertUser, type Product, type InsertProduct,
   type ProductConfiguration, type InsertProductConfiguration,
   type Order, type InsertOrder, type EducationalContent, type InsertEducationalContent,
@@ -19,7 +19,8 @@ import {
   type TimeInsight, type InsertTimeInsight,
   type CalendarConnection, type InsertCalendarConnection,
   type ScheduledTask, type InsertScheduledTask,
-  type TaskTemplate, type InsertTaskTemplate
+  type TaskTemplate, type InsertTaskTemplate,
+  type SavedProductConfiguration, type InsertSavedProductConfiguration
 } from "@shared/schema";
 
 export interface IStorage {
@@ -40,6 +41,14 @@ export interface IStorage {
   getProductConfiguration(id: number): Promise<ProductConfiguration | undefined>;
   createProductConfiguration(config: InsertProductConfiguration): Promise<ProductConfiguration>;
   updateProductConfigurationStatus(id: number, status: string): Promise<ProductConfiguration | undefined>;
+
+  // Saved Product Configuration methods
+  getSavedProductConfigurations(userId: number): Promise<SavedProductConfiguration[]>;
+  getSavedProductConfiguration(id: number): Promise<SavedProductConfiguration | undefined>;
+  getSavedProductConfigurationByShareCode(shareCode: string): Promise<SavedProductConfiguration | undefined>;
+  createSavedProductConfiguration(config: InsertSavedProductConfiguration): Promise<SavedProductConfiguration>;
+  updateSavedProductConfiguration(id: number, config: Partial<InsertSavedProductConfiguration>): Promise<SavedProductConfiguration | undefined>;
+  deleteSavedProductConfiguration(id: number): Promise<boolean>;
 
   // Order methods
   getOrders(): Promise<Order[]>;
@@ -307,6 +316,8 @@ export class MemStorage implements IStorage {
   private currentInventoryId: number;
   private currentAlertId: number;
   private currentRestockOrderId: number;
+  private savedProductConfigurations: Map<number, SavedProductConfiguration>;
+  private currentSavedConfigId: number;
 
   constructor() {
     this.users = new Map();
@@ -353,6 +364,8 @@ export class MemStorage implements IStorage {
     this.currentInventoryId = 1;
     this.currentAlertId = 1;
     this.currentRestockOrderId = 1;
+    this.savedProductConfigurations = new Map();
+    this.currentSavedConfigId = 1;
 
     this.initializeData();
   }
@@ -539,6 +552,53 @@ export class MemStorage implements IStorage {
       return updatedConfig;
     }
     return undefined;
+  }
+
+  // Saved Product Configuration methods
+  async getSavedProductConfigurations(userId: number): Promise<SavedProductConfiguration[]> {
+    return Array.from(this.savedProductConfigurations.values())
+      .filter(config => config.userId === userId);
+  }
+
+  async getSavedProductConfiguration(id: number): Promise<SavedProductConfiguration | undefined> {
+    return this.savedProductConfigurations.get(id);
+  }
+
+  async getSavedProductConfigurationByShareCode(shareCode: string): Promise<SavedProductConfiguration | undefined> {
+    return Array.from(this.savedProductConfigurations.values())
+      .find(config => config.shareCode === shareCode && config.isPublic);
+  }
+
+  async createSavedProductConfiguration(insertConfig: InsertSavedProductConfiguration): Promise<SavedProductConfiguration> {
+    const id = this.currentSavedConfigId++;
+    const now = new Date();
+    const config: SavedProductConfiguration = {
+      ...insertConfig,
+      id,
+      isPublic: insertConfig.isPublic ?? false,
+      createdAt: now,
+      updatedAt: now
+    };
+    this.savedProductConfigurations.set(id, config);
+    return config;
+  }
+
+  async updateSavedProductConfiguration(id: number, updates: Partial<InsertSavedProductConfiguration>): Promise<SavedProductConfiguration | undefined> {
+    const config = this.savedProductConfigurations.get(id);
+    if (config) {
+      const updatedConfig = {
+        ...config,
+        ...updates,
+        updatedAt: new Date()
+      };
+      this.savedProductConfigurations.set(id, updatedConfig);
+      return updatedConfig;
+    }
+    return undefined;
+  }
+
+  async deleteSavedProductConfiguration(id: number): Promise<boolean> {
+    return this.savedProductConfigurations.delete(id);
   }
 
   // Order methods

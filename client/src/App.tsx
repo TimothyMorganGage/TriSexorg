@@ -47,6 +47,7 @@ import InfinitelyAffirmativeProtection from "@/pages/infinitely-affirmative-prot
 import RemixReplit from "@/pages/remix-replit";
 import OralBarriers from "@/pages/oral-barriers";
 import MonogamyEconomics from "@/pages/monogamy-economics";
+import SavedConfigurations from "@/pages/saved-configs";
 import { TabNavigation } from "@/components/TabNavigation";
 import { PWAInstallPrompt, PWAStatusBadge } from "@/components/PWAInstallPrompt";
 import { usePWA } from "@/hooks/usePWA";
@@ -110,6 +111,7 @@ function Router() {
           <Route path="/remix-replit" component={RemixReplit} />
           <Route path="/oral-barriers" component={OralBarriers} />
           <Route path="/monogamy-economics" component={MonogamyEconomics} />
+          <Route path="/saved-configurations" component={SavedConfigurations} />
           <Route path="/clinic-dashboard" component={ClinicDashboard} />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />

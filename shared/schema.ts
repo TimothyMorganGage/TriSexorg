@@ -118,6 +118,23 @@ export const insertPartnershipRequestSchema = createInsertSchema(partnershipRequ
   createdAt: true,
 });
 
+export const savedProductConfigurations = pgTable("saved_product_configurations", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  configurationName: text("configuration_name").notNull(),
+  configurationData: jsonb("configuration_data").notNull(), // Stores the full ProductConfig object
+  shareCode: text("share_code").notNull().unique(), // Unique code for sharing
+  isPublic: boolean("is_public").default(false).notNull(), // Whether it can be accessed via share link
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const insertSavedProductConfigurationSchema = createInsertSchema(savedProductConfigurations).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
 export type InsertProduct = z.infer<typeof insertProductSchema>;
@@ -1335,3 +1352,6 @@ export type PartnerNotification = typeof partnerNotifications.$inferSelect;
 
 export type InsertProductEffectivenessReport = z.infer<typeof insertProductEffectivenessReportSchema>;
 export type ProductEffectivenessReport = typeof productEffectivenessReports.$inferSelect;
+
+export type InsertSavedProductConfiguration = z.infer<typeof insertSavedProductConfigurationSchema>;
+export type SavedProductConfiguration = typeof savedProductConfigurations.$inferSelect;

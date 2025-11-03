@@ -11,7 +11,8 @@ import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ShoppingCart, Save, Box, Ruler, Target, Zap, BookOpen, ArrowRight } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "@/components/ui/dialog";
+import { ShoppingCart, Save, Box, Ruler, Target, Zap, BookOpen, ArrowRight, Bookmark } from "lucide-react";
 import { Link } from "wouter";
 import { useAuth } from "@/lib/auth";
 import { useToast } from "@/hooks/use-toast";
@@ -50,10 +51,35 @@ export default function Products() {
   });
 
   const [useCustomMeasurements, setUseCustomMeasurements] = useState(false);
+  const [showSaveDialog, setShowSaveDialog] = useState(false);
+  const [configName, setConfigName] = useState("");
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const shareCode = urlParams.get('share');
 
   const { data: products, isLoading } = useQuery<Product[]>({
     queryKey: ["/api/products"],
   });
+
+  const { data: sharedConfig } = useQuery({
+    queryKey: ["/api/shared-configurations", shareCode],
+    enabled: !!shareCode,
+    queryFn: async () => {
+      const response = await fetch(`/api/shared-configurations/${shareCode}`);
+      if (!response.ok) throw new Error('Configuration not found');
+      return response.json();
+    },
+  });
+
+  useEffect(() => {
+    if (sharedConfig?.configurationData) {
+      setSelectedConfig(sharedConfig.configurationData);
+      toast({
+        title: "Configuration Loaded",
+        description: `"${sharedConfig.configurationName}" has been loaded from share link.`,
+      });
+    }
+  }, [sharedConfig, toast]);
 
   const configurationMutation = useMutation({
     mutationFn: async (config: any) => {
@@ -66,6 +92,29 @@ export default function Products() {
         description: "Your product configuration has been saved successfully.",
       });
       queryClient.invalidateQueries({ queryKey: ["/api/configurations"] });
+    },
+    onError: (error: Error) => {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
+    },
+  });
+
+  const saveConfigMutation = useMutation({
+    mutationFn: async (data: { configurationName: string; configurationData: ProductConfig }) => {
+      const response = await apiRequest("POST", "/api/saved-configurations", data);
+      return response.json();
+    },
+    onSuccess: () => {
+      toast({
+        title: "Configuration Saved",
+        description: "Your configuration has been saved and can be shared with friends!",
+      });
+      setShowSaveDialog(false);
+      setConfigName("");
+      queryClient.invalidateQueries({ queryKey: ["/api/saved-configurations"] });
     },
     onError: (error: Error) => {
       toast({
@@ -120,7 +169,7 @@ export default function Products() {
     return basePrice + featurePrice;
   };
 
-  const handleSaveConfiguration = () => {
+  const handleSaveForLater = () => {
     if (!user) {
       toast({
         title: "Login Required",
@@ -129,14 +178,22 @@ export default function Products() {
       });
       return;
     }
+    setShowSaveDialog(true);
+  };
 
-    configurationMutation.mutate({
-      userId: user.id,
-      productId: selectedConfig.productId,
-      size: `${selectedConfig.widthCategory}${selectedConfig.lengthCategory}`,
-      material: selectedConfig.material,
-      features: selectedConfig.features,
-      status: "draft",
+  const handleSaveConfigSubmit = () => {
+    if (!configName.trim()) {
+      toast({
+        title: "Name Required",
+        description: "Please enter a name for your configuration.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    saveConfigMutation.mutate({
+      configurationName: configName,
+      configurationData: selectedConfig
     });
   };
 
@@ -890,22 +947,65 @@ export default function Products() {
               </div>
               
               <div className="flex flex-col sm:flex-row gap-4">
+                <Dialog open={showSaveDialog} onOpenChange={setShowSaveDialog}>
+                  <DialogTrigger asChild>
+                    <Button
+                      variant="outline"
+                      onClick={handleSaveForLater}
+                      disabled={!user}
+                      className="flex-1"
+                      data-testid="button-save-config"
+                    >
+                      <Bookmark className="mr-2 h-4 w-4" />
+                      Save Configuration
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent data-testid="dialog-save-config">
+                    <DialogHeader>
+                      <DialogTitle>Save Configuration</DialogTitle>
+                    </DialogHeader>
+                    <div className="space-y-4">
+                      <div>
+                        <Label htmlFor="config-name">Configuration Name</Label>
+                        <Input
+                          id="config-name"
+                          placeholder="e.g., My Perfect Fit"
+                          value={configName}
+                          onChange={(e) => setConfigName(e.target.value)}
+                          data-testid="input-config-name"
+                        />
+                        <p className="text-sm text-muted-foreground mt-1">
+                          Give your configuration a memorable name so you can find it later and share it with friends.
+                        </p>
+                      </div>
+                    </div>
+                    <DialogFooter>
+                      <Button
+                        variant="outline"
+                        onClick={() => setShowSaveDialog(false)}
+                        data-testid="button-cancel-save"
+                      >
+                        Cancel
+                      </Button>
+                      <Button
+                        onClick={handleSaveConfigSubmit}
+                        disabled={saveConfigMutation.isPending}
+                        data-testid="button-confirm-save"
+                      >
+                        {saveConfigMutation.isPending ? "Saving..." : "Save"}
+                      </Button>
+                    </DialogFooter>
+                  </DialogContent>
+                </Dialog>
+                
                 <Button
                   onClick={handleAddToOrder}
-                  disabled={orderMutation.isPending}
+                  disabled={!user || orderMutation.isPending}
                   className="flex-1"
+                  data-testid="button-add-to-order"
                 >
                   <ShoppingCart className="mr-2 h-4 w-4" />
                   {orderMutation.isPending ? "Processing..." : "Add to Order"}
-                </Button>
-                <Button
-                  onClick={handleSaveConfiguration}
-                  disabled={configurationMutation.isPending}
-                  variant="outline"
-                  className="flex-1"
-                >
-                  <Save className="mr-2 h-4 w-4" />
-                  {configurationMutation.isPending ? "Saving..." : "Save Configuration"}
                 </Button>
               </div>
             </div>

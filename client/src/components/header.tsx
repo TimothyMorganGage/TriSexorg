@@ -83,6 +83,11 @@ export function Header() {
                     </Button>
                   </Link>
                 )}
+                <Link href="/saved-configurations">
+                  <Button variant="outline" size="sm">
+                    My Configs
+                  </Button>
+                </Link>
                 <div className="flex items-center space-x-2 text-sm text-gray-600">
                   <User className="h-4 w-4" />
                   <span>{user.username}</span>
@@ -165,6 +170,13 @@ export function Header() {
                         Dashboard
                       </Link>
                     )}
+                    <Link
+                      href="/saved-configurations"
+                      className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-primary"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      My Saved Configurations
+                    </Link>
                     <button
                       onClick={() => {
                         logout();

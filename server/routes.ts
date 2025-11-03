@@ -10,7 +10,8 @@ import rateLimit from "express-rate-limit";
 import { storage } from "./storage";
 import { 
   insertUserSchema, insertProductConfigurationSchema, insertOrderSchema,
-  insertEducationalContentSchema, insertPartnershipRequestSchema 
+  insertEducationalContentSchema, insertPartnershipRequestSchema,
+  insertSavedProductConfigurationSchema
 } from "@shared/schema";
 import { z } from "zod";
 import { genealogyService, RelationshipUtils } from "./genealogy";
@@ -207,6 +208,116 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(configuration);
     } catch (error) {
       res.status(500).json({ message: "Failed to update configuration" });
+    }
+  });
+
+  // Saved Product Configuration routes
+  app.get("/api/saved-configurations", requireAuth, async (req, res) => {
+    try {
+      const userId = req.session.userId!;
+      const configurations = await storage.getSavedProductConfigurations(userId);
+      res.json(configurations);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch saved configurations" });
+    }
+  });
+
+  app.get("/api/saved-configurations/:id", requireAuth, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const userId = req.session.userId!;
+      const configuration = await storage.getSavedProductConfiguration(id);
+      if (!configuration) {
+        return res.status(404).json({ message: "Configuration not found" });
+      }
+      // Verify ownership
+      if (configuration.userId !== userId) {
+        return res.status(403).json({ message: "Unauthorized" });
+      }
+      res.json(configuration);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch configuration" });
+    }
+  });
+
+  app.get("/api/shared-configurations/:shareCode", async (req, res) => {
+    try {
+      const { shareCode } = req.params;
+      const configuration = await storage.getSavedProductConfigurationByShareCode(shareCode);
+      if (!configuration) {
+        return res.status(404).json({ message: "Shared configuration not found" });
+      }
+      res.json(configuration);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch shared configuration" });
+    }
+  });
+
+  app.post("/api/saved-configurations", requireAuth, async (req, res) => {
+    try {
+      const userId = req.session.userId!;
+      // Generate a unique share code
+      const shareCode = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+      
+      const configData = insertSavedProductConfigurationSchema.parse({
+        ...req.body,
+        userId,
+        shareCode
+      });
+      const configuration = await storage.createSavedProductConfiguration(configData);
+      res.json(configuration);
+    } catch (error) {
+      res.status(400).json({ message: error instanceof Error ? error.message : "Failed to save configuration" });
+    }
+  });
+
+  app.patch("/api/saved-configurations/:id", requireAuth, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const userId = req.session.userId!;
+      
+      // First verify ownership
+      const existing = await storage.getSavedProductConfiguration(id);
+      if (!existing) {
+        return res.status(404).json({ message: "Configuration not found" });
+      }
+      if (existing.userId !== userId) {
+        return res.status(403).json({ message: "Unauthorized" });
+      }
+      
+      // Only allow updating specific fields - prevent userId/shareCode tampering
+      const updateSchema = z.object({
+        configurationName: z.string().optional(),
+        configurationData: z.any().optional(),
+        isPublic: z.boolean().optional()
+      });
+      
+      const updates = updateSchema.parse(req.body);
+      const configuration = await storage.updateSavedProductConfiguration(id, updates);
+      res.json(configuration);
+    } catch (error) {
+      res.status(400).json({ message: error instanceof Error ? error.message : "Failed to update configuration" });
+    }
+  });
+
+  app.delete("/api/saved-configurations/:id", requireAuth, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const userId = req.session.userId!;
+      
+      // Verify ownership before deleting
+      const existing = await storage.getSavedProductConfiguration(id);
+      if (!existing) {
+        return res.status(404).json({ message: "Configuration not found" });
+      }
+      if (existing.userId !== userId) {
+        return res.status(403).json({ message: "Unauthorized" });
+      }
+      
+      const success = await storage.deleteSavedProductConfiguration(id);
+      res.json({ message: "Configuration deleted successfully" });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to delete configuration" });
     }
   });
 
