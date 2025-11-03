@@ -36,10 +36,10 @@ const PeopleHuggingIcon = ({ className }: { className?: string }) => (
   </div>
 );
 
-// Custom heart exclamation icon component
-const HeartExclamationIcon = ({ className }: { className?: string }) => (
+// Custom galaxy icon component
+const GalaxyIcon = ({ className }: { className?: string }) => (
   <div className={className} style={{ fontSize: '1.2em', fontWeight: 'bold', lineHeight: 1 }}>
-    ❣️
+    🌌
   </div>
 );
 
@@ -60,7 +60,7 @@ export function TabNavigation({ children }: TabNavigationProps) {
       id: "trillions-protection",
       title: "Trillions of Protection",
       description: "Comprehensive protection solutions at scale",
-      icon: HeartExclamationIcon,
+      icon: GalaxyIcon,
       color: "bg-neon-pink",
       route: "/products"
     },
