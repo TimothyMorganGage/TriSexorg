@@ -29,6 +29,13 @@ const YinYangIcon = ({ className }: { className?: string }) => (
   </div>
 );
 
+// Custom people hugging icon component
+const PeopleHuggingIcon = ({ className }: { className?: string }) => (
+  <div className={className} style={{ fontSize: '1.2em', fontWeight: 'bold', lineHeight: 1 }}>
+    🫂
+  </div>
+);
+
 type TabPosition = "top" | "bottom" | "left" | "right";
 
 interface TabNavigationProps {
@@ -78,7 +85,7 @@ export function TabNavigation({ children }: TabNavigationProps) {
       id: "cooperative-matchmaking",
       title: "Co-operative Matchmaking",
       description: "Community-driven relationship building",
-      icon: Users,
+      icon: PeopleHuggingIcon,
       color: "bg-secondary",
       route: "/good-people"
     }
