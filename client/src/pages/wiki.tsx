@@ -4338,9 +4338,9 @@ Intersex individuals may have:
 
 **Content Note**: This section discusses fecal matter, bodily waste, and sanitation practices in frank, educational terms using harm-reduction and trauma-informed language. We approach these realities with dignity, medical accuracy, and community care.
 
-#### Understanding Anal Sex Byproducts: The "Santorum" Reality
+#### Understanding Anal Sex Byproducts: The "Frotekal" Reality
 
-During anal intercourse, lubricant and bodily fluids mix with trace amounts of fecal matter from the rectal cavity, creating a frothy substance colloquially known as "santorum" (named in protest of anti-gay political rhetoric). This is a normal physiological reality of gaynal sex, not a sign of "uncleanliness" or moral failing.
+During anal intercourse, lubricant and bodily fluids mix with trace amounts of fecal matter from the rectal cavity, creating a frothy substance colloquially known as "frotekal" (named in protest of anti-gay political rhetoric). This is a normal physiological reality of gaynal sex, not a sign of "uncleanliness" or moral failing.
 
 **Destigmatizing Fecal Contact**:
 - The rectum naturally contains residual stool, bacteria, and digestive byproducts
@@ -4533,7 +4533,7 @@ Stool contains bacteria, viruses, and parasites that can cause infection:
 
 #### Conclusion: Honoring Our Bodies, Protecting Our Health
 
-Santorum and fecal matter are natural realities of anal intimacy—not sources of shame. By:
+Frotekal and fecal matter are natural realities of anal intimacy—not sources of shame. By:
 - Understanding the microbial ecology and pathogen risks
 - Implementing community-refined hygiene protocols
 - Centering intersex and trans bodies in safety guidance
@@ -4638,7 +4638,7 @@ We design gaynal condoms centered on intersex anatomical diversity, honoring all
 ---
 
 *For intersex-centered gaynal condom sizing, visit TriSex.org/products. For spiritual practice guidance, see our Tantric Gay Intimacy resources. For STI testing and prevention, consult our 4D STI Intervention system.*`,
-      tags: ["gay-sex", "gaynal", "condoms", "environmental", "spiritual", "reproductive-justice", "sti-prevention", "monogamy", "intersex", "lgbtq", "sexual-health", "ecology", "tantra", "santorum", "harm-reduction", "waste-management"],
+      tags: ["gay-sex", "gaynal", "condoms", "environmental", "spiritual", "reproductive-justice", "sti-prevention", "monogamy", "intersex", "lgbtq", "sexual-health", "ecology", "tantra", "frotekal", "harm-reduction", "waste-management"],
       lastUpdated: "2025-01-13",
       author: "TriSex.org Holistic Sexual Health Team",
       difficulty: "Intermediate",
