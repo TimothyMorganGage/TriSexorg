@@ -247,7 +247,7 @@ export default function Products() {
     },
     {
       value: "nanotech_naturopathic_lubricant",
-      label: "NanoHeal ⓒⓒ Intersectional Naturopathic STI Treatment Lubricant",
+      label: "NanoHeal ⚧️ Intersectional Naturopathic STI Treatment Lubricant",
       description: "Revolutionary nanotech + naturopathic lubricant with STI containment, treatment, and potential cure capabilities - custom formulated for intersex, trans, Two Spirit, Latinx, Quare, and BIPOC identities",
       price: 149.99,
       sustainability: "100% biocompatible with advanced healing nanotechnology and cultural affirmation compounds",

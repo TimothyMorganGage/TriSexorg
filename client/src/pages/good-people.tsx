@@ -737,7 +737,7 @@ export default function GoodPeople() {
                                   <SelectItem value="spermicide">Spermicide</SelectItem>
                                   <SelectItem value="withdrawal">Withdrawal Method</SelectItem>
                                   <SelectItem value="abstinence">Abstinence</SelectItem>
-                                  <SelectItem value="nanoheal">NanoHeal ⓒⓒ STI Treatment</SelectItem>
+                                  <SelectItem value="nanoheal">NanoHeal ⚧️ STI Treatment</SelectItem>
                                 </SelectContent>
                               </Select>
                             </FormItem>

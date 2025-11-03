@@ -2550,7 +2550,7 @@ TriSex.org products can serve as therapeutic tools within comprehensive treatmen
 
 ### Withdrawal Management Products
 
-#### NanoHeal ⓒⓒ Therapeutic Formulations
+#### NanoHeal ⚧️ Therapeutic Formulations
 - **Stress-Reducing Compounds**: Natural anxiolytics and mood stabilizers
 - **Neurochemical Support**: Ingredients supporting dopamine regulation
 - **Physical Comfort**: Materials addressing withdrawal-related physical symptoms
@@ -3178,13 +3178,13 @@ This comprehensive intelligence framework ensures that TriSex.org's peer mentor 
     },
     {
       id: "nanoheal-lube-gaynal-condoms",
-      title: "NanoHeal ⓒⓒ Intersectional Naturopathic STI Treatment Lubricant & Gaynal Condom System",
+      title: "NanoHeal ⚧️ Intersectional Naturopathic STI Treatment Lubricant & Gaynal Condom System",
       category: "products",
-      content: `# NanoHeal ⓒⓒ Intersectional Naturopathic STI Treatment Lubricant & Gaynal Condom System
+      content: `# NanoHeal ⚧️ Intersectional Naturopathic STI Treatment Lubricant & Gaynal Condom System
 
 ## Overview
 
-NanoHeal ⓒⓒ represents a revolutionary advancement in sexual health protection technology, combining intersectional naturopathic medicine with precision-engineered protection systems. This comprehensive solution addresses universal STI coverage while honoring anatomical diversity and cultural healing traditions.
+NanoHeal ⚧️ represents a revolutionary advancement in sexual health protection technology, combining intersectional naturopathic medicine with precision-engineered protection systems. This comprehensive solution addresses universal STI coverage while honoring anatomical diversity and cultural healing traditions.
 
 **Creative Commons License**: All formulations, research, and manufacturing processes are available under CC BY-SA 4.0 for global community access and improvement.
 
@@ -3735,7 +3735,7 @@ All shipping materials are designed to become building components for community 
 
 ## Conclusion
 
-NanoHeal ⓒⓒ and the Gaynal Condom System represent more than technological innovation—they embody a commitment to sexual health justice, cultural humility, and community empowerment. By combining cutting-edge science with traditional wisdom and cooperative economics, we create tools that honor both pleasure and safety in their full complexity.
+NanoHeal ⚧️ and the Gaynal Condom System represent more than technological innovation—they embody a commitment to sexual health justice, cultural humility, and community empowerment. By combining cutting-edge science with traditional wisdom and cooperative economics, we create tools that honor both pleasure and safety in their full complexity.
 
 This intersectional approach ensures that protection technology serves all communities equitably, supporting sexual creativity while maintaining the highest standards of health and safety. Through open-source development and community ownership, NanoHeal continues evolving to meet the diverse needs of our global community.
 

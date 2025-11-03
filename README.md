@@ -36,7 +36,7 @@ A comprehensive wellness and sexual health platform designed to support diverse 
 - **2SLGBTIQA+ Inclusive Design**: Specialized support for diverse communities
 - **Deaf & Braille Translation**: ASL/BSL sign language support
 - **BIPOC, Intersex, Trans, Two Spirit Support**: Culturally responsive design
-- **NanoHeal ⓒⓒ Integration**: Intersectional naturopathic STI treatment
+- **NanoHeal ⚧️ Integration**: Intersectional naturopathic STI treatment
 
 ## 🏗️ Architecture
 
