@@ -97,10 +97,10 @@ export function PrecisionSizing() {
         <CardHeader>
           <CardTitle className="flex items-center">
             <Ruler className="mr-2 h-6 w-6 text-primary" />
-            TriSex.org Custom Sizing System
+            TriSex.org Intersex-Centered Sizing System
           </CardTitle>
           <p className="text-muted-foreground">
-            Inspired by MyONE's precision sizing, adapted for sustainable custom protection
+            Precision sizing centered on intersex anatomical diversity, honoring all bodies without binary assumptions
           </p>
         </CardHeader>
         <CardContent>
@@ -116,11 +116,12 @@ export function PrecisionSizing() {
                 <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
                   <div className="flex items-center space-x-2 mb-2">
                     <Info className="h-5 w-5 text-blue-600" />
-                    <h4 className="font-medium">Privacy-First Measuring</h4>
+                    <h4 className="font-medium">Intersex-Centered, Privacy-First Measuring</h4>
                   </div>
                   <p className="text-sm text-muted-foreground">
-                    All measurements are processed locally. No data is stored or transmitted.
-                    Use our 3D scanning system for the most accurate fit.
+                    Our sizing system honors intersex anatomical variations as the foundation, not an afterthought. 
+                    All measurements are processed locally with no data storage or transmission.
+                    Use our 3D scanning system for the most accurate fit across all anatomical configurations.
                   </p>
                 </div>
 
@@ -140,7 +141,7 @@ export function PrecisionSizing() {
                         })}
                       />
                       <p className="text-xs text-muted-foreground mt-1">
-                        Measure from base to tip when fully extended
+                        Measure your anatomy's full length - all configurations welcome
                       </p>
                     </div>
 
@@ -158,7 +159,7 @@ export function PrecisionSizing() {
                         })}
                       />
                       <p className="text-xs text-muted-foreground mt-1">
-                        Circumference at the base
+                        Circumference at widest point of your anatomy
                       </p>
                     </div>
 
@@ -309,25 +310,30 @@ export function PrecisionSizing() {
                 <div className="grid md:grid-cols-2 gap-6">
                   <Card>
                     <CardHeader>
-                      <CardTitle className="text-lg">How to Measure</CardTitle>
+                      <CardTitle className="text-lg">How to Measure Your Anatomy</CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-3 text-sm">
+                      <div className="bg-purple-50 dark:bg-purple-900/20 p-3 rounded-lg mb-3">
+                        <p className="text-sm font-medium text-purple-900 dark:text-purple-100">
+                          ⚧️ Intersex-Centered Approach: Our sizing honors all anatomical variations including intersex configurations, post-surgical anatomy, and all natural variations. No binary assumptions.
+                        </p>
+                      </div>
                       <div className="flex items-start space-x-2">
                         <div className="w-6 h-6 bg-primary rounded-full flex items-center justify-center text-white text-xs font-bold">1</div>
                         <div>
-                          <strong>Length:</strong> Measure from the base to the tip along the top side when fully erect.
+                          <strong>Length:</strong> Measure your anatomy's full length in whatever state provides the most accurate representation of your body.
                         </div>
                       </div>
                       <div className="flex items-start space-x-2">
                         <div className="w-6 h-6 bg-primary rounded-full flex items-center justify-center text-white text-xs font-bold">2</div>
                         <div>
-                          <strong>Base Girth:</strong> Wrap measuring tape around the base of the shaft.
+                          <strong>Girth:</strong> Measure circumference at the widest point. For intersex anatomy or varied configurations, measure multiple points.
                         </div>
                       </div>
                       <div className="flex items-start space-x-2">
                         <div className="w-6 h-6 bg-primary rounded-full flex items-center justify-center text-white text-xs font-bold">3</div>
                         <div>
-                          <strong>Use our 3D scanner:</strong> For the most accurate measurements, use our privacy-preserving 3D scanning system.
+                          <strong>3D Scanner Recommended:</strong> Our privacy-preserving 3D scanner accommodates all anatomical variations, including intersex configurations, without requiring self-categorization.
                         </div>
                       </div>
                     </CardContent>
@@ -356,16 +362,16 @@ export function PrecisionSizing() {
 
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-lg">TriSex.org vs Traditional Sizing</CardTitle>
+                    <CardTitle className="text-lg">TriSex.org Intersex-Centered vs Traditional Sizing</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="grid md:grid-cols-3 gap-4 text-sm">
                       <div className="text-center">
-                        <h4 className="font-medium mb-2">Traditional</h4>
+                        <h4 className="font-medium mb-2">Traditional Binary</h4>
                         <div className="bg-red-50 dark:bg-red-900/20 p-3 rounded">
                           <p>3-4 sizes (S, M, L, XL)</p>
                           <p className="text-red-600 text-xs mt-1">
-                            70% report poor fit
+                            Assumes binary anatomy, excludes intersex bodies
                           </p>
                         </div>
                       </div>
@@ -374,19 +380,24 @@ export function PrecisionSizing() {
                         <div className="bg-yellow-50 dark:bg-yellow-900/20 p-3 rounded">
                           <p>10-12 sizes</p>
                           <p className="text-yellow-600 text-xs mt-1">
-                            Better, but limited
+                            Better range, still binary-focused
                           </p>
                         </div>
                       </div>
                       <div className="text-center">
-                        <h4 className="font-medium mb-2">TriSex.org System</h4>
+                        <h4 className="font-medium mb-2">TriSex.org ⚧️</h4>
                         <div className="bg-green-50 dark:bg-green-900/20 p-3 rounded">
-                          <p>60+ precision sizes</p>
+                          <p>60+ intersex-centered sizes</p>
                           <p className="text-green-600 text-xs mt-1">
-                            95%+ perfect fit rate
+                            Honors all anatomies, intersex variations as baseline
                           </p>
                         </div>
                       </div>
+                    </div>
+                    <div className="mt-4 p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
+                      <p className="text-sm text-purple-900 dark:text-purple-100">
+                        <strong>⚧️ Why Intersex-Centered?</strong> Traditional sizing systems were designed around binary assumptions, leaving intersex individuals and those with anatomical variations to "fit in" to inadequate categories. Our system starts with intersex anatomical diversity as the foundation, ensuring everyone has access to precision protection without forced categorization.
+                      </p>
                     </div>
                   </CardContent>
                 </Card>

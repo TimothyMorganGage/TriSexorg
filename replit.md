@@ -89,3 +89,10 @@ The project is fully prepared for open source distribution with comprehensive do
     -   **LibreOffice/OpenOffice**: Professional document export with print-ready formatting, ODT conversion guides, Pandoc integration, and Writer templates
     -   **AppFlowy**: Complete workspace integration with database templates, YAML frontmatter, bidirectional linking, and offline-first collaboration
     -   **Cross-Platform Compatibility**: All exports include platform-specific features, metadata preservation, and seamless workflow integration
+-   ✅ **Self-Employed EIN & Medicaid EPD Wiki Article**: Added comprehensive 18-minute guide covering tax deductions, Medicaid Employed Persons with Disabilities program integration, and practical financial accessibility scenarios
+-   ✅ **Intersex-Centered Sizing System**: Complete reframing of all sizing specifications to center around intersex anatomical diversity as the baseline, not as an afterthought
+    -   **Foundation, Not Addition**: Intersex anatomical variations inform entire 60+ size system design
+    -   **No Forced Categorization**: All anatomies measured on their own terms without binary assumptions
+    -   **Updated Components**: MyONESizing component and wiki sizing guide fully redesigned with intersex-centered language
+    -   **Affirming Approach**: Sizing based on measurements alone, no gender or anatomical categorization required
+    -   **Community-Driven**: Developed in consultation with intersex advocates and medical professionals

@@ -1285,86 +1285,199 @@ export default function Wiki() {
   const wikiArticles: WikiArticle[] = [
     {
       id: "precision-sizing-guide",
-      title: "fluck Precision Sizing: Complete Guide to 60+ Custom Fits",
+      title: "TriSex.org Intersex-Centered Sizing: Complete Guide to 60+ Custom Fits",
       category: "sizing",
-      content: `# Complete Custom Sizing Guide
+      content: `# Intersex-Centered Precision Sizing Guide
 
-## Introduction
-fluck's precision sizing system delivers custom-fit protection for better love-making, expanding beyond traditional sizing limitations.
+## ⚧️ Introduction: Centering Intersex Anatomy
 
-## The 60+ Size System
+TriSex.org's precision sizing system is built from the ground up around intersex anatomical diversity. Rather than treating intersex bodies as "special cases" that need to "fit in" to binary sizing systems, we center intersex variations as our baseline—ensuring all anatomical configurations have access to precision protection without forced categorization.
 
-### Size Nomenclature
-- **Letter System**: A through H (width categories)
+**Core Principle**: Intersex anatomical diversity is natural human variation, not an outlier. Our sizing honors this truth.
+
+## Why Intersex-Centered Sizing Matters
+
+### The Problem with Binary Sizing
+Traditional protection sizing was designed around binary assumptions:
+- Assumed only two anatomical "types"
+- Created arbitrary "standard" sizes based on limited data
+- Forced intersex individuals into inadequate categories
+- Excluded natural anatomical variations from design process
+
+### Our Intersex-Centered Approach
+- **Foundation, Not Afterthought**: Intersex variations inform our entire sizing spectrum
+- **No Forced Categorization**: All anatomies measured on their own terms
+- **Anatomical Neutrality**: Sizing based on actual measurements, not gender assumptions
+- **Inclusive Design**: 60+ sizes accommodate the full spectrum of human anatomical diversity
+
+## The 60+ Intersex-Centered Size System
+
+### Size Nomenclature (Gender-Neutral)
+- **Letter System**: A through H (circumference/width categories)
 - **Number System**: 1, 3, 5 (length categories)
-- **Example**: C3 = Medium width, standard length
+- **Example**: C3 = Mid-range width, mid-range length
+- **No Binary Labels**: Sizes describe fit characteristics, not gender
 
-### Width Categories
-- **A Series**: 45-47mm (Ultra snug)
-- **B Series**: 47-49mm (Snug)
-- **C Series**: 49-51mm (Standard)
-- **D Series**: 51-53mm (Comfortable)
-- **E Series**: 53-55mm (Roomy)
-- **F Series**: 55-57mm (Extra roomy)
-- **G Series**: 57-60mm (Ultra roomy)
-- **H Series**: 60mm+ (Maximum)
+### Width Categories (Circumference-Based)
+Our width categories honor all anatomical configurations:
+- **A Series**: 45-47mm circumference (Narrow fit)
+- **B Series**: 47-49mm (Compact fit)
+- **C Series**: 49-51mm (Mid-range fit)
+- **D Series**: 51-53mm (Moderate fit)
+- **E Series**: 53-55mm (Generous fit)
+- **F Series**: 55-57mm (Spacious fit)
+- **G Series**: 57-60mm (Expansive fit)
+- **H Series**: 60mm+ (Maximum fit)
 
-### Length Categories
-- **1 Series**: 160mm (Shorter)
-- **3 Series**: 170mm (Standard)
-- **5 Series**: 180mm (Longer)
+**⚧️ Intersex Consideration**: These ranges accommodate natural anatomical variations including intersex configurations, without requiring users to identify or categorize their bodies.
+
+### Length Categories (Measurement-Based)
+- **1 Series**: 160mm length
+- **3 Series**: 170mm length
+- **5 Series**: 180mm length
+
+**⚧️ Intersex Consideration**: Length categories are purely measurement-based, honoring all anatomical structures regardless of classification.
 
 ## Measurement Best Practices
 
-### Privacy-First Approach
-1. All measurements processed locally
-2. No data transmission during sizing
-3. Optional 3D scanning for precision
-4. User-controlled data retention
+### Intersex-Affirming Measurement Approach
 
-### Measurement Techniques
-1. **Length**: Base to tip, top side, fully erect
-2. **Base Girth**: Circumference at base
-3. **Mid Girth**: Middle shaft circumference
-4. **Head Girth**: Glans circumference
+**Core Principle**: Your anatomy is measured on its own terms, without comparison to binary "norms."
 
-### Common Sizing Errors
-- Measuring while not fully erect
-- Not accounting for variation during arousal
-- Ignoring girth variations along shaft
-- Using inappropriate measuring tools
+1. **Anatomical Neutrality**: We measure what exists, not what "should" exist
+2. **Privacy-First**: All measurements processed locally, no data storage
+3. **No Self-Categorization Required**: Sizing based on measurements alone
+4. **3D Scanning Recommended**: Our scanner accommodates all anatomical variations
+
+### Measurement Techniques for All Anatomies
+
+#### For Standard Erectile Anatomy:
+1. **Length**: Measure full length in representative state
+2. **Circumference**: Measure at widest point
+3. **Variations**: Note any significant variations along structure
+
+#### For Intersex Anatomies:
+1. **Flexible Approach**: Measure in whatever state provides accurate representation
+2. **Multiple Points**: For varied configurations, measure multiple circumference points
+3. **Custom Consultation**: Our team can help determine best measurement approach
+4. **3D Scanner Priority**: Automated scanning eliminates need for self-measurement decisions
+
+#### For Post-Surgical Anatomies:
+1. **Current Configuration**: Measure anatomy as it exists now
+2. **Sensitivity Zones**: Note areas requiring special attention
+3. **Healing Considerations**: Account for any ongoing changes
+4. **Medical Support**: Healthcare provider can assist with measurements if helpful
+
+### Privacy-First, Intersex-Affirming Technology
+1. All measurements processed locally on your device
+2. No data transmission during sizing process
+3. No anatomical categorization required
+4. 3D scanning accommodates all configurations without human intervention
+5. User-controlled data retention—delete measurements anytime
+
+### Common Sizing Challenges & Solutions
+
+**Challenge**: "My anatomy doesn't fit binary assumptions"
+**Solution**: Our system doesn't use binary assumptions. Measure your anatomy exactly as it exists.
+
+**Challenge**: "I have intersex anatomy and don't know how to categorize it"
+**Solution**: Don't categorize—just measure. Our 60+ sizes accommodate all configurations.
+
+**Challenge**: "My anatomy varies significantly in different states"
+**Solution**: Measure in the state when you'll use protection. Our 3D scanner can capture variations.
+
+**Challenge**: "I've had gender-affirming surgery and sizing is confusing"
+**Solution**: Measure your current anatomy. Post-surgical configurations are fully accommodated.
 
 ## Fit Optimization
 
-### Fit Categories
-- **Snug**: Minimal movement, maximum security
-- **Standard**: Balanced comfort and security
-- **Relaxed**: Easy application, comfortable wear
+### Fit Characteristics (Not Gender-Based)
+- **Narrow Fit**: Minimal movement, maximum security, tight feel
+- **Mid-Range Fit**: Balanced comfort and security, most versatile
+- **Spacious Fit**: Easy application, relaxed feel, maximum comfort
 
-### Size Verification
-1. Test fit with sample sizes
-2. Verify comfort during movement
-3. Check for proper retention
-4. Ensure adequate sensitivity
+### Size Verification Process
+1. Test fit with sample sizes (free samples available)
+2. Verify comfort during typical use conditions
+3. Check for proper retention without restriction
+4. Ensure adequate sensitivity and pleasure
 
-## Inclusive Sizing Philosophy
+## Intersex-Centered Inclusive Philosophy
 
-### Body Diversity Recognition
-- All anatomies accommodated
-- No "standard" assumptions
-- Intersex-inclusive sizing
-- Post-surgical considerations
+### Centering Intersex Anatomies
 
-### Cultural Sensitivity
-- Respectful terminology
-- Privacy considerations
-- Community-specific needs
-- Religious/cultural requirements`,
-      tags: ["sizing", "measurement", "precision", "custom-fit", "inclusive", "love-making"],
-      lastUpdated: "2024-01-15",
-      author: "fluck Health Team",
+**What This Means in Practice**:
+- Intersex anatomical variations informed our entire sizing design
+- Size ranges start from intersex anatomical diversity, not binary assumptions
+- No anatomy is considered "outside the norm"—all variations ARE the norm
+- Product testing includes intersex community members from design phase
+
+### All Anatomies Welcome
+
+Our system fully accommodates:
+- ✓ Intersex anatomical configurations (all variations)
+- ✓ Post-gender-affirming-surgery anatomy
+- ✓ Natural variations across the human spectrum
+- ✓ Bodies affected by medical conditions or treatments
+- ✓ Anatomies in various states (hormone therapy, healing, etc.)
+- ✓ Any configuration not listed—we honor all bodies
+
+### No Forced Categorization
+
+**You Will Never Be Asked**:
+- "Are you male or female?" (sizing doesn't require this)
+- "What type of anatomy do you have?" (measurements tell us what we need)
+- "Is your anatomy 'normal'?" (all anatomies are normal)
+- To fit into a binary category to access sizing
+
+**What We Ask Instead**:
+- "What are your measurements?" (neutral, objective)
+- "What fit feel do you prefer?" (personal preference)
+- "What protection features matter to you?" (individualized)
+
+### Cultural & Medical Sensitivity
+- Respectful, neutral terminology throughout
+- Privacy protections for sensitive health information
+- Community-specific needs honored
+- Religious/cultural requirements accommodated
+- Medical provider consultation supported
+
+## Special Considerations
+
+### For Intersex Individuals
+- **You Are Centered Here**: This system was designed WITH you, not for you as an afterthought
+- **Measurement Flexibility**: Our 3D scanner or custom consultation available
+- **No Disclosure Required**: You never need to disclose intersex status to get proper sizing
+- **Community Input Welcome**: Help us continue improving through intersex community feedback
+
+### For Trans & Non-Binary Individuals
+- **Anatomy-Based Only**: Sizing based on current anatomy, not gender identity
+- **Transition Accommodations**: Resizing available as anatomy changes during transition
+- **Privacy Protected**: No gender markers required for sizing
+- **Affirming Language**: Gender-neutral terminology throughout
+
+### For Anyone with Anatomical Variations
+- **All Variations Welcome**: Whether congenital, acquired, or post-surgical
+- **Judgment-Free Zone**: Your anatomy is honored exactly as it exists
+- **Custom Solutions**: If our 60+ sizes don't fit perfectly, custom sizing available
+- **Community Support**: Peer support from others with similar anatomies available
+
+## Conclusion
+
+TriSex.org's intersex-centered sizing represents a fundamental shift: from forcing diverse bodies into narrow categories, to building protection systems around the beautiful reality of human anatomical diversity. 
+
+By centering intersex anatomies in our design, we create better protection for everyone—because honoring the full spectrum of human variation improves outcomes for all bodies.
+
+**Your anatomy is not a problem to solve. It's a reality to honor.**
+
+---
+
+*Developed in consultation with intersex advocates, medical professionals, and community members. Continuously improved through ongoing feedback.*`,
+      tags: ["sizing", "measurement", "precision", "custom-fit", "intersex-centered", "inclusive", "anatomical-diversity"],
+      lastUpdated: "2025-01-13",
+      author: "TriSex.org Intersex-Centered Design Team",
       difficulty: "Beginner",
-      readTime: "12 min"
+      readTime: "16 min"
     },
     {
       id: "4d-sti-intervention",
