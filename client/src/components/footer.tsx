@@ -133,7 +133,7 @@ export function Footer() {
         <div className="border-t border-gray-800 mt-8 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="text-sm text-gray-400">
-              <p>Yours courtesy of American Care Planning - Licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">Creative Commons BY-SA 4.0</a></p>
+              <p>Licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">Creative Commons BY-SA 4.0</a></p>
               <p className="mt-1">Sustainable protection. Inclusive design. Body-positive healthcare.</p>
               <p className="mt-1 flex items-center text-xs text-gray-500">
                 <span className="mr-2">Made on</span>
