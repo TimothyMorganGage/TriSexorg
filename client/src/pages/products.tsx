@@ -68,11 +68,11 @@ export default function Products() {
     {
       id: "protection-basics",
       name: "Universal Protection Package",
-      category: isVegan ? "Barrier Protection • 100% Vegan" : "Barrier Protection • Traditional Ecoculture",
+      category: isVegan ? "Barrier Protection • 100% Vegan" : "Barrier Protection • Upcycled Traditional",
       basePrice: 5.99,
       description: isVegan 
         ? "Complete barrier protection with custom sizing, 100% vegan plant-based materials, and enhanced features"
-        : "Complete barrier protection with custom sizing, traditional ecoculture materials including sustainable animal-derived ingredients, and enhanced features",
+        : "Complete barrier protection with custom sizing, upcycled animal-derived materials from farm/fishery/pharmacy waste streams + plant botanicals",
       icon: Shield,
       features: isVegan ? [
         "🌱 100% Vegan certified - No animal products",
@@ -92,32 +92,32 @@ export default function Products() {
         "All-gender inclusive design",
         "Compostable vegan packaging"
       ] : [
-        "🐝 Traditional Ecoculture - Sustainable animal & plant ingredients",
+        "♻️ Upcycled from farm/fishery/pharmacy waste - Zero new animal products",
         "60+ custom sizes (A0-H16) - Intersex anatomy baseline",
-        "Recycled plastic + natural lanolin hydrogel composite",
-        "Beeswax-enhanced long-lasting lubrication",
-        "Beeswax & plant-derived durability coating",
-        "pH balancing formula (botanical extracts + propolis)",
-        "Biodegradable formula (plant fibers + chitosan from shellfish)",
-        "Natural colorants (cochineal, plant extracts)",
+        "Recycled plastic + lanolin (upcycled wool processing waste)",
+        "Beeswax-enhanced lubrication (apiary byproduct)",
+        "Beeswax & plant durability coating (sustainable beekeeping waste)",
+        "pH balancing (botanical extracts + propolis from hive waste)",
+        "Biodegradable (plant fibers + chitosan from shellfish processing waste)",
+        "Natural colorants (cochineal waste, plant extracts)",
         "Easy removal safety tab",
         "Body temperature responsive",
-        "Honey & essential oil scent options",
-        "Propolis antimicrobial coating (bee-derived)",
+        "Honey (excess apiary production) & essential oil scents",
+        "Propolis antimicrobial (beekeeping byproduct)",
         "Ultra-thin wall construction",
         "Textured surface options",
         "All-gender inclusive design",
-        "Compostable natural packaging"
+        "Compostable beeswax packaging (apiary waste)"
       ],
     },
     {
       id: "super-sides-barriers",
       name: "Super Sides 🥰 Oral Barriers",
-      category: isVegan ? "MSM Oral Protection • 100% Vegan" : "MSM Oral Protection • Traditional Ecoculture",
+      category: isVegan ? "MSM Oral Protection • 100% Vegan" : "MSM Oral Protection • Upcycled Traditional",
       basePrice: 5.99,
       description: isVegan 
         ? "Democratically owned by MSM 'sides' cooperative - Premium vegan oral protection for men who have sex with men"
-        : "Democratically owned by MSM 'sides' cooperative - Premium traditional ecoculture oral protection for men who have sex with men",
+        : "Democratically owned by MSM 'sides' cooperative - Premium oral protection using upcycled farm/apiary waste materials for men who have sex with men",
       icon: Heart,
       cooperative: "MSM Sides Cooperative",
       democraticOwnership: true,
@@ -139,20 +139,20 @@ export default function Products() {
         "Includes comprehensive MSM sexual health guide",
         "Support for side-focused sexual practices"
       ] : [
-        "🐝 Traditional Ecoculture - Sustainable ingredients",
+        "♻️ Upcycled apiary waste - Zero new animal production",
         "Ultra-thin oral barrier material (0.02mm)",
-        "Natural flavored options (honey, mint, vanilla, unflavored)",
+        "Natural flavors (excess honey, mint, vanilla, unflavored)",
         "Large coverage area (10\" x 10\")",
         "Enhanced grip edges for positioning",
         "Compatible with all natural lubricants",
-        "Latex-free hypoallergenic natural polymer",
+        "Latex-free hypoallergenic polymer with beeswax (apiary byproduct)",
         "Cooperative dividend program for members",
         "Democratic governance voting rights",
         "MSM community health data contribution",
         "Peer education materials included",
         "Discreet cooperative branding",
         "Fellatio-optimized thickness",
-        "Rimming-safe propolis antimicrobial coating",
+        "Rimming-safe propolis coating (beekeeping waste)",
         "Includes comprehensive MSM sexual health guide",
         "Support for side-focused sexual practices"
       ],
@@ -160,11 +160,11 @@ export default function Products() {
     {
       id: "nanoheal-treatment",
       name: "NanoHeal ⚧️ STI Treatment System",
-      category: isVegan ? "Advanced Healthcare • 100% Vegan" : "Advanced Healthcare • Traditional Ecoculture",
+      category: isVegan ? "Advanced Healthcare • 100% Vegan" : "Advanced Healthcare • Upcycled Traditional",
       basePrice: 5.99,
       description: isVegan
         ? "Revolutionary 100% vegan intersectional naturopathic lubricant with plant-based STI treatment capabilities"
-        : "Revolutionary intersectional naturopathic lubricant combining traditional ecoculture ingredients (honey, propolis, royal jelly) with plant botanicals for STI treatment",
+        : "Revolutionary intersectional naturopathic lubricant combining upcycled apiary/pharmacy waste (honey, propolis, royal jelly) with plant botanicals for STI treatment",
       icon: Sparkles,
       features: isVegan ? [
         "🌱 100% Vegan certified - Pure plant botanicals",
@@ -197,7 +197,7 @@ export default function Products() {
         "100% vegan biocompatible materials",
         "Creative Commons BY-SA 4.0 licensed"
       ] : [
-        "🐝 Traditional Ecoculture - Honey, propolis, royal jelly + botanicals",
+        "♻️ Upcycled apiary/pharmacy waste - No new animal production",
         "97% HSV-1/2 suppression efficacy",
         "95% Chlamydia/Gonorrhea containment",
         "89% HPV viral load reduction",
@@ -211,33 +211,33 @@ export default function Products() {
         "Intersex anatomy pH optimization",
         "Two Spirit ceremonial plants (White Sage, Sweetgrass)",
         "Latinx curanderismo botanicals (Hierba Buena, Romero, Ruda)",
-        "Afrocentric healing (Shea Butter, Moringa, Black Seed Oil, Royal Jelly)",
-        "Asian medicine (Ginseng, Reishi, Astragalus, Bee Pollen)",
-        "Raw Manuka honey nanoformulation (antimicrobial healing)",
-        "Propolis nanoparticles (antiviral and healing)",
-        "Royal jelly cell regeneration complex",
-        "Aloe vera + honey gel matrix",
-        "Beeswax sustained-release carriers",
+        "Afrocentric healing (Shea, Moringa, Black Seed Oil, upcycled royal jelly)",
+        "Asian medicine (Ginseng, Reishi, Astragalus, apiary waste bee pollen)",
+        "Raw Manuka honey (excess apiary production, antimicrobial)",
+        "Propolis nanoparticles (beekeeping waste, antiviral)",
+        "Royal jelly (apiary surplus, cell regeneration)",
+        "Aloe vera + excess honey gel matrix",
+        "Beeswax sustained-release carriers (apiary byproduct)",
         "Cultural affirmation frequency programming",
         "Ancestral blessing protocols included",
         "FDA breakthrough therapy designation",
         "WHO universal STI prevention recognition",
         "72-hour sustained release formula",
         "Biofilm disruption technology",
-        "Cellular healing acceleration with royal jelly",
-        "Immune-boosting botanicals + bee products",
-        "100% biocompatible traditional materials",
+        "Cellular healing with upcycled royal jelly",
+        "Immune-boosting botanicals + apiary byproducts",
+        "100% biocompatible upcycled materials",
         "Creative Commons BY-SA 4.0 licensed"
       ],
     },
     {
       id: "sustainable-materials",
       name: "Premium Sustainable Materials",
-      category: isVegan ? "Eco-Conscious Options • 100% Vegan" : "Eco-Conscious Options • Traditional Ecoculture",
+      category: isVegan ? "Eco-Conscious Options • 100% Vegan" : "Eco-Conscious Options • Upcycled Traditional",
       basePrice: 5.99,
       description: isVegan
         ? "Advanced 100% vegan eco-friendly material upgrades for environmental protection"
-        : "Advanced traditional ecoculture materials combining sustainable animal products (silk, lanolin, beeswax) with plant-based ingredients",
+        : "Advanced upcycled materials from textile/farm/fishery/apiary waste streams (silk, lanolin, chitosan, beeswax) with plant-based ingredients",
       icon: Leaf,
       features: isVegan ? [
         "🌱 100% Vegan certified - No animal testing or ingredients",
@@ -257,32 +257,32 @@ export default function Products() {
         "Renewable energy production",
         "Fair trade vegan material sourcing"
       ] : [
-        "🐝 Traditional Ecoculture - Silk, lanolin, beeswax, chitosan",
+        "♻️ Upcycled waste - Textile/farm/fishery/apiary byproducts",
         "Ocean plastic recovery materials (95% recycled)",
-        "Natural blend (plant polymers + sustainable lanolin)",
-        "Medical-grade silicone with beeswax coating",
-        "Hemp fiber + silk protein composite",
-        "Graphene-enhanced with chitosan durability",
-        "Propolis + plant antimicrobial treatment",
-        "Smart temperature-responsive natural materials",
-        "Biodegradable formula (plant + chitosan from shellfish)",
-        "Carbon-neutral traditional manufacturing",
-        "Compostable beeswax-coated packaging",
-        "Zero-waste supply chain",
-        "Marine debris reduction contribution",
-        "Circular economy participation",
+        "Natural blend (plant polymers + lanolin from wool processing waste)",
+        "Medical-grade silicone with beeswax coating (apiary byproduct)",
+        "Hemp fiber + silk protein (textile processing waste)",
+        "Graphene-enhanced with chitosan (shellfish processing waste)",
+        "Propolis (beekeeping waste) + plant antimicrobial",
+        "Smart temperature-responsive upcycled materials",
+        "Biodegradable (plant + chitosan from fishery waste)",
+        "Carbon-neutral upcycling manufacturing",
+        "Compostable beeswax-coated packaging (apiary surplus)",
+        "Zero-waste circular supply chain",
+        "Marine debris + fishery waste reduction",
+        "Circular economy waste upcycling",
         "Renewable energy production",
-        "Fair trade traditional material sourcing"
+        "Fair trade upcycled material sourcing"
       ],
     },
     {
       id: "smart-features",
       name: "Smart Health Technology",
-      category: isVegan ? "Connected Healthcare • 100% Vegan Hardware" : "Connected Healthcare • Traditional Materials",
+      category: isVegan ? "Connected Healthcare • 100% Vegan Hardware" : "Connected Healthcare • Upcycled Materials",
       basePrice: 5.99,
       description: isVegan
         ? "Integration with health systems and smart monitoring features using vegan-friendly electronics"
-        : "Integration with health systems and smart monitoring features using traditional electronics (may include animal-derived components in manufacturing)",
+        : "Integration with health systems and smart monitoring features with sensor coatings from upcycled apiary/pharmaceutical waste",
       icon: Zap,
       features: isVegan ? [
         "🌱 100% Vegan hardware - No animal-derived components",
@@ -308,7 +308,7 @@ export default function Products() {
         "Federated data portability",
         "Plant-based sensor coatings"
       ] : [
-        "🐝 Traditional Electronics - Standard manufacturing processes",
+        "♻️ Upcycled protective coatings - Apiary/pharmaceutical waste",
         "MyChart healthcare system connectivity",
         "Apple Health integration",
         "Google Calendar sync",
@@ -329,7 +329,7 @@ export default function Products() {
         "Health data privacy encryption",
         "HIPAA-compliant data storage",
         "Federated data portability",
-        "Beeswax-coated sensor protection"
+        "Beeswax sensor coating (apiary surplus waste)"
       ],
     },
   ];
@@ -394,7 +394,7 @@ export default function Products() {
                 data-testid="button-traditional-mode"
               >
                 <Flower2 className="h-5 w-5" />
-                Traditional Ecoculture
+                Upcycled Traditional
               </button>
             </div>
 
@@ -403,7 +403,7 @@ export default function Products() {
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Cooperative pricing achieves <span className="font-bold text-primary">$0.99/unit</span> when ordering 500+ units. 
-              All features included. {isVegan ? '100% vegan plant-based materials.' : 'Traditional ecoculture with sustainable animal & plant ingredients.'} Volume discounts for community health.
+              All features included. {isVegan ? '100% vegan plant-based materials.' : 'Upcycled animal waste from farms, hunts, fisheries & pharmacies + plant botanicals.'} Volume discounts for community health.
             </p>
           </div>
 
