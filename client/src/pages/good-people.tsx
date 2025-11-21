@@ -177,6 +177,7 @@ export default function GoodPeople() {
       displayName: "Alex Chen",
       age: 28,
       location: "Portland, OR",
+      profileImageUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop",
       bio: "Worker-owner at a tech cooperative. Passionate about sustainable living and community organizing.",
       interests: ["Worker Cooperatives", "Permaculture", "Music"],
       cooperativePrinciples: ["Democratic Member Control", "Concern for Community"],
@@ -198,6 +199,7 @@ export default function GoodPeople() {
       displayName: "Morgan Rivera",
       age: 32,
       location: "Madison, WI",
+      profileImageUrl: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop",
       bio: "Credit union board member and community garden coordinator. Believes in economic democracy.",
       interests: ["Credit Unions", "Community Gardens", "Social Justice"],
       cooperativePrinciples: ["Member Economic Participation", "Education, Training & Information"],
@@ -219,6 +221,7 @@ export default function GoodPeople() {
       displayName: "Sam Okafor",
       age: 26,
       location: "Ithaca, NY",
+      profileImageUrl: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop",
       bio: "Housing cooperative member and renewable energy advocate. Looking for meaningful connections.",
       interests: ["Housing Cooperation", "Renewable Energy", "Hiking"],
       cooperativePrinciples: ["Voluntary & Open Membership", "Cooperation Among Cooperatives"],
@@ -444,12 +447,30 @@ export default function GoodPeople() {
                   return (
                     <Card key={match.id} className="border-l-4 border-l-secondary">
                       <CardHeader>
-                        <div className="flex items-center justify-between">
-                          <CardTitle className="text-lg">{match.displayName}</CardTitle>
-                          <div className="flex items-center space-x-1">
-                            <MatchIcon className={`h-4 w-4 ${getMatchTypeColor(match.matchType)}`} />
-                            <Star className="h-4 w-4 text-yellow-500" />
-                            <span className="text-sm font-medium">{match.compatibilityScore}%</span>
+                        <div className="flex items-start gap-4">
+                          <div className="flex-shrink-0">
+                            {match.profileImageUrl ? (
+                              <img
+                                src={match.profileImageUrl}
+                                alt={`${match.displayName}'s profile`}
+                                className="w-20 h-20 rounded-lg object-cover border-2 border-secondary"
+                                data-testid={`img-match-${match.id}`}
+                              />
+                            ) : (
+                              <div className="w-20 h-20 rounded-lg bg-gray-200 dark:bg-gray-700 flex items-center justify-center border-2 border-gray-300">
+                                <Users className="h-10 w-10 text-gray-400" />
+                              </div>
+                            )}
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex items-center justify-between">
+                              <CardTitle className="text-lg">{match.displayName}</CardTitle>
+                              <div className="flex items-center space-x-1">
+                                <MatchIcon className={`h-4 w-4 ${getMatchTypeColor(match.matchType)}`} />
+                                <Star className="h-4 w-4 text-yellow-500" />
+                                <span className="text-sm font-medium">{match.compatibilityScore}%</span>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </CardHeader>
