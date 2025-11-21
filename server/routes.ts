@@ -17,6 +17,7 @@ import { z } from "zod";
 import { genealogyService, RelationshipUtils } from "./genealogy";
 import { ageVerificationService, DocumentType, VerificationStatus, AgeVerificationUtils } from "./ageVerification";
 import { requireAuth } from "./middleware/auth";
+import { Storage } from "@google-cloud/storage";
 
 const loginSchema = z.object({
   email: z.string().email(),
@@ -59,6 +60,25 @@ const uploadVerification = multer({
     fileSize: 10 * 1024 * 1024 // 10MB limit
   }
 });
+
+// Configure multer for profile image uploads
+const uploadProfileImage = multer({
+  storage: multer.memoryStorage(),
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype.startsWith('image/')) {
+      cb(null, true);
+    } else {
+      cb(new Error('Only image files are allowed'));
+    }
+  },
+  limits: {
+    fileSize: 5 * 1024 * 1024 // 5MB limit
+  }
+});
+
+// Initialize Google Cloud Storage for Replit Object Storage
+const gcsStorage = new Storage();
+const bucketName = process.env.DEFAULT_OBJECT_STORAGE_BUCKET_ID || '';
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Auth routes
@@ -146,6 +166,42 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json({ user: userResponse });
     } catch (error) {
       res.status(500).json({ message: "Failed to get user" });
+    }
+  });
+
+  // Profile image upload route
+  app.post("/api/profile/upload-image", uploadProfileImage.single('profileImage'), async (req, res) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ message: "No image file uploaded" });
+      }
+
+      // Generate unique filename with timestamp
+      const timestamp = Date.now();
+      const extension = path.extname(req.file.originalname);
+      const filename = `profile-images/${timestamp}${extension}`;
+
+      // Upload to GCS bucket
+      const bucket = gcsStorage.bucket(bucketName);
+      const file = bucket.file(filename);
+      
+      await file.save(req.file.buffer, {
+        metadata: {
+          contentType: req.file.mimetype,
+        },
+        public: true,
+      });
+
+      // Get public URL
+      const imageUrl = `https://storage.googleapis.com/${bucketName}/${filename}`;
+
+      res.json({
+        message: "Image uploaded successfully",
+        imageUrl: imageUrl,
+      });
+    } catch (error) {
+      console.error("Image upload error:", error);
+      res.status(500).json({ message: "Failed to upload image" });
     }
   });
 
