@@ -65,51 +65,53 @@ export default function Products() {
     {
       id: "protection-basics",
       name: "Universal Protection Package",
-      category: "Barrier Protection",
+      category: "Barrier Protection • 100% Vegan",
       basePrice: 5.99,
-      description: "Complete barrier protection with custom sizing, sustainable materials, and enhanced features",
+      description: "Complete barrier protection with custom sizing, 100% vegan plant-based materials, and enhanced features",
       icon: Shield,
       features: [
+        "🌱 100% Vegan certified - No animal products",
         "60+ custom sizes (A0-H16) - Intersex anatomy baseline",
-        "Universal Recycled Plastic + Hydrogel Composite material",
-        "Enhanced long-lasting lubrication included",
-        "Extra durability coating",
-        "pH balancing formula",
-        "Biodegradable rapid formula",
-        "Custom color selection",
+        "Plant-based recycled plastic + hydrogel composite",
+        "Vegan long-lasting lubrication (plant oils)",
+        "Plant-derived durability coating",
+        "pH balancing formula (botanical extracts)",
+        "Biodegradable rapid formula (plant fibers)",
+        "Natural plant-based colorants",
         "Easy removal safety tab",
         "Body temperature responsive",
-        "Natural scent options",
-        "Antimicrobial surface coating",
+        "Essential oil scent options",
+        "Plant-based antimicrobial coating (tea tree, neem)",
         "Ultra-thin wall construction",
         "Textured surface options",
         "All-gender inclusive design",
-        "Monogamy-optimized packaging"
+        "Compostable vegan packaging"
       ],
     },
     {
       id: "super-sides-barriers",
       name: "Super Sides 🥰 Oral Barriers",
-      category: "MSM Oral Protection",
+      category: "MSM Oral Protection • 100% Vegan",
       basePrice: 5.99,
-      description: "Democratically owned by MSM 'sides' cooperative - Premium oral protection for men who have sex with men",
+      description: "Democratically owned by MSM 'sides' cooperative - Premium vegan oral protection for men who have sex with men",
       icon: Heart,
       cooperative: "MSM Sides Cooperative",
       democraticOwnership: true,
       features: [
+        "🌱 100% Vegan certified - Plant-based materials only",
         "Ultra-thin oral barrier material (0.02mm)",
-        "Flavored options (mint, vanilla, unflavored)",
+        "Vegan flavored options (mint, vanilla, unflavored)",
         "Large coverage area (10\" x 10\")",
         "Enhanced grip edges for positioning",
-        "Compatible with all lubricants",
-        "Latex-free hypoallergenic polymer",
+        "Compatible with all vegan lubricants",
+        "Latex-free hypoallergenic plant polymer",
         "Cooperative dividend program for members",
         "Democratic governance voting rights",
         "MSM community health data contribution",
         "Peer education materials included",
         "Discreet cooperative branding",
         "Fellatio-optimized thickness",
-        "Rimming-safe antimicrobial coating",
+        "Rimming-safe plant-based antimicrobial coating",
         "Includes comprehensive MSM sexual health guide",
         "Support for side-focused sexual practices"
       ],
@@ -117,11 +119,12 @@ export default function Products() {
     {
       id: "nanoheal-treatment",
       name: "NanoHeal ⚧️ STI Treatment System",
-      category: "Advanced Healthcare",
+      category: "Advanced Healthcare • 100% Vegan",
       basePrice: 5.99,
-      description: "Revolutionary intersectional naturopathic lubricant with STI treatment capabilities",
+      description: "Revolutionary 100% vegan intersectional naturopathic lubricant with plant-based STI treatment capabilities",
       icon: Sparkles,
       features: [
+        "🌱 100% Vegan certified - Pure plant botanicals",
         "97% HSV-1/2 suppression efficacy",
         "95% Chlamydia/Gonorrhea containment",
         "89% HPV viral load reduction",
@@ -133,10 +136,13 @@ export default function Products() {
         "Smart drug release nanotechnology",
         "Trans hormone therapy compatibility",
         "Intersex anatomy pH optimization",
-        "Two Spirit ceremonial plant integration (White Sage, Sweetgrass)",
+        "Two Spirit ceremonial plants (White Sage, Sweetgrass)",
         "Latinx curanderismo botanicals (Hierba Buena, Romero, Ruda)",
-        "Afrocentric healing compounds (Shea Butter, Moringa)",
-        "Asian traditional medicine (Ginseng, Reishi)",
+        "Afrocentric plant healing (Shea Butter, Moringa, Black Seed Oil)",
+        "Asian plant medicine (Ginseng, Reishi, Astragalus)",
+        "Plant-based propolis alternative (Pine resin compounds)",
+        "Vegan aloe vera gel matrix",
+        "Maple syrup antimicrobial (replaces honey)",
         "Cultural affirmation frequency programming",
         "Ancestral blessing protocols included",
         "FDA breakthrough therapy designation",
@@ -144,44 +150,46 @@ export default function Products() {
         "72-hour sustained release formula",
         "Biofilm disruption technology",
         "Cellular healing acceleration",
-        "Immune-boosting botanicals",
-        "100% biocompatible materials",
+        "Immune-boosting plant botanicals",
+        "100% vegan biocompatible materials",
         "Creative Commons BY-SA 4.0 licensed"
       ],
     },
     {
       id: "sustainable-materials",
       name: "Premium Sustainable Materials",
-      category: "Eco-Conscious Options",
+      category: "Eco-Conscious Options • 100% Vegan",
       basePrice: 5.99,
-      description: "Advanced eco-friendly material upgrades for environmental protection",
+      description: "Advanced 100% vegan eco-friendly material upgrades for environmental protection",
       icon: Leaf,
       features: [
+        "🌱 100% Vegan certified - No animal testing or ingredients",
         "Ocean plastic recovery materials (95% recycled)",
-        "Plant-based natural blend options",
-        "Medical-grade platinum silicone",
+        "Plant-based natural blend (soy, corn, sugarcane polymers)",
+        "Medical-grade vegan silicone (petroleum-free)",
         "Hemp fiber composite construction",
-        "Graphene-enhanced durability",
-        "Silver ion antimicrobial treatment",
-        "Smart temperature-responsive materials",
-        "Rapid biodegradable formula",
-        "Carbon-neutral manufacturing",
-        "Compostable packaging",
+        "Graphene-enhanced plant durability",
+        "Plant-based antimicrobial treatment (neem, tea tree)",
+        "Smart temperature-responsive plant materials",
+        "Rapid biodegradable plant formula",
+        "Carbon-neutral vegan manufacturing",
+        "Compostable plant-based packaging",
         "Zero-waste supply chain",
         "Marine debris reduction contribution",
         "Circular economy participation",
         "Renewable energy production",
-        "Fair trade material sourcing"
+        "Fair trade vegan material sourcing"
       ],
     },
     {
       id: "smart-features",
       name: "Smart Health Technology",
-      category: "Connected Healthcare",
+      category: "Connected Healthcare • 100% Vegan Hardware",
       basePrice: 5.99,
-      description: "Integration with health systems and smart monitoring features",
+      description: "Integration with health systems and smart monitoring features using vegan-friendly electronics",
       icon: Zap,
       features: [
+        "🌱 100% Vegan hardware - No animal-derived components",
         "MyChart healthcare system connectivity",
         "Apple Health integration",
         "Google Calendar sync",
@@ -201,7 +209,8 @@ export default function Products() {
         "Automated reorder reminders",
         "Health data privacy encryption",
         "HIPAA-compliant data storage",
-        "Federated data portability"
+        "Federated data portability",
+        "Plant-based sensor coatings"
       ],
     },
   ];
@@ -240,12 +249,15 @@ export default function Products() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="text-center mb-12">
+            <Badge className="mb-4 text-lg px-6 py-2 bg-green-600 hover:bg-green-700">
+              🌱 100% Vegan Certified
+            </Badge>
             <h1 className="text-4xl lg:text-5xl font-bold text-neutral mb-4">
               Bulk Order Products & Services
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Cooperative pricing achieves <span className="font-bold text-primary">$0.99/unit</span> when ordering 500+ units. 
-              All features included. Volume discounts for community health.
+              All features included. 100% vegan plant-based materials. Volume discounts for community health.
             </p>
           </div>
 
