@@ -20,7 +20,9 @@ import {
   Leaf,
   Zap,
   BookOpen,
-  ArrowRight
+  ArrowRight,
+  Sprout,
+  Flower2
 } from "lucide-react";
 import { Link } from "wouter";
 import { useAuth } from "@/lib/auth";
@@ -52,6 +54,7 @@ export default function Products() {
   const { toast } = useToast();
   const [selectedProduct, setSelectedProduct] = useState<string>("protection-basics");
   const [quantity, setQuantity] = useState<number>(500);
+  const [isVegan, setIsVegan] = useState<boolean>(true);
 
   const pricingTiers: BulkPricingTier[] = [
     { minQuantity: 1, maxQuantity: 49, pricePerUnit: 5.99, savingsPercent: 0, label: "Individual" },
@@ -61,15 +64,17 @@ export default function Products() {
     { minQuantity: 500, maxQuantity: null, pricePerUnit: 0.99, savingsPercent: 83, label: "Cooperative" },
   ];
 
-  const productPackages: ProductPackage[] = [
+  const getProductPackages = (): ProductPackage[] => [
     {
       id: "protection-basics",
       name: "Universal Protection Package",
-      category: "Barrier Protection • 100% Vegan",
+      category: isVegan ? "Barrier Protection • 100% Vegan" : "Barrier Protection • Traditional Ecoculture",
       basePrice: 5.99,
-      description: "Complete barrier protection with custom sizing, 100% vegan plant-based materials, and enhanced features",
+      description: isVegan 
+        ? "Complete barrier protection with custom sizing, 100% vegan plant-based materials, and enhanced features"
+        : "Complete barrier protection with custom sizing, traditional ecoculture materials including sustainable animal-derived ingredients, and enhanced features",
       icon: Shield,
-      features: [
+      features: isVegan ? [
         "🌱 100% Vegan certified - No animal products",
         "60+ custom sizes (A0-H16) - Intersex anatomy baseline",
         "Plant-based recycled plastic + hydrogel composite",
@@ -86,18 +91,37 @@ export default function Products() {
         "Textured surface options",
         "All-gender inclusive design",
         "Compostable vegan packaging"
+      ] : [
+        "🐝 Traditional Ecoculture - Sustainable animal & plant ingredients",
+        "60+ custom sizes (A0-H16) - Intersex anatomy baseline",
+        "Recycled plastic + natural lanolin hydrogel composite",
+        "Beeswax-enhanced long-lasting lubrication",
+        "Beeswax & plant-derived durability coating",
+        "pH balancing formula (botanical extracts + propolis)",
+        "Biodegradable formula (plant fibers + chitosan from shellfish)",
+        "Natural colorants (cochineal, plant extracts)",
+        "Easy removal safety tab",
+        "Body temperature responsive",
+        "Honey & essential oil scent options",
+        "Propolis antimicrobial coating (bee-derived)",
+        "Ultra-thin wall construction",
+        "Textured surface options",
+        "All-gender inclusive design",
+        "Compostable natural packaging"
       ],
     },
     {
       id: "super-sides-barriers",
       name: "Super Sides 🥰 Oral Barriers",
-      category: "MSM Oral Protection • 100% Vegan",
+      category: isVegan ? "MSM Oral Protection • 100% Vegan" : "MSM Oral Protection • Traditional Ecoculture",
       basePrice: 5.99,
-      description: "Democratically owned by MSM 'sides' cooperative - Premium vegan oral protection for men who have sex with men",
+      description: isVegan 
+        ? "Democratically owned by MSM 'sides' cooperative - Premium vegan oral protection for men who have sex with men"
+        : "Democratically owned by MSM 'sides' cooperative - Premium traditional ecoculture oral protection for men who have sex with men",
       icon: Heart,
       cooperative: "MSM Sides Cooperative",
       democraticOwnership: true,
-      features: [
+      features: isVegan ? [
         "🌱 100% Vegan certified - Plant-based materials only",
         "Ultra-thin oral barrier material (0.02mm)",
         "Vegan flavored options (mint, vanilla, unflavored)",
@@ -114,16 +138,35 @@ export default function Products() {
         "Rimming-safe plant-based antimicrobial coating",
         "Includes comprehensive MSM sexual health guide",
         "Support for side-focused sexual practices"
+      ] : [
+        "🐝 Traditional Ecoculture - Sustainable ingredients",
+        "Ultra-thin oral barrier material (0.02mm)",
+        "Natural flavored options (honey, mint, vanilla, unflavored)",
+        "Large coverage area (10\" x 10\")",
+        "Enhanced grip edges for positioning",
+        "Compatible with all natural lubricants",
+        "Latex-free hypoallergenic natural polymer",
+        "Cooperative dividend program for members",
+        "Democratic governance voting rights",
+        "MSM community health data contribution",
+        "Peer education materials included",
+        "Discreet cooperative branding",
+        "Fellatio-optimized thickness",
+        "Rimming-safe propolis antimicrobial coating",
+        "Includes comprehensive MSM sexual health guide",
+        "Support for side-focused sexual practices"
       ],
     },
     {
       id: "nanoheal-treatment",
       name: "NanoHeal ⚧️ STI Treatment System",
-      category: "Advanced Healthcare • 100% Vegan",
+      category: isVegan ? "Advanced Healthcare • 100% Vegan" : "Advanced Healthcare • Traditional Ecoculture",
       basePrice: 5.99,
-      description: "Revolutionary 100% vegan intersectional naturopathic lubricant with plant-based STI treatment capabilities",
+      description: isVegan
+        ? "Revolutionary 100% vegan intersectional naturopathic lubricant with plant-based STI treatment capabilities"
+        : "Revolutionary intersectional naturopathic lubricant combining traditional ecoculture ingredients (honey, propolis, royal jelly) with plant botanicals for STI treatment",
       icon: Sparkles,
-      features: [
+      features: isVegan ? [
         "🌱 100% Vegan certified - Pure plant botanicals",
         "97% HSV-1/2 suppression efficacy",
         "95% Chlamydia/Gonorrhea containment",
@@ -153,16 +196,50 @@ export default function Products() {
         "Immune-boosting plant botanicals",
         "100% vegan biocompatible materials",
         "Creative Commons BY-SA 4.0 licensed"
+      ] : [
+        "🐝 Traditional Ecoculture - Honey, propolis, royal jelly + botanicals",
+        "97% HSV-1/2 suppression efficacy",
+        "95% Chlamydia/Gonorrhea containment",
+        "89% HPV viral load reduction",
+        "93% Syphilis healing acceleration",
+        "91% Trichomoniasis elimination",
+        "96% Candida/yeast infection resolution",
+        "87% HIV viral load support (adjunct)",
+        "Real-time pathogen detection sensors",
+        "Smart drug release nanotechnology",
+        "Trans hormone therapy compatibility",
+        "Intersex anatomy pH optimization",
+        "Two Spirit ceremonial plants (White Sage, Sweetgrass)",
+        "Latinx curanderismo botanicals (Hierba Buena, Romero, Ruda)",
+        "Afrocentric healing (Shea Butter, Moringa, Black Seed Oil, Royal Jelly)",
+        "Asian medicine (Ginseng, Reishi, Astragalus, Bee Pollen)",
+        "Raw Manuka honey nanoformulation (antimicrobial healing)",
+        "Propolis nanoparticles (antiviral and healing)",
+        "Royal jelly cell regeneration complex",
+        "Aloe vera + honey gel matrix",
+        "Beeswax sustained-release carriers",
+        "Cultural affirmation frequency programming",
+        "Ancestral blessing protocols included",
+        "FDA breakthrough therapy designation",
+        "WHO universal STI prevention recognition",
+        "72-hour sustained release formula",
+        "Biofilm disruption technology",
+        "Cellular healing acceleration with royal jelly",
+        "Immune-boosting botanicals + bee products",
+        "100% biocompatible traditional materials",
+        "Creative Commons BY-SA 4.0 licensed"
       ],
     },
     {
       id: "sustainable-materials",
       name: "Premium Sustainable Materials",
-      category: "Eco-Conscious Options • 100% Vegan",
+      category: isVegan ? "Eco-Conscious Options • 100% Vegan" : "Eco-Conscious Options • Traditional Ecoculture",
       basePrice: 5.99,
-      description: "Advanced 100% vegan eco-friendly material upgrades for environmental protection",
+      description: isVegan
+        ? "Advanced 100% vegan eco-friendly material upgrades for environmental protection"
+        : "Advanced traditional ecoculture materials combining sustainable animal products (silk, lanolin, beeswax) with plant-based ingredients",
       icon: Leaf,
-      features: [
+      features: isVegan ? [
         "🌱 100% Vegan certified - No animal testing or ingredients",
         "Ocean plastic recovery materials (95% recycled)",
         "Plant-based natural blend (soy, corn, sugarcane polymers)",
@@ -179,16 +256,35 @@ export default function Products() {
         "Circular economy participation",
         "Renewable energy production",
         "Fair trade vegan material sourcing"
+      ] : [
+        "🐝 Traditional Ecoculture - Silk, lanolin, beeswax, chitosan",
+        "Ocean plastic recovery materials (95% recycled)",
+        "Natural blend (plant polymers + sustainable lanolin)",
+        "Medical-grade silicone with beeswax coating",
+        "Hemp fiber + silk protein composite",
+        "Graphene-enhanced with chitosan durability",
+        "Propolis + plant antimicrobial treatment",
+        "Smart temperature-responsive natural materials",
+        "Biodegradable formula (plant + chitosan from shellfish)",
+        "Carbon-neutral traditional manufacturing",
+        "Compostable beeswax-coated packaging",
+        "Zero-waste supply chain",
+        "Marine debris reduction contribution",
+        "Circular economy participation",
+        "Renewable energy production",
+        "Fair trade traditional material sourcing"
       ],
     },
     {
       id: "smart-features",
       name: "Smart Health Technology",
-      category: "Connected Healthcare • 100% Vegan Hardware",
+      category: isVegan ? "Connected Healthcare • 100% Vegan Hardware" : "Connected Healthcare • Traditional Materials",
       basePrice: 5.99,
-      description: "Integration with health systems and smart monitoring features using vegan-friendly electronics",
+      description: isVegan
+        ? "Integration with health systems and smart monitoring features using vegan-friendly electronics"
+        : "Integration with health systems and smart monitoring features using traditional electronics (may include animal-derived components in manufacturing)",
       icon: Zap,
-      features: [
+      features: isVegan ? [
         "🌱 100% Vegan hardware - No animal-derived components",
         "MyChart healthcare system connectivity",
         "Apple Health integration",
@@ -211,9 +307,34 @@ export default function Products() {
         "HIPAA-compliant data storage",
         "Federated data portability",
         "Plant-based sensor coatings"
+      ] : [
+        "🐝 Traditional Electronics - Standard manufacturing processes",
+        "MyChart healthcare system connectivity",
+        "Apple Health integration",
+        "Google Calendar sync",
+        "iCal/Outlook calendar support",
+        "pureOS open-source compatibility",
+        "iMessage notification support",
+        "WhatsApp notification integration",
+        "Smart break management system",
+        "Cross-platform notification sync",
+        "Sexual health tracking dashboard",
+        "Partner network management",
+        "4D STI exposure tracking",
+        "DALY (Disability-Adjusted Life Years) metrics",
+        "Mood and wellness correlation",
+        "Wise Time Flucks creative commons time tracking",
+        "Real-time usage analytics",
+        "Automated reorder reminders",
+        "Health data privacy encryption",
+        "HIPAA-compliant data storage",
+        "Federated data portability",
+        "Beeswax-coated sensor protection"
       ],
     },
   ];
+
+  const productPackages = getProductPackages();
 
   const getCurrentTier = (qty: number): BulkPricingTier => {
     return pricingTiers.find(
@@ -249,15 +370,40 @@ export default function Products() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="text-center mb-12">
-            <Badge className="mb-4 text-lg px-6 py-2 bg-green-600 hover:bg-green-700">
-              🌱 100% Vegan Certified
-            </Badge>
+            {/* Vegan vs Traditional Toggle */}
+            <div className="flex justify-center items-center gap-4 mb-6">
+              <button
+                onClick={() => setIsVegan(true)}
+                className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all ${
+                  isVegan 
+                    ? 'bg-green-600 text-white shadow-lg scale-105' 
+                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                }`}
+                data-testid="button-vegan-mode"
+              >
+                <Sprout className="h-5 w-5" />
+                100% Vegan
+              </button>
+              <button
+                onClick={() => setIsVegan(false)}
+                className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all ${
+                  !isVegan 
+                    ? 'bg-amber-600 text-white shadow-lg scale-105' 
+                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                }`}
+                data-testid="button-traditional-mode"
+              >
+                <Flower2 className="h-5 w-5" />
+                Traditional Ecoculture
+              </button>
+            </div>
+
             <h1 className="text-4xl lg:text-5xl font-bold text-neutral mb-4">
               Bulk Order Products & Services
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Cooperative pricing achieves <span className="font-bold text-primary">$0.99/unit</span> when ordering 500+ units. 
-              All features included. 100% vegan plant-based materials. Volume discounts for community health.
+              All features included. {isVegan ? '100% vegan plant-based materials.' : 'Traditional ecoculture with sustainable animal & plant ingredients.'} Volume discounts for community health.
             </p>
           </div>
 
