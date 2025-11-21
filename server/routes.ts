@@ -18,6 +18,7 @@ import { genealogyService, RelationshipUtils } from "./genealogy";
 import { ageVerificationService, DocumentType, VerificationStatus, AgeVerificationUtils } from "./ageVerification";
 import { requireAuth } from "./middleware/auth";
 import { Storage } from "@google-cloud/storage";
+import { fileTypeFromBuffer } from "file-type";
 
 const loginSchema = z.object({
   email: z.string().email(),
@@ -169,17 +170,40 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Profile image upload route
-  app.post("/api/profile/upload-image", uploadProfileImage.single('profileImage'), async (req, res) => {
+  // Profile image upload route - REQUIRES AUTHENTICATION
+  // NOTE: In production, implement content moderation workflow before making uploads public
+  app.post("/api/profile/upload-image", requireAuth, uploadProfileImage.single('profileImage'), async (req, res) => {
     try {
+      // Verify user session exists (defense in depth)
+      if (!req.session.userId) {
+        return res.status(401).json({ message: "Authentication required" });
+      }
+
       if (!req.file) {
         return res.status(400).json({ message: "No image file uploaded" });
       }
 
-      // Generate unique filename with timestamp
+      // Validate bucket name is configured
+      if (!bucketName) {
+        console.error("Object storage bucket not configured");
+        return res.status(500).json({ message: "Object storage not configured" });
+      }
+
+      // Server-side MIME type validation - defense against spoofed client headers
+      const fileType = await fileTypeFromBuffer(req.file.buffer);
+      const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+      
+      if (!fileType || !allowedMimeTypes.includes(fileType.mime)) {
+        return res.status(400).json({ 
+          message: "Invalid image format. File must be a real JPG, PNG, GIF, or WebP image." 
+        });
+      }
+
+      // Generate unique filename with user ID and timestamp for security
+      const userId = req.session.userId;
       const timestamp = Date.now();
-      const extension = path.extname(req.file.originalname);
-      const filename = `profile-images/${timestamp}${extension}`;
+      const extension = `.${fileType.ext}`;
+      const filename = `profile-images/user-${userId}-${timestamp}${extension}`;
 
       // Upload to GCS bucket
       const bucket = gcsStorage.bucket(bucketName);
@@ -187,17 +211,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       await file.save(req.file.buffer, {
         metadata: {
-          contentType: req.file.mimetype,
+          contentType: fileType.mime,
+          // Add metadata for moderation tracking
+          uploadedBy: userId.toString(),
+          uploadedAt: new Date().toISOString(),
+          // Flag for content moderation review
+          moderationStatus: 'pending',
         },
-        public: true,
+        // Making files public for MVP demo - In production:
+        // 1. Set public: false
+        // 2. Implement admin moderation dashboard  
+        // 3. Add moderator approval workflow
+        // 4. Generate signed URLs only for approved images
+        // 5. Link imageUrl to user profile in database
+        public: false, // Private until moderation approved
       });
 
-      // Get public URL
-      const imageUrl = `https://storage.googleapis.com/${bucketName}/${filename}`;
+      // Generate signed URL (valid for 7 days)
+      const [signedUrl] = await file.getSignedUrl({
+        action: 'read',
+        expires: Date.now() + 7 * 24 * 60 * 60 * 1000, // 7 days
+      });
 
+      // Return signed URL (private file access)
       res.json({
-        message: "Image uploaded successfully",
-        imageUrl: imageUrl,
+        message: "Image uploaded successfully. Please ensure your photo follows our non-pornographic content policy.",
+        imageUrl: signedUrl,
       });
     } catch (error) {
       console.error("Image upload error:", error);
