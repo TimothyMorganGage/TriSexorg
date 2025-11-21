@@ -339,6 +339,7 @@ export const userProfiles = pgTable("user_profiles", {
   displayName: text("display_name").notNull(),
   age: integer("age"),
   location: text("location"),
+  profileImageUrl: text("profile_image_url"), // Non-pornographic profile photo
   lookingFor: text("looking_for").array(),
   interests: text("interests").array(),
   cooperativePrinciples: text("cooperative_principles").array(),

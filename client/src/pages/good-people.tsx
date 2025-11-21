@@ -41,6 +41,7 @@ const profileSchema = z.object({
   displayName: z.string().min(2, "Display name must be at least 2 characters"),
   age: z.number().min(18, "Must be 18 or older").max(120, "Invalid age"),
   location: z.string().min(1, "Location is required"),
+  profileImageUrl: z.string().optional(),
   lookingFor: z.array(z.string()).min(1, "Select at least one option"),
   interests: z.array(z.string()),
   cooperativePrinciples: z.array(z.string()),
@@ -89,6 +90,8 @@ const matchingPreferencesSchema = z.object({
 export default function GoodPeople() {
   const [activeTab, setActiveTab] = useState("discover");
   const [matchType, setMatchType] = useState("all");
+  const [uploadingImage, setUploadingImage] = useState(false);
+  const [profileImagePreview, setProfileImagePreview] = useState<string | null>(null);
   const { toast } = useToast();
 
   const profileForm = useForm({
@@ -97,6 +100,7 @@ export default function GoodPeople() {
       displayName: "",
       age: 25,
       location: "",
+      profileImageUrl: "",
       lookingFor: [],
       interests: [],
       cooperativePrinciples: [],
@@ -232,6 +236,70 @@ export default function GoodPeople() {
       blockedByGenealogy: false
     }
   ];
+
+  const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      toast({
+        title: "Invalid File Type",
+        description: "Please upload an image file (JPG, PNG, etc.)",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Validate file size (max 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      toast({
+        title: "File Too Large",
+        description: "Profile image must be less than 5MB",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setUploadingImage(true);
+
+    try {
+      // Create preview
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfileImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+
+      // Upload to server
+      const formData = new FormData();
+      formData.append('profileImage', file);
+
+      const response = await fetch('/api/profile/upload-image', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) throw new Error('Upload failed');
+
+      const { imageUrl } = await response.json();
+      profileForm.setValue('profileImageUrl', imageUrl);
+
+      toast({
+        title: "Image Uploaded",
+        description: "Your profile image has been uploaded successfully.",
+      });
+    } catch (error) {
+      toast({
+        title: "Upload Failed",
+        description: "Failed to upload image. Please try again.",
+        variant: "destructive",
+      });
+      setProfileImagePreview(null);
+    } finally {
+      setUploadingImage(false);
+    }
+  };
 
   const onProfileSubmit = (data: any) => {
     console.log("Profile data:", data);
@@ -450,6 +518,95 @@ export default function GoodPeople() {
               <CardContent>
                 <Form {...profileForm}>
                   <form onSubmit={profileForm.handleSubmit(onProfileSubmit)} className="space-y-6">
+                    
+                    {/* Profile Image Upload Section */}
+                    <div className="border rounded-lg p-6 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-900">
+                      <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                        <Upload className="h-5 w-5 text-primary" />
+                        Profile Photo
+                      </h3>
+                      
+                      <div className="grid md:grid-cols-2 gap-6">
+                        <div>
+                          <div className="mb-4">
+                            {(profileImagePreview || profileForm.watch('profileImageUrl')) ? (
+                              <div className="relative w-48 h-48 mx-auto">
+                                <img
+                                  src={profileImagePreview || profileForm.watch('profileImageUrl')}
+                                  alt="Profile preview"
+                                  className="w-full h-full object-cover rounded-lg border-4 border-primary shadow-lg"
+                                  data-testid="img-profile-preview"
+                                />
+                              </div>
+                            ) : (
+                              <div className="w-48 h-48 mx-auto bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center border-4 border-dashed border-gray-400">
+                                <Users className="h-20 w-20 text-gray-400" />
+                              </div>
+                            )}
+                          </div>
+                          
+                          <div className="space-y-2">
+                            <input
+                              type="file"
+                              id="profile-image-upload"
+                              accept="image/*"
+                              onChange={handleImageUpload}
+                              className="hidden"
+                              data-testid="input-profile-image"
+                            />
+                            <label htmlFor="profile-image-upload">
+                              <Button
+                                type="button"
+                                variant="outline"
+                                className="w-full cursor-pointer"
+                                disabled={uploadingImage}
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  document.getElementById('profile-image-upload')?.click();
+                                }}
+                                data-testid="button-upload-image"
+                              >
+                                {uploadingImage ? "Uploading..." : "Choose Photo"}
+                              </Button>
+                            </label>
+                          </div>
+                        </div>
+                        
+                        <div className="space-y-3">
+                          <div className="p-4 bg-white dark:bg-gray-800 rounded-lg border border-blue-200 dark:border-blue-800">
+                            <h4 className="font-semibold text-blue-900 dark:text-blue-100 mb-2 flex items-center gap-2">
+                              <Shield className="h-4 w-4" />
+                              Non-Pornographic Content Policy
+                            </h4>
+                            <ul className="text-sm text-blue-800 dark:text-blue-200 space-y-1">
+                              <li>✓ Clear face photo (headshot or full body)</li>
+                              <li>✓ Fully clothed, casual or formal attire</li>
+                              <li>✓ Appropriate for public/workplace viewing</li>
+                              <li>✓ No nudity, partial nudity, or suggestive poses</li>
+                              <li>✓ No sexually explicit or provocative content</li>
+                            </ul>
+                          </div>
+                          
+                          <div className="p-3 bg-amber-50 dark:bg-amber-900/20 rounded-lg border border-amber-200 dark:border-amber-800">
+                            <div className="flex items-start gap-2">
+                              <AlertTriangle className="h-4 w-4 text-amber-600 dark:text-amber-400 mt-0.5 flex-shrink-0" />
+                              <div className="text-xs text-amber-800 dark:text-amber-200">
+                                <strong>Community Standard:</strong> Good People Cooperative requires respectful, non-sexual profile images to maintain a safe space for all members.
+                              </div>
+                            </div>
+                          </div>
+                          
+                          <div className="text-xs text-gray-600 dark:text-gray-400">
+                            <p><strong>File requirements:</strong></p>
+                            <ul className="ml-4 mt-1 space-y-1">
+                              <li>• Formats: JPG, PNG, GIF</li>
+                              <li>• Maximum size: 5MB</li>
+                              <li>• Recommended: 400x400px or larger</li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                     
                     <div className="grid md:grid-cols-2 gap-6">
                       <FormField
