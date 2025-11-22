@@ -48,6 +48,9 @@ import RemixReplit from "@/pages/remix-replit";
 import OralBarriers from "@/pages/oral-barriers";
 import MonogamyEconomics from "@/pages/monogamy-economics";
 import SavedConfigurations from "@/pages/saved-configs";
+import PrivacyPolicy from "@/pages/privacy-policy";
+import TermsOfService from "@/pages/terms-of-service";
+import Accessibility from "@/pages/accessibility";
 import { TabNavigation } from "@/components/TabNavigation";
 import { PWAInstallPrompt, PWAStatusBadge } from "@/components/PWAInstallPrompt";
 import { usePWA } from "@/hooks/usePWA";
@@ -111,6 +114,9 @@ function Router() {
           <Route path="/remix-replit" component={RemixReplit} />
           <Route path="/oral-barriers" component={OralBarriers} />
           <Route path="/monogamy-economics" component={MonogamyEconomics} />
+          <Route path="/privacy-policy" component={PrivacyPolicy} />
+          <Route path="/terms-of-service" component={TermsOfService} />
+          <Route path="/accessibility" component={Accessibility} />
           <Route path="/saved-configurations" component={SavedConfigurations} />
           <Route path="/clinic-dashboard" component={ClinicDashboard} />
           <Route path="/login" component={Login} />

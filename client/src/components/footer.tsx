@@ -148,15 +148,15 @@ export function Footer() {
             </div>
             
             <div className="flex items-center space-x-6 text-sm">
-              <a href="#" className="text-gray-400 hover:text-primary transition-colors">
+              <Link href="/privacy-policy" className="text-gray-400 hover:text-primary transition-colors">
                 Privacy Policy
-              </a>
-              <a href="#" className="text-gray-400 hover:text-primary transition-colors">
+              </Link>
+              <Link href="/terms-of-service" className="text-gray-400 hover:text-primary transition-colors">
                 Terms of Service
-              </a>
-              <a href="#" className="text-gray-400 hover:text-primary transition-colors">
+              </Link>
+              <Link href="/accessibility" className="text-gray-400 hover:text-primary transition-colors">
                 Accessibility
-              </a>
+              </Link>
             </div>
           </div>
         </div>
