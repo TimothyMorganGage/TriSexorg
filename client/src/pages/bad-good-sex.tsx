@@ -26,6 +26,7 @@ import {
   Plus,
   Edit
 } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const sexualHealthPreferencesSchema = z.object({
   // Core Directives
@@ -157,6 +158,14 @@ export default function BadGoodSex() {
   return (
     <div className="min-h-screen bg-background text-foreground py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
+        {/* Intersex Healthcare Affirmation */}
+        <Alert className="mb-8 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border-purple-200">
+          <Heart className="h-5 w-5 text-purple-600" />
+          <AlertDescription className="ml-2">
+            <strong>Intersex Healthcare IS Everyone's Affirmation:</strong> Sexual health advance directives center intersex anatomy as the universal baseline. There is no separate "transgender healthcare" category—comprehensive, affirming care is built into every directive by default.
+          </AlertDescription>
+        </Alert>
+
         {/* Header */}
         <div className="text-center mb-12">
           <div className="flex items-center justify-center mb-6">
