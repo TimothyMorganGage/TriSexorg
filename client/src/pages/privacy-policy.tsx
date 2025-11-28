@@ -73,6 +73,13 @@ export default function PrivacyPolicy() {
                   TriSex.org is built on the principle that <strong>sexual health data is among the most sensitive personal information</strong> a person can share. As a cooperative owned by our members, we have no incentive to monetize your data—our only goal is to serve your health and safety needs.
                 </p>
 
+                <Alert className="my-6 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border-purple-200">
+                  <Heart className="h-5 w-5 text-purple-600" />
+                  <AlertDescription className="ml-2">
+                    <strong>Intersex Healthcare IS Everyone's Affirmation:</strong> Our privacy framework treats ALL anatomical data equally because intersex-centered design is our baseline. There is no separate "transgender healthcare" category to disclose or restrict—just healthcare for human bodies as they naturally exist.
+                  </AlertDescription>
+                </Alert>
+
                 <h3 className="text-lg font-bold mt-6 mb-3">Core Privacy Principles</h3>
                 <div className="space-y-4">
                   <div className="p-4 bg-muted/30 rounded-lg">

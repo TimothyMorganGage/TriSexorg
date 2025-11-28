@@ -290,17 +290,39 @@ export default function Accessibility() {
 
             <Card>
               <CardHeader>
-                <CardTitle>Intersex & Non-Binary Accessibility</CardTitle>
+                <CardTitle>Intersex Healthcare IS Everyone's Affirmation</CardTitle>
               </CardHeader>
               <CardContent>
+                <Alert className="mb-4 bg-purple-50 dark:bg-purple-900/20 border-purple-200">
+                  <Heart className="h-5 w-5 text-purple-600" />
+                  <AlertDescription className="ml-2">
+                    <strong>Core Philosophy:</strong> By centering intersex anatomy as the universal baseline, "opt-out of transgender healthcare" becomes meaningless. There is no separate category to opt out of—intersex-affirming care IS the standard of care for ALL bodies.
+                  </AlertDescription>
+                </Alert>
+
                 <p className="text-sm text-muted-foreground mb-4">
-                  Our intersex-centered sizing system is inherently more accessible:
+                  Traditional healthcare creates arbitrary binary categories (male/female), then treats any deviation as "special" care requiring separate consent. This is backwards. Human anatomy exists on a spectrum—intersex bodies represent the natural center of this spectrum.
                 </p>
+
                 <div className="space-y-3">
-                  <div className="p-3 bg-purple-50 dark:bg-purple-900/20 rounded">
-                    <strong className="block mb-2 text-sm">Inclusive Anatomical Baseline</strong>
+                  <div className="p-3 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded border border-purple-200">
+                    <strong className="block mb-2 text-sm">Universal Anatomical Baseline</strong>
                     <p className="text-xs text-muted-foreground">
-                      Using intersex anatomy as the design foundation (not binary male/female) creates better-fitting products for ALL bodies, including disabled users with atypical anatomy due to medical conditions or surgeries.
+                      When intersex anatomy is the design foundation (not binary male/female), every body receives care designed for natural human variation. Products fit ALL bodies—cisgender, transgender, intersex, and non-binary—because the baseline already accounts for the full spectrum.
+                    </p>
+                  </div>
+
+                  <div className="p-3 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded border border-purple-200">
+                    <strong className="block mb-2 text-sm">No "Special" Healthcare Categories</strong>
+                    <p className="text-xs text-muted-foreground">
+                      When affirming care is the default, there's nothing to "opt out" of. You can't opt out of standard care. Politicians can't restrict care that doesn't exist as a separate category. Intersex-centered healthcare makes discriminatory healthcare policies architecturally impossible.
+                    </p>
+                  </div>
+
+                  <div className="p-3 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded border border-purple-200">
+                    <strong className="block mb-2 text-sm">Affirmation by Design</strong>
+                    <p className="text-xs text-muted-foreground">
+                      Every measurement, every product, every interaction is designed around natural anatomical diversity. Trans users aren't receiving "trans healthcare"—they're receiving HEALTHCARE, designed for bodies like theirs from the start.
                     </p>
                   </div>
 
