@@ -22,6 +22,7 @@ import {
   Zap,
   Globe
 } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 interface FinancialRecord {
   id: string;
@@ -192,6 +193,14 @@ export default function OpenBooks() {
   return (
     <div className="min-h-screen bg-surface py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Intersex Healthcare Affirmation */}
+        <Alert className="mb-8 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border-purple-200">
+          <Heart className="h-5 w-5 text-purple-600" />
+          <AlertDescription className="ml-2">
+            <strong>Intersex Healthcare IS Everyone's Affirmation:</strong> Cooperative finances center intersex anatomy as the universal baseline. There is no separate "transgender healthcare" budget—affirming care is the default standard for ALL bodies.
+          </AlertDescription>
+        </Alert>
+
         <div className="text-center mb-12">
           <div className="flex items-center justify-center mb-6">
             <BookOpen className="h-12 w-12 text-primary mr-4" />
