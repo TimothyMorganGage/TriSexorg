@@ -26,6 +26,7 @@ import {
   Thermometer,
   RotateCcw
 } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 export default function MaterialsScience() {
   const [activeProcess, setActiveProcess] = useState("collection");
@@ -169,6 +170,14 @@ export default function MaterialsScience() {
   return (
     <div className="min-h-screen bg-surface py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Intersex Healthcare Affirmation */}
+        <Alert className="mb-8 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border-purple-200">
+          <Heart className="h-5 w-5 text-purple-600" />
+          <AlertDescription className="ml-2">
+            <strong>Intersex Healthcare IS Everyone's Affirmation:</strong> Materials science centers intersex anatomy as the universal baseline for product development. There is no separate "transgender healthcare" category—all sustainable materials serve ALL bodies by design.
+          </AlertDescription>
+        </Alert>
+
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-foreground font-recoleta mb-4">
             Waterway Plastic Reprocessing Technology

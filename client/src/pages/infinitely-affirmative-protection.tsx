@@ -3,7 +3,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Star, Download, Search, Calendar, User, MapPin, FileText, FileJson } from "lucide-react";
+import { Star, Download, Search, Calendar, User, MapPin, FileText, FileJson, Heart } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { FediverseShare } from "@/components/FediverseShare";
 
@@ -456,6 +457,14 @@ export default function InfinitelyAffirmativeProtection() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50 dark:from-gray-900 dark:to-purple-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Intersex Healthcare Affirmation */}
+        <Alert className="mb-8 bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-900/40 dark:to-pink-900/40 border-purple-200">
+          <Heart className="h-5 w-5 text-purple-600" />
+          <AlertDescription className="ml-2">
+            <strong>Intersex Healthcare IS Everyone's Affirmation:</strong> Infinitely affirmative protection centers intersex anatomy as the universal baseline. There is no separate "transgender healthcare" category—ALL members receive affirming care by design.
+          </AlertDescription>
+        </Alert>
+
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-5xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">
