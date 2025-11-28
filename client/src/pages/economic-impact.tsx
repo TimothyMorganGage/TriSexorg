@@ -16,6 +16,7 @@ import {
   BarChart3,
   Target
 } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 interface DALYData {
   category: string;
@@ -136,6 +137,14 @@ export default function EconomicImpact() {
   return (
     <div className="min-h-screen bg-background py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
+        {/* Intersex Healthcare Affirmation */}
+        <Alert className="mb-8 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border-purple-200">
+          <Heart className="h-5 w-5 text-purple-600" />
+          <AlertDescription className="ml-2">
+            <strong>Intersex Healthcare IS Everyone's Affirmation:</strong> DALY impact calculations center intersex anatomy as the universal baseline. There is no separate "transgender healthcare" category—all economic health metrics serve ALL bodies by design.
+          </AlertDescription>
+        </Alert>
+
         {/* Header */}
         <div className="text-center mb-12">
           <div className="flex items-center justify-center mb-6">

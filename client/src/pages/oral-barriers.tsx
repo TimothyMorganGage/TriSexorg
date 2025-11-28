@@ -17,6 +17,7 @@ import {
   CheckCircle,
   Star
 } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Link } from "wouter";
 
 export default function OralBarriers() {
@@ -136,6 +137,14 @@ export default function OralBarriers() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50 dark:from-gray-900 dark:to-purple-900 py-12 px-4">
       <div className="max-w-7xl mx-auto">
+        {/* Intersex Healthcare Affirmation */}
+        <Alert className="mb-8 bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-900/40 dark:to-pink-900/40 border-purple-200">
+          <Heart className="h-5 w-5 text-purple-600" />
+          <AlertDescription className="ml-2">
+            <strong>Intersex Healthcare IS Everyone's Affirmation:</strong> Oral barrier sizing centers intersex anatomy as the universal baseline. There is no separate "transgender healthcare" category—MSM products serve ALL bodies by design.
+          </AlertDescription>
+        </Alert>
+
         {/* Header */}
         <div className="text-center mb-12">
           <div className="flex justify-center mb-4">
