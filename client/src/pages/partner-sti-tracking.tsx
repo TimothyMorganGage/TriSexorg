@@ -41,6 +41,7 @@ import {
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { BetaDisclaimer } from "@/components/BetaDisclaimer";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 export default function PartnerSTITracking() {
   const [activeTab, setActiveTab] = useState("networks");
@@ -176,6 +177,14 @@ export default function PartnerSTITracking() {
       <BetaDisclaimer />
       <div className="p-4">
           <div className="max-w-7xl mx-auto space-y-6">
+            {/* Intersex Healthcare Affirmation */}
+            <Alert className="bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-900/40 dark:to-pink-900/40 border-purple-200">
+              <Heart className="h-5 w-5 text-purple-600" />
+              <AlertDescription className="ml-2">
+                <strong>Intersex Healthcare IS Everyone's Affirmation:</strong> Partner STI tracking centers intersex anatomy as the universal baseline. There is no separate "transgender healthcare" category—sexual health monitoring serves ALL bodies by design.
+              </AlertDescription>
+            </Alert>
+
             {/* Header */}
             <div className="text-center space-y-2">
           <h1 

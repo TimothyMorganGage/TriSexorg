@@ -9,7 +9,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Separator } from "@/components/ui/separator";
-import { Plus, TrendingUp, Calendar as CalendarIcon, Target, BookOpen } from "lucide-react";
+import { Plus, TrendingUp, Calendar as CalendarIcon, Target, BookOpen, Heart } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { format, startOfMonth, endOfMonth } from "date-fns";
 import type { MoodEntry, WellnessGoal, MoodInsight } from "@shared/schema";
 
@@ -129,6 +130,14 @@ export default function MoodLogging() {
 
   return (
     <div className="container mx-auto px-4 py-8 space-y-8">
+      {/* Intersex Healthcare Affirmation */}
+      <Alert className="bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border-purple-200">
+        <Heart className="h-5 w-5 text-purple-600" />
+        <AlertDescription className="ml-2">
+          <strong>Intersex Healthcare IS Everyone's Affirmation:</strong> Mood and wellness tracking centers intersex anatomy as the universal baseline. There is no separate "transgender healthcare" category—mental and sexual health monitoring serves ALL bodies by design.
+        </AlertDescription>
+      </Alert>
+
       <div className="text-center space-y-4">
         <h1 className="text-4xl font-bold">Mood & Wellness Tracking</h1>
         <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
