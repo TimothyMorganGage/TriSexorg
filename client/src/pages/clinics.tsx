@@ -92,7 +92,7 @@ export default function Clinics() {
           <Alert className="mb-8 bg-white/10 backdrop-blur border-white/20">
             <Heart className="h-5 w-5 text-pink-300" />
             <AlertDescription className="ml-2 text-white">
-              <strong>Intersex Healthcare IS Everyone's Affirmation:</strong> Partner clinics provide care centered on intersex anatomy as the universal baseline—no separate "transgender healthcare" category exists because affirming care is the default.
+              <strong>Intersex Healthcare IS Everyone's Affirmation:</strong> Partner clinics provide care centered on intersex anatomy as the universal baseline—trans, non-binary, genderqueer, and quare embodiment are all respected within this participatory budgeting framework. There is no separate "transgender healthcare" category—affirming care serves ALL bodies by design.
             </AlertDescription>
           </Alert>
 

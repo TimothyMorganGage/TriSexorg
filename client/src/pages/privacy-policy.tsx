@@ -76,7 +76,7 @@ export default function PrivacyPolicy() {
                 <Alert className="my-6 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border-purple-200">
                   <Heart className="h-5 w-5 text-purple-600" />
                   <AlertDescription className="ml-2">
-                    <strong>Intersex Healthcare IS Everyone's Affirmation:</strong> Our privacy framework treats ALL anatomical data equally because intersex-centered design is our baseline. There is no separate "transgender healthcare" category to disclose or restrict—just healthcare for human bodies as they naturally exist.
+                    <strong>Intersex Healthcare IS Everyone's Affirmation:</strong> Our privacy framework treats ALL anatomical data equally—trans, non-binary, genderqueer, and quare embodiment are all respected within this participatory budgeting framework. There is no separate "transgender healthcare" category—just healthcare for human bodies as they naturally exist.
                   </AlertDescription>
                 </Alert>
 

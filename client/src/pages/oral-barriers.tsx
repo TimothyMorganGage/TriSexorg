@@ -141,7 +141,7 @@ export default function OralBarriers() {
         <Alert className="mb-8 bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-900/40 dark:to-pink-900/40 border-purple-200">
           <Heart className="h-5 w-5 text-purple-600" />
           <AlertDescription className="ml-2">
-            <strong>Intersex Healthcare IS Everyone's Affirmation:</strong> Oral barrier sizing centers intersex anatomy as the universal baseline. There is no separate "transgender healthcare" category—MSM products serve ALL bodies by design.
+            <strong>Intersex Healthcare IS Everyone's Affirmation:</strong> Oral barrier sizing centers intersex anatomy as the universal baseline—trans, non-binary, genderqueer, and quare embodiment are all respected within this participatory budgeting framework. There is no separate "transgender healthcare" category—MSM products serve ALL bodies by design.
           </AlertDescription>
         </Alert>
 

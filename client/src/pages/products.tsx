@@ -373,7 +373,7 @@ export default function Products() {
           <Alert className="mb-8 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border-purple-200">
             <Heart className="h-5 w-5 text-purple-600" />
             <AlertDescription className="ml-2">
-              <strong>Intersex Healthcare IS Everyone's Affirmation:</strong> All products use intersex anatomy as the sizing baseline. There is no separate "transgender healthcare" category—custom-fit protection is designed for the full spectrum of human anatomy by default.
+              <strong>Intersex Healthcare IS Everyone's Affirmation:</strong> All products use intersex anatomy as the sizing baseline—trans, non-binary, genderqueer, and quare embodiment are all respected within this participatory budgeting framework. There is no separate "transgender healthcare" category—custom-fit protection serves ALL bodies by design.
             </AlertDescription>
           </Alert>
 

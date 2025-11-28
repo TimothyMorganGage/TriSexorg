@@ -174,7 +174,7 @@ export default function MaterialsScience() {
         <Alert className="mb-8 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border-purple-200">
           <Heart className="h-5 w-5 text-purple-600" />
           <AlertDescription className="ml-2">
-            <strong>Intersex Healthcare IS Everyone's Affirmation:</strong> Materials science centers intersex anatomy as the universal baseline for product development. There is no separate "transgender healthcare" category—all sustainable materials serve ALL bodies by design.
+            <strong>Intersex Healthcare IS Everyone's Affirmation:</strong> Materials science centers intersex anatomy as the universal baseline—trans, non-binary, genderqueer, and quare embodiment are all respected within this participatory budgeting framework. There is no separate "transgender healthcare" category—all sustainable materials serve ALL bodies by design.
           </AlertDescription>
         </Alert>
 

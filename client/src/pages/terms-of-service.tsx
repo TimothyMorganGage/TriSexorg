@@ -74,7 +74,7 @@ export default function TermsOfService() {
                 <Alert className="my-6 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border-purple-200">
                   <Heart className="h-5 w-5 text-purple-600" />
                   <AlertDescription className="ml-2">
-                    <strong>Intersex Healthcare IS Everyone's Affirmation:</strong> Our terms contain no "opt-out of transgender healthcare" provisions because our intersex-centered design makes such categories irrelevant. All members receive healthcare designed for the full spectrum of human anatomy—there is no separate category to opt out of.
+                    <strong>Intersex Healthcare IS Everyone's Affirmation:</strong> Our terms contain no "opt-out of transgender healthcare" provisions—trans, non-binary, genderqueer, and quare embodiment are all respected within this participatory budgeting framework. All members receive healthcare designed for the full spectrum of human anatomy by design.
                   </AlertDescription>
                 </Alert>
 

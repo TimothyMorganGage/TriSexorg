@@ -296,7 +296,7 @@ export default function Accessibility() {
                 <Alert className="mb-4 bg-purple-50 dark:bg-purple-900/20 border-purple-200">
                   <Heart className="h-5 w-5 text-purple-600" />
                   <AlertDescription className="ml-2">
-                    <strong>Core Philosophy:</strong> By centering intersex anatomy as the universal baseline, "opt-out of transgender healthcare" becomes meaningless. There is no separate category to opt out of—intersex-affirming care IS the standard of care for ALL bodies.
+                    <strong>Core Philosophy:</strong> By centering intersex anatomy as the universal baseline—trans, non-binary, genderqueer, and quare embodiment are all respected within this participatory budgeting framework. There is no separate category to opt out of—intersex-affirming care IS the standard for ALL bodies by design.
                   </AlertDescription>
                 </Alert>
 
