@@ -10,7 +10,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
-import { Calendar, Download, Upload, Settings, Clock, Smartphone, Globe, Server, Timer, Wand2 } from "lucide-react";
+import { Calendar, Download, Upload, Settings, Clock, Smartphone, Globe, Server, Timer, Wand2, Heart } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useToast } from "@/hooks/use-toast";
 import { CalendarSyncWizard } from "@/components/CalendarSyncWizard";
 
@@ -207,6 +208,14 @@ export default function CalendarIntegration() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 p-4">
       <div className="max-w-6xl mx-auto space-y-6">
+        {/* Intersex Healthcare Affirmation */}
+        <Alert className="bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-900/40 dark:to-pink-900/40 border-purple-200">
+          <Heart className="h-5 w-5 text-purple-600" />
+          <AlertDescription className="ml-2">
+            <strong>Intersex Healthcare IS Everyone's Affirmation:</strong> Calendar integration centers intersex anatomy as the universal baseline. There is no separate "transgender healthcare" category—wellness scheduling serves ALL bodies by design.
+          </AlertDescription>
+        </Alert>
+
         {/* Header */}
         <div className="text-center space-y-2">
           <h1 
