@@ -1356,3 +1356,102 @@ export type ProductEffectivenessReport = typeof productEffectivenessReports.$inf
 
 export type InsertSavedProductConfiguration = z.infer<typeof insertSavedProductConfigurationSchema>;
 export type SavedProductConfiguration = typeof savedProductConfigurations.$inferSelect;
+
+// Community Forum Tables
+export const forumCategories = pgTable("forum_categories", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  slug: text("slug").notNull().unique(),
+  description: text("description").notNull(),
+  icon: text("icon").default("MessageCircle"),
+  color: text("color").default("purple"),
+  isModerated: boolean("is_moderated").default(true),
+  requiresVerification: boolean("requires_verification").default(false),
+  sortOrder: integer("sort_order").default(0),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const forumPosts = pgTable("forum_posts", {
+  id: serial("id").primaryKey(),
+  categoryId: integer("category_id").references(() => forumCategories.id).notNull(),
+  authorId: integer("author_id").references(() => users.id).notNull(),
+  title: text("title").notNull(),
+  content: text("content").notNull(),
+  isPinned: boolean("is_pinned").default(false),
+  isLocked: boolean("is_locked").default(false),
+  isAnonymous: boolean("is_anonymous").default(false),
+  viewCount: integer("view_count").default(0),
+  likeCount: integer("like_count").default(0),
+  replyCount: integer("reply_count").default(0),
+  tags: text("tags").array(),
+  contentWarning: text("content_warning"),
+  isApproved: boolean("is_approved").default(true),
+  lastActivityAt: timestamp("last_activity_at").defaultNow(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const forumReplies = pgTable("forum_replies", {
+  id: serial("id").primaryKey(),
+  postId: integer("post_id").references(() => forumPosts.id).notNull(),
+  authorId: integer("author_id").references(() => users.id).notNull(),
+  parentReplyId: integer("parent_reply_id"),
+  content: text("content").notNull(),
+  isAnonymous: boolean("is_anonymous").default(false),
+  likeCount: integer("like_count").default(0),
+  isApproved: boolean("is_approved").default(true),
+  isSolution: boolean("is_solution").default(false),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const forumLikes = pgTable("forum_likes", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  postId: integer("post_id").references(() => forumPosts.id),
+  replyId: integer("reply_id").references(() => forumReplies.id),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const forumBookmarks = pgTable("forum_bookmarks", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  postId: integer("post_id").references(() => forumPosts.id).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+// Forum validation schemas
+export const insertForumCategorySchema = createInsertSchema(forumCategories).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertForumPostSchema = createInsertSchema(forumPosts).omit({
+  id: true,
+  viewCount: true,
+  likeCount: true,
+  replyCount: true,
+  lastActivityAt: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertForumReplySchema = createInsertSchema(forumReplies).omit({
+  id: true,
+  likeCount: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+// Forum types
+export type InsertForumCategory = z.infer<typeof insertForumCategorySchema>;
+export type ForumCategory = typeof forumCategories.$inferSelect;
+
+export type InsertForumPost = z.infer<typeof insertForumPostSchema>;
+export type ForumPost = typeof forumPosts.$inferSelect;
+
+export type InsertForumReply = z.infer<typeof insertForumReplySchema>;
+export type ForumReply = typeof forumReplies.$inferSelect;
+
+export type ForumLike = typeof forumLikes.$inferSelect;
+export type ForumBookmark = typeof forumBookmarks.$inferSelect;

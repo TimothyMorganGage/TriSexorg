@@ -84,6 +84,11 @@ export function Footer() {
                   Partner with Us
                 </Link>
               </li>
+              <li>
+                <Link href="/community-forum" className="text-gray-200 hover:text-primary transition-colors block py-1">
+                  Community Forum
+                </Link>
+              </li>
             </ul>
           </div>
 

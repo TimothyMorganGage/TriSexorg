@@ -40,6 +40,7 @@ The application uses a modern full-stack architecture with a clear separation of
     -   Comprehensive guides for endosex women with MSM partners and multidimensional value of gay sex byproducts (Gaynal Condoms).
     -   Federated syndication system for content distribution across decentralized social networks (Mastodon, Bluesky, Pixelfed, Loops).
     -   "Remix to Replit" feature allowing users to create their own copies of TriSex.org.
+    -   Community Forum for peer support and knowledge sharing with moderated categories, anonymous posting, content warnings, trending posts, and cooperative governance discussions.
 
 ## External Dependencies
 
