@@ -25,6 +25,7 @@ import {
   Flower2
 } from "lucide-react";
 import { Link } from "wouter";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useAuth } from "@/lib/auth";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
@@ -368,6 +369,14 @@ export default function Products() {
       <BetaDisclaimer />
       <div className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Intersex Healthcare Affirmation */}
+          <Alert className="mb-8 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border-purple-200">
+            <Heart className="h-5 w-5 text-purple-600" />
+            <AlertDescription className="ml-2">
+              <strong>Intersex Healthcare IS Everyone's Affirmation:</strong> All products use intersex anatomy as the sizing baseline. There is no separate "transgender healthcare" category—custom-fit protection is designed for the full spectrum of human anatomy by default.
+            </AlertDescription>
+          </Alert>
+
           {/* Header */}
           <div className="text-center mb-12">
             {/* Vegan vs Traditional Toggle */}

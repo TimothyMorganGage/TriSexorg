@@ -12,6 +12,7 @@ import {
   BookOpen, Clock, User, Droplets, Target, Zap
 } from "lucide-react";
 import { Link } from "wouter";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import type { EducationalContent } from "@shared/schema";
 
 const categoryIcons = {
@@ -74,6 +75,14 @@ export default function Education() {
       <BetaDisclaimer />
       <div className="py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            {/* Intersex Healthcare Affirmation */}
+            <Alert className="mb-8 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border-purple-200">
+              <Heart className="h-5 w-5 text-purple-600" />
+              <AlertDescription className="ml-2">
+                <strong>Intersex Healthcare IS Everyone's Affirmation:</strong> Our educational content centers intersex anatomy as the universal baseline. There is no separate "transgender healthcare" category—all bodies receive evidence-based, affirming care by design.
+              </AlertDescription>
+            </Alert>
+
             {/* Header */}
             <div className="text-center mb-12">
               <h1 className="text-3xl lg:text-4xl font-bold text-neutral mb-4">

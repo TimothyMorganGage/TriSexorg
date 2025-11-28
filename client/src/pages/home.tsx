@@ -14,6 +14,7 @@ import {
   Coins, Share2, BookOpen, Lightbulb, Award, Book, Star, Users, Timer
 } from "lucide-react";
 import { FediverseShare } from "@/components/FediverseShare";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 export default function Home() {
   const [showOnboarding, setShowOnboarding] = useState(false);
@@ -30,6 +31,16 @@ export default function Home() {
       {/* Beta Disclaimer */}
       <div className="sticky top-0 z-50">
         <BetaDisclaimer />
+      </div>
+
+      {/* Intersex Healthcare Affirmation */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <Alert className="bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border-purple-200">
+          <Heart className="h-5 w-5 text-purple-600" />
+          <AlertDescription className="ml-2">
+            <strong>Intersex Healthcare IS Everyone's Affirmation:</strong> By centering intersex anatomy as the universal baseline, there is no separate "transgender healthcare" to opt out of—affirming care is the default standard for ALL bodies.
+          </AlertDescription>
+        </Alert>
       </div>
       
       {/* Hero Section */}

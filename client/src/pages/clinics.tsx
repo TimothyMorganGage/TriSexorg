@@ -2,9 +2,10 @@ import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { 
   Hospital, UserCheck, Store, Building, Users, 
-  BarChart3, Shield, Clock, CheckCircle, 
+  BarChart3, Shield, Clock, CheckCircle, Heart,
   ArrowRight, Stethoscope 
 } from "lucide-react";
 
@@ -87,6 +88,14 @@ export default function Clinics() {
       {/* Hero Section */}
       <section className="gradient-hero text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Intersex Healthcare Affirmation */}
+          <Alert className="mb-8 bg-white/10 backdrop-blur border-white/20">
+            <Heart className="h-5 w-5 text-pink-300" />
+            <AlertDescription className="ml-2 text-white">
+              <strong>Intersex Healthcare IS Everyone's Affirmation:</strong> Partner clinics provide care centered on intersex anatomy as the universal baseline—no separate "transgender healthcare" category exists because affirming care is the default.
+            </AlertDescription>
+          </Alert>
+
           <div className="text-center">
             <h1 className="text-4xl lg:text-6xl font-bold mb-6">
               Partner with CustomFit Health
