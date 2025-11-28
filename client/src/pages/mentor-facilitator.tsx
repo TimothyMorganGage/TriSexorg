@@ -29,6 +29,7 @@ import {
   AlertCircle,
   Settings
 } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useToast } from "@/hooks/use-toast";
 
 export default function MentorFacilitator() {
@@ -202,6 +203,14 @@ export default function MentorFacilitator() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50 dark:from-gray-900 dark:to-gray-800 p-4">
       <div className="max-w-7xl mx-auto space-y-6">
+        {/* Intersex Healthcare Affirmation */}
+        <Alert className="bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-900/40 dark:to-pink-900/40 border-purple-200">
+          <Heart className="h-5 w-5 text-purple-600" />
+          <AlertDescription className="ml-2">
+            <strong>Intersex Healthcare IS Everyone's Affirmation:</strong> Mentor-facilitator collaboration centers intersex anatomy as the universal baseline. There is no separate "transgender healthcare" category—all guidance serves ALL bodies by design.
+          </AlertDescription>
+        </Alert>
+
         {/* Header */}
         <div className="text-center space-y-2">
           <h1 

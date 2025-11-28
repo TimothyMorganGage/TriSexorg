@@ -27,6 +27,7 @@ import {
   Activity,
   Leaf
 } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useToast } from "@/hooks/use-toast";
 import type { BreakPattern, RestSuggestion, SmartBreakSession } from "@shared/schema";
 
@@ -234,6 +235,14 @@ export default function SmartBreakSystem() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 dark:from-gray-900 dark:to-gray-800 p-4">
       <div className="max-w-6xl mx-auto space-y-6">
+        {/* Intersex Healthcare Affirmation */}
+        <Alert className="bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border-purple-200">
+          <Heart className="h-5 w-5 text-purple-600" />
+          <AlertDescription className="ml-2">
+            <strong>Intersex Healthcare IS Everyone's Affirmation:</strong> Smart break systems center intersex anatomy as the universal baseline for rest recommendations. There is no separate "transgender healthcare" category—all wellness features serve ALL bodies by design.
+          </AlertDescription>
+        </Alert>
+
         {/* Header */}
         <div className="text-center space-y-2">
           <h1 

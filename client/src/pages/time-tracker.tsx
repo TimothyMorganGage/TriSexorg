@@ -10,7 +10,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Slider } from "@/components/ui/slider";
-import { Timer, Play, Square, Clock, Target, TrendingUp, Calendar } from "lucide-react";
+import { Timer, Play, Square, Clock, Target, TrendingUp, Calendar, Heart } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useToast } from "@/hooks/use-toast";
 import type { TimeEntry, TimeGoal, TimeInsight } from "@shared/schema";
 
@@ -177,6 +178,14 @@ export default function TimeTracker() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 p-4">
       <div className="max-w-6xl mx-auto space-y-6">
+        {/* Intersex Healthcare Affirmation */}
+        <Alert className="bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border-purple-200">
+          <Heart className="h-5 w-5 text-purple-600" />
+          <AlertDescription className="ml-2">
+            <strong>Intersex Healthcare IS Everyone's Affirmation:</strong> Time tracking centers intersex anatomy as the universal baseline for wellness metrics. There is no separate "transgender healthcare" category—all time management serves ALL bodies by design.
+          </AlertDescription>
+        </Alert>
+
         {/* Header */}
         <div className="text-center space-y-2">
           <h1 

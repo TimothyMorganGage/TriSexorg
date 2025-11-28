@@ -12,7 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
-import { Shield, FileText, Users, CheckCircle, Clock, AlertTriangle, Upload, Eye } from "lucide-react";
+import { Shield, FileText, Users, CheckCircle, Clock, AlertTriangle, Upload, Eye, Heart } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 
@@ -208,6 +208,14 @@ export default function AgeVerification() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
       <div className="max-w-4xl mx-auto pt-8">
+        {/* Intersex Healthcare Affirmation */}
+        <Alert className="mb-8 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border-purple-200">
+          <Heart className="h-5 w-5 text-purple-600" />
+          <AlertDescription className="ml-2">
+            <strong>Intersex Healthcare IS Everyone's Affirmation:</strong> Age verification centers intersex anatomy as the universal baseline for identity documents. There is no separate "transgender healthcare" category—all verification serves ALL bodies by design.
+          </AlertDescription>
+        </Alert>
+
         {/* Creative Commons Header */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-2 mb-2">
