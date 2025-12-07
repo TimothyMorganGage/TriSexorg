@@ -256,7 +256,7 @@ export default function TrisexStablecoin() {
             </TabsTrigger>
             <TabsTrigger value="upcycle" data-testid="tab-upcycle">
               <Recycle className="h-4 w-4 mr-2" />
-              Upcycle
+              Trade-In
             </TabsTrigger>
             <TabsTrigger value="exchange" data-testid="tab-exchange">
               <ArrowRightLeft className="h-4 w-4 mr-2" />
@@ -533,11 +533,12 @@ export default function TrisexStablecoin() {
                     <Recycle className="h-8 w-8 text-white" />
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-xl font-bold mb-2">♻️ Upcycle Expired Products for $TRISEX</h3>
+                    <h3 className="text-xl font-bold mb-2">♻️ Trade Expired Products for New Ones</h3>
                     <p className="text-muted-foreground mb-4">
-                      Don't throw away expired or unused protection products! Send them back to us for reprocessing 
-                      and earn $TRISEX credits. We'll break down the materials and manufacture new products from 
-                      recycled components—just like our waterway microplastic program.
+                      <strong>Closed-loop recycling:</strong> Don't throw away expired or unwanted condoms and barriers! 
+                      Send them back and receive brand new products in exchange. We break down the materials and 
+                      manufacture fresh products from recycled components—just like our waterway microplastic program. 
+                      Your old protection becomes someone's new protection.
                     </p>
                     <div className="flex gap-3">
                       <Dialog open={showUpcycleDialog} onOpenChange={setShowUpcycleDialog}>
@@ -549,9 +550,9 @@ export default function TrisexStablecoin() {
                         </DialogTrigger>
                         <DialogContent className="max-w-lg">
                           <DialogHeader>
-                            <DialogTitle>Submit Products for Upcycling</DialogTitle>
+                            <DialogTitle>Exchange Expired Products for New Ones</DialogTitle>
                             <DialogDescription>
-                              Earn $TRISEX credits for expired or unused products
+                              Trade in your expired or unwanted condoms and barriers for brand new products
                             </DialogDescription>
                           </DialogHeader>
                           <div className="space-y-4 py-4">
@@ -638,10 +639,36 @@ export default function TrisexStablecoin() {
                             </div>
                             
                             {upcycleForm.productType && (
-                              <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-4 text-center">
-                                <div className="text-sm text-muted-foreground">Estimated Credit</div>
-                                <div className="text-3xl font-bold text-green-600">
-                                  ${calculateUpcycleCredit().toFixed(2)} $TRISEX
+                              <div className="space-y-3">
+                                <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-4">
+                                  <div className="text-center mb-3">
+                                    <div className="text-sm text-muted-foreground">Exchange Value</div>
+                                    <div className="text-3xl font-bold text-green-600">
+                                      ${calculateUpcycleCredit().toFixed(2)}
+                                    </div>
+                                  </div>
+                                  <Separator className="my-3" />
+                                  <div>
+                                    <Label className="text-green-700 font-semibold">Choose Your New Products:</Label>
+                                    <Select defaultValue="same_type">
+                                      <SelectTrigger className="mt-2" data-testid="select-new-product">
+                                        <SelectValue />
+                                      </SelectTrigger>
+                                      <SelectContent>
+                                        <SelectItem value="same_type">Same product type (new)</SelectItem>
+                                        <SelectItem value="external_standard">External Protection (Standard)</SelectItem>
+                                        <SelectItem value="external_custom">External Protection (Custom-Fit)</SelectItem>
+                                        <SelectItem value="internal_standard">Internal Protection</SelectItem>
+                                        <SelectItem value="barrier_dam">Barrier Dams</SelectItem>
+                                        <SelectItem value="oral_barrier">Oral Barriers (MSM)</SelectItem>
+                                        <SelectItem value="nanoheal">NanoHeal Lubricant</SelectItem>
+                                        <SelectItem value="credit_only">Just $TRISEX Credit</SelectItem>
+                                      </SelectContent>
+                                    </Select>
+                                    <p className="text-xs text-muted-foreground mt-1">
+                                      New products ship free once we receive your trade-in
+                                    </p>
+                                  </div>
                                 </div>
                               </div>
                             )}
@@ -653,7 +680,7 @@ export default function TrisexStablecoin() {
                               className="bg-green-600 hover:bg-green-700"
                               data-testid="button-submit-upcycle"
                             >
-                              Generate Shipping Label
+                              Start Trade-In & Get New Products
                             </Button>
                           </DialogFooter>
                         </DialogContent>
@@ -673,8 +700,11 @@ export default function TrisexStablecoin() {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Package className="h-5 w-5 text-green-600" />
-                    Your Upcycle Submissions
+                    Your Trade-In Exchanges
                   </CardTitle>
+                  <CardDescription>
+                    Track your expired-to-new product exchanges
+                  </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
@@ -690,11 +720,13 @@ export default function TrisexStablecoin() {
                           </Badge>
                         </div>
                         <div className="flex justify-between text-sm">
-                          <span>Qty: {sub.quantity} items</span>
-                          {sub.creditsEarned > 0 && (
+                          <span>Sent: {sub.quantity} expired items</span>
+                          {sub.creditsEarned > 0 ? (
                             <span className="text-green-600 font-semibold">
-                              +${sub.creditsEarned.toFixed(2)}
+                              → {Math.floor(sub.creditsEarned / 1.5)} new products
                             </span>
+                          ) : (
+                            <span className="text-muted-foreground">Processing...</span>
                           )}
                         </div>
                         <Progress 
@@ -715,16 +747,16 @@ export default function TrisexStablecoin() {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Factory className="h-5 w-5 text-green-600" />
-                    How Upcycling Works
+                    How the Closed-Loop Exchange Works
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
                     {[
-                      { step: 1, title: "Submit Request", desc: "Generate a prepaid shipping label or find a drop-off location", icon: Package },
-                      { step: 2, title: "Ship Products", desc: "Send expired/unused products to our reprocessing facility", icon: Truck },
-                      { step: 3, title: "Material Processing", desc: "Products are broken down into raw materials safely", icon: Factory },
-                      { step: 4, title: "Earn Credits", desc: "$TRISEX credits deposited to your wallet automatically", icon: Coins }
+                      { step: 1, title: "Submit Trade-In", desc: "Choose your expired products and select what new products you want", icon: Package },
+                      { step: 2, title: "Ship Old Products", desc: "Use our prepaid label or drop off at a partner location", icon: Truck },
+                      { step: 3, title: "Recycling & Remanufacturing", desc: "Materials are safely broken down and made into new products", icon: Factory },
+                      { step: 4, title: "Receive New Products", desc: "Fresh products shipped to you free, or take $TRISEX credit", icon: Gift }
                     ].map(item => (
                       <div key={item.step} className="flex items-start gap-3">
                         <div className="w-8 h-8 bg-green-100 dark:bg-green-900/40 rounded-full flex items-center justify-center flex-shrink-0">
@@ -750,7 +782,10 @@ export default function TrisexStablecoin() {
 
             <Card>
               <CardHeader>
-                <CardTitle>Credit Rates by Product Type</CardTitle>
+                <CardTitle>Exchange Values by Product Type</CardTitle>
+                <CardDescription>
+                  Trade in expired products and receive new ones of equal or different value
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="grid md:grid-cols-3 gap-4">
