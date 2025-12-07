@@ -39,10 +39,20 @@ const scanningSchema = z.object({
   culturalTerminology: z.string().optional(),
 });
 
+interface ScanDataType {
+  measurements: {
+    primary: string;
+    secondary: string;
+    tertiary: string;
+  };
+  customFit: string;
+  printingSpecs: string;
+}
+
 export default function AnatomyScanning() {
   const [scanningStep, setScanningStep] = useState(1);
   const [scanProgress, setScanProgress] = useState(0);
-  const [scanData, setScanData] = useState(null);
+  const [scanData, setScanData] = useState<ScanDataType | null>(null);
   const [isScanning, setIsScanning] = useState(false);
   const { toast } = useToast();
 
@@ -448,84 +458,409 @@ export default function AnatomyScanning() {
 
         {/* Step 2: Privacy Settings */}
         {scanningStep === 2 && (
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center">
-                <Lock className="mr-2 h-6 w-6 text-neon-pink" />
-                Privacy & Security Settings
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-6">
-                <div className="bg-neon-pink/10 border border-neon-pink/30 rounded-lg p-4">
-                  <h4 className="font-medium mb-2 flex items-center">
-                    <Shield className="mr-2 h-5 w-5 text-neon-pink" />
-                    Your Privacy is Protected
-                  </h4>
-                  <ul className="text-sm space-y-1 text-muted-foreground">
-                    <li>• All scanning data is encrypted end-to-end</li>
-                    <li>• No biometric data stored on external servers</li>
-                    <li>• You maintain full control over your data</li>
-                    <li>• Scanning complies with HIPAA and international privacy laws</li>
-                    <li>• Cultural terminology preferences are respected</li>
-                  </ul>
-                </div>
-
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <h4 className="font-medium mb-3">Data Processing</h4>
-                    <div className="space-y-2 text-sm">
-                      <div className="flex items-center">
-                        <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
-                        <span>Local device processing</span>
-                      </div>
-                      <div className="flex items-center">
-                        <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
-                        <span>Zero-knowledge architecture</span>
-                      </div>
-                      <div className="flex items-center">
-                        <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
-                        <span>Automatic data deletion after printing</span>
-                      </div>
-                    </div>
+          <div className="space-y-6">
+            <Card className="bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border-purple-200">
+              <CardContent className="p-6">
+                <div className="flex items-start gap-4">
+                  <div className="p-3 bg-purple-500 rounded-xl">
+                    <Lock className="h-8 w-8 text-white" />
                   </div>
-
                   <div>
-                    <h4 className="font-medium mb-3">Cultural Respect</h4>
-                    <div className="space-y-2 text-sm">
-                      <div className="flex items-center">
-                        <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
-                        <span>Indigenous language support</span>
-                      </div>
-                      <div className="flex items-center">
-                        <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
-                        <span>Community-approved terminology</span>
-                      </div>
-                      <div className="flex items-center">
-                        <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
-                        <span>Respectful anatomical references</span>
-                      </div>
-                    </div>
+                    <h2 className="text-2xl font-bold mb-2">Privacy & Security Settings</h2>
+                    <p className="text-muted-foreground">
+                      Configure your data protection preferences. Your anatomical data is always 
+                      encrypted and processed locally. You maintain complete control over your information.
+                    </p>
                   </div>
                 </div>
+              </CardContent>
+            </Card>
 
-                <div className="flex space-x-4">
-                  <Button 
-                    variant="outline" 
-                    onClick={() => setScanningStep(1)}
-                  >
-                    Back to Configuration
-                  </Button>
-                  <Button 
-                    onClick={() => setScanningStep(3)}
-                    className="flex-1 bg-neon-pink hover:bg-neon-pink/90 text-black"
-                  >
-                    Accept Privacy Terms & Start Scanning
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+            <Tabs defaultValue="encryption" className="w-full">
+              <TabsList className="grid grid-cols-5 mb-6">
+                <TabsTrigger value="encryption">Encryption</TabsTrigger>
+                <TabsTrigger value="storage">Data Storage</TabsTrigger>
+                <TabsTrigger value="sharing">Sharing</TabsTrigger>
+                <TabsTrigger value="consent">Consent</TabsTrigger>
+                <TabsTrigger value="cultural">Cultural</TabsTrigger>
+              </TabsList>
+
+              <TabsContent value="encryption">
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Shield className="h-5 w-5 text-green-600" />
+                      End-to-End Encryption
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-6">
+                    <div className="grid md:grid-cols-2 gap-6">
+                      <div className="space-y-4">
+                        <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200">
+                          <div className="flex items-center gap-2 mb-2">
+                            <CheckCircle className="h-5 w-5 text-green-600" />
+                            <span className="font-semibold">AES-256 Encryption</span>
+                          </div>
+                          <p className="text-sm text-muted-foreground">
+                            Military-grade encryption for all anatomical scan data. Your measurements 
+                            are encrypted before leaving your device.
+                          </p>
+                        </div>
+                        <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200">
+                          <div className="flex items-center gap-2 mb-2">
+                            <CheckCircle className="h-5 w-5 text-green-600" />
+                            <span className="font-semibold">Zero-Knowledge Architecture</span>
+                          </div>
+                          <p className="text-sm text-muted-foreground">
+                            We cannot access your raw scan data. Only encrypted specifications 
+                            are transmitted for 3D printing.
+                          </p>
+                        </div>
+                        <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200">
+                          <div className="flex items-center gap-2 mb-2">
+                            <CheckCircle className="h-5 w-5 text-green-600" />
+                            <span className="font-semibold">Local Processing</span>
+                          </div>
+                          <p className="text-sm text-muted-foreground">
+                            All 3D model generation happens on your device. No raw images or 
+                            biometric data leaves your phone or computer.
+                          </p>
+                        </div>
+                      </div>
+                      <div className="space-y-4">
+                        <h4 className="font-semibold">Encryption Status</h4>
+                        <div className="space-y-3">
+                          {[
+                            { layer: "Device Encryption", status: "Active", strength: "AES-256" },
+                            { layer: "Transport Layer (TLS)", status: "Active", strength: "TLS 1.3" },
+                            { layer: "At-Rest Encryption", status: "Active", strength: "AES-256-GCM" },
+                            { layer: "Key Management", status: "Active", strength: "ECDH P-384" },
+                            { layer: "Hash Verification", status: "Active", strength: "SHA-256" }
+                          ].map((enc, i) => (
+                            <div key={i} className="flex justify-between items-center p-3 bg-muted/30 rounded-lg">
+                              <div>
+                                <div className="font-medium text-sm">{enc.layer}</div>
+                                <div className="text-xs text-muted-foreground">{enc.strength}</div>
+                              </div>
+                              <Badge className="bg-green-500 text-white">{enc.status}</Badge>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+
+              <TabsContent value="storage">
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Download className="h-5 w-5 text-blue-600" />
+                      Data Storage & Retention
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-6">
+                    <div className="grid md:grid-cols-3 gap-4">
+                      {[
+                        { title: "Scan Images", retention: "Deleted Immediately", location: "Device Only", icon: Camera },
+                        { title: "3D Model", retention: "Until Printing Complete", location: "Local + Encrypted Cloud", icon: Scan },
+                        { title: "Measurements", retention: "30 Days (Optional)", location: "Encrypted Vault", icon: Shield },
+                        { title: "Printing Specs", retention: "Until Delivery", location: "Manufacturing Partner", icon: Printer },
+                        { title: "Order History", retention: "Your Choice", location: "Your Account", icon: CheckCircle },
+                        { title: "Analytics", retention: "Never Collected", location: "N/A", icon: Eye }
+                      ].map((item, i) => (
+                        <Card key={i} className="border-t-4 border-t-blue-500">
+                          <CardContent className="p-4">
+                            <item.icon className="h-6 w-6 text-blue-600 mb-2" />
+                            <div className="font-semibold text-sm mb-1">{item.title}</div>
+                            <div className="text-xs text-muted-foreground mb-1">
+                              <span className="font-medium">Retention:</span> {item.retention}
+                            </div>
+                            <div className="text-xs text-muted-foreground">
+                              <span className="font-medium">Location:</span> {item.location}
+                            </div>
+                          </CardContent>
+                        </Card>
+                      ))}
+                    </div>
+                    <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200">
+                      <h4 className="font-semibold mb-2 flex items-center gap-2">
+                        <AlertTriangle className="h-4 w-4 text-blue-600" />
+                        Data Deletion Options
+                      </h4>
+                      <div className="grid md:grid-cols-3 gap-4">
+                        <Button variant="outline" size="sm">
+                          <EyeOff className="h-4 w-4 mr-2" />
+                          Delete After Print
+                        </Button>
+                        <Button variant="outline" size="sm">
+                          <Lock className="h-4 w-4 mr-2" />
+                          Keep in Vault
+                        </Button>
+                        <Button variant="outline" size="sm" className="text-red-600 border-red-300">
+                          <AlertTriangle className="h-4 w-4 mr-2" />
+                          Delete All Now
+                        </Button>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+
+              <TabsContent value="sharing">
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Globe className="h-5 w-5 text-purple-600" />
+                      Data Sharing Preferences
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-6">
+                    <div className="grid md:grid-cols-2 gap-6">
+                      <div className="space-y-4">
+                        <h4 className="font-semibold">Sharing Controls</h4>
+                        {[
+                          { partner: "3D Printing Partner", purpose: "Manufacturing only", status: "Required", editable: false },
+                          { partner: "Healthcare Provider", purpose: "Custom fit records", status: "Optional", editable: true },
+                          { partner: "Partner/Spouse", purpose: "Shared ordering", status: "Disabled", editable: true },
+                          { partner: "Research (Anonymous)", purpose: "Size analytics", status: "Disabled", editable: true },
+                          { partner: "Quality Assurance", purpose: "Product improvement", status: "Enabled", editable: true }
+                        ].map((share, i) => (
+                          <div key={i} className="p-3 bg-muted/30 rounded-lg flex justify-between items-center">
+                            <div>
+                              <div className="font-medium text-sm">{share.partner}</div>
+                              <div className="text-xs text-muted-foreground">{share.purpose}</div>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <Badge variant={share.status === "Required" ? "default" : share.status === "Enabled" ? "secondary" : "outline"}>
+                                {share.status}
+                              </Badge>
+                              {share.editable && (
+                                <Button size="sm" variant="ghost" className="h-6 px-2">
+                                  Edit
+                                </Button>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                      <div className="space-y-4">
+                        <h4 className="font-semibold">Connected Accounts</h4>
+                        {[
+                          { account: "TriSex.org Account", connected: true, syncs: "Product orders, preferences" },
+                          { account: "Healthcare Portal (Epic/MyChart)", connected: false, syncs: "Medical records" },
+                          { account: "Apple Health", connected: false, syncs: "Health data" },
+                          { account: "BAD Co-op Dashboard", connected: true, syncs: "Cooperative benefits" }
+                        ].map((acc, i) => (
+                          <div key={i} className="p-3 bg-muted/30 rounded-lg">
+                            <div className="flex justify-between items-center mb-1">
+                              <span className="font-medium text-sm">{acc.account}</span>
+                              <Badge variant={acc.connected ? "default" : "outline"}>
+                                {acc.connected ? "Connected" : "Not Connected"}
+                              </Badge>
+                            </div>
+                            <div className="text-xs text-muted-foreground">{acc.syncs}</div>
+                          </div>
+                        ))}
+                        <Button variant="outline" size="sm" className="w-full">
+                          Manage Connected Accounts
+                        </Button>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+
+              <TabsContent value="consent">
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <CheckCircle className="h-5 w-5 text-green-600" />
+                      Consent Management
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-6">
+                    <div className="space-y-4">
+                      {[
+                        { 
+                          consent: "Anatomical Scanning Consent", 
+                          desc: "I consent to having my anatomy scanned for custom product creation",
+                          required: true,
+                          granted: true
+                        },
+                        { 
+                          consent: "Data Processing Consent", 
+                          desc: "I consent to encrypted processing of my scan data",
+                          required: true,
+                          granted: true
+                        },
+                        { 
+                          consent: "Manufacturing Partner Sharing", 
+                          desc: "I consent to sharing encrypted specifications with printing partners",
+                          required: true,
+                          granted: true
+                        },
+                        { 
+                          consent: "Product Improvement Research", 
+                          desc: "I consent to anonymized data use for product improvement",
+                          required: false,
+                          granted: false
+                        },
+                        { 
+                          consent: "Marketing Communications", 
+                          desc: "I consent to receiving updates about new products and features",
+                          required: false,
+                          granted: false
+                        },
+                        { 
+                          consent: "Third-Party Research", 
+                          desc: "I consent to anonymized data sharing with academic researchers",
+                          required: false,
+                          granted: false
+                        }
+                      ].map((item, i) => (
+                        <div key={i} className="p-4 border rounded-lg flex justify-between items-start">
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2 mb-1">
+                              <span className="font-medium">{item.consent}</span>
+                              {item.required && <Badge variant="outline" className="text-xs">Required</Badge>}
+                            </div>
+                            <p className="text-sm text-muted-foreground">{item.desc}</p>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            {item.granted ? (
+                              <Badge className="bg-green-500 text-white">Granted</Badge>
+                            ) : (
+                              <Badge variant="outline">Not Granted</Badge>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <Card className="bg-green-50 dark:bg-green-900/20 border-green-200">
+                        <CardContent className="p-4">
+                          <h4 className="font-semibold mb-2 flex items-center gap-2">
+                            <CheckCircle className="h-4 w-4 text-green-600" />
+                            Your Rights
+                          </h4>
+                          <ul className="text-sm space-y-1 text-muted-foreground">
+                            <li>• Right to access your data</li>
+                            <li>• Right to data portability</li>
+                            <li>• Right to erasure ("right to be forgotten")</li>
+                            <li>• Right to withdraw consent</li>
+                            <li>• Right to lodge complaints</li>
+                          </ul>
+                        </CardContent>
+                      </Card>
+                      <Card className="bg-blue-50 dark:bg-blue-900/20 border-blue-200">
+                        <CardContent className="p-4">
+                          <h4 className="font-semibold mb-2 flex items-center gap-2">
+                            <Shield className="h-4 w-4 text-blue-600" />
+                            Compliance
+                          </h4>
+                          <ul className="text-sm space-y-1 text-muted-foreground">
+                            <li>• HIPAA (US Healthcare)</li>
+                            <li>• GDPR (European Union)</li>
+                            <li>• PIPEDA (Canada)</li>
+                            <li>• CCPA (California)</li>
+                            <li>• Indigenous Data Sovereignty</li>
+                          </ul>
+                        </CardContent>
+                      </Card>
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+
+              <TabsContent value="cultural">
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Languages className="h-5 w-5 text-amber-600" />
+                      Cultural & Language Preferences
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-6">
+                    <div className="grid md:grid-cols-2 gap-6">
+                      <div className="space-y-4">
+                        <h4 className="font-semibold">Anatomical Terminology</h4>
+                        <p className="text-sm text-muted-foreground mb-4">
+                          Choose how anatomical terms appear throughout your experience. 
+                          We respect diverse cultural and personal preferences.
+                        </p>
+                        {[
+                          { term: "Medical/Clinical", desc: "Standard medical terminology" },
+                          { term: "Inclusive/Gender-Neutral", desc: "Gender-affirming language" },
+                          { term: "Traditional/Cultural", desc: "Cultural community terms" },
+                          { term: "Custom Preferences", desc: "Define your own terms" }
+                        ].map((pref, i) => (
+                          <div key={i} className="p-3 bg-muted/30 rounded-lg flex justify-between items-center">
+                            <div>
+                              <div className="font-medium text-sm">{pref.term}</div>
+                              <div className="text-xs text-muted-foreground">{pref.desc}</div>
+                            </div>
+                            <input type="radio" name="terminology" className="h-4 w-4" defaultChecked={i === 1} />
+                          </div>
+                        ))}
+                      </div>
+                      <div className="space-y-4">
+                        <h4 className="font-semibold">Indigenous Language Support</h4>
+                        <div className="p-4 bg-amber-50 dark:bg-amber-900/20 rounded-lg border border-amber-200 mb-4">
+                          <p className="text-sm">
+                            TriSex.org partners with Indigenous language preservation initiatives 
+                            to provide culturally appropriate translations and terminology.
+                          </p>
+                        </div>
+                        <div className="space-y-2">
+                          {nativeLanguages.slice(0, 6).map((lang, i) => (
+                            <div key={i} className="p-2 bg-muted/30 rounded flex justify-between items-center">
+                              <div>
+                                <span className="font-medium text-sm">{lang.name}</span>
+                                <div className="text-xs text-muted-foreground">{lang.family} • {lang.speakers.toLocaleString()} speakers</div>
+                              </div>
+                              <Badge variant="outline">Available</Badge>
+                            </div>
+                          ))}
+                        </div>
+                        <Button variant="outline" size="sm" className="w-full">
+                          View All Languages ({nativeLanguages.length}+)
+                        </Button>
+                      </div>
+                    </div>
+                    <div className="p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border border-purple-200">
+                      <h4 className="font-semibold mb-2 flex items-center gap-2">
+                        <Heart className="h-4 w-4 text-purple-600" />
+                        Cultural Safety Commitment
+                      </h4>
+                      <p className="text-sm text-muted-foreground">
+                        We recognize that anatomical language carries cultural significance. Our platform 
+                        was developed in consultation with Indigenous communities, Two-Spirit elders, 
+                        transgender advocates, and intersex organizations to ensure respectful, 
+                        accurate, and affirming terminology across all cultures.
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+            </Tabs>
+
+            <div className="flex space-x-4">
+              <Button 
+                variant="outline" 
+                onClick={() => setScanningStep(1)}
+              >
+                Back to Configuration
+              </Button>
+              <Button 
+                onClick={() => setScanningStep(3)}
+                className="flex-1 bg-neon-pink hover:bg-neon-pink/90 text-black"
+              >
+                Accept Privacy Terms & Start Scanning
+              </Button>
+            </div>
+          </div>
         )}
 
         {/* Step 3: Scanning Process */}
