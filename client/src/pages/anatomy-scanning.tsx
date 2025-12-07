@@ -486,70 +486,270 @@ export default function AnatomyScanning() {
               </TabsList>
 
               <TabsContent value="encryption">
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <Shield className="h-5 w-5 text-green-600" />
-                      End-to-End Encryption
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-6">
-                    <div className="grid md:grid-cols-2 gap-6">
-                      <div className="space-y-4">
-                        <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200">
-                          <div className="flex items-center gap-2 mb-2">
-                            <CheckCircle className="h-5 w-5 text-green-600" />
-                            <span className="font-semibold">AES-256 Encryption</span>
-                          </div>
+                <div className="space-y-6">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2">
+                        <Shield className="h-5 w-5 text-green-600" />
+                        Choose Your Encryption Methods
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-6">
+                      <Alert className="bg-purple-50 dark:bg-purple-900/20 border-purple-200">
+                        <Lock className="h-4 w-4 text-purple-600" />
+                        <AlertDescription>
+                          You have full control over how your data is encrypted. Choose the algorithms 
+                          and key lengths that meet your security requirements. All options provide 
+                          strong protection - advanced options are available for those with specific needs.
+                        </AlertDescription>
+                      </Alert>
+
+                      <div className="grid md:grid-cols-2 gap-6">
+                        <div className="space-y-4">
+                          <h4 className="font-semibold flex items-center gap-2">
+                            <Shield className="h-4 w-4 text-blue-600" />
+                            Symmetric Encryption (Data at Rest)
+                          </h4>
                           <p className="text-sm text-muted-foreground">
-                            Military-grade encryption for all anatomical scan data. Your measurements 
-                            are encrypted before leaving your device.
+                            Choose how your scan data, product specifications, and monitoring data are encrypted when stored.
                           </p>
+                          <div className="space-y-2">
+                            {[
+                              { algo: "AES-256-GCM", desc: "Industry standard, NIST approved", strength: "256-bit", recommended: true, selected: true },
+                              { algo: "AES-256-CBC", desc: "Classic AES with cipher block chaining", strength: "256-bit", recommended: false, selected: false },
+                              { algo: "ChaCha20-Poly1305", desc: "Modern, fast on mobile devices", strength: "256-bit", recommended: true, selected: false },
+                              { algo: "Twofish", desc: "AES finalist, open source", strength: "256-bit", recommended: false, selected: false },
+                              { algo: "Serpent", desc: "Conservative security margin", strength: "256-bit", recommended: false, selected: false },
+                              { algo: "Camellia", desc: "ISO/IEC 18033-3 standard", strength: "256-bit", recommended: false, selected: false }
+                            ].map((item, i) => (
+                              <div key={i} className={`p-3 rounded-lg border cursor-pointer transition-all ${item.selected ? "border-green-500 bg-green-50 dark:bg-green-900/20" : "border-muted hover:border-green-300"}`}>
+                                <div className="flex justify-between items-center">
+                                  <div className="flex items-center gap-2">
+                                    <input type="radio" name="symmetric" defaultChecked={item.selected} className="h-4 w-4" />
+                                    <div>
+                                      <span className="font-medium text-sm">{item.algo}</span>
+                                      {item.recommended && <Badge className="ml-2 bg-blue-500 text-white text-xs">Recommended</Badge>}
+                                    </div>
+                                  </div>
+                                  <Badge variant="outline">{item.strength}</Badge>
+                                </div>
+                                <p className="text-xs text-muted-foreground ml-6 mt-1">{item.desc}</p>
+                              </div>
+                            ))}
+                          </div>
                         </div>
-                        <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200">
-                          <div className="flex items-center gap-2 mb-2">
-                            <CheckCircle className="h-5 w-5 text-green-600" />
-                            <span className="font-semibold">Zero-Knowledge Architecture</span>
-                          </div>
+
+                        <div className="space-y-4">
+                          <h4 className="font-semibold flex items-center gap-2">
+                            <Lock className="h-4 w-4 text-purple-600" />
+                            Asymmetric Encryption (Key Exchange)
+                          </h4>
                           <p className="text-sm text-muted-foreground">
-                            We cannot access your raw scan data. Only encrypted specifications 
-                            are transmitted for 3D printing.
+                            Choose how encryption keys are exchanged securely between your device and trusted parties.
                           </p>
-                        </div>
-                        <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200">
-                          <div className="flex items-center gap-2 mb-2">
-                            <CheckCircle className="h-5 w-5 text-green-600" />
-                            <span className="font-semibold">Local Processing</span>
+                          <div className="space-y-2">
+                            {[
+                              { algo: "ECDH P-384", desc: "Elliptic curve Diffie-Hellman", strength: "384-bit", recommended: true, selected: true },
+                              { algo: "ECDH P-521", desc: "Maximum elliptic curve security", strength: "521-bit", recommended: false, selected: false },
+                              { algo: "X25519", desc: "Modern, constant-time implementation", strength: "255-bit", recommended: true, selected: false },
+                              { algo: "RSA-4096", desc: "Traditional RSA encryption", strength: "4096-bit", recommended: false, selected: false },
+                              { algo: "Curve448", desc: "High-security elliptic curve", strength: "448-bit", recommended: false, selected: false },
+                              { algo: "Kyber-1024", desc: "Post-quantum resistant (experimental)", strength: "256-bit PQ", recommended: false, selected: false }
+                            ].map((item, i) => (
+                              <div key={i} className={`p-3 rounded-lg border cursor-pointer transition-all ${item.selected ? "border-purple-500 bg-purple-50 dark:bg-purple-900/20" : "border-muted hover:border-purple-300"}`}>
+                                <div className="flex justify-between items-center">
+                                  <div className="flex items-center gap-2">
+                                    <input type="radio" name="asymmetric" defaultChecked={item.selected} className="h-4 w-4" />
+                                    <div>
+                                      <span className="font-medium text-sm">{item.algo}</span>
+                                      {item.recommended && <Badge className="ml-2 bg-purple-500 text-white text-xs">Recommended</Badge>}
+                                    </div>
+                                  </div>
+                                  <Badge variant="outline">{item.strength}</Badge>
+                                </div>
+                                <p className="text-xs text-muted-foreground ml-6 mt-1">{item.desc}</p>
+                              </div>
+                            ))}
                           </div>
-                          <p className="text-sm text-muted-foreground">
-                            All 3D model generation happens on your device. No raw images or 
-                            biometric data leaves your phone or computer.
-                          </p>
                         </div>
                       </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2">
+                        <Eye className="h-5 w-5 text-amber-600" />
+                        Hash Functions & Integrity Verification
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="grid md:grid-cols-3 gap-4">
+                        {[
+                          { algo: "SHA-256", desc: "NIST standard, widely compatible", strength: "256-bit", use: "General hashing", selected: true },
+                          { algo: "SHA-384", desc: "Higher security variant", strength: "384-bit", use: "Sensitive data", selected: false },
+                          { algo: "SHA-512", desc: "Maximum SHA-2 security", strength: "512-bit", use: "Critical data", selected: false },
+                          { algo: "BLAKE2b", desc: "Faster than SHA, equally secure", strength: "512-bit", use: "High performance", selected: false },
+                          { algo: "BLAKE3", desc: "Newest, fastest secure hash", strength: "256-bit", use: "Modern systems", selected: false },
+                          { algo: "SHA3-256", desc: "Post-SHA-2 NIST standard", strength: "256-bit", use: "Future-proof", selected: false }
+                        ].map((item, i) => (
+                          <div key={i} className={`p-3 rounded-lg border cursor-pointer transition-all ${item.selected ? "border-amber-500 bg-amber-50 dark:bg-amber-900/20" : "border-muted hover:border-amber-300"}`}>
+                            <div className="flex items-center gap-2 mb-2">
+                              <input type="radio" name="hash" defaultChecked={item.selected} className="h-4 w-4" />
+                              <span className="font-medium text-sm">{item.algo}</span>
+                            </div>
+                            <p className="text-xs text-muted-foreground mb-2">{item.desc}</p>
+                            <div className="flex justify-between">
+                              <Badge variant="outline" className="text-xs">{item.strength}</Badge>
+                              <Badge variant="secondary" className="text-xs">{item.use}</Badge>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2">
+                        <Globe className="h-5 w-5 text-cyan-600" />
+                        Transport Layer Security
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="grid md:grid-cols-2 gap-6">
+                        <div className="space-y-4">
+                          <h4 className="font-semibold">TLS Version</h4>
+                          <div className="space-y-2">
+                            {[
+                              { version: "TLS 1.3", desc: "Latest, fastest, most secure", status: "Recommended", selected: true },
+                              { version: "TLS 1.2", desc: "Wide compatibility", status: "Supported", selected: false }
+                            ].map((item, i) => (
+                              <div key={i} className={`p-3 rounded-lg border ${item.selected ? "border-cyan-500 bg-cyan-50 dark:bg-cyan-900/20" : "border-muted"}`}>
+                                <div className="flex justify-between items-center">
+                                  <div className="flex items-center gap-2">
+                                    <input type="radio" name="tls" defaultChecked={item.selected} className="h-4 w-4" />
+                                    <span className="font-medium">{item.version}</span>
+                                  </div>
+                                  <Badge variant={item.selected ? "default" : "secondary"}>{item.status}</Badge>
+                                </div>
+                                <p className="text-xs text-muted-foreground ml-6">{item.desc}</p>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                        <div className="space-y-4">
+                          <h4 className="font-semibold">Cipher Suite Preference</h4>
+                          <div className="space-y-2">
+                            {[
+                              { suite: "TLS_AES_256_GCM_SHA384", desc: "Maximum security", selected: true },
+                              { suite: "TLS_CHACHA20_POLY1305_SHA256", desc: "Mobile optimized", selected: false },
+                              { suite: "TLS_AES_128_GCM_SHA256", desc: "Balanced performance", selected: false }
+                            ].map((item, i) => (
+                              <div key={i} className="flex items-center gap-2 p-2 bg-muted/30 rounded">
+                                <input type="checkbox" defaultChecked={item.selected} className="h-4 w-4" />
+                                <div>
+                                  <span className="font-mono text-xs">{item.suite}</span>
+                                  <span className="text-xs text-muted-foreground ml-2">({item.desc})</span>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2">
+                        <Lock className="h-5 w-5 text-red-600" />
+                        Data-Specific Encryption Settings
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
                       <div className="space-y-4">
-                        <h4 className="font-semibold">Encryption Status</h4>
+                        <p className="text-sm text-muted-foreground">
+                          Customize encryption for each type of data. Different data types may have different security requirements.
+                        </p>
                         <div className="space-y-3">
                           {[
-                            { layer: "Device Encryption", status: "Active", strength: "AES-256" },
-                            { layer: "Transport Layer (TLS)", status: "Active", strength: "TLS 1.3" },
-                            { layer: "At-Rest Encryption", status: "Active", strength: "AES-256-GCM" },
-                            { layer: "Key Management", status: "Active", strength: "ECDH P-384" },
-                            { layer: "Hash Verification", status: "Active", strength: "SHA-256" }
-                          ].map((enc, i) => (
-                            <div key={i} className="flex justify-between items-center p-3 bg-muted/30 rounded-lg">
-                              <div>
-                                <div className="font-medium text-sm">{enc.layer}</div>
-                                <div className="text-xs text-muted-foreground">{enc.strength}</div>
+                            { data: "Anatomical Scan Data", current: "AES-256-GCM", options: ["AES-256-GCM", "ChaCha20-Poly1305", "Twofish"], sensitivity: "Critical" },
+                            { data: "Product Specifications", current: "AES-256-GCM", options: ["AES-256-GCM", "AES-256-CBC", "Camellia"], sensitivity: "High" },
+                            { data: "3D Model Files", current: "ChaCha20-Poly1305", options: ["ChaCha20-Poly1305", "AES-256-GCM", "Serpent"], sensitivity: "High" },
+                            { data: "Order History", current: "AES-256-CBC", options: ["AES-256-CBC", "AES-256-GCM", "Twofish"], sensitivity: "Medium" },
+                            { data: "STI Monitoring Data", current: "AES-256-GCM", options: ["AES-256-GCM", "ChaCha20-Poly1305", "Serpent"], sensitivity: "Critical" },
+                            { data: "Health Outcomes Tracking", current: "AES-256-GCM", options: ["AES-256-GCM", "ChaCha20-Poly1305", "Twofish"], sensitivity: "Critical" },
+                            { data: "EHR Sync Data", current: "AES-256-GCM", options: ["AES-256-GCM", "ChaCha20-Poly1305"], sensitivity: "Critical" },
+                            { data: "Partner Communications", current: "ChaCha20-Poly1305", options: ["ChaCha20-Poly1305", "AES-256-GCM"], sensitivity: "High" }
+                          ].map((item, i) => (
+                            <div key={i} className="p-4 border rounded-lg">
+                              <div className="flex justify-between items-center mb-2">
+                                <div className="flex items-center gap-2">
+                                  <Lock className="h-4 w-4 text-muted-foreground" />
+                                  <span className="font-medium">{item.data}</span>
+                                </div>
+                                <Badge className={
+                                  item.sensitivity === "Critical" ? "bg-red-500 text-white" :
+                                  item.sensitivity === "High" ? "bg-orange-500 text-white" :
+                                  "bg-yellow-500 text-black"
+                                }>
+                                  {item.sensitivity}
+                                </Badge>
                               </div>
-                              <Badge className="bg-green-500 text-white">{enc.status}</Badge>
+                              <div className="flex items-center gap-4">
+                                <Select defaultValue={item.current}>
+                                  <SelectTrigger className="w-48">
+                                    <SelectValue />
+                                  </SelectTrigger>
+                                  <SelectContent>
+                                    {item.options.map((opt, j) => (
+                                      <SelectItem key={j} value={opt}>{opt}</SelectItem>
+                                    ))}
+                                  </SelectContent>
+                                </Select>
+                                <span className="text-xs text-muted-foreground">Currently: {item.current}</span>
+                              </div>
                             </div>
                           ))}
                         </div>
                       </div>
-                    </div>
-                  </CardContent>
-                </Card>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="bg-green-50 dark:bg-green-900/20 border-green-200">
+                    <CardContent className="p-4">
+                      <div className="flex items-start gap-4">
+                        <CheckCircle className="h-6 w-6 text-green-600 mt-1" />
+                        <div>
+                          <h4 className="font-semibold mb-2">Current Encryption Configuration</h4>
+                          <div className="grid md:grid-cols-4 gap-4 text-sm">
+                            <div>
+                              <span className="text-muted-foreground">Symmetric:</span>
+                              <div className="font-medium">AES-256-GCM</div>
+                            </div>
+                            <div>
+                              <span className="text-muted-foreground">Key Exchange:</span>
+                              <div className="font-medium">ECDH P-384</div>
+                            </div>
+                            <div>
+                              <span className="text-muted-foreground">Hash:</span>
+                              <div className="font-medium">SHA-256</div>
+                            </div>
+                            <div>
+                              <span className="text-muted-foreground">Transport:</span>
+                              <div className="font-medium">TLS 1.3</div>
+                            </div>
+                          </div>
+                          <Button className="mt-4" size="sm">
+                            <Shield className="h-4 w-4 mr-2" />
+                            Apply Encryption Settings
+                          </Button>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
               </TabsContent>
 
               <TabsContent value="storage">
