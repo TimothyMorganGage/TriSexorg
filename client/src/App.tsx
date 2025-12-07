@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { AuthProvider } from "@/lib/auth";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
+import { BottomNavigation } from "@/components/BottomNavigation";
 
 // Pages
 import Home from "@/pages/home";
@@ -128,6 +129,7 @@ function Router() {
           <Route component={NotFound} />
         </Switch>
       </main>
+      <BottomNavigation />
       <Footer />
     </div>
   );

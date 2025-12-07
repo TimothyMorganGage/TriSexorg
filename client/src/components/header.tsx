@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
-import { ShieldHalf, Menu, X, User, LogOut } from "lucide-react";
+import { ShieldHalf, Menu, X, User, LogOut, Search } from "lucide-react";
 import { useAuth } from "@/lib/auth";
 import { ReplitBadge } from "@/components/ReplitBadge";
 
@@ -10,41 +10,24 @@ export function Header() {
   const [location] = useLocation();
   const { user, logout } = useAuth();
 
-  const navigation = [
-    { name: "Generative TriSex Protection", href: "/products" },
-    { name: "👄 Oral Barriers for MSM", href: "/oral-barriers" },
-    { name: "💰 Monogamy Economics", href: "/monogamy-economics" },
-    { name: "💚 Economic Impact & DALYs", href: "/economic-impact" },
-    { name: "BAD Co-op Dashboard", href: "/bad-coop-dashboard" },
-    { name: "🌌 Member Reviews", href: "/infinitely-affirmative-protection" },
-    { name: "⚧️ Remix to Your Replit", href: "/remix-replit" },
-    { name: "Good TriSex Education", href: "/interactive-stories" },
-    { name: "Great TriSex Health", href: "/education" },
-    { name: "Groovy TriSex Community", href: "/partnership" },
-    { name: "Mood Tracker", href: "/mood-logging" },
-    { name: "Time Tracker", href: "/time-tracker" },
-    { name: "Calendar Sync", href: "/calendar-integration" },
-    { name: "Smart Breaks", href: "/smart-break-system" },
-    { name: "Mentor & Facilitator", href: "/mentor-facilitator" },
-    { name: "4D STI Tracking", href: "/partner-sti-tracking" },
-    { name: "Age Verification", href: "/age-verification" },
-    { name: "Wiki", href: "/wiki" },
-    { name: "Analytics", href: "/analytics" },
+  const quickLinks = [
+    { name: "Products", href: "/products" },
+    { name: "Education", href: "/education" },
+    { name: "Community", href: "/community-forum" },
   ];
 
   const isActive = (path: string) => location === path;
 
   return (
-    <header className="bg-white shadow-sm border-b">
+    <header className="bg-white shadow-sm border-b sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          {/* Logo */}
-          <Link href="/" className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
-              <ShieldHalf className="h-6 w-6 text-white" />
+        <div className="flex justify-between items-center h-14">
+          <Link href="/" className="flex items-center space-x-2" data-testid="header-logo">
+            <div className="w-9 h-9 bg-primary rounded-xl flex items-center justify-center">
+              <ShieldHalf className="h-5 w-5 text-white" />
             </div>
             <span 
-              className="text-2xl font-bold text-neutral"
+              className="text-xl font-bold text-neutral hidden sm:block"
               style={{ 
                 fontFamily: 'cursive',
                 textShadow: '2px 2px 4px rgba(0,0,0,0.3), -1px -1px 2px rgba(255,255,255,0.5)',
@@ -55,90 +38,89 @@ export function Header() {
             </span>
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
-            {navigation.map((item) => (
+          <nav className="hidden md:flex items-center space-x-4">
+            {quickLinks.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
-                className={`text-sm font-medium transition-colors hover:text-primary ${
+                className={`text-sm font-medium px-3 py-1.5 rounded-full transition-colors ${
                   isActive(item.href)
-                    ? "text-primary border-b-2 border-primary pb-1"
-                    : "text-gray-600"
+                    ? "bg-primary/10 text-primary"
+                    : "text-gray-600 hover:bg-gray-100"
                 }`}
+                data-testid={`header-link-${item.name.toLowerCase()}`}
               >
                 {item.name}
               </Link>
             ))}
           </nav>
 
-          {/* User Menu */}
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="flex items-center space-x-2">
             <ReplitBadge variant="compact" theme="light" />
-            {user ? (
-              <div className="flex items-center space-x-3">
-                {user.role === "clinic_staff" && (
-                  <Link href="/clinic-dashboard">
-                    <Button variant="outline" size="sm">
-                      Dashboard
+            
+            <div className="hidden md:flex items-center space-x-2">
+              {user ? (
+                <>
+                  {user.role === "clinic_staff" && (
+                    <Link href="/clinic-dashboard">
+                      <Button variant="outline" size="sm" data-testid="header-dashboard-btn">
+                        Dashboard
+                      </Button>
+                    </Link>
+                  )}
+                  <Link href="/saved-configurations">
+                    <Button variant="ghost" size="sm" data-testid="header-configs-btn">
+                      <User className="h-4 w-4 mr-1" />
+                      {user.username}
                     </Button>
                   </Link>
-                )}
-                <Link href="/saved-configurations">
-                  <Button variant="outline" size="sm">
-                    My Configs
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={logout}
+                    className="text-gray-600 hover:text-red-600"
+                    data-testid="header-logout-btn"
+                  >
+                    <LogOut className="h-4 w-4" />
                   </Button>
-                </Link>
-                <div className="flex items-center space-x-2 text-sm text-gray-600">
-                  <User className="h-4 w-4" />
-                  <span>{user.username}</span>
-                </div>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={logout}
-                  className="text-gray-600 hover:text-red-600"
-                >
-                  <LogOut className="h-4 w-4" />
-                </Button>
-              </div>
-            ) : (
-              <div className="flex items-center space-x-3">
-                <Link href="/login">
-                  <Button variant="ghost" size="sm">
-                    Sign In
-                  </Button>
-                </Link>
-                <Link href="/register">
-                  <Button size="sm">
-                    Get Started
-                  </Button>
-                </Link>
-              </div>
-            )}
-          </div>
-
-          {/* Mobile menu button */}
-          <div className="md:hidden">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
-              {isMenuOpen ? (
-                <X className="h-5 w-5" />
+                </>
               ) : (
-                <Menu className="h-5 w-5" />
+                <>
+                  <Link href="/login">
+                    <Button variant="ghost" size="sm" data-testid="header-signin-btn">
+                      Sign In
+                    </Button>
+                  </Link>
+                  <Link href="/register">
+                    <Button size="sm" data-testid="header-getstarted-btn">
+                      Get Started
+                    </Button>
+                  </Link>
+                </>
               )}
-            </Button>
+            </div>
+
+            <div className="md:hidden">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                data-testid="header-mobile-menu-btn"
+              >
+                {isMenuOpen ? (
+                  <X className="h-5 w-5" />
+                ) : (
+                  <Menu className="h-5 w-5" />
+                )}
+              </Button>
+            </div>
           </div>
         </div>
 
-        {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t">
-              {navigation.map((item) => (
+          <div className="md:hidden py-3 border-t">
+            <div className="space-y-1">
+              {quickLinks.map((item) => (
                 <Link
                   key={item.name}
                   href={item.href}
@@ -153,9 +135,9 @@ export function Header() {
                 </Link>
               ))}
               
-              <div className="pt-4 pb-3 border-t border-gray-200">
+              <div className="pt-3 mt-3 border-t border-gray-200">
                 {user ? (
-                  <div className="space-y-2">
+                  <div className="space-y-1">
                     <div className="flex items-center px-3 py-2">
                       <User className="h-5 w-5 text-gray-400 mr-2" />
                       <span className="text-base font-medium text-gray-800">
@@ -189,20 +171,20 @@ export function Header() {
                     </button>
                   </div>
                 ) : (
-                  <div className="space-y-2">
+                  <div className="flex items-center space-x-2 px-3">
                     <Link
                       href="/login"
-                      className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-primary"
+                      className="flex-1"
                       onClick={() => setIsMenuOpen(false)}
                     >
-                      Sign In
+                      <Button variant="outline" className="w-full">Sign In</Button>
                     </Link>
                     <Link
                       href="/register"
-                      className="block px-3 py-2 text-base font-medium text-primary"
+                      className="flex-1"
                       onClick={() => setIsMenuOpen(false)}
                     >
-                      Get Started
+                      <Button className="w-full">Get Started</Button>
                     </Link>
                   </div>
                 )}
