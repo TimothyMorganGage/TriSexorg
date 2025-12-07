@@ -89,6 +89,11 @@ export function Footer() {
                   Community Forum
                 </Link>
               </li>
+              <li>
+                <Link href="/trisex-stablecoin" className="text-gray-200 hover:text-primary transition-colors block py-1">
+                  $TRISEX Stablecoin
+                </Link>
+              </li>
             </ul>
           </div>
 

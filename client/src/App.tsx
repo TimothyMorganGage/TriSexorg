@@ -52,6 +52,7 @@ import PrivacyPolicy from "@/pages/privacy-policy";
 import TermsOfService from "@/pages/terms-of-service";
 import Accessibility from "@/pages/accessibility";
 import CommunityForum from "@/pages/community-forum";
+import TrisexStablecoin from "@/pages/trisex-stablecoin";
 import { TabNavigation } from "@/components/TabNavigation";
 import { PWAInstallPrompt, PWAStatusBadge } from "@/components/PWAInstallPrompt";
 import { usePWA } from "@/hooks/usePWA";
@@ -119,6 +120,7 @@ function Router() {
           <Route path="/terms-of-service" component={TermsOfService} />
           <Route path="/accessibility" component={Accessibility} />
           <Route path="/community-forum" component={CommunityForum} />
+          <Route path="/trisex-stablecoin" component={TrisexStablecoin} />
           <Route path="/saved-configurations" component={SavedConfigurations} />
           <Route path="/clinic-dashboard" component={ClinicDashboard} />
           <Route path="/login" component={Login} />
