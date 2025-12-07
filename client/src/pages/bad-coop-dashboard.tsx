@@ -294,9 +294,10 @@ export default function BadCoopDashboard() {
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="grid w-full grid-cols-6 mb-8">
+          <TabsList className="grid w-full grid-cols-7 mb-8">
             <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
-            <TabsTrigger value="modules">Featured Modules</TabsTrigger>
+            <TabsTrigger value="modules">Modules</TabsTrigger>
+            <TabsTrigger value="family">Family & Caregiving</TabsTrigger>
             <TabsTrigger value="activity">Activity</TabsTrigger>
             <TabsTrigger value="community">Community</TabsTrigger>
             <TabsTrigger value="resources">Resources</TabsTrigger>
@@ -468,6 +469,399 @@ export default function BadCoopDashboard() {
                   </CardContent>
                 </Card>
               ))}
+            </div>
+          </TabsContent>
+
+          <TabsContent value="family">
+            <div className="space-y-6">
+              <Card className="bg-gradient-to-r from-orange-50 to-amber-50 dark:from-orange-900/20 dark:to-amber-900/20 border-orange-200">
+                <CardContent className="p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="p-3 bg-orange-500 rounded-xl">
+                      <User className="h-8 w-8 text-white" />
+                    </div>
+                    <div>
+                      <h2 className="text-2xl font-bold mb-2">Family & Caregiver Coordination Hub</h2>
+                      <p className="text-muted-foreground">
+                        Comprehensive family planning, caregiving coordination, multigenerational health management, 
+                        and intergenerational care directives—all centered on intersex-affirming healthcare as the universal baseline.
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <div className="grid md:grid-cols-2 gap-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Users className="h-5 w-5 text-orange-600" />
+                      Care Circle Management
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="space-y-3">
+                      {[
+                        { name: "Primary Caregiver", person: "Sarah M.", role: "Spouse/Partner", status: "active", contact: "+1 (503) 555-0123" },
+                        { name: "Secondary Caregiver", person: "Michael T.", role: "Adult Child", status: "active", contact: "+1 (503) 555-0124" },
+                        { name: "Emergency Contact", person: "Dr. Rebecca L.", role: "Healthcare Provider", status: "verified", contact: "+1 (503) 555-0125" },
+                        { name: "Backup Caregiver", person: "James W.", role: "Sibling", status: "pending", contact: "+1 (503) 555-0126" }
+                      ].map((member, i) => (
+                        <div key={i} className="p-3 bg-muted/30 rounded-lg">
+                          <div className="flex justify-between items-start mb-2">
+                            <div>
+                              <div className="font-semibold">{member.name}</div>
+                              <div className="text-sm text-muted-foreground">{member.person} • {member.role}</div>
+                            </div>
+                            <Badge variant={member.status === "active" ? "default" : member.status === "verified" ? "secondary" : "outline"}>
+                              {member.status}
+                            </Badge>
+                          </div>
+                          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                            <Phone className="h-3 w-3" />
+                            <span>{member.contact}</span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    <Button className="w-full" variant="outline">
+                      <Plus className="h-4 w-4 mr-2" />
+                      Add Care Circle Member
+                    </Button>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Calendar className="h-5 w-5 text-orange-600" />
+                      Caregiving Schedule
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="space-y-3">
+                      {[
+                        { day: "Monday", shift: "Morning", caregiver: "Sarah M.", tasks: "Medication, Meals, PT" },
+                        { day: "Monday", shift: "Evening", caregiver: "Michael T.", tasks: "Dinner, Evening routine" },
+                        { day: "Tuesday", shift: "Full Day", caregiver: "Professional Aide", tasks: "Full care coverage" },
+                        { day: "Wednesday", shift: "Morning", caregiver: "Sarah M.", tasks: "Doctor visit, Labs" },
+                        { day: "Thursday", shift: "Afternoon", caregiver: "James W.", tasks: "Respite, Activities" }
+                      ].map((schedule, i) => (
+                        <div key={i} className="p-3 bg-muted/30 rounded-lg flex justify-between items-center">
+                          <div>
+                            <div className="font-semibold text-sm">{schedule.day} - {schedule.shift}</div>
+                            <div className="text-xs text-muted-foreground">{schedule.caregiver}</div>
+                          </div>
+                          <Badge variant="secondary" className="text-xs">{schedule.tasks}</Badge>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="grid grid-cols-2 gap-2">
+                      <Button variant="outline" size="sm">
+                        <Edit className="h-4 w-4 mr-2" />
+                        Edit Schedule
+                      </Button>
+                      <Button variant="outline" size="sm">
+                        <Share2 className="h-4 w-4 mr-2" />
+                        Share Calendar
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              <div className="grid md:grid-cols-3 gap-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <FileText className="h-5 w-5 text-blue-600" />
+                      Guardianship & Custody
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="space-y-2">
+                      <div className="flex justify-between items-center p-2 bg-muted/30 rounded">
+                        <span className="text-sm">Minor Children Guardian</span>
+                        <Badge>Designated</Badge>
+                      </div>
+                      <div className="flex justify-between items-center p-2 bg-muted/30 rounded">
+                        <span className="text-sm">Pet Care Directive</span>
+                        <Badge>Complete</Badge>
+                      </div>
+                      <div className="flex justify-between items-center p-2 bg-muted/30 rounded">
+                        <span className="text-sm">Education Decisions</span>
+                        <Badge variant="secondary">Pending</Badge>
+                      </div>
+                      <div className="flex justify-between items-center p-2 bg-muted/30 rounded">
+                        <span className="text-sm">Medical Consent for Minors</span>
+                        <Badge>Complete</Badge>
+                      </div>
+                    </div>
+                    <Button variant="outline" className="w-full" size="sm">
+                      <Edit className="h-4 w-4 mr-2" />
+                      Update Documents
+                    </Button>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Stethoscope className="h-5 w-5 text-green-600" />
+                      Elder Care Planning
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="space-y-2">
+                      <div className="flex justify-between items-center p-2 bg-muted/30 rounded">
+                        <span className="text-sm">Long-term Care Insurance</span>
+                        <Badge className="bg-green-500">Active</Badge>
+                      </div>
+                      <div className="flex justify-between items-center p-2 bg-muted/30 rounded">
+                        <span className="text-sm">Assisted Living Preferences</span>
+                        <Badge>Documented</Badge>
+                      </div>
+                      <div className="flex justify-between items-center p-2 bg-muted/30 rounded">
+                        <span className="text-sm">Home Modification Plan</span>
+                        <Badge>Complete</Badge>
+                      </div>
+                      <div className="flex justify-between items-center p-2 bg-muted/30 rounded">
+                        <span className="text-sm">Memory Care Preferences</span>
+                        <Badge variant="secondary">In Progress</Badge>
+                      </div>
+                    </div>
+                    <Button variant="outline" className="w-full" size="sm">
+                      <Building className="h-4 w-4 mr-2" />
+                      Browse Facilities
+                    </Button>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Heart className="h-5 w-5 text-pink-600" />
+                      Parenting Directives
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="space-y-2">
+                      <div className="flex justify-between items-center p-2 bg-muted/30 rounded">
+                        <span className="text-sm">Sexual Health Education</span>
+                        <Badge className="bg-pink-500 text-white">Age-Appropriate</Badge>
+                      </div>
+                      <div className="flex justify-between items-center p-2 bg-muted/30 rounded">
+                        <span className="text-sm">Gender-Affirming Care</span>
+                        <Badge>Supported</Badge>
+                      </div>
+                      <div className="flex justify-between items-center p-2 bg-muted/30 rounded">
+                        <span className="text-sm">Vaccination Schedule</span>
+                        <Badge>Up to Date</Badge>
+                      </div>
+                      <div className="flex justify-between items-center p-2 bg-muted/30 rounded">
+                        <span className="text-sm">Emergency Protocols</span>
+                        <Badge>Complete</Badge>
+                      </div>
+                    </div>
+                    <Button variant="outline" className="w-full" size="sm">
+                      <BookOpen className="h-4 w-4 mr-2" />
+                      Parenting Resources
+                    </Button>
+                  </CardContent>
+                </Card>
+              </div>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Activity className="h-5 w-5 text-purple-600" />
+                    Family Medical History Management
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid md:grid-cols-4 gap-4 mb-6">
+                    {[
+                      { condition: "Cardiovascular", relatives: 3, risk: "Moderate", color: "bg-yellow-100 text-yellow-800" },
+                      { condition: "Diabetes Type 2", relatives: 2, risk: "Elevated", color: "bg-orange-100 text-orange-800" },
+                      { condition: "Breast Cancer", relatives: 1, risk: "Screening Recommended", color: "bg-pink-100 text-pink-800" },
+                      { condition: "Mental Health", relatives: 4, risk: "Monitor", color: "bg-purple-100 text-purple-800" }
+                    ].map((history, i) => (
+                      <Card key={i} className="border-l-4 border-l-purple-500">
+                        <CardContent className="p-4">
+                          <div className="font-semibold mb-1">{history.condition}</div>
+                          <div className="text-sm text-muted-foreground mb-2">{history.relatives} relatives affected</div>
+                          <Badge className={history.color}>{history.risk}</Badge>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <Button variant="outline">
+                      <Upload className="h-4 w-4 mr-2" />
+                      Import GEDCOM Family Tree
+                    </Button>
+                    <Button variant="outline">
+                      <Download className="h-4 w-4 mr-2" />
+                      Export Medical History Report
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <div className="grid md:grid-cols-2 gap-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <MessageSquare className="h-5 w-5 text-blue-600" />
+                      Family Communication Hub
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="space-y-3">
+                      {[
+                        { type: "Group Chat", name: "Care Team Updates", members: 5, unread: 3 },
+                        { type: "Video Call", name: "Weekly Family Meeting", members: 8, unread: 0 },
+                        { type: "Document Share", name: "Medical Records", members: 4, unread: 1 },
+                        { type: "Calendar", name: "Appointments", members: 6, unread: 2 }
+                      ].map((channel, i) => (
+                        <div key={i} className="p-3 bg-muted/30 rounded-lg flex justify-between items-center">
+                          <div className="flex items-center gap-3">
+                            {channel.type === "Group Chat" && <MessageSquare className="h-4 w-4 text-blue-500" />}
+                            {channel.type === "Video Call" && <Video className="h-4 w-4 text-green-500" />}
+                            {channel.type === "Document Share" && <FileText className="h-4 w-4 text-orange-500" />}
+                            {channel.type === "Calendar" && <Calendar className="h-4 w-4 text-purple-500" />}
+                            <div>
+                              <div className="font-semibold text-sm">{channel.name}</div>
+                              <div className="text-xs text-muted-foreground">{channel.members} members</div>
+                            </div>
+                          </div>
+                          {channel.unread > 0 && (
+                            <Badge className="bg-red-500 text-white">{channel.unread}</Badge>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                    <div className="grid grid-cols-2 gap-2">
+                      <Button size="sm">
+                        <Video className="h-4 w-4 mr-2" />
+                        Start Video Call
+                      </Button>
+                      <Button variant="outline" size="sm">
+                        <Plus className="h-4 w-4 mr-2" />
+                        New Channel
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Bell className="h-5 w-5 text-amber-600" />
+                      Care Notifications & Alerts
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="space-y-3">
+                      {[
+                        { alert: "Medication Reminder", time: "Today 2:00 PM", priority: "high", details: "Blood pressure medication due" },
+                        { alert: "Doctor Appointment", time: "Tomorrow 10:00 AM", priority: "medium", details: "Annual checkup with Dr. Chen" },
+                        { alert: "Insurance Renewal", time: "In 2 weeks", priority: "low", details: "Long-term care policy renewal" },
+                        { alert: "Caregiver Relief", time: "Saturday", priority: "medium", details: "Respite care scheduled" }
+                      ].map((notification, i) => (
+                        <div key={i} className="p-3 bg-muted/30 rounded-lg">
+                          <div className="flex justify-between items-start mb-1">
+                            <span className="font-semibold text-sm">{notification.alert}</span>
+                            <Badge className={
+                              notification.priority === "high" ? "bg-red-100 text-red-800" :
+                              notification.priority === "medium" ? "bg-yellow-100 text-yellow-800" :
+                              "bg-gray-100 text-gray-800"
+                            }>
+                              {notification.priority}
+                            </Badge>
+                          </div>
+                          <div className="text-xs text-muted-foreground">{notification.time}</div>
+                          <div className="text-sm text-muted-foreground mt-1">{notification.details}</div>
+                        </div>
+                      ))}
+                    </div>
+                    <Button variant="outline" className="w-full" size="sm">
+                      <Settings className="h-4 w-4 mr-2" />
+                      Notification Settings
+                    </Button>
+                  </CardContent>
+                </Card>
+              </div>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Map className="h-5 w-5 text-teal-600" />
+                    Intergenerational Health Transfer
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid md:grid-cols-3 gap-6">
+                    <div className="space-y-3">
+                      <h4 className="font-semibold">For Children</h4>
+                      <div className="space-y-2">
+                        <div className="p-2 bg-teal-50 dark:bg-teal-900/20 rounded text-sm">Age-appropriate sexual health education timeline</div>
+                        <div className="p-2 bg-teal-50 dark:bg-teal-900/20 rounded text-sm">Gender identity support resources</div>
+                        <div className="p-2 bg-teal-50 dark:bg-teal-900/20 rounded text-sm">Body autonomy & consent education</div>
+                        <div className="p-2 bg-teal-50 dark:bg-teal-900/20 rounded text-sm">Puberty preparation guides</div>
+                      </div>
+                    </div>
+                    <div className="space-y-3">
+                      <h4 className="font-semibold">For Teens & Young Adults</h4>
+                      <div className="space-y-2">
+                        <div className="p-2 bg-blue-50 dark:bg-blue-900/20 rounded text-sm">Contraception & protection access</div>
+                        <div className="p-2 bg-blue-50 dark:bg-blue-900/20 rounded text-sm">STI testing & prevention</div>
+                        <div className="p-2 bg-blue-50 dark:bg-blue-900/20 rounded text-sm">Healthy relationship education</div>
+                        <div className="p-2 bg-blue-50 dark:bg-blue-900/20 rounded text-sm">Financial independence planning</div>
+                      </div>
+                    </div>
+                    <div className="space-y-3">
+                      <h4 className="font-semibold">For Elders</h4>
+                      <div className="space-y-2">
+                        <div className="p-2 bg-purple-50 dark:bg-purple-900/20 rounded text-sm">Wisdom & knowledge preservation</div>
+                        <div className="p-2 bg-purple-50 dark:bg-purple-900/20 rounded text-sm">Health legacy documentation</div>
+                        <div className="p-2 bg-purple-50 dark:bg-purple-900/20 rounded text-sm">Cultural tradition transfer</div>
+                        <div className="p-2 bg-purple-50 dark:bg-purple-900/20 rounded text-sm">End-of-life planning support</div>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Clock className="h-5 w-5 text-indigo-600" />
+                    Caregiver Support & Wellness
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid md:grid-cols-4 gap-4">
+                    {[
+                      { title: "Respite Care", desc: "Schedule breaks for primary caregivers", icon: Clock, action: "Schedule" },
+                      { title: "Support Groups", desc: "Connect with other caregivers", icon: Users, action: "Join" },
+                      { title: "Training", desc: "Learn caregiving skills", icon: BookOpen, action: "Browse" },
+                      { title: "Financial Aid", desc: "Caregiver compensation programs", icon: DollarSign, action: "Apply" }
+                    ].map((resource, i) => (
+                      <Card key={i} className="border-t-4 border-t-indigo-500">
+                        <CardContent className="p-4 text-center">
+                          <resource.icon className="h-8 w-8 mx-auto mb-2 text-indigo-600" />
+                          <h4 className="font-semibold mb-1">{resource.title}</h4>
+                          <p className="text-xs text-muted-foreground mb-3">{resource.desc}</p>
+                          <Button size="sm" variant="outline" className="w-full">
+                            {resource.action}
+                          </Button>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
             </div>
           </TabsContent>
 
