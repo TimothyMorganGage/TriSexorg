@@ -10,7 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/lib/auth";
-import { ShieldHalf, Lock, Mail, User } from "lucide-react";
+import { Lock, Mail, User } from "lucide-react";
 
 const registerSchema = z.object({
   username: z.string().min(3, "Username must be at least 3 characters"),
@@ -80,9 +80,7 @@ export default function Register() {
     <div className="min-h-screen bg-surface flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-2xl w-full space-y-8">
         <div className="text-center">
-          <div className="w-16 h-16 bg-primary rounded-2xl flex items-center justify-center mx-auto mb-6">
-            <ShieldHalf className="h-8 w-8 text-white" />
-          </div>
+          <div className="text-6xl mx-auto mb-6">⚧️</div>
           <h2 className="text-3xl font-bold text-neutral">Join TriSex.org</h2>
           <p className="mt-2 text-gray-600">Create your account for personalized protection</p>
         </div>

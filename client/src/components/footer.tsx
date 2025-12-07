@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import { ShieldHalf, Mail, Phone, MapPin, Heart } from "lucide-react";
+import { Mail, Phone, MapPin, Heart } from "lucide-react";
 
 export function Footer() {
   return (

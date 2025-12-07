@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
-import { ShieldHalf, Menu, X, User, LogOut, Search } from "lucide-react";
+import { Menu, X, User, LogOut } from "lucide-react";
 import { useAuth } from "@/lib/auth";
 import { ReplitBadge } from "@/components/ReplitBadge";
 
@@ -23,9 +23,7 @@ export function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-14">
           <Link href="/" className="flex items-center space-x-2" data-testid="header-logo">
-            <div className="w-9 h-9 bg-primary rounded-xl flex items-center justify-center">
-              <ShieldHalf className="h-5 w-5 text-white" />
-            </div>
+            <span className="text-3xl">⚧️</span>
             <span 
               className="text-xl font-bold text-neutral hidden sm:block"
               style={{ 
@@ -34,7 +32,7 @@ export function Header() {
                 filter: 'contrast(1.2)'
               }}
             >
-              ⚧️ TriSex.org
+              TriSex.org
             </span>
           </Link>
 

@@ -5,7 +5,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { 
-  ShieldHalf,
   Heart,
   Users,
   BookOpen,
@@ -29,7 +28,8 @@ import {
   Scan,
   HandHeart,
   Scale,
-  Globe
+  Globe,
+  Package
 } from "lucide-react";
 
 interface NavItem {
@@ -43,7 +43,7 @@ interface NavItem {
 
 const allNavItems: NavItem[] = [
   { name: "Home", href: "/", icon: Home, category: "core", priority: 10, keywords: ["home", "start", "main"] },
-  { name: "Products", href: "/products", icon: ShieldHalf, category: "products", priority: 9, keywords: ["products", "protection", "buy", "shop"] },
+  { name: "Products", href: "/products", icon: Package, category: "products", priority: 9, keywords: ["products", "protection", "buy", "shop"] },
   { name: "Oral Barriers", href: "/oral-barriers", icon: CircleDot, category: "products", priority: 8, keywords: ["oral", "barriers", "msm", "sides"] },
   { name: "Anatomy Scanning", href: "/anatomy-scanning", icon: Scan, category: "health", priority: 8, keywords: ["scan", "anatomy", "3d", "custom"] },
   { name: "Education", href: "/education", icon: BookOpen, category: "education", priority: 7, keywords: ["learn", "education", "health", "info"] },
@@ -201,7 +201,7 @@ export function BottomNavigation() {
 
               <div>
                 <h4 className="text-xs font-semibold text-muted-foreground mb-2 flex items-center gap-1">
-                  <ShieldHalf className="h-3 w-3" /> Products
+                  <Package className="h-3 w-3" /> Products
                 </h4>
                 <div className="space-y-1">
                   {allNavItems.filter(i => i.category === "products").slice(0, 4).map(item => (
