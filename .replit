@@ -80,8 +80,12 @@ localPort = 43675
 externalPort = 3003
 
 [[ports]]
+localPort = 43967
+externalPort = 8081
+
+[[ports]]
 localPort = 46425
 externalPort = 8008
 
 [agent]
-integrations = ["javascript_websocket==1.0.0"]
+integrations = ["javascript_websocket:1.0.0"]
