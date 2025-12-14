@@ -77,7 +77,8 @@ export function TabNavigation({ children }: TabNavigationProps) {
       description: "Complete healthcare planning and cooperative management",
       icon: InfinityIcon,
       color: "bg-primary",
-      route: "/bad-coop-dashboard"
+      route: "https://glad.wtf",
+      external: true
     },
     {
       id: "balanced-directives",

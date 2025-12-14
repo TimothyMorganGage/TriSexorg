@@ -41,6 +41,15 @@ interface NavItem {
   keywords: string[];
 }
 
+const isExternalLink = (href: string) => href.startsWith('http://') || href.startsWith('https://');
+
+const NavLink = ({ href, className, children }: { href: string; className: string; children: React.ReactNode }) => {
+  if (isExternalLink(href)) {
+    return <a href={href} target="_blank" rel="noopener noreferrer" className={className}>{children}</a>;
+  }
+  return <NavLink href={href} className={className}>{children}</NavLink>;
+};
+
 const allNavItems: NavItem[] = [
   { name: "Home", href: "/", icon: Home, category: "core", priority: 10, keywords: ["home", "start", "main"] },
   { name: "Products", href: "/products", icon: Package, category: "products", priority: 9, keywords: ["products", "protection", "buy", "shop"] },
@@ -48,7 +57,7 @@ const allNavItems: NavItem[] = [
   { name: "Anatomy Scanning", href: "/anatomy-scanning", icon: Scan, category: "health", priority: 8, keywords: ["scan", "anatomy", "3d", "custom"] },
   { name: "Education", href: "/education", icon: BookOpen, category: "education", priority: 7, keywords: ["learn", "education", "health", "info"] },
   { name: "Interactive Stories", href: "/interactive-stories", icon: Sparkles, category: "education", priority: 6, keywords: ["stories", "interactive", "learn"] },
-  { name: "BAD Co-op", href: "/bad-coop-dashboard", icon: Building2, category: "community", priority: 8, keywords: ["coop", "cooperative", "dashboard", "bad"] },
+  { name: "BAD Co-op", href: "https://glad.wtf", icon: Building2, category: "community", priority: 8, keywords: ["coop", "cooperative", "dashboard", "bad", "glad"] },
   { name: "Community Forum", href: "/community-forum", icon: MessageCircle, category: "community", priority: 7, keywords: ["forum", "community", "discuss", "chat"] },
   { name: "Peer Mentor", href: "/peer-mentor", icon: HandHeart, category: "community", priority: 6, keywords: ["mentor", "peer", "support", "help"] },
   { name: "Partnership", href: "/partnership", icon: Users, category: "community", priority: 5, keywords: ["partner", "clinic", "healthcare"] },
@@ -181,7 +190,7 @@ export function BottomNavigation() {
                 </h4>
                 <div className="space-y-1">
                   {recentItems.length > 0 ? recentItems.map(item => (
-                    <Link
+                    <NavLink
                       key={item.href}
                       href={item.href}
                       className={`flex items-center gap-2 p-2 rounded-lg text-sm transition-colors ${
@@ -192,7 +201,7 @@ export function BottomNavigation() {
                     >
                       <item.icon className="h-4 w-4" />
                       <span className="truncate">{item.name}</span>
-                    </Link>
+                    </NavLink>
                   )) : (
                     <p className="text-xs text-muted-foreground p-2">No recent pages</p>
                   )}
@@ -205,7 +214,7 @@ export function BottomNavigation() {
                 </h4>
                 <div className="space-y-1">
                   {allNavItems.filter(i => i.category === "products").slice(0, 4).map(item => (
-                    <Link
+                    <NavLink
                       key={item.href}
                       href={item.href}
                       className={`flex items-center gap-2 p-2 rounded-lg text-sm transition-colors ${
@@ -216,7 +225,7 @@ export function BottomNavigation() {
                     >
                       <item.icon className="h-4 w-4" />
                       <span className="truncate">{item.name}</span>
-                    </Link>
+                    </NavLink>
                   ))}
                 </div>
               </div>
@@ -227,7 +236,7 @@ export function BottomNavigation() {
                 </h4>
                 <div className="space-y-1">
                   {allNavItems.filter(i => i.category === "health" || i.category === "wellness").slice(0, 4).map(item => (
-                    <Link
+                    <NavLink
                       key={item.href}
                       href={item.href}
                       className={`flex items-center gap-2 p-2 rounded-lg text-sm transition-colors ${
@@ -238,7 +247,7 @@ export function BottomNavigation() {
                     >
                       <item.icon className="h-4 w-4" />
                       <span className="truncate">{item.name}</span>
-                    </Link>
+                    </NavLink>
                   ))}
                 </div>
               </div>
@@ -249,7 +258,7 @@ export function BottomNavigation() {
                 </h4>
                 <div className="space-y-1">
                   {allNavItems.filter(i => i.category === "community").slice(0, 4).map(item => (
-                    <Link
+                    <NavLink
                       key={item.href}
                       href={item.href}
                       className={`flex items-center gap-2 p-2 rounded-lg text-sm transition-colors ${
@@ -260,7 +269,7 @@ export function BottomNavigation() {
                     >
                       <item.icon className="h-4 w-4" />
                       <span className="truncate">{item.name}</span>
-                    </Link>
+                    </NavLink>
                   ))}
                 </div>
               </div>
@@ -271,7 +280,7 @@ export function BottomNavigation() {
               <ScrollArea className="w-full">
                 <div className="flex gap-2 pb-2">
                   {allNavItems.map(item => (
-                    <Link
+                    <NavLink
                       key={item.href}
                       href={item.href}
                       className={`flex items-center gap-1 px-3 py-1.5 rounded-full text-xs whitespace-nowrap transition-colors ${
@@ -282,7 +291,7 @@ export function BottomNavigation() {
                     >
                       <item.icon className="h-3 w-3" />
                       {item.name}
-                    </Link>
+                    </NavLink>
                   ))}
                 </div>
                 <ScrollBar orientation="horizontal" />
@@ -295,7 +304,7 @@ export function BottomNavigation() {
           <div className="flex items-center justify-between">
             <ScrollArea className="flex-1">
               <div className="flex items-center gap-1 sm:gap-2">
-                <Link
+                <NavLink
                   href="/"
                   className={`flex flex-col items-center justify-center p-2 rounded-lg min-w-[60px] transition-colors ${
                     isActive("/") ? "bg-primary/10 text-primary" : "hover:bg-muted"
@@ -304,10 +313,10 @@ export function BottomNavigation() {
                 >
                   <Home className="h-5 w-5" />
                   <span className="text-[10px] mt-1">Home</span>
-                </Link>
+                </NavLink>
 
                 {suggestedItems.slice(0, 6).map(item => (
-                  <Link
+                  <NavLink
                     key={item.href}
                     href={item.href}
                     className={`flex flex-col items-center justify-center p-2 rounded-lg min-w-[60px] transition-colors ${
@@ -320,7 +329,7 @@ export function BottomNavigation() {
                       <div className={`absolute -top-1 -right-1 w-2 h-2 rounded-full ${getCategoryColor(item.category)}`} />
                     </div>
                     <span className="text-[10px] mt-1 max-w-[60px] truncate">{item.name}</span>
-                  </Link>
+                  </NavLink>
                 ))}
               </div>
               <ScrollBar orientation="horizontal" />
