@@ -5473,72 +5473,76 @@ We recognize that endosex women with bisexual/MSM partners are often underserved
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
       <BetaDisclaimer />
-      <div className="py-12 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-7xl mx-auto">
-          {/* Intersex Healthcare Affirmation */}
-          <Alert className="mb-8 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border-purple-200">
-            <Heart className="h-5 w-5 text-purple-600" />
-            <AlertDescription className="ml-2">
-              <strong>Intersex Healthcare IS Everyone's Affirmation:</strong> Wiki content centers intersex anatomy as the universal baseline—trans, non-binary, genderqueer, and quare embodiment are all respected within this participatory budgeting framework. There is no separate "transgender healthcare" category—all knowledge serves ALL bodies by design.
-            </AlertDescription>
-          </Alert>
-
-          {/* Header */}
-        <div className="text-center mb-12">
-          <div className="flex items-center justify-center mb-6">
-            <BookOpen className="h-12 w-12 text-primary mr-4" />
-            <div>
-              <h1 className="text-4xl font-bold text-foreground">
-                TriSex.org Knowledge Wiki
-              </h1>
-              <p className="text-xl text-muted-foreground mt-2">
-                Best Practices for Sustainable Sexual Health
-              </p>
+      
+      {/* Hero Header */}
+      <div className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 text-white py-16 px-4">
+        <div className="max-w-5xl mx-auto text-center">
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-white/20 backdrop-blur-sm rounded-2xl mb-6">
+            <BookOpen className="h-10 w-10 text-white" />
+          </div>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">
+            TriSex.org Knowledge Wiki
+          </h1>
+          <p className="text-xl text-white/90 max-w-2xl mx-auto leading-relaxed">
+            Best Practices for Sustainable Sexual Health
+          </p>
+          
+          {/* Search in Hero */}
+          <div className="mt-8 max-w-lg mx-auto">
+            <div className="relative">
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400" />
+              <Input
+                placeholder="Search wiki articles..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-12 py-6 text-lg rounded-xl border-0 shadow-lg bg-white text-slate-900 placeholder:text-slate-400"
+              />
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Search */}
-        <div className="mb-8">
-          <div className="relative max-w-md mx-auto">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input
-              placeholder="Search wiki articles..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10"
-            />
-          </div>
-        </div>
+      <div className="py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          
+          {/* Intersex Healthcare Affirmation */}
+          <Alert className="mb-10 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border-l-4 border-l-purple-500 border-purple-200 shadow-sm">
+            <Heart className="h-5 w-5 text-purple-600" />
+            <AlertDescription className="ml-2 text-purple-900 dark:text-purple-100">
+              <strong>Intersex Healthcare IS Everyone's Affirmation:</strong> Wiki content centers intersex anatomy as the universal baseline—trans, non-binary, genderqueer, and quare embodiment are all respected within this participatory budgeting framework.
+            </AlertDescription>
+          </Alert>
 
         <div className="grid lg:grid-cols-4 gap-8">
           {/* Categories Sidebar */}
-          <div className="lg:col-span-1">
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Categories</CardTitle>
+          <div className="lg:col-span-1 space-y-6">
+            <Card className="shadow-md border-0 bg-white dark:bg-slate-800 overflow-hidden">
+              <CardHeader className="bg-gradient-to-r from-indigo-500 to-purple-500 text-white pb-4">
+                <CardTitle className="text-lg font-semibold">Categories</CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="space-y-2">
+              <CardContent className="p-4">
+                <div className="space-y-1">
                   {categories.map((category) => {
                     const IconComponent = category.icon;
                     return (
                       <button
                         key={category.id}
                         onClick={() => setActiveCategory(category.id)}
-                        className={`w-full flex items-center justify-between p-3 rounded-lg text-left transition-colors ${
+                        className={`w-full flex items-center justify-between p-3 rounded-xl text-left transition-all duration-200 ${
                           activeCategory === category.id
-                            ? "bg-primary text-primary-foreground"
-                            : "hover:bg-muted"
+                            ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md"
+                            : "hover:bg-slate-100 dark:hover:bg-slate-700"
                         }`}
                       >
-                        <div className="flex items-center space-x-2">
-                          <IconComponent className="h-4 w-4" />
+                        <div className="flex items-center space-x-3">
+                          <div className={`p-2 rounded-lg ${activeCategory === category.id ? "bg-white/20" : "bg-slate-100 dark:bg-slate-600"}`}>
+                            <IconComponent className="h-4 w-4" />
+                          </div>
                           <span className="text-sm font-medium">{category.name}</span>
                         </div>
-                        <Badge variant="secondary" className="text-xs">
+                        <Badge variant={activeCategory === category.id ? "secondary" : "outline"} className="text-xs font-semibold">
                           {category.count}
                         </Badge>
                       </button>
@@ -5549,27 +5553,35 @@ We recognize that endosex women with bisexual/MSM partners are often underserved
             </Card>
 
             {/* Quick Links */}
-            <Card className="mt-6">
-              <CardHeader>
-                <CardTitle className="text-lg">Quick Links</CardTitle>
+            <Card className="shadow-md border-0 bg-white dark:bg-slate-800">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-lg font-semibold text-slate-800 dark:text-white">Quick Links</CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="space-y-2 text-sm">
-                  <a href="#" className="flex items-center space-x-2 text-blue-600 hover:underline">
-                    <Star className="h-4 w-4" />
-                    <span>Getting Started Guide</span>
+              <CardContent className="p-4 pt-0">
+                <div className="space-y-3">
+                  <a href="#" className="flex items-center space-x-3 p-2 rounded-lg hover:bg-indigo-50 dark:hover:bg-slate-700 transition-colors group">
+                    <div className="p-2 bg-amber-100 dark:bg-amber-900/30 rounded-lg">
+                      <Star className="h-4 w-4 text-amber-600" />
+                    </div>
+                    <span className="text-sm font-medium text-slate-700 dark:text-slate-200 group-hover:text-indigo-600">Getting Started Guide</span>
                   </a>
-                  <a href="#" className="flex items-center space-x-2 text-blue-600 hover:underline">
-                    <Target className="h-4 w-4" />
-                    <span>Community Guidelines</span>
+                  <a href="#" className="flex items-center space-x-3 p-2 rounded-lg hover:bg-indigo-50 dark:hover:bg-slate-700 transition-colors group">
+                    <div className="p-2 bg-rose-100 dark:bg-rose-900/30 rounded-lg">
+                      <Target className="h-4 w-4 text-rose-600" />
+                    </div>
+                    <span className="text-sm font-medium text-slate-700 dark:text-slate-200 group-hover:text-indigo-600">Community Guidelines</span>
                   </a>
-                  <a href="#" className="flex items-center space-x-2 text-blue-600 hover:underline">
-                    <Zap className="h-4 w-4" />
-                    <span>Technical Support</span>
+                  <a href="#" className="flex items-center space-x-3 p-2 rounded-lg hover:bg-indigo-50 dark:hover:bg-slate-700 transition-colors group">
+                    <div className="p-2 bg-cyan-100 dark:bg-cyan-900/30 rounded-lg">
+                      <Zap className="h-4 w-4 text-cyan-600" />
+                    </div>
+                    <span className="text-sm font-medium text-slate-700 dark:text-slate-200 group-hover:text-indigo-600">Technical Support</span>
                   </a>
-                  <a href="#" className="flex items-center space-x-2 text-blue-600 hover:underline">
-                    <Globe className="h-4 w-4" />
-                    <span>Community Forum</span>
+                  <a href="#" className="flex items-center space-x-3 p-2 rounded-lg hover:bg-indigo-50 dark:hover:bg-slate-700 transition-colors group">
+                    <div className="p-2 bg-emerald-100 dark:bg-emerald-900/30 rounded-lg">
+                      <Globe className="h-4 w-4 text-emerald-600" />
+                    </div>
+                    <span className="text-sm font-medium text-slate-700 dark:text-slate-200 group-hover:text-indigo-600">Community Forum</span>
                   </a>
                 </div>
               </CardContent>
@@ -5582,55 +5594,65 @@ We recognize that endosex women with bisexual/MSM partners are often underserved
               {filteredArticles.map((article) => {
                 const IconComponent = getCategoryIcon(article.category);
                 return (
-                  <Card key={article.id} className="hover:shadow-lg transition-shadow">
-                    <CardHeader>
+                  <Card key={article.id} className="group hover:shadow-xl transition-all duration-300 border-0 shadow-md bg-white dark:bg-slate-800 overflow-hidden">
+                    <div className="h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500" />
+                    <CardHeader className="pb-3">
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
-                          <div className="flex items-center space-x-2 mb-2">
-                            <IconComponent className="h-4 w-4 text-primary" />
-                            <Badge variant="outline" className="text-xs">
-                              {categories.find(c => c.id === article.category)?.name}
-                            </Badge>
-                            <Badge className={getDifficultyColor(article.difficulty) + " text-xs"}>
+                          <div className="flex items-center flex-wrap gap-2 mb-3">
+                            <div className="flex items-center space-x-2 px-3 py-1 bg-indigo-50 dark:bg-indigo-900/30 rounded-full">
+                              <IconComponent className="h-4 w-4 text-indigo-600" />
+                              <span className="text-xs font-medium text-indigo-700 dark:text-indigo-300">
+                                {categories.find(c => c.id === article.category)?.name}
+                              </span>
+                            </div>
+                            <Badge className={getDifficultyColor(article.difficulty) + " text-xs font-semibold"}>
                               {article.difficulty}
                             </Badge>
+                            <span className="text-xs text-slate-500 dark:text-slate-400">{article.readTime} read</span>
                           </div>
-                          <CardTitle className="text-xl mb-2">{article.title}</CardTitle>
-                          <div className="flex items-center space-x-4 text-sm text-muted-foreground">
-                            <span>By {article.author}</span>
+                          <CardTitle className="text-xl font-bold text-slate-800 dark:text-white mb-2 group-hover:text-indigo-600 transition-colors">
+                            {article.title}
+                          </CardTitle>
+                          <div className="flex items-center space-x-3 text-sm text-slate-500 dark:text-slate-400">
+                            <span className="font-medium">By {article.author}</span>
+                            <span className="text-slate-300">•</span>
                             <span>Updated {article.lastUpdated}</span>
-                            <span>{article.readTime} read</span>
                           </div>
                         </div>
                       </div>
                     </CardHeader>
-                    <CardContent>
+                    <CardContent className="pt-0">
                       <div className="space-y-4">
-                        <div className="prose prose-sm max-w-none">
-                          <p className="text-muted-foreground">
-                            {article.content.split('\n\n')[1]?.replace(/^#{1,6}\s/, '') || 
-                             article.content.substring(0, 200) + "..."}
-                          </p>
-                        </div>
+                        <p className="text-slate-600 dark:text-slate-300 leading-relaxed line-clamp-3">
+                          {article.content.split('\n\n')[1]?.replace(/^#{1,6}\s/, '') || 
+                           article.content.substring(0, 200) + "..."}
+                        </p>
                         
-                        <div className="flex flex-wrap gap-1">
-                          {article.tags.map((tag) => (
-                            <Badge key={tag} variant="secondary" className="text-xs">
+                        <div className="flex flex-wrap gap-2">
+                          {article.tags.slice(0, 5).map((tag) => (
+                            <Badge key={tag} variant="secondary" className="text-xs bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-indigo-100 hover:text-indigo-700 transition-colors cursor-pointer">
                               {tag}
                             </Badge>
                           ))}
+                          {article.tags.length > 5 && (
+                            <Badge variant="outline" className="text-xs">+{article.tags.length - 5} more</Badge>
+                          )}
                         </div>
                         
-                        <div className="flex items-center justify-between pt-4 border-t">
+                        <div className="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-slate-700">
                           <div className="flex items-center space-x-2">
-                            <CheckCircle className="h-4 w-4 text-green-500" />
-                            <span className="text-sm text-muted-foreground">Community Verified</span>
+                            <div className="flex items-center space-x-1.5 px-2 py-1 bg-emerald-50 dark:bg-emerald-900/30 rounded-full">
+                              <CheckCircle className="h-3.5 w-3.5 text-emerald-500" />
+                              <span className="text-xs font-medium text-emerald-700 dark:text-emerald-300">Verified</span>
+                            </div>
                           </div>
                           <button 
                             onClick={() => setSelectedArticle(article)}
-                            className="text-primary hover:underline text-sm font-medium"
+                            className="flex items-center space-x-1 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg transition-colors"
                           >
-                            Read Full Article →
+                            <span>Read Article</span>
+                            <span>→</span>
                           </button>
                         </div>
                       </div>
