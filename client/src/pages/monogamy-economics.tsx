@@ -24,8 +24,8 @@ export default function MonogamyEconomics() {
       <div className="max-w-5xl mx-auto">
         {/* Intersex Healthcare Affirmation */}
         <Alert className="mb-8 bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-900/40 dark:to-pink-900/40 border-purple-200">
-          <Heart className="h-5 w-5 text-purple-600" />
-          <AlertDescription className="ml-2">
+          <Heart className="h-5 w-5 text-black dark:text-white" />
+          <AlertDescription className="ml-2 text-black dark:text-white">
             <strong>Intersex Healthcare IS Everyone's Affirmation:</strong> Monogamy economics analysis centers intersex anatomy as the universal baseline—trans, non-binary, genderqueer, and quare embodiment are all respected within this participatory budgeting framework. There is no separate "transgender healthcare" category—all relationship health metrics serve ALL bodies by design.
           </AlertDescription>
         </Alert>

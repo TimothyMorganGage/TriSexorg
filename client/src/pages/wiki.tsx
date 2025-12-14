@@ -5509,7 +5509,7 @@ We recognize that endosex women with bisexual/MSM partners are often underserved
           
           {/* Intersex Healthcare Affirmation */}
           <Alert className="mb-10 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border-l-4 border-l-purple-500 border-purple-200 shadow-sm">
-            <Heart className="h-5 w-5 text-purple-600" />
+            <Heart className="h-5 w-5 text-black dark:text-white" />
             <AlertDescription className="ml-2 text-purple-900 dark:text-purple-100">
               <strong>Intersex Healthcare IS Everyone's Affirmation:</strong> Wiki content centers intersex anatomy as the universal baseline—trans, non-binary, genderqueer, and quare embodiment are all respected within this participatory budgeting framework.
             </AlertDescription>

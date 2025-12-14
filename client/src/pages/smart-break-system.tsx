@@ -236,9 +236,9 @@ export default function SmartBreakSystem() {
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 dark:from-gray-900 dark:to-gray-800 p-4">
       <div className="max-w-6xl mx-auto space-y-6">
         {/* Intersex Healthcare Affirmation */}
-        <Alert className="bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border-purple-200">
-          <Heart className="h-5 w-5 text-purple-600" />
-          <AlertDescription className="ml-2">
+        <Alert className="bg-white dark:bg-gray-950 border-2 border-black dark:border-white">
+          <Heart className="h-5 w-5 text-black dark:text-white" />
+          <AlertDescription className="ml-2 text-black dark:text-white">
             <strong>Intersex Healthcare IS Everyone's Affirmation:</strong> Smart break systems center intersex anatomy as the universal baseline—trans, non-binary, genderqueer, and quare embodiment are all respected within this participatory budgeting framework. There is no separate "transgender healthcare" category—all wellness features serve ALL bodies by design.
           </AlertDescription>
         </Alert>

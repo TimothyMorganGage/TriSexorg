@@ -65,7 +65,7 @@ export default function Accessibility() {
         {/* Quick Summary */}
         <Alert className="mb-8 bg-purple-50 dark:bg-purple-900/20 border-purple-200">
           <CheckCircle className="h-5 w-5 text-purple-600" />
-          <AlertDescription className="ml-2">
+          <AlertDescription className="ml-2 text-black dark:text-white">
             <strong>Our Commitment:</strong> TriSex.org is designed for full accessibility across visual, auditory, motor, and cognitive disabilities. We support screen readers, sign language interpretation, braille displays, voice navigation, and more. Everyone deserves access to sexual health resources.
           </AlertDescription>
         </Alert>
@@ -294,8 +294,8 @@ export default function Accessibility() {
               </CardHeader>
               <CardContent>
                 <Alert className="mb-4 bg-purple-50 dark:bg-purple-900/20 border-purple-200">
-                  <Heart className="h-5 w-5 text-purple-600" />
-                  <AlertDescription className="ml-2">
+                  <Heart className="h-5 w-5 text-black dark:text-white" />
+                  <AlertDescription className="ml-2 text-black dark:text-white">
                     <strong>Core Philosophy:</strong> By centering intersex anatomy as the universal baseline—trans, non-binary, genderqueer, and quare embodiment are all respected within this participatory budgeting framework. There is no separate category to opt out of—intersex-affirming care IS the standard for ALL bodies by design.
                   </AlertDescription>
                 </Alert>

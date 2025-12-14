@@ -46,7 +46,7 @@ export default function PrivacyPolicy() {
         {/* Quick Summary */}
         <Alert className="mb-8 bg-green-50 dark:bg-green-900/20 border-green-200">
           <CheckCircle className="h-5 w-5 text-green-600" />
-          <AlertDescription className="ml-2">
+          <AlertDescription className="ml-2 text-black dark:text-white">
             <strong>Quick Summary:</strong> Your sexual health data belongs to YOU. We use enterprise-grade encryption, never sell your data, and you can delete everything at any time. We're a cooperative—your privacy is our mission, not a business model.
           </AlertDescription>
         </Alert>
@@ -72,9 +72,9 @@ export default function PrivacyPolicy() {
                   TriSex.org is built on the principle that <strong>sexual health data is among the most sensitive personal information</strong> a person can share. As a cooperative owned by our members, we have no incentive to monetize your data—our only goal is to serve your health and safety needs.
                 </p>
 
-                <Alert className="my-6 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border-purple-200">
-                  <Heart className="h-5 w-5 text-purple-600" />
-                  <AlertDescription className="ml-2">
+                <Alert className="my-6 bg-white dark:bg-gray-950 border-2 border-black dark:border-white">
+                  <Heart className="h-5 w-5 text-black dark:text-white" />
+                  <AlertDescription className="ml-2 text-black dark:text-white">
                     <strong>Intersex Healthcare IS Everyone's Affirmation:</strong> Our privacy framework treats ALL anatomical data equally—trans, non-binary, genderqueer, and quare embodiment are all respected within this participatory budgeting framework. There is no separate "transgender healthcare" category—just healthcare for human bodies as they naturally exist.
                   </AlertDescription>
                 </Alert>

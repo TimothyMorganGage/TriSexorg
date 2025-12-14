@@ -45,7 +45,7 @@ export default function TermsOfService() {
         {/* Quick Summary */}
         <Alert className="mb-8 bg-blue-50 dark:bg-blue-900/20 border-blue-200">
           <CheckCircle className="h-5 w-5 text-blue-600" />
-          <AlertDescription className="ml-2">
+          <AlertDescription className="ml-2 text-black dark:text-white">
             <strong>Quick Summary:</strong> Be respectful, be honest about your health status, don't share other people's private data, and we'll provide you with the best custom sexual health products and community. As a cooperative, these terms protect ALL members equally.
           </AlertDescription>
         </Alert>
@@ -71,9 +71,9 @@ export default function TermsOfService() {
                   TriSex.org is a <strong>member-owned cooperative</strong>, not a traditional company. When you join, you become a member with rights AND responsibilities to the community.
                 </p>
 
-                <Alert className="my-6 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border-purple-200">
-                  <Heart className="h-5 w-5 text-purple-600" />
-                  <AlertDescription className="ml-2">
+                <Alert className="my-6 bg-white dark:bg-gray-950 border-2 border-black dark:border-white">
+                  <Heart className="h-5 w-5 text-black dark:text-white" />
+                  <AlertDescription className="ml-2 text-black dark:text-white">
                     <strong>Intersex Healthcare IS Everyone's Affirmation:</strong> Our terms contain no "opt-out of transgender healthcare" provisions—trans, non-binary, genderqueer, and quare embodiment are all respected within this participatory budgeting framework. All members receive healthcare designed for the full spectrum of human anatomy by design.
                   </AlertDescription>
                 </Alert>

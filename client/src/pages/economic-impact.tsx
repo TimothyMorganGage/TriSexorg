@@ -137,9 +137,9 @@ export default function EconomicImpact() {
     <div className="min-h-screen bg-background py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         {/* Intersex Healthcare Affirmation */}
-        <Alert className="mb-8 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border-purple-200">
-          <Heart className="h-5 w-5 text-purple-600" />
-          <AlertDescription className="ml-2">
+        <Alert className="mb-8 bg-white dark:bg-gray-950 border-2 border-black dark:border-white">
+          <Heart className="h-5 w-5 text-black dark:text-white" />
+          <AlertDescription className="ml-2 text-black dark:text-white">
             <strong>Intersex Healthcare IS Everyone's Affirmation:</strong> DALY impact calculations center intersex anatomy as the universal baseline—trans, non-binary, genderqueer, and quare embodiment are all respected within this participatory budgeting framework. There is no separate "transgender healthcare" category—all economic health metrics serve ALL bodies by design.
           </AlertDescription>
         </Alert>
