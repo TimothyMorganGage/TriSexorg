@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { AlertTriangle, ChevronDown, ChevronUp, GitBranch, Users, Calendar } from "lucide-react";
+import { AlertTriangle, ChevronDown, ChevronUp, GitBranch, Users, Calendar, Sparkles, Coins, Package, Share2 } from "lucide-react";
 
 interface TeamChange {
   date: string;
@@ -76,36 +76,71 @@ export function BetaDisclaimer({ showExpanded = false }: { showExpanded?: boolea
   };
 
   return (
-    <div className="bg-yellow-50 border border-yellow-200 rounded-lg">
-      {/* Main Banner */}
-      <div className="bg-yellow-100 border-b border-yellow-300 px-4 py-3">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <AlertTriangle className="h-5 w-5 text-yellow-600" />
-            <div>
-              <p className="text-sm font-semibold text-yellow-800">
-                What's up‽ This is an early prototype - features may not work properly and content is preliminary
+    <div className="bg-gradient-to-r from-purple-50 via-pink-50 to-yellow-50 border border-purple-200 rounded-lg">
+      {/* Main Banner - Remix Focus */}
+      <div className="bg-gradient-to-r from-purple-100 via-pink-100 to-yellow-100 border-b border-purple-200 px-4 py-3">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
+          <div className="flex items-start space-x-3">
+            <Sparkles className="h-5 w-5 text-purple-600 flex-shrink-0 mt-0.5" />
+            <div className="space-y-1">
+              <p className="text-sm font-semibold text-purple-900">
+                ⚧️ Open Source Sexual Health Platform - Remix & Build Your Own!
+              </p>
+              <p className="text-xs text-purple-700">
+                Fork this Replit to create your own stablecoin, product line & interoperable STI data network
               </p>
             </div>
           </div>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => setIsExpanded(!isExpanded)}
-            className="text-yellow-700 hover:text-yellow-900"
-          >
-            {isExpanded ? (
-              <>
-                <ChevronUp className="h-4 w-4 mr-1" />
-                Hide Changes
-              </>
-            ) : (
-              <>
-                <ChevronDown className="h-4 w-4 mr-1" />
-                View Changes
-              </>
-            )}
-          </Button>
+          <div className="flex items-center space-x-2">
+            <a
+              href="/remix-replit"
+              className="inline-flex items-center px-3 py-1.5 text-xs font-medium bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors"
+              data-testid="link-remix-replit"
+            >
+              <GitBranch className="h-3 w-3 mr-1" />
+              Remix Now
+            </a>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setIsExpanded(!isExpanded)}
+              className="text-purple-700 hover:text-purple-900"
+            >
+              {isExpanded ? (
+                <>
+                  <ChevronUp className="h-4 w-4 mr-1" />
+                  Less
+                </>
+              ) : (
+                <>
+                  <ChevronDown className="h-4 w-4 mr-1" />
+                  More
+                </>
+              )}
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      {/* Interoperability Features */}
+      <div className="px-4 py-3 bg-white/50 border-b border-purple-100">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <div className="flex items-center space-x-2 text-xs text-gray-700">
+            <Coins className="h-4 w-4 text-yellow-600" />
+            <span>Custom Stablecoin</span>
+          </div>
+          <div className="flex items-center space-x-2 text-xs text-gray-700">
+            <Package className="h-4 w-4 text-green-600" />
+            <span>Your Product Line</span>
+          </div>
+          <div className="flex items-center space-x-2 text-xs text-gray-700">
+            <Share2 className="h-4 w-4 text-blue-600" />
+            <span>Interoperable STI Data</span>
+          </div>
+          <div className="flex items-center space-x-2 text-xs text-gray-700">
+            <AlertTriangle className="h-4 w-4 text-orange-500" />
+            <span>Beta Prototype</span>
+          </div>
         </div>
       </div>
 
