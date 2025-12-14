@@ -5083,21 +5083,21 @@ We recognize that endosex women with bisexual/MSM partners are often underserved
       .map((line, index) => {
         // Headers
         if (line.startsWith('# ')) {
-          return <h1 key={index} className="text-3xl font-bold mt-8 mb-4 first:mt-0">{line.substring(2)}</h1>;
+          return <h1 key={index} className="text-2xl font-bold mt-8 mb-4 first:mt-0 text-black dark:text-white">{line.substring(2)}</h1>;
         }
         if (line.startsWith('## ')) {
-          return <h2 key={index} className="text-2xl font-semibold mt-6 mb-3">{line.substring(3)}</h2>;
+          return <h2 key={index} className="text-xl font-semibold mt-8 mb-4 text-black dark:text-white">{line.substring(3)}</h2>;
         }
         if (line.startsWith('### ')) {
-          return <h3 key={index} className="text-xl font-semibold mt-5 mb-2">{line.substring(4)}</h3>;
+          return <h3 key={index} className="text-lg font-semibold mt-6 mb-3 text-black dark:text-white">{line.substring(4)}</h3>;
         }
         if (line.startsWith('#### ')) {
-          return <h4 key={index} className="text-lg font-medium mt-4 mb-2">{line.substring(5)}</h4>;
+          return <h4 key={index} className="text-base font-semibold mt-5 mb-2 text-black dark:text-white">{line.substring(5)}</h4>;
         }
         
         // Lists
         if (line.startsWith('- ')) {
-          return <li key={index} className="ml-4 mb-1">{line.substring(2)}</li>;
+          return <li key={index} className="ml-6 mb-2 text-base leading-relaxed text-black dark:text-white">{line.substring(2)}</li>;
         }
         
         // Bold text
@@ -5105,25 +5105,25 @@ We recognize that endosex women with bisexual/MSM partners are often underserved
         
         // Empty lines
         if (line.trim() === '') {
-          return <br key={index} />;
+          return <div key={index} className="h-4" />;
         }
         
         // Regular paragraphs - sanitize HTML to prevent XSS attacks
         const sanitizedHtml = DOMPurify.sanitize(boldText);
-        return <p key={index} className="mb-3" dangerouslySetInnerHTML={{ __html: sanitizedHtml }} />;
+        return <p key={index} className="mb-4 text-base leading-7 text-black dark:text-white" dangerouslySetInnerHTML={{ __html: sanitizedHtml }} />;
       });
   };
 
   if (selectedArticle) {
     return (
-      <div className="min-h-screen bg-background py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto">
+      <div className="min-h-screen bg-white dark:bg-gray-950 py-8 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-3xl mx-auto">
           {/* Back Button */}
-          <div className="mb-6">
+          <div className="mb-8">
             <Button 
               variant="outline" 
               onClick={() => setSelectedArticle(null)}
-              className="flex items-center space-x-2"
+              className="flex items-center space-x-2 border-black dark:border-white text-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-900"
             >
               <ArrowLeft className="h-4 w-4" />
               <span>Back to Articles</span>
@@ -5131,29 +5131,31 @@ We recognize that endosex women with bisexual/MSM partners are often underserved
           </div>
 
           {/* Article Content */}
-          <Card>
-            <CardHeader>
+          <article className="bg-white dark:bg-gray-950">
+            <header className="mb-8 pb-6 border-b border-gray-200 dark:border-gray-800">
               <div className="flex items-center space-x-2 mb-4">
                 {(() => {
                   const IconComponent = getCategoryIcon(selectedArticle.category);
-                  return <IconComponent className="h-5 w-5 text-primary" />;
+                  return <IconComponent className="h-5 w-5 text-black dark:text-white" />;
                 })()}
-                <Badge variant="outline" className="text-xs">
+                <Badge variant="outline" className="text-xs border-gray-400 text-gray-700 dark:text-gray-300">
                   {categories.find(c => c.id === selectedArticle.category)?.name}
                 </Badge>
                 <Badge className={getDifficultyColor(selectedArticle.difficulty) + " text-xs"}>
                   {selectedArticle.difficulty}
                 </Badge>
               </div>
-              <CardTitle className="text-3xl mb-4">{selectedArticle.title}</CardTitle>
-              <div className="flex items-center space-x-4 text-sm text-muted-foreground mb-4">
+              <h1 className="text-2xl md:text-3xl font-bold mb-4 text-black dark:text-white leading-tight">{selectedArticle.title}</h1>
+              <div className="flex items-center flex-wrap gap-3 text-sm text-gray-600 dark:text-gray-400 mb-4">
                 <span>By {selectedArticle.author}</span>
+                <span className="text-gray-300 dark:text-gray-600">•</span>
                 <span>Updated {selectedArticle.lastUpdated}</span>
+                <span className="text-gray-300 dark:text-gray-600">•</span>
                 <span>{selectedArticle.readTime} read</span>
               </div>
               <div className="flex flex-wrap gap-1 mb-4">
                 {selectedArticle.tags.map((tag) => (
-                  <Badge key={tag} variant="secondary" className="text-xs">
+                  <Badge key={tag} variant="secondary" className="text-xs bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">
                     {tag}
                   </Badge>
                 ))}
@@ -5166,15 +5168,13 @@ We recognize that endosex women with bisexual/MSM partners are often underserved
                   imagePrompt="Create educational infographic summarizing key points from this article"
                 />
               </div>
-            </CardHeader>
-            <CardContent>
-              <div className="prose prose-lg max-w-none text-foreground">
-                <div className="leading-relaxed">
-                  {renderMarkdownContent(selectedArticle.content)}
-                </div>
+            </header>
+            <div className="max-w-none">
+              <div className="leading-7">
+                {renderMarkdownContent(selectedArticle.content)}
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </article>
 
           {/* Public Health Agency Export Panel */}
           <Card className="mt-6 bg-blue-50 dark:bg-blue-900/20 border-blue-200">
@@ -5473,31 +5473,31 @@ We recognize that endosex women with bisexual/MSM partners are often underserved
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+    <div className="min-h-screen bg-white dark:bg-gray-950">
       <BetaDisclaimer />
       
-      {/* Hero Header */}
-      <div className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 text-white py-16 px-4">
+      {/* Clean Header */}
+      <div className="bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-800 py-12 px-4">
         <div className="max-w-5xl mx-auto text-center">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-white/20 backdrop-blur-sm rounded-2xl mb-6">
-            <BookOpen className="h-10 w-10 text-white" />
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-gray-100 dark:bg-gray-900 rounded-xl mb-4">
+            <BookOpen className="h-8 w-8 text-black dark:text-white" />
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">
+          <h1 className="text-3xl md:text-4xl font-bold mb-3 text-black dark:text-white">
             TriSex.org Knowledge Wiki
           </h1>
-          <p className="text-xl text-white/90 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed">
             Best Practices for Sustainable Sexual Health
           </p>
           
-          {/* Search in Hero */}
-          <div className="mt-8 max-w-lg mx-auto">
+          {/* Search */}
+          <div className="mt-6 max-w-lg mx-auto">
             <div className="relative">
-              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400" />
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
               <Input
                 placeholder="Search wiki articles..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-12 py-6 text-lg rounded-xl border-0 shadow-lg bg-white text-slate-900 placeholder:text-slate-400"
+                className="pl-12 py-5 text-base rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-black dark:text-white placeholder:text-gray-400"
               />
             </div>
           </div>
@@ -5508,9 +5508,9 @@ We recognize that endosex women with bisexual/MSM partners are often underserved
         <div className="max-w-7xl mx-auto">
           
           {/* Intersex Healthcare Affirmation */}
-          <Alert className="mb-10 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border-l-4 border-l-purple-500 border-purple-200 shadow-sm">
+          <Alert className="mb-10 bg-white dark:bg-gray-950 border-2 border-black dark:border-white">
             <Heart className="h-5 w-5 text-black dark:text-white" />
-            <AlertDescription className="ml-2 text-purple-900 dark:text-purple-100">
+            <AlertDescription className="ml-2 text-black dark:text-white">
               <strong>Intersex Healthcare IS Everyone's Affirmation:</strong> Wiki content centers intersex anatomy as the universal baseline—trans, non-binary, genderqueer, and quare embodiment are all respected within this participatory budgeting framework.
             </AlertDescription>
           </Alert>
@@ -5518,9 +5518,9 @@ We recognize that endosex women with bisexual/MSM partners are often underserved
         <div className="grid lg:grid-cols-4 gap-8">
           {/* Categories Sidebar */}
           <div className="lg:col-span-1 space-y-6">
-            <Card className="shadow-md border-0 bg-white dark:bg-slate-800 overflow-hidden">
-              <CardHeader className="bg-gradient-to-r from-indigo-500 to-purple-500 text-white pb-4">
-                <CardTitle className="text-lg font-semibold">Categories</CardTitle>
+            <Card className="border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950">
+              <CardHeader className="bg-gray-100 dark:bg-gray-900 pb-4">
+                <CardTitle className="text-lg font-semibold text-black dark:text-white">Categories</CardTitle>
               </CardHeader>
               <CardContent className="p-4">
                 <div className="space-y-1">
@@ -5530,14 +5530,14 @@ We recognize that endosex women with bisexual/MSM partners are often underserved
                       <button
                         key={category.id}
                         onClick={() => setActiveCategory(category.id)}
-                        className={`w-full flex items-center justify-between p-3 rounded-xl text-left transition-all duration-200 ${
+                        className={`w-full flex items-center justify-between p-3 rounded-lg text-left transition-all duration-200 ${
                           activeCategory === category.id
-                            ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md"
-                            : "hover:bg-slate-100 dark:hover:bg-slate-700"
+                            ? "bg-black dark:bg-white text-white dark:text-black"
+                            : "hover:bg-gray-100 dark:hover:bg-gray-800 text-black dark:text-white"
                         }`}
                       >
                         <div className="flex items-center space-x-3">
-                          <div className={`p-2 rounded-lg ${activeCategory === category.id ? "bg-white/20" : "bg-slate-100 dark:bg-slate-600"}`}>
+                          <div className={`p-2 rounded-lg ${activeCategory === category.id ? "bg-white/20 dark:bg-black/20" : "bg-gray-100 dark:bg-gray-800"}`}>
                             <IconComponent className="h-4 w-4" />
                           </div>
                           <span className="text-sm font-medium">{category.name}</span>
@@ -5553,35 +5553,35 @@ We recognize that endosex women with bisexual/MSM partners are often underserved
             </Card>
 
             {/* Quick Links */}
-            <Card className="shadow-md border-0 bg-white dark:bg-slate-800">
+            <Card className="border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950">
               <CardHeader className="pb-3">
-                <CardTitle className="text-lg font-semibold text-slate-800 dark:text-white">Quick Links</CardTitle>
+                <CardTitle className="text-lg font-semibold text-black dark:text-white">Quick Links</CardTitle>
               </CardHeader>
               <CardContent className="p-4 pt-0">
                 <div className="space-y-3">
-                  <a href="#" className="flex items-center space-x-3 p-2 rounded-lg hover:bg-indigo-50 dark:hover:bg-slate-700 transition-colors group">
-                    <div className="p-2 bg-amber-100 dark:bg-amber-900/30 rounded-lg">
-                      <Star className="h-4 w-4 text-amber-600" />
+                  <a href="#" className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
+                    <div className="p-2 bg-gray-100 dark:bg-gray-800 rounded-lg">
+                      <Star className="h-4 w-4 text-black dark:text-white" />
                     </div>
-                    <span className="text-sm font-medium text-slate-700 dark:text-slate-200 group-hover:text-indigo-600">Getting Started Guide</span>
+                    <span className="text-sm font-medium text-black dark:text-white">Getting Started Guide</span>
                   </a>
-                  <a href="#" className="flex items-center space-x-3 p-2 rounded-lg hover:bg-indigo-50 dark:hover:bg-slate-700 transition-colors group">
-                    <div className="p-2 bg-rose-100 dark:bg-rose-900/30 rounded-lg">
-                      <Target className="h-4 w-4 text-rose-600" />
+                  <a href="#" className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
+                    <div className="p-2 bg-gray-100 dark:bg-gray-800 rounded-lg">
+                      <Target className="h-4 w-4 text-black dark:text-white" />
                     </div>
-                    <span className="text-sm font-medium text-slate-700 dark:text-slate-200 group-hover:text-indigo-600">Community Guidelines</span>
+                    <span className="text-sm font-medium text-black dark:text-white">Community Guidelines</span>
                   </a>
-                  <a href="#" className="flex items-center space-x-3 p-2 rounded-lg hover:bg-indigo-50 dark:hover:bg-slate-700 transition-colors group">
-                    <div className="p-2 bg-cyan-100 dark:bg-cyan-900/30 rounded-lg">
-                      <Zap className="h-4 w-4 text-cyan-600" />
+                  <a href="#" className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
+                    <div className="p-2 bg-gray-100 dark:bg-gray-800 rounded-lg">
+                      <Zap className="h-4 w-4 text-black dark:text-white" />
                     </div>
-                    <span className="text-sm font-medium text-slate-700 dark:text-slate-200 group-hover:text-indigo-600">Technical Support</span>
+                    <span className="text-sm font-medium text-black dark:text-white">Technical Support</span>
                   </a>
-                  <a href="#" className="flex items-center space-x-3 p-2 rounded-lg hover:bg-indigo-50 dark:hover:bg-slate-700 transition-colors group">
-                    <div className="p-2 bg-emerald-100 dark:bg-emerald-900/30 rounded-lg">
-                      <Globe className="h-4 w-4 text-emerald-600" />
+                  <a href="#" className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
+                    <div className="p-2 bg-gray-100 dark:bg-gray-800 rounded-lg">
+                      <Globe className="h-4 w-4 text-black dark:text-white" />
                     </div>
-                    <span className="text-sm font-medium text-slate-700 dark:text-slate-200 group-hover:text-indigo-600">Community Forum</span>
+                    <span className="text-sm font-medium text-black dark:text-white">Community Forum</span>
                   </a>
                 </div>
               </CardContent>
@@ -5594,29 +5594,28 @@ We recognize that endosex women with bisexual/MSM partners are often underserved
               {filteredArticles.map((article) => {
                 const IconComponent = getCategoryIcon(article.category);
                 return (
-                  <Card key={article.id} className="group hover:shadow-xl transition-all duration-300 border-0 shadow-md bg-white dark:bg-slate-800 overflow-hidden">
-                    <div className="h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500" />
+                  <Card key={article.id} className="group hover:shadow-lg transition-all duration-300 border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 overflow-hidden">
                     <CardHeader className="pb-3">
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
                           <div className="flex items-center flex-wrap gap-2 mb-3">
-                            <div className="flex items-center space-x-2 px-3 py-1 bg-indigo-50 dark:bg-indigo-900/30 rounded-full">
-                              <IconComponent className="h-4 w-4 text-indigo-600" />
-                              <span className="text-xs font-medium text-indigo-700 dark:text-indigo-300">
+                            <div className="flex items-center space-x-2 px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full">
+                              <IconComponent className="h-4 w-4 text-black dark:text-white" />
+                              <span className="text-xs font-medium text-black dark:text-white">
                                 {categories.find(c => c.id === article.category)?.name}
                               </span>
                             </div>
                             <Badge className={getDifficultyColor(article.difficulty) + " text-xs font-semibold"}>
                               {article.difficulty}
                             </Badge>
-                            <span className="text-xs text-slate-500 dark:text-slate-400">{article.readTime} read</span>
+                            <span className="text-xs text-gray-500 dark:text-gray-400">{article.readTime} read</span>
                           </div>
-                          <CardTitle className="text-xl font-bold text-slate-800 dark:text-white mb-2 group-hover:text-indigo-600 transition-colors">
+                          <CardTitle className="text-xl font-bold text-black dark:text-white mb-2">
                             {article.title}
                           </CardTitle>
-                          <div className="flex items-center space-x-3 text-sm text-slate-500 dark:text-slate-400">
+                          <div className="flex items-center space-x-3 text-sm text-gray-600 dark:text-gray-400">
                             <span className="font-medium">By {article.author}</span>
-                            <span className="text-slate-300">•</span>
+                            <span className="text-gray-300 dark:text-gray-600">•</span>
                             <span>Updated {article.lastUpdated}</span>
                           </div>
                         </div>
@@ -5624,14 +5623,14 @@ We recognize that endosex women with bisexual/MSM partners are often underserved
                     </CardHeader>
                     <CardContent className="pt-0">
                       <div className="space-y-4">
-                        <p className="text-slate-600 dark:text-slate-300 leading-relaxed line-clamp-3">
+                        <p className="text-gray-700 dark:text-gray-300 leading-relaxed line-clamp-3 text-base">
                           {article.content.split('\n\n')[1]?.replace(/^#{1,6}\s/, '') || 
                            article.content.substring(0, 200) + "..."}
                         </p>
                         
                         <div className="flex flex-wrap gap-2">
                           {article.tags.slice(0, 5).map((tag) => (
-                            <Badge key={tag} variant="secondary" className="text-xs bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-indigo-100 hover:text-indigo-700 transition-colors cursor-pointer">
+                            <Badge key={tag} variant="secondary" className="text-xs bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">
                               {tag}
                             </Badge>
                           ))}
@@ -5640,16 +5639,16 @@ We recognize that endosex women with bisexual/MSM partners are often underserved
                           )}
                         </div>
                         
-                        <div className="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-slate-700">
+                        <div className="flex items-center justify-between pt-4 border-t border-gray-100 dark:border-gray-800">
                           <div className="flex items-center space-x-2">
-                            <div className="flex items-center space-x-1.5 px-2 py-1 bg-emerald-50 dark:bg-emerald-900/30 rounded-full">
-                              <CheckCircle className="h-3.5 w-3.5 text-emerald-500" />
-                              <span className="text-xs font-medium text-emerald-700 dark:text-emerald-300">Verified</span>
+                            <div className="flex items-center space-x-1.5 px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded-full">
+                              <CheckCircle className="h-3.5 w-3.5 text-black dark:text-white" />
+                              <span className="text-xs font-medium text-black dark:text-white">Verified</span>
                             </div>
                           </div>
                           <button 
                             onClick={() => setSelectedArticle(article)}
-                            className="flex items-center space-x-1 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg transition-colors"
+                            className="flex items-center space-x-1 px-4 py-2 bg-black dark:bg-white hover:bg-gray-800 dark:hover:bg-gray-200 text-white dark:text-black text-sm font-medium rounded-lg transition-colors"
                           >
                             <span>Read Article</span>
                             <span>→</span>
