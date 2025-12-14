@@ -62,15 +62,8 @@ export default function Home() {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="text-center lg:text-left">
-              {/* TriSex.org Logo */}
-              <div className="flex justify-center lg:justify-start mb-8">
-                <div className="text-8xl lg:text-9xl transform hover:scale-110 transition-transform duration-300">
-                  ⚧️
-                </div>
-              </div>
-              
               <h1 className="text-5xl lg:text-7xl font-black leading-tight mb-6 flex items-center justify-center lg:justify-start gap-4">
-                <span className="text-6xl lg:text-8xl">⚧️</span>
+                <span className="text-6xl lg:text-8xl transform hover:scale-110 transition-transform duration-300">⚧️</span>
                 <div>
                   <span className="bg-gradient-to-r from-black via-gray-500 to-white bg-clip-text text-transparent">
                     TriSex
