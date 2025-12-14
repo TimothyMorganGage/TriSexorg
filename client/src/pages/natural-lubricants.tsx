@@ -7,7 +7,6 @@ import { Progress } from "@/components/ui/progress";
 import { 
   Leaf, 
   Droplets, 
-  Shield,
   Heart,
   Microscope,
   FlaskConical,
@@ -302,7 +301,7 @@ export default function NaturalLubricants() {
               Formulations
             </TabsTrigger>
             <TabsTrigger value="biocompatibility" className="flex items-center gap-2">
-              <Shield className="h-4 w-4" />
+              <CheckCircle className="h-4 w-4" />
               Safety
             </TabsTrigger>
             <TabsTrigger value="manufacturing" className="flex items-center gap-2">
@@ -818,7 +817,7 @@ export default function NaturalLubricants() {
 
                   <div className="space-y-3">
                     <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
-                      <Shield className="h-6 w-6 text-purple-600" />
+                      <CheckCircle className="h-6 w-6 text-purple-600" />
                     </div>
                     <h3 className="font-medium">Quality Control</h3>
                     <p className="text-sm text-muted-foreground">
@@ -1038,7 +1037,7 @@ export default function NaturalLubricants() {
 
                   <div className="text-center space-y-3">
                     <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto">
-                      <Shield className="h-8 w-8 text-purple-600" />
+                      <CheckCircle className="h-8 w-8 text-purple-600" />
                     </div>
                     <h3 className="font-medium">Quality Assurance</h3>
                     <div className="text-sm text-muted-foreground space-y-1">

@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { 
   Hospital, UserCheck, Store, Building, Users, 
-  BarChart3, Shield, Clock, CheckCircle, Heart,
+  BarChart3, Lock, Clock, CheckCircle, Heart,
   ArrowRight, Stethoscope 
 } from "lucide-react";
 
@@ -17,7 +17,7 @@ export default function Clinics() {
       description: "Real-time analytics, order tracking, and inventory management in one unified interface.",
     },
     {
-      icon: Shield,
+      icon: Lock,
       title: "HIPAA Compliant",
       description: "Full compliance with healthcare privacy regulations and secure data handling.",
     },

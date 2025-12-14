@@ -7,16 +7,16 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { 
-  ShieldCheck, Heart, Leaf, MessageCircle, 
+  Heart, Leaf, MessageCircle, 
   Users, FlaskConical, Search, ArrowRight,
-  BookOpen, Clock, User, Droplets, Target, Zap
+  BookOpen, Clock, User, Droplets, Target, Zap, CheckCircle
 } from "lucide-react";
 import { Link } from "wouter";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import type { EducationalContent } from "@shared/schema";
 
 const categoryIcons = {
-  sti_prevention: ShieldCheck,
+  sti_prevention: CheckCircle,
   inclusive_health: Heart,
   sustainable_health: Leaf,
   communication: MessageCircle,

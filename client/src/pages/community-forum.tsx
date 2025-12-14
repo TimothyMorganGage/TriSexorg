@@ -27,7 +27,6 @@ import {
   Pin,
   Lock,
   AlertTriangle,
-  Shield,
   Tag,
   Filter,
   TrendingUp,
@@ -743,7 +742,7 @@ export default function CommunityForum() {
               1,422 Posts
             </Badge>
             <Badge variant="secondary" className="px-4 py-2">
-              <Shield className="h-4 w-4 mr-2" />
+              <CheckCircle className="h-4 w-4 mr-2" />
               Moderated Space
             </Badge>
           </div>
@@ -1054,7 +1053,7 @@ export default function CommunityForum() {
         <Card className="mt-8">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Shield className="h-5 w-5 text-blue-600" />
+              <CheckCircle className="h-5 w-5 text-blue-600" />
               Community Guidelines
             </CardTitle>
           </CardHeader>

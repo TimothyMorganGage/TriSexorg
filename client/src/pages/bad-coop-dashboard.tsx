@@ -13,7 +13,6 @@ import { apiRequest, queryClient } from "@/lib/queryClient";
 import { 
   Brain,
   Heart, 
-  Shield, 
   Users, 
   FileText,
   CheckCircle,
@@ -261,7 +260,7 @@ export default function BadCoopDashboard() {
         <div className="text-center mb-12">
           <div className="flex items-center justify-center mb-6">
             <div className="w-16 h-16 bg-primary rounded-xl flex items-center justify-center mr-4">
-              <Shield className="h-8 w-8 text-white" />
+              <Heart className="h-8 w-8 text-white" />
             </div>
             <div>
               <h1 className="text-4xl font-bold text-foreground">
@@ -1438,7 +1437,7 @@ export default function BadCoopDashboard() {
                 <Card>
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
-                      <Shield className="h-5 w-5 text-green-600" />
+                      <Lock className="h-5 w-5 text-green-600" />
                       Security Settings
                     </CardTitle>
                   </CardHeader>

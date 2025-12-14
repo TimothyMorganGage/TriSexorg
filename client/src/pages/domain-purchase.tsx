@@ -7,7 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
   Globe, 
   ShoppingCart, 
-  Shield, 
+  Lock, 
   Clock, 
   CheckCircle,
   ExternalLink,
@@ -191,7 +191,7 @@ export default function DomainPurchase() {
             <Card className="mt-8 bg-blue-50 dark:bg-blue-900/20 border-blue-200">
               <CardContent className="p-6">
                 <div className="flex items-center space-x-3 mb-4">
-                  <Shield className="h-6 w-6 text-blue-600" />
+                  <Lock className="h-6 w-6 text-blue-600" />
                   <h3 className="text-lg font-semibold">Domain Protection Recommendations</h3>
                 </div>
                 <ul className="space-y-2 text-sm text-muted-foreground">

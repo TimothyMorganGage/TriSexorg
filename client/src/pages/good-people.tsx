@@ -33,7 +33,7 @@ import {
   Info,
   Upload,
   FileText,
-  Shield,
+  Lock,
   AlertTriangle
 } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -605,7 +605,7 @@ export default function GoodPeople() {
                         <div className="space-y-3">
                           <div className="p-4 bg-white dark:bg-gray-800 rounded-lg border border-blue-200 dark:border-blue-800">
                             <h4 className="font-semibold text-blue-900 dark:text-blue-100 mb-2 flex items-center gap-2">
-                              <Shield className="h-4 w-4" />
+                              <CheckCircle className="h-4 w-4" />
                               Non-Pornographic Content Policy
                             </h4>
                             <ul className="text-sm text-blue-800 dark:text-blue-200 space-y-1">
@@ -940,7 +940,7 @@ export default function GoodPeople() {
                         
                         <div className="p-4 bg-orange-50 border border-orange-200 rounded-lg">
                           <div className="flex items-center gap-2 mb-2">
-                            <Shield className="h-4 w-4 text-orange-600" />
+                            <Lock className="h-4 w-4 text-orange-600" />
                             <span className="text-sm font-medium text-orange-800">Incest Prevention System</span>
                           </div>
                           <div className="text-xs text-orange-700 space-y-1">

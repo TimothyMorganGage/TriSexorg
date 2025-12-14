@@ -6,7 +6,7 @@ import {
   AlertTriangle,
   DollarSign,
   Heart,
-  Shield,
+  Lock,
   TrendingUp,
   Users,
   XCircle,
@@ -46,7 +46,7 @@ export default function MonogamyEconomics() {
 
         {/* Platform Policy */}
         <Alert className="mb-8 border-2 border-blue-500 bg-blue-50 dark:bg-blue-950">
-          <Shield className="h-5 w-5 text-blue-600" />
+          <Lock className="h-5 w-5 text-blue-600" />
           <AlertDescription className="text-blue-900 dark:text-blue-100">
             <strong>TriSex.org Policy:</strong> This platform exclusively serves monogamous relationship structures. 
             We do not provide products, services, or support for polyamorous, open, or non-monogamous arrangements. 
@@ -574,7 +574,7 @@ export default function MonogamyEconomics() {
             <div className="flex flex-wrap gap-3 justify-center mt-6">
               <Button asChild>
                 <Link href="/products">
-                  <Shield className="mr-2 h-4 w-4" />
+                  <Package className="mr-2 h-4 w-4" />
                   Monogamy Protection Products
                 </Link>
               </Button>

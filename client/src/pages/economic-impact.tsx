@@ -8,7 +8,6 @@ import {
   DollarSign, 
   TrendingDown, 
   Heart, 
-  Shield,
   Calculator,
   Coins,
   PiggyBank,
@@ -674,7 +673,7 @@ export default function EconomicImpact() {
               <Card className="bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-900/20 dark:to-blue-900/20">
                 <CardHeader>
                   <CardTitle className="flex items-center">
-                    <Shield className="mr-3 h-6 w-6 text-green-500" />
+                    <Heart className="mr-3 h-6 w-6 text-green-500" />
                     How TriSex Products Save Lives
                   </CardTitle>
                   <p className="text-lg">

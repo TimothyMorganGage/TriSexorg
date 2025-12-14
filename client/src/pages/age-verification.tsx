@@ -12,7 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
-import { Shield, FileText, Users, CheckCircle, Clock, AlertTriangle, Upload, Eye, Heart } from "lucide-react";
+import { Lock, FileText, Users, CheckCircle, Clock, AlertTriangle, Upload, Eye, Heart } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 
@@ -219,7 +219,7 @@ export default function AgeVerification() {
         {/* Creative Commons Header */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-2 mb-2">
-            <Shield className="h-8 w-8 text-blue-600" />
+            <Lock className="h-8 w-8 text-blue-600" />
             <h1 className="text-3xl font-bold text-gray-900">Age Verification System</h1>
           </div>
           <p className="text-gray-600 mb-4">
@@ -274,7 +274,7 @@ export default function AgeVerification() {
           <Card className="mb-6">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <Shield className="h-5 w-5" />
+                <Lock className="h-5 w-5" />
                 Verification Status
               </CardTitle>
               <CardDescription>
@@ -358,7 +358,7 @@ export default function AgeVerification() {
                 </>
               ) : (
                 <div className="text-center py-8">
-                  <Shield className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                  <Lock className="h-12 w-12 text-gray-400 mx-auto mb-4" />
                   <h3 className="text-lg font-medium mb-2">No Verification Started</h3>
                   <p className="text-gray-600 mb-4">
                     Upload an identity document to begin the verification process
@@ -440,7 +440,7 @@ export default function AgeVerification() {
                 )}
 
                 <Alert>
-                  <Shield className="h-4 w-4" />
+                  <Lock className="h-4 w-4" />
                   <AlertDescription>
                     <strong>Privacy Notice:</strong> Your document is processed locally and encrypted. 
                     Personal data is extracted only for age verification and deleted after processing.

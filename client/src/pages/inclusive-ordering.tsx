@@ -9,7 +9,6 @@ import { Separator } from "@/components/ui/separator";
 import { PrecisionSizing } from "@/components/MyONESizing";
 import { 
   ShoppingCart, 
-  Shield, 
   Heart,
   Users,
   CheckCircle,
@@ -225,7 +224,7 @@ export default function InclusiveOrdering() {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center">
-                  <Shield className="mr-2 h-5 w-5" />
+                  <Settings className="mr-2 h-5 w-5" />
                   Custom Sizing & Configuration
                 </CardTitle>
                 <div className="flex items-center space-x-2 mt-2">

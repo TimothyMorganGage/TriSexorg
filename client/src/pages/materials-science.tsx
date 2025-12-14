@@ -20,7 +20,7 @@ import {
   CheckCircle,
   ArrowRight,
   Globe,
-  Shield,
+  Award,
   Heart,
   Filter,
   Thermometer,
@@ -202,7 +202,7 @@ export default function MaterialsScience() {
               Environmental Impact
             </TabsTrigger>
             <TabsTrigger value="quality" className="flex items-center gap-2">
-              <Shield className="h-4 w-4" />
+              <Award className="h-4 w-4" />
               Quality Standards
             </TabsTrigger>
           </TabsList>

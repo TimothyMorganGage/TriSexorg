@@ -9,7 +9,7 @@ import {
   Droplets, 
   MapPin, 
   TrendingUp, 
-  Shield,
+  Lock,
   AlertTriangle,
   CheckCircle,
   Activity,

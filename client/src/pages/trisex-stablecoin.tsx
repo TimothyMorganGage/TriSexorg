@@ -22,7 +22,7 @@ import {
   Award,
   ArrowRightLeft,
   Wallet,
-  Shield,
+  Lock,
   Leaf,
   Factory,
   Truck,
@@ -199,7 +199,7 @@ export default function TrisexStablecoin() {
           </div>
           <div className="flex justify-center gap-4 flex-wrap">
             <Badge className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-2">
-              <Shield className="h-4 w-4 mr-2" />
+              <CheckCircle className="h-4 w-4 mr-2" />
               1:1 USD Backed
             </Badge>
             <Badge variant="secondary" className="px-4 py-2">
@@ -508,7 +508,7 @@ export default function TrisexStablecoin() {
                   {[
                     { title: "Peer Mentoring", hours: "5-10/session", icon: Users, description: "Support other members with sexual health questions" },
                     { title: "Content Creation", hours: "2-5/article", icon: Sparkles, description: "Write educational wiki articles or guides" },
-                    { title: "Forum Moderation", hours: "1-3/hour", icon: Shield, description: "Help maintain community guidelines" },
+                    { title: "Forum Moderation", hours: "1-3/hour", icon: Users, description: "Help maintain community guidelines" },
                     { title: "Product Testing", hours: "3-8/review", icon: Package, description: "Test new products and provide feedback" }
                   ].map((item, i) => (
                     <Card key={i} className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20">
@@ -869,7 +869,7 @@ export default function TrisexStablecoin() {
                       { title: "Product Discounts", desc: "Pay for products with up to 50% $TRISEX", icon: Package },
                       { title: "Peer Services", desc: "Pay mentors and facilitators directly", icon: Users },
                       { title: "Community Donations", desc: "Support cooperative programs", icon: Heart },
-                      { title: "Partner Clinics", desc: "Pay for services at participating clinics", icon: Shield },
+                      { title: "Partner Clinics", desc: "Pay for services at participating clinics", icon: Heart },
                       { title: "Stablecoin Withdrawal", desc: "Convert to USDC/DAI at 1:1", icon: Wallet }
                     ].map((item, i) => (
                       <div key={i} className="flex items-center gap-3 p-3 bg-muted/30 rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
@@ -944,7 +944,7 @@ export default function TrisexStablecoin() {
         <Card className="mt-8">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Shield className="h-5 w-5 text-blue-600" />
+              <Coins className="h-5 w-5 text-blue-600" />
               About $TRISEX Stablecoin
             </CardTitle>
           </CardHeader>

@@ -10,7 +10,7 @@ import { apiRequest } from "@/lib/queryClient";
 import { 
   FileText, 
   Heart, 
-  Shield, 
+  Lock, 
   Users, 
   CheckCircle,
   AlertCircle,
@@ -478,7 +478,7 @@ export default function BadGoodHealth() {
                 <CardContent>
                   <div className="grid md:grid-cols-3 gap-4">
                     <div className="text-center p-4 border border-border rounded-lg">
-                      <Shield className="h-8 w-8 text-primary mx-auto mb-2" />
+                      <Lock className="h-8 w-8 text-primary mx-auto mb-2" />
                       <h5 className="font-medium">Secure Storage</h5>
                       <p className="text-xs text-muted-foreground mt-1">
                         Encrypted cloud storage with blockchain verification
@@ -607,7 +607,7 @@ export default function BadGoodHealth() {
                     </div>
                     <div className="text-center">
                       <div className="w-12 h-12 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center mx-auto mb-2">
-                        <Shield className="h-6 w-6 text-green-600" />
+                        <Lock className="h-6 w-6 text-green-600" />
                       </div>
                       <h5 className="font-medium text-sm">Privacy Settings</h5>
                       <p className="text-xs text-green-600">Protected</p>
@@ -677,7 +677,7 @@ export default function BadGoodHealth() {
                       <Badge className="mt-2 bg-blue-100 text-blue-800">Volunteer</Badge>
                     </div>
                     <div className="text-center p-4 border border-border rounded-lg">
-                      <Shield className="h-8 w-8 text-secondary mx-auto mb-2" />
+                      <Heart className="h-8 w-8 text-secondary mx-auto mb-2" />
                       <h5 className="font-medium">Mutual Aid Network</h5>
                       <p className="text-xs text-muted-foreground mt-1">
                         Contributing to community health mutual aid

@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { 
   FileText, 
   Users, 
-  Shield, 
+  Lock, 
   Heart,
   AlertTriangle,
   CheckCircle,
@@ -158,7 +158,7 @@ export default function TermsOfService() {
 
                   <div className="p-4 border rounded-lg">
                     <h4 className="font-bold mb-2 flex items-center">
-                      <Shield className="mr-2 h-5 w-5 text-blue-600" />
+                      <CheckCircle className="mr-2 h-5 w-5 text-blue-600" />
                       Your Responsibilities
                     </h4>
                     <ul className="text-sm space-y-1 text-muted-foreground">

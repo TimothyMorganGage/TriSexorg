@@ -12,7 +12,7 @@ import { Switch } from "@/components/ui/switch";
 import { Slider } from "@/components/ui/slider";
 import { 
   Users2, 
-  Shield, 
+  Lock, 
   TestTube, 
   AlertTriangle,
   Heart,
@@ -567,7 +567,7 @@ export default function PartnerSTITracking() {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Shield className="h-5 w-5" />
+                  <Package className="h-5 w-5" />
                   Sexual Product Customizations
                 </CardTitle>
                 <CardDescription>
@@ -827,7 +827,7 @@ export default function PartnerSTITracking() {
                 <Card>
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
-                      <Shield className="h-5 w-5" />
+                      <Heart className="h-5 w-5" />
                       Regulation Strategies
                     </CardTitle>
                   </CardHeader>

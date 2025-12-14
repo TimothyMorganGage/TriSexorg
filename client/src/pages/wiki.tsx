@@ -10,7 +10,6 @@ import {
   BookOpen, 
   Search, 
   Users, 
-  Shield,
   Heart,
   Droplets,
   Ruler,
@@ -5182,7 +5181,7 @@ We recognize that endosex women with bisexual/MSM partners are often underserved
             <CardHeader>
               <div className="flex items-center justify-between">
                 <CardTitle className="text-lg flex items-center text-blue-900 dark:text-blue-100">
-                  <Shield className="h-5 w-5 mr-2" />
+                  <Globe className="h-5 w-5 mr-2" />
                   Public Health Agency Access
                 </CardTitle>
                 <Badge variant="outline" className="text-blue-700 border-blue-300">

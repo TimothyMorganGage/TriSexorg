@@ -8,10 +8,10 @@ import { Badge } from "@/components/ui/badge";
 import { OnboardingTutorial } from "@/components/OnboardingTutorial";
 import { BetaDisclaimer } from "@/components/BetaDisclaimer";
 import { 
-  ShieldCheck, Leaf, Heart, Box, CheckCircle, 
+  Leaf, Heart, Box, CheckCircle, 
   Printer, Truck, Hospital, UserCheck, Store, 
   Building, Play, Ruler, Droplets, Palette, TestTube,
-  Coins, Share2, BookOpen, Lightbulb, Award, Book, Star, Users, Timer
+  Coins, Share2, BookOpen, Lightbulb, Award, Book, Star, Users, Timer, Package
 } from "lucide-react";
 import { FediverseShare } from "@/components/FediverseShare";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -112,7 +112,7 @@ export default function Home() {
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-center lg:justify-start">
                 <Link href="/inclusive-ordering">
                   <Button size="lg" className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white shadow-lg w-full">
-                    <ShieldCheck className="mr-2 h-5 w-5" />
+                    <Package className="mr-2 h-5 w-5" />
                     Start Inclusive Order
                   </Button>
                 </Link>

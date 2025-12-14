@@ -13,7 +13,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Shield, Users, CheckCircle, XCircle, Clock, AlertTriangle, FileCheck, Heart } from "lucide-react";
+import { Lock, Users, CheckCircle, XCircle, Clock, AlertTriangle, FileCheck, Heart } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 
@@ -239,7 +239,7 @@ export default function ParentalConsentResponse() {
 
             {consentDetails.consentType === 'full_platform_access' && (
               <Alert>
-                <Shield className="h-4 w-4" />
+                <Lock className="h-4 w-4" />
                 <AlertDescription>
                   <strong>Full Platform Access</strong> includes relationship matching, sexual health tracking, 
                   cooperative financial features, and community participation. All activities are monitored 

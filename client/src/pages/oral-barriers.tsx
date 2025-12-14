@@ -10,7 +10,6 @@ import {
   Heart,
   Droplets,
   Sparkles,
-  ShieldCheck,
   Leaf,
   Award,
   Info,
@@ -177,7 +176,7 @@ export default function OralBarriers() {
               60+ Size Options
             </Badge>
             <Badge variant="secondary" className="bg-blue-100 text-blue-800 px-4 py-2">
-              <ShieldCheck className="w-4 h-4 mr-2" />
+              <CheckCircle className="w-4 h-4 mr-2" />
               STI Prevention
             </Badge>
             <Badge variant="secondary" className="bg-green-100 text-green-800 px-4 py-2">
@@ -511,7 +510,7 @@ export default function OralBarriers() {
                       size="lg"
                       data-testid="button-add-to-cart"
                     >
-                      <ShieldCheck className="mr-2 h-5 w-5" />
+                      <CheckCircle className="mr-2 h-5 w-5" />
                       Add to Cart
                     </Button>
 

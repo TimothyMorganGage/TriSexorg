@@ -4,7 +4,6 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { 
-  Shield, 
   Lock, 
   Eye, 
   Database, 
@@ -27,7 +26,7 @@ export default function PrivacyPolicy() {
         {/* Header */}
         <div className="text-center mb-12">
           <div className="flex items-center justify-center mb-6">
-            <Shield className="h-12 w-12 text-primary mr-4" />
+            <Lock className="h-12 w-12 text-primary mr-4" />
             <div>
               <h1 className="text-4xl font-bold text-foreground">
                 Privacy Policy
@@ -316,7 +315,7 @@ export default function PrivacyPolicy() {
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="p-4 border rounded-lg">
                     <h4 className="font-bold mb-3 flex items-center">
-                      <Shield className="mr-2 h-5 w-5 text-blue-600" />
+                      <Lock className="mr-2 h-5 w-5 text-blue-600" />
                       Encryption
                     </h4>
                     <ul className="text-sm space-y-2 text-muted-foreground">

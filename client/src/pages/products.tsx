@@ -16,7 +16,6 @@ import {
   CheckCircle2, 
   Sparkles,
   Heart,
-  Shield,
   Leaf,
   Zap,
   BookOpen,
@@ -74,7 +73,7 @@ export default function Products() {
       description: isVegan 
         ? "Complete barrier protection with custom sizing, 100% vegan plant-based materials, and enhanced features"
         : "Complete barrier protection with custom sizing, upcycled animal-derived materials from farm/fishery/pharmacy waste streams + plant botanicals",
-      icon: Shield,
+      icon: Package,
       features: isVegan ? [
         "🌱 100% Vegan certified - No animal products",
         "60+ custom sizes (A0-H16) - Intersex anatomy baseline",
@@ -709,7 +708,7 @@ export default function Products() {
               <Card className="hover:shadow-lg transition-shadow">
                 <CardHeader>
                   <CardTitle className="text-lg flex items-center gap-2">
-                    <Shield className="h-5 w-5 text-primary" />
+                    <Heart className="h-5 w-5 text-primary" />
                     NanoHeal Wiki
                   </CardTitle>
                 </CardHeader>

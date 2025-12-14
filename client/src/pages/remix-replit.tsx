@@ -6,7 +6,7 @@ import {
   Copy,
   Download,
   Rocket,
-  Shield,
+  Lock,
   CheckCircle,
   ExternalLink,
   FileText,
@@ -32,7 +32,7 @@ export default function RemixReplit() {
       description: "PostgreSQL schema with Drizzle ORM for intersex-centered sizing, reviews, and cooperative data"
     },
     {
-      icon: Shield,
+      icon: Lock,
       title: "Security Features",
       description: "Age verification system, parental consent workflows, and genealogical verification"
     },
@@ -240,7 +240,7 @@ export default function RemixReplit() {
         <Card className="border-green-500/50 bg-green-50 dark:bg-green-950">
           <CardHeader>
             <CardTitle className="flex items-center text-green-900 dark:text-green-100">
-              <Shield className="h-6 w-6 mr-2" />
+              <Heart className="h-6 w-6 mr-2" />
               Open Source & Cooperative Principles
             </CardTitle>
           </CardHeader>

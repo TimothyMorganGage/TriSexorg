@@ -14,7 +14,6 @@ import {
   MessageCircle, 
   Users, 
   Heart, 
-  Shield, 
   Smartphone, 
   Accessibility,
   Globe,
@@ -189,7 +188,7 @@ export default function MentorFacilitator() {
     { id: "whatsapp", name: "WhatsApp", icon: MessageCircle, color: "bg-green-100 text-green-800" },
     { id: "facebook_messenger", name: "Facebook Messenger", icon: MessageCircle, color: "bg-blue-100 text-blue-800" },
     { id: "google_messages", name: "Google Messages", icon: MessageCircle, color: "bg-orange-100 text-orange-800" },
-    { id: "signal", name: "Signal", icon: Shield, color: "bg-gray-100 text-gray-800" },
+    { id: "signal", name: "Signal", icon: Lock, color: "bg-gray-100 text-gray-800" },
   ];
 
   const healthcareSystems = [

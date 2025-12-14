@@ -16,7 +16,7 @@ import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { 
   Heart, 
-  Shield, 
+  Lock, 
   FileText, 
   Users, 
   CheckCircle,
@@ -184,7 +184,7 @@ export default function BadGoodSex() {
           
           <div className="flex justify-center space-x-4">
             <Badge variant="secondary" className="bg-aquamarine text-black">
-              <Shield className="w-4 h-4 mr-1" />
+              <Lock className="w-4 h-4 mr-1" />
               Sexual Health Rights
             </Badge>
             <Badge variant="secondary" className="bg-primary text-black">
@@ -628,19 +628,19 @@ export default function BadGoodSex() {
                       <h4 className="font-medium mb-3">Privacy Protection:</h4>
                       <ul className="space-y-2 text-sm">
                         <li className="flex items-center">
-                          <Shield className="h-4 w-4 text-aquamarine mr-2" />
+                          <Lock className="h-4 w-4 text-aquamarine mr-2" />
                           Encrypted data transmission
                         </li>
                         <li className="flex items-center">
-                          <Shield className="h-4 w-4 text-aquamarine mr-2" />
+                          <Lock className="h-4 w-4 text-aquamarine mr-2" />
                           Granular sharing controls
                         </li>
                         <li className="flex items-center">
-                          <Shield className="h-4 w-4 text-aquamarine mr-2" />
+                          <Lock className="h-4 w-4 text-aquamarine mr-2" />
                           Revocable consent
                         </li>
                         <li className="flex items-center">
-                          <Shield className="h-4 w-4 text-aquamarine mr-2" />
+                          <Lock className="h-4 w-4 text-aquamarine mr-2" />
                           HIPAA compliance
                         </li>
                       </ul>

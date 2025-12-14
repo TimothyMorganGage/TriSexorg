@@ -14,7 +14,6 @@ import {
   Video,
   Camera,
   Globe,
-  Shield,
   CheckCircle,
   ExternalLink,
   Bell,
@@ -284,7 +283,7 @@ export default function SocialIntegration() {
           <Card className="mt-8 border-green-500/50 bg-green-50 dark:bg-green-950">
             <CardContent className="pt-6">
               <div className="flex items-start space-x-3">
-                <Shield className="h-6 w-6 text-green-600 dark:text-green-400 flex-shrink-0 mt-1" />
+                <Lock className="h-6 w-6 text-green-600 dark:text-green-400 flex-shrink-0 mt-1" />
                 <div>
                   <h3 className="font-semibold text-green-900 dark:text-green-100 mb-2">
                     🛡️ Federation Protects Against Antitrust Monopolies
@@ -302,7 +301,7 @@ export default function SocialIntegration() {
                       Community Ownership
                     </Badge>
                     <Badge variant="outline" className="bg-white/50 dark:bg-black/50">
-                      <Shield className="w-3 h-3 mr-1" />
+                      <Lock className="w-3 h-3 mr-1" />
                       Data Sovereignty
                     </Badge>
                   </div>

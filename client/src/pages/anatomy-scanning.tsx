@@ -17,7 +17,6 @@ import {
   Smartphone, 
   Upload,
   Download,
-  Shield,
   Printer,
   CheckCircle,
   AlertTriangle,
@@ -230,7 +229,7 @@ export default function AnatomyScanning() {
           
           <div className="flex justify-center space-x-4">
             <Badge variant="secondary" className="bg-neon-pink text-black">
-              <Shield className="w-4 h-4 mr-1" />
+              <Lock className="w-4 h-4 mr-1" />
               Private & Secure
             </Badge>
             <Badge variant="secondary" className="bg-aquamarine text-black">
@@ -490,7 +489,7 @@ export default function AnatomyScanning() {
                   <Card>
                     <CardHeader>
                       <CardTitle className="flex items-center gap-2">
-                        <Shield className="h-5 w-5 text-green-600" />
+                        <Lock className="h-5 w-5 text-green-600" />
                         Choose Your Encryption Methods
                       </CardTitle>
                     </CardHeader>
@@ -507,7 +506,7 @@ export default function AnatomyScanning() {
                       <div className="grid md:grid-cols-2 gap-6">
                         <div className="space-y-4">
                           <h4 className="font-semibold flex items-center gap-2">
-                            <Shield className="h-4 w-4 text-blue-600" />
+                            <Lock className="h-4 w-4 text-blue-600" />
                             Symmetric Encryption (Data at Rest)
                           </h4>
                           <p className="text-sm text-muted-foreground">
@@ -742,7 +741,7 @@ export default function AnatomyScanning() {
                             </div>
                           </div>
                           <Button className="mt-4" size="sm">
-                            <Shield className="h-4 w-4 mr-2" />
+                            <Lock className="h-4 w-4 mr-2" />
                             Apply Encryption Settings
                           </Button>
                         </div>
@@ -765,7 +764,7 @@ export default function AnatomyScanning() {
                       {[
                         { title: "Scan Images", retention: "Deleted Immediately", location: "Device Only", icon: Camera },
                         { title: "3D Model", retention: "Until Printing Complete", location: "Local + Encrypted Cloud", icon: Scan },
-                        { title: "Measurements", retention: "30 Days (Optional)", location: "Encrypted Vault", icon: Shield },
+                        { title: "Measurements", retention: "30 Days (Optional)", location: "Encrypted Vault", icon: Lock },
                         { title: "Printing Specs", retention: "Until Delivery", location: "Manufacturing Partner", icon: Printer },
                         { title: "Order History", retention: "Your Choice", location: "Your Account", icon: CheckCircle },
                         { title: "Analytics", retention: "Never Collected", location: "N/A", icon: Eye }
@@ -957,7 +956,7 @@ export default function AnatomyScanning() {
                       <Card className="bg-blue-50 dark:bg-blue-900/20 border-blue-200">
                         <CardContent className="p-4">
                           <h4 className="font-semibold mb-2 flex items-center gap-2">
-                            <Shield className="h-4 w-4 text-blue-600" />
+                            <Lock className="h-4 w-4 text-blue-600" />
                             Compliance
                           </h4>
                           <ul className="text-sm space-y-1 text-muted-foreground">
@@ -1105,7 +1104,7 @@ export default function AnatomyScanning() {
                         { step: 2, instruction: "Position device 12-18 inches from anatomy", icon: Smartphone },
                         { step: 3, instruction: "Hold steady - scanning takes 10-15 seconds", icon: Scan },
                         { step: 4, instruction: "Follow on-screen positioning guides", icon: CheckCircle },
-                        { step: 5, instruction: "Review captured data before confirmation", icon: Shield }
+                        { step: 5, instruction: "Review captured data before confirmation", icon: Lock }
                       ].map((item, i) => (
                         <div key={i} className="flex items-center gap-3 p-3 bg-muted/30 rounded-lg">
                           <div className="w-8 h-8 bg-cyan-500 text-white rounded-full flex items-center justify-center text-sm font-bold">
@@ -1122,7 +1121,7 @@ export default function AnatomyScanning() {
                 <Card>
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
-                      <Shield className="h-5 w-5 text-green-600" />
+                      <Lock className="h-5 w-5 text-green-600" />
                       Pre-Scan Checklist
                     </CardTitle>
                   </CardHeader>
@@ -1214,7 +1213,7 @@ export default function AnatomyScanning() {
                     </div>
                     <div className="grid md:grid-cols-3 gap-4 max-w-2xl mx-auto">
                       {[
-                        { phase: "Initialize", icon: Shield, complete: scanProgress >= 20 },
+                        { phase: "Initialize", icon: Lock, complete: scanProgress >= 20 },
                         { phase: "Capture", icon: Camera, complete: scanProgress >= 40 },
                         { phase: "Process", icon: Scan, complete: scanProgress >= 60 },
                         { phase: "Validate", icon: CheckCircle, complete: scanProgress >= 80 },
@@ -1343,7 +1342,7 @@ export default function AnatomyScanning() {
                     <Card>
                       <CardHeader>
                         <CardTitle className="flex items-center gap-2">
-                          <Shield className="h-5 w-5 text-blue-600" />
+                          <Lock className="h-5 w-5 text-blue-600" />
                           Custom Fit Recommendations
                         </CardTitle>
                       </CardHeader>
@@ -1381,7 +1380,7 @@ export default function AnatomyScanning() {
                   </CardHeader>
                   <CardContent className="space-y-6">
                     <Alert className="bg-blue-50 dark:bg-blue-900/20 border-blue-200">
-                      <Shield className="h-4 w-4 text-blue-600" />
+                      <Lock className="h-4 w-4 text-blue-600" />
                       <AlertDescription>
                         Sync your custom-fit specifications and STI testing data with your healthcare 
                         provider's electronic health records for coordinated care and healthy outcomes tracking.
