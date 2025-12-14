@@ -75,7 +75,7 @@ export interface ParentalConsent {
 // Creative Commons licensing notice
 export const CC_LICENSE_NOTICE = `
 /**
- * Fluck‽ Open Source Age Verification System
+ * American Care Planning Open Source Age Verification System
  * 
  * Licensed under Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
  * https://creativecommons.org/licenses/by-sa/4.0/
@@ -90,7 +90,7 @@ export const CC_LICENSE_NOTICE = `
  * - Comprehensive audit trails for compliance
  * - Support for tribal and military identification documents
  * 
- * Attribution Required: Please credit "Fluck‽ Community" in derivative works
+ * Attribution Required: Please credit "American Care Planning Community" in derivative works
  * Share-Alike: Derivative works must be licensed under CC BY-SA 4.0 or compatible
  */
 `;
@@ -242,12 +242,12 @@ export class AgeVerificationService {
     console.log(`
     === PARENTAL CONSENT EMAIL ===
     To: ${consent.parentGuardianEmail}
-    Subject: Parental Consent Required for Fluck‽ Platform Access
+    Subject: Parental Consent Required for American Care Planning Platform Access
     
     Dear ${consent.parentGuardianName},
     
     A minor under your care (User ID: ${consent.minorUserId}) has requested access to 
-    Fluck‽'s sexual health and relationship platform services.
+    American Care Planning's sexual health and relationship platform services.
     
     Consent Type: ${consent.consentType}
     Verification Code: ${consent.verificationCode}
@@ -264,7 +264,7 @@ export class AgeVerificationService {
     https://creativecommons.org/licenses/by-sa/4.0/
     
     Best regards,
-    Fluck‽ Verification Team
+    American Care Planning Verification Team
     `);
   }
 
@@ -463,7 +463,7 @@ export const AgeVerificationUtils = {
              src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />
       </a>
       <br />
-      <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Fluck‽ Age Verification System</span> 
+      <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">American Care Planning Age Verification System</span> 
       is licensed under a 
       <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
         Creative Commons Attribution-ShareAlike 4.0 International License
