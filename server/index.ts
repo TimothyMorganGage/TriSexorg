@@ -29,8 +29,19 @@ app.use(helmet({
 
 // CORS configuration
 app.use(cors({
-  origin: process.env.NODE_ENV === 'production' 
-    ? ['https://trisex.org'] 
+  origin: process.env.NODE_ENV === 'production'
+    ? (origin, callback) => {
+        const allowed = [
+          'https://trisex.org',
+          /\.replit\.app$/,
+          /\.replit\.dev$/,
+        ];
+        if (!origin) return callback(null, true);
+        const isAllowed = allowed.some(p =>
+          typeof p === 'string' ? p === origin : p.test(origin)
+        );
+        callback(null, isAllowed ? origin : false);
+      }
     : true,
   credentials: true,
 }));
@@ -137,12 +148,20 @@ app.use((req, res, next) => {
 (async () => {
   const server = await registerRoutes(app);
 
+  // Healthcheck endpoint for deployment infrastructure
+  app.get("/healthz", (_req, res) => {
+    res.status(200).json({ status: "ok" });
+  });
+
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;
     const message = err.message || "Internal Server Error";
-
-    res.status(status).json({ message });
-    throw err;
+    if (!res.headersSent) {
+      res.status(status).json({ message });
+    }
+    if (process.env.NODE_ENV !== "production") {
+      console.error(err);
+    }
   });
 
   // importantly only setup vite in development and after
@@ -151,7 +170,15 @@ app.use((req, res, next) => {
   if (app.get("env") === "development") {
     await setupVite(app, server);
   } else {
-    serveStatic(app);
+    try {
+      serveStatic(app);
+    } catch (e) {
+      console.error("[startup] Failed to serve static files:", e);
+      // Fallback: serve a minimal response so healthchecks pass
+      app.use("*", (_req, res) => {
+        res.status(503).send("App is starting up, please try again shortly.");
+      });
+    }
   }
 
   // ALWAYS serve the app on port 5000
