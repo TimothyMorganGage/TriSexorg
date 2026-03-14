@@ -10,7 +10,35 @@ import { BottomNavigation } from "@/components/BottomNavigation";
 import { TabNavigation } from "@/components/TabNavigation";
 import { PWAInstallPrompt, PWAStatusBadge } from "@/components/PWAInstallPrompt";
 import { usePWA } from "@/hooks/usePWA";
-import { Suspense, lazy, useEffect } from "react";
+import { Suspense, lazy, useEffect, Component, ReactNode } from "react";
+
+class ErrorBoundary extends Component<{ children: ReactNode }, { error: Error | null }> {
+  constructor(props: { children: ReactNode }) {
+    super(props);
+    this.state = { error: null };
+  }
+  static getDerivedStateFromError(error: Error) {
+    return { error };
+  }
+  render() {
+    if (this.state.error) {
+      return (
+        <div style={{ padding: "2rem", fontFamily: "sans-serif", textAlign: "center" }}>
+          <div style={{ fontSize: "3rem" }}>⚧️</div>
+          <h2 style={{ marginTop: "1rem" }}>Something went wrong</h2>
+          <p style={{ color: "#666" }}>Please refresh the page. If this continues, contact 503 610 6762.</p>
+          <button
+            onClick={() => window.location.reload()}
+            style={{ marginTop: "1rem", padding: "0.5rem 1.5rem", cursor: "pointer" }}
+          >
+            Refresh
+          </button>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
 
 const PageLoader = () => (
   <div className="flex items-center justify-center min-h-[50vh]">
@@ -143,18 +171,20 @@ function Router() {
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <TooltipProvider>
-          <PWAWrapper>
-            <Toaster />
-            <TabNavigation>
-              <Router />
-            </TabNavigation>
-          </PWAWrapper>
-        </TooltipProvider>
-      </AuthProvider>
-    </QueryClientProvider>
+    <ErrorBoundary>
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+          <TooltipProvider>
+            <PWAWrapper>
+              <Toaster />
+              <TabNavigation>
+                <Router />
+              </TabNavigation>
+            </PWAWrapper>
+          </TooltipProvider>
+        </AuthProvider>
+      </QueryClientProvider>
+    </ErrorBoundary>
   );
 }
 
