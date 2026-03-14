@@ -53,17 +53,10 @@ export default function BadGoodSex() {
 
   const { data: badIntegration, isLoading } = useQuery({
     queryKey: ['/api/bad-coop-integration'],
-    onError: (error: Error) => {
-      toast({
-        title: "Error loading BAD Co-op integration",
-        description: error.message,
-        variant: "destructive",
-      });
-    },
   });
 
   const createIntegrationMutation = useMutation({
-    mutationFn: (data: any) => apiRequest('/api/bad-coop-integration', 'POST', data),
+    mutationFn: (data: any) => apiRequest('POST', '/api/bad-coop-integration', data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['/api/bad-coop-integration'] });
       toast({
@@ -444,15 +437,12 @@ export default function BadGoodSex() {
                                       >
                                         <FormControl>
                                           <Checkbox
-                                            checked={field.value?.includes(item)}
+                                            checked={(field.value as string[])?.includes(item)}
                                             onCheckedChange={(checked) => {
+                                              const cur = (field.value as string[]) || [];
                                               return checked
-                                                ? field.onChange([...field.value, item])
-                                                : field.onChange(
-                                                    field.value?.filter(
-                                                      (value) => value !== item
-                                                    )
-                                                  )
+                                                ? field.onChange([...cur, item])
+                                                : field.onChange(cur.filter((value) => value !== item))
                                             }}
                                           />
                                         </FormControl>

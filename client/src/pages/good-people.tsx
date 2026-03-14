@@ -698,9 +698,9 @@ export default function GoodPeople() {
                               return (
                                 <div key={option.id} className="flex items-start space-x-3 p-3 border border-border rounded-lg">
                                   <Checkbox
-                                    checked={field.value?.includes(option.id)}
+                                    checked={(field.value as string[])?.includes(option.id)}
                                     onCheckedChange={(checked) => {
-                                      const currentValue = field.value || [];
+                                      const currentValue = (field.value as string[]) || [];
                                       if (checked) {
                                         field.onChange([...currentValue, option.id]);
                                       } else {
@@ -1025,14 +1025,14 @@ export default function GoodPeople() {
                                       <Badge 
                                         variant="outline"
                                         className={
-                                          field.value === 'verified' ? 'bg-green-50 text-green-700' :
-                                          field.value === 'rejected' ? 'bg-red-50 text-red-700' :
+                                          (field.value as string) === 'verified' ? 'bg-green-50 text-green-700' :
+                                          (field.value as string) === 'rejected' ? 'bg-red-50 text-red-700' :
                                           'bg-yellow-50 text-yellow-700'
                                         }
                                       >
-                                        {field.value === 'verified' && <CheckCircle className="w-3 h-3 mr-1" />}
-                                        {field.value === 'rejected' && <AlertTriangle className="w-3 h-3 mr-1" />}
-                                        {field.value === 'pending' && <Info className="w-3 h-3 mr-1" />}
+                                        {(field.value as string) === 'verified' && <CheckCircle className="w-3 h-3 mr-1" />}
+                                        {(field.value as string) === 'rejected' && <AlertTriangle className="w-3 h-3 mr-1" />}
+                                        {(field.value as string) === 'pending' && <Info className="w-3 h-3 mr-1" />}
                                         {field.value}
                                       </Badge>
                                     </div>

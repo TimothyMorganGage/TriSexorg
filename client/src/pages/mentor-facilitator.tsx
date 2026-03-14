@@ -49,31 +49,31 @@ export default function MentorFacilitator() {
   const queryClient = useQueryClient();
 
   // Fetch co-editing sessions
-  const { data: sessions = [], isLoading: sessionsLoading } = useQuery({
+  const { data: sessions = [] as any[], isLoading: sessionsLoading } = useQuery<any[]>({
     queryKey: ["/api/co-editing-sessions"],
     enabled: activeTab === "sessions",
   });
 
   // Fetch messaging integrations
-  const { data: messagingIntegrations = [], isLoading: messagingLoading } = useQuery({
+  const { data: messagingIntegrations = [] as any[], isLoading: messagingLoading } = useQuery<any[]>({
     queryKey: ["/api/messaging-integrations"],
     enabled: activeTab === "integrations",
   });
 
   // Fetch healthcare integrations
-  const { data: healthcareIntegrations = [], isLoading: healthcareLoading } = useQuery({
+  const { data: healthcareIntegrations = [] as any[], isLoading: healthcareLoading } = useQuery<any[]>({
     queryKey: ["/api/healthcare-integrations"],
     enabled: activeTab === "integrations",
   });
 
   // Fetch accessibility settings
-  const { data: accessibilitySettings, isLoading: accessibilityLoading } = useQuery({
+  const { data: accessibilitySettings, isLoading: accessibilityLoading } = useQuery<any>({
     queryKey: ["/api/accessibility-settings"],
     enabled: activeTab === "accessibility",
   });
 
   // Fetch messages for selected session
-  const { data: messages = [], isLoading: messagesLoading } = useQuery({
+  const { data: messages = [] as any[], isLoading: messagesLoading } = useQuery<any[]>({
     queryKey: ["/api/co-editing-sessions", selectedSession?.id, "messages"],
     enabled: !!selectedSession,
   });

@@ -267,8 +267,12 @@ export interface IStorage {
   // Partner Notification methods
   getPartnerNotifications(userId: number): Promise<any[]>;
   sendPartnerNotification(notification: any): Promise<any>;
-  markNotificationAsRead(notificationId: number): Promise<any>;
   respondToNotification(notificationId: number, response: any): Promise<any>;
+
+  // BAD Co-op Integration methods
+  getBadCoopIntegration(userId: number): Promise<any>;
+  createBadCoopIntegration(data: any): Promise<any>;
+  updateBadCoopIntegration(id: number, data: any): Promise<any>;
 }
 
 export class MemStorage implements IStorage {
@@ -749,6 +753,9 @@ export class MemStorage implements IStorage {
     const id = this.currentFinancialRecordId++;
     const record: FinancialRecord = { 
       id, 
+      status: "pending",
+      transactionHash: null,
+      approvedBy: null,
       ...insertRecord,
       createdAt: new Date(),
       updatedAt: new Date()
@@ -769,8 +776,11 @@ export class MemStorage implements IStorage {
     const id = this.currentBudgetItemId++;
     const item: BudgetItem = { 
       id, 
-      ...insertItem,
+      status: "voting",
+      allocatedAmount: "0",
+      priority: "medium",
       votes: 0,
+      ...insertItem,
       createdAt: new Date(),
       updatedAt: new Date()
     };
@@ -796,6 +806,7 @@ export class MemStorage implements IStorage {
     const id = this.currentBudgetVoteId++;
     const vote: BudgetVote = { 
       id, 
+      votingPower: 1,
       ...insertVote,
       createdAt: new Date()
     };
@@ -1028,6 +1039,12 @@ export class MemStorage implements IStorage {
 
   async createMoodEntry(entry: InsertMoodEntry): Promise<MoodEntry> {
     const newEntry: MoodEntry = {
+      sleepQuality: null,
+      physicalSymptoms: null,
+      emotionalState: null,
+      notes: null,
+      tags: null,
+      isPrivate: true,
       ...entry,
       id: this.currentMoodEntryId++,
       createdAt: new Date(),
@@ -1072,6 +1089,13 @@ export class MemStorage implements IStorage {
 
   async createWellnessGoal(goal: InsertWellnessGoal): Promise<WellnessGoal> {
     const newGoal: WellnessGoal = {
+      description: null,
+      targetEmoji: null,
+      targetValue: null,
+      endDate: null,
+      status: "active",
+      reminderTime: null,
+      isActive: true,
       ...goal,
       id: this.currentWellnessGoalId++,
       createdAt: new Date(),
@@ -1104,6 +1128,11 @@ export class MemStorage implements IStorage {
 
   async createMoodInsight(insight: InsertMoodInsight): Promise<MoodInsight> {
     const newInsight: MoodInsight = {
+      dataPoints: null,
+      isPositive: null,
+      suggestedActions: null,
+      acknowledgedAt: null,
+      isAcknowledged: false,
       ...insight,
       id: this.currentMoodInsightId++,
       generatedAt: new Date(),
@@ -1136,6 +1165,23 @@ export class MemStorage implements IStorage {
 
   async createTimeEntry(entry: InsertTimeEntry): Promise<TimeEntry> {
     const newEntry: TimeEntry = {
+      endTime: null,
+      duration: null,
+      project: null,
+      description: null,
+      energyBefore: null,
+      energyAfter: null,
+      focusQuality: null,
+      satisfaction: null,
+      tags: null,
+      timeWisdom: null,
+      isCreativeCommons: null,
+      wiseTimeFluck: null,
+      calendarEventId: null,
+      calendarType: null,
+      syncStatus: null,
+      lastSynced: null,
+      isCalendarBlocked: null,
       ...entry,
       id: this.currentTimeEntryId++,
       createdAt: new Date(),
@@ -1186,6 +1232,14 @@ export class MemStorage implements IStorage {
 
   async createTimeGoal(goal: InsertTimeGoal): Promise<TimeGoal> {
     const newGoal: TimeGoal = {
+      description: null,
+      targetHoursDaily: null,
+      targetHoursWeekly: null,
+      targetHoursMonthly: null,
+      reminderTime: null,
+      endDate: null,
+      status: "active",
+      priority: "medium",
       ...goal,
       id: this.currentTimeGoalId++,
       createdAt: new Date(),
@@ -1218,6 +1272,13 @@ export class MemStorage implements IStorage {
 
   async createTimeInsight(insight: InsertTimeInsight): Promise<TimeInsight> {
     const newInsight: TimeInsight = {
+      category: null,
+      timePattern: null,
+      recommendation: null,
+      wiseTimeFluck: null,
+      dataPoints: null,
+      acknowledgedAt: null,
+      isAcknowledged: false,
       ...insight,
       id: this.currentTimeInsightId++,
       generatedAt: new Date(),
@@ -1250,6 +1311,16 @@ export class MemStorage implements IStorage {
 
   async createCalendarConnection(connection: InsertCalendarConnection): Promise<CalendarConnection> {
     const newConnection: CalendarConnection = {
+      accessToken: null,
+      refreshToken: null,
+      calendarUrl: null,
+      calendarId: null,
+      syncEnabled: true,
+      autoCreateBlocks: false,
+      syncDirection: "bidirectional",
+      lastSyncTime: null,
+      syncErrors: null,
+      isActive: true,
       ...connection,
       id: this.currentCalendarConnectionId++,
       createdAt: new Date(),
@@ -1286,6 +1357,21 @@ export class MemStorage implements IStorage {
 
   async createScheduledTask(task: InsertScheduledTask): Promise<ScheduledTask> {
     const newTask: ScheduledTask = {
+      description: null,
+      scheduledStartTime: null,
+      scheduledEndTime: null,
+      estimatedDuration: null,
+      priority: "medium",
+      status: "scheduled",
+      linkedTimeEntryId: null,
+      calendarEventId: null,
+      calendarConnectionId: null,
+      recurrenceRule: null,
+      reminderMinutes: null,
+      wiseTimePrep: null,
+      energyRequirement: null,
+      focusRequirement: null,
+      isCreativeCommons: false,
       ...task,
       id: this.currentScheduledTaskId++,
       createdAt: new Date(),
@@ -1334,6 +1420,14 @@ export class MemStorage implements IStorage {
 
   async createTaskTemplate(template: InsertTaskTemplate): Promise<TaskTemplate> {
     const newTemplate: TaskTemplate = {
+      description: null,
+      defaultDuration: null,
+      defaultEnergyRequirement: null,
+      defaultFocusRequirement: null,
+      defaultTags: null,
+      wiseTimeTemplate: null,
+      isPublic: false,
+      timesUsed: 0,
       ...template,
       id: this.currentTaskTemplateId++,
       createdAt: new Date(),
@@ -2530,14 +2624,6 @@ export class MemStorage implements IStorage {
     };
   }
 
-  async markNotificationAsRead(notificationId: number): Promise<any> {
-    return { 
-      id: notificationId, 
-      deliveryStatus: "read",
-      readAt: new Date() 
-    };
-  }
-
   async respondToNotification(notificationId: number, response: any): Promise<any> {
     return { 
       notificationId, 
@@ -2545,6 +2631,19 @@ export class MemStorage implements IStorage {
       responseReceived: true,
       respondedAt: new Date() 
     };
+  }
+
+  // BAD Co-op Integration methods
+  async getBadCoopIntegration(userId: number): Promise<any> {
+    return null;
+  }
+
+  async createBadCoopIntegration(data: any): Promise<any> {
+    return { id: Date.now(), ...data, createdAt: new Date() };
+  }
+
+  async updateBadCoopIntegration(id: number, data: any): Promise<any> {
+    return { id, ...data, updatedAt: new Date() };
   }
 }
 

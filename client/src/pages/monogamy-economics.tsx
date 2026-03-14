@@ -14,7 +14,8 @@ import {
   Calculator,
   Activity,
   Target,
-  Clock
+  Clock,
+  Package
 } from "lucide-react";
 import { Link } from "wouter";
 

@@ -134,13 +134,7 @@ export default function AgeVerification() {
   // Parental consent mutation  
   const requestConsentMutation = useMutation({
     mutationFn: async (data: ParentalConsent) => {
-      return apiRequest('/api/age-verification/parental-consent', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      });
+      return apiRequest('POST', '/api/age-verification/parental-consent', data);
     },
     onSuccess: () => {
       toast({
@@ -331,12 +325,12 @@ export default function AgeVerification() {
                     ))}
                   </div>
 
-                  {verificationStatus.parentalConsents?.length > 0 && (
+                  {(verificationStatus.parentalConsents?.length ?? 0) > 0 && (
                     <>
                       <Separator />
                       <div>
                         <h4 className="font-medium mb-2">Parental Consent Requests</h4>
-                        {verificationStatus.parentalConsents.map((consent: any, index: number) => (
+                        {(verificationStatus.parentalConsents as any[]).map((consent: any, index: number) => (
                           <div key={index} className="p-3 bg-gray-50 rounded-lg mb-2">
                             <div className="flex items-center justify-between mb-2">
                               <span className="font-medium">{consent.parentGuardianName || 'Unknown'}</span>

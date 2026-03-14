@@ -109,8 +109,8 @@ export class GenealogyService {
     let commonAncestor: string | null = null;
     let minDistance = Infinity;
 
-    for (const [ancestor1, distance1] of ancestors1) {
-      for (const [ancestor2, distance2] of ancestors2) {
+    for (const [ancestor1, distance1] of Array.from(ancestors1)) {
+      for (const [ancestor2, distance2] of Array.from(ancestors2)) {
         if (this.isLikelyMatch(tree1.people[ancestor1], tree2.people[ancestor2])) {
           const totalDistance = distance1 + distance2;
           if (totalDistance < minDistance) {

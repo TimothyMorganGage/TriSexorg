@@ -30,13 +30,6 @@ export default function BadGoodHealth() {
 
   const { data: healthPlan, isLoading } = useQuery({
     queryKey: ['/api/health-planning'],
-    onError: (error: Error) => {
-      toast({
-        title: "Error loading health planning data",
-        description: error.message,
-        variant: "destructive",
-      });
-    },
   });
 
   const healthPlanningAreas = [

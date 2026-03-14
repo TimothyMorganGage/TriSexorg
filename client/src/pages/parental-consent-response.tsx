@@ -65,13 +65,7 @@ export default function ParentalConsentResponse() {
   // Consent response mutation
   const respondToConsentMutation = useMutation({
     mutationFn: async (data: ConsentResponse) => {
-      return apiRequest(`/api/age-verification/parental-consent/${consentId}/respond`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        }, 
-        body: JSON.stringify(data)
-      });
+      return apiRequest('POST', `/api/age-verification/parental-consent/${consentId}/respond`, data);
     },
     onSuccess: (data: any) => {
       toast({

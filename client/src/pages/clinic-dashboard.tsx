@@ -95,29 +95,26 @@ export default function ClinicDashboard() {
   const queryClient = useQueryClient();
 
   // Fetch inventory data
-  const { data: inventory = [], isLoading: inventoryLoading } = useQuery({
+  const { data: inventory = [] as any[], isLoading: inventoryLoading } = useQuery<any[]>({
     queryKey: ['/api/clinic-inventory'],
     refetchInterval: 30000 // Refresh every 30 seconds
   });
 
   // Fetch stock alerts
-  const { data: alerts = [], isLoading: alertsLoading } = useQuery({
+  const { data: alerts = [] as any[], isLoading: alertsLoading } = useQuery<any[]>({
     queryKey: ['/api/stock-alerts'],
     refetchInterval: 15000 // Refresh every 15 seconds
   });
 
   // Fetch restock orders
-  const { data: orders = [], isLoading: ordersLoading } = useQuery({
+  const { data: orders = [] as any[], isLoading: ordersLoading } = useQuery<any[]>({
     queryKey: ['/api/restock-orders']
   });
 
   // Update stock mutation
   const updateStockMutation = useMutation({
     mutationFn: (data: { itemId: number; newQuantity: number; notes?: string }) =>
-      apiRequest(`/api/clinic-inventory/${data.itemId}/update-stock`, {
-        method: 'POST',
-        body: JSON.stringify({ quantity: data.newQuantity, notes: data.notes })
-      }),
+      apiRequest('POST', `/api/clinic-inventory/${data.itemId}/update-stock`, { quantity: data.newQuantity, notes: data.notes }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['/api/clinic-inventory'] });
       queryClient.invalidateQueries({ queryKey: ['/api/stock-alerts'] });
@@ -127,10 +124,7 @@ export default function ClinicDashboard() {
   // Create restock order mutation
   const createRestockOrderMutation = useMutation({
     mutationFn: (data: { items: { itemId: number; quantity: number }[]; supplier: string }) =>
-      apiRequest('/api/restock-orders', {
-        method: 'POST',
-        body: JSON.stringify(data)
-      }),
+      apiRequest('POST', '/api/restock-orders', data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['/api/restock-orders'] });
       setSelectedItems([]);
@@ -140,9 +134,7 @@ export default function ClinicDashboard() {
   // Acknowledge alert mutation
   const acknowledgeAlertMutation = useMutation({
     mutationFn: (alertId: number) =>
-      apiRequest(`/api/stock-alerts/${alertId}/acknowledge`, {
-        method: 'POST'
-      }),
+      apiRequest('POST', `/api/stock-alerts/${alertId}/acknowledge`),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['/api/stock-alerts'] });
     }
