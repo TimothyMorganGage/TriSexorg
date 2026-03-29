@@ -18,7 +18,7 @@ export function BetaDisclaimer({ showExpanded = false }: { showExpanded?: boolea
     {
       date: "2025-02-03",
       member: "User Request",
-      change: "Contact phone number updated to +1 503 610 6762",
+      change: "Contact information updated",
       category: "Contact"
     },
     {

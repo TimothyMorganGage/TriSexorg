@@ -119,7 +119,7 @@ export function Footer() {
               </div>
               <div className="flex items-center space-x-3 text-gray-300">
                 <Phone className="h-4 w-4 text-primary" />
-                <span>+1 503 610 6762</span>
+                <span>contact@trisex.org</span>
               </div>
               <div className="flex items-center space-x-3 text-gray-300">
                 <MapPin className="h-4 w-4 text-primary" />

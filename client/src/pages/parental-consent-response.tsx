@@ -210,7 +210,7 @@ export default function ParentalConsentResponse() {
 
             {/* Platform Information */}
             <div className="bg-blue-50 p-4 rounded-lg">
-              <h4 className="font-medium text-blue-900 mb-2">About 503 610 6762 Platform</h4>
+              <h4 className="font-medium text-blue-900 mb-2">About TriSex.org Platform</h4>
               <div className="text-sm text-blue-800 space-y-2">
                 <p>
                   <strong>Mission:</strong> Comprehensive sexual health education and cooperative relationship 

@@ -477,7 +477,6 @@ export default function PrivacyPolicy() {
                 </p>
                 <div className="space-y-2 text-sm">
                   <p><strong>Email:</strong> privacy@trisex.org</p>
-                  <p><strong>Phone:</strong> +1 503 610 6762</p>
                   <p><strong>Response Time:</strong> Within 48 hours</p>
                 </div>
               </CardContent>

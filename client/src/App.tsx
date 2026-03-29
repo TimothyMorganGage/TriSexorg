@@ -26,7 +26,7 @@ class ErrorBoundary extends Component<{ children: ReactNode }, { error: Error | 
         <div style={{ padding: "2rem", fontFamily: "sans-serif", textAlign: "center" }}>
           <div style={{ fontSize: "3rem" }}>⚧️</div>
           <h2 style={{ marginTop: "1rem" }}>Something went wrong</h2>
-          <p style={{ color: "#666" }}>Please refresh the page. If this continues, contact 503 610 6762.</p>
+          <p style={{ color: "#666" }}>Please refresh the page or visit trisex.org for help.</p>
           <button
             onClick={() => window.location.reload()}
             style={{ marginTop: "1rem", padding: "0.5rem 1.5rem", cursor: "pointer" }}
