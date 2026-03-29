@@ -91,6 +91,7 @@ const TermsOfService = lazy(() => import("@/pages/terms-of-service"));
 const Accessibility = lazy(() => import("@/pages/accessibility"));
 const CommunityForum = lazy(() => import("@/pages/community-forum"));
 const TrisexStablecoin = lazy(() => import("@/pages/trisex-stablecoin"));
+const Contact = lazy(() => import("@/pages/contact"));
 
 function PWAWrapper({ children }: { children: React.ReactNode }) {
   const { registerServiceWorker } = usePWA();
@@ -157,6 +158,7 @@ function Router() {
             <Route path="/community-forum" component={CommunityForum} />
             <Route path="/trisex-stablecoin" component={TrisexStablecoin} />
             <Route path="/saved-configurations" component={SavedConfigurations} />
+            <Route path="/contact" component={Contact} />
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
             <Route component={NotFound} />

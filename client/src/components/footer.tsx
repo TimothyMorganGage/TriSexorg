@@ -118,8 +118,8 @@ export function Footer() {
                 </span>
               </div>
               <div className="flex items-center space-x-3 text-gray-300">
-                <Phone className="h-4 w-4 text-primary" />
-                <span>contact@trisex.org</span>
+                <Mail className="h-4 w-4 text-primary" />
+                <Link href="/contact" className="hover:text-white underline">Contact Us</Link>
               </div>
               <div className="flex items-center space-x-3 text-gray-300">
                 <MapPin className="h-4 w-4 text-primary" />

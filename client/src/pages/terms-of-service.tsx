@@ -352,7 +352,7 @@ export default function TermsOfService() {
                   <Alert className="bg-green-50 dark:bg-green-900/20 border-green-200">
                     <CheckCircle className="h-5 w-5 text-green-600" />
                     <AlertDescription>
-                      <strong>Financial Hardship:</strong> No one should go without protection due to cost. Contact us at contact@trisex.org for sliding scale pricing or free product access.
+                      <strong>Financial Hardship:</strong> No one should go without protection due to cost. Use our <a href="/contact" className="underline">contact form</a> for sliding scale pricing or free product access.
                     </AlertDescription>
                   </Alert>
                 </div>
@@ -383,7 +383,7 @@ export default function TermsOfService() {
                       In the event of a dispute, we follow this escalation process:
                     </p>
                     <ol className="text-sm text-muted-foreground space-y-2 list-decimal list-inside">
-                      <li><strong>Direct Contact:</strong> Email privacy@trisex.org</li>
+                      <li><strong>Direct Contact:</strong> <a href="/contact" className="underline">Contact form</a></li>
                       <li><strong>Cooperative Mediation:</strong> Member-elected dispute resolution committee</li>
                       <li><strong>Binding Arbitration:</strong> American Arbitration Association (AAA) rules</li>
                       <li><strong>Legal Action:</strong> Multnomah County, Oregon courts (last resort)</li>
@@ -488,7 +488,7 @@ export default function TermsOfService() {
             Licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">Creative Commons BY-SA 4.0</a>
           </p>
           <p className="text-xs text-muted-foreground mt-2">
-            Questions? Contact us: privacy@trisex.org
+            Questions? <a href="/contact" className="underline">Contact us here</a>
           </p>
         </div>
       </div>

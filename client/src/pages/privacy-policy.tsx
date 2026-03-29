@@ -476,7 +476,7 @@ export default function PrivacyPolicy() {
                   Questions about your privacy? Contact our Data Protection Officer:
                 </p>
                 <div className="space-y-2 text-sm">
-                  <p><strong>Email:</strong> privacy@trisex.org</p>
+                  <p><strong>Contact:</strong> <a href="/contact" className="underline">trisex.org/contact</a></p>
                   <p><strong>Response Time:</strong> Within 48 hours</p>
                 </div>
               </CardContent>

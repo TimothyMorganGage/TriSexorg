@@ -17,6 +17,7 @@ import { z } from "zod";
 import { genealogyService, RelationshipUtils } from "./genealogy";
 import { ageVerificationService, DocumentType, VerificationStatus, AgeVerificationUtils } from "./ageVerification";
 import { requireAuth } from "./middleware/auth";
+import { sendContactEmail } from "./email";
 import { Storage } from "@google-cloud/storage";
 import { fileTypeFromBuffer } from "file-type";
 
@@ -82,6 +83,28 @@ const gcsStorage = new Storage();
 const bucketName = process.env.DEFAULT_OBJECT_STORAGE_BUCKET_ID || '';
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Contact form (public, rate-limited)
+  const contactLimiter = rateLimit({ windowMs: 60 * 60 * 1000, max: 10, message: "Too many contact requests, please try again later" });
+  app.post("/api/contact", contactLimiter, async (req, res) => {
+    try {
+      const schema = z.object({
+        name: z.string().min(2).max(100),
+        email: z.string().email(),
+        subject: z.string().min(3).max(200),
+        message: z.string().min(10).max(5000),
+      });
+      const data = schema.parse(req.body);
+      const result = await sendContactEmail(data);
+      if (result.success) {
+        res.json({ success: true });
+      } else {
+        res.status(500).json({ message: "Failed to send message. Please try again later." });
+      }
+    } catch (err: any) {
+      res.status(400).json({ message: err.message || "Invalid request" });
+    }
+  });
+
   // Auth routes
   app.post("/api/auth/register", async (req, res) => {
     try {

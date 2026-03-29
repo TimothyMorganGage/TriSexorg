@@ -228,7 +228,7 @@ export default function Accessibility() {
                       <li>• <strong>BSL Support:</strong> British Sign Language for UK/international users</li>
                       <li>• <strong>Real-time Captions:</strong> Live captions for video calls with partners/counselors</li>
                       <li>• <strong>Visual Notifications:</strong> Flashing alerts for messages, test results, appointment reminders</li>
-                      <li>• <strong>TTY/TDD Support:</strong> Telephone accessibility for customer service: accessibility@trisex.org</li>
+                      <li>• <strong>TTY/TDD Support:</strong> Telephone accessibility for customer service — use our <a href="/contact" className="underline">contact form</a></li>
                     </ul>
                   </div>
 
@@ -542,11 +542,11 @@ export default function Accessibility() {
                     </p>
                     <div className="space-y-3 text-sm">
                       <div className="p-3 border rounded-lg">
-                        <strong>Email:</strong> accessibility@trisex.org
+                        <strong>Contact Form:</strong> <a href="/contact" className="underline">trisex.org/contact</a>
                         <p className="text-xs text-muted-foreground mt-1">Available 24/7 for accessibility support</p>
                       </div>
                       <div className="p-3 border rounded-lg">
-                        <strong>Email:</strong> accessibility@trisex.org
+                        <strong>Contact:</strong> <a href="/contact" className="underline">trisex.org/contact</a>
                         <p className="text-xs text-muted-foreground mt-1">Response within 24 hours</p>
                       </div>
                       <div className="p-3 border rounded-lg">
@@ -688,7 +688,7 @@ export default function Accessibility() {
             Licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">Creative Commons BY-SA 4.0</a>
           </p>
           <p className="text-xs text-muted-foreground mt-2">
-            Accessibility Support: accessibility@trisex.org
+            Accessibility Support: <a href="/contact" className="underline">trisex.org/contact</a>
           </p>
         </div>
       </div>
