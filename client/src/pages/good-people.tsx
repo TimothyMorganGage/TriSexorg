@@ -10,7 +10,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Slider } from "@/components/ui/slider";
 import { useToast } from "@/hooks/use-toast";
@@ -92,7 +91,6 @@ const matchingPreferencesSchema = z.object({
 });
 
 export default function GoodPeople() {
-  const [activeTab, setActiveTab] = useState("discover");
   const [matchType, setMatchType] = useState("all");
   const [uploadingImage, setUploadingImage] = useState(false);
   const [profileImagePreview, setProfileImagePreview] = useState<string | null>(null);
@@ -414,15 +412,34 @@ export default function GoodPeople() {
           </div>
         </div>
 
-        <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="grid w-full grid-cols-4 mb-8">
-            <TabsTrigger value="discover">Discover</TabsTrigger>
-            <TabsTrigger value="profile">My Profile</TabsTrigger>
-            <TabsTrigger value="preferences">Matching</TabsTrigger>
-            <TabsTrigger value="principles">Cooperative Love</TabsTrigger>
-          </TabsList>
+        {/* Sticky quick-nav */}
+        <div className="sticky top-0 z-30 bg-background/95 backdrop-blur border-b border-border mb-10">
+          <nav className="flex overflow-x-auto gap-1 py-2">
+            {[
+              { href: "#discover", label: "Discover", icon: Search },
+              { href: "#profile", label: "My Profile", icon: UserPlus },
+              { href: "#matching", label: "Matching", icon: Settings },
+              { href: "#principles", label: "Cooperative Love", icon: Heart },
+            ].map(({ href, label, icon: Icon }) => (
+              <a
+                key={href}
+                href={href}
+                className="flex items-center gap-1.5 whitespace-nowrap px-4 py-2 rounded-md text-sm font-medium hover:bg-secondary/20 transition-colors border border-transparent hover:border-secondary/40"
+              >
+                <Icon className="h-3.5 w-3.5" />
+                {label}
+              </a>
+            ))}
+          </nav>
+        </div>
 
-          <TabsContent value="discover">
+        <div className="space-y-20">
+
+          {/* ── DISCOVER ───────────────────────────────────────────── */}
+          <section id="discover">
+            <h2 className="text-2xl font-bold mb-6 flex items-center gap-2 border-b-2 border-black dark:border-white pb-3">
+              <Search className="h-6 w-6" /> Discover
+            </h2>
             <div className="space-y-6">
               {/* Match Type Filter */}
               <Card>
@@ -552,9 +569,13 @@ export default function GoodPeople() {
                 })}
               </div>
             </div>
-          </TabsContent>
+          </section>
 
-          <TabsContent value="profile">
+          {/* ── MY PROFILE ─────────────────────────────────────────── */}
+          <section id="profile">
+            <h2 className="text-2xl font-bold mb-6 flex items-center gap-2 border-b-2 border-black dark:border-white pb-3">
+              <UserPlus className="h-6 w-6" /> My Profile
+            </h2>
             <Card>
               <CardHeader>
                 <CardTitle>Your Cooperative Profile</CardTitle>
@@ -835,9 +856,13 @@ export default function GoodPeople() {
                 </Form>
               </CardContent>
             </Card>
-          </TabsContent>
+          </section>
 
-          <TabsContent value="preferences">
+          {/* ── MATCHING ───────────────────────────────────────────── */}
+          <section id="matching">
+            <h2 className="text-2xl font-bold mb-6 flex items-center gap-2 border-b-2 border-black dark:border-white pb-3">
+              <Settings className="h-6 w-6" /> Matching Preferences
+            </h2>
             <Card>
               <CardHeader>
                 <CardTitle>Matching Preferences</CardTitle>
@@ -1211,9 +1236,13 @@ export default function GoodPeople() {
                 </Form>
               </CardContent>
             </Card>
-          </TabsContent>
+          </section>
 
-          <TabsContent value="principles">
+          {/* ── COOPERATIVE LOVE ───────────────────────────────────── */}
+          <section id="principles">
+            <h2 className="text-2xl font-bold mb-6 flex items-center gap-2 border-b-2 border-black dark:border-white pb-3">
+              <Heart className="h-6 w-6" /> Cooperative Love
+            </h2>
             <div className="space-y-6">
               <Card>
                 <CardHeader>
@@ -1300,8 +1329,9 @@ export default function GoodPeople() {
                 </CardContent>
               </Card>
             </div>
-          </TabsContent>
-        </Tabs>
+          </section>
+
+        </div>{/* end scroll sections */}
       </div>
     </div>
   );
