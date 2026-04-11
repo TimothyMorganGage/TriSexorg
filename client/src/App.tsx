@@ -103,8 +103,6 @@ function PWAWrapper({ children }: { children: React.ReactNode }) {
   return (
     <>
       {children}
-      <PWAInstallPrompt />
-      <PWAStatusBadge />
     </>
   );
 }
