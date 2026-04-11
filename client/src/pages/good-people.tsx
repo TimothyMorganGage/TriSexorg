@@ -34,7 +34,10 @@ import {
   Upload,
   FileText,
   Lock,
-  AlertTriangle
+  AlertTriangle,
+  Palette,
+  Ban,
+  ShieldCheck
 } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
@@ -93,6 +96,7 @@ export default function GoodPeople() {
   const [matchType, setMatchType] = useState("all");
   const [uploadingImage, setUploadingImage] = useState(false);
   const [profileImagePreview, setProfileImagePreview] = useState<string | null>(null);
+  const [artPolicyAgreed, setArtPolicyAgreed] = useState(false);
   const { toast } = useToast();
 
   const profileForm = useForm({
@@ -178,7 +182,7 @@ export default function GoodPeople() {
       displayName: "Alex Chen",
       age: 28,
       location: "Portland, OR",
-      profileImageUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop",
+      profileImageUrl: "https://api.dicebear.com/9.x/avataaars/svg?seed=AlexChen&backgroundColor=b6e3f4",
       bio: "Worker-owner at a tech cooperative. Passionate about sustainable living and community organizing.",
       interests: ["Worker Cooperatives", "Permaculture", "Music"],
       cooperativePrinciples: ["Democratic Member Control", "Concern for Community"],
@@ -200,7 +204,7 @@ export default function GoodPeople() {
       displayName: "Morgan Rivera",
       age: 32,
       location: "Madison, WI",
-      profileImageUrl: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop",
+      profileImageUrl: "https://api.dicebear.com/9.x/avataaars/svg?seed=MorganRivera&backgroundColor=c0aede",
       bio: "Credit union board member and community garden coordinator. Believes in economic democracy.",
       interests: ["Credit Unions", "Community Gardens", "Social Justice"],
       cooperativePrinciples: ["Member Economic Participation", "Education, Training & Information"],
@@ -222,7 +226,7 @@ export default function GoodPeople() {
       displayName: "Sam Okafor",
       age: 26,
       location: "Ithaca, NY",
-      profileImageUrl: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop",
+      profileImageUrl: "https://api.dicebear.com/9.x/avataaars/svg?seed=SamOkafor&backgroundColor=d1d4f9",
       bio: "Housing cooperative member and renewable energy advocate. Looking for meaningful connections.",
       interests: ["Housing Cooperation", "Renewable Energy", "Hiking"],
       cooperativePrinciples: ["Voluntary & Open Membership", "Cooperation Among Cooperatives"],
@@ -244,6 +248,16 @@ export default function GoodPeople() {
   const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
+
+    if (!artPolicyAgreed) {
+      toast({
+        title: "Art-Only Policy Required",
+        description: "You must agree to the art-only content policy before uploading.",
+        variant: "destructive",
+      });
+      event.target.value = "";
+      return;
+    }
 
     // Validate file type
     if (!file.type.startsWith('image/')) {
@@ -548,12 +562,53 @@ export default function GoodPeople() {
               <CardContent>
                 <Form {...profileForm}>
                   <form onSubmit={profileForm.handleSubmit(onProfileSubmit)} className="space-y-6">
-                    
+
+                    {/* Global Files & Media Policy */}
+                    <div className="border-2 border-black dark:border-white rounded-lg p-4 bg-white dark:bg-black">
+                      <h3 className="font-bold text-black dark:text-white mb-3 flex items-center gap-2">
+                        <ShieldCheck className="h-5 w-5" />
+                        Files &amp; Media Content Policy
+                      </h3>
+                      <p className="text-sm text-gray-800 dark:text-gray-200 mb-3">
+                        All profile pictures, icons, and files exchanged within Good People — including images shared in messages, connection requests, or any other platform feature — are subject to the following rules:
+                      </p>
+                      <div className="grid sm:grid-cols-2 gap-3 text-sm">
+                        <div className="space-y-1.5">
+                          <p className="font-semibold text-black dark:text-white flex items-center gap-1">
+                            <CheckCircle className="h-3.5 w-3.5 text-green-600" /> Permitted content
+                          </p>
+                          <ul className="text-gray-700 dark:text-gray-300 space-y-1 ml-5 list-disc">
+                            <li>Original or commissioned artwork</li>
+                            <li>Digital illustrations and paintings</li>
+                            <li>Stylized avatars and graphic art</li>
+                            <li>Abstract or non-representational art</li>
+                            <li>Educational anatomical diagrams</li>
+                          </ul>
+                        </div>
+                        <div className="space-y-1.5">
+                          <p className="font-semibold text-black dark:text-white flex items-center gap-1">
+                            <Ban className="h-3.5 w-3.5 text-red-600" /> Strictly prohibited
+                          </p>
+                          <ul className="text-gray-700 dark:text-gray-300 space-y-1 ml-5 list-disc">
+                            <li>Photographs of real people</li>
+                            <li>Pornography of any kind</li>
+                            <li>Sexually explicit depictions of real people</li>
+                            <li>Non-consensual intimate imagery</li>
+                            <li>AI-generated realistic pornography</li>
+                          </ul>
+                        </div>
+                      </div>
+                      <p className="text-xs text-gray-600 dark:text-gray-400 mt-3 border-t border-gray-200 dark:border-gray-700 pt-2">
+                        Violations are reported to platform moderators and result in immediate account removal. Content is screened against known CSAM and NCII databases.
+                      </p>
+                    </div>
+
                     {/* Profile Image Upload Section */}
                     <div className="border rounded-lg p-6 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-900">
                       <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                        <Upload className="h-5 w-5 text-primary" />
-                        Profile Photo
+                        <Palette className="h-5 w-5 text-primary" />
+                        Profile Artwork
+                        <span className="text-xs font-normal text-muted-foreground ml-2">— art only, no photographs of real people</span>
                       </h3>
                       
                       <div className="grid md:grid-cols-2 gap-6">
@@ -584,54 +639,85 @@ export default function GoodPeople() {
                               className="hidden"
                               data-testid="input-profile-image"
                             />
-                            <label htmlFor="profile-image-upload">
-                              <Button
-                                type="button"
-                                variant="outline"
-                                className="w-full cursor-pointer"
-                                disabled={uploadingImage}
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  document.getElementById('profile-image-upload')?.click();
-                                }}
-                                data-testid="button-upload-image"
-                              >
-                                {uploadingImage ? "Uploading..." : "Choose Photo"}
-                              </Button>
-                            </label>
+                            <Button
+                              type="button"
+                              variant="outline"
+                              className="w-full"
+                              disabled={uploadingImage || !artPolicyAgreed}
+                              onClick={(e) => {
+                                e.preventDefault();
+                                document.getElementById('profile-image-upload')?.click();
+                              }}
+                              data-testid="button-upload-image"
+                            >
+                              <Palette className="h-4 w-4 mr-2" />
+                              {uploadingImage ? "Uploading..." : artPolicyAgreed ? "Choose Artwork" : "Agree to Policy First"}
+                            </Button>
+                            {!artPolicyAgreed && (
+                              <p className="text-xs text-center text-muted-foreground">
+                                Check the art-only confirmation box on the right to enable upload
+                              </p>
+                            )}
                           </div>
                         </div>
                         
                         <div className="space-y-3">
-                          <div className="p-4 bg-white dark:bg-gray-800 rounded-lg border border-blue-200 dark:border-blue-800">
-                            <h4 className="font-semibold text-blue-900 dark:text-blue-100 mb-2 flex items-center gap-2">
-                              <CheckCircle className="h-4 w-4" />
-                              Non-Pornographic Content Policy
+                          <div className="p-4 bg-white dark:bg-gray-800 rounded-lg border-2 border-black dark:border-white">
+                            <h4 className="font-semibold text-black dark:text-white mb-3 flex items-center gap-2">
+                              <Palette className="h-4 w-4" />
+                              Art-Only Profile Image Policy
                             </h4>
-                            <ul className="text-sm text-blue-800 dark:text-blue-200 space-y-1">
-                              <li>✓ Clear face photo (headshot or full body)</li>
-                              <li>✓ Fully clothed, casual or formal attire</li>
-                              <li>✓ Appropriate for public/workplace viewing</li>
-                              <li>✓ No nudity, partial nudity, or suggestive poses</li>
-                              <li>✓ No sexually explicit or provocative content</li>
+                            <ul className="text-sm text-gray-800 dark:text-gray-200 space-y-2">
+                              <li className="flex items-start gap-2">
+                                <CheckCircle className="h-3.5 w-3.5 text-green-600 mt-0.5 flex-shrink-0" />
+                                <span>Illustrated portraits, digital art, paintings, or avatar art</span>
+                              </li>
+                              <li className="flex items-start gap-2">
+                                <CheckCircle className="h-3.5 w-3.5 text-green-600 mt-0.5 flex-shrink-0" />
+                                <span>Abstract or stylized artwork representing yourself</span>
+                              </li>
+                              <li className="flex items-start gap-2">
+                                <CheckCircle className="h-3.5 w-3.5 text-green-600 mt-0.5 flex-shrink-0" />
+                                <span>Custom-drawn avatars, cartoons, or graphic art</span>
+                              </li>
+                              <li className="flex items-start gap-2">
+                                <Ban className="h-3.5 w-3.5 text-red-600 mt-0.5 flex-shrink-0" />
+                                <span><strong>No photographs of real people</strong></span>
+                              </li>
+                              <li className="flex items-start gap-2">
+                                <Ban className="h-3.5 w-3.5 text-red-600 mt-0.5 flex-shrink-0" />
+                                <span><strong>No pornography or sexually explicit depictions of any kind</strong></span>
+                              </li>
+                              <li className="flex items-start gap-2">
+                                <Ban className="h-3.5 w-3.5 text-red-600 mt-0.5 flex-shrink-0" />
+                                <span>No nudity, real or illustrated, unless purely anatomical/medical art</span>
+                              </li>
                             </ul>
                           </div>
-                          
-                          <div className="p-3 bg-amber-50 dark:bg-amber-900/20 rounded-lg border border-amber-200 dark:border-amber-800">
+
+                          <div className="p-3 bg-black dark:bg-white rounded-lg">
                             <div className="flex items-start gap-2">
-                              <AlertTriangle className="h-4 w-4 text-amber-600 dark:text-amber-400 mt-0.5 flex-shrink-0" />
-                              <div className="text-xs text-amber-800 dark:text-amber-200">
-                                <strong>Community Standard:</strong> Good People Cooperative requires respectful, non-sexual profile images to maintain a safe space for all members.
-                              </div>
+                              <Checkbox
+                                id="art-policy-agree"
+                                checked={artPolicyAgreed}
+                                onCheckedChange={(v) => setArtPolicyAgreed(!!v)}
+                                className="mt-0.5 border-white dark:border-black data-[state=checked]:bg-white dark:data-[state=checked]:bg-black"
+                              />
+                              <label
+                                htmlFor="art-policy-agree"
+                                className="text-xs text-white dark:text-black cursor-pointer leading-relaxed"
+                              >
+                                <strong>I confirm</strong> my profile image is original artwork or a commissioned illustration — not a photograph of a real person, and contains no pornographic or sexually explicit content. I understand violations result in immediate account removal.
+                              </label>
                             </div>
                           </div>
-                          
+
                           <div className="text-xs text-gray-600 dark:text-gray-400">
                             <p><strong>File requirements:</strong></p>
                             <ul className="ml-4 mt-1 space-y-1">
-                              <li>• Formats: JPG, PNG, GIF</li>
+                              <li>• Formats: JPG, PNG, GIF, WebP, SVG</li>
                               <li>• Maximum size: 5MB</li>
-                              <li>• Recommended: 400x400px or larger</li>
+                              <li>• Recommended: 400×400px or larger</li>
                             </ul>
                           </div>
                         </div>
