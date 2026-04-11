@@ -3,7 +3,6 @@ import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Menu, X, User, LogOut } from "lucide-react";
 import { useAuth } from "@/lib/auth";
-import { ReplitBadge } from "@/components/ReplitBadge";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -14,37 +13,31 @@ export function Header() {
     { name: "Products", href: "/products" },
     { name: "Education", href: "/education" },
     { name: "Community", href: "/community-forum" },
+    { name: "STI Tracking", href: "/partner-sti-tracking" },
   ];
 
   const isActive = (path: string) => location === path;
 
   return (
-    <header className="bg-white shadow-sm border-b sticky top-0 z-50">
+    <header className="bg-black border-b border-white/10 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-14">
           <Link href="/" className="flex items-center space-x-2" data-testid="header-logo">
-            <span className="text-3xl">⚧️</span>
-            <span 
-              className="text-xl font-bold text-neutral hidden sm:block"
-              style={{ 
-                fontFamily: 'cursive',
-                textShadow: '2px 2px 4px rgba(0,0,0,0.3), -1px -1px 2px rgba(255,255,255,0.5)',
-                filter: 'contrast(1.2)'
-              }}
-            >
+            <span className="text-2xl leading-none">⚧️</span>
+            <span className="text-lg font-bold text-white tracking-tight hidden sm:block font-display">
               TriSex.org
             </span>
           </Link>
 
-          <nav className="hidden md:flex items-center space-x-4">
+          <nav className="hidden md:flex items-center space-x-1">
             {quickLinks.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
-                className={`text-sm font-medium px-3 py-1.5 rounded-full transition-colors ${
+                className={`text-sm font-medium px-3 py-1.5 rounded-md transition-colors ${
                   isActive(item.href)
-                    ? "bg-primary/10 text-primary"
-                    : "text-gray-600 hover:bg-gray-100"
+                    ? "bg-white text-black"
+                    : "text-white/70 hover:text-white hover:bg-white/10"
                 }`}
                 data-testid={`header-link-${item.name.toLowerCase()}`}
               >
@@ -54,20 +47,18 @@ export function Header() {
           </nav>
 
           <div className="flex items-center space-x-2">
-            <ReplitBadge variant="compact" theme="light" />
-            
             <div className="hidden md:flex items-center space-x-2">
               {user ? (
                 <>
                   {user.role === "clinic_staff" && (
                     <Link href="/clinic-dashboard">
-                      <Button variant="outline" size="sm" data-testid="header-dashboard-btn">
+                      <Button variant="outline" size="sm" className="border-white/20 text-white hover:bg-white/10" data-testid="header-dashboard-btn">
                         Dashboard
                       </Button>
                     </Link>
                   )}
                   <Link href="/saved-configurations">
-                    <Button variant="ghost" size="sm" data-testid="header-configs-btn">
+                    <Button variant="ghost" size="sm" className="text-white/70 hover:text-white hover:bg-white/10" data-testid="header-configs-btn">
                       <User className="h-4 w-4 mr-1" />
                       {user.username}
                     </Button>
@@ -76,7 +67,7 @@ export function Header() {
                     variant="ghost"
                     size="sm"
                     onClick={logout}
-                    className="text-gray-600 hover:text-red-600"
+                    className="text-white/50 hover:text-red-400 hover:bg-white/5"
                     data-testid="header-logout-btn"
                   >
                     <LogOut className="h-4 w-4" />
@@ -85,12 +76,12 @@ export function Header() {
               ) : (
                 <>
                   <Link href="/login">
-                    <Button variant="ghost" size="sm" data-testid="header-signin-btn">
+                    <Button variant="ghost" size="sm" className="text-white/70 hover:text-white hover:bg-white/10" data-testid="header-signin-btn">
                       Sign In
                     </Button>
                   </Link>
                   <Link href="/register">
-                    <Button size="sm" data-testid="header-getstarted-btn">
+                    <Button size="sm" className="bg-white text-black hover:bg-white/90 font-semibold" data-testid="header-getstarted-btn">
                       Get Started
                     </Button>
                   </Link>
@@ -103,6 +94,7 @@ export function Header() {
                 variant="ghost"
                 size="sm"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="text-white hover:bg-white/10"
                 data-testid="header-mobile-menu-btn"
               >
                 {isMenuOpen ? (
@@ -116,36 +108,36 @@ export function Header() {
         </div>
 
         {isMenuOpen && (
-          <div className="md:hidden py-3 border-t">
+          <div className="md:hidden py-3 border-t border-white/10">
             <div className="space-y-1">
               {quickLinks.map((item) => (
                 <Link
                   key={item.name}
                   href={item.href}
-                  className={`block px-3 py-2 text-base font-medium rounded-md ${
+                  className={`block px-3 py-2 text-base font-medium rounded-md transition-colors ${
                     isActive(item.href)
-                      ? "text-primary bg-primary/10"
-                      : "text-gray-600 hover:text-primary hover:bg-gray-50"
+                      ? "text-black bg-white"
+                      : "text-white/70 hover:text-white hover:bg-white/10"
                   }`}
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {item.name}
                 </Link>
               ))}
-              
-              <div className="pt-3 mt-3 border-t border-gray-200">
+
+              <div className="pt-3 mt-3 border-t border-white/10">
                 {user ? (
                   <div className="space-y-1">
                     <div className="flex items-center px-3 py-2">
-                      <User className="h-5 w-5 text-gray-400 mr-2" />
-                      <span className="text-base font-medium text-gray-800">
+                      <User className="h-5 w-5 text-white/40 mr-2" />
+                      <span className="text-base font-medium text-white">
                         {user.username}
                       </span>
                     </div>
                     {user.role === "clinic_staff" && (
                       <Link
                         href="/clinic-dashboard"
-                        className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-primary"
+                        className="block px-3 py-2 text-base font-medium text-white/70 hover:text-white"
                         onClick={() => setIsMenuOpen(false)}
                       >
                         Dashboard
@@ -153,7 +145,7 @@ export function Header() {
                     )}
                     <Link
                       href="/saved-configurations"
-                      className="block px-3 py-2 text-base font-medium text-gray-600 hover:text-primary"
+                      className="block px-3 py-2 text-base font-medium text-white/70 hover:text-white"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       My Saved Configurations
@@ -163,7 +155,7 @@ export function Header() {
                         logout();
                         setIsMenuOpen(false);
                       }}
-                      className="block w-full text-left px-3 py-2 text-base font-medium text-red-600 hover:text-red-800"
+                      className="block w-full text-left px-3 py-2 text-base font-medium text-red-400 hover:text-red-300"
                     >
                       Sign Out
                     </button>
@@ -175,14 +167,14 @@ export function Header() {
                       className="flex-1"
                       onClick={() => setIsMenuOpen(false)}
                     >
-                      <Button variant="outline" className="w-full">Sign In</Button>
+                      <Button variant="outline" className="w-full border-white/20 text-white hover:bg-white/10">Sign In</Button>
                     </Link>
                     <Link
                       href="/register"
                       className="flex-1"
                       onClick={() => setIsMenuOpen(false)}
                     >
-                      <Button className="w-full">Get Started</Button>
+                      <Button className="w-full bg-white text-black hover:bg-white/90 font-semibold">Get Started</Button>
                     </Link>
                   </div>
                 )}

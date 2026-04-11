@@ -6,10 +6,11 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        'recoleta': ['Recoleta', 'serif'],
-        'coolvetica': ['Coolvetica', 'sans-serif'],
-        'sans': ['Coolvetica', 'ui-sans-serif', 'system-ui'],
-        'serif': ['Recoleta', 'ui-serif', 'Georgia', 'serif'],
+        'recoleta': ['Playfair Display', 'ui-serif', 'Georgia', 'serif'],
+        'coolvetica': ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        'sans': ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'sans-serif'],
+        'serif': ['Playfair Display', 'ui-serif', 'Georgia', 'serif'],
+        'display': ['Playfair Display', 'ui-serif', 'Georgia', 'serif'],
       },
       borderRadius: {
         lg: "var(--radius)",

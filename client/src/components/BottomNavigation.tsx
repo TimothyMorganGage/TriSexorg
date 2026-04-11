@@ -47,7 +47,7 @@ const NavLink = ({ href, className, children }: { href: string; className: strin
   if (isExternalLink(href)) {
     return <a href={href} target="_blank" rel="noopener noreferrer" className={className}>{children}</a>;
   }
-  return <NavLink href={href} className={className}>{children}</NavLink>;
+  return <Link href={href} className={className}>{children}</Link>;
 };
 
 const allNavItems: NavItem[] = [

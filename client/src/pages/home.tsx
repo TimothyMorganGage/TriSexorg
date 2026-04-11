@@ -1,480 +1,306 @@
 import { useState } from "react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
-import { ReplitBadge } from "@/components/ReplitBadge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-
 import { OnboardingTutorial } from "@/components/OnboardingTutorial";
 import { BetaDisclaimer } from "@/components/BetaDisclaimer";
-import { 
-  Leaf, Heart, Box, CheckCircle, 
-  Printer, Truck, Hospital, UserCheck, Store, 
-  Building, Play, Ruler, Droplets, Palette, TestTube,
-  Coins, Share2, BookOpen, Lightbulb, Award, Book, Star, Users, Timer, Package
+import {
+  Leaf, Heart, Box, CheckCircle,
+  Printer, Truck, Hospital, UserCheck, Store,
+  Building, Ruler, Droplets, TestTube,
+  Coins, BookOpen, Lightbulb, Users, Package, ArrowRight
 } from "lucide-react";
-import { FediverseShare } from "@/components/FediverseShare";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
 export default function Home() {
   const [showOnboarding, setShowOnboarding] = useState(false);
 
   const handleOnboardingComplete = (progress: any) => {
-    console.log("Onboarding completed with progress:", progress);
-    // Store progress in localStorage or send to backend
     localStorage.setItem('onboardingCompleted', 'true');
     localStorage.setItem('userProgress', JSON.stringify(progress));
   };
 
   return (
-    <div className="min-h-screen">
-      {/* Beta Disclaimer */}
-      <div className="sticky top-0 z-50">
+    <div className="min-h-screen bg-background">
+      {/* Beta / Remix Banner */}
+      <div className="border-b border-white/10">
         <BetaDisclaimer />
       </div>
 
-      {/* Intersex Healthcare Affirmation */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-        <Alert className="bg-white dark:bg-gray-950 border-2 border-black dark:border-white">
-          <Heart className="h-5 w-5 text-black dark:text-white" />
-          <AlertDescription className="ml-2 text-black dark:text-white">
-            <strong>Intersex Healthcare IS Everyone's Affirmation:</strong> By centering intersex anatomy as the universal baseline—trans, non-binary, genderqueer, and quare embodiment are all respected within this participatory budgeting framework. There is no separate "transgender healthcare" to opt out of—affirming care serves ALL bodies by design.
-          </AlertDescription>
-        </Alert>
-      </div>
-      
-      {/* Hero Section */}
-      <section className="relative gradient-hero text-white overflow-hidden">
-        <div className="absolute inset-0 bg-black opacity-10"></div>
-        
-        {/* Geometric pattern background */}
-        <div className="absolute inset-0 opacity-5">
-          <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-            <defs>
-              <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
-                <path d="M 10 0 L 0 0 0 10" fill="none" stroke="white" strokeWidth="0.5"/>
-              </pattern>
-            </defs>
-            <rect width="100" height="100" fill="url(#grid)" />
-          </svg>
+      {/* Affirmation Alert */}
+      <div className="bg-black border-b border-white/10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+          <Alert className="bg-white/5 border border-white/15 rounded-lg">
+            <Heart className="h-4 w-4 text-primary flex-shrink-0" />
+            <AlertDescription className="ml-2 text-white/80 text-sm">
+              <strong className="text-white">Intersex Healthcare IS Everyone's Affirmation:</strong>{" "}
+              Centering intersex anatomy as the universal baseline — trans, non-binary, genderqueer, and quare embodiment are all respected within this participatory budgeting framework.
+            </AlertDescription>
+          </Alert>
         </div>
-        
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="text-center lg:text-left">
-              <h1 className="text-5xl lg:text-7xl font-black leading-tight mb-6 flex items-center justify-center lg:justify-start gap-4">
-                <span className="text-6xl lg:text-8xl transform hover:scale-110 transition-transform duration-300">⚧️</span>
+      </div>
+
+      {/* Hero */}
+      <section className="gradient-hero border-b border-white/10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div>
+              <div className="flex items-center gap-4 mb-6">
+                <span className="text-7xl lg:text-8xl">⚧️</span>
                 <div>
-                  <span className="bg-gradient-to-r from-black via-gray-500 to-white bg-clip-text text-transparent">
-                    TriSex
-                  </span>
-                  <span className="text-accent">.org</span>
+                  <h1 className="text-5xl lg:text-7xl font-black leading-none text-white font-display">
+                    TriSex<span className="text-primary">.org</span>
+                  </h1>
+                  <p className="text-white/50 text-sm mt-1 font-sans tracking-widest uppercase">Open Source Sexual Health</p>
                 </div>
-              </h1>
-              
-              <h2 className="text-2xl lg:text-3xl font-bold leading-tight mb-6 text-white font-recoleta">
+              </div>
+
+              <h2 className="text-xl lg:text-2xl font-semibold text-white/90 leading-snug mb-4 font-display">
                 Protection for Sexual Creativity & Reproductive Justice
               </h2>
-              <p className="text-xl lg:text-2xl text-blue-100 mb-8 leading-relaxed font-coolvetica">
-                Precision sizing with 60+ custom fits supporting sexual creativity and anatomical diversity. 
-                4D STI intervention through bioregional monitoring advances reproductive justice. 
-                Sustainable waterway microplastic materials with cooperative sexual health principles 
-                ensuring bodily autonomy for the full 2SLGBTIQA+ community.
+
+              <p className="text-base text-white/60 mb-8 leading-relaxed font-sans">
+                Precision sizing with 60+ custom fits, 4D STI bioregional monitoring, sustainable waterway microplastic materials, and cooperative sexual health principles for the full 2SLGBTIQA+ community.
               </p>
-              
-              {/* Feature Badges */}
-              <div className="flex flex-wrap justify-center lg:justify-start gap-3 mb-8">
-                <Badge variant="secondary" className="bg-blue-100 text-blue-800 px-3 py-1">
-                  <Droplets className="w-4 h-4 mr-1" />
-                  4D STI Analytics
+
+              <div className="flex flex-wrap gap-2 mb-8">
+                <Badge className="bg-white/10 text-white/80 border border-white/20 hover:bg-white/15">
+                  <Droplets className="w-3 h-3 mr-1" /> 4D STI Analytics
                 </Badge>
-                <Badge variant="secondary" className="bg-green-100 text-green-800 px-3 py-1">
-                  <Ruler className="w-4 h-4 mr-1" />
-                  Precision Sizing
+                <Badge className="bg-white/10 text-white/80 border border-white/20 hover:bg-white/15">
+                  <Ruler className="w-3 h-3 mr-1" /> Precision Sizing
                 </Badge>
-                <Badge variant="secondary" className="bg-purple-100 text-purple-800 px-3 py-1">
-                  <Palette className="w-4 h-4 mr-1" />
-                  Color Wheel
+                <Badge className="bg-white/10 text-white/80 border border-white/20 hover:bg-white/15">
+                  <TestTube className="w-3 h-3 mr-1" /> 3D Scanning
                 </Badge>
-                <Badge variant="secondary" className="bg-orange-100 text-orange-800 px-3 py-1">
-                  <TestTube className="w-4 h-4 mr-1" />
-                  3D Scanning
-                </Badge>
-                <Badge variant="secondary" className="bg-cyan-100 text-cyan-800 px-3 py-1">
-                  <Heart className="w-4 h-4 mr-1" />
-                  DALY Tracking
-                </Badge>
-                <Badge variant="secondary" className="bg-yellow-100 text-yellow-800 px-3 py-1">
-                  <Coins className="w-4 h-4 mr-1" />
-                  Stablecoin Dividends
+                <Badge className="bg-white/10 text-white/80 border border-white/20 hover:bg-white/15">
+                  <Coins className="w-3 h-3 mr-1" /> $TRISEX Stablecoin
                 </Badge>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-center lg:justify-start">
+
+              <div className="flex flex-col sm:flex-row gap-3">
                 <Link href="/inclusive-ordering">
-                  <Button size="lg" className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white shadow-lg w-full">
+                  <Button size="lg" className="bg-white text-black hover:bg-white/90 font-bold shadow-lg w-full sm:w-auto">
                     <Package className="mr-2 h-5 w-5" />
                     Start Inclusive Order
                   </Button>
                 </Link>
-                <Link href="/time-tracker">
-                  <Button size="lg" className="bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white shadow-lg w-full">
-                    <Play className="mr-2 h-5 w-5" />
-                    Wise Time TriSex
-                  </Button>
-                </Link>
-                <Link href="/wiki">
-                  <Button size="lg" className="bg-accent hover:bg-accent/90 text-neutral w-full">
-                    <BookOpen className="mr-2 h-5 w-5" />
-                    Knowledge Wiki
-                  </Button>
-                </Link>
                 <Link href="/4d-sti-intervention">
-                  <Button 
-                    size="lg" 
-                    variant="outline" 
-                    className="bg-blue-500/20 backdrop-blur-sm text-white border-blue-300/30 hover:bg-blue-500/30 w-full"
-                  >
-                    <Droplets className="mr-2 h-4 w-4" />
+                  <Button size="lg" variant="outline" className="border-white/25 text-white hover:bg-white/10 w-full sm:w-auto">
+                    <Droplets className="mr-2 h-5 w-5" />
                     4D STI System
                   </Button>
                 </Link>
-                <Link href="/anatomy-scanning">
-                  <Button 
-                    size="lg" 
-                    variant="outline" 
-                    className="bg-white/10 backdrop-blur-sm text-white border-white/20 hover:bg-white/20 w-full"
-                  >
-                    <TestTube className="mr-2 h-4 w-4" />
-                    3D Scanning
-                  </Button>
-                </Link>
-                <Link href="/economic-impact">
-                  <Button 
-                    size="lg" 
-                    variant="outline" 
-                    className="bg-gradient-to-r from-yellow-500/20 to-green-500/20 backdrop-blur-sm text-white border-yellow-300/30 hover:bg-yellow-500/30 w-full"
-                  >
-                    <Heart className="mr-2 h-4 w-4" />
-                    DALY Dashboard
+                <Link href="/education">
+                  <Button size="lg" variant="ghost" className="text-white/60 hover:text-white hover:bg-white/5 w-full sm:w-auto">
+                    <BookOpen className="mr-2 h-5 w-5" />
+                    Learn More
                   </Button>
                 </Link>
               </div>
             </div>
-            
-            <div className="relative">
-              {/* Floating cards showcasing key features */}
-              <div className="relative h-96 lg:h-[500px]">
-                <Card className="absolute top-0 right-0 bg-white/10 backdrop-blur-sm border-white/20 shadow-xl transform rotate-3 hover:rotate-0 transition-transform">
-                  <CardContent className="p-6 text-center">
-                    <Leaf className="text-accent h-8 w-8 mb-3 mx-auto" />
-                    <h3 className="font-semibold text-lg mb-2 text-white">Eco-Friendly</h3>
-                    <p className="text-blue-100 text-sm">Made from recycled waterway microplastics</p>
+
+            <div className="hidden lg:grid grid-cols-2 gap-4">
+              {[
+                { icon: Leaf, title: "Eco-Friendly", desc: "Recycled waterway microplastics", color: "text-emerald-400" },
+                { icon: Heart, title: "Inclusive Design", desc: "For all bodies and identities", color: "text-primary" },
+                { icon: Box, title: "3D Printed", desc: "Custom-fit precision technology", color: "text-sky-400" },
+                { icon: Coins, title: "Cooperative", desc: "Community-owned & governed", color: "text-amber-400" },
+              ].map(({ icon: Icon, title, desc, color }) => (
+                <Card key={title} className="bg-white/5 border-white/10 hover:bg-white/8 transition-colors">
+                  <CardContent className="p-5">
+                    <Icon className={`${color} h-6 w-6 mb-3`} />
+                    <h3 className="text-white font-semibold text-sm mb-1">{title}</h3>
+                    <p className="text-white/50 text-xs leading-relaxed">{desc}</p>
                   </CardContent>
                 </Card>
-                
-                <Card className="absolute top-20 left-0 bg-white/10 backdrop-blur-sm border-white/20 shadow-xl transform -rotate-2 hover:rotate-0 transition-transform">
-                  <CardContent className="p-6 text-center">
-                    <Heart className="text-accent h-8 w-8 mb-3 mx-auto" />
-                    <h3 className="font-semibold text-lg mb-2 text-white">Inclusive Design</h3>
-                    <p className="text-blue-100 text-sm">For all bodies and identities</p>
-                  </CardContent>
-                </Card>
-                
-                <Card className="absolute bottom-0 right-8 bg-white/10 backdrop-blur-sm border-white/20 shadow-xl transform rotate-1 hover:rotate-0 transition-transform">
-                  <CardContent className="p-6 text-center">
-                    <Box className="text-accent h-8 w-8 mb-3 mx-auto" />
-                    <h3 className="font-semibold text-lg mb-2 text-white">3D Printed</h3>
-                    <p className="text-blue-100 text-sm">Custom-fit technology</p>
-                  </CardContent>
-                </Card>
-                
-                <Card className="absolute bottom-8 left-8 bg-white/10 backdrop-blur-sm border-white/20 shadow-xl transform -rotate-1 hover:rotate-0 transition-transform">
-                  <CardContent className="p-4 text-center">
-                    <ReplitBadge variant="compact" theme="dark" className="text-white/80" />
-                  </CardContent>
-                </Card>
-              </div>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
-      {/* How It Works Section */}
-      <section className="py-20 bg-white">
+      {/* How It Works */}
+      <section className="py-20 bg-black border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-neutral mb-4">
+          <div className="text-center mb-14">
+            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-3 font-display">
               How CustomFit Works
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Our simple, private process ensures you get the perfect fit for your needs
+            <p className="text-white/50 text-lg max-w-2xl mx-auto">
+              A simple, private process for your perfect fit
             </p>
           </div>
-          
+
           <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
-            <div className="text-center group">
-              <div className="bg-primary/10 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-primary/20 transition-colors">
-                <UserCheck className="text-primary h-8 w-8" />
+            {[
+              { icon: UserCheck, step: "01", title: "Private Assessment", desc: "Complete our confidential questionnaire about your needs, preferences, and body measurements using our secure platform.", color: "text-primary" },
+              { icon: Printer, step: "02", title: "Custom Manufacturing", desc: "Our 3D printing technology creates your personalized product using eco-friendly materials and precise specifications.", color: "text-secondary" },
+              { icon: Truck, step: "03", title: "Discreet Delivery", desc: "Receive your custom products through your preferred clinic or direct delivery in unmarked, secure packaging.", color: "text-white/70" },
+            ].map(({ icon: Icon, step, title, desc, color }) => (
+              <div key={step} className="text-center group">
+                <div className="relative mb-6">
+                  <div className="w-16 h-16 border border-white/15 rounded-2xl flex items-center justify-center mx-auto group-hover:border-white/30 transition-colors bg-white/5">
+                    <Icon className={`${color} h-7 w-7`} />
+                  </div>
+                  <span className="absolute -top-2 -right-2 text-xs font-mono text-white/30 font-bold">{step}</span>
+                </div>
+                <h3 className="text-lg font-semibold text-white mb-3 font-display">{title}</h3>
+                <p className="text-white/50 leading-relaxed text-sm">{desc}</p>
               </div>
-              <h3 className="text-xl font-semibold text-neutral mb-4">1. Private Assessment</h3>
-              <p className="text-gray-600 leading-relaxed">
-                Complete our confidential questionnaire about your needs, preferences, and body 
-                measurements using our secure platform.
-              </p>
-            </div>
-            
-            <div className="text-center group">
-              <div className="bg-secondary/10 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-secondary/20 transition-colors">
-                <Printer className="text-secondary h-8 w-8" />
-              </div>
-              <h3 className="text-xl font-semibold text-neutral mb-4">2. Custom Manufacturing</h3>
-              <p className="text-gray-600 leading-relaxed">
-                Our 3D printing technology creates your personalized product using eco-friendly 
-                materials and precise specifications.
-              </p>
-            </div>
-            
-            <div className="text-center group">
-              <div className="bg-accent/10 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-accent/20 transition-colors">
-                <Truck className="text-accent h-8 w-8" />
-              </div>
-              <h3 className="text-xl font-semibold text-neutral mb-4">3. Discreet Delivery</h3>
-              <p className="text-gray-600 leading-relaxed">
-                Receive your custom products through your preferred clinic or direct delivery 
-                in unmarked, secure packaging.
-              </p>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Access & Distribution */}
-      <section className="py-20 bg-surface">
+      {/* Distribution Channels */}
+      <section className="py-20 bg-surface border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl lg:text-4xl font-bold text-neutral mb-4">
+            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-3 font-display">
               Accessible Distribution
             </h2>
-            <p className="text-xl text-gray-600">
-              Available through multiple channels to meet you where you are
-            </p>
+            <p className="text-white/50 text-lg">Available through multiple channels to meet you where you are</p>
           </div>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="text-center group">
-              <div className="bg-primary/10 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
-                <Hospital className="text-primary h-8 w-8" />
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              { icon: Hospital, label: "Healthcare Clinics", desc: "Partner clinics and health centers nationwide", color: "text-primary" },
+              { icon: UserCheck, label: "Private Practice", desc: "Individual healthcare providers and specialists", color: "text-secondary" },
+              { icon: Store, label: "Retail Partners", desc: "Pharmacies, wellness stores, specialty retailers", color: "text-white/70" },
+              { icon: Building, label: "Community Spaces", desc: "2SLGBTIQA+ centers, bathhouses, community programs", color: "text-amber-400" },
+            ].map(({ icon: Icon, label, desc, color }) => (
+              <div key={label} className="group text-center p-6 rounded-xl border border-white/10 hover:border-white/20 bg-white/3 hover:bg-white/5 transition-all">
+                <div className="w-12 h-12 rounded-xl border border-white/10 flex items-center justify-center mx-auto mb-4 group-hover:border-white/20 transition-colors">
+                  <Icon className={`${color} h-6 w-6`} />
+                </div>
+                <h3 className="text-white font-semibold mb-2 text-sm">{label}</h3>
+                <p className="text-white/40 text-xs leading-relaxed">{desc}</p>
               </div>
-              <h3 className="text-lg font-semibold text-neutral mb-2">Healthcare Clinics</h3>
-              <p className="text-gray-600 text-sm">
-                Available at partner clinics and health centers nationwide
-              </p>
-            </div>
-            
-            <div className="text-center group">
-              <div className="bg-secondary/10 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:bg-secondary/20 transition-colors">
-                <UserCheck className="text-secondary h-8 w-8" />
-              </div>
-              <h3 className="text-lg font-semibold text-neutral mb-2">Private Practice</h3>
-              <p className="text-gray-600 text-sm">
-                Through individual healthcare providers and specialists
-              </p>
-            </div>
-            
-            <div className="text-center group">
-              <div className="bg-accent/10 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:bg-accent/20 transition-colors">
-                <Store className="text-accent h-8 w-8" />
-              </div>
-              <h3 className="text-lg font-semibold text-neutral mb-2">Retail Partners</h3>
-              <p className="text-gray-600 text-sm">
-                Select pharmacies, wellness stores, and specialty retailers
-              </p>
-            </div>
-            
-            <div className="text-center group">
-              <div className="bg-purple-100 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:bg-purple-200 transition-colors">
-                <Building className="text-purple-600 h-8 w-8" />
-              </div>
-              <h3 className="text-lg font-semibold text-neutral mb-2">Community Spaces</h3>
-              <p className="text-gray-600 text-sm">
-                2SLGBTIQA+ 🌈 🏳️‍🌈🏳️‍⚧️⚧️ centers, bathhouses, and community health programs
-              </p>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Learning Resources Section */}
-      <section className="py-20 bg-gradient-to-br from-purple-50 via-blue-50 to-cyan-50">
+      {/* Learning Resources */}
+      <section className="py-20 bg-black border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl lg:text-5xl font-bold text-neutral mb-6">
+          <div className="text-center mb-14">
+            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-3 font-display">
               Cultural Wisdom & Learning
             </h2>
-            <p className="text-xl text-gray-600 mb-8">
-              Access cultural wisdom through stories, connect with peer mentors, and explore health equity resources
+            <p className="text-white/50 text-lg mb-8 max-w-2xl mx-auto">
+              Stories, peer mentors, and health equity analytics — all in one place
             </p>
-            
-            <Button 
-              size="lg" 
+            <Button
+              size="lg"
               onClick={() => setShowOnboarding(true)}
-              className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white shadow-lg"
+              className="bg-white text-black hover:bg-white/90 font-semibold"
             >
               <Lightbulb className="mr-2 h-5 w-5" />
               Start Learning Tutorial
             </Button>
           </div>
 
-          <div className="grid lg:grid-cols-3 gap-8 mb-16">
-            {/* Interactive Stories */}
-            <Card className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary/50">
-              <CardContent className="p-8 text-center">
-                <div className="mb-6 relative">
-                  <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto group-hover:scale-110 transition-transform">
-                    <Book className="h-8 w-8 text-white" />
+          <div className="grid lg:grid-cols-3 gap-6 mb-10">
+            {[
+              {
+                href: "/interactive-stories",
+                title: "Cultural Wisdom Stories",
+                desc: "Learn from Indigenous elders, curanderas, and traditional healers through interactive storytelling.",
+                tags: ["Medicine Wheel", "Curanderismo", "African Healing"],
+                badge: "150 XP",
+                color: "border-primary/20 hover:border-primary/40",
+                btnClass: "bg-primary text-black hover:bg-primary/90",
+                btnLabel: "Explore Stories",
+              },
+              {
+                href: "/peer-mentor",
+                title: "Peer Mentor Network",
+                desc: "Connect with mentors using intelligence frameworks and earn stablecoin dividends for contributions.",
+                tags: ["Infinite Intelligence", "Multicultural", "Time Banking"],
+                badge: "Earn Dividends",
+                color: "border-secondary/20 hover:border-secondary/40",
+                btnClass: "bg-secondary text-black hover:bg-secondary/90",
+                btnLabel: "Find Mentors",
+              },
+              {
+                href: "/analytics",
+                title: "Learning Analytics",
+                desc: "Monitor your health equity journey, cultural competency growth, and community impact metrics.",
+                tags: ["Health Equity", "DALY Impact", "Cultural Growth"],
+                badge: "Track Progress",
+                color: "border-white/10 hover:border-white/20",
+                btnClass: "bg-white text-black hover:bg-white/90",
+                btnLabel: "View Analytics",
+              },
+            ].map(({ href, title, desc, tags, badge, color, btnClass, btnLabel }) => (
+              <Card key={title} className={`bg-white/3 border ${color} transition-all duration-200`}>
+                <CardContent className="p-7 flex flex-col h-full">
+                  <div className="flex items-start justify-between mb-4">
+                    <h3 className="text-lg font-bold text-white font-display">{title}</h3>
+                    <Badge className="bg-white/10 text-white/70 border-white/15 text-xs ml-2 flex-shrink-0">{badge}</Badge>
                   </div>
-                  <Badge className="absolute -top-2 -right-2 bg-yellow-500 text-black">
-                    <Star className="w-3 h-3 mr-1" />
-                    150 XP
-                  </Badge>
-                </div>
-                <h3 className="text-xl font-bold mb-4">Cultural Wisdom Stories</h3>
-                <p className="text-gray-600 mb-6">
-                  Learn from Indigenous elders, curanderas, and traditional healers through interactive storytelling
-                </p>
-                <div className="space-y-2 mb-6">
-                  <Badge variant="secondary" className="mr-2">Medicine Wheel</Badge>
-                  <Badge variant="secondary" className="mr-2">Curanderismo</Badge>
-                  <Badge variant="secondary">African Healing</Badge>
-                </div>
-                <Link href="/interactive-stories">
-                  <Button className="w-full group-hover:bg-primary/90">
-                    <Play className="mr-2 h-4 w-4" />
-                    Explore Stories
-                  </Button>
-                </Link>
-              </CardContent>
-            </Card>
-
-            {/* Peer Mentor Network */}
-            <Card className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-aquamarine/50">
-              <CardContent className="p-8 text-center">
-                <div className="mb-6 relative">
-                  <div className="w-16 h-16 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full flex items-center justify-center mx-auto group-hover:scale-110 transition-transform">
-                    <Heart className="h-8 w-8 text-white" />
+                  <p className="text-white/50 text-sm leading-relaxed mb-5 flex-1">{desc}</p>
+                  <div className="flex flex-wrap gap-2 mb-5">
+                    {tags.map(t => (
+                      <Badge key={t} variant="outline" className="border-white/15 text-white/40 text-xs">{t}</Badge>
+                    ))}
                   </div>
-                  <Badge className="absolute -top-2 -right-2 bg-green-500 text-white">
-                    <Coins className="w-3 h-3 mr-1" />
-                    Earn Dividends
-                  </Badge>
-                </div>
-                <h3 className="text-xl font-bold mb-4">Peer Mentor Network</h3>
-                <p className="text-gray-600 mb-6">
-                  Connect with mentors using our intelligence frameworks and earn stablecoin dividends for contributions
-                </p>
-                <div className="space-y-2 mb-6">
-                  <Badge variant="outline" className="mr-2">Infinite Intelligence</Badge>
-                  <Badge variant="outline" className="mr-2">Multicultural</Badge>
-                  <Badge variant="outline">Time Banking</Badge>
-                </div>
-                <Link href="/peer-mentor">
-                  <Button className="w-full bg-aquamarine hover:bg-aquamarine/90 text-black group-hover:shadow-lg">
-                    <Users className="mr-2 h-4 w-4" />
-                    Find Mentors
-                  </Button>
-                </Link>
-              </CardContent>
-            </Card>
-
-            {/* Analytics Dashboard */}
-            <Card className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-secondary/50">
-              <CardContent className="p-8 text-center">
-                <div className="mb-6 relative">
-                  <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-teal-500 rounded-full flex items-center justify-center mx-auto group-hover:scale-110 transition-transform">
-                    <Building className="h-8 w-8 text-white" />
-                  </div>
-                  <Badge className="absolute -top-2 -right-2 bg-blue-500 text-white">
-                    <Award className="w-3 h-3 mr-1" />
-                    Track Progress
-                  </Badge>
-                </div>
-                <h3 className="text-xl font-bold mb-4">Learning Analytics</h3>
-                <p className="text-gray-600 mb-6">
-                  Monitor your health equity journey, cultural competency growth, and community impact metrics
-                </p>
-                <div className="space-y-2 mb-6">
-                  <Badge variant="outline" className="mr-2">Health Equity</Badge>
-                  <Badge variant="outline" className="mr-2">DALY Impact</Badge>
-                  <Badge variant="outline">Cultural Growth</Badge>
-                </div>
-                <Link href="/analytics">
-                  <Button className="w-full bg-secondary hover:bg-secondary/90 group-hover:shadow-lg">
-                    <Building className="mr-2 h-4 w-4" />
-                    View Analytics
-                  </Button>
-                </Link>
-              </CardContent>
-            </Card>
+                  <Link href={href}>
+                    <Button className={`w-full ${btnClass} font-semibold`}>
+                      {btnLabel}
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </Link>
+                </CardContent>
+              </Card>
+            ))}
           </div>
 
-          {/* Gboard Integration Showcase */}
-          <Card className="bg-gradient-to-r from-purple-100 via-blue-100 to-cyan-100 border-2 border-purple-200">
+          {/* Gboard Integration */}
+          <Card className="bg-white/3 border border-white/10">
             <CardContent className="p-8">
               <div className="grid lg:grid-cols-2 gap-8 items-center">
                 <div>
-                  <h3 className="text-2xl font-bold mb-4 flex items-center">
-                    <Lightbulb className="mr-3 h-6 w-6 text-purple-600" />
+                  <h3 className="text-2xl font-bold text-white mb-3 font-display flex items-center">
+                    <Lightbulb className="mr-3 h-6 w-6 text-amber-400" />
                     Smart Keyboard Integration
                   </h3>
-                  <p className="text-gray-700 mb-6">
-                    Learn inclusive language through our Gboard integration with real-time suggestions, 
+                  <p className="text-white/50 text-sm mb-5 leading-relaxed">
+                    Learn inclusive language through our Gboard integration with real-time suggestions,
                     cultural terminology, and voice input accessibility features.
                   </p>
-                  <div className="grid grid-cols-2 gap-4 mb-6">
-                    <div className="flex items-center space-x-2">
-                      <CheckCircle className="h-4 w-4 text-green-600" />
-                      <span className="text-sm">Inclusive Language</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <CheckCircle className="h-4 w-4 text-green-600" />
-                      <span className="text-sm">Voice Accessibility</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <CheckCircle className="h-4 w-4 text-green-600" />
-                      <span className="text-sm">Cultural Terms</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <CheckCircle className="h-4 w-4 text-green-600" />
-                      <span className="text-sm">Multi-language</span>
-                    </div>
+                  <div className="grid grid-cols-2 gap-3 mb-6">
+                    {["Inclusive Language", "Voice Accessibility", "Cultural Terms", "Multi-language"].map(f => (
+                      <div key={f} className="flex items-center space-x-2">
+                        <CheckCircle className="h-4 w-4 text-secondary flex-shrink-0" />
+                        <span className="text-sm text-white/60">{f}</span>
+                      </div>
+                    ))}
                   </div>
-                  <Button 
+                  <Button
                     onClick={() => setShowOnboarding(true)}
-                    className="bg-gradient-to-r from-purple-600 to-blue-600 text-white"
+                    className="bg-white text-black hover:bg-white/90 font-semibold"
                   >
                     Try Interactive Tutorial
                   </Button>
                 </div>
-                <div className="text-center">
-                  <div className="relative inline-block">
-                    <div className="w-64 h-32 bg-white rounded-lg shadow-lg border p-4 mx-auto">
-                      <div className="text-sm text-gray-500 mb-2">Try typing: "sexual creativity"</div>
-                      <div className="border rounded p-2 text-left text-sm bg-gray-50">
-                        sexual creativity
-                      </div>
-                      <div className="mt-2 space-y-1">
-                        <div className="text-xs bg-blue-100 text-blue-800 rounded px-2 py-1 inline-block">
-                          → sexual wellness
-                        </div>
-                        <div className="text-xs bg-purple-100 text-purple-800 rounded px-2 py-1 inline-block ml-2">
-                          → reproductive justice
-                        </div>
-                      </div>
-                    </div>
-                    <Badge className="absolute -top-2 -right-2 bg-purple-500 text-white">
-                      Live Demo
-                    </Badge>
+                <div className="bg-white/5 border border-white/10 rounded-xl p-6">
+                  <div className="text-xs text-white/30 mb-2 font-mono">Try typing: "sexual creativity"</div>
+                  <div className="border border-white/15 rounded-lg p-3 text-sm text-white/70 bg-white/5 font-mono mb-3">
+                    sexual creativity
                   </div>
+                  <div className="space-y-2">
+                    <div className="text-xs bg-primary/20 text-primary rounded-lg px-3 py-1.5 inline-block">
+                      → sexual wellness
+                    </div>
+                    <div className="text-xs bg-secondary/20 text-secondary rounded-lg px-3 py-1.5 inline-block ml-2">
+                      → reproductive justice
+                    </div>
+                  </div>
+                  <Badge className="mt-3 bg-amber-500/20 text-amber-400 border-amber-500/20 text-xs">Live Demo</Badge>
                 </div>
               </div>
             </CardContent>
@@ -482,32 +308,33 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl lg:text-4xl font-bold text-neutral mb-4">
+      {/* CTA */}
+      <section className="py-20 bg-surface">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 font-display">
             Ready to Get Started?
           </h2>
-          <p className="text-xl text-gray-600 mb-8">
-            Join thousands who have already discovered personalized protection and cultural wisdom
+          <p className="text-white/50 text-lg mb-8">
+            Join thousands who have discovered personalized protection and cultural wisdom
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/products">
-              <Button size="lg">
+              <Button size="lg" className="bg-white text-black hover:bg-white/90 font-bold">
                 <Ruler className="mr-2 h-5 w-5" />
                 Start Customization
               </Button>
             </Link>
-            <Button 
-              size="lg" 
+            <Button
+              size="lg"
               variant="outline"
               onClick={() => setShowOnboarding(true)}
+              className="border-white/20 text-white hover:bg-white/10"
             >
               <Lightbulb className="mr-2 h-5 w-5" />
               Take Tutorial
             </Button>
             <Link href="/partnership">
-              <Button size="lg" variant="outline">
+              <Button size="lg" variant="ghost" className="text-white/50 hover:text-white hover:bg-white/5">
                 Partner With Us
               </Button>
             </Link>
@@ -515,7 +342,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Onboarding Tutorial Modal */}
       <OnboardingTutorial
         isOpen={showOnboarding}
         onClose={() => setShowOnboarding(false)}
