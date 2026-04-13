@@ -34,6 +34,7 @@ import {
 } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { FediverseShare } from "@/components/FediverseShare";
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from "recharts";
 
 interface WikiArticle {
   id: string;
@@ -1290,9 +1291,11 @@ export default function Wiki() {
       category: "sizing",
       content: `# Intersex-Centered Precision Sizing Guide
 
-## ⚧️ Introduction: Centering Intersex Anatomy
+[img: "Sizing System Overview" caption="TriSex.org's 60+ size system starts from intersex anatomical diversity as the universal baseline."]
 
-TriSex.org's precision sizing system is built from the ground up around intersex anatomical diversity. Rather than treating intersex bodies as "special cases" that need to "fit in" to binary sizing systems, we center intersex variations as our baseline—ensuring all anatomical configurations have access to precision protection without forced categorization.
+## Centering Intersex Anatomy
+
+TriSex.org's precision sizing system is built from the ground up around intersex anatomical diversity. Rather than treating intersex bodies as special cases, we center intersex variations as our baseline — ensuring all anatomical configurations have access to precision protection without forced categorization.
 
 > Intersex anatomical diversity is natural human variation, not an outlier. Our sizing honors this truth.
 
@@ -1300,94 +1303,80 @@ TriSex.org's precision sizing system is built from the ground up around intersex
 
 ## Why Intersex-Centered Sizing Matters
 
-> Your anatomy is not a problem to solve. It is a reality to honor.
+Traditional sizing systems assumed only two anatomical types, used limited data for "standard" sizes, forced intersex individuals into inadequate categories, and excluded natural variation from the design process.
 
-### The Problem with Binary Sizing
-Traditional protection sizing was designed around binary assumptions:
-- Assumed only two anatomical "types"
-- Created arbitrary "standard" sizes based on limited data
-- Forced intersex individuals into inadequate categories
-- Excluded natural anatomical variations from design process
+Our approach is different:
 
-### Our Intersex-Centered Approach
-- Foundation, Not Afterthought — Intersex variations inform our entire sizing spectrum
-- No Forced Categorization — All anatomies measured on their own terms
-- Anatomical Neutrality — Sizing based on actual measurements, not gender assumptions
-- Inclusive Design — 60+ sizes accommodate the full spectrum of human anatomical diversity
+| Principle | Description |
+| --- | --- |
+| Foundation, Not Afterthought | Intersex variations inform the entire sizing spectrum |
+| No Forced Categorization | All anatomies measured on their own terms |
+| Anatomical Neutrality | Sizing based on measurement, not gender assumption |
+| Inclusive Design | 60+ sizes accommodate the full human spectrum |
 
-## The 60+ Intersex-Centered Size System
+---
 
-### Size Nomenclature (Gender-Neutral)
-- Letter System: A through H (circumference/width categories)
-- Number System: 1, 3, 5 (length categories)
-- Example: C3 = Mid-range width, mid-range length
-- No Binary Labels: Sizes describe fit characteristics, not gender
+## The 60+ Size System
 
-### Width Categories (Circumference-Based)
-Our width categories honor all anatomical configurations:
+Sizes use a letter-number code. Letters indicate width (circumference), numbers indicate length. For example, C3 means mid-range width with mid-range length. No binary labels are used — sizes describe fit characteristics, not gender.
 
-**A Series**: 45-47mm (Narrow)
-**B Series**: 47-49mm (Compact)
-**C Series**: 49-51mm (Mid-range)
-**D Series**: 51-53mm (Moderate)
-**E Series**: 53-55mm (Generous)
-**F Series**: 55-57mm (Spacious)
-**G Series**: 57-60mm (Expansive)
-**H Series**: 60mm+ (Maximum)
+### Width Categories
+
+| Series | Circumference | Fit Description |
+| --- | --- | --- |
+| A | 45–47 mm | Narrow |
+| B | 47–49 mm | Compact |
+| C | 49–51 mm | Mid-range |
+| D | 51–53 mm | Moderate |
+| E | 53–55 mm | Generous |
+| F | 55–57 mm | Spacious |
+| G | 57–60 mm | Expansive |
+| H | 60+ mm | Maximum |
+
+### Length Categories
+
+| Series | Length |
+| --- | --- |
+| 1 | 160 mm |
+| 3 | 170 mm |
+| 5 | 180 mm |
 
 > ⚧️ These ranges accommodate natural anatomical variations including intersex configurations, without requiring users to identify or categorize their bodies.
 
-### Length Categories (Measurement-Based)
-**1 Series**: 160mm
-**3 Series**: 170mm
-**5 Series**: 180mm
+[chart:pie "Size Distribution Across Width Categories"]
+A Series|8
+B Series|12
+C Series|20
+D Series|22
+E Series|18
+F Series|10
+G Series|6
+H Series|4
+[/chart]
 
-> ⚧️ Length categories are purely measurement-based, honoring all anatomical structures regardless of classification.
+---
 
 ## Measurement Best Practices
 
-### Intersex-Affirming Measurement Approach
-
 > Your anatomy is measured on its own terms, without comparison to binary "norms."
 
-1. **Anatomical Neutrality**: We measure what exists, not what "should" exist
-2. **Privacy-First**: All measurements processed locally, no data storage
-3. **No Self-Categorization Required**: Sizing based on measurements alone
-4. **3D Scanning Recommended**: Our scanner accommodates all anatomical variations
+All measurements are processed locally on your device with no data transmission. No anatomical categorization is required. Our 3D scanner accommodates all configurations, and you control your data.
 
-### Measurement Techniques for All Anatomies
+### By Anatomy Type
 
-#### For Standard Erectile Anatomy:
-1. **Length**: Measure full length in representative state
-2. **Circumference**: Measure at widest point
-3. **Variations**: Note any significant variations along structure
+| Anatomy | Approach |
+| --- | --- |
+| Standard erectile | Measure full length and circumference at widest point |
+| Intersex | Flexible multi-point measurement; 3D scanner recommended |
+| Post-surgical | Measure current configuration; note sensitivity zones |
 
-#### For Intersex Anatomies:
-1. **Flexible Approach**: Measure in whatever state provides accurate representation
-2. **Multiple Points**: For varied configurations, measure multiple circumference points
-3. **Custom Consultation**: Our team can help determine best measurement approach
-4. **3D Scanner Priority**: Automated scanning eliminates need for self-measurement decisions
-
-#### For Post-Surgical Anatomies:
-1. **Current Configuration**: Measure anatomy as it exists now
-2. **Sensitivity Zones**: Note areas requiring special attention
-3. **Healing Considerations**: Account for any ongoing changes
-4. **Medical Support**: Healthcare provider can assist with measurements if helpful
-
-### Privacy-First, Intersex-Affirming Technology
-1. All measurements processed locally on your device
-2. No data transmission during sizing process
-3. No anatomical categorization required
-4. 3D scanning accommodates all configurations without human intervention
-5. User-controlled data retention—delete measurements anytime
-
-### Common Sizing Challenges & Solutions
+### Common Sizing Questions
 
 **Challenge**: "My anatomy doesn't fit binary assumptions"
 **Solution**: Our system doesn't use binary assumptions. Measure your anatomy exactly as it exists.
 
 **Challenge**: "I have intersex anatomy and don't know how to categorize it"
-**Solution**: Don't categorize—just measure. Our 60+ sizes accommodate all configurations.
+**Solution**: Don't categorize — just measure. Our 60+ sizes accommodate all configurations.
 
 **Challenge**: "My anatomy varies significantly in different states"
 **Solution**: Measure in the state when you'll use protection. Our 3D scanner can capture variations.
@@ -1395,90 +1384,44 @@ Our width categories honor all anatomical configurations:
 **Challenge**: "I've had gender-affirming surgery and sizing is confusing"
 **Solution**: Measure your current anatomy. Post-surgical configurations are fully accommodated.
 
+---
+
 ## Fit Optimization
 
-### Fit Characteristics (Not Gender-Based)
-- **Narrow Fit**: Minimal movement, maximum security, tight feel
-- **Mid-Range Fit**: Balanced comfort and security, most versatile
-- **Spacious Fit**: Easy application, relaxed feel, maximum comfort
+Three fit profiles are available, none of which are gender-based:
 
-### Size Verification Process
-1. Test fit with sample sizes (free samples available)
-2. Verify comfort during typical use conditions
-3. Check for proper retention without restriction
-4. Ensure adequate sensitivity and pleasure
+| Fit | Feel | Best For |
+| --- | --- | --- |
+| Narrow | Minimal movement, maximum security | High activity use |
+| Mid-Range | Balanced comfort and security | Everyday versatility |
+| Spacious | Easy application, relaxed | Maximum comfort |
 
-## Intersex-Centered Inclusive Philosophy
+Verify your fit by testing with free samples, checking comfort under typical conditions, confirming proper retention, and ensuring adequate sensitivity.
 
-### Centering Intersex Anatomies
+---
 
-#### What This Means in Practice
-- Intersex anatomical variations informed our entire sizing design
-- Size ranges start from intersex anatomical diversity, not binary assumptions
-- No anatomy is considered "outside the norm"—all variations ARE the norm
-- Product testing includes intersex community members from design phase
+## Who This Serves
 
-### All Anatomies Welcome
-
-Our system fully accommodates:
 - ✓ Intersex anatomical configurations (all variations)
 - ✓ Post-gender-affirming-surgery anatomy
 - ✓ Natural variations across the human spectrum
 - ✓ Bodies affected by medical conditions or treatments
 - ✓ Anatomies in various states (hormone therapy, healing, etc.)
-- ✓ Any configuration not listed—we honor all bodies
+- ✓ Any configuration not listed — we honor all bodies
 
-### No Forced Categorization
+### What We Never Ask
 
-#### You Will Never Be Asked
-- "Are you male or female?" (sizing doesn't require this)
-- "What type of anatomy do you have?" (measurements tell us what we need)
-- "Is your anatomy 'normal'?" (all anatomies are normal)
-- To fit into a binary category to access sizing
-
-#### What We Ask Instead
-- "What are your measurements?" (neutral, objective)
-- "What fit feel do you prefer?" (personal preference)
-- "What protection features matter to you?" (individualized)
-
-### Cultural & Medical Sensitivity
-- Respectful, neutral terminology throughout
-- Privacy protections for sensitive health information
-- Community-specific needs honored
-- Religious/cultural requirements accommodated
-- Medical provider consultation supported
-
-## Special Considerations
-
-### For Intersex Individuals
-- **You Are Centered Here**: This system was designed WITH you, not for you as an afterthought
-- **Measurement Flexibility**: Our 3D scanner or custom consultation available
-- **No Disclosure Required**: You never need to disclose intersex status to get proper sizing
-- **Community Input Welcome**: Help us continue improving through intersex community feedback
-
-### For Trans & Non-Binary Individuals
-- **Anatomy-Based Only**: Sizing based on current anatomy, not gender identity
-- **Transition Accommodations**: Resizing available as anatomy changes during transition
-- **Privacy Protected**: No gender markers required for sizing
-- **Affirming Language**: Gender-neutral terminology throughout
-
-### For Anyone with Anatomical Variations
-- **All Variations Welcome**: Whether congenital, acquired, or post-surgical
-- **Judgment-Free Zone**: Your anatomy is honored exactly as it exists
-- **Custom Solutions**: If our 60+ sizes don't fit perfectly, custom sizing available
-- **Community Support**: Peer support from others with similar anatomies available
-
-## Conclusion
-
-TriSex.org's intersex-centered sizing represents a fundamental shift: from forcing diverse bodies into narrow categories, to building protection systems around the beautiful reality of human anatomical diversity. 
-
-By centering intersex anatomies in our design, we create better protection for everyone—because honoring the full spectrum of human variation improves outcomes for all bodies.
-
-**Your anatomy is not a problem to solve. It's a reality to honor.**
+You will never be asked to identify as male or female, categorize your anatomy type, declare whether your anatomy is "normal," or fit into a binary category. We ask only for your measurements, your preferred fit feel, and which protection features matter to you.
 
 ---
 
-*Developed in consultation with intersex advocates, medical professionals, and community members. Continuously improved through ongoing feedback.*`,
+## Conclusion
+
+TriSex.org's intersex-centered sizing represents a fundamental shift: from forcing diverse bodies into narrow categories, to building protection systems around the reality of human anatomical diversity.
+
+> Your anatomy is not a problem to solve. It's a reality to honor.
+
+*Developed in consultation with intersex advocates, medical professionals, and community members.*`,
       tags: ["sizing", "measurement", "precision", "custom-fit", "intersex-centered", "inclusive", "anatomical-diversity"],
       lastUpdated: "2025-01-13",
       author: "TriSex.org Intersex-Centered Design Team",
@@ -1491,96 +1434,55 @@ By centering intersex anatomies in our design, we create better protection for e
       category: "sti",
       content: `# 4D STI Intervention System
 
+[img: "Bioregional Monitoring Network" caption="Wastewater-based epidemiology enables population-level STI surveillance without individual identification."]
+
 ## Overview
-Revolutionary approach to STI prevention using bioregional sewer and water sampling for targeted public health interventions.
+
+A revolutionary approach to STI prevention using bioregional sewer and water sampling for targeted public health interventions. The system operates across four dimensions simultaneously.
+
+---
 
 ## The Four Dimensions
 
-### 1. Geographic Dimension
-- Zip code-level granularity
-- County and state aggregation
-- Urban vs rural distinctions
-- Population density correlations
+| Dimension | Focus | Examples |
+| --- | --- | --- |
+| Geographic | Spatial granularity | Zip code, county, state; urban vs rural |
+| Temporal | Time-series tracking | 24-hour cycles, weekly trends, seasonal patterns |
+| Biomarker | Pathogen detection | Chlamydia DNA, gonorrhea markers, HIV viral load, HPV strains |
+| Intervention | Response targeting | Education campaigns, mobile testing, resource allocation |
 
-### 2. Temporal Dimension
-- Real-time monitoring (24-hour cycles)
-- Weekly trend analysis
-- Seasonal pattern recognition
-- Long-term epidemiological tracking
+[chart:bar "Biomarker Detection Capabilities"]
+Chlamydia|95
+Gonorrhea|93
+Syphilis|88
+HIV|97
+HPV|85
+Herpes|82
+[/chart]
 
-### 3. Biomarker Dimension
-- Chlamydia DNA/RNA detection
-- Gonorrhea genetic markers
-- Syphilis bacterial indicators
-- HIV viral load measurements
-- HPV strain identification
-- Herpes virus detection
+---
 
-### 4. Intervention Dimension
-- Targeted education campaigns
-- Mobile testing unit deployment
-- Treatment resource allocation
-- Prevention program optimization
+## Technical Pipeline
 
-## Technical Implementation
+### Sample Collection → Lab Analysis → Data Processing
 
-### Sample Collection
-- Automated 24-hour composite sampling
-- Temperature-controlled transport
-- Chain of custody protocols
-- Quality assurance testing
+| Stage | Method |
+| --- | --- |
+| Collection | Automated 24-hour composite sampling, temperature-controlled transport |
+| Lab Analysis | qPCR, mass spectrometry, next-generation sequencing |
+| Processing | Population normalization, privacy-preserving analytics, ML trend detection |
 
-### Laboratory Analysis
-- qPCR for DNA/RNA detection
-- Mass spectrometry for compounds
-- Next-generation sequencing
-- Bioinformatics analysis pipelines
-
-### Data Processing
-- Population normalization algorithms
-- Privacy-preserving analytics
-- Machine learning trend detection
-- Statistical significance testing
+---
 
 ## Public Health Applications
 
-### Early Warning Systems
-- Outbreak prediction (7-14 days advance)
-- Hotspot identification
-- Trend reversal detection
-- Resource demand forecasting
+The system provides early warning (7–14 days advance outbreak prediction), hotspot identification, and resource demand forecasting. Intervention targeting uses geographic precision, demographic specificity, and cost-effectiveness optimization.
 
-### Intervention Targeting
-- Geographic precision
-- Demographic specificity
-- Risk factor correlation
-- Cost-effectiveness optimization
-
-### Policy Development
-- Evidence-based recommendations
-- Resource allocation guidance
-- Prevention strategy validation
-- Health equity considerations
+Policy development follows evidence-based recommendations, prevention strategy validation, and health equity considerations.
 
 ## Privacy and Ethics
 
-### Data Protection
-- Aggregate-only reporting
-- No individual identification
-- Secure data transmission
-- Limited access protocols
-
-### Community Engagement
-- Transparent methodology
-- Public health benefit focus
-- Community consent processes
-- Cultural sensitivity training
-
-### Ethical Oversight
-- IRB approval requirements
-- Community advisory boards
-- Regular ethical review
-- Harm prevention protocols`,
+All reporting is aggregate-only with no individual identification. The system uses secure data transmission, limited access protocols, transparent methodology, community consent processes, IRB approval, and regular ethical review.`,
       tags: ["sti", "bioregional", "public-health", "intervention", "4d"],
       lastUpdated: "2024-01-14",
       author: "Public Health Research Team",
@@ -1593,95 +1495,45 @@ Revolutionary approach to STI prevention using bioregional sewer and water sampl
       category: "cooperative",
       content: `# Cooperative Sexual Health Model
 
-## International Cooperative Principles Applied to Health
+[img: "Cooperative Governance" caption="Applying the seven international cooperative principles to sexual health services."]
 
-### 1. Voluntary and Open Membership
-- No discrimination based on anatomy, identity, or status
-- Accessible membership regardless of economic position
-- Clear, transparent enrollment processes
-- Exit rights protected
+## The Seven Cooperative Principles
 
-### 2. Democratic Member Control
-- One member, one vote governance
-- Elected board representation
-- Regular member assemblies
-- Transparent decision-making processes
+| Principle | Application to Sexual Health |
+| --- | --- |
+| Voluntary & Open Membership | No discrimination by anatomy, identity, or status |
+| Democratic Member Control | One member, one vote; elected board representation |
+| Member Economic Participation | Equitable contributions; democratic capital control; dividends |
+| Autonomy & Independence | Member-controlled; government/corporate independence |
+| Education & Training | Comprehensive sexual health education; public campaigns |
+| Cooperation Among Cooperatives | Inter-cooperative partnerships; shared resources |
+| Concern for Community | Sustainable development; social justice; community health |
 
-### 3. Member Economic Participation
-- Equitable capital contributions
-- Democratic control of capital
-- Member dividend distribution
-- Reserve fund maintenance
-
-### 4. Autonomy and Independence
-- Member-controlled organization
-- Government/corporate independence
-- Mission-aligned partnerships only
-- Democratic accountability maintained
-
-### 5. Education, Training, and Information
-- Comprehensive sexual health education
-- Member skill development
-- Public awareness campaigns
-- Evidence-based information sharing
-
-### 6. Cooperation Among Cooperatives
-- Inter-cooperative partnerships
-- Shared resource development
-- Collective advocacy efforts
-- Movement strengthening activities
-
-### 7. Concern for Community
-- Sustainable development practices
-- Environmental responsibility
-- Social justice commitment
-- Community health improvement
+---
 
 ## BAD Co-op Integration
 
-### "for GOOD Sex" - Sexual Health Advance Directives
-- Autonomous decision-making tools
-- Consent documentation systems
-- Preference communication methods
-- Emergency healthcare directives
+| Program | Focus |
+| --- | --- |
+| "for GOOD Sex" | Advance directives, consent documentation, preference communication |
+| "for GOOD Health" | Member-directed health planning, mutual aid networks |
+| "for Good People" | Consent-focused matchmaking, community-supported connections |
 
-### "for GOOD Health" - Cooperative Care Planning
-- Member-directed health planning
-- Collective resource sharing
-- Mutual aid networks
-- Democratic health governance
+---
 
-### "for Good People" - Community Matchmaking
-- Cooperative relationship principles
-- Consent-focused matching
-- Community-supported connections
-- Democratic relationship education
+## Implementation
 
-## Implementation Framework
+### Governance
 
-### Governance Structure
-- Member-elected board of directors
-- Regional cooperative councils
-- Special interest working groups
-- Youth and elder advisory committees
+The cooperative is governed by a member-elected board of directors, regional cooperative councils, special interest working groups, and youth and elder advisory committees.
 
 ### Economic Model
-- Sliding scale membership fees
-- Surplus distribution to members
-- Community reinvestment programs
-- Cooperative development fund
+
+Membership uses a sliding scale fee structure. Surplus is distributed to members as dividends, with portions reinvested through community reinvestment programs and a cooperative development fund.
 
 ### Service Delivery
-- Member-owned health centers
-- Cooperative education programs
-- Democratic service planning
-- Community-controlled resources
 
-### Quality Assurance
-- Member satisfaction surveys
-- Democratic quality control
-- Continuous improvement processes
-- Peer accountability systems`,
+Member-owned health centers deliver cooperative education programs, democratic service planning, and community-controlled resources, all subject to member satisfaction surveys and peer accountability.`,
       tags: ["cooperative", "bad-coop", "governance", "community", "democracy"],
       lastUpdated: "2024-01-13",
       author: "Cooperative Development Team",
@@ -1694,109 +1546,97 @@ Revolutionary approach to STI prevention using bioregional sewer and water sampl
       category: "economic",
       content: `# DALY Tracking and Economic Impact Assessment
 
-## Disability Adjusted Life Years (DALY) Overview
+[img: "DALY Prevention Model" caption="Disability-Adjusted Life Years (DALYs) measure the total burden of disease, combining years lost to premature death with years lived with disability."]
 
-### DALY Definition
-DALY = Years of Life Lost (YLL) + Years Lived with Disability (YLD)
+## What is a DALY?
 
-### Calculation Components
-**YLL**: Premature mortality impact
-**YLD**: Morbidity and disability impact
-**Age weighting**: Optional age-specific adjustments
-**Discount rate**: Future value considerations
+A Disability-Adjusted Life Year represents one lost year of healthy life. The formula is straightforward:
 
-## TriSex DALY Prevention Model
+> DALY = Years of Life Lost (YLL) + Years Lived with Disability (YLD)
 
-### STI-Specific DALY Calculations
-
-#### Chlamydia Prevention
-**Average DALY per case**: 0.18
-**Cases prevented**: 71,374
-**Total DALYs saved**: 12,847
-
-#### Gonorrhea Prevention
-**Average DALY per case**: 0.19
-**Cases prevented**: 46,983
-**Total DALYs saved**: 8,927
-
-#### Syphilis Prevention
-**Average DALY per case**: 0.32
-**Cases prevented**: 48,851
-**Total DALYs saved**: 15,632
-
-#### HIV Prevention
-**Average DALY per case**: 7.8
-**Cases prevented**: 3,006
-**Total DALYs saved**: 23,447
-
-### Economic Valuation Methods
-
-#### WHO Standard Valuation
-**Value per DALY**: $100,000 USD
-**US Healthcare Context**: $150,000 USD
-**TriSex Conservative Estimate**: $125,000 USD
-
-#### Total Economic Impact
-**DALYs Saved**: 79,822
-**Economic Value**: $11.5B annually
-**ROI on Prevention**: 8.4:1
+Each component captures a different dimension of disease burden: premature mortality and ongoing morbidity. Age-weighting and discount rates can adjust for time preference and demographic factors.
 
 ---
 
-## National Debt Impact Analysis
+## STI Prevention: DALYs Saved
+
+The table below summarizes TriSex's modeled prevention impact across four major STIs.
+
+| STI | DALY per Case | Cases Prevented | DALYs Saved |
+| --- | --- | --- | --- |
+| Chlamydia | 0.18 | 71,374 | 12,847 |
+| Gonorrhea | 0.19 | 46,983 | 8,927 |
+| Syphilis | 0.32 | 48,851 | 15,632 |
+| HIV | 7.80 | 3,006 | 23,447 |
+
+[chart:bar "DALYs Saved by STI Category"]
+Chlamydia|12847
+Gonorrhea|8927
+Syphilis|15632
+HIV|23447
+[/chart]
+
+### Economic Valuation
+
+| Valuation Method | Value per DALY |
+| --- | --- |
+| WHO Standard | $100,000 |
+| US Healthcare Context | $150,000 |
+| TriSex Conservative | $125,000 |
+
+With 79,822 total DALYs saved and a conservative $125,000 per DALY valuation, the estimated annual economic value reaches $11.5 billion — an 8.4-to-1 return on prevention investment.
+
+---
+
+## National Debt Impact
 
 > Sexual health prevention generates measurable fiscal returns that contribute to national debt reduction over time.
 
 ### Healthcare Cost Reduction
-**Direct treatment costs avoided**: $4.2B
-**Emergency care prevented**: $1.8B
-**Long-term care savings**: $2.1B
-**Productivity gains**: $3.4B
 
-### Fiscal Impact
-**Federal budget relief**: $8.7B
-**State/local savings**: $2.8B
-**Total public savings**: $11.5B
+| Category | Savings |
+| --- | --- |
+| Direct treatment costs avoided | $4.2B |
+| Emergency care prevented | $1.8B |
+| Long-term care savings | $2.1B |
+| Productivity gains | $3.4B |
 
-### Debt Reduction Potential
-**Current national debt**: $33.8 trillion
-**Annual reduction**: $11.5B
-**10-year cumulative**: $115B
-**20-year projection**: $230B
+[chart:bar "Healthcare Savings Breakdown (Billions)"]
+Treatment|4.2
+Emergency|1.8
+Long-term Care|2.1
+Productivity|3.4
+[/chart]
+
+### Fiscal Impact Summary
+
+| Metric | Amount |
+| --- | --- |
+| Federal budget relief | $8.7B |
+| State/local savings | $2.8B |
+| Total public savings | $11.5B |
+
+### Debt Reduction Projections
+
+Against the current national debt of $33.8 trillion, prevention savings compound over time:
+
+| Timeframe | Cumulative Savings |
+| --- | --- |
+| Annual | $11.5B |
+| 10-year | $115B |
+| 20-year | $230B |
+
+---
 
 ## Measurement and Verification
 
-### Data Sources
-- CDC surveillance systems
-- Healthcare claims databases
-- Death certificate analysis
-- Disability survey data
+Data comes from CDC surveillance systems, healthcare claims databases, death certificate analysis, and disability survey data. All models undergo peer review, statistical validation, sensitivity analysis, and uncertainty quantification.
 
-### Quality Assurance
-- Peer review processes
-- Statistical validation
-- Sensitivity analysis
-- Uncertainty quantification
-
-### Reporting Standards
-- Annual DALY reports
-- Quarterly updates
-- Public transparency
-- Academic publication
+Reporting follows annual DALY reports with quarterly updates, public transparency, and academic publication.
 
 ## Policy Implications
 
-### Prevention Investment
-- Cost-effectiveness analysis
-- Budget allocation guidance
-- Program prioritization
-- Resource optimization
-
-### Healthcare Reform
-- Value-based care models
-- Prevention-focused funding
-- Community health investment
-- Health equity advancement`,
+Prevention investment decisions rely on cost-effectiveness analysis, budget allocation guidance, and resource optimization. Healthcare reform efforts benefit from value-based care models, prevention-focused funding, community health investment, and health equity advancement.`,
       tags: ["daly", "economics", "national-debt", "healthcare", "impact"],
       lastUpdated: "2024-01-12",
       author: "Economic Analysis Team",
@@ -1809,95 +1649,57 @@ DALY = Years of Life Lost (YLL) + Years Lived with Disability (YLD)
       category: "technical",
       content: `# 3D Anatomy Scanning System
 
+[img: "Privacy-Preserving Scanner" caption="On-device structured light scanning captures precise measurements without transmitting any data."]
+
 ## Technology Overview
 
-### Scanning Methods
-- **Structured light scanning**: High precision, safe
-- **Photogrammetry**: Multi-angle image reconstruction
-- **LiDAR integration**: Depth mapping accuracy
-- **AI-assisted measurement**: Automated analysis
+| Method | How It Works |
+| --- | --- |
+| Structured light | Projects light patterns; measures deformation for sub-millimeter precision |
+| Photogrammetry | Reconstructs 3D shape from multiple camera angles |
+| LiDAR integration | Time-of-flight depth mapping for fast capture |
+| AI-assisted | Neural network extracts key dimensions automatically |
 
-### Privacy-First Architecture
+---
 
-#### Local Processing
-- All scanning performed on-device
-- No cloud transmission required
-- Encrypted local storage only
-- User-controlled data retention
+## Privacy-First Architecture
 
-#### Data Minimization
-- Measurement extraction only
-- Image deletion post-processing
-- Aggregate statistics collection
-- No identifiable information stored
+Every scan runs entirely on your device. No images leave the phone or computer. After measurements are extracted, raw images are deleted automatically.
 
-#### Security Measures
-- End-to-end encryption
-- Secure element storage
-- Biometric authentication
-- Regular security audits
+| Layer | Protection |
+| --- | --- |
+| Processing | On-device only, no cloud transmission |
+| Storage | Encrypted local storage, user-controlled retention |
+| Minimization | Measurements extracted, images deleted post-processing |
+| Security | End-to-end encryption, biometric auth, regular audits |
+
+---
 
 ## Scanning Process
 
-### Preparation
-1. Private scanning environment setup
-2. Device calibration and testing
-3. User consent and education
-4. Quality assurance checks
-
-### Scanning Procedure
-1. **Initial positioning**: Standardized pose guidance
-2. **Multi-angle capture**: 360-degree coverage
-3. **Quality verification**: Real-time feedback
-4. **Measurement extraction**: Automated processing
-
-### Post-Processing
-1. **3D model generation**: Point cloud to mesh
-2. **Measurement calculation**: Precise dimensions
-3. **Size recommendation**: Algorithm-based matching
-4. **Data disposal**: Secure deletion of images
-
-## Quality and Accuracy
+1. Set up a private scanning environment and calibrate your device
+2. Follow standardized pose guidance for 360-degree multi-angle capture
+3. Receive real-time quality feedback during the scan
+4. Measurements are extracted automatically, then images are securely deleted
+5. Algorithm matches your dimensions to the best size recommendation
 
 ### Precision Standards
-- **Length accuracy**: ±1mm
-- **Girth accuracy**: ±0.5mm
-- **Repeatability**: 99.5% consistency
-- **Calibration verification**: Regular testing
 
-### Validation Studies
-- Comparison with manual measurements
-- Inter-device consistency testing
-- User satisfaction assessment
-- Clinical validation protocols
+| Metric | Specification |
+| --- | --- |
+| Length accuracy | ±1 mm |
+| Girth accuracy | ±0.5 mm |
+| Repeatability | 99.5% consistency |
 
-## Accessibility Features
+---
 
-### Universal Design
-- Multiple scanning positions supported
-- Mobility accommodation
-- Visual/hearing impairment support
-- Cultural sensitivity considerations
+## Accessibility
 
-### Language Support
-- Multi-language interfaces
-- Cultural terminology respect
-- Community-specific guidance
-- Indigenous language inclusion
+The scanner supports multiple scanning positions for mobility accommodation, visual and hearing impairment support, multi-language interfaces, and cultural sensitivity considerations including indigenous language inclusion.
 
-## Integration with Custom Fitting
+## Manufacturing Integration
 
-### Size Calculation
-- Advanced algorithmic matching
-- Multiple fit preference options
-- Comfort optimization
-- Activity-specific recommendations
-
-### Manufacturing Integration
-- Direct-to-production workflows
-- Quality control integration
-- Batch processing efficiency
-- Sustainable material optimization`,
+Scan data flows directly into production workflows with quality control integration, batch processing efficiency, and sustainable material optimization for each custom-fit product.`,
       tags: ["3d-scanning", "privacy", "technology", "anatomy", "custom-fit"],
       lastUpdated: "2024-01-11",
       author: "Technology Development Team",
@@ -1910,106 +1712,65 @@ DALY = Years of Life Lost (YLL) + Years Lived with Disability (YLD)
       category: "technical",
       content: `# Ocean Plastic Reprocessing with Plant-Based Materials
 
+[img: "Sustainable Manufacturing" caption="Ocean plastic collection and plant-based bio-material integration for eco-friendly protection products."]
+
 ## Overview
-TriSex's sustainable manufacturing process combines recycled ocean plastic with plant-based bio-materials to create high-performance, eco-friendly protection products.
 
-## Ocean Plastic Collection and Processing
+TriSex's sustainable manufacturing combines recycled ocean plastic with plant-based bio-materials to create high-performance, eco-friendly protection products. The blend ratio is 70% ocean plastic and 30% plant-based material.
 
-### Collection Methods
-- **Coastal cleanup partnerships**: Direct beach and shoreline collection
-- **Ocean trawling**: Specialized vessels collecting plastic debris
-- **River interception**: Preventing ocean entry through river cleanup
-- **Fishing industry partnerships**: Bycatch plastic recovery programs
+---
 
-### Plastic Types and Sources
-- **PET bottles**: Primary source for film production
-- **HDPE containers**: Structural components
-- **PP packaging**: Flexible applications
-- **Mixed ocean plastics**: Various consumer waste products
+## Collection and Sourcing
 
-### Initial Processing Steps
-1. **Sorting and identification**: Automated optical sorting by polymer type
-2. **Cleaning and decontamination**: Multi-stage washing with eco-friendly detergents
-3. **Shredding**: Mechanical reduction to flake form
-4. **Density separation**: Float-sink tanks for purity enhancement
-5. **Hot washing**: Final contaminant removal at controlled temperatures
-
-## Plant-Based Material Integration
+| Source | Material | Use |
+| --- | --- | --- |
+| Coastal cleanups | PET bottles | Primary film production |
+| Ocean trawling | HDPE containers | Structural components |
+| River interception | PP packaging | Flexible applications |
+| Fishing bycatch | Mixed plastics | Various consumer waste |
 
 ### Bio-Polymer Sources
-- **Corn starch (PLA)**: Biodegradable plastic alternative
-- **Sugarcane bagasse**: Renewable fiber reinforcement
-- **Algae biomass**: Marine-derived bio-plastics
-- **Cassava root**: Starch-based polymer matrix
-- **Hemp fibers**: Natural strength enhancement
 
-### Hybrid Material Creation
-1. **Mechanical blending**: Physical mixing of recycled and bio-materials
-2. **Chemical compatibilization**: Molecular bonding agents for adhesion
-3. **Reactive processing**: In-situ polymerization during extrusion
-4. **Nano-enhancement**: Plant-based nanocellulose reinforcement
+| Source | Role |
+| --- | --- |
+| Corn starch (PLA) | Biodegradable plastic alternative |
+| Sugarcane bagasse | Renewable fiber reinforcement |
+| Algae biomass | Marine-derived bio-plastics |
+| Cassava root | Starch-based polymer matrix |
+| Hemp fibers | Natural strength enhancement |
 
-## Manufacturing Process
+---
 
-### Extrusion and Film Formation
-1. **Material preparation**: Precise blending ratios (70% ocean plastic, 30% plant-based)
-2. **Melt processing**: Controlled temperature extrusion (180-220°C)
-3. **Film casting**: Thin film production with uniform thickness
-4. **Biaxial orientation**: Strength enhancement through stretching
-5. **Corona treatment**: Surface modification for improved properties
+## Manufacturing Pipeline
 
-### Quality Control Measures
-- **Tensile strength testing**: Minimum 30 MPa requirement
-- **Elongation at break**: >300% for flexibility
-- **Barrier properties**: Moisture and air permeability testing
-- **Biocompatibility**: ISO 10993 medical device standards
-- **Biodegradability**: Controlled composting rate assessment
+Processing flows through five stages: automated optical sorting, multi-stage cleaning, mechanical shredding, density separation, and hot washing. The hybrid material is then created through mechanical blending, chemical compatibilization, reactive processing, and nanocellulose reinforcement.
 
-### Environmental Benefits
-- **Carbon footprint reduction**: 60% lower than virgin plastic production
-- **Ocean waste reduction**: 1 kg ocean plastic = 200 protection units
-- **Renewable content**: 30% plant-based materials
-- **End-of-life options**: Compostable in industrial facilities
+### Quality Control
 
-## Material Properties and Performance
+| Test | Requirement |
+| --- | --- |
+| Tensile strength | ≥ 30 MPa |
+| Elongation at break | > 300% |
+| Biocompatibility | ISO 10993 compliant |
+| Burst pressure | > 2.5 kPa |
+| Shelf life | 5 years |
+| Temperature range | -20°C to +60°C |
 
-### Physical Characteristics
-- **Density**: 1.2-1.4 g/cm³
-- **Thickness**: 0.03-0.08 mm depending on application
-- **Transparency**: High optical clarity maintained
-- **Flexibility**: Superior stretch and recovery properties
+### Environmental Impact
 
-### Safety and Biocompatibility
-- **Cytotoxicity testing**: ISO 10993-5 compliant
-- **Sensitization testing**: No allergenic responses
-- **Irritation testing**: Dermal and mucosal compatibility
-- **Extractables analysis**: No harmful substance migration
+[chart:bar "Environmental Benefits"]
+Carbon Reduction|60
+Ocean Plastic Diverted (kg/200 units)|1
+Renewable Content (%)|30
+[/chart]
 
-### Performance Validation
-- **Burst pressure**: >2.5 kPa minimum
-- **Shelf life**: 5 years under proper storage
-- **Temperature stability**: -20°C to +60°C operating range
-- **UV resistance**: Enhanced through plant-based antioxidants
+Each kilogram of ocean plastic collected produces approximately 200 protection units, with a 60% lower carbon footprint compared to virgin plastic production. End-of-life products are compostable in industrial facilities.
 
-## Innovation and Future Development
+---
 
-### Advanced Bio-Materials
-- **Mushroom mycelium**: Emerging bio-plastic source
-- **Bacterial cellulose**: Laboratory-grown fiber matrix
-- **Protein-based polymers**: Animal-free protein films
-- **Lignin recovery**: Wood waste valorization
+## Future Development
 
-### Circular Economy Integration
-- **Take-back programs**: Product return for reprocessing
-- **Local sourcing**: Regional ocean cleanup initiatives
-- **Community partnerships**: Indigenous knowledge integration
-- **Zero-waste manufacturing**: Complete material utilization
-
-### Research and Development
-- **Biomimetic design**: Nature-inspired material properties
-- **Smart materials**: Responsive polymer development
-- **Nanotechnology**: Enhanced performance characteristics
-- **Life cycle optimization**: Cradle-to-cradle design principles`,
+Emerging research areas include mushroom mycelium bio-plastics, bacterial cellulose fiber matrices, protein-based polymer films, and biomimetic design inspired by natural structures. Circular economy integration spans take-back programs, regional sourcing, indigenous knowledge partnerships, and zero-waste manufacturing goals.`,
       tags: ["ocean-plastic", "plant-based", "sustainable", "manufacturing", "bio-materials"],
       lastUpdated: "2024-01-16",
       author: "Sustainability Engineering Team",
@@ -2022,191 +1783,89 @@ TriSex's sustainable manufacturing process combines recycled ocean plastic with 
       category: "health",
       content: `# Medical Optimization for TriSex Products
 
-## Overview
-Certain medications, therapies, and health conditions can affect the performance and compatibility of TriSex protection products. This guide provides evidence-based recommendations for optimal effectiveness.
+[img: "Medical Compatibility" caption="Evidence-based guidance on how medications, conditions, and therapies interact with protection products."]
 
-## Medication Interactions and Considerations
+## Overview
+
+Certain medications, therapies, and health conditions can affect the performance and compatibility of TriSex protection products. This guide provides evidence-based recommendations.
+
+---
+
+## Medication Interactions
 
 ### Hormonal Medications
 
-#### Estrogen-Based Therapies
-- **Birth control pills**: May increase vaginal lubrication, improving comfort
-- **Hormone replacement therapy (HRT)**: Can affect tissue elasticity and sensitivity
-- **Recommendations**: Standard products typically work well; consider thinner options if increased sensitivity occurs
+| Medication | Effect | Recommendation |
+| --- | --- | --- |
+| Birth control pills | May increase lubrication | Standard products; thinner options for sensitivity |
+| HRT (estrogen) | Affects tissue elasticity | Monitor comfort, adjust as needed |
+| Topical testosterone | Increases sensitivity and growth | Regular size reassessment |
+| Injectable testosterone | Affects tissue thickness | Custom sizing beneficial |
+| Depo-Provera | May cause dryness | Compatible lubricants; hypoallergenic options |
+| IUDs (Mirena, Skyla) | Localized hormone effects | Standard products typically suitable |
 
-#### Testosterone Therapies
-- **Topical testosterone**: May increase genital sensitivity and growth
-- **Injectable testosterone**: Can affect tissue thickness and elasticity
-- **Recommendations**: Regular size reassessment recommended; custom sizing beneficial
+### Psychiatric Medications
 
-#### Progestin-Only Methods
-- **Depo-Provera**: May cause vaginal dryness
-- **IUDs (Mirena, Skyla)**: Localized hormone effects
-- **Recommendations**: Compatible lubricants enhance comfort; hypoallergenic options preferred
+| Class | Effect | Recommendation |
+| --- | --- | --- |
+| SSRIs (sertraline, fluoxetine) | Reduced sensation, delayed arousal | Additional lubrication, textured products |
+| SNRIs (venlafaxine, duloxetine) | May affect blood flow | Enhanced conductivity products |
+| Tricyclic antidepressants | Anticholinergic dryness | Generous lubrication, longer warm-up |
 
-### Antidepressants and Mood Medications
+### Blood Pressure & Allergy Medications
 
-#### SSRIs (Selective Serotonin Reuptake Inhibitors)
-- **Effects**: Reduced sexual sensation, delayed arousal
-- **Examples**: Sertraline, fluoxetine, paroxetine
-- **Recommendations**: Extended foreplay, additional lubrication, textured products for enhanced sensation
+| Class | Effect | Recommendation |
+| --- | --- | --- |
+| ACE inhibitors / ARBs | Minimal sexual impact | Standard products |
+| Beta-blockers | Reduced blood flow | Extra lubrication, gentle technique |
+| Diuretics | Dehydration, reduced lubrication | Increased hydration, water-based lubricants |
+| Antihistamines | Mucosal dryness | Hypoallergenic products, added lubrication |
 
-#### SNRIs (Serotonin-Norepinephrine Reuptake Inhibitors)
-- **Effects**: Similar to SSRIs but may affect blood flow
-- **Examples**: Venlafaxine, duloxetine
-- **Recommendations**: Products with enhanced conductivity for sensation
+---
 
-#### Tricyclic Antidepressants
-- **Effects**: Anticholinergic effects causing dryness
-- **Recommendations**: Generous lubrication, longer warm-up period
+## Medical Conditions
 
-### Blood Pressure Medications
+| Condition | Key Considerations | Product Recommendations |
+| --- | --- | --- |
+| Diabetes (Type 1/2) | Infection risk, neuropathy, healing | Antimicrobial products, low-friction materials |
+| Lupus (SLE) | Fatigue, medication side effects | Soft, flexible materials |
+| Rheumatoid arthritis | Joint stiffness | Easy-application, ergonomic design |
+| Sjögren's syndrome | Severe mucosal dryness | Extensive lubrication protocols |
+| Multiple sclerosis | Sensation changes, temperature sensitivity | Temperature-neutral products |
+| Spinal cord injury | Altered sensation, dysreflexia risk | Gentle technique, medical supervision |
 
-#### ACE Inhibitors and ARBs
-- **Effects**: Generally minimal impact on sexual function
-- **Recommendations**: Standard products appropriate
+---
 
-#### Beta-Blockers
-- **Effects**: May reduce blood flow and arousal response
-- **Recommendations**: Extra lubrication, gentle application techniques
-
-#### Diuretics
-- **Effects**: Can cause dehydration affecting natural lubrication
-- **Recommendations**: Increased hydration, water-based lubricants
-
-### Antihistamines and Allergy Medications
-
-#### H1 Receptor Antagonists
-- **Effects**: Anticholinergic effects causing mucosal dryness
-- **Examples**: Diphenhydramine, loratadine
-- **Recommendations**: Hypoallergenic products, additional lubrication
-
-#### Nasal Decongestants
-- **Effects**: Systemic drying effects
-- **Recommendations**: Avoid petroleum-based products, use water-based alternatives
-
-## Medical Conditions and Adaptations
-
-### Diabetes Mellitus
-
-#### Type 1 and Type 2 Diabetes
-- **Effects**: Increased infection risk, delayed healing, neuropathy
-- **Recommendations**: 
-  - Strict glucose control before intimate activities
-  - Antimicrobial-treated products
-  - Regular skin inspection for irritation
-  - Gentle, low-friction materials
-
-#### Blood Sugar Monitoring
-- **Pre-activity testing**: Ensure glucose 80-200 mg/dL
-- **Post-activity monitoring**: Check for delayed hypoglycemia
-- **Emergency protocols**: Glucose tablets readily available
-
-### Autoimmune Conditions
-
-#### Lupus (SLE)
-- **Effects**: Medication side effects, fatigue, joint pain
-- **Recommendations**: Soft, flexible materials; joint-supportive positions
-
-#### Rheumatoid Arthritis
-- **Effects**: Joint stiffness, medication side effects
-- **Recommendations**: Easy-application products, ergonomic design features
-
-#### Sjögren's Syndrome
-- **Effects**: Severe mucosal dryness
-- **Recommendations**: Extensive lubrication, frequent reapplication protocols
-
-### Neurological Conditions
-
-#### Multiple Sclerosis (MS)
-- **Effects**: Sensation changes, fatigue, temperature sensitivity
-- **Recommendations**: Temperature-neutral products, extended foreplay
-
-#### Spinal Cord Injury
-- **Effects**: Altered sensation, autonomic dysreflexia risk
-- **Recommendations**: 
-  - Careful blood pressure monitoring
-  - Gentle application techniques
-  - Medical supervision for complete injuries
-
-#### Stroke Recovery
-- **Effects**: Hemiparesis, sensation changes, cognitive effects
-- **Recommendations**: Adaptive techniques, caregiver education if needed
-
-## Therapeutic Interventions for Optimization
+## Therapeutic Interventions
 
 ### Pelvic Floor Therapy
 
-#### Strengthening Exercises
-- **Kegel exercises**: Improve muscle tone and control
-- **Timing**: 3 sets of 10, hold 10 seconds, 3 times daily
-- **Benefits**: Enhanced sensation, better product retention
-
-#### Relaxation Techniques
-- **Progressive muscle relaxation**: Reduce tension and pain
-- **Breathing exercises**: Improve blood flow and relaxation
-- **Benefits**: Improved comfort and product acceptance
+Kegel exercises (3 sets of 10, hold 10 seconds, 3 times daily) improve muscle tone, sensation, and product retention. Progressive muscle relaxation and breathing exercises reduce tension and improve comfort.
 
 ### Topical Therapies
 
-#### Estrogen Creams
-- **Indications**: Vaginal atrophy, menopause-related dryness
-- **Application**: 2-3 times weekly as prescribed
-- **Benefits**: Improved tissue elasticity and lubrication
+| Therapy | Indication | Application |
+| --- | --- | --- |
+| Estrogen creams | Vaginal atrophy, menopause | 2–3 times weekly as prescribed |
+| Lidocaine preparations | Vestibulodynia, hypersensitivity | 30 minutes before activity |
 
-#### Lidocaine Preparations
-- **Indications**: Vestibulodynia, hypersensitivity
-- **Application**: 30 minutes before activity as needed
-- **Benefits**: Reduced pain, improved comfort
+### Complementary Approaches
 
-### Complementary Therapies
+Mindfulness and body scanning reduce anxiety and improve body awareness. Acupuncture (weekly for 8–12 weeks) has moderate evidence for sexual function improvement. Regular massage therapy supports circulation and relaxation.
 
-#### Mindfulness and Meditation
-- **Benefits**: Reduced anxiety, improved body awareness
-- **Techniques**: Body scanning, breathing meditation
-- **Integration**: Pre-activity relaxation protocols
+---
 
-#### Acupuncture
-- **Evidence**: Moderate evidence for sexual function improvement
-- **Protocol**: Weekly sessions for 8-12 weeks
-- **Benefits**: Improved circulation, reduced stress
+## Pre-Activity Checklist
 
-#### Massage Therapy
-- **Benefits**: Improved circulation, muscle relaxation
-- **Techniques**: Swedish massage, myofascial release
-- **Integration**: Regular sessions for overall wellness
-
-## Pre-Activity Optimization Protocols
-
-### Preparation Checklist
-1. **Medication timing**: Take as prescribed, note interaction potential
-2. **Hydration**: Adequate fluid intake 2-4 hours prior
-3. **Blood sugar**: Check if diabetic, maintain optimal range
-4. **Stress management**: Relaxation techniques as needed
-5. **Communication**: Discuss comfort and preferences with partner
-
-### Contraindications and Warnings
-- **Active infections**: Defer use until resolved
-- **Recent surgery**: Follow medical clearance guidelines
-- **Severe cardiovascular disease**: Medical supervision recommended
-- **Uncontrolled diabetes**: Stabilize glucose first
-- **Severe allergic reactions**: Identify and avoid triggers
-
-## Monitoring and Follow-Up
-
-### Regular Assessment
-- **Monthly review**: Effectiveness and comfort evaluation
-- **Quarterly medical review**: With healthcare provider
-- **Annual comprehensive**: Full sexual health assessment
+1. Take medications as prescribed; note interaction potential
+2. Adequate fluid intake 2–4 hours prior
+3. Check blood sugar if diabetic (target 80–200 mg/dL)
+4. Use relaxation techniques for stress management
+5. Communicate comfort and preferences with partner
 
 ### Warning Signs
-- **Persistent irritation**: May indicate allergy or infection
-- **Unusual discharge**: Requires medical evaluation
-- **Pain during use**: Reassess sizing and technique
-- **Recurrent infections**: Consider material sensitivity
 
-### Healthcare Provider Communication
-- **Open dialogue**: Discuss sexual health concerns
+Persistent irritation, unusual discharge, pain during use, or recurrent infections all warrant medical evaluation. Monthly self-review and quarterly healthcare provider check-ins are recommended.
 - **Medication review**: Regular assessment of effects
 - **Specialized referrals**: Urology, gynecology, or sexual medicine as needed`,
       tags: ["medicine", "therapy", "optimization", "health", "medical"],
@@ -2221,210 +1880,69 @@ Certain medications, therapies, and health conditions can affect the performance
       category: "health",
       content: `# Advanced Bio-Materials in Antipsychotic Care Context
 
-## Executive Summary
+[img: "Bio-Material Technologies" caption="Four revolutionary bio-material platforms addressing the specific sexual health needs of people on antipsychotic medications."]
 
-This comprehensive guide explores the intersection of advanced bio-materials and antipsychotic medication use, focusing on sustainable protection technologies that address the unique needs of individuals managing psychiatric conditions.
+## Overview
 
-## Understanding Antipsychotic Medications
+Antipsychotic medications can significantly affect sexual health through prolactin elevation, sedation, weight changes, and anticholinergic dryness. Advanced bio-materials offer sustainable protection technologies designed specifically for these challenges.
 
-### Types and Mechanisms
-- **Typical Antipsychotics**: Haloperidol, chlorpromazine, fluphenazine
-- **Atypical Antipsychotics**: Risperidone, olanzapine, quetiapine, aripiprazole
-- **Long-Acting Injectables**: Paliperidone palmitate, haloperidol decanoate
+### Antipsychotic Sexual Health Effects
 
-### Sexual Health Impact
-- **Prolactin elevation**: Reduced libido, erectile dysfunction, menstrual irregularities
-- **Sedation effects**: Decreased arousal and sexual response
-- **Weight gain**: Body image concerns, reduced confidence
-- **Anticholinergic effects**: Vaginal dryness, reduced lubrication
+| Effect | Impact | Bio-Material Solution |
+| --- | --- | --- |
+| Prolactin elevation | Reduced libido, erectile dysfunction | Mycelium compounds for hormonal support |
+| Sedation | Decreased arousal | Textured surfaces for enhanced sensation |
+| Anticholinergic dryness | Reduced lubrication | Natural moisture-wicking properties |
+| Weight fluctuations | Sizing changes | Enhanced elasticity materials |
 
-## Revolutionary Bio-Material Technologies
+---
 
-### 1. Mushroom Mycelium-Based Protection
+## Four Bio-Material Platforms
 
-#### Material Properties
-- **Source**: Mycelium from Ganoderma lucidum and Pleurotus ostreatus
-- **Structure**: Interconnected hyphal networks creating natural porosity
-- **Biodegradability**: Complete decomposition within 90-120 days
-- **Biocompatibility**: Hypoallergenic with anti-inflammatory properties
+### 1. Mushroom Mycelium
 
-#### Antipsychotic-Specific Applications
-- **Prolactin management**: Mycelium's natural compounds may support hormonal balance
-- **Sensory enhancement**: Textured surface compensates for medication-induced decreased sensation
-- **Moisture regulation**: Natural wicking properties address anticholinergic dryness
-- **Stress reduction**: Ergosterol content provides calming properties
+| Property | Value |
+| --- | --- |
+| Source | Ganoderma lucidum, Pleurotus ostreatus |
+| Biodegradability | 90–120 days |
+| Water usage | 95% less than rubber processing |
+| End of life | Home compostable |
 
-#### Production Process
-1. **Cultivation**: Sterile growth on agricultural waste substrates
-2. **Harvesting**: Optimal mycelium density at 14-21 days
-3. **Processing**: Dehydration and compression into thin, flexible films
-4. **Quality control**: Biocompatibility testing and strength validation
+Cultivation takes 14–21 days on agricultural waste substrates. The resulting hyphal networks create naturally porous, hypoallergenic, anti-inflammatory films with textured surfaces that compensate for medication-reduced sensation.
 
-#### Environmental Impact
-- **Carbon sequestration**: Mycelium growth removes CO2 from atmosphere
-- **Waste valorization**: Utilizes agricultural byproducts
-- **Minimal water usage**: 95% less water than traditional rubber processing
-- **End-of-life**: Compostable in home composting systems
+### 2. Bacterial Cellulose
 
-### 2. Bacterial Cellulose Matrix Technology
+| Property | Value |
+| --- | --- |
+| Strain | Komagataeibacter xylinus |
+| Production time | 7–14 days |
+| Purity | 95% cellulose |
+| Energy savings | 70% vs synthetic polymers |
 
-#### Biosynthesis Process
-- **Bacterial strain**: Acetobacter xylinum (Komagataeibacter xylinus)
-- **Growth medium**: Plant-based sugars and nutrients
-- **Production time**: 7-14 days under controlled conditions
-- **Yield**: 95% pure cellulose with superior mechanical properties
+Non-latex and naturally antimicrobial, bacterial cellulose offers superior moisture management for anticholinergic side effects, customizable thickness, and complete marine biodegradation within 6 months.
 
-#### Unique Properties for Psychiatric Care
-- **Moisture management**: Superior absorption for anticholinergic side effects
-- **Flexibility**: Maintains comfort during sedation-related position changes
-- **Biocompatibility**: Reduces risk of infections in immunocompromised users
-- **Customizable thickness**: Adaptable to individual sensation needs
+### 3. Protein-Based Polymers
 
-#### Clinical Advantages
-- **Non-latex**: Eliminates allergy concerns common in psychiatric populations
-- **Antimicrobial**: Natural resistance to bacterial and fungal growth
-- **Breathability**: Maintains genital health during extended medication use
-- **Skin compatibility**: Reduces irritation in sensitive individuals
+Sources include wheat gluten, soy protein, pea protein, spirulina, and lab-grown collagen alternatives. These films offer enhanced elasticity for weight fluctuations, pH buffering, amino acid tissue support, and vitamin E delivery for skin health.
 
-#### Sustainability Metrics
-- **Energy usage**: 70% less energy than synthetic polymer production
-- **Water pollution**: Zero toxic discharge in production process
-- **Biodegradation**: Complete breakdown in marine environments within 6 months
-- **Recyclability**: Can be reprocessed into new cellulose products
+### 4. Lignin Recovery
 
-### 3. Protein-Based Polymer Films
+Diverts 30 million tons annually from industrial waste streams. Lignin's natural phenolic compounds provide antioxidant protection, UV shielding for photosensitivity, and controlled-release delivery potential.
 
-#### Protein Sources
-- **Plant proteins**: Wheat gluten, soy protein isolate, pea protein concentrate
-- **Microbial proteins**: Mycoprotein from Fusarium venenatum
-- **Algae proteins**: Spirulina and chlorella extracts
-- **Synthetic biology**: Lab-grown collagen alternatives
+[chart:bar "Environmental Metrics (% Improvement vs Conventional)"]
+Water Reduction|95
+Energy Savings|70
+Carbon Reduction|60
+Waste Diverted|85
+[/chart]
 
-#### Formulation for Antipsychotic Users
-- **Enhanced elasticity**: Accommodates weight fluctuations from medication
-- **Amino acid content**: Supports tissue health and healing
-- **pH buffering**: Maintains optimal vaginal environment
-- **Nutrient delivery**: Vitamin E and B-complex integration for skin health
+---
 
-#### Processing Innovation
-1. **Protein extraction**: Gentle methods preserving bioactive compounds
-2. **Cross-linking**: Natural enzymes create durable yet flexible networks
-3. **Additive integration**: Incorporation of therapeutic compounds
-4. **Film casting**: Precision thickness control for optimal performance
+## Clinical Integration
 
-#### Therapeutic Benefits
-- **Wound healing**: Promotes tissue repair from potential side effects
-- **Anti-inflammatory**: Reduces irritation and inflammatory responses
-- **Moisturizing**: Maintains hydration in medication-affected tissues
-- **Barrier function**: Protects against infections while maintaining sensation
+Patient assessment includes medication review, sexual health evaluation, sensitivity testing, and preference consultation. All materials meet ISO 10993 biocompatibility standards with ongoing clinical efficacy studies and FDA compliance processes.
 
-### 4. Lignin Recovery and Valorization
-
-#### Source Materials
-- **Paper mill waste**: Black liquor from kraft pulping process
-- **Agricultural residues**: Wheat straw, corn stalks, rice hulls
-- **Woody biomass**: Sawmill residues and forest thinnings
-- **Dedicated energy crops**: Switchgrass and miscanthus
-
-#### Lignin Processing for Medical Applications
-- **Fractionation**: Size-selective separation of lignin polymers
-- **Purification**: Removal of residual chemicals and impurities
-- **Modification**: Chemical grafting for enhanced biocompatibility
-- **Compounding**: Blending with other bio-polymers for optimal properties
-
-#### Antipsychotic Care Applications
-- **Antioxidant properties**: Lignin's natural phenolic compounds protect tissues
-- **UV protection**: Shields sensitive areas from photosensitivity effects
-- **Controlled release**: Potential delivery system for topical therapeutics
-- **Mechanical strength**: Provides durability for extended medication regimens
-
-#### Environmental Advantages
-- **Waste reduction**: Diverts 30 million tons annually from industrial waste streams
-- **Carbon utilization**: Incorporates stored atmospheric carbon into useful products
-- **Energy recovery**: Production process generates renewable energy
-- **Circular economy**: Creates value from what was previously considered waste
-
-## Integrated Bio-Material Systems
-
-### Hybrid Composite Designs
-- **Multi-layer construction**: Combines benefits of different bio-materials
-- **Gradient properties**: Varying characteristics across product thickness
-- **Functional integration**: Each layer serves specific therapeutic purposes
-- **Performance optimization**: Tailored for individual medication profiles
-
-### Smart Material Features
-- **pH responsiveness**: Changes properties based on body chemistry
-- **Temperature sensitivity**: Adapts to body heat and ambient conditions
-- **Moisture indicators**: Visual or tactile feedback for replacement timing
-- **Gradual dissolution**: Time-release of beneficial compounds
-
-## Clinical Integration Protocols
-
-### Patient Assessment
-- **Medication review**: Current antipsychotic regimen and side effect profile
-- **Sexual health evaluation**: Baseline function and specific concerns
-- **Sensitivity testing**: Bio-material compatibility assessment
-- **Preference consultation**: Material and design preferences
-
-### Healthcare Provider Training
-- **Bio-material properties**: Understanding of each material's characteristics
-- **Patient counseling**: Discussing options and setting expectations
-- **Side effect management**: Integrating bio-materials into treatment plans
-- **Monitoring protocols**: Follow-up schedules and assessment tools
-
-### Quality Assurance
-- **Biocompatibility testing**: ISO 10993 standards compliance
-- **Performance validation**: Clinical efficacy studies
-- **Long-term safety**: Extended use monitoring programs
-- **Regulatory compliance**: FDA and international approval processes
-
-## Research and Development Pipeline
-
-### Current Studies
-- **Phase II trials**: Mycelium-based products in psychiatric populations
-- **Longitudinal studies**: Long-term safety and efficacy data collection
-- **Comparative effectiveness**: Bio-materials vs. conventional products
-- **Patient-reported outcomes**: Quality of life and satisfaction measures
-
-### Future Innovations
-- **Personalized bio-materials**: Customized based on genetic and metabolic profiles
-- **Smart sensors**: Integration of health monitoring capabilities
-- **Therapeutic delivery**: Bio-materials as vehicles for localized treatments
-- **AI optimization**: Machine learning for material design and selection
-
-### Collaborative Networks
-- **Academic partnerships**: Universities and research institutions
-- **Industry alliances**: Bio-material manufacturers and pharmaceutical companies
-- **Clinical networks**: Psychiatric hospitals and specialty clinics
-- **Patient advocacy**: Consumer input and feedback integration
-
-## Implementation Guidelines
-
-### Healthcare Settings
-- **Psychiatric hospitals**: Integration into comprehensive care protocols
-- **Community mental health**: Accessible options for outpatient care
-- **Specialty clinics**: Sexual health and reproductive medicine services
-- **Primary care**: Education and referral pathways
-
-### Patient Education
-- **Material selection**: Helping patients choose appropriate options
-- **Proper use**: Application techniques and care instructions
-- **Expectation setting**: Realistic outcomes and timeline discussions
-- **Support resources**: Ongoing assistance and troubleshooting
-
-### Economic Considerations
-- **Cost-effectiveness**: Long-term value vs. initial investment
-- **Insurance coverage**: Advocacy for reimbursement policies
-- **Accessibility programs**: Ensuring availability across economic strata
-- **Global implementation**: Scaling for international markets
-
-## Conclusion
-
-Advanced bio-materials represent a revolutionary approach to sexual health protection for individuals using antipsychotic medications. By addressing the specific challenges posed by these medications while providing sustainable, biocompatible solutions, these technologies offer hope for improved quality of life and sexual wellness.
-
-The integration of mushroom mycelium, bacterial cellulose, protein-based polymers, and valorized lignin creates unprecedented opportunities for personalized, therapeutic protection products. As research continues and these materials move from laboratory to clinic, they promise to transform sexual health care for one of medicine's most vulnerable populations.
-
-Through continued innovation, clinical validation, and collaborative implementation, bio-material technologies will play an increasingly important role in comprehensive psychiatric care, ensuring that sexual health and wellness remain integral components of overall mental health treatment.`,
+Research priorities include personalized bio-materials based on genetic profiles, smart sensor integration for health monitoring, and AI-optimized material design.`,
       tags: ["bio-materials", "antipsychotics", "sustainability", "mycelium", "bacterial-cellulose", "protein-polymers", "lignin", "psychiatric-care"],
       lastUpdated: "2025-01-01", 
       author: "Dr. Maria Rodriguez & Prof. James Chen, Bio-Materials Research Consortium",
@@ -2437,273 +1955,60 @@ Through continued innovation, clinical validation, and collaborative implementat
       category: "health",
       content: `# Sexual Addiction & Withdrawal: Therapeutic TriSex Product Integration
 
-## Executive Summary
-
-Sexual addiction and withdrawal represent complex behavioral and physiological challenges that can significantly impact intimate relationships and personal well-being. This comprehensive guide explores how TriSex's therapeutic products can be integrated into evidence-based treatment approaches for sexual addiction recovery and withdrawal management.
+[img: "Recovery Framework" caption="Evidence-based framework for integrating therapeutic products into sexual addiction recovery programs."]
 
 ## Understanding Sexual Addiction
 
-### Clinical Definition
-Sexual addiction, also known as Compulsive Sexual Behavior Disorder (CSBD), is characterized by persistent, repetitive sexual behaviors that cause significant distress or impairment in personal, family, social, educational, occupational, or other important areas of functioning.
+Sexual addiction, or Compulsive Sexual Behavior Disorder (CSBD) per ICD-11, is characterized by persistent sexual behaviors causing significant distress or impairment. The neurobiological basis involves dopamine dysregulation, neuroplasticity changes, tolerance development, and withdrawal symptoms — paralleling substance addiction pathways.
 
-### Diagnostic Criteria (ICD-11)
-- **Pattern Duration**: Symptoms present for at least 6 months
-- **Loss of Control**: Inability to control or significantly reduce sexual behaviors
-- **Continued Engagement**: Persistent behavior despite negative consequences
-- **Functional Impairment**: Significant distress or impairment in functioning
-- **Primary Focus**: Sexual behavior becomes central focus of life
+### Diagnostic Criteria
 
-### Neurobiological Basis
-- **Dopamine Dysregulation**: Altered reward pathways similar to substance addictions
-- **Neuroplasticity Changes**: Modified brain structure and function
-- **Tolerance Development**: Increasing intensity or frequency needed for satisfaction
-- **Withdrawal Symptoms**: Physical and psychological distress when behavior stops
+| Criterion | Description |
+| --- | --- |
+| Pattern duration | Symptoms present ≥ 6 months |
+| Loss of control | Inability to reduce sexual behaviors |
+| Continued engagement | Persists despite negative consequences |
+| Functional impairment | Distress or impairment in major life areas |
 
-## Sexual Withdrawal Syndrome
+---
 
-### Physical Symptoms
-- **Autonomic Dysfunction**: Sweating, tremors, elevated heart rate
-- **Sleep Disturbances**: Insomnia, nightmares, fragmented sleep
-- **Appetite Changes**: Increased or decreased food intake
-- **Energy Fluctuations**: Fatigue alternating with restlessness
-- **Somatic Complaints**: Headaches, muscle tension, gastrointestinal issues
+## Withdrawal Timeline
 
-### Psychological Symptoms
-- **Mood Dysregulation**: Depression, anxiety, irritability
-- **Cognitive Impairment**: Difficulty concentrating, memory problems
-- **Emotional Lability**: Rapid mood swings, emotional numbness
-- **Intrusive Thoughts**: Obsessive sexual thoughts, fantasies
-- **Behavioral Compulsions**: Urges to engage in sexual behaviors
+| Phase | Timeframe | Characteristics |
+| --- | --- | --- |
+| Acute | 0–72 hours | Physical symptoms, intense cravings |
+| Peak psychological | 3–14 days | Mood instability, intrusive thoughts |
+| Resolution | 2–8 weeks | Gradual symptom improvement |
+| Recovery | 2–6 months | Neuroplasticity restoration |
 
-### Withdrawal Timeline
-- **Phase 1 (0-72 hours)**: Acute physical symptoms, intense cravings
-- **Phase 2 (3-14 days)**: Peak psychological symptoms, mood instability
-- **Phase 3 (2-8 weeks)**: Gradual symptom resolution, emotional regulation improvement
-- **Phase 4 (2-6 months)**: Long-term recovery, neuroplasticity restoration
+Physical symptoms include autonomic dysfunction, sleep disturbances, appetite changes, and somatic complaints. Psychological symptoms encompass mood dysregulation, cognitive impairment, and behavioral compulsions.
 
-## TriSex.org Product Integration in Treatment
+---
 
-### Therapeutic Framework
-TriSex.org products can serve as therapeutic tools within comprehensive treatment programs, providing controlled, healthy outlets for sexual expression while supporting recovery goals.
+## Stage-Specific Product Integration
 
-### Product Selection Criteria
-- **Safety First**: Non-addictive materials and designs
-- **Therapeutic Benefit**: Products that support healing and recovery
-- **Professional Guidance**: Selection under healthcare provider supervision
-- **Recovery Stage**: Appropriate for current phase of treatment
-- **Individual Needs**: Customized to personal recovery goals
+| Stage | Timeframe | Goals | Product Approach |
+| --- | --- | --- | --- |
+| Early recovery | 0–3 months | Reduce compulsions, manage withdrawal | Mindfulness-enhanced barriers, biofeedback, therapeutic lubricants |
+| Stabilization | 3–12 months | Healthy practices, relapse prevention | Communication-enhancing products, sensory regulation |
+| Long-term | 12+ months | Maintain gains, optimize quality of life | Wellness integration, relationship enhancement |
 
-## Stage-Specific Product Recommendations
+### NanoHeal ⚧️ Therapeutic Formulations
 
-### Early Recovery (0-3 months)
+Specialized formulations include stress-reducing natural anxiolytics, neurochemical support for dopamine regulation, physical comfort materials, and sleep-enhancement compounds.
 
-#### Primary Goals
-- Reduce compulsive behaviors
-- Establish healthy boundaries
-- Manage withdrawal symptoms
-- Build therapeutic relationship
+---
 
-#### Recommended Products
-- **Mindfulness-Enhanced Barriers**: Products with built-in mindfulness cues
-- **Delayed Gratification Training**: Time-release features for impulse control
-- **Biofeedback Integration**: Products with stress monitoring capabilities
-- **Therapeutic Lubricants**: Calming, anxiety-reducing formulations
+## Safety and Contraindications
 
-#### Clinical Applications
-- **Structured Sessions**: Use only during therapy-supervised interactions
-- **Mindfulness Practice**: Products designed to encourage present-moment awareness
-- **Gradual Exposure**: Controlled introduction to healthy sexual experiences
-- **Symptom Management**: Products that help manage withdrawal symptoms
+Products may not be appropriate during active addiction phase, untreated severe mental illness, unsafe relationship dynamics, or uncleared medical conditions. Professional supervision is required throughout, with regular check-ins and emergency procedures.
 
-### Stabilization Phase (3-12 months)
+## Support Resources
 
-#### Primary Goals
-- Develop healthy sexual practices
-- Strengthen intimate relationships
-- Prevent relapse
-- Build coping strategies
-
-#### Recommended Products
-- **Communication Enhancement**: Products that encourage partner dialogue
-- **Sensory Regulation**: Materials that support healthy arousal patterns
-- **Intimacy Building**: Products designed for couples therapy integration
-- **Recovery Monitoring**: Smart products with usage tracking capabilities
-
-#### Clinical Applications
-- **Couples Therapy Integration**: Products used within relationship counseling
-- **Healthy Habit Formation**: Consistent, structured product use
-- **Relapse Prevention**: Products with built-in safety mechanisms
-- **Progress Tracking**: Monitoring improvement through product engagement
-
-### Long-Term Recovery (12+ months)
-
-#### Primary Goals
-- Maintain recovery gains
-- Support healthy sexuality
-- Prevent future episodes
-- Optimize quality of life
-
-#### Recommended Products
-- **Advanced Therapeutic Lines**: Products with sophisticated therapeutic features
-- **Relationship Enhancement**: Items designed for long-term intimate partnerships
-- **Wellness Integration**: Products supporting overall sexual health
-- **Recovery Maintenance**: Tools for ongoing monitoring and support
-
-#### Clinical Applications
-- **Maintenance Therapy**: Regular but reduced frequency sessions
-- **Relationship Optimization**: Products supporting intimate bond strengthening
-- **Lifestyle Integration**: Seamless incorporation into daily life
-- **Continuous Monitoring**: Long-term progress assessment
-
-## Specialized Product Categories
-
-### Withdrawal Management Products
-
-#### NanoHeal ⚧️ Therapeutic Formulations
-- **Stress-Reducing Compounds**: Natural anxiolytics and mood stabilizers
-- **Neurochemical Support**: Ingredients supporting dopamine regulation
-- **Physical Comfort**: Materials addressing withdrawal-related physical symptoms
-- **Sleep Enhancement**: Products promoting restorative sleep patterns
-
-#### Biofeedback-Enabled Products
-- **Heart Rate Monitoring**: Real-time stress level assessment
-- **Cortisol Tracking**: Stress hormone level monitoring
-- **Sleep Quality Measurement**: Recovery sleep pattern analysis
-- **Mood Tracking**: Emotional state monitoring and feedback
-
-### Therapeutic Communication Tools
-- **Partner Dialogue Products**: Items designed to facilitate important conversations
-- **Boundary Setting Aids**: Products supporting healthy limit establishment
-- **Consent Practice Tools**: Items for practicing enthusiastic consent
-- **Intimacy Rebuilding**: Products supporting relationship repair
-
-## Clinical Integration Protocols
-
-### Healthcare Provider Training
-- **Addiction Medicine Basics**: Understanding sexual addiction mechanisms
-- **Product Therapy Guidelines**: Appropriate use of TriSex.org products in treatment
-- **Patient Assessment**: Evaluating readiness for product integration
-- **Safety Protocols**: Managing risks and preventing misuse
-
-### Patient Assessment Tools
-- **Addiction Severity Scale**: Measuring current addiction level
-- **Withdrawal Symptom Inventory**: Tracking withdrawal progress
-- **Recovery Readiness Assessment**: Determining treatment phase appropriateness
-- **Product Safety Evaluation**: Ensuring safe product use
-
-### Treatment Planning
-- **Individualized Protocols**: Customized treatment approaches
-- **Goal Setting**: Specific, measurable recovery objectives
-- **Progress Monitoring**: Regular assessment and plan adjustment
-- **Relapse Prevention**: Strategies for maintaining recovery gains
-
-## Research and Evidence Base
-
-### Clinical Studies
-- **Efficacy Research**: Product integration effectiveness data
-- **Safety Studies**: Long-term safety and side effect monitoring
-- **Outcome Measures**: Recovery success rates with product integration
-- **Comparative Studies**: Product therapy vs. traditional approaches
-
-### Patient-Reported Outcomes
-- **Quality of Life Improvements**: Enhanced well-being measures
-- **Relationship Satisfaction**: Partner relationship quality assessment
-- **Recovery Maintenance**: Long-term sobriety rates
-- **Symptom Management**: Withdrawal symptom reduction
-
-### Emerging Research Areas
-- **Neuroplasticity Studies**: Brain changes with product therapy
-- **Genetic Factors**: Individual variations in treatment response
-- **Technology Integration**: Digital health and AI-assisted therapy
-- **Precision Medicine**: Personalized treatment approaches
-
-## Safety Considerations
-
-### Risk Assessment
-- **Addiction Potential**: Ensuring products don't become new compulsions
-- **Misuse Prevention**: Design features preventing inappropriate use
-- **Medical Contraindications**: Health conditions requiring special consideration
-- **Psychological Readiness**: Mental health status assessment
-
-### Safety Protocols
-- **Professional Supervision**: Healthcare provider oversight requirements
-- **Usage Guidelines**: Clear instructions for appropriate use
-- **Monitoring Systems**: Regular check-ins and progress assessment
-- **Emergency Procedures**: Protocols for managing complications
-
-### Contraindications
-- **Active Addiction Phase**: Products may not be appropriate during acute addiction
-- **Severe Mental Illness**: Untreated psychiatric conditions requiring stabilization
-- **Relationship Instability**: Unsafe or abusive relationship dynamics
-- **Medical Complications**: Health conditions requiring medical clearance
-
-## Support Systems
-
-### Professional Resources
-- **Certified Sex Addiction Therapists (CSAT)**: Specialized addiction treatment
-- **Couples Therapists**: Relationship repair and enhancement
-- **Medical Specialists**: Addressing physical health aspects
-- **Support Groups**: Peer support and accountability
-
-### Family and Partner Support
-- **Education Programs**: Understanding sexual addiction and recovery
-- **Communication Training**: Healthy interaction skill development
-- **Boundary Setting**: Establishing appropriate limits and expectations
-- **Recovery Participation**: Active involvement in treatment process
-
-### Community Resources
-- **Support Groups**: Sex Addicts Anonymous (SAA), Sexual Recovery Anonymous (SRA)
-- **Online Communities**: Digital support networks and resources
-- **Educational Programs**: Workshops and seminars on sexual health
-- **Advocacy Organizations**: Groups promoting sexual addiction awareness
-
-## Implementation Guidelines
-
-### Healthcare Settings
-- **Addiction Treatment Centers**: Integration into existing programs
-- **Mental Health Clinics**: Incorporation into therapy services
-- **Medical Practices**: Primary care provider involvement
-- **Specialized Centers**: Dedicated sexual addiction treatment facilities
-
-### Patient Education
-- **Treatment Orientation**: Understanding product therapy approach
-- **Safety Training**: Proper use and risk management
-- **Recovery Planning**: Setting realistic goals and expectations
-- **Relapse Prevention**: Identifying triggers and coping strategies
-
-### Ongoing Support
-- **Regular Monitoring**: Continued assessment and adjustment
-- **Skill Development**: Building healthy sexual practices
-- **Relationship Work**: Partner involvement and support
-- **Lifestyle Integration**: Incorporating recovery into daily life
-
-## Future Directions
-
-### Technology Integration
-- **AI-Assisted Therapy**: Machine learning for personalized treatment
-- **Telemedicine**: Remote monitoring and support
-- **Digital Health**: App-based tracking and intervention
-- **Virtual Reality**: Immersive therapy experiences
-
-### Research Priorities
-- **Long-Term Outcomes**: Extended follow-up studies
-- **Mechanism Research**: Understanding how product therapy works
-- **Optimization Studies**: Improving treatment effectiveness
-- **Prevention Research**: Early intervention strategies
-
-### Policy Development
-- **Clinical Guidelines**: Professional practice standards
-- **Insurance Coverage**: Reimbursement for product therapy
-- **Regulatory Framework**: Safety and efficacy oversight
-- **Ethics Guidelines**: Appropriate use and boundaries
-
-## Conclusion
-
-Sexual addiction and withdrawal represent significant challenges requiring comprehensive, evidence-based treatment approaches. TriSex.org's therapeutic products, when properly integrated into professional treatment programs, offer innovative tools for supporting recovery and promoting healthy sexuality.
-
-The key to successful integration lies in appropriate patient selection, professional supervision, and careful monitoring throughout the recovery process. By combining cutting-edge product technology with established therapeutic principles, TriSex.org contributes to advancing the field of sexual addiction treatment and improving outcomes for individuals and couples affected by these challenging conditions.
-
-Through continued research, clinical validation, and ethical implementation, product-assisted therapy represents a promising frontier in sexual health and addiction medicine, offering hope for those seeking recovery and renewed intimate wellness.`,
+- Certified Sex Addiction Therapists (CSAT)
+- Sex Addicts Anonymous (SAA) and Sexual Recovery Anonymous (SRA)
+- Couples therapy for relationship repair
+- Digital health and AI-assisted therapy for personalized treatment`,
       tags: ["sexual-addiction", "withdrawal", "therapy", "recovery", "mental-health", "product-integration", "clinical-treatment"],
       lastUpdated: "2025-01-01",
       author: "Dr. Sarah Mitchell, CSAT & TriSex.org Clinical Research Team",
@@ -2716,108 +2021,53 @@ Through continued research, clinical validation, and ethical implementation, pro
       category: "health",
       content: `# Sexual Anatomy Education & Reproductive Justice
 
-## Introduction
-Sexual anatomy education and reproductive justice are fundamental to TriSex.org's mission of supporting sexual creativity while ensuring bodily autonomy and reproductive rights for all individuals.
+[img: "Anatomical Diversity" caption="Natural variation across human sexual anatomy is the foundation of TriSex.org's inclusive approach."]
 
 ## Sexual Anatomy Diversity
 
-### External Genital Anatomy
-- **Vulva variations**: Natural diversity in labia size, clitoral structure, and vestibular configuration
-- **Penis anatomy**: Variations in size, shape, foreskin presence, and urethral placement
-- **Intersex anatomy**: Natural chromosomal, gonadal, or anatomical variations affecting sexual development
-- **Post-surgical anatomy**: Considerations for gender-affirming surgical outcomes
+Human sexual anatomy exists across a broad spectrum of natural variation:
 
-### Internal Reproductive Anatomy
-- **Uterine variations**: Bicornuate, septate, and other müllerian duct variations
-- **Vaginal anatomy**: Length, width, and elasticity differences
-- **Prostate considerations**: Size, sensitivity, and accessibility variations
-- **Hormonal influences**: Impact of natural and medical hormone levels on anatomy
+| Category | Variations |
+| --- | --- |
+| External genital | Labia size, clitoral structure, penis shape, foreskin, urethral placement |
+| Intersex | Chromosomal, gonadal, and anatomical variations |
+| Internal reproductive | Uterine variations (bicornuate, septate), vaginal dimensions, prostate |
+| Post-surgical | Gender-affirming surgical outcomes |
+| Temporal | Puberty timelines, pregnancy changes, aging effects, medication influences |
 
-### Anatomical Changes Over Time
-- **Puberty variations**: Different timelines and outcomes of sexual development
-- **Pregnancy and childbirth**: Anatomical changes and postpartum considerations
-- **Aging effects**: Natural changes in sensitivity, lubrication, and erectile function
-- **Medical influences**: Medication and treatment effects on sexual anatomy
+---
 
 ## Reproductive Justice Framework
 
-### Core Principles
-1. **Right to have children**: Access to fertility treatments, adoption, and family planning
-2. **Right not to have children**: Contraception access, abortion rights, and sterilization choices
-3. **Right to parent children**: Safe communities, economic support, and freedom from violence
-4. **Right to sexual autonomy**: Bodily integrity, consent education, and pleasure rights
+> Reproductive justice centers the right of every person to have children, not have children, parent in safe communities, and exercise sexual autonomy.
 
-### Historical Context
-- **Forced sterilization**: Historical abuses targeting disabled, Indigenous, and marginalized communities
-- **Contraceptive access**: Struggles for birth control legalization and insurance coverage
-- **Abortion rights**: Legal battles and ongoing threats to reproductive autonomy
-- **LGBTQ+ family rights**: Marriage equality, adoption rights, and fertility access
+### Core Principles
+
+| Right | Scope |
+| --- | --- |
+| To have children | Fertility treatments, adoption, family planning |
+| Not to have children | Contraception, abortion access, sterilization choice |
+| To parent | Safe communities, economic support, freedom from violence |
+| Sexual autonomy | Bodily integrity, consent education, pleasure rights |
 
 ### Intersectional Considerations
-- **Race and ethnicity**: Maternal mortality disparities and healthcare access barriers
-- **Economic class**: Insurance coverage gaps and cost barriers to reproductive care
-- **Disability rights**: Autonomy in reproductive decisions and accessible healthcare
-- **Geographic location**: Rural healthcare deserts and state-level policy variations
+
+| Factor | Challenge |
+| --- | --- |
+| Race/ethnicity | Maternal mortality disparities, healthcare access barriers |
+| Economic class | Insurance gaps, cost barriers to reproductive care |
+| Disability | Autonomy in decisions, accessible healthcare |
+| Geography | Rural healthcare deserts, state-level policy variation |
+
+---
 
 ## Sexual Creativity and Expression
 
-### Defining Sexual Creativity
-- **Beyond penetration**: Diverse sexual practices and pleasure exploration
-- **Adaptive techniques**: Creative solutions for different abilities and anatomies
-- **Communication skills**: Expressing desires, boundaries, and preferences
-- **Pleasure activism**: Advocating for joy, consent, and sexual liberation
-
-### Supporting Anatomical Diversity
-- **Custom-fit products**: TriSex.org's precision sizing accommodates all anatomies
-- **Inclusive design**: Products that work with surgical scars, prosthetics, and mobility aids
-- **Educational resources**: Anatomy-positive information about sexual function
-- **Community support**: Peer networks for sharing experiences and advice
-
-### Consent and Communication
-- **Enthusiastic consent**: Ongoing, informed agreement in all sexual encounters
-- **Boundary setting**: Clear communication about comfort levels and limits
-- **Safer sex practices**: STI prevention strategies for all types of sexual contact
-- **Trauma-informed approaches**: Sensitivity to sexual violence survivors
+TriSex.org supports anatomical diversity through precision-fit products for all bodies, inclusive design for surgical scars and prosthetics, anatomy-positive education, and community peer networks. Consent practices center enthusiastic, ongoing agreement with clear boundary communication and trauma-informed approaches.
 
 ## Policy and Advocacy
 
-### Legislative Priorities
-- **Comprehensive sex education**: Age-appropriate, inclusive curriculum in schools
-- **Healthcare access**: Insurance coverage for contraception, abortion, and fertility treatments
-- **Anti-discrimination laws**: Protection for LGBTQ+ individuals in healthcare settings
-- **Research funding**: Support for sexual health and reproductive justice studies
-
-### Community Organizing
-- **Grassroots advocacy**: Local campaigns for reproductive rights and sexual health access
-- **Coalition building**: Partnerships across movements for social justice
-- **Direct action**: Protests, clinic escorting, and community defense
-- **Mutual aid**: Community-supported reproductive care and emergency assistance
-
-### Corporate Responsibility
-- **Employee benefits**: Comprehensive reproductive healthcare coverage
-- **Supply chain ethics**: Ensuring fair labor practices in healthcare manufacturing
-- **Community investment**: Supporting local reproductive justice organizations
-- **Product accessibility**: Affordable pricing and distribution strategies
-
-## Implementation in Healthcare
-
-### Provider Training
-- **Cultural competency**: Understanding diverse sexual practices and identities
-- **Trauma-informed care**: Recognizing and responding to sexual violence histories
-- **Anatomical inclusivity**: Examination techniques for all body types
-- **Communication skills**: Respectful language and patient-centered approaches
-
-### Service Delivery
-- **Comprehensive care**: Integrating sexual health into primary healthcare
-- **Accessibility standards**: Physical and communication accommodations
-- **Privacy protection**: Confidentiality for minors and marginalized populations
-- **Emergency protocols**: Rapid response for sexual assault and reproductive emergencies
-
-### Quality Improvement
-- **Patient feedback**: Regular assessment of care quality and cultural responsiveness
-- **Outcome tracking**: Monitoring reproductive health disparities and interventions
-- **Staff development**: Ongoing education about sexual anatomy and reproductive justice
-- **Community partnerships**: Collaboration with advocacy organizations and peer educators
+Legislative priorities include comprehensive sex education, healthcare insurance coverage, anti-discrimination protections, and research funding. Community organizing spans grassroots advocacy, coalition building, direct action, and mutual aid networks for reproductive care.
 
 ## Educational Applications
 
@@ -2850,237 +2100,60 @@ Sexual anatomy education and reproductive justice are fundamental to TriSex.org'
       category: "health",
       content: `# Intelligence Frameworks for Holistic Health
 
-## Introduction
-TriSex.org's peer mentor network operates on expanded intelligence frameworks that recognize diverse forms of wisdom and knowledge beyond traditional IQ measurements. These frameworks ensure equitable representation and value all forms of human intelligence in healthcare decision-making.
+[img: "Peer Mentor Intelligence Network" caption="Four intelligence frameworks guide TriSex.org's peer mentor matching and Time Banking dividend system."]
 
-## Infinite Intelligence
+## Overview
 
-### Definition
-Infinite Intelligence transcends individual cognitive capacity, accessing collective wisdom through interconnected knowledge networks and emergent understanding.
+TriSex.org's peer mentor network recognizes diverse forms of wisdom beyond traditional IQ measurements. Four intelligence frameworks ensure equitable representation in healthcare decision-making and inform the $TRISEXORG dividend system.
 
-### Core Principles
-- **Collective Wisdom Access**: Drawing from community knowledge pools and shared experiences
-- **Pattern Recognition Across Domains**: Identifying connections between seemingly unrelated fields
-- **Emergent Problem-Solving**: Solutions arising from collaborative thinking processes
-- **Intuitive Insight Synthesis**: Integrating rational analysis with intuitive understanding
+---
 
-### Applications in Healthcare
-- **Community Health Networks**: Leveraging collective experience for health solutions
-- **Cross-Pollination**: Applying insights from one health domain to another
-- **Emergent Treatments**: Discovering new approaches through collaborative exploration
-- **Holistic Assessment**: Considering multiple perspectives simultaneously
+## The Four Frameworks
 
-### Time Banking Integration
-Contributors demonstrating infinite intelligence receive enhanced dividend multipliers based on:
-- Cross-domain knowledge connections
-- Innovative solution synthesis
-- Community wisdom facilitation
-- Pattern recognition contributions
+| Framework | Definition | Healthcare Application |
+| --- | --- | --- |
+| Infinite Intelligence | Collective wisdom through interconnected knowledge networks | Community health solutions, cross-domain insights |
+| Multigenerational | Wisdom across age groups (elder knowledge + youth innovation) | Age-diverse mentor matching, knowledge exchange |
+| Multicultural | Diverse cultural approaches to health and healing | Cultural competency, traditional medicine integration |
+| Racial & Ethnic | Understanding how race impacts health outcomes | Health equity, addressing systemic disparities |
 
-## Multigenerational Intelligence
+---
 
-### Definition
-Multigenerational Intelligence integrates wisdom across age groups, combining elder knowledge with youth innovation and middle-generation bridge-building.
+## Multigenerational Wisdom
 
-### Generational Wisdom Types
+| Generation | Age Range | Key Strengths |
+| --- | --- | --- |
+| Elder | 65+ | Historical pattern recognition, traditional knowledge, mentorship |
+| Adult | 44–64 | Bridge-building, resource management, family advocacy |
+| Millennial | 28–43 | Technology integration, systems thinking, advocacy |
+| Gen Z | 18–27 | Digital native insights, social justice awareness, global perspective |
 
-#### Elder Intelligence (65+)
-- **Historical Pattern Recognition**: Understanding long-term health trends and cycles
-- **Traditional Knowledge Systems**: Indigenous and cultural healing practices
-- **Life Experience Integration**: Practical wisdom from lived experiences
-- **Mentorship Capacity**: Ability to guide and teach younger generations
+---
 
-#### Adult Intelligence (44-64)
-- **Bridge-Building**: Connecting generational perspectives and technologies
-- **Resource Management**: Experienced navigation of healthcare systems
-- **Career-Health Balance**: Managing health across professional responsibilities
-- **Family Advocacy**: Coordinating multi-generational family health needs
+## Cultural Knowledge Systems
 
-#### Millennial Intelligence (28-43)
-- **Technology Integration**: Digital health tool proficiency and innovation
-- **Systems Thinking**: Understanding complex healthcare interconnections
-- **Advocacy Skills**: Organizing for healthcare reform and access
-- **Work-Life Integration**: Balancing career demands with health priorities
+| Tradition | Focus Areas |
+| --- | --- |
+| Indigenous Wisdom | Holistic body-mind-spirit, plant medicine, ceremonial healing, land-based health |
+| Eastern Medicine | Traditional Chinese Medicine, Ayurveda, yoga, acupuncture |
+| African Diaspora | Community wellness, spiritual healing, herbal traditions, music therapy |
+| Latin American | Curanderismo, parteras, spiritual cleansing, family-centered care |
 
-#### Gen Z Intelligence (18-27)
-- **Digital Native Insights**: Intuitive understanding of online health communities
-- **Social Justice Awareness**: Connecting health to broader equity issues
-- **Innovation Mindset**: Creative approaches to traditional health challenges
-- **Global Perspective**: Understanding health as interconnected worldwide issue
+---
 
-### Implementation in Peer Mentoring
-- **Age-Diverse Matching**: Pairing mentors and mentees across generations
-- **Knowledge Exchange Programs**: Structured sharing between age groups
-- **Technology Training**: Youth teaching elders digital tools; elders sharing traditional wisdom
-- **Succession Planning**: Ensuring knowledge transfer and continuity
+## Health Equity
 
-## Multicultural Intelligence
+> Racial and ethnic intelligence involves deep understanding of how race impacts health outcomes, while recognizing and addressing systemic inequities.
 
-### Definition
-Multicultural Intelligence encompasses the ability to understand, respect, and integrate diverse cultural approaches to health, healing, and wellness.
+Structural racism in healthcare manifests through historical medical trauma, implicit bias, access barriers, and quality disparities. Intersectional factors — race-gender intersections, socioeconomic status, immigration status, and LGBTQ+ identity — compound these challenges.
 
-### Cultural Knowledge Systems
+---
 
-#### Indigenous Wisdom Traditions
-- **Holistic Health Concepts**: Understanding body-mind-spirit-community interconnections
-- **Plant Medicine Knowledge**: Traditional herbal and natural healing approaches
-- **Ceremonial Healing**: Ritual and spiritual components of wellness
-- **Land-Based Health**: Connection between environmental and human health
+## Peer Mentor Integration
 
-#### Eastern Medical Systems
-- **Traditional Chinese Medicine**: Qi, meridians, and energy-based healing
-- **Ayurvedic Principles**: Dosha balance and constitutional health approaches
-- **Yoga and Meditation**: Mind-body practices for wellness
-- **Acupuncture and Bodywork**: Physical intervention for energy flow
+The mentor matching algorithm considers cultural background alignment, generational balance, intelligence complementarity, and racial/ethnic sensitivity. Time Banking equity measures include cultural knowledge bonuses, language service payments, community organizing dividends, and mentorship quality multipliers.
 
-#### African Diaspora Healing
-- **Community-Centered Wellness**: Collective approaches to individual health
-- **Spiritual Healing Practices**: Integration of faith and physical wellness
-- **Herbal Medicine Traditions**: Plant-based healing knowledge
-- **Music and Movement Therapy**: Rhythm and dance for healing
-
-#### Latin American Curanderismo
-- **Sobadoras/Parteras**: Traditional bodywork and birth attendance
-- **Herbal Medicine**: Extensive plant knowledge for health conditions
-- **Spiritual Cleansing**: Limpias and energy clearing practices
-- **Family-Centered Care**: Extended family involvement in healing
-
-### Cross-Cultural Health Navigation
-- **Language Accessibility**: Understanding health concepts across languages
-- **Cultural Competency**: Respectful integration of diverse healing approaches
-- **Religious Integration**: Incorporating faith-based healing where appropriate
-- **Dietary Wisdom**: Understanding cultural nutrition and food medicine
-
-## Racial & Ethnic Intelligence
-
-### Definition
-Racial & Ethnic Intelligence involves deep understanding of how race and ethnicity impact health outcomes, healthcare access, and healing approaches, while recognizing and addressing systemic inequities.
-
-### Health Equity Awareness
-
-#### Structural Racism in Healthcare
-- **Historical Medical Trauma**: Understanding impacts of unethical medical experimentation
-- **Implicit Bias Recognition**: Identifying unconscious prejudices in healthcare delivery
-- **Access Barriers**: Recognizing geographic, economic, and cultural barriers to care
-- **Quality Disparities**: Understanding differences in care quality across racial groups
-
-#### Intersectional Health Impacts
-- **Race-Gender Intersections**: Understanding unique challenges for women of color
-- **Socioeconomic Factors**: How poverty and racism compound health challenges
-- **Immigration Status**: Healthcare access challenges for undocumented communities
-- **LGBTQ+ Identity**: Additional challenges for queer and trans people of color
-
-### Community-Specific Knowledge
-
-#### African American Health Intelligence
-- **Historical Health Resilience**: Survival strategies under systemic oppression
-- **Church-Based Wellness**: Faith community health support systems
-- **Hair and Skin Care**: Specific health considerations for Black bodies
-- **Hypertension and Diabetes**: Community-specific prevention and management
-
-#### Latino/Hispanic Health Intelligence
-- **Familismo**: Family-centered approach to health decision-making
-- **Traditional Healing**: Curanderismo and folk medicine integration
-- **Migration Health**: Understanding health impacts of displacement
-- **Language Barriers**: Navigating healthcare with limited English proficiency
-
-#### Asian American Health Intelligence
-- **Model Minority Myth**: Understanding hidden health struggles and needs
-- **Intergenerational Trauma**: Impacts of war, displacement, and discrimination
-- **Traditional Medicine Integration**: Balancing Eastern and Western approaches
-- **Mental Health Stigma**: Cultural barriers to seeking psychological support
-
-#### Indigenous Health Intelligence
-- **Historical Trauma**: Understanding impacts of colonization on health
-- **Traditional Ecological Knowledge**: Connection between land and health
-- **Tribal Sovereignty**: Respecting Indigenous healthcare governance
-- **Cultural Revitalization**: Health benefits of cultural practice restoration
-
-### Advocacy and Action
-
-#### Community Health Advocacy
-- **Data Collection**: Ensuring accurate representation in health research
-- **Policy Reform**: Advocating for healthcare policies that address racial disparities
-- **Community Organizing**: Building power for health equity
-- **Cultural Preservation**: Maintaining traditional healing knowledge
-
-#### Healthcare System Reform
-- **Diversifying Healthcare Workforce**: Increasing representation in medical fields
-- **Bias Training**: Educating healthcare providers about unconscious bias
-- **Community Health Workers**: Training and supporting community-based health advocates
-- **Culturally Adapted Interventions**: Developing health programs for specific communities
-
-## Integration in TriSex.org's Peer Mentor Network
-
-### Matching Algorithm
-The peer mentor matching system considers all intelligence types to create optimal pairings:
-- **Cultural Background Alignment**: Matching based on shared or complementary cultural experiences
-- **Generational Balance**: Pairing across age groups for knowledge exchange
-- **Intelligence Type Complementarity**: Combining different intelligence strengths
-- **Racial/Ethnic Sensitivity**: Ensuring culturally competent mentoring relationships
-
-### Time Banking Equity Measures
-The stablecoin dividend system incorporates intelligence equity through:
-- **Cultural Knowledge Bonuses**: Extra compensation for sharing traditional healing knowledge
-- **Language Services**: Additional payments for interpretation and translation
-- **Community Organizing**: Bonuses for health advocacy and system navigation assistance
-- **Mentorship Quality**: Higher dividends for demonstrating cultural competency and inclusive practices
-
-### Training and Development
-All peer mentors complete training in:
-- **Cultural Humility**: Ongoing learning about diverse health approaches
-- **Racial Equity**: Understanding systemic racism's impact on health
-- **Generational Communication**: Effective cross-age interaction strategies
-- **Infinite Intelligence Practices**: Accessing and contributing to collective wisdom
-
-### Quality Assurance
-The network maintains quality through:
-- **Community Feedback**: Regular assessment from mentees and community members
-- **Cultural Advisory Boards**: Oversight from diverse community leaders
-- **Outcome Tracking**: Monitoring health equity improvements
-- **Continuous Learning**: Ongoing education about evolving cultural competency standards
-
-## Research and Evidence Base
-
-### Academic Foundations
-- **Howard Gardner's Multiple Intelligences**: Recognition of diverse cognitive abilities
-- **Cultural Psychology Research**: Understanding culture's impact on cognition and health
-- **Critical Race Theory**: Analyzing systemic racism's health impacts
-- **Indigenous Research Methodologies**: Incorporating traditional knowledge validation
-
-### Outcome Measurements
-- **Health Equity Metrics**: Tracking disparities reduction across racial/ethnic groups
-- **Cultural Competency Assessments**: Measuring mentor effectiveness across cultures
-- **Generational Satisfaction**: Evaluating cross-age mentoring success
-- **Community Health Indicators**: Monitoring overall community wellness improvements
-
-### Continuous Innovation
-- **Community-Participatory Research**: Involving communities in defining and measuring success
-- **Traditional Knowledge Integration**: Formal recognition and incorporation of indigenous wisdom
-- **Technology Adaptation**: Ensuring digital tools work across cultural and generational lines
-- **Global Health Perspectives**: Learning from international community health models
-
-## Implementation Guidelines
-
-### For Healthcare Providers
-- **Assessment Tools**: Incorporating cultural and generational factors in health evaluations
-- **Treatment Planning**: Developing culturally appropriate and age-sensitive interventions
-- **Communication Strategies**: Adapting interaction styles for diverse intelligence types
-- **Resource Navigation**: Connecting patients with culturally competent community resources
-
-### For Community Organizations
-- **Program Design**: Creating initiatives that honor diverse intelligence types
-- **Leadership Development**: Cultivating leaders across cultural and generational lines
-- **Partnership Building**: Collaborating across racial, ethnic, and age boundaries
-- **Advocacy Coordination**: Uniting diverse voices for health equity
-
-### For Individual Users
-- **Self-Assessment**: Understanding your own intelligence strengths and cultural background
-- **Mentor Selection**: Choosing mentors who complement your knowledge and experience
-- **Learning Opportunities**: Seeking education about other cultural and generational perspectives
-- **Community Contribution**: Sharing your unique intelligence types with the network
-
-This comprehensive intelligence framework ensures that TriSex.org's peer mentor network values and utilizes the full spectrum of human wisdom, creating more equitable and effective health support for all community members.`,
+All mentors complete training in cultural humility, racial equity, generational communication, and collective wisdom practices, overseen by cultural advisory boards with continuous community feedback.`,
       tags: ["intelligence", "cultural-competency", "multigenerational", "racial-equity", "peer-mentoring"],
       lastUpdated: "2024-01-16",
       author: "Peer Mentor Intelligence Collective",
@@ -3093,92 +2166,52 @@ This comprehensive intelligence framework ensures that TriSex.org's peer mentor 
       category: "health",
       content: `# Inclusive Sexual Health Terminology
 
+[img: "Inclusive Language" caption="Person-first, community-approved terminology that respects self-identification and cultural context."]
+
 ## Core Principles
 
-### Person-First Language
-- "Person with [condition]" vs "[condition] person"
-- Avoid stigmatizing terminology
-- Respect self-identification
-- Use current, accepted terms
+Person-first language prioritizes the individual over their condition, avoids stigmatizing terms, respects self-identification, and uses current, community-approved terminology with awareness of regional variations and indigenous knowledge systems.
 
-### Cultural Competency
-- Community-approved terminology
-- Regional language variations
-- Indigenous knowledge systems
-- Intersectional considerations
+---
 
 ## Anatomy and Identity
 
-### Inclusive Anatomy Terms
-- **External genitalia**: Vulva, penis, intersex variations
-- **Internal anatomy**: Uterus, prostate, varied configurations
-- **Secondary characteristics**: Chest, body hair, voice
-- **Surgical considerations**: Post-operative anatomies
+| Category | Inclusive Terms |
+| --- | --- |
+| External genitalia | Vulva, penis, intersex variations |
+| Internal anatomy | Uterus, prostate, varied configurations |
+| Secondary characteristics | Chest, body hair, voice |
+| Post-surgical | Post-operative anatomies |
 
-### Identity-Affirming Language
-- **Gender identity**: Self-determination priority
-- **Sexual orientation**: Spectrum recognition
-- **Relationship styles**: Committed monogamous relationships
-- **Cultural identity**: Intersectional awareness
+Identity-affirming language prioritizes gender self-determination, sexual orientation spectrum recognition, and intersectional cultural awareness.
+
+---
 
 ## 2SLGBTIQA+ Terminology
 
-### Expanded Acronym
-- **2S**: Two-Spirit (Indigenous identity)
-- **L**: Lesbian
-- **G**: Gay
-- **B**: Bisexual
-- **T**: Transgender
-- **I**: Intersex
-- **Q**: Queer/Questioning
-- **A**: Asexual/Aromantic
-- **+**: Additional identities
+| Letter | Identity |
+| --- | --- |
+| 2S | Two-Spirit (Indigenous identity) |
+| L | Lesbian |
+| G | Gay |
+| B | Bisexual |
+| T | Transgender |
+| I | Intersex |
+| Q | Queer / Questioning |
+| A | Asexual / Aromantic |
+| + | Additional identities |
 
-### Evolving Language
-- Regular terminology updates
-- Community input processes
-- Youth-led language evolution
-- Elder wisdom integration
+Language evolves through regular updates with community input, youth-led evolution, and elder wisdom integration.
 
-## Native American/Indigenous Perspectives
+---
 
-### Traditional Knowledge
-- Two-Spirit recognition
-- Ceremonial health practices
-- Community healing approaches
-- Land-based health concepts
+## Indigenous Perspectives
 
-### Language Preservation
-- Cherokee terminology integration
-- Navajo health concepts
-- Cree community input
-- Tribal-specific protocols
-
-### Respectful Engagement
-- Tribal consultation protocols
-- Cultural appropriation avoidance
-- Sovereignty recognition
-- Collaborative development
+Two-Spirit recognition, ceremonial health practices, community healing, and land-based health concepts are honored through tribal consultation protocols and collaborative development. Language preservation spans Cherokee, Navajo, Cree, and tribal-specific protocols.
 
 ## Communication Best Practices
 
-### Active Listening
-- Ask for preferred terms
-- Respect corrections
-- Avoid assumptions
-- Learn continuously
-
-### Professional Development
-- Regular training updates
-- Community engagement
-- Bias recognition work
-- Cultural humility practice
-
-### Documentation Standards
-- Inclusive intake forms
-- Flexible terminology options
-- Privacy protection
-- Regular form updates`,
+Ask for preferred terms, respect corrections, avoid assumptions, and learn continuously. Documentation uses inclusive intake forms with flexible terminology, privacy protection, and regular updates.`,
       tags: ["terminology", "inclusive", "2slgbtiq", "cultural-competency", "indigenous"],
       lastUpdated: "2024-01-10",
       author: "Community Relations Team",
@@ -3191,566 +2224,133 @@ This comprehensive intelligence framework ensures that TriSex.org's peer mentor 
       category: "products",
       content: `# NanoHeal ⚧️ Intersectional Naturopathic STI Treatment Lubricant & Gaynal Condom System
 
+[img: "NanoHeal Product System" caption="Combining naturopathic medicine with precision-engineered protection. All formulations licensed under CC BY-SA 4.0."]
+
 ## Overview
 
-NanoHeal ⚧️ represents a revolutionary advancement in sexual health protection technology, combining intersectional naturopathic medicine with precision-engineered protection systems. This comprehensive solution addresses universal STI coverage while honoring anatomical diversity and cultural healing traditions.
-
-**Creative Commons License**: All formulations, research, and manufacturing processes are available under CC BY-SA 4.0 for global community access and improvement.
-
-## Flexible Protection Framework: Relationship-Based STI Risk Management
-
-### NanoHeal Usage Models
-
-NanoHeal is uniquely designed to provide effective STI prevention across different relationship contexts and commitment levels, offering protection both as a standalone solution and in combination with barrier methods.
-
-#### **Standalone NanoHeal Protection** (No Condoms)
-*STRICT ELIGIBILITY REQUIREMENTS - Only sold with verified seasonal testing cycle completion*
-
-**⚠️ MANDATORY REQUIREMENT FOR STANDALONE SALES:**
-**Full Seasonal Testing Cycle** (3-6 months) of documented monogamy required before standalone NanoHeal purchase eligibility.
-
-**Verified Low-Risk Contexts Only:**
-- **Documented monogamous partnerships**: BOTH partners must complete full seasonal testing cycle (3-6 months minimum) with:
-  - Baseline comprehensive STI panel at relationship start
-  - Mid-cycle testing at 6-8 weeks
-  - Final comprehensive panel at 3-6 months
-  - Zero sexual contact outside partnership during entire cycle
-  - Written verification from healthcare provider or certified testing facility
-
-**Additional Eligibility Requirements:**
-- **Established relationship verification**: Minimum 6 months documented exclusive relationship
-- **Regular testing protocol**: Ongoing quarterly testing schedule established
-- **Partner health transparency**: Full sexual health history disclosure and verification
-- **Pregnancy planning status**: Clear understanding and agreement on conception risk
-
-**Standalone Protection Effectiveness:**
-- HIV prevention: 89.4% efficacy through microbicide action
-- Bacterial STI reduction: 82.7% (chlamydia, gonorrhea, syphilis)
-- Fungal infection prevention: 94.8% (candida, other yeasts)
-- HSV transmission reduction: 76.2% with regular use
-
-**⚠️ IMPORTANT SAFETY NOTICE:** Standalone NanoHeal is NOT sold to individuals who cannot provide documented proof of completed seasonal testing cycle with verified monogamy. All other users must purchase combination protection (NanoHeal + condoms).
-
-#### **Combined NanoHeal + Barrier Protection** (With Condoms)
-*Recommended for higher-risk contexts and new relationships*
-
-**Higher-Risk Relationship Contexts:**
-- **New sexual partnerships**: Unknown STI status or recent testing
-- **New partnerships**: Building intimacy in developing relationships
-- **New relationship formation**: Transitioning to committed partnership
-- **Unknown partner history**: Meeting partners through dating apps or social settings
-- **Recent STI exposure**: Partner had recent infection or exposure risk
-
-**Combined Protection Effectiveness:**
-- HIV prevention: 98.9% efficacy (barrier + microbicide synergy)
-- Bacterial STI reduction: 97.1% (dual-layer protection)
-- Fungal infection prevention: 99.2% (comprehensive coverage)
-- HSV transmission reduction: 94.8% (maximum barrier protection)
-
-### Risk Assessment Framework
-
-#### **Relationship Commitment Levels**
-
-**Level 1: Exploratory** (Always use barriers + NanoHeal)
-- First-time sexual contact
-- Dating phase, getting to know one partner
-- Unknown sexual health status
-- Recent breakup or new to sexual activity
-
-**Level 2: Developing** (Flexible approach based on communication)
-- Regular sexual contact (2-6 months)
-- Some knowledge of partner's sexual health
-- Transitioning to exclusivity
-- Ongoing STI testing discussions
-
-**Level 3: Committed** (May use NanoHeal standalone with regular testing)
-- Exclusive sexual relationship (6+ months)
-- Comprehensive STI testing completed
-- Open communication about sexual health
-- Shared sexual health goals and practices
-
-**Level 4: Fluid-Bonded** (NanoHeal standalone appropriate)
-- Long-term exclusive partnership
-- Regular comprehensive STI screening
-- Pregnancy planning or prevention decisions
-- Mutual agreement on fluid exchange
-
-### Application Guidelines by Context
-
-#### **Standalone NanoHeal Application**
-*For committed relationships with established trust and testing*
-
-**Pre-Application:**
-- Confirm partner STI testing currency (within 3-6 months)
-- Discuss any sexual contact outside relationship
-- Apply generous amount to all contact areas
-- Allow 5-10 minutes for full absorption
-
-**During Activity:**
-- Reapply as needed for extended sessions
-- Focus extra application on high-transmission areas
-- Communicate comfort and lubrication needs
-- Maintain open dialogue about any concerns
-
-#### **Combined Protection Application**
-*For new relationships or higher-risk contexts*
-
-**Preparation:**
-- Select appropriate condom size and type
-- Apply NanoHeal as base layer before condom
-- Additional external lubrication as needed
-- Extra protection for anal or vigorous activity
-
-**Enhanced Safety Protocol:**
-- Visual inspection of barrier integrity
-- Proper application and removal techniques
-- Post-activity health check and communication
-- Plan for regular STI testing schedule
-
-## Core Technology
-
-### NanoHeal Lubricant Formulation
-
-**Active Ingredients:**
-- **Nano-silver particles (10-20nm)**: Broad-spectrum antimicrobial with minimal tissue irritation
-- **Carrageenan extract**: Natural HIV/HPV barrier from red seaweed
-- **Tea tree oil microcapsules**: Controlled-release antifungal and antibacterial
-- **Aloe vera concentrate**: Tissue healing and inflammation reduction
-- **Coconut oil fractions**: MCT antimicrobial lipids
-- **Hyaluronic acid**: Moisture retention and tissue protection
-
-**pH Balanced Formulations:**
-- **Vaginal Formula**: pH 3.8-4.5 supporting healthy lactobacilli
-- **Anal Formula**: pH 5.5-6.0 for rectal tissue compatibility
-- **Oral Formula**: pH 6.8-7.2 matching natural saliva
-
-### Universal STI Coverage Mechanism
-
-**Viral Protection:**
-- HIV: Carrageenan and nano-silver dual barrier
-- HSV-1/2: Tea tree oil disrupts viral envelope
-- HPV: Carrageenan blocks cellular attachment
-- Hepatitis B: Nano-silver interferes with viral replication
-
-**Bacterial Inhibition:**
-- Chlamydia: Silver nanoparticles disrupt cell walls
-- Gonorrhea: MCT lipids compromise bacterial membranes  
-- Syphilis: Tea tree oil targets Treponema pallidum
-- Bacterial vaginosis: pH balancing supports beneficial flora
-
-**Fungal Prevention:**
-- Candida species: Tea tree oil and coconut fractions
-- Other yeasts: Nano-silver broad-spectrum activity
-
-## Gaynal Condom Integration System: Designed for Men Who Have Sex With Men
-
-### Design Philosophy
-
-The Gaynal Condom System is specifically engineered for men who have sex with men (MSM), recognizing that gay, bisexual, and other MSM communities require specialized protection designed for male-male sexual practices. Our intersectional approach honors diverse anatomies within MSM communities while addressing the unique safety and pleasure needs of gay men, including bears, twinks, leather enthusiasts, and trans gay men.
-
-### Technical Specifications
-
-**Base Materials:**
-- **Natural latex blend**: Sourced from fair-trade cooperatives
-- **Polyisoprene synthetic**: For latex allergies
-- **Polyurethane ultra-thin**: Maximum sensation preservation
-- **Lambskin premium**: Natural feel with bacterial barrier (not viral)
-
-**Anatomical Adaptations:**
-
-1. **Receptive Partner Protection:**
-   - Wider base circumference (60-70mm vs standard 52-56mm)
-   - Extended length (220mm vs standard 180mm)
-   - Reinforced tip with reservoir (15mm depth)
-   - Internal NanoHeal lubricant coating
-
-2. **Insertive Partner Options:**
-   - Standard circumference with extended length
-   - Comfort fit variants for girthier anatomy
-   - Textured external surface options
-   - Pre-applied NanoHeal external coating
-
-### Size Matrix & Customization for MSM Communities
-
-**Bottom-Optimized Sizes (Anal Receptive):**
-- **Gaynal A-Series**: 60mm base, 220mm length, extra lubrication for comfortable bottoming
-- **Gaynal B-Series**: 65mm base, 240mm length, maximum protection for vigorous play
-- **Gaynal C-Series**: 70mm base, 260mm length, comfort priority for extended sessions
-
-**Top-Optimized Sizes (Anal Insertive):**
-- **Precision G1-G12**: Width range 45-65mm, all 220mm+ length for diverse gay male anatomy
-- **Bear Strength**: Reinforced variants for larger men and vigorous play
-- **Slender Fit**: Smaller sizes with enhanced sensitivity for slimmer body types
-- **Plus Size**: Comfortable options for larger body types and varied anatomies
-- **Athletic Fit**: Designed for muscular builds and active lifestyles
-- **Leather Extreme**: Heavy-duty options for BDSM and kink communities
-- **Extended Intimacy**: Long-lasting formula for committed couples
-
-**Specialized MSM Options:**
-- **Trans Gay Men**: Anatomically adapted designs for FTM gay men
-- **Versatile Ready**: Quick-change options for vers men who switch roles
-- **Relationship Ready**: Variety packs for committed partners exploring together
-
-### Trans Sex Protection Systems
-
-**Transgender-Specific Designs:**
-- **FTM (Trans Male) Series**: Designed for trans men with varied surgical status
-  - Pre-op compatible: Accommodates original anatomy with NanoHeal coating
-  - Post-phalloplasty: Specialized fit for constructed anatomy
-  - Post-metoidioplasty: Ultra-sensitive materials for enhanced sensation
-- **MTF (Trans Female) Series**: For trans women across transition stages
-  - Pre/Non-op receptive: Internal protection with extended coverage
-  - Post-vaginoplasty: Anatomically contoured for neovaginal tissue
-  - Hormone-adaptive: Materials that adjust to hormonal skin changes
-- **Non-Binary Options**: Flexible designs for diverse anatomical configurations
-  - Adaptable fit systems for various body configurations
-  - Gender-neutral packaging and terminology
-  - Custom sizing for unique anatomical presentations
-
-### Intersex² Protection Solutions
-
-**Intersex-Inclusive Design Philosophy:**
-Recognizing the beautiful diversity of intersex anatomies, our protection systems adapt to unique anatomical presentations rather than forcing conformity to binary assumptions.
-
-**Adaptive Protection Systems:**
-- **Custom Anatomy Mapping**: 3D scanning technology for precise fit
-- **Dual-Function Designs**: Protection that works across anatomical variations
-- **Hormone-Responsive Materials**: Adapts to various hormonal profiles
-- **Sensitivity-Optimized**: Enhanced sensation preservation for varied nerve distributions
-- **Multi-Configuration Options**: Single product works across different anatomical presentations
-
-**Specialized Intersex Options:**
-- **Variable Anatomy Series**: Adjustable protection for changing anatomical needs
-- **Micro-Anatomy Support**: Ultra-precise fit for smaller anatomical features
-- **Enhanced Sensitivity**: Special formulations for varied nerve sensitivity patterns
-- **Dual-Use Systems**: Protection that works for both penetrative and receptive roles
-
-### Male-Female (Penile-Vaginal & Anal) Protection
-
-**Heterosexual Couple-Optimized Systems:**
-
-**Penile-Vaginal Protection:**
-- **Comfort Fit Series**: Traditional sizing with NanoHeal enhancement
-  - Standard sizes: 52mm, 55mm, 58mm base width
-  - Extended length options for varied anatomy
-  - Ultra-thin with maximum sensation preservation
-  - Pre-lubricated with vaginal-compatible NanoHeal formula
-- **Couple's Harmony**: Dual-sensation enhancement
-  - Internal texture for increased pleasure
-  - External warming lubricant integration
-  - Extended foreplay-compatible materials
-  - Pregnancy prevention with STI protection
-
-**Male-Female Anal Protection:**
-- **Anal Comfort Series**: Specialized for heterosexual anal play
-  - Extra lubrication with anal-specific NanoHeal formula
-  - Reinforced base for security during anal penetration
-  - Desensitizing option for comfort during initial penetration
-  - Extended length for deep penetration comfort
-- **Couples' Adventure Pack**: Variety options for exploration
-  - Multiple textures and sensations
-  - His and hers sensation enhancers
-  - Communication cards for consent and preference discussion
-  - Educational materials for safe anal play practices
-
-**Female Pleasure Priority Options:**
-- **Her Pleasure Focus**: Designed to optimize female sensation
-  - Clitoral stimulation ridges
-  - G-spot targeting contours
-  - Extended external coverage for vulvar protection
-  - Compatible with external vibrators and toys
-
-## Intersectional Customization
-
-### Cultural Medicine Integration
-
-**Traditional Healing Partnerships:**
-- Indigenous medicine integration with community consent
-- Ayurvedic herb inclusion where culturally appropriate
-- Traditional Chinese Medicine compatibility assessments
-- African traditional medicine collaborative formulations
-
-**Accessibility Considerations:**
-- Braille packaging with raised texture indicators
-- Audio instructions via QR codes and NFC chips
-- Easy-open packaging for limited dexterity
-- Visual contrast for color-blind users
-
-### Identity-Affirming Options
-
-**Trans-Inclusive Design:**
-- Pre/post-surgical anatomy accommodation
-- Hormone therapy compatibility testing
-- Prosthetic-compatible designs
-- Dysphoria-reducing packaging language
-
-**Non-Binary & Genderfluid Support:**
-- Neutral packaging without gendered assumptions  
-- Flexible naming conventions
-- Community-driven design feedback integration
-- Multiple size options without binary categorization
-
-## Application Guidelines
-
-### Pre-Application Preparation
-
-1. **Compatibility Testing**: Patch test 24 hours prior for sensitive individuals
-2. **Hygiene Protocol**: Gentle cleansing with pH-appropriate cleaners
-3. **Communication**: Partner discussion of preferences and boundaries
-4. **Relaxation**: Stress reduction supports natural lubrication
-
-### Application Technique
-
-**For Anal Play:**
-1. Apply generous NanoHeal lubricant externally
-2. Use applicator for internal preparation (included)
-3. Select appropriate Gaynal condom size
-4. Apply additional external lubricant to condom
-5. Proceed with gentle, communicative engagement
-
-**For Vaginal Play:**
-1. Apply vaginal-formula NanoHeal as desired
-2. Standard protection methods remain effective
-3. NanoHeal enhances rather than replaces barriers
-4. Reapplication as needed during extended play
-
-**For Oral Sex Protection:**
-1. **Oral Condoms**: Ultra-thin protection for fellatio across all body sizes
-   - **Slender Oral**: 45-50mm width for smaller anatomy, enhanced sensation
-   - **Standard Oral**: 52-55mm width for average anatomy, balanced comfort
-   - **Plus Size Oral**: 58-65mm width for larger anatomy, secure fit
-   - **Custom Fit**: 3D-measured options for unique anatomical needs
-2. **Flavored Options**: All sizes available in mint, vanilla, strawberry, or unflavored
-3. **Dental Dams with NanoHeal**: For cunnilingus and anilingus protection
-   - Standard size: 6"x10" for most body types
-   - Large size: 8"x12" for fuller body coverage
-   - Textured versions for enhanced sensation
-4. **Body-Inclusive Design**: Protection that works across all body sizes and types
-5. **Safe Oral Formula**: NanoHeal coating safe for ingestion in recommended quantities
-
-## Safety & Efficacy Data
-
-### Clinical Trial Results
-
-**STI Prevention Effectiveness:**
-- HIV transmission reduction: 96.7% (p<0.001)
-- Bacterial STI reduction: 94.2% (p<0.001)
-- Fungal infection prevention: 98.1% (p<0.001)
-- HSV transmission reduction: 89.3% (p<0.01)
-
-**User Experience Metrics:**
-- Comfort rating: 4.8/5.0
-- Sensation preservation: 4.6/5.0
-- Ease of use: 4.7/5.0
-- Cultural appropriateness: 4.9/5.0
-
-### Contraindications & Precautions
-
-**Avoid Use If:**
-- Known allergy to any active ingredients
-- Severe immunocompromise without medical supervision
-- Open wounds or severe tissue trauma
-- Concurrent use with incompatible medications
-
-**Consultation Recommended:**
-- Pregnancy or trying to conceive
-- Chronic health conditions
-- Taking immune-suppressing medications
-- History of severe allergic reactions
-
-## Manufacturing & Distribution
-
-### Cooperative Production Model
-
-**Community Ownership:**
-- Worker-owned manufacturing cooperatives
-- Profit-sharing with ingredient source communities
-- Transparent pricing and cost breakdowns
-- Open-source manufacturing processes
-
-**Quality Assurance:**
-- ISO 13485 medical device standards
-- FDA/Health Canada regulatory compliance
-- Third-party testing for all batches
-- Community oversight and testing access
-
-### Global Access Program
-
-**Sliding Scale Pricing:**
-- Income-based pricing tiers
-- Free distribution through health clinics
-- Insurance coverage advocacy
-- Bulk purchasing for organizations
-
-**Distribution Network:**
-- Cooperative pharmacies prioritized
-- Community health centers
-- LGBTQ+ resource centers
-- Online direct-to-consumer shipping
-
-## Environmental Impact & Eco Brick Packaging System
-
-### Zero-Waste Eco Brick Packaging Plan
-
-**Revolutionary Circular Packaging Philosophy:**
-NanoHeal products utilize the innovative Eco Brick system - transforming all packaging waste into valuable building materials for community infrastructure projects.
-
-#### **Primary Product Packaging**
-
-**Mycelium-Based Containers:**
-- **Material**: Mushroom mycelium foam grown from agricultural waste
-- **Vegan certified**: No animal-derived materials or testing
-- **Home compostable**: Complete breakdown in 30-90 days
-- **Water-resistant coating**: Plant-based chitosan from mushroom sources
-- **Custom molding**: Perfect fit for each product size
-
-**Hemp-Fiber Outer Wraps:**
-- **100% hemp fiber** from regenerative farming practices
-- **Natural dye printing** using vegetable-based inks
-- **Fully compostable** within 60 days in home systems
-- **Tensile strength** exceeding traditional cardboard
-- **Antimicrobial properties** from natural hemp compounds
-
-#### **Shipping & Handling Materials**
-
-**Eco Brick Integration System:**
-All shipping materials are designed to become building components for community projects.
-
-**Protective Filling:**
-- **Compressed mycelium packing**: Replaces plastic bubble wrap
-- **Cornstarch packing peanuts**: 100% biodegradable, dissolves in water
-- **Shredded hemp fiber**: Loose-fill protection that composts completely
-- **No plastic tape**: Hemp-fiber adhesive strips only
-
-**Shipping Containers:**
-- **Corrugated cardboard**: 100% post-consumer recycled content
-- **Seed-embedded paper**: Box decomposes into wildflower garden
-- **Plantable labels**: Soy-ink printing on seed paper
-- **Compostable void fill**: Mushroom-based padding
-
-#### **Eco Brick Construction Program**
-
-**Community Building Integration:**
-- **Brick formation**: Used packaging compressed into building blocks
-- **Natural binding agent**: Mycelium-based mortar from packaging waste
-- **Community workshops**: Teaching brick-making from packaging materials
-- **Infrastructure projects**: Schools, community centers, housing
-
-**Packaging Return Program:**
-- **Prepaid return envelopes**: Made from hemp fiber
-- **Collection points**: Community gardens, health centers, pharmacies
-- **Processing facilities**: Local cooperatives create Eco Bricks
-- **Credit system**: Discounts for packaging returns
-
-### Vegan Certification Standards
-
-**Complete Animal-Free Production:**
-- **No animal-derived ingredients**: All components plant or mineral-based
-- **Vegan ink and adhesives**: Soy-based printing, plant-based glues
-- **Cruelty-free testing**: Only in-vitro and computer modeling
-- **Certified vegan packaging**: Third-party verification for all materials
-
-**Alternative Material Sources:**
-- **Plant-based plastics**: PLA from corn, PHA from algae
-- **Tree-free paper**: Hemp, bamboo, and agricultural residue
-- **Natural pigments**: Vegetable and mineral-based colorants
-- **Bio-based adhesives**: Soy protein and starch-based bonding
-
-### Waste-Free Shipping Protocol
-
-**Zero Packaging Waste Policy:**
-
-**Pre-Shipment Optimization:**
-- **Right-size packaging**: Custom-fit containers, no excess material
-- **Product consolidation**: Multi-item orders in single container
-- **Local fulfillment**: Regional distribution to minimize shipping materials
-- **Bulk shipping options**: Larger quantities in reusable containers
-
-**Delivery Process:**
-- **Reusable shipping bags**: Customer returns for credit
-- **Refillable containers**: Bulk quantities in returnable vessels
-- **Neighborhood hubs**: Central delivery points reducing individual packaging
-- **Bike/cargo bike delivery**: Local, carbon-neutral distribution
-
-**Post-Delivery Circularity:**
-- **100% material recovery**: Every component becomes useful resource
-- **Community composting**: Free compost delivery to local gardens
-- **Educational partnerships**: Schools use packaging for environmental projects
-- **Art and craft programs**: Creative reuse in community centers
-
-### Sustainable Practices
-
-**Carbon Neutrality:**
-- Renewable energy manufacturing
-- Local sourcing where possible
-- Carbon offset programs
-- Sustainable transportation networks
-
-## Research & Development
-
-### Ongoing Studies
-
-**Enhanced Formulations:**
-- Longer-lasting protection mechanisms
-- Additional natural antimicrobials
-- Personalized medicine approaches
-- Microbiome-supporting formulations
-
-**User Experience Innovation:**
-- Smart packaging with usage tracking
-- Temperature-responsive formulations
-- Customizable viscosity options
-- Integration with sexual wellness apps
-
-### Community Feedback Integration
-
-**Continuous Improvement:**
-- Regular user surveys and feedback
-- Community advisory boards
-- Cultural competency assessments
-- Accessibility audits and improvements
-
-## Economic Justice Model
-
-### Cooperative Ownership Structure
-
-**Stakeholder Groups:**
-- Manufacturing workers (40% ownership)
-- Ingredient source communities (25% ownership)
-- Research and development team (20% ownership)
-- Community health organizations (15% ownership)
-
-**Profit Distribution:**
-- 60% reinvested in R&D and expansion
-- 25% distributed to worker-owners
-- 10% community health program funding
-- 5% environmental restoration projects
-
-## Future Innovations
-
-### Technology Roadmap
-
-**Next-Generation Features:**
-- Biodegradable condom materials
-- Smart sensors for optimal application
-- Personalized formulation based on microbiome
-- Integration with telehealth monitoring
-
-**Global Expansion:**
-- Culturally adapted formulations by region
-- Local manufacturing cooperative development
-- Traditional medicine integration programs
-- Community health worker training initiatives
-
-## Conclusion
-
-NanoHeal ⚧️ and the Gaynal Condom System represent more than technological innovation—they embody a commitment to sexual health justice, cultural humility, and community empowerment. By combining cutting-edge science with traditional wisdom and cooperative economics, we create tools that honor both pleasure and safety in their full complexity.
-
-This intersectional approach ensures that protection technology serves all communities equitably, supporting sexual creativity while maintaining the highest standards of health and safety. Through open-source development and community ownership, NanoHeal continues evolving to meet the diverse needs of our global community.
+NanoHeal ⚧️ combines intersectional naturopathic medicine with precision-engineered protection systems, providing universal STI coverage while honoring anatomical diversity and cultural healing traditions.
 
 ---
 
-*"Technology in service of love, healing, and justice—this is the path forward for sexual health innovation."* - NanoHeal Cooperative Research Team`,
+## Protection Models
+
+### Standalone vs Combined
+
+| Model | Context | Requirements |
+| --- | --- | --- |
+| Standalone NanoHeal | Documented monogamous partnerships | Full seasonal testing cycle (3–6 months), quarterly testing |
+| Combined (NanoHeal + barriers) | New relationships, higher-risk contexts | Standard STI testing recommended |
+
+> ⚠️ Standalone NanoHeal requires documented proof of completed seasonal testing cycle with verified monogamy. All other users must purchase combination protection.
+
+### Effectiveness Comparison
+
+| STI Category | Standalone | Combined |
+| --- | --- | --- |
+| HIV prevention | 89.4% | 98.9% |
+| Bacterial STI reduction | 82.7% | 97.1% |
+| Fungal prevention | 94.8% | 99.2% |
+| HSV reduction | 76.2% | 94.8% |
+
+### Relationship Commitment Levels
+
+| Level | Stage | Recommended Protection |
+| --- | --- | --- |
+| 1 – Exploratory | First contact, dating | Always barriers + NanoHeal |
+| 2 – Developing | 2–6 months, transitioning to exclusivity | Flexible with communication |
+| 3 – Committed | 6+ months exclusive, testing complete | NanoHeal standalone eligible |
+| 4 – Fluid-Bonded | Long-term exclusive, regular screening | NanoHeal standalone appropriate |
+
+---
+
+## Core Technology
+
+### Active Ingredients
+
+| Ingredient | Function |
+| --- | --- |
+| Nano-silver (10–20nm) | Broad-spectrum antimicrobial |
+| Carrageenan extract | Natural HIV/HPV barrier (red seaweed) |
+| Tea tree oil microcapsules | Controlled-release antifungal/antibacterial |
+| Aloe vera concentrate | Tissue healing, inflammation reduction |
+| Coconut oil MCT fractions | Antimicrobial lipids |
+| Hyaluronic acid | Moisture retention, tissue protection |
+
+### pH-Balanced Formulations
+
+| Formula | pH Range | Optimized For |
+| --- | --- | --- |
+| Vaginal | 3.8–4.5 | Healthy lactobacilli support |
+| Anal | 5.5–6.0 | Rectal tissue compatibility |
+| Oral | 6.8–7.2 | Natural saliva matching |
+
+---
+
+## Gaynal Condom System
+
+Specifically engineered for MSM communities, recognizing the need for specialized protection designed for male-male sexual practices.
+
+### Base Materials
+
+| Material | Use Case |
+| --- | --- |
+| Natural latex blend | Fair-trade standard option |
+| Polyisoprene | Latex allergy alternative |
+| Polyurethane ultra-thin | Maximum sensation |
+| Lambskin premium | Natural feel (bacterial barrier only) |
+
+### Size Matrix
+
+| Category | Sizes | Features |
+| --- | --- | --- |
+| Bottom-optimized (A/B/C) | 60–70mm base, 220–260mm length | Extra lubrication, reinforced tip |
+| Top-optimized (G1–G12) | 45–65mm width, 220mm+ length | Bear, slender, athletic, leather variants |
+| Trans gay men | Anatomically adapted | FTM-specific designs |
+| Versatile ready | Quick-change options | For role switching |
+
+### Trans & Intersex Protection
+
+| Population | Options |
+| --- | --- |
+| FTM trans men | Pre-op, post-phalloplasty, post-metoidioplasty |
+| MTF trans women | Pre/non-op, post-vaginoplasty, hormone-adaptive |
+| Non-binary | Adaptable fit, gender-neutral packaging |
+| Intersex | Custom 3D-mapped, dual-function, multi-configuration |
+
+### Additional Protection Systems
+
+Penile-vaginal options include comfort fit (52–65mm), couple's harmony dual-sensation, and female pleasure priority designs. Oral protection spans slender to plus-size oral condoms, flavored options, and dental dams with NanoHeal coating.
+
+---
+
+## Clinical Results
+
+| Metric | Score |
+| --- | --- |
+| HIV reduction | 96.7% (p<0.001) |
+| Bacterial STI reduction | 94.2% (p<0.001) |
+| Fungal prevention | 98.1% (p<0.001) |
+| Comfort rating | 4.8/5.0 |
+| Sensation preservation | 4.6/5.0 |
+
+---
+
+## Eco Brick Packaging
+
+All packaging uses mycelium-based containers (home compostable in 30–90 days), hemp-fiber wraps with vegetable inks, and zero-plastic shipping materials. Used packaging can be compressed into building blocks through the Eco Brick Construction Program, supporting community infrastructure projects. The entire system is vegan-certified with no animal-derived ingredients.
+
+## Cooperative Economics
+
+| Stakeholder | Ownership |
+| --- | --- |
+| Manufacturing workers | 40% |
+| Ingredient source communities | 25% |
+| R&D team | 20% |
+| Community health organizations | 15% |
+
+Sliding-scale pricing, free clinic distribution, and cooperative pharmacy prioritization ensure global accessibility.
+
+> "Technology in service of love, healing, and justice — this is the path forward for sexual health innovation."`,
       tags: ["nanoheal", "lubricant", "gaynal-condoms", "sti-prevention", "intersectional", "naturopathic", "product-innovation"],
       lastUpdated: "2025-01-11",
       author: "NanoHeal Cooperative Research Team & TriSex.org Clinical Partners",
@@ -3761,411 +2361,88 @@ This intersectional approach ensures that protection technology serves all commu
       id: "self-employed-ein-medicaid-epd",
       title: "Using TriSex.org with Self-Employed EIN & Medicaid Employed Persons with Disabilities Program",
       category: "health",
-      content: `# Using TriSex.org with Self-Employed EIN & Medicaid Employed Persons with Disabilities Program
+      content: `# Using TriSex.org with Self-Employed EIN & Medicaid EPD
+
+[img: "Financial Access" caption="Coordinating EIN tax deductions with Medicaid EPD coverage for maximum healthcare accessibility."]
 
 ## Overview
 
-TriSex.org services can be utilized through self-employed EIN (Employer Identification Number) tax structures and coordinated with the Medicaid Employed Persons with Disabilities (EPD) program, providing comprehensive sexual health care while maximizing financial accessibility and tax benefits. This guide outlines how to effectively leverage both systems for optimal health and financial outcomes.
-
-## Part 1: Self-Employed EIN Integration
-
-### What is a Self-Employed EIN?
-
-An Employer Identification Number (EIN) is a federal tax ID for businesses. Self-employed individuals can obtain an EIN to:
-- Separate personal and business finances
-- Claim business deductions
-- Build business credit
-- Establish professional legitimacy
-
-### Using TriSex.org Services with Your EIN
-
-#### Eligible Business Deductions
-
-**Health & Wellness Services** (100% Deductible):
-- Preventive sexual health screenings
-- STI testing and treatment
-- Reproductive health consultations
-- Mental wellness counseling related to sexual health
-- Addiction recovery support services
-
-**Medical Supplies & Products** (100% Deductible):
-- NanoHeal lubricants for health maintenance
-- Barrier protection (condoms, dental dams)
-- At-home testing kits
-- Health monitoring devices
-- Prescribed treatments and medications
-
-**Educational Resources** (100% Deductible):
-- Sexual health education materials
-- Professional development for health educators
-- Community facilitator training
-- Cultural competency workshops
-
-#### Setting Up Your EIN for TriSex.org Services
-
-**Step 1: Obtain Your EIN**
-- Apply free at IRS.gov (instant approval online)
-- Sole proprietors, LLCs, and partnerships all qualify
-- No cost to obtain or maintain
-
-**Step 2: Establish Your Business Purpose**
-- Health educator
-- Wellness consultant
-- Community advocate
-- Peer support specialist
-- Any legitimate self-employed work qualifies
-
-**Step 3: Document Your Health Expenses**
-- Request invoices with your EIN from TriSex.org
-- Maintain detailed expense records
-- Categorize as "Health & Wellness" or "Medical Supplies"
-- Keep all receipts for 7 years (IRS requirement)
-
-#### Tax Benefits & Deductions
-
-**Schedule C Deductions** (Self-Employed):
-- Line 25: Health insurance premiums (if self-insured)
-- Line 29: Medical and health expenses related to business activities
-
-**Health Savings Account (HSA) Coordination**:
-- Use HSA funds for qualified medical expenses
-- TriSex.org preventive services qualify
-- Triple tax advantage: pre-tax contributions, tax-free growth, tax-free withdrawals
-
-**Self-Employed Health Insurance Deduction**:
-- Deduct 100% of health insurance premiums
-- Includes sexual health coverage
-- Claimed on Form 1040, not Schedule C
-
-### Invoicing & Payment Structure
-
-**Requesting EIN-Based Invoices from TriSex.org**:
-1. Provide your EIN during checkout
-2. Specify business name for proper documentation
-3. Request detailed itemization for tax records
-4. Ask for HSA/FSA eligible item designation
-
-**Payment Methods for Tax Documentation**:
-- Business checking account (best for audit trail)
-- Business credit card (builds business credit)
-- HSA/FSA debit card (for qualified expenses)
-- Avoid cash payments (difficult to document)
-
-## Part 2: Medicaid Employed Persons with Disabilities (EPD) Program
-
-### Understanding Medicaid EPD
-
-The Medicaid EPD (Employed Persons with Disabilities) program extends Medicaid coverage to working individuals with disabilities who:
-- Earn above traditional Medicaid income limits
-- Cannot afford private insurance
-- Need comprehensive health coverage to maintain employment
-
-### TriSex.org Services Covered by Medicaid EPD
-
-#### Covered Services
-
-**Primary Care Sexual Health** (Full Coverage):
-- Annual wellness exams including sexual health
-- STI screening and diagnosis
-- Bacterial, viral, and fungal infection treatment
-- Reproductive health services
-- Family planning counseling
-
-**Preventive Care** (No Cost-Sharing):
-- HIV testing and PrEP medication
-- HPV vaccination
-- Hepatitis A/B vaccination
-- Annual STI screening for high-risk individuals
-- Contraceptive counseling and supplies
-
-**Mental Health Services** (Covered):
-- Sexual health counseling
-- Trauma-informed therapy
-- Addiction recovery support
-- Relationship counseling related to health
-
-**Durable Medical Equipment** (Covered):
-- At-home testing devices
-- Health monitoring equipment
-- Mobility aids for clinic access
-- Assistive devices for sexual health management
-
-#### Services Requiring Prior Authorization
-
-**Specialty Products**:
-- NanoHeal lubricants (may require medical necessity documentation)
-- Specialized barrier protection (standard condoms covered without authorization)
-- Custom-fitted products (require prescription)
-
-**Extended Services**:
-- Intensive outpatient therapy beyond standard limits
-- Specialty consultations with out-of-network providers
-- Experimental or emerging treatments
-
-### EPD Eligibility & Enrollment
-
-#### Qualifying for Medicaid EPD
-
-**Disability Requirements**:
-- Social Security disability determination (SSDI or SSI eligible), OR
-- State disability certification, OR
-- Certain chronic conditions that limit work capacity
-
-**Employment Requirements**:
-- Actively employed (part-time or full-time)
-- Earning income from work
-- Income below 250% of Federal Poverty Level (varies by state)
-
-**Asset Requirements**:
-- Most states allow up to $15,000 in countable assets
-- Home, one vehicle, and retirement accounts typically excluded
-- Work-related equipment and supplies excluded
-
-#### Enrollment Process for TriSex.org Users
-
-**Step 1: Verify EPD Availability**
-- Check your state Medicaid website (not all states offer EPD)
-- Contact local Medicaid office
-- Call TriSex.org billing department for EPD confirmation
-
-**Step 2: Gather Documentation**
-- Proof of disability (SSA award letter or state certification)
-- Pay stubs or tax returns showing employment
-- Asset statements
-- Current insurance information (if any)
-
-**Step 3: Apply**
-- Online application through state Medicaid portal
-- In-person application at local Medicaid office
-- Phone application (some states)
-- Processing time: 45-90 days typically
-
-**Step 4: Coordinate with TriSex.org**
-- Provide Medicaid EPD card once approved
-- Verify coverage for planned services
-- Understand any cost-sharing requirements
-- Request care coordination if available
-
-### Premium & Cost-Sharing Structure
-
-#### Monthly Premiums (Income-Based Sliding Scale)
-
-**Income Level: 150-200% FPL**:
-- Monthly premium: $25-75 typically
-- No premium for preventive services
-- Sliding scale based on household income
-
-**Income Level: 200-250% FPL**:
-- Monthly premium: $75-150 typically
-- Some states charge premiums up to 7.5% of income
-- Payment required to maintain coverage
-
-#### Cost-Sharing for TriSex.org Services
-
-**Preventive Services**: $0 copay
-- Annual exams, STI screening, vaccinations
-
-**Primary Care Visits**: $3-5 copay
-- Sexual health consultations, follow-ups
-
-**Prescription Medications**: $0-8 copay
-- Generic STI treatments: $0-3
-- Brand-name medications: $3-8
-- PrEP medication: Often $0 copay
-
-**Durable Medical Equipment**: 5-10% coinsurance
-- Testing devices, monitoring equipment
-
-### Coordinating EIN Deductions with Medicaid EPD
-
-#### Dual Benefit Strategy
-
-**What You Can Deduct with EPD Coverage**:
-- Copayments and coinsurance (business expense if work-related)
-- Monthly premiums (business or personal tax deduction)
-- Non-covered services (full business deduction)
-- Transportation to medical appointments (business mileage if work-related)
-
-**Optimizing Both Programs**:
-1. Use Medicaid EPD for covered services (reduces out-of-pocket)
-2. Pay any cost-sharing with business account (tax deductible)
-3. Purchase non-covered items with EIN (100% deductible)
-4. Document everything for both Medicaid and tax records
-
-#### Documentation Requirements
-
-**For Medicaid EPD Coordination**:
-- Keep Explanation of Benefits (EOB) statements
-- Track all copayments and coinsurance
-- Document denied claims (may be tax-deductible)
-- Maintain premium payment records
-
-**For Tax Deductions**:
-- Separate covered vs. non-covered expenses
-- Only deduct amounts you personally paid
-- Don't double-dip (can't deduct what Medicaid paid)
-- Keep 7 years of coordinated records
-
-## Part 3: Practical Implementation Guide
-
-### Setting Up Your TriSex.org Account
-
-**Account Configuration for EIN/EPD Users**:
-1. Profile settings: Add your EIN for business purchases
-2. Insurance information: Upload Medicaid EPD card
-3. Billing preferences: Separate business and personal expenses
-4. Payment methods: Link business account and HSA card
-
-**Billing Optimization**:
-- Primary insurance: Medicaid EPD
-- Secondary payment: Business EIN account (for cost-sharing)
-- Tertiary payment: HSA/FSA (if applicable)
-- Itemized invoices for all transactions
-
-### Common Scenarios & Solutions
-
-#### Scenario 1: Self-Employed Health Educator
-**Profile**: Freelance sexual health educator with EPD coverage
-
-**Strategy**:
-- Educational materials → Business expense (EIN)
-- Personal STI screening → Medicaid EPD ($0-5 copay)
-- NanoHeal for workshops → Business expense (EIN)
-- Mental health counseling → Medicaid EPD coverage
-- Professional development → Business expense (EIN)
-
-**Tax Benefit**: $3,000-5,000 annual deductions
-
-#### Scenario 2: Peer Support Specialist
-**Profile**: Part-time peer supporter with disability, EPD enrolled
-
-**Strategy**:
-- Personal health services → Medicaid EPD
-- Peer support training materials → Business expense (EIN)
-- Testing supplies for education → Business expense (EIN)
-- Personal medications → Medicaid EPD ($0-8 copay)
-- Travel to support groups → Business mileage deduction
-
-**Tax Benefit**: $2,000-3,500 annual deductions
-
-#### Scenario 3: Wellness Consultant
-**Profile**: Self-employed consultant using TriSex.org for personal and professional needs
-
-**Strategy**:
-- Client education resources → Business expense (EIN)
-- Personal preventive care → Medicaid EPD
-- Demonstration products → Business expense (EIN)
-- Personal treatment → Medicaid EPD
-- Workshop supplies → Business expense (EIN)
-
-**Tax Benefit**: $4,000-7,000 annual deductions
-
-### Quarterly Planning & Tax Optimization
-
-**Q1 (January-March)**:
-- Review prior year expenses for tax filing
-- Maximize EPD preventive benefits (annual exams)
-- Plan business purchases for new tax year
-- Update EIN documentation if business structure changed
-
-**Q2 (April-June)**:
-- File taxes with documented health deductions
-- Review EPD coverage and benefits usage
-- Stock up on business-use health supplies
-- Evaluate HSA contribution maximization
-
-**Q3 (July-September)**:
-- Mid-year expense review
-- Adjust estimated quarterly tax payments
-- Verify EPD renewal requirements
-- Plan year-end health spending
-
-**Q4 (October-December)**:
-- Final business deduction purchases
-- Use remaining EPD benefits before year-end
-- Maximize HSA contributions before December 31
-- Gather all documentation for upcoming tax season
-
-### State-Specific Considerations
-
-**EPD Program Variations by State**:
-- California (Medi-Cal Working Disabled): Income limit 250% FPL
-- New York (Medicaid Buy-In for Working People with Disabilities): Varies by county
-- Texas: EPD not available, alternative programs limited
-- Pennsylvania (Medicaid for Workers with Disabilities): Income limit 250% FPL
-
-**State Tax Implications**:
-- Some states allow additional health expense deductions
-- State-specific HSA treatment varies
-- Research your state's tax code for additional benefits
-
-## Resources & Support
-
-### TriSex.org Billing Support
-- **Phone**: Contact billing department for EIN setup
-- **Email**: Request EPD coordination assistance
-- **Portal**: Online account management for dual benefits
-
-### Medicaid EPD Resources
-- **CMS Website**: Official EPD program information
-- **State Medicaid Office**: Local enrollment support
-- **Work Incentives Planning**: Free WIPA services for EPD planning
-
-### Tax & Financial Guidance
-- **IRS Publication 535**: Business expense deductions
-- **IRS Publication 502**: Medical expense deductions  
-- **Schedule C Instructions**: Self-employment tax guidance
-- **VITA Program**: Free tax preparation for qualifying individuals
-
-### Disability & Employment
-- **Ticket to Work**: Free employment services for SSDI recipients
-- **Benefits Counseling**: Understanding how work affects benefits
-- **Vocational Rehabilitation**: Job training and support services
-
-## Frequently Asked Questions
-
-**Q: Can I use my EIN for personal health expenses?**
-A: Only if they're legitimately related to your self-employed business activities. Personal-only health expenses should be deducted differently (Schedule A or self-employed health insurance deduction).
-
-**Q: Does Medicaid EPD cover my spouse or dependents?**
-A: EPD covers only the qualified individual with a disability. Family members may qualify for regular Medicaid or marketplace subsidies.
-
-**Q: Will my EPD benefits change if my income increases?**
-A: Possibly. EPD allows higher income limits than traditional Medicaid (up to 250% FPL), but significant increases may affect eligibility or premiums.
-
-**Q: Can I deduct Medicaid EPD premiums?**
-A: Yes, if you're self-employed. Premiums paid for Medicaid EPD may qualify for the self-employed health insurance deduction.
-
-**Q: What if my state doesn't have EPD?**
-A: Contact your state Medicaid office about alternative programs. Some states offer similar benefits under different names.
-
-**Q: How do I prove medical necessity for non-covered items?**
-A: Obtain a prescription or letter of medical necessity from your healthcare provider. Submit with prior authorization request.
-
-**Q: Can I use HSA funds if I have Medicaid EPD?**
-A: You cannot contribute to an HSA while enrolled in Medicaid, but you can use existing HSA funds for qualified expenses not covered by Medicaid.
-
-## Conclusion
-
-Coordinating TriSex.org services with self-employed EIN tax structures and Medicaid EPD coverage creates a powerful strategy for accessible, affordable sexual health care. By understanding both systems, you can:
-
-- Maximize tax deductions for business-related health expenses
-- Access comprehensive Medicaid coverage while maintaining employment
-- Optimize out-of-pocket costs through strategic coordination
-- Build sustainable self-employment while managing disability
-
-**Key Takeaways**:
-✓ Obtain an EIN for legitimate business tax benefits
-✓ Enroll in Medicaid EPD if you qualify (disability + employment)
-✓ Coordinate both programs for maximum financial benefit
-✓ Document everything for tax and insurance purposes
-✓ Consult with tax and benefits specialists for personalized guidance
-
-This integrated approach ensures that sexual health remains accessible and affordable, supporting both your health and your financial wellbeing as you build sustainable self-employment.
+TriSex.org services can be accessed through self-employed EIN (Employer Identification Number) tax structures and coordinated with Medicaid's Employed Persons with Disabilities (EPD) program, maximizing financial accessibility and tax benefits.
 
 ---
 
-*For personalized guidance on implementing this strategy, contact TriSex.org billing support and consult with a qualified tax professional or benefits counselor familiar with Medicaid EPD and self-employment taxation.*`,
+## Part 1: Self-Employed EIN
+
+An EIN is a free federal tax ID obtained at IRS.gov. Self-employed individuals (health educators, wellness consultants, peer support specialists) can use it to claim business deductions on TriSex.org services.
+
+### Deductible Expenses
+
+| Category | Examples | Deduction |
+| --- | --- | --- |
+| Health & Wellness Services | STI testing, screenings, counseling | 100% |
+| Medical Supplies | NanoHeal lubricants, barriers, test kits | 100% |
+| Educational Resources | Training, workshops, materials | 100% |
+
+### Tax Strategies
+
+| Method | Benefit |
+| --- | --- |
+| Schedule C deductions | Business health expenses |
+| HSA coordination | Triple tax advantage (pre-tax, tax-free growth, tax-free withdrawal) |
+| Self-employed health insurance | 100% premium deduction on Form 1040 |
+
+---
+
+## Part 2: Medicaid EPD
+
+The EPD program extends Medicaid to working individuals with disabilities earning above traditional income limits (up to 250% FPL).
+
+### Covered TriSex.org Services
+
+| Service | Coverage | Cost-Sharing |
+| --- | --- | --- |
+| Preventive care (exams, STI screening, vaccines) | Full | $0 copay |
+| Primary care visits | Full | $3–5 copay |
+| Mental health counseling | Full | Varies |
+| Generic medications | Full | $0–3 copay |
+| PrEP medication | Full | Often $0 |
+| Specialty products (NanoHeal) | Prior authorization | Varies |
+
+### Eligibility
+
+| Requirement | Details |
+| --- | --- |
+| Disability | SSDI/SSI eligible, state certification, or qualifying chronic condition |
+| Employment | Actively working (part-time or full-time) |
+| Income | Below 250% FPL (varies by state) |
+| Assets | Up to $15,000 countable; home, vehicle, retirement excluded |
+
+---
+
+## Dual Benefit Strategy
+
+1. Use Medicaid EPD for covered services (reduces out-of-pocket)
+2. Pay cost-sharing with business account (tax deductible)
+3. Purchase non-covered items with EIN (100% deductible)
+4. Document everything for both Medicaid and tax records
+
+### Example Scenarios
+
+| Role | Annual Tax Benefit |
+| --- | --- |
+| Freelance health educator | $3,000–5,000 |
+| Part-time peer supporter | $2,000–3,500 |
+| Wellness consultant | $4,000–7,000 |
+
+---
+
+## Key Takeaways
+
+- ✓ Obtain a free EIN at IRS.gov for legitimate business deductions
+- ✓ Enroll in Medicaid EPD if you qualify (disability + employment)
+- ✓ Coordinate both programs for maximum financial benefit
+- ✓ Keep 7 years of documentation for tax and insurance records
+- ✓ Consult a qualified tax professional for personalized guidance`,
       tags: ["medicaid", "epd", "self-employed", "ein", "tax-deductions", "disability", "insurance", "financial-planning"],
       lastUpdated: "2025-01-13",
       author: "TriSex.org Financial Access Team",
@@ -4178,475 +2455,98 @@ This integrated approach ensures that sexual health remains accessible and affor
       category: "health",
       content: `# Gaynal Condoms: The Multidimensional Value of Gay Sex Byproducts
 
-## Introduction: Reframing Sexual Health Through Ecological & Spiritual Lenses
+[img: "Holistic Protection" caption="Environmental, reproductive, spiritual, and sanitary dimensions of gaynal protection — designed for MSM communities."]
 
-⚧️ This article explores the often-overlooked positive dimensions of gay sexual activity and its byproducts, examining how monogamous gay relationships generate environmental, reproductive, spiritual, and sanitary value for individuals and communities. We center intersex and transgender experiences while honoring all gender configurations within 2SLGBTIQA+ communities.
+## Overview
 
-**Content Note**: This article discusses sexual fluids, bodily processes, and ecological cycles in frank, educational terms. We approach these topics with scientific rigor and spiritual reverence.
-
-## Environmental Value: Closing the Loop
-
-### The Ecological Case for Gay Sex Byproducts
-
-Traditional narratives around sexual activity focus exclusively on reproduction, ignoring the broader ecological role of sexual fluids and energy exchange. Gay sex, particularly when practiced within committed monogamous partnerships, generates unique environmental benefits:
-
-**1. Zero-Waste Intimacy Models**
-- No unwanted pregnancies requiring resource-intensive medical interventions
-- Reduced reliance on hormonal contraceptives that pollute waterways
-- Lower pharmaceutical waste from birth control disposal
-- Minimal medical waste compared to reproductive heterosexual encounters
-
-**2. Fluid Recycling & Nutrient Cycling**
-- Semen contains zinc, calcium, vitamin C, protein, and other nutrients
-- When deposited in the rectal cavity (gaynal sex), these nutrients can be absorbed through the highly vascular rectal wall
-- Creates a closed-loop nutrient exchange system between partners
-- Reduces reliance on external supplement industries
-
-**3. Microbiome Exchange for Ecosystem Health**
-- Sexual contact facilitates beneficial microbial exchange
-- Monogamous gay partners develop synchronized microbiomes
-- Enhanced immune system coordination through regular fluid exchange
-- Parallel to how ecosystems strengthen through biodiversity
-
-**4. Reduced Resource Consumption**
-- Gay sex inherently requires no pregnancy-related medical care
-- No diapers, formula, or child-rearing material footprint
-- Gaynal condoms protect health while minimizing waste compared to alternative family planning methods
-- Reduced pharmaceutical burden on water treatment systems
-
-### Gaynal Condoms: Environmental Protection Technology
-
-**TriSex.org Gaynal Condom Design Philosophy**:
-- Ultra-thin materials minimize waste volume
-- Biodegradable lubricant formulations derived from sustainable sources
-- Recycled ocean plastic in non-contact packaging components
-- Waterway microplastic removal funding (rivers, lakes, streams, oceans)
-
-**Lifecycle Analysis**:
-- Manufacturing: Low-energy precision molding process
-- Use: Facilitates safe fluid exchange while preventing disease transmission
-- Disposal: Composting research initiatives for future biodegradable options
-- Impact: Every purchase removes 100g of microplastics from waterways
-
-## Reproductive Value: Non-Procreative Reproduction
-
-### Redefining "Reproductive Justice" Beyond Biological Reproduction
-
-Reproductive justice traditionally centers childbearing rights. We expand this framework to include **relational reproduction**—the creation and sustaining of loving partnerships, chosen families, and community bonds.
-
-**Gay Sex as Relational Reproduction**:
-1. **Partnership Bonding**: Regular intimate contact strengthens monogamous pair bonds
-2. **Chosen Family Building**: Sexual intimacy creates foundation for non-biological kinship networks
-3. **Community Continuity**: Healthy gay relationships model alternative family structures for younger generations
-4. **Intergenerational Knowledge Transfer**: Mentorship relationships rooted in community care, not bloodlines
-
-**The Reproductive Power of Gaynal Protection**:
-- **Prevents STI Transmission**: Enables lifelong monogamous partnerships to flourish
-- **Supports Aging Together**: Health protection allows partners to grow old together
-- **Creates Safe Experimentation**: Reduces fear, enabling authentic sexual expression
-- **Facilitates Trust**: Physical safety enables emotional vulnerability and deeper bonding
-
-### Intersex & Trans Reproductive Considerations
-
-For intersex and transgender individuals in gay relationships:
-- **Hormone Therapy Compatibility**: Gaynal condoms don't interfere with HRT absorption
-- **Anatomical Flexibility**: TriSex.org sizing accommodates all configurations post-surgery or naturally occurring
-- **Reproductive Autonomy**: Protection enables sexual pleasure without pressure to reproduce biologically
-- **Medical Safety**: Critical barrier protection during immune-suppressing medical transitions
-
-## Spiritual Value: Sacred Intimacy & Energy Exchange
-
-### Tantric & Mystic Traditions of Same-Sex Union
-
-Many spiritual traditions recognize the unique energetic properties of same-sex intimacy:
-
-**1. Polarity Balance**
-- Traditional tantric teaching assumes masculine/feminine polarity
-- Same-sex unions create **parallel polarity**—two similar energies amplifying rather than opposing
-- Results in energy spiraling upward rather than grounding (earth-based reproduction)
-- Facilitates spiritual ascension and consciousness expansion
-
-**2. Kundalini Activation Through Gaynal Practice**
-- Rectal stimulation activates root chakra (Muladhara)
-- Prostate stimulation (in anatomies with prostates) connects root to third eye
-- Fluid exchange creates energetic circuit between partners
-- Monogamous practice builds cumulative spiritual resonance over time
-
-**3. Sacred Masculine & Feminine Divine**
-- Gay male intimacy: Double masculine divine energy (creative force without form)
-- Lesbian intimacy: Double feminine divine energy (creative form without force)
-- Bisexual/pansexual intimacy: Fluid movement between polarities
-- Intersex intimacy: Integration of all polarities in single bodies/relationships
-
-**4. The Alchemy of Semen**
-- Ancient Taoist texts recognize semen as "precious essence" (jing)
-- Retention and recycling of sexual fluids for spiritual cultivation
-- Gaynal sex allows retention (minimal fluid loss) while achieving orgasm
-- Partners exchange and recirculate vital essence rather than expelling it
-
-### Gaynal Condoms as Sacred Technology
-
-**Spiritual Protection Functions**:
-- **Energy Boundary Maintenance**: Prevents unwanted energetic entanglements (STI spirits)
-- **Intentional Exchange**: Conscious choice about when/where to exchange fluids
-- **Monogamy Sanctification**: Physical barrier reinforces emotional fidelity agreements
-- **Chakra Protection**: Prevents energetic depletion from disease or fear
-
-**Ritual Integration**:
-- Condom application as mindful foreplay practice
-- Blessing the barrier before use (protection prayers/affirmations)
-- Disposal as release ritual (letting go of old energy)
-- Purchase as sacred commitment to partnership health
-
-## Sanitary Value: Disease Prevention & Public Health
-
-### The Public Health Case for Gaynal Condoms
-
-**Statistical Reality**:
-- Men who have sex with men (MSM) face disproportionate STI rates
-- Rectal tissue is more vulnerable to infection than vaginal tissue
-- Consistent condom use reduces HIV transmission by 95%+
-- Syphilis, gonorrhea, chlamydia all transmissible through anal sex
-
-**Gaynal-Specific Design Features**:
-- **Thicker Base, Ultra-Thin Tip**: Prevents breakage during anal friction while maintaining sensation
-- **Extra Lubrication**: Pre-lubricated with anal-safe silicone formula
-- **Larger Reservoir**: Accommodates higher ejaculate volume
-- **Visual Inspection Support**: Transparent options for checking barrier integrity
-
-### Monogamy + Condoms = Optimal Protection
-
-**The Dual Protection Model**:
-1. **Structural Monogamy**: Exclusive sexual partnership reduces exposure networks
-2. **Barrier Protection**: Condoms prevent transmission during testing windows/exposure risk
-3. **Combined Efficacy**: Near-100% protection when both strategies employed
-4. **Trust Building**: Testing together + condom use = transparency and care
-
-**Transitioning to Fluid-Bonded Status**:
-- Both partners test negative for all STIs (comprehensive panel)
-- 3-month window period for HIV seroconversion
-- Mutual agreement about monogamy boundaries
-- Continued communication about any exposure risks
-- Optional: Periodic testing as ongoing verification
-
-### Intersex-Specific Sanitary Considerations
-
-Intersex individuals may have:
-- **Unique Anatomical Configurations**: Require custom barrier solutions
-- **Hormonal Variations**: Affect fluid composition and tissue resilience
-- **Medical Histories**: Past surgeries may impact tissue integrity
-- **Specialized Needs**: Non-standard anatomy benefits from TriSex.org's 60+ size system
-
-**TriSex.org Gaynal Condom Sizing for Intersex Bodies**:
-- No assumptions about anatomy based on gender
-- Measurements drive sizing, not identity categories
-- 3D scanning accommodates all configurations
-- Confidential consultation with trained specialists available
-
-### Waste Stream Safety Protocols: Body-Informed Intimacy & Sanitation
-
-**Content Note**: This section discusses fecal matter, bodily waste, and sanitation practices in frank, educational terms using harm-reduction and trauma-informed language. We approach these realities with dignity, medical accuracy, and community care.
-
-#### Understanding Anal Sex Byproducts: The "Frotekal" Reality
-
-During anal intercourse, lubricant and bodily fluids mix with trace amounts of fecal matter from the rectal cavity, creating a frothy substance colloquially known as "frotekal" (named in protest of anti-gay political rhetoric). This is a normal physiological reality of gaynal sex, not a sign of "uncleanliness" or moral failing.
-
-**Destigmatizing Fecal Contact**:
-- The rectum naturally contains residual stool, bacteria, and digestive byproducts
-- Even with thorough preparation, trace fecal matter is present in most anal encounters
-- This is **not dirty or shameful**—it's biology
-- Understanding this reality enables informed consent and safer practices
-
-**The Intersex & Trans Context**:
-- Post-surgical anatomies may have altered bowel function or positioning
-- Intersex individuals with unique GI configurations may experience different waste patterns
-- Hormone therapy can affect digestive motility and stool consistency
-- Community knowledge-sharing about anatomical variations improves safety for all bodies
-
-#### Econologic of Waste Streams: Microbial Networks & Resource Flows
-
-**Environmental Perspective**: Fecal matter is nutrient-dense biomaterial in ecosystem terms:
-- Contains nitrogen, phosphorus, potassium (agricultural value)
-- Hosts diverse microbiome essential for gut health
-- Represents digestive system's waste processing efficiency
-- When managed safely, integrates into broader nutrient cycles
-
-**Community Engagement**: Queer and intersex communities have developed sophisticated harm-reduction knowledge about waste management:
-- Shared hygiene protocols refined over decades
-- Community care practices for immunocompromised members
-- Collective knowledge about preparation, cleaning, and aftercare
-- Intergenerational transmission of body-informed intimacy skills
-
-**Reproductive Systems Framework**: While not procreative, waste stream management is reproductive in broader sense:
-- Protects long-term health enabling aging partnerships (relational reproduction)
-- Prevents infection that could compromise fertility for those who desire it
-- Maintains microbiome health essential for overall wellness
-- Builds trust and communication skills that strengthen chosen families
-
-#### Medical Realities: Pathogen Risks & Harm Reduction
-
-**⚠️ Health Alert: Gastrointestinal Pathogens in Fecal Matter**
-
-Stool contains bacteria, viruses, and parasites that can cause infection:
-
-**Common Microbial Risks**:
-- **E. coli**: Can cause urinary tract infections, gastrointestinal illness
-- **Hepatitis A**: Fecal-oral transmission, liver infection (vaccine available)
-- **Shigella, Salmonella, Campylobacter**: Bacterial gastroenteritis
-- **Giardia, Cryptosporidium**: Parasitic infections causing diarrhea
-- **Entamoeba histolytica**: Amoebic dysentery (rare but serious)
-- **HPV, Herpes**: Viral infections transmissible through anal contact
-
-**Transmission Routes**:
-1. **Oral-Anal Contact**: Direct fecal-oral transmission (rimming)
-2. **Hand-to-Mouth**: Touching anus/stool then touching mouth/face
-3. **Toy Sharing**: Sex toys used anally then vaginally/orally without cleaning
-4. **Barrier Failure**: Condom breaks or improper removal exposing fluids
-
-**High-Risk Populations**:
-- Immunocompromised individuals (HIV+, transplant recipients, chemotherapy patients)
-- People with inflammatory bowel disease (IBD, Crohn's, ulcerative colitis)
-- Those on immunosuppressive medications (common during gender-affirming care)
-- Individuals with compromised liver function
-
-#### Hygiene Protocols: Community-Refined Safety Practices
-
-**Pre-Play Preparation** (Optional, Not Required):
-
-*Note: Enemas/douching are personal choices, not hygiene requirements. Many choose not to prepare and that's valid.*
-
-- **Fiber Supplementation**: Regular fiber intake promotes complete evacuation
-- **Timing**: Bowel movement 1-3 hours before play (allows natural cleansing)
-- **Gentle Rinsing**: If desired, use plain water or saline (avoid harsh chemicals)
-- **Enema Limitations**: Excessive use can disrupt microbiome and bowel function
-- **Listen to Your Body**: Cramping, discomfort = stop preparation
-
-**During-Play Safety**:
-
-1. **Barrier Use**: Condoms prevent fecal matter from contacting skin/fluids
-2. **Glove Changes**: If using gloves for digital penetration, change between orifices
-3. **Lubricant Selection**: Water or silicone-based (not oil-based with latex condoms)
-4. **Visual Monitoring**: Check for visible stool on condom during play (normal, not crisis)
-5. **Communication**: Partners should feel safe pausing if discomfort/concerns arise
-
-**Post-Play Hygiene**:
-
-1. **Immediate Washing**: Wash genitals, hands, anus with soap and water
-2. **Toy Cleaning**: Disinfect all toys before reuse (10% bleach solution or toy cleaner)
-3. **Barrier Disposal**: Wrap used condoms in tissue, dispose in trash (not toilet)
-4. **Surface Disinfection**: Clean sheets, towels, play surfaces (bleach or alcohol wipes)
-5. **Handwashing**: Thorough handwashing before touching face, food, or mouth
-6. **Urination**: Pee after play to flush urethra (reduces UTI risk)
-
-**Safer Practices Hierarchy** (Most to Least Protective):
-
-✅ **Highest Protection**: Condom use + handwashing + toy disinfection + surface cleaning
-✅ **High Protection**: Condom use + handwashing + immediate cleanup
-⚠️ **Moderate Protection**: Barrier use only (no cleanup)
-⚠️ **Lower Protection**: No barriers + minimal cleanup
-❌ **Risky**: Fluid-bonding without testing + oral-anal contact + no hygiene protocols
-
-#### Vaccination & Medical Prevention
-
-**Recommended Vaccines for Gaynal Practitioners**:
-- **Hepatitis A & B**: Prevents liver infections from fecal-oral transmission
-- **HPV (Gardasil 9)**: Protects against anal warts and cancer
-- **Meningococcal**: Recommended for MSM in outbreak areas
-- **COVID-19, Flu**: Supports overall immune function
-
-**Pre-Exposure Prophylaxis (PrEP)**:
-- Prevents HIV transmission (doesn't protect against other GI pathogens)
-- Should be combined with condoms for comprehensive protection
-
-**Post-Exposure Care**:
-- Monitor for GI symptoms: diarrhea, cramping, fever, blood in stool
-- Seek medical care if symptoms develop within 2 weeks of exposure
-- Mention anal sexual activity to provider (enables proper STI screening)
-- Request comprehensive stool testing if persistent symptoms occur
-
-#### Intersex & Trans-Specific Considerations
-
-**Anatomical Variations**:
-- Some intersex configurations may have altered rectal-colon positioning
-- Post-surgical anatomy may affect stool consistency or evacuation patterns
-- Consult with intersex-affirming healthcare provider for personalized guidance
-
-**Hormonal Impacts**:
-- Testosterone can alter bowel motility (slower transit = firmer stool)
-- Estrogen may affect digestive patterns and microbiome composition
-- Adjust preparation and hygiene protocols based on your body's patterns
-
-**Medical Monitoring**:
-- Immunosuppression during gender transition increases infection risk
-- Regular STI screening should include stool pathogen testing
-- Communicate openly with providers about sexual practices for accurate care
-
-#### Community Care & Collective Hygiene Wisdom
-
-**Queer Community Harm Reduction Traditions**:
-- Experienced practitioners mentor newer community members
-- Open discussion of "accidents" and cleanup strategies (normalizing reality)
-- Shared knowledge about which lubricants, condoms, toys work best
-- Collective understanding that bodies are bodies—not shameful, just honest
-
-**Intersex Community Knowledge**:
-- Intersex individuals with unique GI anatomy share preparation strategies
-- Community documentation of anatomical variations and safe practices
-- Mutual support for navigating medical systems that lack intersex expertise
-- Emphasis on self-advocacy and body literacy
-
-**Disability Justice Integration**:
-- Accommodations for those with limited mobility (hygiene assistance)
-- Accessible preparation methods for various ability levels
-- Recognition that some disabled bodies can't follow standard protocols (that's okay)
-- Community care includes helping each other maintain safety
-
-#### Waste Disposal & Environmental Stewardship
-
-**Proper Disposal Methods**:
-- **Condoms**: Wrap in tissue, dispose in trash (biodegradable options in development)
-- **Wipes**: Only use flushable varieties (or better, washable cloths)
-- **Gloves**: Dispose in sealed bags to prevent waste worker exposure
-- **Enema Equipment**: Clean thoroughly between uses, replace regularly
-
-**Wastewater Treatment Considerations**:
-- Human waste enters municipal treatment systems (designed for this purpose)
-- Proper disposal prevents plumbing issues and environmental contamination
-- TriSex.org's waterway microplastic removal helps offset treatment system burden
-- Choosing eco-friendly lubricants reduces chemical load on treatment facilities
-
-**Econologic Integration**: Managing waste streams responsibly:
-- Protects water systems (environmental value)
-- Enables long-term sexual health (reproductive/relational value)
-- Maintains community care traditions (spiritual/communal value)
-- Prevents disease transmission (sanitary value)
-
-#### Resources for Body-Informed Intimacy
-
-**Harm Reduction Organizations**:
-- San Francisco AIDS Foundation: Pleasure & Health guides
-- Fenway Health: MSM sexual health resources
-- interACT Advocates: Intersex-specific health information
-- Your local LGBTQ+ health center: Community-based care and education
-
-**Medical Resources**:
-- CDC STI Treatment Guidelines: www.cdc.gov/sti
-- WHO Sexual Health Resources: www.who.int/health-topics/sexual-health
-- Intersex-affirming providers: Via interACT provider directory
-
-**Community Wisdom Sources**:
-- Queer sex educator workshops (hands-on learning)
-- Online communities for intersex and trans sexual health
-- Peer mentorship programs in local LGBTQ+ centers
-- TriSex.org's 4D STI Intervention system and community forums
-
-#### Conclusion: Honoring Our Bodies, Protecting Our Health
-
-Frotekal and fecal matter are natural realities of anal intimacy—not sources of shame. By:
-- Understanding the microbial ecology and pathogen risks
-- Implementing community-refined hygiene protocols
-- Centering intersex and trans bodies in safety guidance
-- Framing waste management through econologic and reproductive justice lenses
-
-We transform bodily realities into opportunities for care, communication, and community building. **Gaynal condoms don't just prevent disease—they're tools for body-literate, shame-free intimacy that honors the full reality of our anatomies while protecting our collective health.**
-
-## Integration: The Holistic Gaynal Protection Framework
-
-### Bringing It All Together
-
-**Environmental + Reproductive + Spiritual + Sanitary = Holistic Sexual Health**
-
-The TriSex.org approach integrates all four dimensions:
-
-**🌍 Environmental**: Choose protection that sustains ecosystems (ocean plastic removal, minimal waste)
-
-**👨‍👨‍👦 Reproductive**: Build chosen families through safe, bonded intimacy (relational reproduction)
-
-**✨ Spiritual**: Honor sexual union as sacred practice (conscious energy exchange)
-
-**🩺 Sanitary**: Protect physical health as foundation for all other dimensions (STI prevention)
-
-### Practical Application Guide
-
-**For Monogamous Gay Couples**:
-
-1. **Start with Barriers**: Use gaynal condoms during early relationship stages
-2. **Test Together**: Comprehensive STI panel after 3-month exclusive period
-3. **Make Informed Decision**: Discuss fluid-bonding based on risk tolerance and test results
-4. **Maintain Awareness**: Continue condom use if any outside exposure risk exists
-5. **Ritualize Protection**: Treat condom use as act of love and mutual care
-
-**For Intersex & Trans Individuals**:
-
-1. **Get Sized Properly**: Use TriSex.org's 3D scanning for anatomically correct fit
-2. **Consider Hormonal Factors**: HRT may affect tissue elasticity and fluid composition
-3. **Communicate Needs**: Partners should discuss comfort, sensation, and safety openly
-4. **Access Specialized Resources**: TriSex.org offers inclusive sexual health education
-
-**For Community Leaders & Educators**:
-
-1. **Normalize Condom Use**: Discuss gaynal protection without shame or stigma
-2. **Teach All Dimensions**: Environmental, reproductive, spiritual, sanitary value together
-3. **Center Intersex Experiences**: Don't treat as afterthought—build from this foundation
-4. **Provide Access**: Partner with TriSex.org for subsidized protection in underserved communities
-
-## Cultural Resistance & Liberation
-
-### Confronting Anti-Gay Narratives
-
-**Dominant Culture Claims**:
-- "Gay sex is unnatural/dirty"
-- "It serves no purpose (can't make babies)"
-- "It's spiritually corrupt"
-- "It spreads disease"
-
-**Our Counter-Narrative**:
-- Gay sex is ecologically efficient and natural
-- It serves bonding, community, and spiritual purposes
-- It connects to ancient sacred traditions across cultures
-- Disease prevention is possible through proper protection and monogamy
-
-### Gaynal Pride as Resistance
-
-Using gaynal condoms is not just health practice—it's **political and spiritual resistance**:
-
-- **Against Compulsory Reproduction**: Refusing the mandate to procreate
-- **Against Sex Negativity**: Celebrating pleasure as sacred and valuable
-- **Against Medical Gatekeeping**: Accessing protection designed FOR gay bodies, not adapted from straight norms
-- **Against Shame**: Treating our sexual fluids as nutrient-rich, energy-dense, spiritually potent substances
-
-### Building Gaynal-Positive Communities
-
-**Community Practices**:
-- Condom distribution at pride events and queer community centers
-- Workshops on tantric gaynal practice and sacred sexuality
-- Open discussion of fluid-bonding decisions and boundaries
-- Celebration of long-term monogamous gay partnerships as ecological and spiritual models
-
-## Conclusion: The Gaynal Revolution
-
-Reframing gay sex through environmental, reproductive, spiritual, and sanitary lenses reveals its profound value. Gaynal condoms are not just disease prevention tools—they're **technologies of liberation** that enable:
-
-- 🌍 **Ecological Responsibility**: Closed-loop intimacy with minimal environmental impact
-- 👨‍👨‍👦 **Relational Reproduction**: Building chosen families and sustaining community
-- ✨ **Spiritual Ascension**: Sacred energy exchange and consciousness expansion
-- 🩺 **Public Health**: Preventing transmission while honoring bodily autonomy
-
-**TriSex.org's Commitment**:
-
-We design gaynal condoms centered on intersex anatomical diversity, honoring all bodies in the 2SLGBTIQA+ spectrum. Every purchase removes microplastics from waterways, supports cooperative sexual health infrastructure, and funds comprehensive sex education that celebrates gay intimacy as ecologically sound, reproductively generative (in non-biological ways), spiritually powerful, and medically safe.
-
-**Join the Gaynal Revolution**:
-- Use protection designed FOR you, not adapted FROM others
-- Treat your sexual fluids as sacred, nutrient-rich, powerful substances
-- Build monogamous partnerships as ecological and spiritual practice
-- Advocate for comprehensive gay sexual health in your communities
-
-🙏🏼 **Thank you for honoring your body, your partner, and our shared ecosystems through conscious, protected, sacred intimacy.**
+⚧️ This article examines the multidimensional value of monogamous gay sexual activity across four lenses: environmental, reproductive, spiritual, and sanitary. We center intersex and transgender experiences while honoring all configurations within 2SLGBTIQA+ communities.
 
 ---
 
-*For intersex-centered gaynal condom sizing, visit TriSex.org/products. For spiritual practice guidance, see our Tantric Gay Intimacy resources. For STI testing and prevention, consult our 4D STI Intervention system.*`,
+## The Four Dimensions
+
+| Dimension | Value |
+| --- | --- |
+| Environmental | Zero-waste intimacy, closed-loop nutrient exchange, microbiome synchronization |
+| Reproductive | Relational reproduction — chosen families, partnership bonding, community continuity |
+| Spiritual | Parallel polarity energy, kundalini activation, sacred fluid alchemy |
+| Sanitary | 95%+ HIV reduction with consistent condom use, pathogen prevention |
+
+### Environmental Protection Design
+
+Every Gaynal condom purchase removes 100g of microplastics from waterways. Products use ultra-thin materials, biodegradable lubricants, and recycled ocean plastic in non-contact packaging.
+
+### Relational Reproduction
+
+> Reproductive justice includes the creation and sustaining of loving partnerships, chosen families, and community bonds.
+
+Gaynal protection enables lifelong monogamous partnerships, safe experimentation, and trust-building through physical safety enabling emotional vulnerability.
+
+---
+
+## Sanitary Value
+
+### Public Health Context
+
+MSM face disproportionate STI rates. Rectal tissue is more vulnerable to infection than vaginal tissue, making specialized protection essential.
+
+| Design Feature | Purpose |
+| --- | --- |
+| Thicker base, ultra-thin tip | Prevents breakage while maintaining sensation |
+| Extra lubrication | Anal-safe silicone formula |
+| Larger reservoir | Accommodates higher volume |
+| Transparent options | Visual integrity inspection |
+
+### Dual Protection Model
+
+1. Structural monogamy reduces exposure networks
+2. Barrier protection prevents transmission during testing windows
+3. Combined efficacy approaches 100%
+4. Testing together + condom use = transparency and care
+
+### Transitioning to Fluid-Bonded Status
+
+Both partners test negative on comprehensive STI panel, observe 3-month window period, reach mutual agreement on monogamy boundaries, and maintain ongoing communication about exposure risks.
+
+---
+
+## Hygiene Protocols
+
+### Pre-Play (Optional)
+
+Fiber supplementation promotes complete evacuation. If desired, gentle rinsing with plain water or saline. Excessive enema use can disrupt the microbiome.
+
+### During Play
+
+Use barriers consistently, change gloves between orifices, use water or silicone-based lubricant, and communicate openly about comfort and concerns.
+
+### Post-Play
+
+Wash genitals, hands, and anus with soap and water. Disinfect toys, dispose of condoms in trash (not toilet), and urinate to flush the urethra.
+
+### Recommended Vaccinations
+
+| Vaccine | Protection |
+| --- | --- |
+| Hepatitis A & B | Fecal-oral transmission prevention |
+| HPV (Gardasil 9) | Anal warts and cancer |
+| Meningococcal | MSM outbreak areas |
+
+PrEP prevents HIV transmission but should be combined with condoms for comprehensive protection.
+
+---
+
+## Intersex & Trans Considerations
+
+TriSex.org sizing accommodates all configurations post-surgery or naturally occurring. Hormone therapy compatibility means Gaynal condoms don't interfere with HRT absorption. 3D scanning provides anatomically correct fit, and measurements drive sizing — not identity categories.
+
+---
+
+## The Gaynal Revolution
+
+> Gaynal condoms are technologies of liberation — enabling ecological responsibility, relational reproduction, sacred energy exchange, and public health protection.
+
+Every purchase supports cooperative sexual health infrastructure and funds comprehensive sex education that celebrates gay intimacy as ecologically sound, reproductively generative, spiritually powerful, and medically safe.`,
       tags: ["gay-sex", "gaynal", "condoms", "environmental", "spiritual", "reproductive-justice", "sti-prevention", "monogamy", "intersex", "lgbtq", "sexual-health", "ecology", "tantra", "frotekal", "harm-reduction", "waste-management"],
       lastUpdated: "2025-01-13",
       author: "TriSex.org Holistic Sexual Health Team",
@@ -4659,400 +2559,95 @@ We design gaynal condoms centered on intersex anatomical diversity, honoring all
       category: "health",
       content: `# Sexual Health for Endosex Women with Bisexual/MSM Partners
 
-## Introduction: Centering Endosex Women in MSM Sexual Health Conversations
+[img: "Endosex Women's Guide" caption="Navigating intersex-inclusive protection for endosex women in monogamous relationships with bisexual/MSM partners."]
 
-⚧️ This article addresses the specific needs of **endosex women** (women who are not intersex, with typical binary female anatomy) who are in monogamous sexual relationships with **bisexual or pansexual men** who have sexual histories with, or ongoing interest in, men who have sex with men (MSM).
+## Overview
 
-While TriSex.org centers intersex anatomical diversity and primarily serves MSM communities, we recognize that many bisexual/pansexual men form monogamous partnerships with endosex women. These women face unique sexual health considerations that bridge heterosexual and MSM health frameworks.
-
-**Content Note**: This article discusses STI transmission, anatomical differences, and relationship dynamics in frank, educational terms using a monogamy-affirming, intersex-inclusive framework.
-
-## Understanding the Context
-
-### Who This Article Serves
-
-**Primary Audience**: Endosex women who are:
-- In monogamous relationships with bisexual/pansexual men who have MSM histories
-- Dating men who previously identified as gay but now identify as bisexual
-- Partnered with men who are attracted to multiple genders
-- Married to men who came out as bisexual during the relationship
-
-**Not Covered**: This article does **not** address:
-- Polyamorous or open relationship structures (TriSex.org serves monogamy only)
-- Women in relationships with men who are currently having sex with other men
-- Dating people who are "separated" or in non-monogamous arrangements
-
-### Key Terminology
-
-**Endosex**: A person whose sex characteristics (chromosomes, gonads, hormones, genitals) align with typical male or female binary patterns. Endosex is the counterpart to intersex—it describes people who are **not** intersex.
-
-**MSM (Men Who Have Sex with Men)**: Behavioral category describing sexual activity, not identity. Includes gay, bisexual, pansexual, queer, and straight-identifying men.
-
-**Intersex-Inclusive Protection**: Barrier methods and sexual health protocols designed around intersex anatomical diversity as the foundation, which automatically accommodates endosex anatomies as well.
-
-## The Epidemiological Reality: Why Your Partner's MSM History Matters
-
-### STI Prevalence in MSM vs. Heterosexual Populations
-
-**Statistical Context**:
-- MSM populations have significantly higher rates of HIV, syphilis, gonorrhea, and chlamydia compared to heterosexual men
-- Anal sex (receptive or insertive) carries higher STI transmission risk than vaginal sex
-- Many MSM have multiple lifetime partners before monogamous partnership
-- Testing gaps between partners create windows of unknownStatus
-
-**For Endosex Women**:
-- Your partner's previous MSM activity means potential exposure to STIs with higher baseline prevalence
-- Even if your partner tested negative years ago, reactivation or latent infections are possible
-- Comprehensive testing protocols designed for MSM are more thorough than standard heterosexual STI panels
-
-### Transmission Dynamics: MSM → Bisexual Man → Endosex Woman
-
-**The Bridging Population Concept**:
-
-Bisexual men who have sex with both men and women create an epidemiological "bridge" between MSM and heterosexual populations:
-
-1. **MSM Network Exposure**: Acquires STI through MSM contact (anal, oral)
-2. **Asymptomatic Period**: May not show symptoms for weeks/months
-3. **Heterosexual Transmission**: Passes infection to endosex female partner through vaginal/oral sex
-4. **Broader Network Impact**: Endosex woman may not realize exposure came from MSM network
-
-**Common Infections Transmitted This Way**:
-- HIV (though risk is lower for receptive vaginal sex than receptive anal)
-- Syphilis (especially oral-genital transmission)
-- Gonorrhea (throat, vaginal, rectal)
-- Chlamydia (cervical, urethral)
-- Herpes HSV-1 and HSV-2
-- HPV (high-risk strains linked to cervical cancer)
-- Hepatitis B and C
-
-## Anatomical Considerations: Intersex-Inclusive Design for Endosex Bodies
-
-### Why Intersex-Centered Protection Benefits Endosex Women
-
-TriSex.org's sizing and product design centers **intersex anatomical diversity**, which means:
-
-**For Your Male Partner**:
-- If he has intersex anatomy or post-surgical configurations, products are designed specifically for him
-- If he has endosex male anatomy, he benefits from precision sizing that doesn't assume binary "standard"
-- 60+ size options accommodate all penile configurations (girth, length, shape)
-
-**For You (Endosex Woman)**:
-- Dental dams and barriers for oral sex come in intersex-inclusive sizing (larger surface area options)
-- Internal condoms (FC2-style) available in intersex-affirming sizes
-- Vaginal barriers don't assume "standard" vaginal dimensions—accommodate anatomical variation
-- Lubricants formulated for anal + vaginal + oral use (your partner may prefer anal-safe formulas)
-
-### Specific Product Recommendations
-
-**For Penis-Vagina Intercourse**:
-1. **External Condoms** (for your partner's penis):
-   - Use TriSex.org's 60+ size system based on actual measurements
-   - Choose **ultra-thin** for sensation while maintaining protection
-   - Consider **gynecological-friendly lubrication** (water-based, pH-balanced for vaginal tissue)
-
-2. **Internal Condoms** (inserted into your vagina):
-   - Provides STI protection you control
-   - Safer if you're uncertain about partner's consistent condom use
-   - Can be inserted hours before sex (no interruption)
-
-**For Oral Sex** (you performing fellatio):
-- **Flavored oral barriers** from Super Sides 🥰 cooperative
-- 60+ sizes ensure proper fit for your partner's anatomy
-- Food-safe lubrication enhances your comfort and safety
-
-**For Oral Sex** (you receiving cunnilingus):
-- **Dental dams** or cut-open external condoms
-- Flavored options reduce latex taste
-- Large-surface varieties accommodate anatomical diversity
-
-**For Anal Sex** (if applicable):
-- **Gaynal condoms** with extra lubrication and thicker base
-- Anal-safe silicone lubricant (never oil-based with latex)
-- Rectal-specific STI screening (gonorrhea/chlamydia can infect rectum)
-
-## Testing Protocols for Monogamous Transition
-
-### Comprehensive STI Testing for Bisexual/MSM Men
-
-**Standard Panel is Insufficient**:
-
-When your partner gets tested, ensure he requests **MSM-specific comprehensive panel**:
-
-✅ **Must Include**:
-- HIV (4th generation antigen/antibody test)
-- Syphilis (RPR + confirmatory treponemal test)
-- Gonorrhea (throat, urethra, rectum)
-- Chlamydia (throat, urethra, rectum)
-- Hepatitis B and C
-- Herpes HSV-1 and HSV-2 (IgG antibody test)
-- HPV (if available; otherwise rely on symptoms/vaccine)
-
-❌ **Standard "STI Panel" Often Misses**:
-- Throat and rectal swabs (only tests urethra)
-- Herpes antibody testing (only symptom-based)
-- Hepatitis screening
-- Syphilis in latent stages
-
-**Testing Timeline**:
-1. **Initial Test**: Before establishing monogamy (both partners)
-2. **3-Month Window**: Celibacy or barrier use for HIV seroconversion window
-3. **Confirmatory Test**: Retest both partners at 3-month mark
-4. **Negative Results**: If all clear, discuss fluid-bonding (barrier-free sex)
-5. **Annual Monitoring**: Optional retesting to verify ongoing fidelity
-
-### Your Testing Protocol as an Endosex Woman
-
-**Comprehensive Panel for You**:
-- **Pap smear with HPV testing** (cervical cancer screening)
-- **HIV, syphilis, gonorrhea, chlamydia** (vaginal/cervical swabs)
-- **Hepatitis B and C** (blood test)
-- **Herpes HSV-1/2** (antibody testing if desired)
-- **Bacterial vaginosis/yeast screening** (if symptoms)
-
-**Special Considerations**:
-- If your partner has anal sex history, request **rectal swab for yourself** if you practice anal sex
-- If he has oral sex with men history, request **throat swab for yourself** after oral contact with him
-- Discuss PrEP (HIV prevention medication) with provider if partner's HIV status is unknown/positive
-
-## Navigating Relationship Dynamics
-
-### Communication About MSM History
-
-**Disclosure Expectations**:
-
-Your partner should disclose:
-- ✓ Previous MSM sexual activity (approximate number of partners, timeframe)
-- ✓ Most recent MSM encounter (date)
-- ✓ Last comprehensive STI test results
-- ✓ Any ongoing attraction to men (honesty about desires vs. actions)
-- ✓ Commitment to monogamy moving forward
-
-**You Should Ask**:
-- "When was your last sexual contact with a man?"
-- "Have you been tested for STIs since then? What kind of test?"
-- "Were throat and rectal swabs included?"
-- "Are you attracted to men, women, or all genders?"
-- "Do you feel confident in choosing monogamy with me?"
-
-**Red Flags**:
-- ✗ Refusal to get comprehensive testing
-- ✗ Vague timelines ("it's been a while")
-- ✗ Defensive reactions to questions
-- ✗ Unwillingness to use barriers during testing window
-- ✗ Continued cruising/app usage (Grindr, Scruff, etc.)
-
-### Addressing Stigma and Biphobia
-
-**Your Partner May Face**:
-- Erasure of bisexual identity (assumed gay or straight, not both)
-- Judgment from gay community for dating women
-- Judgment from straight community for MSM history
-- Fear of rejection from you due to MSM past
-
-**You May Experience**:
-- Fear of him "leaving you for a man"
-- Anxiety about STI exposure from his past
-- Confusion about his sexual orientation
-- Pressure to be "cool" with things you're uncomfortable with
-
-**Healthy Framework**:
-- His bisexuality is valid—he's not confused or in denial
-- Attraction to multiple genders doesn't mean inability to be monogamous
-- His MSM history is **his history**—what matters is current fidelity
-- Your feelings and health needs are equally important
-
-### Monogamy Verification Strategies
-
-**Transparent Practices**:
-- Shared phone access (voluntary, not demanded)
-- Open discussion about temptations/attractions
-- Regular STI retesting as mutual reassurance
-- Couples counseling focused on trust-building
-- Joint decision-making about sexual practices
-
-**Behavioral Agreements**:
-- No cruising apps or hookup sites
-- No sex with anyone else (any gender)
-- Immediate disclosure if fidelity is broken
-- Use of barriers if any outside exposure occurs
-- Couples testing after any breach of monogamy
-
-## Specific Health Scenarios
-
-### Scenario 1: Your Partner Just Came Out as Bisexual
-
-**What This Means**:
-- He may have recent MSM activity you didn't know about
-- His most recent "regular checkup" likely wasn't comprehensive
-- You both need immediate, thorough STI testing
-
-**Action Steps**:
-1. Pause penetrative sex until comprehensive testing completed
-2. Both get MSM-level STI panels (throat/rectal swabs for him)
-3. Use barriers for all sexual contact during testing window
-4. Retest at 3 months for HIV seroconversion window
-5. Decide together about continuing relationship based on results
-
-### Scenario 2: He Had MSM Activity Years Ago
-
-**What This Means**:
-- If he's been tested comprehensively since last MSM contact, risk is lower
-- Some infections (herpes, HPV, latent syphilis) can persist asymptomatically
-- Verify testing was actually comprehensive (not just "I got tested")
-
-**Action Steps**:
-1. Request documentation of previous test results
-2. If no throat/rectal swabs were done, get them now
-3. You get tested comprehensively as well
-4. Use barriers until confirmatory testing at 3 months
-5. If all clear, transition to fluid-bonding
-
-### Scenario 3: He's Attracted to Men But Never Acted on It
-
-**What This Means**:
-- Lower epidemiological risk (no actual MSM exposure)
-- Higher psychological/relational complexity
-- May explore MSM activity in future if not addressed
-
-**Action Steps**:
-1. Both get baseline STI testing anyway (good practice)
-2. Discuss his attractions openly without judgment
-3. Establish clear monogamy boundaries
-4. Consider couples therapy to address his sexual identity exploration
-5. Reaffirm commitment to exclusive relationship regardless of attractions
-
-### Scenario 4: You Want to Try Anal Sex
-
-**What This Means**:
-- Anal sex carries higher STI transmission risk than vaginal
-- If he has MSM experience, he may know techniques you don't
-- You need anal-specific protection and preparation
-
-**Action Steps**:
-1. Ensure both partners tested negative for rectal STIs first
-2. Use **gaynal condoms** (extra lubrication, thicker base)
-3. Use abundant anal-safe silicone lubricant
-4. Start slow with finger/toy preparation
-5. Get rectal STI screening 2 weeks after first anal sex
-6. Communicate openly about comfort and boundaries
-
-## Cultural and Identity Considerations
-
-### When Your Partner is Trans or Intersex
-
-If your bisexual/pansexual partner is also **trans or intersex**:
-
-**Anatomical Diversity**:
-- Post-surgical anatomy may require custom barrier sizing
-- Hormone therapy affects genital tissue (HRT changes sensation, lubrication needs)
-- Intersex anatomy may not fit binary condom sizing (use TriSex.org 60+ system)
-
-**Health Considerations**:
-- Trans men on testosterone: May have vaginal dryness requiring extra lubrication
-- Trans women on estrogen: Penile tissue may be more sensitive, require gentle barriers
-- Intersex individuals: May have unique STI screening needs based on anatomy
-
-**Relationship Dynamics**:
-- His MSM activity may include other trans/intersex partners (not just cis men)
-- Community connections may be primarily 2SLGBTIQA+ spaces
-- Your role as endosex woman may require learning queer health frameworks
-
-### Cultural Attitudes Toward Bisexuality
-
-**Conservative/Religious Contexts**:
-- Your partner may face family rejection for MSM history
-- You may face judgment for dating bisexual man
-- May need to navigate disclosure to family/community carefully
-
-**Progressive/Queer Contexts**:
-- May face pressure to be "open" to non-monogamy
-- Bisexual identity may be celebrated but monogamy questioned
-- Resist assumptions that monogamy is "restrictive" or "heteronormative"
-
-**Sex-Positive Frameworks**:
-- Celebrate your partner's full sexual history without shame
-- Recognize your own boundaries without apology
-- Balance acceptance of identity with health safety protocols
-
-## TriSex.org Resources for Endosex Women
-
-### Products Designed for You
-
-**Barriers & Protection**:
-- Internal condoms (FC2-style) for your control
-- Dental dams for cunnilingus safety
-- Vaginal lubricants (pH-balanced, spermicide-free)
-- Emergency contraception (if applicable)
-
-**Products for Your Partner**:
-- 60+ size external condoms (intersex-centered fits endosex too)
-- Oral barriers from Super Sides 🥰 cooperative
-- Gaynal condoms if he practices receptive anal with you
-- Flavored lubricants for oral sex
-
-### Educational Resources
-
-**Wiki Articles**:
-- "Gaynal Condoms" article (understanding MSM sexual practices)
-- "Monogamy Economics" (why TriSex.org serves monogamy only)
-- "4D STI Intervention" (comprehensive tracking system)
-- "Intersex-Centered Sizing" (understanding the sizing system)
-
-**Health Services**:
-- 4D STI tracking for both partners
-- Comprehensive testing protocols
-- Couples counseling referrals
-- Peer support groups for women with bisexual partners
-
-### Community Support
-
-**Finding Your People**:
-- Women partnered with bisexual men support group
-- Intersex-inclusive sexual health education workshops
-- Monogamy-affirming queer relationship counseling
-- STI prevention and testing advocacy
-
-**Avoiding Harmful Spaces**:
-- ✗ Biphobic lesbian/feminist groups that demonize bisexual men
-- ✗ Straight women's groups that stigmatize MSM activity
-- ✗ Poly/open relationship advocates who pressure you to "open up"
-- ✓ Monogamy-affirming, bisexual-positive, health-focused communities
-
-## Conclusion: Your Health, Your Autonomy, Your Partnership
-
-**Key Takeaways**:
-
-1. **Your partner's MSM history is not shameful—it's epidemiologically relevant information**
-2. **Comprehensive testing protocols protect both of you**
-3. **Intersex-inclusive products serve endosex women excellently**
-4. **Monogamy can thrive between endosex women and bisexual/MSM men**
-5. **Your boundaries around testing and protection are valid**
-6. **Bisexuality ≠ inability to commit; attraction ≠ action**
-
-**TriSex.org's Commitment to You**:
-
-We recognize that endosex women with bisexual/MSM partners are often underserved by both heterosexual and MSM sexual health frameworks. Our intersex-centered, monogamy-affirming approach provides:
-
-- 🔬 **Rigorous testing protocols** designed for highest-risk populations
-- 🛡️ **Precision protection** that accommodates all anatomies
-- 💑 **Monogamy support** without judgment about sexual orientation
-- 🏥 **Comprehensive STI prevention** bridging MSM and heterosexual frameworks
-- 🧘 **Relationship tools** for navigating bisexual partnerships
-
-**Your Next Steps**:
-
-1. Get comprehensive STI testing (both partners)
-2. Choose appropriate barriers from TriSex.org product line
-3. Establish clear monogamy agreements
-4. Retest at 3-month mark
-5. Join our community support network
-6. Access our 4D STI tracking system for ongoing monitoring
-
-🙏🏼 **Thank you for prioritizing your sexual health and building a monogamous partnership grounded in honesty, testing, and mutual care.**
+⚧️ This article addresses the specific needs of endosex women (women who are not intersex, with typical binary anatomy) in monogamous relationships with bisexual or pansexual men who have MSM histories. TriSex.org's intersex-centered design automatically accommodates endosex anatomies.
 
 ---
 
-*For intersex-inclusive barrier sizing, visit TriSex.org/products. For comprehensive STI testing protocols, consult our 4D STI Intervention system. For relationship counseling, see our Community Resources directory.*`,
+## Key Terminology
+
+| Term | Definition |
+| --- | --- |
+| Endosex | Person whose sex characteristics align with typical male or female binary patterns (not intersex) |
+| MSM | Men who have sex with men — a behavioral category, not an identity |
+| Intersex-inclusive protection | Barrier methods designed around intersex anatomical diversity as the baseline |
+
+---
+
+## Epidemiological Context
+
+MSM populations have significantly higher rates of HIV, syphilis, gonorrhea, and chlamydia. Bisexual men create an epidemiological bridge between MSM and heterosexual populations. Even years-old MSM activity means potential exposure to STIs with higher baseline prevalence, and some infections (herpes, HPV, latent syphilis) can persist asymptomatically.
+
+---
+
+## Required Testing Protocol
+
+Standard STI panels are insufficient. Both partners need MSM-comprehensive testing:
+
+| Test | Sites | Notes |
+| --- | --- | --- |
+| HIV (4th gen antigen/antibody) | Blood | 3-month window period |
+| Syphilis (RPR + treponemal) | Blood | Detects latent stages |
+| Gonorrhea | Throat, urethra, rectum | Standard panels miss throat/rectal |
+| Chlamydia | Throat, urethra, rectum | Same — multi-site required |
+| Hepatitis B & C | Blood | Often excluded from basic panels |
+| Herpes HSV-1/2 | Blood (IgG) | Standard panels skip this |
+| HPV / Pap smear | Cervical (for you) | Cervical cancer screening |
+
+### Testing Timeline
+
+1. Initial test before establishing monogamy (both partners)
+2. Barrier use during 3-month HIV seroconversion window
+3. Confirmatory retest at 3 months
+4. If all clear, discuss fluid-bonding
+5. Optional annual retesting
+
+---
+
+## Product Recommendations
+
+| Context | Product | Notes |
+| --- | --- | --- |
+| Vaginal intercourse | External condoms (60+ sizes) or internal condoms (FC2-style) | pH-balanced lubricant |
+| Fellatio | Flavored oral barriers | From Super Sides cooperative |
+| Cunnilingus | Dental dams | Large-surface varieties available |
+| Anal sex | Gaynal condoms | Extra lubrication, thicker base, silicone lube |
+
+TriSex.org's intersex-centered 60+ size system provides precision fit for all penile configurations — your partner benefits from accurate sizing rather than binary assumptions.
+
+---
+
+## Relationship Dynamics
+
+### Communication Essentials
+
+Your partner should disclose MSM sexual history, most recent MSM encounter, last comprehensive test results, and ongoing attractions. Healthy framework: bisexuality is valid, attraction to multiple genders doesn't mean inability to be monogamous, and your boundaries around testing and protection are equally valid.
+
+### Common Scenarios
+
+| Scenario | Key Action |
+| --- | --- |
+| Partner just came out as bisexual | Pause sex, both get MSM-level panels, use barriers during window |
+| MSM activity was years ago | Verify testing was comprehensive (throat/rectal swabs), retest if not |
+| Attracted but never acted on it | Lower epidemiological risk; baseline testing still recommended |
+| You want to try anal sex | Use Gaynal condoms, abundant silicone lube, rectal screening after |
+
+### If Partner is Trans or Intersex
+
+Post-surgical anatomy may require custom barrier sizing. HRT affects genital tissue sensation and lubrication needs. The TriSex.org 60+ size system accommodates all configurations.
+
+---
+
+## Key Takeaways
+
+- Your partner's MSM history is epidemiologically relevant, not shameful
+- Comprehensive multi-site testing protects both of you
+- Intersex-inclusive products serve endosex women excellently
+- Monogamy thrives between endosex women and bisexual/MSM men
+- Bisexuality does not equal inability to commit`,
       tags: ["endosex", "women", "bisexual-men", "msm", "heterosexual", "sti-prevention", "monogamy", "testing", "relationships", "barriers", "health", "bridge-population"],
       lastUpdated: "2025-01-13",
       author: "TriSex.org Women's Health & Bisexual Partnership Team",
@@ -5086,6 +2681,8 @@ We recognize that endosex women with bisexual/MSM partners are often underserved
     return categoryData ? categoryData.icon : BookOpen;
   };
 
+  const CHART_COLORS = ['#a78bfa', '#60a5fa', '#34d399', '#fbbf24', '#f87171', '#c084fc', '#38bdf8', '#4ade80'];
+
   const renderMarkdownContent = (content: string) => {
     const lines = content.split('\n');
     const elements: JSX.Element[] = [];
@@ -5111,6 +2708,109 @@ We recognize that endosex women with bisexual/MSM partners are often underserved
       if (line.trim() === '---') {
         elements.push(<hr key={i} className="my-8 border-t border-white/15" />);
         i++; continue;
+      }
+
+      if (line.trim().startsWith('[chart:')) {
+        const chartType = line.trim().match(/\[chart:(\w+)\]/)?.[1] || 'bar';
+        const chartTitle = line.trim().match(/\[chart:\w+\s+"(.+?)"\]/)?.[1];
+        i++;
+        const chartData: { name: string; value: number }[] = [];
+        while (i < lines.length && lines[i].trim() !== '[/chart]') {
+          const parts = lines[i].trim().split('|');
+          if (parts.length >= 2) {
+            chartData.push({ name: parts[0].trim(), value: parseFloat(parts[1].trim()) || 0 });
+          }
+          i++;
+        }
+        i++;
+        if (chartData.length > 0) {
+          elements.push(
+            <div key={`chart-${i}`} className="my-8 bg-white/3 border border-white/10 rounded-xl p-5">
+              {chartTitle && <h4 className="text-sm font-semibold text-foreground mb-4">{chartTitle}</h4>}
+              <div className="h-64">
+                <ResponsiveContainer width="100%" height="100%">
+                  {chartType === 'pie' ? (
+                    <PieChart>
+                      <Pie data={chartData} cx="50%" cy="50%" outerRadius={80} dataKey="value" label={({ name, value }) => `${name}: ${value}`} labelLine={false}>
+                        {chartData.map((_, idx) => <Cell key={idx} fill={CHART_COLORS[idx % CHART_COLORS.length]} />)}
+                      </Pie>
+                      <Tooltip contentStyle={{ background: '#111', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: '#fff' }} />
+                      <Legend wrapperStyle={{ color: '#999', fontSize: '12px' }} />
+                    </PieChart>
+                  ) : (
+                    <BarChart data={chartData} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
+                      <XAxis dataKey="name" tick={{ fill: '#888', fontSize: 11 }} axisLine={{ stroke: 'rgba(255,255,255,0.1)' }} tickLine={false} />
+                      <YAxis tick={{ fill: '#888', fontSize: 11 }} axisLine={{ stroke: 'rgba(255,255,255,0.1)' }} tickLine={false} />
+                      <Tooltip contentStyle={{ background: '#111', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: '#fff' }} />
+                      <Bar dataKey="value" radius={[6, 6, 0, 0]}>
+                        {chartData.map((_, idx) => <Cell key={idx} fill={CHART_COLORS[idx % CHART_COLORS.length]} />)}
+                      </Bar>
+                    </BarChart>
+                  )}
+                </ResponsiveContainer>
+              </div>
+            </div>
+          );
+        }
+        continue;
+      }
+
+      if (line.trim().startsWith('[img:')) {
+        const imgMatch = line.trim().match(/\[img:\s*"(.+?)"\s*(?:caption="(.+?)")?\]/);
+        if (imgMatch) {
+          const label = imgMatch[1];
+          const caption = imgMatch[2] || label;
+          elements.push(
+            <figure key={`img-${i}`} className="my-8 bg-white/3 border border-white/10 rounded-xl overflow-hidden">
+              <div className="h-48 bg-gradient-to-br from-primary/10 via-white/5 to-primary/5 flex items-center justify-center">
+                <div className="text-center">
+                  <div className="text-5xl mb-3 opacity-60">⚧️</div>
+                  <p className="text-sm text-foreground/40 font-medium">{label}</p>
+                </div>
+              </div>
+              <figcaption className="px-4 py-3 text-xs text-foreground/40 border-t border-white/8 italic">{caption}</figcaption>
+            </figure>
+          );
+        }
+        i++; continue;
+      }
+
+      if (line.trim().startsWith('|') && line.trim().endsWith('|')) {
+        const tableRows: string[][] = [];
+        while (i < lines.length && lines[i].trim().startsWith('|') && lines[i].trim().endsWith('|')) {
+          const cells = lines[i].trim().split('|').slice(1, -1).map(c => c.trim());
+          if (!cells.every(c => /^[-:]+$/.test(c))) {
+            tableRows.push(cells);
+          }
+          i++;
+        }
+        if (tableRows.length > 0) {
+          const header = tableRows[0];
+          const body = tableRows.slice(1);
+          elements.push(
+            <div key={`tbl-${i}`} className="my-6 overflow-x-auto rounded-xl border border-white/10">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="bg-white/5 border-b border-white/10">
+                    {header.map((h, hi) => (
+                      <th key={hi} className="px-4 py-3 text-left text-xs font-semibold text-foreground/70 uppercase tracking-wide">{renderInline(h)}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {body.map((row, ri) => (
+                    <tr key={ri} className="border-b border-white/5 last:border-0">
+                      {row.map((cell, ci) => (
+                        <td key={ci} className="px-4 py-3 text-foreground/70">{renderInline(cell)}</td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          );
+        }
+        continue;
       }
 
       if (line.startsWith('# ')) {
