@@ -1294,9 +1294,13 @@ export default function Wiki() {
 
 TriSex.org's precision sizing system is built from the ground up around intersex anatomical diversity. Rather than treating intersex bodies as "special cases" that need to "fit in" to binary sizing systems, we center intersex variations as our baseline—ensuring all anatomical configurations have access to precision protection without forced categorization.
 
-**Core Principle**: Intersex anatomical diversity is natural human variation, not an outlier. Our sizing honors this truth.
+> Intersex anatomical diversity is natural human variation, not an outlier. Our sizing honors this truth.
+
+---
 
 ## Why Intersex-Centered Sizing Matters
+
+> Your anatomy is not a problem to solve. It is a reality to honor.
 
 ### The Problem with Binary Sizing
 Traditional protection sizing was designed around binary assumptions:
@@ -1306,44 +1310,45 @@ Traditional protection sizing was designed around binary assumptions:
 - Excluded natural anatomical variations from design process
 
 ### Our Intersex-Centered Approach
-- **Foundation, Not Afterthought**: Intersex variations inform our entire sizing spectrum
-- **No Forced Categorization**: All anatomies measured on their own terms
-- **Anatomical Neutrality**: Sizing based on actual measurements, not gender assumptions
-- **Inclusive Design**: 60+ sizes accommodate the full spectrum of human anatomical diversity
+- Foundation, Not Afterthought — Intersex variations inform our entire sizing spectrum
+- No Forced Categorization — All anatomies measured on their own terms
+- Anatomical Neutrality — Sizing based on actual measurements, not gender assumptions
+- Inclusive Design — 60+ sizes accommodate the full spectrum of human anatomical diversity
 
 ## The 60+ Intersex-Centered Size System
 
 ### Size Nomenclature (Gender-Neutral)
-- **Letter System**: A through H (circumference/width categories)
-- **Number System**: 1, 3, 5 (length categories)
-- **Example**: C3 = Mid-range width, mid-range length
-- **No Binary Labels**: Sizes describe fit characteristics, not gender
+- Letter System: A through H (circumference/width categories)
+- Number System: 1, 3, 5 (length categories)
+- Example: C3 = Mid-range width, mid-range length
+- No Binary Labels: Sizes describe fit characteristics, not gender
 
 ### Width Categories (Circumference-Based)
 Our width categories honor all anatomical configurations:
-- **A Series**: 45-47mm circumference (Narrow fit)
-- **B Series**: 47-49mm (Compact fit)
-- **C Series**: 49-51mm (Mid-range fit)
-- **D Series**: 51-53mm (Moderate fit)
-- **E Series**: 53-55mm (Generous fit)
-- **F Series**: 55-57mm (Spacious fit)
-- **G Series**: 57-60mm (Expansive fit)
-- **H Series**: 60mm+ (Maximum fit)
 
-**⚧️ Intersex Consideration**: These ranges accommodate natural anatomical variations including intersex configurations, without requiring users to identify or categorize their bodies.
+**A Series**: 45-47mm (Narrow)
+**B Series**: 47-49mm (Compact)
+**C Series**: 49-51mm (Mid-range)
+**D Series**: 51-53mm (Moderate)
+**E Series**: 53-55mm (Generous)
+**F Series**: 55-57mm (Spacious)
+**G Series**: 57-60mm (Expansive)
+**H Series**: 60mm+ (Maximum)
+
+> ⚧️ These ranges accommodate natural anatomical variations including intersex configurations, without requiring users to identify or categorize their bodies.
 
 ### Length Categories (Measurement-Based)
-- **1 Series**: 160mm length
-- **3 Series**: 170mm length
-- **5 Series**: 180mm length
+**1 Series**: 160mm
+**3 Series**: 170mm
+**5 Series**: 180mm
 
-**⚧️ Intersex Consideration**: Length categories are purely measurement-based, honoring all anatomical structures regardless of classification.
+> ⚧️ Length categories are purely measurement-based, honoring all anatomical structures regardless of classification.
 
 ## Measurement Best Practices
 
 ### Intersex-Affirming Measurement Approach
 
-**Core Principle**: Your anatomy is measured on its own terms, without comparison to binary "norms."
+> Your anatomy is measured on its own terms, without comparison to binary "norms."
 
 1. **Anatomical Neutrality**: We measure what exists, not what "should" exist
 2. **Privacy-First**: All measurements processed locally, no data storage
@@ -1407,7 +1412,7 @@ Our width categories honor all anatomical configurations:
 
 ### Centering Intersex Anatomies
 
-**What This Means in Practice**:
+#### What This Means in Practice
 - Intersex anatomical variations informed our entire sizing design
 - Size ranges start from intersex anatomical diversity, not binary assumptions
 - No anatomy is considered "outside the norm"—all variations ARE the norm
@@ -1425,13 +1430,13 @@ Our system fully accommodates:
 
 ### No Forced Categorization
 
-**You Will Never Be Asked**:
+#### You Will Never Be Asked
 - "Are you male or female?" (sizing doesn't require this)
 - "What type of anatomy do you have?" (measurements tell us what we need)
 - "Is your anatomy 'normal'?" (all anatomies are normal)
 - To fit into a binary category to access sizing
 
-**What We Ask Instead**:
+#### What We Ask Instead
 - "What are your measurements?" (neutral, objective)
 - "What fit feel do you prefer?" (personal preference)
 - "What protection features matter to you?" (individualized)
@@ -1695,65 +1700,69 @@ Revolutionary approach to STI prevention using bioregional sewer and water sampl
 DALY = Years of Life Lost (YLL) + Years Lived with Disability (YLD)
 
 ### Calculation Components
-- **YLL**: Premature mortality impact
-- **YLD**: Morbidity and disability impact
-- **Age weighting**: Optional age-specific adjustments
-- **Discount rate**: Future value considerations
+**YLL**: Premature mortality impact
+**YLD**: Morbidity and disability impact
+**Age weighting**: Optional age-specific adjustments
+**Discount rate**: Future value considerations
 
 ## TriSex DALY Prevention Model
 
 ### STI-Specific DALY Calculations
 
 #### Chlamydia Prevention
-- **Average DALY per case**: 0.18
-- **Cases prevented**: 71,374
-- **Total DALYs saved**: 12,847
+**Average DALY per case**: 0.18
+**Cases prevented**: 71,374
+**Total DALYs saved**: 12,847
 
 #### Gonorrhea Prevention
-- **Average DALY per case**: 0.19
-- **Cases prevented**: 46,983
-- **Total DALYs saved**: 8,927
+**Average DALY per case**: 0.19
+**Cases prevented**: 46,983
+**Total DALYs saved**: 8,927
 
 #### Syphilis Prevention
-- **Average DALY per case**: 0.32
-- **Cases prevented**: 48,851
-- **Total DALYs saved**: 15,632
+**Average DALY per case**: 0.32
+**Cases prevented**: 48,851
+**Total DALYs saved**: 15,632
 
 #### HIV Prevention
-- **Average DALY per case**: 7.8
-- **Cases prevented**: 3,006
-- **Total DALYs saved**: 23,447
+**Average DALY per case**: 7.8
+**Cases prevented**: 3,006
+**Total DALYs saved**: 23,447
 
 ### Economic Valuation Methods
 
 #### WHO Standard Valuation
-- **Value per DALY**: $100,000 USD
-- **US Healthcare Context**: $150,000 USD
-- **TriSex Conservative Estimate**: $125,000 USD
+**Value per DALY**: $100,000 USD
+**US Healthcare Context**: $150,000 USD
+**TriSex Conservative Estimate**: $125,000 USD
 
 #### Total Economic Impact
-- **DALYs Saved**: 79,822
-- **Economic Value**: $11.5 billion annually
-- **ROI on Prevention**: 8.4:1
+**DALYs Saved**: 79,822
+**Economic Value**: $11.5B annually
+**ROI on Prevention**: 8.4:1
+
+---
 
 ## National Debt Impact Analysis
 
+> Sexual health prevention generates measurable fiscal returns that contribute to national debt reduction over time.
+
 ### Healthcare Cost Reduction
-- **Direct treatment costs avoided**: $4.2B
-- **Emergency care prevented**: $1.8B
-- **Long-term care savings**: $2.1B
-- **Productivity gains**: $3.4B
+**Direct treatment costs avoided**: $4.2B
+**Emergency care prevented**: $1.8B
+**Long-term care savings**: $2.1B
+**Productivity gains**: $3.4B
 
 ### Fiscal Impact
-- **Federal budget relief**: $8.7B
-- **State/local savings**: $2.8B
-- **Total public savings**: $11.5B
+**Federal budget relief**: $8.7B
+**State/local savings**: $2.8B
+**Total public savings**: $11.5B
 
 ### Debt Reduction Potential
-- **Current national debt**: $33.8 trillion
-- **Annual reduction**: $11.5B (0.034%)
-- **10-year cumulative**: $115B
-- **20-year projection**: $230B
+**Current national debt**: $33.8 trillion
+**Annual reduction**: $11.5B
+**10-year cumulative**: $115B
+**20-year projection**: $230B
 
 ## Measurement and Verification
 
@@ -5065,10 +5074,10 @@ We recognize that endosex women with bisexual/MSM partners are often underserved
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
-      case "Beginner": return "bg-green-100 text-green-800";
-      case "Intermediate": return "bg-yellow-100 text-yellow-800";
-      case "Advanced": return "bg-red-100 text-red-800";
-      default: return "bg-gray-100 text-gray-800";
+      case "Beginner": return "bg-green-500/15 text-green-400 border border-green-500/20";
+      case "Intermediate": return "bg-yellow-500/15 text-yellow-400 border border-yellow-500/20";
+      case "Advanced": return "bg-red-500/15 text-red-400 border border-red-500/20";
+      default: return "bg-white/5 text-foreground/40 border border-white/10";
     }
   };
 
@@ -5078,84 +5087,238 @@ We recognize that endosex women with bisexual/MSM partners are often underserved
   };
 
   const renderMarkdownContent = (content: string) => {
-    return content
-      .split('\n')
-      .map((line, index) => {
-        // Headers
-        if (line.startsWith('# ')) {
-          return <h1 key={index} className="text-2xl font-bold mt-8 mb-4 first:mt-0 text-black dark:text-white">{line.substring(2)}</h1>;
+    const lines = content.split('\n');
+    const elements: JSX.Element[] = [];
+    let i = 0;
+
+    const processInline = (text: string): string => {
+      return text
+        .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-foreground">$1</strong>')
+        .replace(/\*(.*?)\*/g, '<em>$1</em>')
+        .replace(/`(.*?)`/g, '<code class="px-1.5 py-0.5 bg-white/10 rounded text-sm font-mono text-primary">$1</code>');
+    };
+
+    const renderInline = (text: string) => {
+      const sanitized = DOMPurify.sanitize(processInline(text));
+      return <span dangerouslySetInnerHTML={{ __html: sanitized }} />;
+    };
+
+    while (i < lines.length) {
+      const line = lines[i];
+
+      if (line.trim() === '') { i++; continue; }
+
+      if (line.trim() === '---') {
+        elements.push(<hr key={i} className="my-8 border-t border-white/15" />);
+        i++; continue;
+      }
+
+      if (line.startsWith('# ')) {
+        elements.push(<h1 key={i} className="text-3xl font-bold mt-10 mb-5 first:mt-0 text-foreground font-display leading-tight">{line.substring(2)}</h1>);
+        i++; continue;
+      }
+      if (line.startsWith('## ')) {
+        elements.push(
+          <div key={i} className="mt-10 mb-5">
+            <h2 className="text-2xl font-bold text-foreground font-display leading-tight">{line.substring(3)}</h2>
+            <div className="h-0.5 w-16 bg-primary mt-2 rounded-full" />
+          </div>
+        );
+        i++; continue;
+      }
+      if (line.startsWith('### ')) {
+        elements.push(<h3 key={i} className="text-xl font-semibold mt-8 mb-3 text-foreground font-display">{line.substring(4)}</h3>);
+        i++; continue;
+      }
+      if (line.startsWith('#### ')) {
+        elements.push(<h4 key={i} className="text-lg font-semibold mt-6 mb-2 text-foreground">{line.substring(5)}</h4>);
+        i++; continue;
+      }
+
+      if (line.startsWith('> ')) {
+        const quoteLines: string[] = [];
+        while (i < lines.length && lines[i].startsWith('> ')) {
+          quoteLines.push(lines[i].substring(2));
+          i++;
         }
-        if (line.startsWith('## ')) {
-          return <h2 key={index} className="text-xl font-semibold mt-8 mb-4 text-black dark:text-white">{line.substring(3)}</h2>;
+        elements.push(
+          <blockquote key={`q-${i}`} className="my-6 border-l-4 border-primary bg-primary/5 rounded-r-lg px-5 py-4">
+            {quoteLines.map((ql, qi) => (
+              <p key={qi} className="text-foreground/80 text-sm leading-relaxed italic">{renderInline(ql)}</p>
+            ))}
+          </blockquote>
+        );
+        continue;
+      }
+
+      if (line.startsWith('- ✓ ') || line.startsWith('- ✔') || line.startsWith('- ✕') || line.startsWith('- ✗')) {
+        const checkItems: { text: string; checked: boolean }[] = [];
+        while (i < lines.length && (lines[i].startsWith('- ✓') || lines[i].startsWith('- ✔') || lines[i].startsWith('- ✕') || lines[i].startsWith('- ✗') || lines[i].startsWith('- ✘'))) {
+          const isChecked = lines[i].startsWith('- ✓') || lines[i].startsWith('- ✔');
+          checkItems.push({ text: lines[i].replace(/^- [✓✔✕✗✘]\s*/, ''), checked: isChecked });
+          i++;
         }
-        if (line.startsWith('### ')) {
-          return <h3 key={index} className="text-lg font-semibold mt-6 mb-3 text-black dark:text-white">{line.substring(4)}</h3>;
+        elements.push(
+          <div key={`check-${i}`} className="my-4 space-y-2 bg-white/5 rounded-xl p-4 border border-white/10">
+            {checkItems.map((item, ci) => (
+              <div key={ci} className="flex items-start gap-3">
+                <span className={`mt-0.5 text-lg flex-shrink-0 ${item.checked ? 'text-emerald-400' : 'text-red-400'}`}>
+                  {item.checked ? '✓' : '✕'}
+                </span>
+                <span className="text-foreground/80 text-sm leading-relaxed">{renderInline(item.text)}</span>
+              </div>
+            ))}
+          </div>
+        );
+        continue;
+      }
+
+      if (line.startsWith('- ')) {
+        const listItems: string[] = [];
+        while (i < lines.length && lines[i].startsWith('- ')) {
+          listItems.push(lines[i].substring(2));
+          i++;
         }
-        if (line.startsWith('#### ')) {
-          return <h4 key={index} className="text-base font-semibold mt-5 mb-2 text-black dark:text-white">{line.substring(5)}</h4>;
+        elements.push(
+          <ul key={`ul-${i}`} className="my-4 space-y-2">
+            {listItems.map((item, li) => (
+              <li key={li} className="flex items-start gap-3 text-foreground/80">
+                <span className="mt-2 h-1.5 w-1.5 bg-primary rounded-full flex-shrink-0" />
+                <span className="text-sm leading-relaxed">{renderInline(item)}</span>
+              </li>
+            ))}
+          </ul>
+        );
+        continue;
+      }
+
+      if (/^\d+\.\s/.test(line)) {
+        const numItems: string[] = [];
+        while (i < lines.length && /^\d+\.\s/.test(lines[i])) {
+          numItems.push(lines[i].replace(/^\d+\.\s/, ''));
+          i++;
         }
-        
-        // Lists
-        if (line.startsWith('- ')) {
-          return <li key={index} className="ml-6 mb-2 text-base leading-relaxed text-black dark:text-white">{line.substring(2)}</li>;
+        elements.push(
+          <ol key={`ol-${i}`} className="my-4 space-y-3">
+            {numItems.map((item, ni) => (
+              <li key={ni} className="flex items-start gap-3 text-foreground/80">
+                <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/15 text-primary text-xs font-bold flex items-center justify-center mt-0.5">{ni + 1}</span>
+                <span className="text-sm leading-relaxed">{renderInline(item)}</span>
+              </li>
+            ))}
+          </ol>
+        );
+        continue;
+      }
+
+      const statMatch = line.match(/^\*\*(.+?)\*\*:\s*(\$[\d,.]+[BMK]?(?:\s*(?:USD|annually|per\s+\w+))?|\d[\d,.]*%?(?:\s*\w+)?)/);
+      if (statMatch) {
+        const statItems: { label: string; value: string }[] = [];
+        while (i < lines.length) {
+          const sm = lines[i].match(/^\*\*(.+?)\*\*:\s*(.+)/);
+          if (sm) {
+            statItems.push({ label: sm[1], value: sm[2] });
+            i++;
+          } else break;
         }
-        
-        // Bold text
-        const boldText = line.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-        
-        // Empty lines
-        if (line.trim() === '') {
-          return <div key={index} className="h-4" />;
+        if (statItems.length >= 2) {
+          elements.push(
+            <div key={`stats-${i}`} className="my-6 grid grid-cols-2 sm:grid-cols-3 gap-3">
+              {statItems.map((s, si) => (
+                <div key={si} className="bg-white/5 border border-white/10 rounded-xl p-4 text-center">
+                  <div className="text-lg font-bold text-primary mb-1">{renderInline(s.value)}</div>
+                  <div className="text-xs text-foreground/50">{s.label}</div>
+                </div>
+              ))}
+            </div>
+          );
+          continue;
         }
-        
-        // Regular paragraphs - sanitize HTML to prevent XSS attacks
-        const sanitizedHtml = DOMPurify.sanitize(boldText);
-        return <p key={index} className="mb-4 text-base leading-7 text-black dark:text-white" dangerouslySetInnerHTML={{ __html: sanitizedHtml }} />;
-      });
+      }
+
+      const kvMatch = line.match(/^\*\*(.+?)\*\*:\s+(.+)/);
+      if (kvMatch) {
+        elements.push(
+          <div key={i} className="my-2 flex items-start gap-2 text-foreground/80">
+            <span className="font-semibold text-foreground text-sm flex-shrink-0">{kvMatch[1]}:</span>
+            <span className="text-sm leading-relaxed">{renderInline(kvMatch[2])}</span>
+          </div>
+        );
+        i++; continue;
+      }
+
+      const challengeMatch = line.match(/^\*\*Challenge\*\*:\s*"(.+)"/);
+      if (challengeMatch && i + 1 < lines.length) {
+        const solMatch = lines[i + 1]?.match(/^\*\*Solution\*\*:\s*(.+)/);
+        if (solMatch) {
+          elements.push(
+            <div key={`faq-${i}`} className="my-4 bg-white/5 border border-white/10 rounded-xl overflow-hidden">
+              <div className="px-5 py-3 bg-white/5 border-b border-white/10">
+                <p className="text-sm font-medium text-foreground flex items-center gap-2">
+                  <span className="text-amber-400">Q</span> {challengeMatch[1]}
+                </p>
+              </div>
+              <div className="px-5 py-3">
+                <p className="text-sm text-foreground/70 flex items-start gap-2">
+                  <span className="text-emerald-400 font-semibold">A</span> {solMatch[1]}
+                </p>
+              </div>
+            </div>
+          );
+          i += 2; continue;
+        }
+      }
+
+      const sanitized = DOMPurify.sanitize(processInline(line));
+      elements.push(
+        <p key={i} className="mb-3 text-sm leading-7 text-foreground/80" dangerouslySetInnerHTML={{ __html: sanitized }} />
+      );
+      i++;
+    }
+
+    return elements;
   };
 
   if (selectedArticle) {
     return (
-      <div className="min-h-screen bg-white dark:bg-gray-950 py-8 px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen bg-background py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto">
-          {/* Back Button */}
           <div className="mb-8">
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               onClick={() => setSelectedArticle(null)}
-              className="flex items-center space-x-2 border-black dark:border-white text-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-900"
+              className="flex items-center space-x-2 border-white/20 text-foreground hover:bg-white/5"
             >
               <ArrowLeft className="h-4 w-4" />
               <span>Back to Articles</span>
             </Button>
           </div>
 
-          {/* Article Content */}
-          <article className="bg-white dark:bg-gray-950">
-            <header className="mb-8 pb-6 border-b border-gray-200 dark:border-gray-800">
+          <article className="bg-background">
+            <header className="mb-8 pb-6 border-b border-white/10">
               <div className="flex items-center space-x-2 mb-4">
                 {(() => {
                   const IconComponent = getCategoryIcon(selectedArticle.category);
-                  return <IconComponent className="h-5 w-5 text-black dark:text-white" />;
+                  return <IconComponent className="h-5 w-5 text-foreground/60" />;
                 })()}
-                <Badge variant="outline" className="text-xs border-gray-400 text-gray-700 dark:text-gray-300">
+                <Badge variant="outline" className="text-xs border-white/20 text-foreground/60">
                   {categories.find(c => c.id === selectedArticle.category)?.name}
                 </Badge>
                 <Badge className={getDifficultyColor(selectedArticle.difficulty) + " text-xs"}>
                   {selectedArticle.difficulty}
                 </Badge>
               </div>
-              <h1 className="text-2xl md:text-3xl font-bold mb-4 text-black dark:text-white leading-tight">{selectedArticle.title}</h1>
-              <div className="flex items-center flex-wrap gap-3 text-sm text-gray-600 dark:text-gray-400 mb-4">
+              <h1 className="text-2xl md:text-3xl font-bold mb-4 text-foreground leading-tight font-display">{selectedArticle.title}</h1>
+              <div className="flex items-center flex-wrap gap-3 text-sm text-foreground/40 mb-4">
                 <span>By {selectedArticle.author}</span>
-                <span className="text-gray-300 dark:text-gray-600">•</span>
+                <span className="text-foreground/20">•</span>
                 <span>Updated {selectedArticle.lastUpdated}</span>
-                <span className="text-gray-300 dark:text-gray-600">•</span>
+                <span className="text-foreground/20">•</span>
                 <span>{selectedArticle.readTime} read</span>
               </div>
               <div className="flex flex-wrap gap-1 mb-4">
                 {selectedArticle.tags.map((tag) => (
-                  <Badge key={tag} variant="secondary" className="text-xs bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">
+                  <Badge key={tag} variant="secondary" className="text-xs bg-white/5 text-foreground/50 border border-white/10">
                     {tag}
                   </Badge>
                 ))}
@@ -5177,37 +5340,35 @@ We recognize that endosex women with bisexual/MSM partners are often underserved
           </article>
 
           {/* Public Health Agency Export Panel */}
-          <Card className="mt-6 bg-blue-50 dark:bg-blue-900/20 border-blue-200">
+          <Card className="mt-6 bg-white/3 border border-white/10">
             <CardHeader>
-              <div className="flex items-center justify-between">
-                <CardTitle className="text-lg flex items-center text-blue-900 dark:text-blue-100">
-                  <Globe className="h-5 w-5 mr-2" />
+              <div className="flex items-center justify-between flex-wrap gap-2">
+                <CardTitle className="text-base flex items-center text-foreground">
+                  <Globe className="h-4 w-4 mr-2 text-primary" />
                   Public Health Agency Access
                 </CardTitle>
-                <Badge variant="outline" className="text-blue-700 border-blue-300">
+                <Badge variant="outline" className="text-xs text-foreground/40 border-white/15">
                   Approved for Inter-Agency Sharing
                 </Badge>
               </div>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <p className="text-sm text-blue-700 dark:text-blue-200">
-                  This content is approved for sharing with public health agencies, healthcare systems, and educational institutions. 
-                  All exports include compliance metadata and follow HIPAA, GDPR, and accessibility guidelines.
+                <p className="text-sm text-foreground/50">
+                  Approved for sharing with public health agencies, healthcare systems, and educational institutions. 
+                  Exports include compliance metadata and follow HIPAA, GDPR, and accessibility guidelines.
                 </p>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  
-                  {/* Microsoft Teams */}
                   <div className="space-y-2">
-                    <h4 className="font-medium flex items-center text-blue-900 dark:text-blue-100">
+                    <h4 className="text-sm font-medium flex items-center text-foreground/70">
                       <Monitor className="h-4 w-4 mr-2" />
                       Microsoft Teams
                     </h4>
                     <Button 
                       variant="outline" 
                       size="sm" 
-                      className="w-full justify-start border-blue-300 text-blue-700 hover:bg-blue-100"
+                      className="w-full justify-start border-white/15 text-foreground/60 hover:bg-white/5"
                       onClick={() => exportToMicrosoftTeams(selectedArticle)}
                       data-testid="export-teams"
                     >
@@ -5216,16 +5377,15 @@ We recognize that endosex women with bisexual/MSM partners are often underserved
                     </Button>
                   </div>
 
-                  {/* Public Health Platforms */}
                   <div className="space-y-2">
-                    <h4 className="font-medium flex items-center text-blue-900 dark:text-blue-100">
+                    <h4 className="text-sm font-medium flex items-center text-foreground/70">
                       <Heart className="h-4 w-4 mr-2" />
                       Health Platforms
                     </h4>
                     <Button 
                       variant="outline" 
                       size="sm" 
-                      className="w-full justify-start border-blue-300 text-blue-700 hover:bg-blue-100"
+                      className="w-full justify-start border-white/15 text-foreground/60 hover:bg-white/5"
                       onClick={() => exportToPublicHealthPlatforms(selectedArticle)}
                       data-testid="export-public-health"
                     >
@@ -5234,16 +5394,15 @@ We recognize that endosex women with bisexual/MSM partners are often underserved
                     </Button>
                   </div>
 
-                  {/* Complete Dataset */}
                   <div className="space-y-2">
-                    <h4 className="font-medium flex items-center text-blue-900 dark:text-blue-100">
+                    <h4 className="text-sm font-medium flex items-center text-foreground/70">
                       <Globe className="h-4 w-4 mr-2" />
                       Complete Dataset
                     </h4>
                     <Button 
                       variant="outline" 
                       size="sm" 
-                      className="w-full justify-start border-blue-300 text-blue-700 hover:bg-blue-100"
+                      className="w-full justify-start border-white/15 text-foreground/60 hover:bg-white/5"
                       onClick={createPublicHealthDataset(wikiArticles)}
                       data-testid="export-full-dataset"
                     >
@@ -5253,43 +5412,40 @@ We recognize that endosex women with bisexual/MSM partners are often underserved
                   </div>
                 </div>
 
-                {/* Compliance Information */}
-                <div className="mt-4 p-3 bg-blue-100 dark:bg-blue-800/30 rounded-lg">
-                  <h4 className="font-medium text-blue-900 dark:text-blue-100 mb-2 flex items-center">
-                    <CheckCircle className="h-4 w-4 mr-2" />
+                <div className="mt-4 p-3 bg-white/5 rounded-lg border border-white/10">
+                  <h4 className="text-sm font-medium text-foreground/70 mb-2 flex items-center">
+                    <CheckCircle className="h-4 w-4 mr-2 text-primary" />
                     Data Sharing Compliance
                   </h4>
-                  <div className="text-xs text-blue-700 dark:text-blue-200 space-y-1">
+                  <div className="text-xs text-foreground/40 space-y-1.5">
                     <div className="flex items-center">
-                      <CheckCircle className="h-3 w-3 mr-2 text-green-600" />
-                      HIPAA Compliant - De-identified Information
+                      <CheckCircle className="h-3 w-3 mr-2 text-green-500" />
+                      HIPAA Compliant — De-identified Information
                     </div>
                     <div className="flex items-center">
-                      <CheckCircle className="h-3 w-3 mr-2 text-green-600" />
-                      GDPR Compliant - Legitimate Interest
+                      <CheckCircle className="h-3 w-3 mr-2 text-green-500" />
+                      GDPR Compliant — Legitimate Interest
                     </div>
                     <div className="flex items-center">
-                      <CheckCircle className="h-3 w-3 mr-2 text-green-600" />
+                      <CheckCircle className="h-3 w-3 mr-2 text-green-500" />
                       Section 508 Accessibility Compliant
                     </div>
                     <div className="flex items-center">
-                      <CheckCircle className="h-3 w-3 mr-2 text-green-600" />
+                      <CheckCircle className="h-3 w-3 mr-2 text-green-500" />
                       Creative Commons BY-SA 4.0 Licensed
                     </div>
                   </div>
                 </div>
 
-                {/* Platform Integration Guide */}
-                <div className="mt-4 p-3 bg-white dark:bg-gray-800 rounded-lg border border-blue-200">
-                  <h4 className="font-medium text-blue-900 dark:text-blue-100 mb-2 flex items-center">
+                <div className="mt-4 p-3 bg-white/3 rounded-lg border border-white/8">
+                  <h4 className="text-sm font-medium text-foreground/60 mb-2 flex items-center">
                     <Info className="h-4 w-4 mr-2" />
-                    Platform Integration Instructions
+                    Platform Integration
                   </h4>
-                  <div className="text-xs text-blue-700 dark:text-blue-200 space-y-1">
-                    <p><strong>Microsoft Teams:</strong> Content copied to clipboard, paste into channels or start conversations</p>
-                    <p><strong>Health Platforms:</strong> JSON/CSV exports for API integration and data analysis</p>
-                    <p><strong>Authorized Use:</strong> Public health agencies, healthcare systems, educational institutions</p>
-                    <p><strong>Contact:</strong> TriSex.org Clinical Partners for technical integration support</p>
+                  <div className="text-xs text-foreground/35 space-y-1">
+                    <p><strong className="text-foreground/50">Microsoft Teams:</strong> Content copied to clipboard, paste into channels</p>
+                    <p><strong className="text-foreground/50">Health Platforms:</strong> JSON/CSV exports for API integration</p>
+                    <p><strong className="text-foreground/50">Authorized Use:</strong> Public health agencies, healthcare systems, educational institutions</p>
                   </div>
                 </div>
               </div>
@@ -5451,17 +5607,17 @@ We recognize that endosex women with bisexual/MSM partners are often underserved
                 </div>
 
                 {/* Integration Instructions */}
-                <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-                  <h4 className="font-medium text-blue-900 dark:text-blue-100 mb-2 flex items-center">
+                <div className="mt-6 p-4 bg-white/3 rounded-lg border border-white/8">
+                  <h4 className="text-sm font-medium text-foreground/60 mb-2 flex items-center">
                     <Info className="h-4 w-4 mr-2" />
                     Platform Integration Guide
                   </h4>
-                  <div className="text-sm text-blue-700 dark:text-blue-200 space-y-2">
-                    <p><strong>Google Workspace:</strong> Use Drive API, Sites API, or Docs API for programmatic integration</p>
-                    <p><strong>Apple Notes:</strong> iOS 26+/macOS 26+ supports native markdown import/export</p>
-                    <p><strong>Microsoft Office:</strong> Use MarkItDown tool or Writage plugin for enhanced conversion</p>
-                    <p><strong>LibreOffice:</strong> Native markdown support coming in version 26.2 (2026)</p>
-                    <p><strong>AppFlowy:</strong> Import via Settings → Files → Import Data or ZIP workspace feature</p>
+                  <div className="text-xs text-foreground/35 space-y-1.5">
+                    <p><strong className="text-foreground/50">Google Workspace:</strong> Drive API, Sites API, or Docs API</p>
+                    <p><strong className="text-foreground/50">Apple Notes:</strong> iOS 26+/macOS 26+ native markdown import</p>
+                    <p><strong className="text-foreground/50">Microsoft Office:</strong> MarkItDown tool or Writage plugin</p>
+                    <p><strong className="text-foreground/50">LibreOffice:</strong> Native markdown support v26.2 (2026)</p>
+                    <p><strong className="text-foreground/50">AppFlowy:</strong> Settings → Files → Import Data</p>
                   </div>
                 </div>
               </CardContent>
@@ -5473,31 +5629,29 @@ We recognize that endosex women with bisexual/MSM partners are often underserved
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-950">
+    <div className="min-h-screen bg-background">
       <BetaDisclaimer />
-      
-      {/* Clean Header */}
-      <div className="bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-800 py-12 px-4">
+
+      <div className="bg-background border-b border-white/10 py-12 px-4">
         <div className="max-w-5xl mx-auto text-center">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-gray-100 dark:bg-gray-900 rounded-xl mb-4">
-            <BookOpen className="h-8 w-8 text-black dark:text-white" />
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-white/5 border border-white/10 rounded-xl mb-4">
+            <BookOpen className="h-8 w-8 text-foreground" />
           </div>
-          <h1 className="text-3xl md:text-4xl font-bold mb-3 text-black dark:text-white">
+          <h1 className="text-3xl md:text-4xl font-bold mb-3 text-foreground font-display">
             TriSex.org Knowledge Wiki
           </h1>
-          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg text-foreground/50 max-w-2xl mx-auto leading-relaxed">
             Best Practices for Sustainable Sexual Health
           </p>
-          
-          {/* Search */}
+
           <div className="mt-6 max-w-lg mx-auto">
             <div className="relative">
-              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-foreground/30" />
               <Input
                 placeholder="Search wiki articles..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-12 py-5 text-base rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-black dark:text-white placeholder:text-gray-400"
+                className="pl-12 py-5 text-base rounded-lg border border-white/15 bg-white/5 text-foreground placeholder:text-foreground/30"
               />
             </div>
           </div>
@@ -5507,22 +5661,20 @@ We recognize that endosex women with bisexual/MSM partners are often underserved
       <div className="py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           
-          {/* Intersex Healthcare Affirmation */}
-          <Alert className="mb-10 bg-white dark:bg-gray-950 border-2 border-black dark:border-white">
-            <Heart className="h-5 w-5 text-black dark:text-white" />
-            <AlertDescription className="ml-2 text-black dark:text-white">
-              <strong>Intersex Healthcare IS Everyone's Affirmation:</strong> Wiki content centers intersex anatomy as the universal baseline—trans, non-binary, genderqueer, and quare embodiment are all respected within this participatory budgeting framework.
+          <Alert className="mb-10 bg-white/5 border border-white/15 rounded-lg">
+            <Heart className="h-4 w-4 text-primary flex-shrink-0" />
+            <AlertDescription className="ml-2 text-foreground/70 text-sm">
+              <strong className="text-foreground">Intersex Healthcare IS Everyone's Affirmation:</strong> Wiki content centers intersex anatomy as the universal baseline.
             </AlertDescription>
           </Alert>
 
         <div className="grid lg:grid-cols-4 gap-8">
-          {/* Categories Sidebar */}
           <div className="lg:col-span-1 space-y-6">
-            <Card className="border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950">
-              <CardHeader className="bg-gray-100 dark:bg-gray-900 pb-4">
-                <CardTitle className="text-lg font-semibold text-black dark:text-white">Categories</CardTitle>
+            <Card className="border border-white/10 bg-white/3">
+              <CardHeader className="bg-white/5 pb-4">
+                <CardTitle className="text-sm font-semibold text-foreground uppercase tracking-wide">Categories</CardTitle>
               </CardHeader>
-              <CardContent className="p-4">
+              <CardContent className="p-3">
                 <div className="space-y-1">
                   {categories.map((category) => {
                     const IconComponent = category.icon;
@@ -5530,19 +5682,17 @@ We recognize that endosex women with bisexual/MSM partners are often underserved
                       <button
                         key={category.id}
                         onClick={() => setActiveCategory(category.id)}
-                        className={`w-full flex items-center justify-between p-3 rounded-lg text-left transition-all duration-200 ${
+                        className={`w-full flex items-center justify-between p-2.5 rounded-lg text-left transition-all duration-200 ${
                           activeCategory === category.id
-                            ? "bg-black dark:bg-white text-white dark:text-black"
-                            : "hover:bg-gray-100 dark:hover:bg-gray-800 text-black dark:text-white"
+                            ? "bg-white text-black"
+                            : "hover:bg-white/5 text-foreground/70"
                         }`}
                       >
-                        <div className="flex items-center space-x-3">
-                          <div className={`p-2 rounded-lg ${activeCategory === category.id ? "bg-white/20 dark:bg-black/20" : "bg-gray-100 dark:bg-gray-800"}`}>
-                            <IconComponent className="h-4 w-4" />
-                          </div>
+                        <div className="flex items-center space-x-2.5">
+                          <IconComponent className="h-4 w-4" />
                           <span className="text-sm font-medium">{category.name}</span>
                         </div>
-                        <Badge variant={activeCategory === category.id ? "secondary" : "outline"} className="text-xs font-semibold">
+                        <Badge variant="outline" className={`text-xs ${activeCategory === category.id ? 'border-black/20 text-black' : 'border-white/15 text-foreground/40'}`}>
                           {category.count}
                         </Badge>
                       </button>
@@ -5552,103 +5702,82 @@ We recognize that endosex women with bisexual/MSM partners are often underserved
               </CardContent>
             </Card>
 
-            {/* Quick Links */}
-            <Card className="border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950">
+            <Card className="border border-white/10 bg-white/3">
               <CardHeader className="pb-3">
-                <CardTitle className="text-lg font-semibold text-black dark:text-white">Quick Links</CardTitle>
+                <CardTitle className="text-sm font-semibold text-foreground uppercase tracking-wide">Quick Links</CardTitle>
               </CardHeader>
-              <CardContent className="p-4 pt-0">
-                <div className="space-y-3">
-                  <a href="#" className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
-                    <div className="p-2 bg-gray-100 dark:bg-gray-800 rounded-lg">
-                      <Star className="h-4 w-4 text-black dark:text-white" />
-                    </div>
-                    <span className="text-sm font-medium text-black dark:text-white">Getting Started Guide</span>
-                  </a>
-                  <a href="#" className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
-                    <div className="p-2 bg-gray-100 dark:bg-gray-800 rounded-lg">
-                      <Target className="h-4 w-4 text-black dark:text-white" />
-                    </div>
-                    <span className="text-sm font-medium text-black dark:text-white">Community Guidelines</span>
-                  </a>
-                  <a href="#" className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
-                    <div className="p-2 bg-gray-100 dark:bg-gray-800 rounded-lg">
-                      <Zap className="h-4 w-4 text-black dark:text-white" />
-                    </div>
-                    <span className="text-sm font-medium text-black dark:text-white">Technical Support</span>
-                  </a>
-                  <a href="#" className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group">
-                    <div className="p-2 bg-gray-100 dark:bg-gray-800 rounded-lg">
-                      <Globe className="h-4 w-4 text-black dark:text-white" />
-                    </div>
-                    <span className="text-sm font-medium text-black dark:text-white">Community Forum</span>
-                  </a>
+              <CardContent className="p-3 pt-0">
+                <div className="space-y-1">
+                  {[
+                    { icon: Star, label: "Getting Started Guide" },
+                    { icon: Target, label: "Community Guidelines" },
+                    { icon: Zap, label: "Technical Support" },
+                    { icon: Globe, label: "Community Forum" },
+                  ].map(({ icon: Icon, label }) => (
+                    <a key={label} href="#" className="flex items-center space-x-2.5 p-2.5 rounded-lg hover:bg-white/5 transition-colors">
+                      <Icon className="h-4 w-4 text-foreground/40" />
+                      <span className="text-sm text-foreground/60 hover:text-foreground">{label}</span>
+                    </a>
+                  ))}
                 </div>
               </CardContent>
             </Card>
           </div>
 
-          {/* Articles List */}
           <div className="lg:col-span-3">
-            <div className="space-y-6">
+            <div className="space-y-4">
               {filteredArticles.map((article) => {
                 const IconComponent = getCategoryIcon(article.category);
                 return (
-                  <Card key={article.id} className="group hover:shadow-lg transition-all duration-300 border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 overflow-hidden">
+                  <Card key={article.id} className="group hover:border-white/20 transition-all duration-200 border border-white/10 bg-white/3 overflow-hidden">
                     <CardHeader className="pb-3">
-                      <div className="flex items-start justify-between">
-                        <div className="flex-1">
-                          <div className="flex items-center flex-wrap gap-2 mb-3">
-                            <div className="flex items-center space-x-2 px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full">
-                              <IconComponent className="h-4 w-4 text-black dark:text-white" />
-                              <span className="text-xs font-medium text-black dark:text-white">
-                                {categories.find(c => c.id === article.category)?.name}
-                              </span>
-                            </div>
-                            <Badge className={getDifficultyColor(article.difficulty) + " text-xs font-semibold"}>
-                              {article.difficulty}
-                            </Badge>
-                            <span className="text-xs text-gray-500 dark:text-gray-400">{article.readTime} read</span>
-                          </div>
-                          <CardTitle className="text-xl font-bold text-black dark:text-white mb-2">
-                            {article.title}
-                          </CardTitle>
-                          <div className="flex items-center space-x-3 text-sm text-gray-600 dark:text-gray-400">
-                            <span className="font-medium">By {article.author}</span>
-                            <span className="text-gray-300 dark:text-gray-600">•</span>
-                            <span>Updated {article.lastUpdated}</span>
-                          </div>
+                      <div className="flex items-center flex-wrap gap-2 mb-3">
+                        <div className="flex items-center space-x-1.5 px-2.5 py-1 bg-white/5 border border-white/10 rounded-full">
+                          <IconComponent className="h-3.5 w-3.5 text-foreground/50" />
+                          <span className="text-xs text-foreground/50">
+                            {categories.find(c => c.id === article.category)?.name}
+                          </span>
                         </div>
+                        <Badge className={getDifficultyColor(article.difficulty) + " text-xs"}>
+                          {article.difficulty}
+                        </Badge>
+                        <span className="text-xs text-foreground/30">{article.readTime} read</span>
+                      </div>
+                      <CardTitle className="text-lg font-bold text-foreground mb-1.5 font-display">
+                        {article.title}
+                      </CardTitle>
+                      <div className="flex items-center space-x-3 text-xs text-foreground/30">
+                        <span>By {article.author}</span>
+                        <span className="text-foreground/15">•</span>
+                        <span>Updated {article.lastUpdated}</span>
                       </div>
                     </CardHeader>
                     <CardContent className="pt-0">
                       <div className="space-y-4">
-                        <p className="text-gray-700 dark:text-gray-300 leading-relaxed line-clamp-3 text-base">
+                        <p className="text-foreground/50 leading-relaxed line-clamp-3 text-sm">
                           {article.content.split('\n\n')[1]?.replace(/^#{1,6}\s/, '') || 
                            article.content.substring(0, 200) + "..."}
                         </p>
-                        
-                        <div className="flex flex-wrap gap-2">
+
+                        <div className="flex flex-wrap gap-1.5">
                           {article.tags.slice(0, 5).map((tag) => (
-                            <Badge key={tag} variant="secondary" className="text-xs bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">
+                            <Badge key={tag} variant="outline" className="text-xs bg-white/3 text-foreground/35 border-white/10">
                               {tag}
                             </Badge>
                           ))}
                           {article.tags.length > 5 && (
-                            <Badge variant="outline" className="text-xs">+{article.tags.length - 5} more</Badge>
+                            <Badge variant="outline" className="text-xs border-white/10 text-foreground/25">+{article.tags.length - 5}</Badge>
                           )}
                         </div>
-                        
-                        <div className="flex items-center justify-between pt-4 border-t border-gray-100 dark:border-gray-800">
-                          <div className="flex items-center space-x-2">
-                            <div className="flex items-center space-x-1.5 px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded-full">
-                              <CheckCircle className="h-3.5 w-3.5 text-black dark:text-white" />
-                              <span className="text-xs font-medium text-black dark:text-white">Verified</span>
-                            </div>
+
+                        <div className="flex items-center justify-between pt-3 border-t border-white/8">
+                          <div className="flex items-center space-x-1.5 text-foreground/25">
+                            <CheckCircle className="h-3.5 w-3.5" />
+                            <span className="text-xs">Verified</span>
                           </div>
                           <button 
                             onClick={() => setSelectedArticle(article)}
-                            className="flex items-center space-x-1 px-4 py-2 bg-black dark:bg-white hover:bg-gray-800 dark:hover:bg-gray-200 text-white dark:text-black text-sm font-medium rounded-lg transition-colors"
+                            className="flex items-center space-x-1.5 px-4 py-2 bg-white text-black hover:bg-white/90 text-sm font-semibold rounded-lg transition-colors"
                           >
                             <span>Read Article</span>
                             <span>→</span>
@@ -5661,11 +5790,11 @@ We recognize that endosex women with bisexual/MSM partners are often underserved
               })}
 
               {filteredArticles.length === 0 && (
-                <Card>
+                <Card className="border border-white/10 bg-white/3">
                   <CardContent className="p-12 text-center">
-                    <Search className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                    <h3 className="text-lg font-medium mb-2">No articles found</h3>
-                    <p className="text-muted-foreground">
+                    <Search className="h-12 w-12 text-foreground/20 mx-auto mb-4" />
+                    <h3 className="text-lg font-medium text-foreground mb-2">No articles found</h3>
+                    <p className="text-foreground/40 text-sm">
                       Try adjusting your search terms or browse different categories.
                     </p>
                   </CardContent>
@@ -5675,19 +5804,15 @@ We recognize that endosex women with bisexual/MSM partners are often underserved
           </div>
         </div>
 
-        {/* Footer Notice */}
-        <Card className="mt-12 bg-blue-50 dark:bg-blue-900/20 border-blue-200">
+        <Card className="mt-12 bg-white/3 border border-white/10">
           <CardContent className="p-6">
             <div className="flex items-start space-x-3">
-              <Info className="h-5 w-5 text-blue-600 mt-0.5" />
+              <Info className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
               <div>
-                <h4 className="font-medium text-blue-900 dark:text-blue-100 mb-1">
-                  Community-Driven Knowledge
-                </h4>
-                <p className="text-sm text-blue-700 dark:text-blue-200">
+                <h4 className="font-medium text-foreground mb-1 text-sm">Community-Driven Knowledge</h4>
+                <p className="text-xs text-foreground/40 leading-relaxed">
                   This wiki is maintained collaboratively by the TriSex.org community, healthcare professionals, 
-                  and subject matter experts. All content is reviewed for accuracy and cultural sensitivity. 
-                  To contribute or suggest improvements, join our community forum.
+                  and subject matter experts. All content is reviewed for accuracy and cultural sensitivity.
                 </p>
               </div>
             </div>
