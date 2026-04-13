@@ -131,7 +131,7 @@ export default function MetaPlatforms() {
     {
       id: "meta-4",
       platform: "threads",
-      content: "Breaking: fluck's cooperative health model saves 12,847 DALYs this quarter, contributing to national debt reduction. The future of sustainable healthcare is here. 🧵",
+      content: "Breaking: TriSex's cooperative health model saves 12,847 DALYs this quarter, contributing to national debt reduction. The future of sustainable healthcare is here. 🧵",
       engagement: { likes: 567, shares: 234, comments: 123, views: 4567 },
       timestamp: "2 days ago",
       hashtags: ["HealthcareInnovation", "DALYs", "CooperativeHealth", "SustainableHealth"],
@@ -361,7 +361,7 @@ export default function MetaPlatforms() {
                       </label>
                       <textarea
                         className="w-full p-3 border rounded-lg min-h-[120px] resize-none"
-                        placeholder="Share fluck's mission across Meta platforms..."
+                        placeholder="Share TriSex's mission across Meta platforms..."
                         value={postContent}
                         onChange={(e) => setPostContent(e.target.value)}
                       />

@@ -20,7 +20,7 @@ export function BetaDisclaimer({ showExpanded = false }: { showExpanded?: boolea
     { date: "2025-01-31", member: "AI Assistant", change: "Integrated greensong.info/natural-senses framework for sensory-optimized products", category: "Integration" },
     { date: "2025-01-31", member: "AI Assistant", change: "Cross-platform notification sync and smart break system implementation", category: "System" },
     { date: "2025-01-31", member: "AI Assistant", change: "Mentor/facilitator co-editing with healthcare system connectivity", category: "Healthcare" },
-    { date: "2025-01-31", member: "AI Assistant", change: "Updated navigation with Fluck-focused branding", category: "UI/UX" },
+    { date: "2025-01-31", member: "AI Assistant", change: "Updated navigation with TriSex-focused branding", category: "UI/UX" },
     { date: "2025-01-31", member: "User Request", change: "Beta disclaimer system with team change tracking", category: "Documentation" },
   ];
 

@@ -585,7 +585,7 @@ export default function BadGoodSex() {
                   <div className="bg-muted/50 p-4 rounded-lg">
                     <h4 className="font-medium mb-2">About BAD Co-op Integration</h4>
                     <p className="text-sm text-muted-foreground">
-                      Connect your fluck account with Balanced Advance Directives (BAD co-op) to create 
+                      Connect your TriSex account with Balanced Advance Directives (BAD co-op) to create 
                       a comprehensive health planning system that includes both your sexual health 
                       preferences and overall medical advance directives.
                     </p>

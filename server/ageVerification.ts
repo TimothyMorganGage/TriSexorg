@@ -255,7 +255,7 @@ export class AgeVerificationService {
     This request expires on: ${consent.expiresAt.toLocaleDateString()}
     
     To provide consent, please visit:
-    https://fluck.app/parental-consent/${consent.id}
+    https://TriSex.app/parental-consent/${consent.id}
     
     This platform provides comprehensive sexual health education and cooperative 
     relationship matching with strict safety protocols.

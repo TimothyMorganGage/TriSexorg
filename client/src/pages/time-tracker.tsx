@@ -107,7 +107,7 @@ export default function TimeTracker() {
           focusQuality: currentEntry.focusQuality || 3,
           satisfaction: currentEntry.satisfaction || 3,
           timeWisdom: currentEntry.timeWisdom,
-          wiseTimeFluck: currentEntry.wiseTimeFluck,
+          wiseTimeTriSex: currentEntry.wiseTimeTriSex,
         }),
       });
       if (!response.ok) throw new Error("Failed to stop timer");
@@ -128,7 +128,7 @@ export default function TimeTracker() {
       queryClient.invalidateQueries({ queryKey: ["/api/time-entries/active"] });
       toast({
         title: "Timer Stopped",
-        description: "Time entry saved with your Wise Time Fluck!",
+        description: "Time entry saved with your Wise Time TriSex!",
       });
     },
     onError: () => {
@@ -195,7 +195,7 @@ export default function TimeTracker() {
               textShadow: '2px 2px 4px rgba(0,0,0,0.1)',
             }}
           >
-            Wise Time Flucks ⏰
+            Wise Time TriSexs ⏰
           </h1>
           <p className="text-lg text-muted-foreground">
             Time Management with Creative Commons Wisdom
@@ -419,11 +419,11 @@ export default function TimeTracker() {
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="wise-time-fluck">Your Wise Time Fluck</Label>
+                      <Label htmlFor="wise-time-TriSex">Your Wise Time TriSex</Label>
                       <Input
-                        id="wise-time-fluck"
-                        value={currentEntry.wiseTimeFluck || ""}
-                        onChange={(e) => setCurrentEntry(prev => ({ ...prev, wiseTimeFluck: e.target.value }))}
+                        id="wise-time-TriSex"
+                        value={currentEntry.wiseTimeTriSex || ""}
+                        onChange={(e) => setCurrentEntry(prev => ({ ...prev, wiseTimeTriSex: e.target.value }))}
                         placeholder="A personal mantra or insight from this time block..."
                       />
                     </div>
@@ -474,10 +474,10 @@ export default function TimeTracker() {
                           <p className="text-sm">{entry.description}</p>
                         )}
                         
-                        {entry.wiseTimeFluck && (
+                        {entry.wiseTimeTriSex && (
                           <div className="bg-primary/5 rounded p-2">
-                            <p className="text-sm font-medium">💡 Wise Time Fluck:</p>
-                            <p className="text-sm italic">"{entry.wiseTimeFluck}"</p>
+                            <p className="text-sm font-medium">💡 Wise Time TriSex:</p>
+                            <p className="text-sm italic">"{entry.wiseTimeTriSex}"</p>
                           </div>
                         )}
                         
@@ -573,10 +573,10 @@ export default function TimeTracker() {
                             <p className="text-sm">{insight.recommendation}</p>
                           </div>
                         )}
-                        {insight.wiseTimeFluck && (
+                        {insight.wiseTimeTriSex && (
                           <div className="bg-secondary/20 rounded p-2">
-                            <p className="text-sm font-medium">🎯 Wise Time Fluck:</p>
-                            <p className="text-sm italic">"{insight.wiseTimeFluck}"</p>
+                            <p className="text-sm font-medium">🎯 Wise Time TriSex:</p>
+                            <p className="text-sm italic">"{insight.wiseTimeTriSex}"</p>
                           </div>
                         )}
                         <div className="flex justify-between items-center mt-2">

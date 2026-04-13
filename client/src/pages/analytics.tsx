@@ -551,7 +551,7 @@ export default function Analytics() {
                       </h4>
                       <p className="text-sm text-green-700 dark:text-green-300">
                         WHO threshold: $150/DALY in high-income countries.
-                        fluck's $100/DALY demonstrates exceptional value.
+                        TriSex's $100/DALY demonstrates exceptional value.
                       </p>
                     </div>
                   </div>

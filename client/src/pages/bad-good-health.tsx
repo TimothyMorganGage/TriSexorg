@@ -44,7 +44,7 @@ export default function BadGoodHealth() {
     {
       id: "sexual-health",
       title: "Sexual Health Planning",
-      description: "Integrated with fluck for comprehensive sexual wellness",
+      description: "Integrated with TriSex for comprehensive sexual wellness",
       status: "in-progress",
       priority: "high",
       lastUpdated: "1 hour ago"
@@ -189,7 +189,7 @@ export default function BadGoodHealth() {
           <TabsList className="grid w-full grid-cols-4 mb-8">
             <TabsTrigger value="overview">Health Planning</TabsTrigger>
             <TabsTrigger value="directives">Advance Directives</TabsTrigger>
-            <TabsTrigger value="integration">fluck Integration</TabsTrigger>
+            <TabsTrigger value="integration">TriSex Integration</TabsTrigger>
             <TabsTrigger value="cooperative">Cooperative Values</TabsTrigger>
           </TabsList>
 
@@ -249,7 +249,7 @@ export default function BadGoodHealth() {
                         <div className="w-2 h-2 bg-aquamarine rounded-full" />
                         <div className="text-sm">
                           <span className="font-medium">Sexual health preferences updated</span>
-                          <p className="text-muted-foreground">Integrated with fluck protection settings</p>
+                          <p className="text-muted-foreground">Integrated with TriSex protection settings</p>
                         </div>
                       </div>
                       <div className="flex items-center space-x-3">
@@ -503,14 +503,14 @@ export default function BadGoodHealth() {
                 <CardHeader>
                   <CardTitle className="flex items-center">
                     <LinkIcon className="mr-2 h-6 w-6 text-aquamarine" />
-                    fluck Sexual Health Integration
+                    TriSex Sexual Health Integration
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="bg-aquamarine/10 border border-aquamarine/30 rounded-lg p-4 mb-6">
                     <div className="flex items-center">
                       <CheckCircle className="h-5 w-5 text-aquamarine mr-2" />
-                      <span className="font-medium">Successfully integrated with fluck</span>
+                      <span className="font-medium">Successfully integrated with TriSex</span>
                     </div>
                     <p className="text-sm text-muted-foreground mt-2">
                       Your sexual health preferences and advance directives are now synchronized.

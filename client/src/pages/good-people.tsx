@@ -940,7 +940,7 @@ export default function GoodPeople() {
                             <div><strong>Stage 5:</strong> Protected sex after 1 month of meaningful interactions</div>
                             <div><strong>Stage 6:</strong> Unprotected sex only after 3+ months AND equalized sexual health risks</div>
                             <div className="pt-2 border-t border-red-300">
-                              <strong className="text-red-900">⚠️ Violations result in $FLUCK penalties</strong>
+                              <strong className="text-red-900">⚠️ Violations result in $TRISEX penalties</strong>
                             </div>
                           </div>
                         </div>

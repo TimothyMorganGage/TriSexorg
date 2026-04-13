@@ -23,11 +23,11 @@ The application uses a modern full-stack architecture with a clear separation of
     -   Configurable protection products with custom sizing and material preferences based on natural senses profiling.
     -   Categorized educational content and partnership request system.
     -   Cooperative financial tracking (budget voting, dividends) and community features (DALY metrics).
-    -   Mood and wellness tracking, "Wise Time Flucks" Creative Commons time tracking.
+    -   Mood and wellness tracking, "Wise Time TriSex" Creative Commons time tracking.
     -   Comprehensive 4D STI tracking and sexual partner network management.
     -   Integration of advanced biomaterials knowledge and "NanoHeal ⚧️ Intersectional Naturopathic STI Treatment Lubricant."
     -   Wiki on sexual addiction and withdrawal with product recommendations.
-    -   Progressive dating stages with mandatory sexual health safety protocols and a "$FLUCK" penalty system.
+    -   Progressive dating stages with mandatory sexual health safety protocols and a "$TRISEX" penalty system.
     -   Cross-platform notification system with smart break management.
     -   Mentor/facilitator co-editing with multi-platform messaging (iMessage, WhatsApp) and healthcare system connectivity (MyChart, Apple Health).
     -   Deaf and braille translation services with ASL/BSL support.

@@ -1700,7 +1700,7 @@ DALY = Years of Life Lost (YLL) + Years Lived with Disability (YLD)
 - **Age weighting**: Optional age-specific adjustments
 - **Discount rate**: Future value considerations
 
-## fluck DALY Prevention Model
+## TriSex DALY Prevention Model
 
 ### STI-Specific DALY Calculations
 
@@ -1729,7 +1729,7 @@ DALY = Years of Life Lost (YLL) + Years Lived with Disability (YLD)
 #### WHO Standard Valuation
 - **Value per DALY**: $100,000 USD
 - **US Healthcare Context**: $150,000 USD
-- **fluck Conservative Estimate**: $125,000 USD
+- **TriSex Conservative Estimate**: $125,000 USD
 
 #### Total Economic Impact
 - **DALYs Saved**: 79,822
@@ -1902,7 +1902,7 @@ DALY = Years of Life Lost (YLL) + Years Lived with Disability (YLD)
       content: `# Ocean Plastic Reprocessing with Plant-Based Materials
 
 ## Overview
-fluck's sustainable manufacturing process combines recycled ocean plastic with plant-based bio-materials to create high-performance, eco-friendly protection products.
+TriSex's sustainable manufacturing process combines recycled ocean plastic with plant-based bio-materials to create high-performance, eco-friendly protection products.
 
 ## Ocean Plastic Collection and Processing
 
@@ -2423,14 +2423,14 @@ Through continued innovation, clinical validation, and collaborative implementat
       readTime: "28 min"
     },
     {
-      id: "sex-addiction-withdrawal-fluck-use",
-      title: "Sexual Addiction & Withdrawal: Therapeutic fluck Product Integration",
+      id: "sex-addiction-withdrawal-TriSex-use",
+      title: "Sexual Addiction & Withdrawal: Therapeutic TriSex Product Integration",
       category: "health",
-      content: `# Sexual Addiction & Withdrawal: Therapeutic fluck Product Integration
+      content: `# Sexual Addiction & Withdrawal: Therapeutic TriSex Product Integration
 
 ## Executive Summary
 
-Sexual addiction and withdrawal represent complex behavioral and physiological challenges that can significantly impact intimate relationships and personal well-being. This comprehensive guide explores how fluck's therapeutic products can be integrated into evidence-based treatment approaches for sexual addiction recovery and withdrawal management.
+Sexual addiction and withdrawal represent complex behavioral and physiological challenges that can significantly impact intimate relationships and personal well-being. This comprehensive guide explores how TriSex's therapeutic products can be integrated into evidence-based treatment approaches for sexual addiction recovery and withdrawal management.
 
 ## Understanding Sexual Addiction
 

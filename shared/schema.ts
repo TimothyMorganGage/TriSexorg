@@ -660,7 +660,7 @@ export type WellnessGoal = typeof wellnessGoals.$inferSelect;
 export type InsertMoodInsight = z.infer<typeof insertMoodInsightSchema>;
 export type MoodInsight = typeof moodInsights.$inferSelect;
 
-// Time Management Tables - "Wise Time Flucks" Creative Commons System
+// Time Management Tables - "Wise Time TriSexs" Creative Commons System
 export const timeEntries = pgTable("time_entries", {
   id: serial("id").primaryKey(),
   userId: integer("user_id").references(() => users.id).notNull(),
@@ -678,7 +678,7 @@ export const timeEntries = pgTable("time_entries", {
   tags: text("tags").array(), // productivity, flow_state, distracted, etc.
   timeWisdom: text("time_wisdom"), // personal reflection on time use
   isCreativeCommons: boolean("is_creative_commons").default(false), // if work can be shared
-  wiseTimeFluck: text("wise_time_fluck"), // personal mantra or insight
+  wiseTimeTriSex: text("wise_time_TriSex"), // personal mantra or insight
   // Calendar Integration Fields
   calendarEventId: text("calendar_event_id"), // Google Calendar/iCal event ID
   calendarType: text("calendar_type"), // google, ical, outlook, pureos
@@ -716,7 +716,7 @@ export const timeInsights = pgTable("time_insights", {
   category: text("category"), // which time category this insight relates to
   timePattern: text("time_pattern"), // morning_person, night_owl, afternoon_slump, etc.
   recommendation: text("recommendation"), // suggested improvements
-  wiseTimeFluck: text("wise_time_fluck"), // wisdom gained about time management
+  wiseTimeTriSex: text("wise_time_TriSex"), // wisdom gained about time management
   confidence: integer("confidence").notNull(), // 1-100 percentage
   dataPoints: text("data_points").array(), // referenced time entry IDs
   generatedAt: timestamp("generated_at").defaultNow().notNull(),

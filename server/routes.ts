@@ -594,7 +594,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Time Management routes - "Wise Time Flucks" system
+  // Time Management routes - "Wise Time TriSexs" system
   app.get("/api/time-entries", requireAuth, async (req, res) => {
     try {
       const userId = req.session.userId!;
@@ -881,9 +881,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Generate iCal format
       let icalData = `BEGIN:VCALENDAR
 VERSION:2.0
-PRODID:-//Fluck//Wise Time Flucks//EN
-NAME:Wise Time Flucks Calendar
-X-WR-CALNAME:Wise Time Flucks Calendar
+PRODID:-//TriSex//Wise Time TriSexs//EN
+NAME:Wise Time TriSexs Calendar
+X-WR-CALNAME:Wise Time TriSexs Calendar
 `;
 
       tasks.forEach(task => {
@@ -892,7 +892,7 @@ X-WR-CALNAME:Wise Time Flucks Calendar
         const endTime = task.scheduledEndTime ? task.scheduledEndTime.replace(':', '') + '00' : '100000';
         
         icalData += `BEGIN:VEVENT
-UID:${task.id}@fluck.wtf
+UID:${task.id}@TriSex.wtf
 DTSTART:${startDate}T${startTime}
 DTEND:${startDate}T${endTime}
 SUMMARY:${task.title}
@@ -906,7 +906,7 @@ END:VEVENT
       icalData += 'END:VCALENDAR';
 
       res.setHeader('Content-Type', 'text/calendar');
-      res.setHeader('Content-Disposition', 'attachment; filename="wise-time-flucks.ics"');
+      res.setHeader('Content-Disposition', 'attachment; filename="wise-time-TriSexs.ics"');
       res.send(icalData);
     } catch (error) {
       res.status(500).json({ message: "Failed to export calendar data" });

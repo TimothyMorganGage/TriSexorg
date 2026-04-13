@@ -130,7 +130,7 @@ export default function Newsletter() {
   const currentIssues: NewsletterIssue[] = [
     {
       id: "weekly-2024-03",
-      title: "Good Flucking Weekly: Indigenous Wisdom & Health Equity",
+      title: "Good TriSexing Weekly: Indigenous Wisdom & Health Equity",
       frequency: "weekly",
       publishDate: "2024-01-22",
       status: "published",
@@ -205,7 +205,7 @@ export default function Newsletter() {
   const newsletterTemplates: NewsletterTemplate[] = [
     {
       frequency: "weekly",
-      name: "Good Flucking Weekly",
+      name: "Good TriSexing Weekly",
       description: "Weekly updates on community progress, featured wiki articles, and dividend distributions",
       sections: [
         "Community Spotlight",
@@ -223,7 +223,7 @@ export default function Newsletter() {
     },
     {
       frequency: "monthly",
-      name: "Good Flucking Monthly Deep Dive",
+      name: "Good TriSexing Monthly Deep Dive",
       description: "Comprehensive monthly analysis of health equity progress and community growth",
       sections: [
         "Monthly Health Equity Analysis",
@@ -242,7 +242,7 @@ export default function Newsletter() {
     },
     {
       frequency: "quarterly",
-      name: "Good Flucking Quarterly Review",
+      name: "Good TriSexing Quarterly Review",
       description: "Quarterly strategic updates on platform development and community impact",
       sections: [
         "Quarterly Impact Assessment",
@@ -295,7 +295,7 @@ export default function Newsletter() {
             <Mail className="h-12 w-12 text-primary mr-4" />
             <div>
               <h1 className="text-4xl font-bold text-foreground font-recoleta">
-                Good Flucking Newsletter
+                Good TriSexing Newsletter
               </h1>
               <p className="text-xl text-muted-foreground mt-2 font-coolvetica">
                 Wiki Insights • DALY Metrics • Dividend Updates • Ghost.org Integration
@@ -880,7 +880,7 @@ export default function Newsletter() {
                       <div className="grid md:grid-cols-2 gap-4">
                         <div>
                           <label className="text-sm font-medium">Newsletter Title</label>
-                          <Input placeholder="Good Flucking Weekly: [Topic]" />
+                          <Input placeholder="Good TriSexing Weekly: [Topic]" />
                         </div>
                         <div>
                           <label className="text-sm font-medium">Publication Frequency</label>

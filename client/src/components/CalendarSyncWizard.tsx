@@ -65,7 +65,7 @@ export function CalendarSyncWizard({ isOpen, onClose }: CalendarSyncWizardProps)
     {
       id: 'provider',
       title: 'Choose Calendar Provider',
-      description: 'Select your calendar system to sync with Wise Time Flucks',
+      description: 'Select your calendar system to sync with Wise Time TriSexs',
       icon: Calendar,
     },
     {
@@ -131,7 +131,7 @@ export function CalendarSyncWizard({ isOpen, onClose }: CalendarSyncWizardProps)
     { id: 'time_entries', name: 'Time Entries', description: 'Sync completed time tracking sessions' },
     { id: 'scheduled_tasks', name: 'Scheduled Tasks', description: 'Sync future planned tasks and time blocks' },
     { id: 'calendar_blocks', name: 'Auto Calendar Blocks', description: 'Automatically create calendar events when tracking time' },
-    { id: 'reminders', name: 'Smart Reminders', description: 'Get notifications for scheduled Wise Time Flucks' },
+    { id: 'reminders', name: 'Smart Reminders', description: 'Get notifications for scheduled Wise Time TriSexs' },
     { id: 'insights', name: 'Time Insights', description: 'Sync productivity insights and time wisdom' },
     { id: 'templates', name: 'Task Templates', description: 'Sync reusable task templates to calendar' },
   ];
@@ -151,7 +151,7 @@ export function CalendarSyncWizard({ isOpen, onClose }: CalendarSyncWizardProps)
       queryClient.invalidateQueries({ queryKey: ["/api/calendar-connections"] });
       toast({
         title: "Calendar Connected Successfully!",
-        description: "Your calendar is now synced with Wise Time Flucks",
+        description: "Your calendar is now synced with Wise Time TriSexs",
       });
       onClose();
       setCurrentStep(0);
@@ -300,13 +300,13 @@ export function CalendarSyncWizard({ isOpen, onClose }: CalendarSyncWizardProps)
                   <SelectItem value="import">
                     <div className="flex items-center gap-2">
                       <Download className="h-4 w-4" />
-                      Import Only - Bring events to Wise Time Flucks
+                      Import Only - Bring events to Wise Time TriSexs
                     </div>
                   </SelectItem>
                   <SelectItem value="export">
                     <div className="flex items-center gap-2">
                       <Upload className="h-4 w-4" />
-                      Export Only - Send Wise Time Flucks to calendar
+                      Export Only - Send Wise Time TriSexs to calendar
                     </div>
                   </SelectItem>
                   <SelectItem value="bidirectional">
@@ -472,7 +472,7 @@ export function CalendarSyncWizard({ isOpen, onClose }: CalendarSyncWizardProps)
             Calendar Sync Wizard
           </DialogTitle>
           <DialogDescription>
-            Connect your calendar to Wise Time Flucks in just a few steps
+            Connect your calendar to Wise Time TriSexs in just a few steps
           </DialogDescription>
         </DialogHeader>
 

@@ -112,7 +112,7 @@ export interface IStorage {
   createMoodInsight(insight: InsertMoodInsight): Promise<MoodInsight>;
   acknowledgeMoodInsight(id: number): Promise<MoodInsight | undefined>;
 
-  // Time Management methods - "Wise Time Flucks" system
+  // Time Management methods - "Wise Time TriSexs" system
   getTimeEntries(userId: number): Promise<TimeEntry[]>;
   getTimeEntry(id: number): Promise<TimeEntry | undefined>;
   createTimeEntry(entry: InsertTimeEntry): Promise<TimeEntry>;
@@ -378,7 +378,7 @@ export class MemStorage implements IStorage {
     // Create default products
     const defaultProducts: InsertProduct[] = [
       {
-        name: "fluck External Protection - Ocean Plastic",
+        name: "TriSex External Protection - Ocean Plastic",
         description: "3D-printed custom-fit external protection made from recycled ocean plastic and hydrogel. Fits penis anatomy 4.5-11.5 inches.",
         category: "penis_protection",
         bodyCompatibility: ["penis"],
@@ -387,7 +387,7 @@ export class MemStorage implements IStorage {
         isActive: true,
       },
       {
-        name: "fluck Internal Protection - Natural Blend",
+        name: "TriSex Internal Protection - Natural Blend",
         description: "3D-printed custom-fit internal protection made from natural plant-based materials. Compatible with vaginal and anal anatomy.",
         category: "multi_anatomical",
         bodyCompatibility: ["vagina", "anus", "front_hole"],
@@ -396,7 +396,7 @@ export class MemStorage implements IStorage {
         isActive: true,
       },
       {
-        name: "fluck Multi-Anatomy Kit - Bio Silicone",
+        name: "TriSex Multi-Anatomy Kit - Bio Silicone",
         description: "Complete kit for intersex and trans bodies. Includes external, internal, and barrier protection options.",
         category: "multi_anatomical",
         bodyCompatibility: ["penis", "vagina", "anus", "front_hole", "multi_anatomy"],
@@ -405,7 +405,7 @@ export class MemStorage implements IStorage {
         isActive: true,
       },
       {
-        name: "fluck Barrier Dams - Ocean Plastic",
+        name: "TriSex Barrier Dams - Ocean Plastic",
         description: "Custom-sized dental dams and barrier sheets made from recycled ocean plastic.",
         category: "barrier_dams",
         bodyCompatibility: ["vagina", "anus", "front_hole"],
@@ -1154,7 +1154,7 @@ export class MemStorage implements IStorage {
     return updated;
   }
 
-  // Time Management methods - "Wise Time Flucks" system
+  // Time Management methods - "Wise Time TriSexs" system
   async getTimeEntries(userId: number): Promise<TimeEntry[]> {
     return Array.from(this.timeEntries.values()).filter(entry => entry.userId === userId);
   }
@@ -1176,7 +1176,7 @@ export class MemStorage implements IStorage {
       tags: null,
       timeWisdom: null,
       isCreativeCommons: null,
-      wiseTimeFluck: null,
+      wiseTimeTriSex: null,
       calendarEventId: null,
       calendarType: null,
       syncStatus: null,
@@ -1275,7 +1275,7 @@ export class MemStorage implements IStorage {
       category: null,
       timePattern: null,
       recommendation: null,
-      wiseTimeFluck: null,
+      wiseTimeTriSex: null,
       dataPoints: null,
       acknowledgedAt: null,
       isAcknowledged: false,

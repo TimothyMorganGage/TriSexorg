@@ -67,7 +67,7 @@ const allNavItems: NavItem[] = [
   { name: "Open Books", href: "/open-books", icon: FileText, category: "economics", priority: 5, keywords: ["books", "finance", "open", "transparent"] },
   { name: "STI Tracking", href: "/partner-sti-tracking", icon: Activity, category: "health", priority: 8, keywords: ["sti", "tracking", "health", "4d"] },
   { name: "Mood Tracker", href: "/mood-logging", icon: Heart, category: "wellness", priority: 6, keywords: ["mood", "feelings", "emotions", "track"] },
-  { name: "Time Tracker", href: "/time-tracker", icon: Clock, category: "wellness", priority: 5, keywords: ["time", "flucks", "track", "hours"] },
+  { name: "Time Tracker", href: "/time-tracker", icon: Clock, category: "wellness", priority: 5, keywords: ["time", "TriSexs", "track", "hours"] },
   { name: "Calendar", href: "/calendar-integration", icon: Calendar, category: "wellness", priority: 5, keywords: ["calendar", "schedule", "sync"] },
   { name: "Smart Breaks", href: "/smart-break-system", icon: Brain, category: "wellness", priority: 4, keywords: ["breaks", "rest", "health", "smart"] },
   { name: "Mentor/Facilitator", href: "/mentor-facilitator", icon: Users, category: "wellness", priority: 4, keywords: ["mentor", "facilitator", "support"] },

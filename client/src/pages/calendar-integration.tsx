@@ -183,7 +183,7 @@ export default function CalendarIntegration() {
     window.open("/api/calendar-export/ical", "_blank");
     toast({
       title: "Calendar Export",
-      description: "Your Wise Time Flucks calendar has been exported as iCal!",
+      description: "Your Wise Time TriSexs calendar has been exported as iCal!",
     });
   };
 
@@ -228,7 +228,7 @@ export default function CalendarIntegration() {
             Calendar Integration ⏰
           </h1>
           <p className="text-lg text-muted-foreground">
-            Sync Wise Time Flucks with Google Calendar, iCal, pureOS & More
+            Sync Wise Time TriSexs with Google Calendar, iCal, pureOS & More
           </p>
           <div className="text-sm text-muted-foreground">
             Licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener noreferrer" className="text-primary underline">
@@ -254,7 +254,7 @@ export default function CalendarIntegration() {
                   Calendar Connections
                 </CardTitle>
                 <CardDescription>
-                  Connect external calendars to sync your Wise Time Flucks
+                  Connect external calendars to sync your Wise Time TriSexs
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
@@ -642,7 +642,7 @@ export default function CalendarIntegration() {
                     Calendar Export
                   </CardTitle>
                   <CardDescription>
-                    Export your Wise Time Flucks calendar
+                    Export your Wise Time TriSexs calendar
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
