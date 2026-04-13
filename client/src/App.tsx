@@ -163,7 +163,6 @@ function Router() {
           </Switch>
         </Suspense>
       </main>
-      <BottomNavigation />
       <Footer />
     </div>
   );
@@ -177,9 +176,7 @@ function App() {
           <TooltipProvider>
             <PWAWrapper>
               <Toaster />
-              <TabNavigation>
-                <Router />
-              </TabNavigation>
+              <Router />
             </PWAWrapper>
           </TooltipProvider>
         </AuthProvider>
