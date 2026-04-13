@@ -1,8 +1,11 @@
+import { eq, and, or, desc, sql, ilike } from "drizzle-orm";
+import { db } from "./db";
 import { 
   users, products, productConfigurations, orders, educationalContent, partnershipRequests,
   financialRecords, budgetItems, budgetVotes, communityDividends,
   moodEntries, wellnessGoals, moodInsights, timeEntries, timeGoals, timeInsights,
   calendarConnections, scheduledTasks, taskTemplates, savedProductConfigurations,
+  forumCategories, forumPosts, forumReplies, forumLikes, forumBookmarks,
   type User, type InsertUser, type Product, type InsertProduct,
   type ProductConfiguration, type InsertProductConfiguration,
   type Order, type InsertOrder, type EducationalContent, type InsertEducationalContent,
@@ -20,7 +23,11 @@ import {
   type CalendarConnection, type InsertCalendarConnection,
   type ScheduledTask, type InsertScheduledTask,
   type TaskTemplate, type InsertTaskTemplate,
-  type SavedProductConfiguration, type InsertSavedProductConfiguration
+  type SavedProductConfiguration, type InsertSavedProductConfiguration,
+  type ForumCategory, type InsertForumCategory,
+  type ForumPost, type InsertForumPost,
+  type ForumReply, type InsertForumReply,
+  type ForumLike, type ForumBookmark
 } from "@shared/schema";
 
 export interface IStorage {
@@ -152,6 +159,24 @@ export interface IStorage {
   updateTaskTemplate(id: number, template: Partial<InsertTaskTemplate>): Promise<TaskTemplate | undefined>;
   deleteTaskTemplate(id: number): Promise<boolean>;
   incrementTemplateUsage(id: number): Promise<TaskTemplate | undefined>;
+
+  // Forum methods
+  getForumCategories(): Promise<ForumCategory[]>;
+  getForumCategory(id: number): Promise<ForumCategory | undefined>;
+  createForumCategory(category: InsertForumCategory): Promise<ForumCategory>;
+  getForumPosts(categoryId?: number, limit?: number, offset?: number): Promise<ForumPost[]>;
+  getForumPost(id: number): Promise<ForumPost | undefined>;
+  createForumPost(post: InsertForumPost): Promise<ForumPost>;
+  updateForumPost(id: number, data: Partial<InsertForumPost>): Promise<ForumPost | undefined>;
+  incrementPostViewCount(id: number): Promise<void>;
+  getForumReplies(postId: number): Promise<ForumReply[]>;
+  createForumReply(reply: InsertForumReply): Promise<ForumReply>;
+  toggleForumLike(userId: number, postId?: number, replyId?: number): Promise<boolean>;
+  getForumLikes(userId: number): Promise<ForumLike[]>;
+  getForumBookmarks(userId: number): Promise<ForumBookmark[]>;
+  toggleForumBookmark(userId: number, postId: number): Promise<boolean>;
+  searchForumPosts(query: string): Promise<ForumPost[]>;
+  getTrendingForumPosts(limit?: number): Promise<ForumPost[]>;
 
   // Clinic Inventory methods
   getClinicInventory(): Promise<any[]>;
@@ -2644,6 +2669,122 @@ export class MemStorage implements IStorage {
 
   async updateBadCoopIntegration(id: number, data: any): Promise<any> {
     return { id, ...data, updatedAt: new Date() };
+  }
+
+  // Forum methods
+  async getForumCategories(): Promise<ForumCategory[]> {
+    return await db.select().from(forumCategories).orderBy(forumCategories.sortOrder);
+  }
+
+  async getForumCategory(id: number): Promise<ForumCategory | undefined> {
+    const [category] = await db.select().from(forumCategories).where(eq(forumCategories.id, id));
+    return category;
+  }
+
+  async createForumCategory(category: InsertForumCategory): Promise<ForumCategory> {
+    const [created] = await db.insert(forumCategories).values(category).returning();
+    return created;
+  }
+
+  async getForumPosts(categoryId?: number, limit = 50, offset = 0): Promise<ForumPost[]> {
+    if (categoryId) {
+      return await db.select().from(forumPosts)
+        .where(eq(forumPosts.categoryId, categoryId))
+        .orderBy(desc(forumPosts.isPinned), desc(forumPosts.lastActivityAt))
+        .limit(limit).offset(offset);
+    }
+    return await db.select().from(forumPosts)
+      .orderBy(desc(forumPosts.isPinned), desc(forumPosts.lastActivityAt))
+      .limit(limit).offset(offset);
+  }
+
+  async getForumPost(id: number): Promise<ForumPost | undefined> {
+    const [post] = await db.select().from(forumPosts).where(eq(forumPosts.id, id));
+    return post;
+  }
+
+  async createForumPost(post: InsertForumPost): Promise<ForumPost> {
+    const [created] = await db.insert(forumPosts).values(post).returning();
+    return created;
+  }
+
+  async updateForumPost(id: number, data: Partial<InsertForumPost>): Promise<ForumPost | undefined> {
+    const [updated] = await db.update(forumPosts).set({ ...data, updatedAt: new Date() }).where(eq(forumPosts.id, id)).returning();
+    return updated;
+  }
+
+  async incrementPostViewCount(id: number): Promise<void> {
+    await db.update(forumPosts).set({ viewCount: sql`${forumPosts.viewCount} + 1` }).where(eq(forumPosts.id, id));
+  }
+
+  async getForumReplies(postId: number): Promise<ForumReply[]> {
+    return await db.select().from(forumReplies)
+      .where(eq(forumReplies.postId, postId))
+      .orderBy(forumReplies.createdAt);
+  }
+
+  async createForumReply(reply: InsertForumReply): Promise<ForumReply> {
+    const [created] = await db.insert(forumReplies).values(reply).returning();
+    await db.update(forumPosts).set({
+      replyCount: sql`${forumPosts.replyCount} + 1`,
+      lastActivityAt: new Date()
+    }).where(eq(forumPosts.id, reply.postId));
+    return created;
+  }
+
+  async toggleForumLike(userId: number, postId?: number, replyId?: number): Promise<boolean> {
+    const conditions = [eq(forumLikes.userId, userId)];
+    if (postId) conditions.push(eq(forumLikes.postId, postId));
+    if (replyId) conditions.push(eq(forumLikes.replyId, replyId));
+
+    const [existing] = await db.select().from(forumLikes).where(and(...conditions));
+    if (existing) {
+      await db.delete(forumLikes).where(eq(forumLikes.id, existing.id));
+      if (postId) await db.update(forumPosts).set({ likeCount: sql`GREATEST(${forumPosts.likeCount} - 1, 0)` }).where(eq(forumPosts.id, postId));
+      if (replyId) await db.update(forumReplies).set({ likeCount: sql`GREATEST(${forumReplies.likeCount} - 1, 0)` }).where(eq(forumReplies.id, replyId));
+      return false;
+    } else {
+      await db.insert(forumLikes).values({ userId, postId: postId || null, replyId: replyId || null });
+      if (postId) await db.update(forumPosts).set({ likeCount: sql`${forumPosts.likeCount} + 1` }).where(eq(forumPosts.id, postId));
+      if (replyId) await db.update(forumReplies).set({ likeCount: sql`${forumReplies.likeCount} + 1` }).where(eq(forumReplies.id, replyId));
+      return true;
+    }
+  }
+
+  async getForumLikes(userId: number): Promise<ForumLike[]> {
+    return await db.select().from(forumLikes).where(eq(forumLikes.userId, userId));
+  }
+
+  async getForumBookmarks(userId: number): Promise<ForumBookmark[]> {
+    return await db.select().from(forumBookmarks).where(eq(forumBookmarks.userId, userId));
+  }
+
+  async toggleForumBookmark(userId: number, postId: number): Promise<boolean> {
+    const [existing] = await db.select().from(forumBookmarks)
+      .where(and(eq(forumBookmarks.userId, userId), eq(forumBookmarks.postId, postId)));
+    if (existing) {
+      await db.delete(forumBookmarks).where(eq(forumBookmarks.id, existing.id));
+      return false;
+    } else {
+      await db.insert(forumBookmarks).values({ userId, postId });
+      return true;
+    }
+  }
+
+  async searchForumPosts(query: string): Promise<ForumPost[]> {
+    return await db.select().from(forumPosts)
+      .where(or(
+        ilike(forumPosts.title, `%${query}%`),
+        ilike(forumPosts.content, `%${query}%`)
+      ))
+      .orderBy(desc(forumPosts.lastActivityAt))
+      .limit(50);
+  }
+
+  async getTrendingForumPosts(limit = 10): Promise<ForumPost[]> {
+    return await db.select().from(forumPosts)
+      .orderBy(desc(forumPosts.likeCount), desc(forumPosts.replyCount), desc(forumPosts.viewCount))
+      .limit(limit);
   }
 }
 

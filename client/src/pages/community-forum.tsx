@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -12,8 +13,11 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { FediverseShare } from "@/components/FediverseShare";
+import { apiRequest, queryClient } from "@/lib/queryClient";
+import { useAuth } from "@/lib/auth";
+import { useToast } from "@/hooks/use-toast";
+import type { ForumCategory, ForumPost, ForumReply } from "@shared/schema";
 import {
   Heart,
   MessageCircle,
@@ -27,7 +31,6 @@ import {
   Pin,
   Lock,
   AlertTriangle,
-  Tag,
   Filter,
   TrendingUp,
   Star,
@@ -35,338 +38,20 @@ import {
   Reply,
   Share2,
   Flag,
-  MoreVertical,
   ChevronRight,
   Sparkles,
   Brain,
   Stethoscope,
   Leaf,
   Globe,
-  Accessibility
+  Accessibility,
+  Loader2
 } from "lucide-react";
 import { format, formatDistanceToNow } from "date-fns";
 
-interface ForumCategory {
-  id: number;
-  name: string;
-  slug: string;
-  description: string;
-  icon: string;
-  color: string;
-  postCount: number;
-  latestPost?: {
-    title: string;
-    author: string;
-    timestamp: Date;
-  };
-}
-
-interface ForumPost {
-  id: number;
-  categoryId: number;
-  categoryName: string;
-  authorId: number;
-  authorName: string;
-  authorBadge?: string;
-  title: string;
-  content: string;
-  isPinned: boolean;
-  isLocked: boolean;
-  isAnonymous: boolean;
-  viewCount: number;
-  likeCount: number;
-  replyCount: number;
-  tags: string[];
-  contentWarning?: string;
-  isSolved?: boolean;
-  createdAt: Date;
-  lastActivityAt: Date;
-}
-
-interface ForumReply {
-  id: number;
-  postId: number;
-  authorId: number;
-  authorName: string;
-  authorBadge?: string;
-  content: string;
-  isAnonymous: boolean;
-  likeCount: number;
-  isSolution: boolean;
-  createdAt: Date;
-  replies?: ForumReply[];
-}
-
-const forumCategories: ForumCategory[] = [
-  {
-    id: 1,
-    name: "Sexual Health Questions",
-    slug: "sexual-health",
-    description: "Ask questions about STI prevention, testing, treatment, and general sexual health",
-    icon: "Stethoscope",
-    color: "red",
-    postCount: 247,
-    latestPost: {
-      title: "Understanding 4D STI monitoring",
-      author: "HealthAdvocate",
-      timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000)
-    }
-  },
-  {
-    id: 2,
-    name: "Product Sizing & Fit",
-    slug: "product-sizing",
-    description: "Discuss custom sizing, intersex-centered measurements, and product recommendations",
-    icon: "Ruler",
-    color: "purple",
-    postCount: 189,
-    latestPost: {
-      title: "First time using 3D scanning",
-      author: "NewMember2024",
-      timestamp: new Date(Date.now() - 4 * 60 * 60 * 1000)
-    }
-  },
-  {
-    id: 3,
-    name: "Peer Support & Wellness",
-    slug: "peer-support",
-    description: "Connect with others for emotional support, share experiences, and build community",
-    icon: "Heart",
-    color: "pink",
-    postCount: 412,
-    latestPost: {
-      title: "Dealing with STI stigma",
-      author: "AnonymousMember",
-      timestamp: new Date(Date.now() - 1 * 60 * 60 * 1000)
-    }
-  },
-  {
-    id: 4,
-    name: "Trans & Non-Binary Health",
-    slug: "trans-nb-health",
-    description: "Specific discussions for trans, non-binary, genderqueer, and quare community members",
-    icon: "Sparkles",
-    color: "blue",
-    postCount: 156,
-    latestPost: {
-      title: "Intersex-centered sizing helped me",
-      author: "TransAlly",
-      timestamp: new Date(Date.now() - 6 * 60 * 60 * 1000)
-    }
-  },
-  {
-    id: 5,
-    name: "Relationship & Communication",
-    slug: "relationships",
-    description: "Discuss monogamy, partner communication, and building healthy relationships",
-    icon: "Users",
-    color: "green",
-    postCount: 203,
-    latestPost: {
-      title: "How to discuss testing with partner",
-      author: "OpenHeart",
-      timestamp: new Date(Date.now() - 3 * 60 * 60 * 1000)
-    }
-  },
-  {
-    id: 6,
-    name: "Cooperative & Governance",
-    slug: "coop-governance",
-    description: "Participate in cooperative decisions, budget voting, and community governance",
-    icon: "Globe",
-    color: "orange",
-    postCount: 78,
-    latestPost: {
-      title: "Q4 dividend proposal discussion",
-      author: "CoopMember",
-      timestamp: new Date(Date.now() - 12 * 60 * 60 * 1000)
-    }
-  },
-  {
-    id: 7,
-    name: "Accessibility & Inclusion",
-    slug: "accessibility",
-    description: "Discussions about platform accessibility, Deaf/blind support, and inclusive design",
-    icon: "Accessibility",
-    color: "teal",
-    postCount: 45,
-    latestPost: {
-      title: "ASL support experience",
-      author: "DeafCommunity",
-      timestamp: new Date(Date.now() - 8 * 60 * 60 * 1000)
-    }
-  },
-  {
-    id: 8,
-    name: "Materials & Sustainability",
-    slug: "sustainability",
-    description: "Discuss ocean plastic recycling, sustainable materials, and environmental impact",
-    icon: "Leaf",
-    color: "emerald",
-    postCount: 92,
-    latestPost: {
-      title: "How the reprocessing works",
-      author: "EcoWarrior",
-      timestamp: new Date(Date.now() - 5 * 60 * 60 * 1000)
-    }
-  }
-];
-
-const samplePosts: ForumPost[] = [
-  {
-    id: 1,
-    categoryId: 3,
-    categoryName: "Peer Support & Wellness",
-    authorId: 1,
-    authorName: "WellnessJourney",
-    authorBadge: "Verified Member",
-    title: "Finding peace after an STI diagnosis - my story",
-    content: "I was diagnosed with HSV-2 six months ago, and I want to share how this community helped me through the initial shock and stigma. The peer mentors here were incredible, and the 4D monitoring gave me so much peace of mind about my health...",
-    isPinned: true,
-    isLocked: false,
-    isAnonymous: false,
-    viewCount: 1247,
-    likeCount: 89,
-    replyCount: 34,
-    tags: ["mental-health", "hsv", "support", "stigma"],
-    createdAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
-    lastActivityAt: new Date(Date.now() - 2 * 60 * 60 * 1000)
-  },
-  {
-    id: 2,
-    categoryId: 2,
-    categoryName: "Product Sizing & Fit",
-    authorId: 2,
-    authorName: "FirstTimer",
-    authorBadge: "New Member",
-    title: "3D scanning vs manual measurements - which is better?",
-    content: "I'm trying to decide whether to use the 3D scanning feature or do manual measurements. Has anyone compared both methods? I'm a bit nervous about the scanning process...",
-    isPinned: false,
-    isLocked: false,
-    isAnonymous: false,
-    viewCount: 342,
-    likeCount: 23,
-    replyCount: 18,
-    tags: ["sizing", "3d-scanning", "measurements"],
-    isSolved: true,
-    createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000),
-    lastActivityAt: new Date(Date.now() - 4 * 60 * 60 * 1000)
-  },
-  {
-    id: 3,
-    categoryId: 4,
-    categoryName: "Trans & Non-Binary Health",
-    authorId: 3,
-    authorName: "Anonymous",
-    title: "Intersex-centered sizing changed everything for me",
-    content: "As a trans woman, I've always struggled with finding protection that actually fits. The intersex-centered approach here finally acknowledged that my body exists on the natural spectrum. No more 'special' categories - just human bodies...",
-    isPinned: false,
-    isLocked: false,
-    isAnonymous: true,
-    viewCount: 567,
-    likeCount: 78,
-    replyCount: 25,
-    tags: ["trans", "intersex", "sizing", "affirmation"],
-    contentWarning: "Discussion of body dysphoria",
-    createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
-    lastActivityAt: new Date(Date.now() - 1 * 60 * 60 * 1000)
-  },
-  {
-    id: 4,
-    categoryId: 1,
-    categoryName: "Sexual Health Questions",
-    authorId: 4,
-    authorName: "CuriousLearner",
-    authorBadge: "Active Contributor",
-    title: "How does the 4D STI bioregional monitoring actually work?",
-    content: "I've been reading about the 4D STI intervention system and the water/sewer sampling. Can someone explain how this protects individual privacy while still providing community health insights?",
-    isPinned: false,
-    isLocked: false,
-    isAnonymous: false,
-    viewCount: 891,
-    likeCount: 45,
-    replyCount: 32,
-    tags: ["4d-monitoring", "privacy", "public-health"],
-    createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
-    lastActivityAt: new Date(Date.now() - 30 * 60 * 1000)
-  },
-  {
-    id: 5,
-    categoryId: 5,
-    categoryName: "Relationship & Communication",
-    authorId: 5,
-    authorName: "MonogamyAdvocate",
-    authorBadge: "Mentor",
-    title: "Scripts for discussing STI testing with a new partner",
-    content: "After many conversations with my peer mentor, I've developed some helpful scripts for bringing up STI testing with a new monogamous partner. These have worked well in my experience...",
-    isPinned: false,
-    isLocked: false,
-    isAnonymous: false,
-    viewCount: 1023,
-    likeCount: 112,
-    replyCount: 47,
-    tags: ["communication", "testing", "relationships", "tips"],
-    createdAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000),
-    lastActivityAt: new Date(Date.now() - 6 * 60 * 60 * 1000)
-  },
-  {
-    id: 6,
-    categoryId: 6,
-    categoryName: "Cooperative & Governance",
-    authorId: 6,
-    authorName: "CoopVoter",
-    authorBadge: "Cooperative Member",
-    title: "Proposal: Increase NanoHeal R&D budget for Q1 2025",
-    content: "I'm proposing we allocate an additional 15% of the participatory budget toward NanoHeal lubricant research. The preliminary results from the naturopathic STI treatment trials are promising...",
-    isPinned: true,
-    isLocked: false,
-    isAnonymous: false,
-    viewCount: 234,
-    likeCount: 56,
-    replyCount: 28,
-    tags: ["governance", "budget", "nanoheal", "proposal"],
-    createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
-    lastActivityAt: new Date(Date.now() - 2 * 60 * 60 * 1000)
-  }
-];
-
-const sampleReplies: ForumReply[] = [
-  {
-    id: 1,
-    postId: 2,
-    authorId: 10,
-    authorName: "SizingExpert",
-    authorBadge: "Mentor",
-    content: "I've used both methods! The 3D scanning is definitely more accurate, especially for the girth measurements. The manual method works fine if you're comfortable with it, but the scanner removes any measurement error. Pro tip: do the scan in a warm room for best results.",
-    isAnonymous: false,
-    likeCount: 15,
-    isSolution: true,
-    createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000)
-  },
-  {
-    id: 2,
-    postId: 2,
-    authorId: 11,
-    authorName: "TechEnthusiast",
-    content: "The scanning process is really private - all data stays on your device until you explicitly save it. I was nervous too but it's much easier than I expected!",
-    isAnonymous: false,
-    likeCount: 8,
-    isSolution: false,
-    createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000 + 60 * 60 * 1000)
-  }
-];
-
 const getIconComponent = (iconName: string) => {
   const icons: { [key: string]: any } = {
-    Stethoscope,
-    Heart,
-    Users,
-    Sparkles,
-    Globe,
-    Leaf,
-    Accessibility,
-    MessageCircle,
-    Brain
+    Stethoscope, Heart, Users, Sparkles, Globe, Leaf, Accessibility, MessageCircle, Brain
   };
   return icons[iconName] || MessageCircle;
 };
@@ -388,9 +73,12 @@ const getColorClasses = (color: string) => {
 export default function CommunityForum() {
   const [activeTab, setActiveTab] = useState("categories");
   const [selectedCategory, setSelectedCategory] = useState<ForumCategory | null>(null);
-  const [selectedPost, setSelectedPost] = useState<ForumPost | null>(null);
+  const [selectedPostId, setSelectedPostId] = useState<number | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
   const [showNewPostDialog, setShowNewPostDialog] = useState(false);
+  const [replyContent, setReplyContent] = useState("");
+  const [replyAnonymous, setReplyAnonymous] = useState(false);
   const [newPost, setNewPost] = useState({
     title: "",
     content: "",
@@ -400,64 +88,203 @@ export default function CommunityForum() {
     contentWarning: ""
   });
 
-  const filteredPosts = samplePosts.filter(post => {
-    if (selectedCategory && post.categoryId !== selectedCategory.id) return false;
-    if (searchQuery) {
-      const query = searchQuery.toLowerCase();
-      return (
-        post.title.toLowerCase().includes(query) ||
-        post.content.toLowerCase().includes(query) ||
-        post.tags.some(tag => tag.toLowerCase().includes(query))
-      );
-    }
-    return true;
+  const { user } = useAuth();
+  const { toast } = useToast();
+
+  useEffect(() => {
+    const timer = setTimeout(() => setDebouncedSearch(searchQuery), 300);
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
+
+  const { data: categories = [], isLoading: categoriesLoading } = useQuery<ForumCategory[]>({
+    queryKey: ['/api/forum/categories'],
   });
 
+  useEffect(() => {
+    if (categories.length === 0 && !categoriesLoading) {
+      apiRequest("POST", "/api/forum/categories/seed").then(() => {
+        queryClient.invalidateQueries({ queryKey: ['/api/forum/categories'] });
+      }).catch(() => {});
+    }
+  }, [categories, categoriesLoading]);
+
+  const { data: posts = [], isLoading: postsLoading } = useQuery<ForumPost[]>({
+    queryKey: ['/api/forum/posts', selectedCategory?.id],
+    queryFn: async () => {
+      const url = selectedCategory
+        ? `/api/forum/posts?categoryId=${selectedCategory.id}`
+        : '/api/forum/posts';
+      const res = await fetch(url, { credentials: "include" });
+      if (!res.ok) throw new Error("Failed to fetch posts");
+      return res.json();
+    },
+  });
+
+  const { data: trendingPosts = [], isLoading: trendingLoading } = useQuery<ForumPost[]>({
+    queryKey: ['/api/forum/posts/trending'],
+  });
+
+  const { data: searchResults = [] } = useQuery<ForumPost[]>({
+    queryKey: ['/api/forum/posts/search', debouncedSearch],
+    queryFn: async () => {
+      if (!debouncedSearch) return [];
+      const res = await fetch(`/api/forum/posts/search?q=${encodeURIComponent(debouncedSearch)}`, { credentials: "include" });
+      if (!res.ok) throw new Error("Search failed");
+      return res.json();
+    },
+    enabled: debouncedSearch.length > 0,
+  });
+
+  const { data: selectedPost, isLoading: postDetailLoading } = useQuery<ForumPost>({
+    queryKey: ['/api/forum/posts', selectedPostId],
+    queryFn: async () => {
+      const res = await fetch(`/api/forum/posts/${selectedPostId}`, { credentials: "include" });
+      if (!res.ok) throw new Error("Failed to fetch post");
+      return res.json();
+    },
+    enabled: !!selectedPostId,
+  });
+
+  const { data: replies = [], isLoading: repliesLoading } = useQuery<ForumReply[]>({
+    queryKey: ['/api/forum/posts', selectedPostId, 'replies'],
+    queryFn: async () => {
+      const res = await fetch(`/api/forum/posts/${selectedPostId}/replies`, { credentials: "include" });
+      if (!res.ok) throw new Error("Failed to fetch replies");
+      return res.json();
+    },
+    enabled: !!selectedPostId,
+  });
+
+  const { data: bookmarkIds = [] } = useQuery<number[]>({
+    queryKey: ['/api/forum/bookmarks'],
+    queryFn: async () => {
+      const res = await fetch('/api/forum/bookmarks', { credentials: "include" });
+      if (!res.ok) return [];
+      const bookmarks = await res.json();
+      return bookmarks.map((b: any) => b.postId);
+    },
+    enabled: !!user,
+  });
+
+  const createPostMutation = useMutation({
+    mutationFn: async (data: typeof newPost) => {
+      const tags = data.tags.split(",").map(t => t.trim()).filter(Boolean);
+      await apiRequest("POST", "/api/forum/posts", {
+        title: data.title,
+        content: data.content,
+        categoryId: data.categoryId,
+        tags,
+        isAnonymous: data.isAnonymous,
+        contentWarning: data.contentWarning || null,
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/forum/posts'] });
+      queryClient.invalidateQueries({ queryKey: ['/api/forum/categories'] });
+      setShowNewPostDialog(false);
+      setNewPost({ title: "", content: "", categoryId: 0, tags: "", isAnonymous: false, contentWarning: "" });
+      toast({ title: "Post created", description: "Your post has been published to the forum." });
+    },
+    onError: (error: any) => {
+      toast({ title: "Error", description: error.message || "Failed to create post", variant: "destructive" });
+    }
+  });
+
+  const createReplyMutation = useMutation({
+    mutationFn: async ({ postId, content, isAnonymous }: { postId: number; content: string; isAnonymous: boolean }) => {
+      await apiRequest("POST", `/api/forum/posts/${postId}/replies`, { content, isAnonymous });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/forum/posts', selectedPostId, 'replies'] });
+      queryClient.invalidateQueries({ queryKey: ['/api/forum/posts', selectedPostId] });
+      setReplyContent("");
+      setReplyAnonymous(false);
+      toast({ title: "Reply posted", description: "Your reply has been added." });
+    },
+    onError: (error: any) => {
+      toast({ title: "Error", description: error.message || "Failed to post reply", variant: "destructive" });
+    }
+  });
+
+  const likePostMutation = useMutation({
+    mutationFn: async (postId: number) => {
+      await apiRequest("POST", `/api/forum/posts/${postId}/like`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/forum/posts'] });
+      if (selectedPostId) queryClient.invalidateQueries({ queryKey: ['/api/forum/posts', selectedPostId] });
+    },
+    onError: (error: any) => {
+      toast({ title: "Error", description: error.message || "Must be logged in to like", variant: "destructive" });
+    }
+  });
+
+  const likeReplyMutation = useMutation({
+    mutationFn: async (replyId: number) => {
+      await apiRequest("POST", `/api/forum/replies/${replyId}/like`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/forum/posts', selectedPostId, 'replies'] });
+    },
+    onError: (error: any) => {
+      toast({ title: "Error", description: error.message || "Must be logged in to like", variant: "destructive" });
+    }
+  });
+
+  const bookmarkMutation = useMutation({
+    mutationFn: async (postId: number) => {
+      await apiRequest("POST", `/api/forum/posts/${postId}/bookmark`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/forum/bookmarks'] });
+      toast({ title: "Bookmark updated" });
+    },
+    onError: (error: any) => {
+      toast({ title: "Error", description: error.message || "Must be logged in to bookmark", variant: "destructive" });
+    }
+  });
+
+  const displayPosts = debouncedSearch ? searchResults : posts;
+
   const handleCreatePost = () => {
-    console.log("Creating post:", newPost);
-    setShowNewPostDialog(false);
-    setNewPost({
-      title: "",
-      content: "",
-      categoryId: 0,
-      tags: "",
-      isAnonymous: false,
-      contentWarning: ""
-    });
+    if (!newPost.title || !newPost.content || !newPost.categoryId) {
+      toast({ title: "Missing fields", description: "Please fill in title, content, and category.", variant: "destructive" });
+      return;
+    }
+    createPostMutation.mutate(newPost);
+  };
+
+  const handleSubmitReply = () => {
+    if (!replyContent.trim() || !selectedPostId) return;
+    createReplyMutation.mutate({ postId: selectedPostId, content: replyContent, isAnonymous: replyAnonymous });
+  };
+
+  const getCategoryName = (categoryId: number) => {
+    const cat = categories.find(c => c.id === categoryId);
+    return cat?.name || "Unknown";
   };
 
   const renderCategoryCard = (category: ForumCategory) => {
-    const IconComponent = getIconComponent(category.icon);
+    const IconComponent = getIconComponent(category.icon || "MessageCircle");
     return (
-      <Card 
+      <Card
         key={category.id}
         className="cursor-pointer hover:shadow-lg transition-all hover:scale-[1.01]"
         onClick={() => {
           setSelectedCategory(category);
           setActiveTab("posts");
         }}
-        data-testid={`category-card-${category.id}`}
       >
         <CardContent className="p-6">
           <div className="flex items-start gap-4">
-            <div className={`p-3 rounded-lg ${getColorClasses(category.color)}`}>
+            <div className={`p-3 rounded-lg ${getColorClasses(category.color || "purple")}`}>
               <IconComponent className="h-6 w-6" />
             </div>
             <div className="flex-1">
               <div className="flex items-center gap-2 mb-1">
                 <h3 className="font-semibold text-lg">{category.name}</h3>
-                <Badge variant="secondary" className="text-xs">
-                  {category.postCount} posts
-                </Badge>
               </div>
               <p className="text-sm text-muted-foreground mb-3">{category.description}</p>
-              {category.latestPost && (
-                <div className="text-xs text-muted-foreground flex items-center gap-2">
-                  <Clock className="h-3 w-3" />
-                  <span>Latest: "{category.latestPost.title}" by {category.latestPost.author}</span>
-                  <span>• {formatDistanceToNow(category.latestPost.timestamp, { addSuffix: true })}</span>
-                </div>
-              )}
             </div>
             <ChevronRight className="h-5 w-5 text-muted-foreground" />
           </div>
@@ -467,20 +294,19 @@ export default function CommunityForum() {
   };
 
   const renderPostCard = (post: ForumPost) => (
-    <Card 
+    <Card
       key={post.id}
       className={`cursor-pointer hover:shadow-md transition-all ${post.isPinned ? 'border-primary border-2' : ''}`}
       onClick={() => {
-        setSelectedPost(post);
+        setSelectedPostId(post.id);
         setActiveTab("post-detail");
       }}
-      data-testid={`post-card-${post.id}`}
     >
       <CardContent className="p-4">
         <div className="flex items-start gap-3">
           <Avatar className="h-10 w-10">
             <AvatarFallback className="bg-gradient-to-br from-purple-400 to-pink-400 text-white">
-              {post.isAnonymous ? "?" : post.authorName.substring(0, 2).toUpperCase()}
+              {post.isAnonymous ? "?" : "U"}
             </AvatarFallback>
           </Avatar>
           <div className="flex-1 min-w-0">
@@ -497,12 +323,6 @@ export default function CommunityForum() {
                   Locked
                 </Badge>
               )}
-              {post.isSolved && (
-                <Badge variant="default" className="bg-green-600 text-xs">
-                  <CheckCircle className="h-3 w-3 mr-1" />
-                  Solved
-                </Badge>
-              )}
               {post.contentWarning && (
                 <Badge variant="outline" className="text-xs border-orange-400 text-orange-600">
                   <AlertTriangle className="h-3 w-3 mr-1" />
@@ -513,12 +333,8 @@ export default function CommunityForum() {
             <h4 className="font-semibold text-base mb-1 line-clamp-1">{post.title}</h4>
             <p className="text-sm text-muted-foreground line-clamp-2 mb-2">{post.content}</p>
             <div className="flex items-center gap-4 text-xs text-muted-foreground">
-              <span className="flex items-center gap-1">
-                <span>{post.isAnonymous ? "Anonymous" : post.authorName}</span>
-                {post.authorBadge && !post.isAnonymous && (
-                  <Badge variant="outline" className="text-[10px] py-0">{post.authorBadge}</Badge>
-                )}
-              </span>
+              <span>{post.isAnonymous ? "Anonymous" : `User #${post.authorId}`}</span>
+              <span className="text-xs">{getCategoryName(post.categoryId)}</span>
               <span className="flex items-center gap-1">
                 <Eye className="h-3 w-3" />
                 {post.viewCount}
@@ -531,15 +347,17 @@ export default function CommunityForum() {
                 <MessageCircle className="h-3 w-3" />
                 {post.replyCount}
               </span>
-              <span>{formatDistanceToNow(post.createdAt, { addSuffix: true })}</span>
+              <span>{formatDistanceToNow(new Date(post.createdAt), { addSuffix: true })}</span>
             </div>
-            <div className="flex flex-wrap gap-1 mt-2">
-              {post.tags.slice(0, 4).map(tag => (
-                <Badge key={tag} variant="secondary" className="text-[10px] py-0">
-                  #{tag}
-                </Badge>
-              ))}
-            </div>
+            {post.tags && post.tags.length > 0 && (
+              <div className="flex flex-wrap gap-1 mt-2">
+                {post.tags.slice(0, 4).map(tag => (
+                  <Badge key={tag} variant="secondary" className="text-[10px] py-0">
+                    #{tag}
+                  </Badge>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </CardContent>
@@ -547,18 +365,22 @@ export default function CommunityForum() {
   );
 
   const renderPostDetail = () => {
+    if (!selectedPostId) return null;
+    if (postDetailLoading) return (
+      <div className="flex justify-center py-12">
+        <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+      </div>
+    );
     if (!selectedPost) return null;
-    const postReplies = sampleReplies.filter(r => r.postId === selectedPost.id);
 
     return (
       <div className="space-y-6">
-        <Button 
-          variant="ghost" 
+        <Button
+          variant="ghost"
           onClick={() => {
-            setSelectedPost(null);
+            setSelectedPostId(null);
             setActiveTab("posts");
           }}
-          data-testid="button-back-to-posts"
         >
           ← Back to posts
         </Button>
@@ -577,46 +399,44 @@ export default function CommunityForum() {
             <div className="flex items-start gap-4">
               <Avatar className="h-12 w-12">
                 <AvatarFallback className="bg-gradient-to-br from-purple-400 to-pink-400 text-white text-lg">
-                  {selectedPost.isAnonymous ? "?" : selectedPost.authorName.substring(0, 2).toUpperCase()}
+                  {selectedPost.isAnonymous ? "?" : "U"}
                 </AvatarFallback>
               </Avatar>
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-2">
                   <span className="font-semibold">
-                    {selectedPost.isAnonymous ? "Anonymous" : selectedPost.authorName}
+                    {selectedPost.isAnonymous ? "Anonymous" : `User #${selectedPost.authorId}`}
                   </span>
-                  {selectedPost.authorBadge && !selectedPost.isAnonymous && (
-                    <Badge variant="secondary">{selectedPost.authorBadge}</Badge>
-                  )}
                   <span className="text-sm text-muted-foreground">
-                    {format(selectedPost.createdAt, "MMM d, yyyy 'at' h:mm a")}
+                    {format(new Date(selectedPost.createdAt), "MMM d, yyyy 'at' h:mm a")}
                   </span>
                 </div>
                 <h2 className="text-2xl font-bold mb-4">{selectedPost.title}</h2>
                 <div className="prose dark:prose-invert max-w-none mb-4">
                   <p>{selectedPost.content}</p>
                 </div>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {selectedPost.tags.map(tag => (
-                    <Badge key={tag} variant="outline">#{tag}</Badge>
-                  ))}
-                </div>
+                {selectedPost.tags && selectedPost.tags.length > 0 && (
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {selectedPost.tags.map(tag => (
+                      <Badge key={tag} variant="outline">#{tag}</Badge>
+                    ))}
+                  </div>
+                )}
                 <div className="flex items-center gap-4">
-                  <Button variant="outline" size="sm" data-testid="button-like-post">
+                  <Button variant="outline" size="sm" onClick={() => likePostMutation.mutate(selectedPost.id)}>
                     <ThumbsUp className="h-4 w-4 mr-2" />
                     Like ({selectedPost.likeCount})
                   </Button>
-                  <Button variant="outline" size="sm" data-testid="button-bookmark-post">
+                  <Button variant="outline" size="sm" onClick={() => bookmarkMutation.mutate(selectedPost.id)}>
                     <BookmarkPlus className="h-4 w-4 mr-2" />
-                    Bookmark
+                    {bookmarkIds.includes(selectedPost.id) ? "Bookmarked" : "Bookmark"}
                   </Button>
-                  <Button variant="outline" size="sm" data-testid="button-share-post">
+                  <Button variant="outline" size="sm" onClick={() => {
+                    navigator.clipboard.writeText(window.location.origin + `/community-forum?post=${selectedPost.id}`);
+                    toast({ title: "Link copied to clipboard" });
+                  }}>
                     <Share2 className="h-4 w-4 mr-2" />
                     Share
-                  </Button>
-                  <Button variant="ghost" size="sm" data-testid="button-report-post">
-                    <Flag className="h-4 w-4 mr-2" />
-                    Report
                   </Button>
                 </div>
               </div>
@@ -627,81 +447,96 @@ export default function CommunityForum() {
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <h3 className="text-lg font-semibold">{selectedPost.replyCount} Replies</h3>
-            <Select defaultValue="newest">
-              <SelectTrigger className="w-40" data-testid="select-sort-replies">
-                <SelectValue placeholder="Sort by" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="newest">Newest first</SelectItem>
-                <SelectItem value="oldest">Oldest first</SelectItem>
-                <SelectItem value="popular">Most liked</SelectItem>
-              </SelectContent>
-            </Select>
           </div>
 
-          <Card>
-            <CardContent className="p-4">
-              <Textarea 
-                placeholder="Write a thoughtful reply... Be respectful and supportive."
-                className="mb-3"
-                data-testid="input-reply-content"
-              />
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <Checkbox id="anonymous-reply" data-testid="checkbox-anonymous-reply" />
-                  <Label htmlFor="anonymous-reply" className="text-sm">Post anonymously</Label>
-                </div>
-                <Button data-testid="button-submit-reply">
-                  <Reply className="h-4 w-4 mr-2" />
-                  Reply
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-
-          {postReplies.map(reply => (
-            <Card key={reply.id} className={reply.isSolution ? "border-green-500 border-2" : ""}>
+          {!selectedPost.isLocked && (
+            <Card>
               <CardContent className="p-4">
-                <div className="flex items-start gap-3">
-                  <Avatar className="h-10 w-10">
-                    <AvatarFallback className="bg-gradient-to-br from-blue-400 to-purple-400 text-white">
-                      {reply.isAnonymous ? "?" : reply.authorName.substring(0, 2).toUpperCase()}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="font-semibold">
-                        {reply.isAnonymous ? "Anonymous" : reply.authorName}
-                      </span>
-                      {reply.authorBadge && !reply.isAnonymous && (
-                        <Badge variant="secondary" className="text-xs">{reply.authorBadge}</Badge>
-                      )}
-                      {reply.isSolution && (
-                        <Badge className="bg-green-600 text-xs">
-                          <CheckCircle className="h-3 w-3 mr-1" />
-                          Solution
-                        </Badge>
-                      )}
-                      <span className="text-xs text-muted-foreground">
-                        {formatDistanceToNow(reply.createdAt, { addSuffix: true })}
-                      </span>
-                    </div>
-                    <p className="text-sm mb-3">{reply.content}</p>
-                    <div className="flex items-center gap-3">
-                      <Button variant="ghost" size="sm" className="h-8" data-testid={`button-like-reply-${reply.id}`}>
-                        <ThumbsUp className="h-3 w-3 mr-1" />
-                        {reply.likeCount}
-                      </Button>
-                      <Button variant="ghost" size="sm" className="h-8" data-testid={`button-reply-to-${reply.id}`}>
-                        <Reply className="h-3 w-3 mr-1" />
-                        Reply
-                      </Button>
-                    </div>
+                <Textarea
+                  placeholder="Write a thoughtful reply... Be respectful and supportive."
+                  className="mb-3"
+                  value={replyContent}
+                  onChange={(e) => setReplyContent(e.target.value)}
+                />
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Checkbox
+                      id="anonymous-reply"
+                      checked={replyAnonymous}
+                      onCheckedChange={(checked) => setReplyAnonymous(checked as boolean)}
+                    />
+                    <Label htmlFor="anonymous-reply" className="text-sm">Post anonymously</Label>
                   </div>
+                  <Button
+                    onClick={handleSubmitReply}
+                    disabled={createReplyMutation.isPending || !replyContent.trim()}
+                  >
+                    {createReplyMutation.isPending ? (
+                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    ) : (
+                      <Reply className="h-4 w-4 mr-2" />
+                    )}
+                    Reply
+                  </Button>
                 </div>
               </CardContent>
             </Card>
-          ))}
+          )}
+
+          {repliesLoading ? (
+            <div className="flex justify-center py-8">
+              <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+            </div>
+          ) : replies.length === 0 ? (
+            <Card>
+              <CardContent className="p-8 text-center">
+                <MessageCircle className="h-10 w-10 text-muted-foreground mx-auto mb-3" />
+                <p className="text-muted-foreground">No replies yet. Be the first to respond!</p>
+              </CardContent>
+            </Card>
+          ) : (
+            replies.map(reply => (
+              <Card key={reply.id} className={reply.isSolution ? "border-green-500 border-2" : ""}>
+                <CardContent className="p-4">
+                  <div className="flex items-start gap-3">
+                    <Avatar className="h-10 w-10">
+                      <AvatarFallback className="bg-gradient-to-br from-blue-400 to-purple-400 text-white">
+                        {reply.isAnonymous ? "?" : "U"}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="font-semibold">
+                          {reply.isAnonymous ? "Anonymous" : `User #${reply.authorId}`}
+                        </span>
+                        {reply.isSolution && (
+                          <Badge className="bg-green-600 text-xs">
+                            <CheckCircle className="h-3 w-3 mr-1" />
+                            Solution
+                          </Badge>
+                        )}
+                        <span className="text-xs text-muted-foreground">
+                          {formatDistanceToNow(new Date(reply.createdAt), { addSuffix: true })}
+                        </span>
+                      </div>
+                      <p className="text-sm mb-3">{reply.content}</p>
+                      <div className="flex items-center gap-3">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-8"
+                          onClick={() => likeReplyMutation.mutate(reply.id)}
+                        >
+                          <ThumbsUp className="h-3 w-3 mr-1" />
+                          {reply.likeCount}
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))
+          )}
         </div>
       </div>
     );
@@ -734,12 +569,8 @@ export default function CommunityForum() {
           </div>
           <div className="flex justify-center gap-4 flex-wrap">
             <Badge variant="secondary" className="px-4 py-2">
-              <Users className="h-4 w-4 mr-2" />
-              2,847 Members
-            </Badge>
-            <Badge variant="secondary" className="px-4 py-2">
               <MessageCircle className="h-4 w-4 mr-2" />
-              1,422 Posts
+              {posts.length} Posts
             </Badge>
             <Badge variant="secondary" className="px-4 py-2">
               <CheckCircle className="h-4 w-4 mr-2" />
@@ -751,12 +582,12 @@ export default function CommunityForum() {
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
             <TabsList>
-              <TabsTrigger value="categories" data-testid="tab-categories">Categories</TabsTrigger>
-              <TabsTrigger value="posts" data-testid="tab-posts">
+              <TabsTrigger value="categories">Categories</TabsTrigger>
+              <TabsTrigger value="posts">
                 {selectedCategory ? selectedCategory.name : "All Posts"}
               </TabsTrigger>
-              <TabsTrigger value="trending" data-testid="tab-trending">Trending</TabsTrigger>
-              <TabsTrigger value="bookmarks" data-testid="tab-bookmarks">My Bookmarks</TabsTrigger>
+              <TabsTrigger value="trending">Trending</TabsTrigger>
+              <TabsTrigger value="bookmarks">My Bookmarks</TabsTrigger>
             </TabsList>
             <div className="flex gap-2">
               <div className="relative">
@@ -766,12 +597,11 @@ export default function CommunityForum() {
                   className="pl-10 w-64"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  data-testid="input-search-forum"
                 />
               </div>
               <Dialog open={showNewPostDialog} onOpenChange={setShowNewPostDialog}>
                 <DialogTrigger asChild>
-                  <Button data-testid="button-new-post">
+                  <Button>
                     <Plus className="h-4 w-4 mr-2" />
                     New Post
                   </Button>
@@ -786,15 +616,15 @@ export default function CommunityForum() {
                   <div className="space-y-4 py-4">
                     <div>
                       <Label htmlFor="post-category">Category</Label>
-                      <Select 
-                        value={newPost.categoryId.toString()} 
+                      <Select
+                        value={newPost.categoryId.toString()}
                         onValueChange={(v) => setNewPost({...newPost, categoryId: parseInt(v)})}
                       >
-                        <SelectTrigger data-testid="select-post-category">
+                        <SelectTrigger>
                           <SelectValue placeholder="Select a category" />
                         </SelectTrigger>
                         <SelectContent>
-                          {forumCategories.map(cat => (
+                          {categories.map(cat => (
                             <SelectItem key={cat.id} value={cat.id.toString()}>
                               {cat.name}
                             </SelectItem>
@@ -809,7 +639,6 @@ export default function CommunityForum() {
                         placeholder="What's your post about?"
                         value={newPost.title}
                         onChange={(e) => setNewPost({...newPost, title: e.target.value})}
-                        data-testid="input-post-title"
                       />
                     </div>
                     <div>
@@ -820,7 +649,6 @@ export default function CommunityForum() {
                         rows={6}
                         value={newPost.content}
                         onChange={(e) => setNewPost({...newPost, content: e.target.value})}
-                        data-testid="input-post-content"
                       />
                     </div>
                     <div>
@@ -830,7 +658,6 @@ export default function CommunityForum() {
                         placeholder="e.g., sizing, support, question"
                         value={newPost.tags}
                         onChange={(e) => setNewPost({...newPost, tags: e.target.value})}
-                        data-testid="input-post-tags"
                       />
                     </div>
                     <div>
@@ -840,15 +667,13 @@ export default function CommunityForum() {
                         placeholder="e.g., Discussion of trauma, explicit content"
                         value={newPost.contentWarning}
                         onChange={(e) => setNewPost({...newPost, contentWarning: e.target.value})}
-                        data-testid="input-content-warning"
                       />
                     </div>
                     <div className="flex items-center gap-2">
-                      <Checkbox 
-                        id="anonymous" 
+                      <Checkbox
+                        id="anonymous"
                         checked={newPost.isAnonymous}
                         onCheckedChange={(checked) => setNewPost({...newPost, isAnonymous: checked as boolean})}
-                        data-testid="checkbox-anonymous-post"
                       />
                       <Label htmlFor="anonymous">Post anonymously</Label>
                     </div>
@@ -857,7 +682,10 @@ export default function CommunityForum() {
                     <Button variant="outline" onClick={() => setShowNewPostDialog(false)}>
                       Cancel
                     </Button>
-                    <Button onClick={handleCreatePost} data-testid="button-submit-post">
+                    <Button onClick={handleCreatePost} disabled={createPostMutation.isPending}>
+                      {createPostMutation.isPending ? (
+                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                      ) : null}
                       Create Post
                     </Button>
                   </DialogFooter>
@@ -867,9 +695,15 @@ export default function CommunityForum() {
           </div>
 
           <TabsContent value="categories" className="space-y-4">
-            <div className="grid gap-4">
-              {forumCategories.map(renderCategoryCard)}
-            </div>
+            {categoriesLoading ? (
+              <div className="flex justify-center py-12">
+                <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+              </div>
+            ) : (
+              <div className="grid gap-4">
+                {categories.map(renderCategoryCard)}
+              </div>
+            )}
           </TabsContent>
 
           <TabsContent value="posts" className="space-y-4">
@@ -878,18 +712,17 @@ export default function CommunityForum() {
                 <CardContent className="p-4">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <Button 
-                        variant="ghost" 
+                      <Button
+                        variant="ghost"
                         size="sm"
                         onClick={() => setSelectedCategory(null)}
-                        data-testid="button-clear-category"
                       >
                         ← All Categories
                       </Button>
                       <Separator orientation="vertical" className="h-6" />
-                      <div className={`p-2 rounded-lg ${getColorClasses(selectedCategory.color)}`}>
+                      <div className={`p-2 rounded-lg ${getColorClasses(selectedCategory.color || "purple")}`}>
                         {(() => {
-                          const IconComponent = getIconComponent(selectedCategory.icon);
+                          const IconComponent = getIconComponent(selectedCategory.icon || "MessageCircle");
                           return <IconComponent className="h-5 w-5" />;
                         })()}
                       </div>
@@ -898,49 +731,36 @@ export default function CommunityForum() {
                         <p className="text-sm text-muted-foreground">{selectedCategory.description}</p>
                       </div>
                     </div>
-                    <Badge>{selectedCategory.postCount} posts</Badge>
                   </div>
                 </CardContent>
               </Card>
             )}
-            
-            <div className="flex items-center gap-2 mb-4">
-              <Button variant="outline" size="sm">
-                <Filter className="h-4 w-4 mr-2" />
-                Filter
-              </Button>
-              <Select defaultValue="recent">
-                <SelectTrigger className="w-40" data-testid="select-sort-posts">
-                  <SelectValue placeholder="Sort by" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="recent">Most Recent</SelectItem>
-                  <SelectItem value="popular">Most Popular</SelectItem>
-                  <SelectItem value="replies">Most Replies</SelectItem>
-                  <SelectItem value="unanswered">Unanswered</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
 
-            <div className="space-y-3">
-              {filteredPosts.length > 0 ? (
-                filteredPosts.map(renderPostCard)
-              ) : (
-                <Card>
-                  <CardContent className="p-8 text-center">
-                    <MessageCircle className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                    <h3 className="text-lg font-semibold mb-2">No posts found</h3>
-                    <p className="text-muted-foreground mb-4">
-                      {searchQuery ? "Try adjusting your search terms" : "Be the first to start a conversation!"}
-                    </p>
-                    <Button onClick={() => setShowNewPostDialog(true)} data-testid="button-create-first-post">
-                      <Plus className="h-4 w-4 mr-2" />
-                      Create Post
-                    </Button>
-                  </CardContent>
-                </Card>
-              )}
-            </div>
+            {postsLoading ? (
+              <div className="flex justify-center py-12">
+                <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {displayPosts.length > 0 ? (
+                  displayPosts.map(renderPostCard)
+                ) : (
+                  <Card>
+                    <CardContent className="p-8 text-center">
+                      <MessageCircle className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                      <h3 className="text-lg font-semibold mb-2">No posts found</h3>
+                      <p className="text-muted-foreground mb-4">
+                        {debouncedSearch ? "Try adjusting your search terms" : "Be the first to start a conversation!"}
+                      </p>
+                      <Button onClick={() => setShowNewPostDialog(true)}>
+                        <Plus className="h-4 w-4 mr-2" />
+                        Create Post
+                      </Button>
+                    </CardContent>
+                  </Card>
+                )}
+              </div>
+            )}
           </TabsContent>
 
           <TabsContent value="trending" className="space-y-4">
@@ -948,23 +768,26 @@ export default function CommunityForum() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <TrendingUp className="h-5 w-5 text-orange-500" />
-                  Trending This Week
+                  Trending Posts
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="space-y-3">
-                  {samplePosts
-                    .sort((a, b) => b.likeCount - a.likeCount)
-                    .slice(0, 5)
-                    .map((post, index) => (
-                      <div 
+                {trendingLoading ? (
+                  <div className="flex justify-center py-8">
+                    <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+                  </div>
+                ) : trendingPosts.length === 0 ? (
+                  <p className="text-muted-foreground text-center py-4">No trending posts yet.</p>
+                ) : (
+                  <div className="space-y-3">
+                    {trendingPosts.map((post, index) => (
+                      <div
                         key={post.id}
                         className="flex items-center gap-4 p-3 rounded-lg hover:bg-muted/50 cursor-pointer transition-colors"
                         onClick={() => {
-                          setSelectedPost(post);
+                          setSelectedPostId(post.id);
                           setActiveTab("post-detail");
                         }}
-                        data-testid={`trending-post-${post.id}`}
                       >
                         <div className="text-2xl font-bold text-muted-foreground w-8">
                           {index + 1}
@@ -972,7 +795,7 @@ export default function CommunityForum() {
                         <div className="flex-1">
                           <h4 className="font-semibold line-clamp-1">{post.title}</h4>
                           <div className="flex items-center gap-3 text-sm text-muted-foreground">
-                            <span>{post.categoryName}</span>
+                            <span>{getCategoryName(post.categoryId)}</span>
                             <span className="flex items-center gap-1">
                               <ThumbsUp className="h-3 w-3" />
                               {post.likeCount}
@@ -986,63 +809,39 @@ export default function CommunityForum() {
                         <ChevronRight className="h-5 w-5 text-muted-foreground" />
                       </div>
                     ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Star className="h-5 w-5 text-yellow-500" />
-                  Top Contributors This Month
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  {[
-                    { name: "SizingExpert", posts: 23, likes: 156, badge: "Mentor" },
-                    { name: "WellnessJourney", posts: 18, likes: 134, badge: "Verified" },
-                    { name: "MonogamyAdvocate", posts: 15, likes: 112, badge: "Mentor" },
-                    { name: "CoopVoter", posts: 12, likes: 89, badge: "Member" }
-                  ].map((contributor, index) => (
-                    <Card key={contributor.name} className="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20">
-                      <CardContent className="p-4 text-center">
-                        <div className="text-3xl font-bold text-purple-600 mb-1">#{index + 1}</div>
-                        <Avatar className="h-12 w-12 mx-auto mb-2">
-                          <AvatarFallback className="bg-gradient-to-br from-purple-400 to-pink-400 text-white">
-                            {contributor.name.substring(0, 2).toUpperCase()}
-                          </AvatarFallback>
-                        </Avatar>
-                        <div className="font-semibold text-sm">{contributor.name}</div>
-                        <Badge variant="secondary" className="text-xs mt-1">{contributor.badge}</Badge>
-                        <div className="text-xs text-muted-foreground mt-2">
-                          {contributor.posts} posts • {contributor.likes} likes
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
+                  </div>
+                )}
               </CardContent>
             </Card>
           </TabsContent>
 
           <TabsContent value="bookmarks" className="space-y-4">
-            <Card>
-              <CardContent className="p-8 text-center">
-                <BookmarkPlus className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                <h3 className="text-lg font-semibold mb-2">No bookmarks yet</h3>
-                <p className="text-muted-foreground mb-4">
-                  Bookmark posts you want to revisit later
-                </p>
-                <Button 
-                  variant="outline"
-                  onClick={() => setActiveTab("categories")}
-                  data-testid="button-browse-posts"
-                >
-                  Browse Posts
-                </Button>
-              </CardContent>
-            </Card>
+            {!user ? (
+              <Card>
+                <CardContent className="p-8 text-center">
+                  <BookmarkPlus className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                  <h3 className="text-lg font-semibold mb-2">Log in to see bookmarks</h3>
+                  <p className="text-muted-foreground">You need to be logged in to save and view bookmarks.</p>
+                </CardContent>
+              </Card>
+            ) : bookmarkIds.length === 0 ? (
+              <Card>
+                <CardContent className="p-8 text-center">
+                  <BookmarkPlus className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                  <h3 className="text-lg font-semibold mb-2">No bookmarks yet</h3>
+                  <p className="text-muted-foreground mb-4">
+                    Bookmark posts you want to revisit later
+                  </p>
+                  <Button variant="outline" onClick={() => setActiveTab("categories")}>
+                    Browse Posts
+                  </Button>
+                </CardContent>
+              </Card>
+            ) : (
+              <div className="space-y-3">
+                {posts.filter(p => bookmarkIds.includes(p.id)).map(renderPostCard)}
+              </div>
+            )}
           </TabsContent>
 
           <TabsContent value="post-detail">

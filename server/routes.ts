@@ -2147,6 +2147,181 @@ END:VEVENT
     }
   });
 
+  // Forum API routes
+  app.get('/api/forum/categories', async (_req, res) => {
+    try {
+      const categories = await storage.getForumCategories();
+      res.json(categories);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch forum categories" });
+    }
+  });
+
+  app.get('/api/forum/posts', async (req, res) => {
+    try {
+      const categoryId = req.query.categoryId ? parseInt(req.query.categoryId as string) : undefined;
+      const limit = req.query.limit ? parseInt(req.query.limit as string) : 50;
+      const offset = req.query.offset ? parseInt(req.query.offset as string) : 0;
+      const posts = await storage.getForumPosts(categoryId, limit, offset);
+      res.json(posts);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch forum posts" });
+    }
+  });
+
+  app.get('/api/forum/posts/trending', async (req, res) => {
+    try {
+      const limit = req.query.limit ? parseInt(req.query.limit as string) : 10;
+      const posts = await storage.getTrendingForumPosts(limit);
+      res.json(posts);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch trending posts" });
+    }
+  });
+
+  app.get('/api/forum/posts/search', async (req, res) => {
+    try {
+      const query = req.query.q as string;
+      if (!query) return res.json([]);
+      const posts = await storage.searchForumPosts(query);
+      res.json(posts);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to search forum posts" });
+    }
+  });
+
+  app.get('/api/forum/posts/:id', async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const post = await storage.getForumPost(id);
+      if (!post) return res.status(404).json({ message: "Post not found" });
+      await storage.incrementPostViewCount(id);
+      res.json(post);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch forum post" });
+    }
+  });
+
+  app.post('/api/forum/posts', async (req, res) => {
+    try {
+      if (!req.session?.userId) {
+        return res.status(401).json({ message: "Must be logged in to create a post" });
+      }
+      const post = await storage.createForumPost({
+        ...req.body,
+        authorId: req.session.userId
+      });
+      res.status(201).json(post);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to create forum post" });
+    }
+  });
+
+  app.get('/api/forum/posts/:id/replies', async (req, res) => {
+    try {
+      const postId = parseInt(req.params.id);
+      const replies = await storage.getForumReplies(postId);
+      res.json(replies);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch replies" });
+    }
+  });
+
+  app.post('/api/forum/posts/:id/replies', async (req, res) => {
+    try {
+      if (!req.session?.userId) {
+        return res.status(401).json({ message: "Must be logged in to reply" });
+      }
+      const postId = parseInt(req.params.id);
+      const reply = await storage.createForumReply({
+        ...req.body,
+        postId,
+        authorId: req.session.userId
+      });
+      res.status(201).json(reply);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to create reply" });
+    }
+  });
+
+  app.post('/api/forum/posts/:id/like', async (req, res) => {
+    try {
+      if (!req.session?.userId) {
+        return res.status(401).json({ message: "Must be logged in to like" });
+      }
+      const postId = parseInt(req.params.id);
+      const liked = await storage.toggleForumLike(req.session.userId, postId);
+      res.json({ liked });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to toggle like" });
+    }
+  });
+
+  app.post('/api/forum/replies/:id/like', async (req, res) => {
+    try {
+      if (!req.session?.userId) {
+        return res.status(401).json({ message: "Must be logged in to like" });
+      }
+      const replyId = parseInt(req.params.id);
+      const liked = await storage.toggleForumLike(req.session.userId, undefined, replyId);
+      res.json({ liked });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to toggle like" });
+    }
+  });
+
+  app.get('/api/forum/bookmarks', async (req, res) => {
+    try {
+      if (!req.session?.userId) {
+        return res.status(401).json({ message: "Must be logged in" });
+      }
+      const bookmarks = await storage.getForumBookmarks(req.session.userId);
+      res.json(bookmarks);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch bookmarks" });
+    }
+  });
+
+  app.post('/api/forum/posts/:id/bookmark', async (req, res) => {
+    try {
+      if (!req.session?.userId) {
+        return res.status(401).json({ message: "Must be logged in to bookmark" });
+      }
+      const postId = parseInt(req.params.id);
+      const bookmarked = await storage.toggleForumBookmark(req.session.userId, postId);
+      res.json({ bookmarked });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to toggle bookmark" });
+    }
+  });
+
+  app.post('/api/forum/categories/seed', async (_req, res) => {
+    try {
+      const existing = await storage.getForumCategories();
+      if (existing.length > 0) {
+        return res.json({ message: "Categories already seeded", categories: existing });
+      }
+      const defaultCategories = [
+        { name: "Sexual Health Q&A", slug: "sexual-health-qa", description: "Ask questions about STI testing, prevention, and treatment in a supportive environment", icon: "Stethoscope", color: "red", sortOrder: 1 },
+        { name: "Product Reviews & Sizing", slug: "product-reviews-sizing", description: "Share experiences with custom-fit products, sizing tips, and material preferences", icon: "Heart", color: "purple", sortOrder: 2 },
+        { name: "Peer Support", slug: "peer-support", description: "Connect with others, share experiences, and find community support", icon: "Users", color: "pink", sortOrder: 3 },
+        { name: "Intersex & Gender Diversity", slug: "intersex-gender-diversity", description: "Discussions centering intersex anatomy and gender-diverse experiences", icon: "Sparkles", color: "blue", sortOrder: 4 },
+        { name: "Relationships & Communication", slug: "relationships-communication", description: "Navigate conversations about sexual health with partners", icon: "Globe", color: "green", sortOrder: 5 },
+        { name: "Cooperative & Governance", slug: "cooperative-governance", description: "Participatory budgeting, $TRISEXORG stablecoin proposals, and cooperative decisions", icon: "Leaf", color: "orange", sortOrder: 6 },
+        { name: "NanoHeal & Naturopathic", slug: "nanoheal-naturopathic", description: "Discuss NanoHeal lubricant research, naturopathic STI treatments, and biomaterials", icon: "Brain", color: "teal", sortOrder: 7 },
+        { name: "Accessibility & Inclusion", slug: "accessibility-inclusion", description: "ASL/BSL support, braille translation, and making sexual health accessible to all", icon: "Accessibility", color: "emerald", sortOrder: 8 }
+      ];
+      const created = [];
+      for (const cat of defaultCategories) {
+        const c = await storage.createForumCategory(cat);
+        created.push(c);
+      }
+      res.status(201).json({ message: "Categories seeded", categories: created });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to seed categories" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

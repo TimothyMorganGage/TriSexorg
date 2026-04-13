@@ -40,7 +40,7 @@ The application uses a modern full-stack architecture with a clear separation of
     -   Comprehensive guides for endosex women with MSM partners and multidimensional value of gay sex byproducts (Gaynal Condoms).
     -   Federated syndication system for content distribution across decentralized social networks (Mastodon, Bluesky, Pixelfed, Loops).
     -   "Remix to Replit" feature allowing users to create their own copies of TriSex.org.
-    -   Community Forum for peer support and knowledge sharing with moderated categories, anonymous posting, content warnings, trending posts, and cooperative governance discussions.
+    -   Community Forum for peer support and knowledge sharing with moderated categories, anonymous posting, content warnings, trending posts, and cooperative governance discussions. Fully backend-integrated with PostgreSQL storage (forum_categories, forum_posts, forum_replies, forum_likes, forum_bookmarks tables), REST API endpoints under `/api/forum/*`, and real-time data via TanStack Query.
     -   $TRISEXORG stablecoin system integrated with Time Banking for cooperative dividends and health impact rewards.
     -   Expired product upcycling program allowing users to exchange used barriers for credit toward new products.
 
