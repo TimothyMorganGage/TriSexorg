@@ -168,7 +168,7 @@ export default function TrisexStablecoin() {
         <Alert className="mb-8 bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-900/40 dark:to-pink-900/40 border-purple-200">
           <Heart className="h-5 w-5 text-black dark:text-white" />
           <AlertDescription className="ml-2 text-black dark:text-white">
-            <strong>Intersex Healthcare IS Everyone's Affirmation:</strong> $TRISEX stablecoin centers intersex anatomy as the universal baseline—trans, non-binary, genderqueer, and quare embodiment are all respected within this participatory budgeting framework. There is no separate "transgender healthcare" category—cooperative economics serves ALL bodies by design.
+            <strong>Intersex Healthcare IS Everyone's Affirmation:</strong> $TRISEXORG stablecoin centers intersex anatomy as the universal baseline—trans, non-binary, genderqueer, and quare embodiment are all respected within this participatory budgeting framework. There is no separate "transgender healthcare" category—cooperative economics serves ALL bodies by design.
           </AlertDescription>
         </Alert>
 
@@ -184,15 +184,15 @@ export default function TrisexStablecoin() {
             </div>
           </div>
           <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 bg-clip-text text-transparent mb-2">
-            $TRISEX Stablecoin
+            $TRISEXORG Stablecoin
           </h1>
           <p className="text-xl text-muted-foreground mb-4">
             Time Banking • Cooperative Dividends • Upcycle Credits
           </p>
           <div className="flex justify-center mb-4">
             <FediverseShare
-              title="$TRISEX Stablecoin - Cooperative Sexual Health Currency"
-              description="Earn $TRISEX through time banking, upcycling expired products, and cooperative participation"
+              title="$TRISEXORG Stablecoin - Cooperative Sexual Health Currency"
+              description="Earn $TRISEXORG through time banking, upcycling expired products, and cooperative participation"
               hashtags={["TRISEX", "Stablecoin", "TimeBank", "Cooperative", "Upcycle"]}
               imagePrompt="Cryptocurrency coin with transgender symbol"
             />
@@ -218,7 +218,7 @@ export default function TrisexStablecoin() {
             <CardContent className="p-4 text-center">
               <Wallet className="h-8 w-8 mx-auto mb-2 opacity-80" />
               <div className="text-3xl font-bold">${timeBank.trisexBalance.toFixed(2)}</div>
-              <div className="text-sm opacity-80">$TRISEX Balance</div>
+              <div className="text-sm opacity-80">$TRISEXORG Balance</div>
             </CardContent>
           </Card>
           <Card className="bg-gradient-to-br from-blue-500 to-cyan-500 text-white">
@@ -274,7 +274,7 @@ export default function TrisexStablecoin() {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Wallet className="h-5 w-5 text-purple-600" />
-                    Your $TRISEX Wallet
+                    Your $TRISEXORG Wallet
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-6">
@@ -319,9 +319,9 @@ export default function TrisexStablecoin() {
                       </DialogTrigger>
                       <DialogContent>
                         <DialogHeader>
-                          <DialogTitle>Send $TRISEX</DialogTitle>
+                          <DialogTitle>Send $TRISEXORG</DialogTitle>
                           <DialogDescription>
-                            Transfer $TRISEX to another cooperative member
+                            Transfer $TRISEXORG to another cooperative member
                           </DialogDescription>
                         </DialogHeader>
                         <div className="space-y-4 py-4">
@@ -343,7 +343,7 @@ export default function TrisexStablecoin() {
                         </div>
                         <DialogFooter>
                           <Button variant="outline" onClick={() => setShowSendDialog(false)}>Cancel</Button>
-                          <Button data-testid="button-confirm-send">Send $TRISEX</Button>
+                          <Button data-testid="button-confirm-send">Send $TRISEXORG</Button>
                         </DialogFooter>
                       </DialogContent>
                     </Dialog>
@@ -401,7 +401,7 @@ export default function TrisexStablecoin() {
                     Time Bank Overview
                   </CardTitle>
                   <CardDescription>
-                    Contribute time to earn $TRISEX at ${(5.00 * timeBank.equityMultiplier).toFixed(2)}/hour
+                    Contribute time to earn $TRISEXORG at ${(5.00 * timeBank.equityMultiplier).toFixed(2)}/hour
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
@@ -428,7 +428,7 @@ export default function TrisexStablecoin() {
                     <div className="flex justify-between">
                       <span>Hourly Rate:</span>
                       <span className="font-semibold text-purple-600">
-                        ${(5.00 * timeBank.equityMultiplier).toFixed(2)} $TRISEX
+                        ${(5.00 * timeBank.equityMultiplier).toFixed(2)} $TRISEXORG
                       </span>
                     </div>
                     <Separator />
@@ -453,7 +453,7 @@ export default function TrisexStablecoin() {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Calculator className="h-5 w-5 text-purple-600" />
-                    Convert Time to $TRISEX
+                    Convert Time to $TRISEXORG
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-6">
@@ -487,13 +487,13 @@ export default function TrisexStablecoin() {
                   <div className="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-4 text-center">
                     <div className="text-sm text-muted-foreground">You'll receive</div>
                     <div className="text-3xl font-bold text-purple-600">
-                      ${calculateTimeToTrisex(10).toFixed(2)} $TRISEX
+                      ${calculateTimeToTrisex(10).toFixed(2)} $TRISEXORG
                     </div>
                   </div>
 
                   <Button className="w-full bg-gradient-to-r from-blue-500 to-purple-500" data-testid="button-convert-time">
                     <ArrowRightLeft className="h-4 w-4 mr-2" />
-                    Convert to $TRISEX
+                    Convert to $TRISEXORG
                   </Button>
                 </CardContent>
               </Card>
@@ -662,7 +662,7 @@ export default function TrisexStablecoin() {
                                         <SelectItem value="barrier_dam">Barrier Dams</SelectItem>
                                         <SelectItem value="oral_barrier">Oral Barriers (MSM)</SelectItem>
                                         <SelectItem value="nanoheal">NanoHeal Lubricant</SelectItem>
-                                        <SelectItem value="credit_only">Just $TRISEX Credit</SelectItem>
+                                        <SelectItem value="credit_only">Just $TRISEXORG Credit</SelectItem>
                                       </SelectContent>
                                     </Select>
                                     <p className="text-xs text-muted-foreground mt-1">
@@ -756,7 +756,7 @@ export default function TrisexStablecoin() {
                       { step: 1, title: "Submit Trade-In", desc: "Choose your expired products and select what new products you want", icon: Package },
                       { step: 2, title: "Ship Old Products", desc: "Use our prepaid label or drop off at a partner location", icon: Truck },
                       { step: 3, title: "Recycling & Remanufacturing", desc: "Materials are safely broken down and made into new products", icon: Factory },
-                      { step: 4, title: "Receive New Products", desc: "Fresh products shipped to you free, or take $TRISEX credit", icon: Gift }
+                      { step: 4, title: "Receive New Products", desc: "Fresh products shipped to you free, or take $TRISEXORG credit", icon: Gift }
                     ].map(item => (
                       <div key={item.step} className="flex items-start gap-3">
                         <div className="w-8 h-8 bg-green-100 dark:bg-green-900/40 rounded-full flex items-center justify-center flex-shrink-0">
@@ -806,7 +806,7 @@ export default function TrisexStablecoin() {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <ArrowRightLeft className="h-5 w-5 text-purple-600" />
-                    Exchange $TRISEX
+                    Exchange $TRISEXORG
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
@@ -817,7 +817,7 @@ export default function TrisexStablecoin() {
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="trisex">$TRISEX</SelectItem>
+                        <SelectItem value="trisex">$TRISEXORG</SelectItem>
                         <SelectItem value="timebank">Time Bank Hours</SelectItem>
                         <SelectItem value="upcycle">Upcycle Credits</SelectItem>
                       </SelectContent>
@@ -860,13 +860,13 @@ export default function TrisexStablecoin() {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <DollarSign className="h-5 w-5 text-purple-600" />
-                    Use $TRISEX
+                    Use $TRISEXORG
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
                     {[
-                      { title: "Product Discounts", desc: "Pay for products with up to 50% $TRISEX", icon: Package },
+                      { title: "Product Discounts", desc: "Pay for products with up to 50% $TRISEXORG", icon: Package },
                       { title: "Peer Services", desc: "Pay mentors and facilitators directly", icon: Users },
                       { title: "Community Donations", desc: "Support cooperative programs", icon: Heart },
                       { title: "Partner Clinics", desc: "Pay for services at participating clinics", icon: Heart },
@@ -945,7 +945,7 @@ export default function TrisexStablecoin() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Coins className="h-5 w-5 text-blue-600" />
-              About $TRISEX Stablecoin
+              About $TRISEXORG Stablecoin
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -953,19 +953,19 @@ export default function TrisexStablecoin() {
               <div>
                 <h4 className="font-semibold mb-2">1:1 USD Backed</h4>
                 <p className="text-sm text-muted-foreground">
-                  Every $TRISEX is backed by $1 USD held in cooperative reserves. Audited quarterly with full transparency.
+                  Every $TRISEXORG is backed by $1 USD held in cooperative reserves. Audited quarterly with full transparency.
                 </p>
               </div>
               <div>
                 <h4 className="font-semibold mb-2">Cooperative Governance</h4>
                 <p className="text-sm text-muted-foreground">
-                  Token holders participate in budget decisions through participatory budgeting. Your $TRISEX = your voice.
+                  Token holders participate in budget decisions through participatory budgeting. Your $TRISEXORG = your voice.
                 </p>
               </div>
               <div>
                 <h4 className="font-semibold mb-2">Circular Economy</h4>
                 <p className="text-sm text-muted-foreground">
-                  Upcycling expired products keeps materials in circulation and rewards sustainable behavior with $TRISEX.
+                  Upcycling expired products keeps materials in circulation and rewards sustainable behavior with $TRISEXORG.
                 </p>
               </div>
             </div>

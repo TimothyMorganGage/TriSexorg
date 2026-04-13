@@ -75,7 +75,7 @@ export default function Home() {
                   <TestTube className="w-3 h-3 mr-1" /> 3D Scanning
                 </Badge>
                 <Badge className="bg-white/10 text-white/80 border border-white/20 hover:bg-white/15">
-                  <Coins className="w-3 h-3 mr-1" /> $TRISEX Stablecoin
+                  <Coins className="w-3 h-3 mr-1" /> $TRISEXORG Stablecoin
                 </Badge>
               </div>
 

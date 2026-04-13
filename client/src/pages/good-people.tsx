@@ -68,7 +68,7 @@ const sexualHealthDirectivesSchema = z.object({
   monthlyHealthScreening: z.boolean(),
   stiTestResults: z.string().optional(),
   contraceptiveMethod: z.string().optional(),
-  trisexBalance: z.number().default(1000), // Starting $TRISEX balance
+  trisexBalance: z.number().default(1000), // Starting $TRISEXORG balance
 });
 
 const matchingPreferencesSchema = z.object({
@@ -940,7 +940,7 @@ export default function GoodPeople() {
                             <div><strong>Stage 5:</strong> Protected sex after 1 month of meaningful interactions</div>
                             <div><strong>Stage 6:</strong> Unprotected sex only after 3+ months AND equalized sexual health risks</div>
                             <div className="pt-2 border-t border-red-300">
-                              <strong className="text-red-900">⚠️ Violations result in $TRISEX penalties</strong>
+                              <strong className="text-red-900">⚠️ Violations result in $TRISEXORG penalties</strong>
                             </div>
                           </div>
                         </div>
@@ -997,7 +997,7 @@ export default function GoodPeople() {
                             name="sexualHealthDirectives.trisexBalance"
                             render={({ field }) => (
                               <FormItem>
-                                <FormLabel>Current $TRISEX Balance</FormLabel>
+                                <FormLabel>Current $TRISEXORG Balance</FormLabel>
                                 <FormControl>
                                   <Input
                                     type="number"

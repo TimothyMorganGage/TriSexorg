@@ -63,7 +63,7 @@ const allNavItems: NavItem[] = [
   { name: "Partnership", href: "/partnership", icon: Users, category: "community", priority: 5, keywords: ["partner", "clinic", "healthcare"] },
   { name: "Economic Impact", href: "/economic-impact", icon: TrendingUp, category: "economics", priority: 7, keywords: ["daly", "economics", "impact", "health"] },
   { name: "Monogamy Economics", href: "/monogamy-economics", icon: Scale, category: "economics", priority: 6, keywords: ["monogamy", "economics", "relationship"] },
-  { name: "$TRISEX", href: "/trisex-stablecoin", icon: Coins, category: "economics", priority: 6, keywords: ["trisex", "stablecoin", "coin", "crypto"] },
+  { name: "$TRISEXORG", href: "/trisex-stablecoin", icon: Coins, category: "economics", priority: 6, keywords: ["trisex", "stablecoin", "coin", "crypto"] },
   { name: "Open Books", href: "/open-books", icon: FileText, category: "economics", priority: 5, keywords: ["books", "finance", "open", "transparent"] },
   { name: "STI Tracking", href: "/partner-sti-tracking", icon: Activity, category: "health", priority: 8, keywords: ["sti", "tracking", "health", "4d"] },
   { name: "Mood Tracker", href: "/mood-logging", icon: Heart, category: "wellness", priority: 6, keywords: ["mood", "feelings", "emotions", "track"] },
