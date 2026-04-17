@@ -180,6 +180,7 @@ export default function FilingPreparation() {
   const [entityName, setEntityName] = useState("BAD Cooperative");
   const [taxYear, setTaxYear] = useState<string>(String(new Date().getFullYear() - 1));
   const [jurisdiction, setJurisdiction] = useState("");
+  const [stablecoin, setStablecoin] = useState<string>("$BAD");
   const [fieldValues, setFieldValues] = useState<Record<string, string>>({});
   const [previewDoc, setPreviewDoc] = useState<FilingDocument | null>(null);
   const [statusUpdate, setStatusUpdate] = useState<{ id: number; status: string; confirmationNumber: string; agencyResponse: string; notes: string } | null>(null);
@@ -204,6 +205,7 @@ export default function FilingPreparation() {
         entityName,
         taxYear: taxYear ? parseInt(taxYear) : undefined,
         jurisdiction: jurisdiction || undefined,
+        stablecoin,
         data,
       });
       return await res.json();
@@ -382,6 +384,20 @@ export default function FilingPreparation() {
                     <div>
                       <Label>State (jurisdiction)</Label>
                       <Input value={jurisdiction} onChange={e => setJurisdiction(e.target.value)} placeholder="e.g., New York" data-testid="input-jurisdiction" />
+                    </div>
+                  )}
+                  {(selectedFormId === "FinCEN-107" || selectedFormId === "State-MTL") && (
+                    <div>
+                      <Label>Stablecoin(s) covered by this filing</Label>
+                      <Select value={stablecoin} onValueChange={setStablecoin}>
+                        <SelectTrigger data-testid="select-stablecoin"><SelectValue /></SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="$BAD">$BAD only</SelectItem>
+                          <SelectItem value="$TRISEXORG">$TRISEXORG only</SelectItem>
+                          <SelectItem value="$BAD + $TRISEXORG">$BAD + $TRISEXORG (both)</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <p className="text-xs text-muted-foreground mt-1">Most state regulators expect a separate registration per distinct token. Generate one packet per coin if your counsel advises.</p>
                     </div>
                   )}
                 </div>

@@ -2341,7 +2341,7 @@ END:VEVENT
   app.post('/api/filings/generate', async (req, res) => {
     try {
       if (!req.session?.userId) return res.status(401).json({ message: "Must be logged in" });
-      const { formType, entityName, taxYear, jurisdiction, data } = req.body;
+      const { formType, entityName, taxYear, jurisdiction, stablecoin, data } = req.body;
       if (!formType || !entityName) {
         return res.status(400).json({ message: "formType and entityName are required" });
       }
@@ -2350,6 +2350,7 @@ END:VEVENT
         entityName,
         taxYear,
         jurisdiction,
+        stablecoin,
         data: data || {},
       });
       const doc = await storage.createFilingDocument({

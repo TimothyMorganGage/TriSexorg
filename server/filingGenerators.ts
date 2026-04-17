@@ -3,7 +3,12 @@ export interface FilingInput {
   entityName: string;
   taxYear?: number;
   jurisdiction?: string;
+  stablecoin?: string; // "$BAD" | "$TRISEXORG" | "$BAD + $TRISEXORG"
   data: Record<string, any>;
+}
+
+function coinLabel(input: FilingInput): string {
+  return input.stablecoin || "$BAD";
 }
 
 export interface GeneratedFiling {
@@ -207,7 +212,7 @@ SECTION B — REGISTRANT INFORMATION
 SECTION C — MSB ACTIVITIES (check all that apply)
 [${d.actCurrencyDealer ? "X" : " "}] Currency dealer or exchanger
 [${d.actCheckCasher ? "X" : " "}] Check casher
-[${d.actMoneyTransmitter ? "X" : " "}] Money transmitter  ← required for $BAD stablecoin issuance/redemption
+[${d.actMoneyTransmitter ? "X" : " "}] Money transmitter  ← required for ${coinLabel(input)} stablecoin issuance/redemption
 [${d.actMoneyOrder ? "X" : " "}] Issuer / seller / redeemer of money orders
 [${d.actTravelersCheck ? "X" : " "}] Issuer / seller / redeemer of traveler's checks
 [${d.actStoredValue ? "X" : " "}] Provider / seller of prepaid access (stored value)
@@ -284,7 +289,7 @@ City/State/ZIP:             ${d.principalCityStateZip || "[REQUIRED]"}
 Phone:                      ${d.principalPhone || "[REQUIRED]"}
 
 PROPOSED ACTIVITIES IN ${state.toUpperCase()}
-Description:                ${d.activityDescription || `Issuance, transmission, and redemption of $BAD stablecoin to and on behalf of cooperative members residing in or transacting from ${state}.`}
+Description:                ${d.activityDescription || `Issuance, transmission, and redemption of ${coinLabel(input)} stablecoin(s) to and on behalf of cooperative members residing in or transacting from ${state}.`}
 Estimated annual volume:    $${d.estimatedVolume || "[REQUIRED]"}
 Number of expected agents:  ${d.agentCount || "0"}
 Customer-funds custody:     ${d.custodyModel || "[REQUIRED — describe segregated trust account, surety, or qualified custodian]"}
@@ -330,7 +335,7 @@ Notary acknowledgment required in most states.
 ` + FOOTER(
     `${state} Department of Financial Institutions / Financial Regulation`,
     "https://nationwidelicensingsystem.org",
-    `Submit through NMLS (Nationwide Multistate Licensing System).\n                 Some states require a parallel paper packet — confirm with\n                 the ${state} regulator before relying on NMLS alone.\n                 Money transmission without a license is a criminal offense\n                 in nearly every state.`
+    `Submit through NMLS (Nationwide Multistate Licensing System).\n                 Some states require a parallel paper packet — confirm with\n                 the ${state} regulator before relying on NMLS alone.\n                 Money transmission without a license is a criminal offense\n                 in nearly every state.\n                 NOTE: A separate MTL packet may be required per stablecoin\n                 issued (${coinLabel(input)}); confirm with state counsel.`
   );
   return {
     documentBody: body,
