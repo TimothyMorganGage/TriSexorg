@@ -1455,3 +1455,35 @@ export type ForumReply = typeof forumReplies.$inferSelect;
 
 export type ForumLike = typeof forumLikes.$inferSelect;
 export type ForumBookmark = typeof forumBookmarks.$inferSelect;
+
+export const filingDocuments = pgTable("filing_documents", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  formType: text("form_type").notNull(),
+  entityName: text("entity_name").notNull(),
+  status: text("status").notNull().default("drafted"),
+  documentBody: text("document_body").notNull(),
+  payload: text("payload"),
+  taxYear: integer("tax_year"),
+  jurisdiction: text("jurisdiction"),
+  confirmationNumber: text("confirmation_number"),
+  agencyResponse: text("agency_response"),
+  generatedAt: timestamp("generated_at").defaultNow().notNull(),
+  submittedAt: timestamp("submitted_at"),
+  acknowledgedAt: timestamp("acknowledged_at"),
+  notes: text("notes"),
+});
+
+export const insertFilingDocumentSchema = createInsertSchema(filingDocuments).omit({
+  id: true,
+  documentBody: true,
+  generatedAt: true,
+  submittedAt: true,
+  acknowledgedAt: true,
+  confirmationNumber: true,
+  agencyResponse: true,
+  status: true,
+});
+
+export type InsertFilingDocument = z.infer<typeof insertFilingDocumentSchema>;
+export type FilingDocument = typeof filingDocuments.$inferSelect;

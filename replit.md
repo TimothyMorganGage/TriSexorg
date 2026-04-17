@@ -43,6 +43,7 @@ The application uses a modern full-stack architecture with a clear separation of
     -   Community Forum for peer support and knowledge sharing with moderated categories, anonymous posting, content warnings, trending posts, and cooperative governance discussions. Fully backend-integrated with PostgreSQL storage (forum_categories, forum_posts, forum_replies, forum_likes, forum_bookmarks tables), REST API endpoints under `/api/forum/*`, and real-time data via TanStack Query.
     -   $TRISEXORG stablecoin system integrated with Time Banking for cooperative dividends and health impact rewards.
     -   Expired product upcycling program allowing users to exchange used barriers for credit toward new products.
+    -   Filing Preparation system for the $BAD cooperative — generates real, downloadable, filing-ready packets (IRS Form 1024 for 501(c)(12) status, 1099-DIV with patronage note, FinCEN Form 107 MSB registration, State Money Transmitter License packets via NMLS) with explicit honesty banners that TriSex.org does not file on behalf of users. Backed by `filing_documents` table; REST API under `/api/filings/*`; users update real-world status with actual agency confirmation numbers (no internal placeholders).
 
 ## External Dependencies
 

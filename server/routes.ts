@@ -8,6 +8,7 @@ import helmet from "helmet";
 import cors from "cors";
 import rateLimit from "express-rate-limit";
 import { storage } from "./storage";
+import { generateFiling, SUPPORTED_FORMS } from "./filingGenerators";
 import { 
   insertUserSchema, insertProductConfigurationSchema, insertOrderSchema,
   insertEducationalContentSchema, insertPartnershipRequestSchema,
@@ -2319,6 +2320,111 @@ END:VEVENT
       res.status(201).json({ message: "Categories seeded", categories: created });
     } catch (error) {
       res.status(500).json({ message: "Failed to seed categories" });
+    }
+  });
+
+  // Filing Preparation API routes (real, downloadable, filing-ready packets)
+  app.get('/api/filings/forms', (_req, res) => {
+    res.json(SUPPORTED_FORMS);
+  });
+
+  app.get('/api/filings', async (req, res) => {
+    try {
+      if (!req.session?.userId) return res.status(401).json({ message: "Must be logged in" });
+      const docs = await storage.getFilingDocuments(req.session.userId);
+      res.json(docs);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch filings" });
+    }
+  });
+
+  app.post('/api/filings/generate', async (req, res) => {
+    try {
+      if (!req.session?.userId) return res.status(401).json({ message: "Must be logged in" });
+      const { formType, entityName, taxYear, jurisdiction, data } = req.body;
+      if (!formType || !entityName) {
+        return res.status(400).json({ message: "formType and entityName are required" });
+      }
+      const generated = generateFiling({
+        formType,
+        entityName,
+        taxYear,
+        jurisdiction,
+        data: data || {},
+      });
+      const doc = await storage.createFilingDocument({
+        userId: req.session.userId,
+        formType,
+        entityName,
+        taxYear: taxYear || null,
+        jurisdiction: jurisdiction || null,
+        payload: generated.payload,
+        notes: null,
+        documentBody: generated.documentBody,
+      } as any);
+      res.status(201).json({ ...doc, agencyUrl: generated.agencyUrl, formNumber: generated.formNumber, filingMethod: generated.filingMethod });
+    } catch (error: any) {
+      res.status(500).json({ message: error.message || "Failed to generate filing" });
+    }
+  });
+
+  app.get('/api/filings/:id', async (req, res) => {
+    try {
+      if (!req.session?.userId) return res.status(401).json({ message: "Must be logged in" });
+      const doc = await storage.getFilingDocument(parseInt(req.params.id));
+      if (!doc) return res.status(404).json({ message: "Filing not found" });
+      if (doc.userId !== req.session.userId) return res.status(403).json({ message: "Forbidden" });
+      res.json(doc);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch filing" });
+    }
+  });
+
+  app.get('/api/filings/:id/download', async (req, res) => {
+    try {
+      if (!req.session?.userId) return res.status(401).json({ message: "Must be logged in" });
+      const doc = await storage.getFilingDocument(parseInt(req.params.id));
+      if (!doc) return res.status(404).json({ message: "Filing not found" });
+      if (doc.userId !== req.session.userId) return res.status(403).json({ message: "Forbidden" });
+      const safeName = doc.formType.replace(/[^a-z0-9-]/gi, "_");
+      res.setHeader("Content-Type", "text/plain; charset=utf-8");
+      res.setHeader("Content-Disposition", `attachment; filename="${safeName}_${doc.id}.txt"`);
+      res.send(doc.documentBody);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to download filing" });
+    }
+  });
+
+  app.patch('/api/filings/:id/status', async (req, res) => {
+    try {
+      if (!req.session?.userId) return res.status(401).json({ message: "Must be logged in" });
+      const id = parseInt(req.params.id);
+      const existing = await storage.getFilingDocument(id);
+      if (!existing) return res.status(404).json({ message: "Filing not found" });
+      if (existing.userId !== req.session.userId) return res.status(403).json({ message: "Forbidden" });
+      const { status, confirmationNumber, agencyResponse, notes } = req.body;
+      const allowed = ["drafted", "reviewed", "submitted", "acknowledged", "approved", "rejected", "withdrawn"];
+      if (!allowed.includes(status)) {
+        return res.status(400).json({ message: `status must be one of ${allowed.join(", ")}` });
+      }
+      const updated = await storage.updateFilingDocumentStatus(id, status, { confirmationNumber, agencyResponse, notes });
+      res.json(updated);
+    } catch (error: any) {
+      res.status(500).json({ message: error.message || "Failed to update filing status" });
+    }
+  });
+
+  app.delete('/api/filings/:id', async (req, res) => {
+    try {
+      if (!req.session?.userId) return res.status(401).json({ message: "Must be logged in" });
+      const id = parseInt(req.params.id);
+      const existing = await storage.getFilingDocument(id);
+      if (!existing) return res.status(404).json({ message: "Filing not found" });
+      if (existing.userId !== req.session.userId) return res.status(403).json({ message: "Forbidden" });
+      await storage.deleteFilingDocument(id);
+      res.json({ success: true });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to delete filing" });
     }
   });
 

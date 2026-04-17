@@ -6,6 +6,7 @@ import {
   moodEntries, wellnessGoals, moodInsights, timeEntries, timeGoals, timeInsights,
   calendarConnections, scheduledTasks, taskTemplates, savedProductConfigurations,
   forumCategories, forumPosts, forumReplies, forumLikes, forumBookmarks,
+  filingDocuments,
   type User, type InsertUser, type Product, type InsertProduct,
   type ProductConfiguration, type InsertProductConfiguration,
   type Order, type InsertOrder, type EducationalContent, type InsertEducationalContent,
@@ -27,7 +28,8 @@ import {
   type ForumCategory, type InsertForumCategory,
   type ForumPost, type InsertForumPost,
   type ForumReply, type InsertForumReply,
-  type ForumLike, type ForumBookmark
+  type ForumLike, type ForumBookmark,
+  type FilingDocument, type InsertFilingDocument
 } from "@shared/schema";
 
 export interface IStorage {
@@ -177,6 +179,13 @@ export interface IStorage {
   toggleForumBookmark(userId: number, postId: number): Promise<boolean>;
   searchForumPosts(query: string): Promise<ForumPost[]>;
   getTrendingForumPosts(limit?: number): Promise<ForumPost[]>;
+
+  // Filing Preparation methods
+  getFilingDocuments(userId: number): Promise<FilingDocument[]>;
+  getFilingDocument(id: number): Promise<FilingDocument | undefined>;
+  createFilingDocument(data: InsertFilingDocument & { documentBody: string }): Promise<FilingDocument>;
+  updateFilingDocumentStatus(id: number, status: string, fields?: { confirmationNumber?: string; agencyResponse?: string; notes?: string }): Promise<FilingDocument | undefined>;
+  deleteFilingDocument(id: number): Promise<boolean>;
 
   // Clinic Inventory methods
   getClinicInventory(): Promise<any[]>;
@@ -2785,6 +2794,43 @@ export class MemStorage implements IStorage {
     return await db.select().from(forumPosts)
       .orderBy(desc(forumPosts.likeCount), desc(forumPosts.replyCount), desc(forumPosts.viewCount))
       .limit(limit);
+  }
+
+  // Filing Preparation methods
+  async getFilingDocuments(userId: number): Promise<FilingDocument[]> {
+    return await db.select().from(filingDocuments)
+      .where(eq(filingDocuments.userId, userId))
+      .orderBy(desc(filingDocuments.generatedAt));
+  }
+
+  async getFilingDocument(id: number): Promise<FilingDocument | undefined> {
+    const [doc] = await db.select().from(filingDocuments).where(eq(filingDocuments.id, id));
+    return doc;
+  }
+
+  async createFilingDocument(data: InsertFilingDocument & { documentBody: string }): Promise<FilingDocument> {
+    const [created] = await db.insert(filingDocuments).values(data).returning();
+    return created;
+  }
+
+  async updateFilingDocumentStatus(
+    id: number,
+    status: string,
+    fields?: { confirmationNumber?: string; agencyResponse?: string; notes?: string }
+  ): Promise<FilingDocument | undefined> {
+    const update: any = { status };
+    if (status === "submitted") update.submittedAt = new Date();
+    if (status === "acknowledged" || status === "approved") update.acknowledgedAt = new Date();
+    if (fields?.confirmationNumber !== undefined) update.confirmationNumber = fields.confirmationNumber;
+    if (fields?.agencyResponse !== undefined) update.agencyResponse = fields.agencyResponse;
+    if (fields?.notes !== undefined) update.notes = fields.notes;
+    const [updated] = await db.update(filingDocuments).set(update).where(eq(filingDocuments.id, id)).returning();
+    return updated;
+  }
+
+  async deleteFilingDocument(id: number): Promise<boolean> {
+    const result = await db.delete(filingDocuments).where(eq(filingDocuments.id, id)).returning();
+    return result.length > 0;
   }
 }
 
