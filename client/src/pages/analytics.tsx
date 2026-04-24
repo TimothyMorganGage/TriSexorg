@@ -45,59 +45,46 @@ export default function Analytics() {
   const [timeRange, setTimeRange] = useState("30d");
   const [selectedMetric, setSelectedMetric] = useState("health-equity");
 
-  // Health Equity Data
-  const healthEquityData = [
-    { month: "Jan", white: 85, black: 72, hispanic: 69, asian: 88, indigenous: 65, overall: 75.8 },
-    { month: "Feb", white: 86, black: 74, hispanic: 71, asian: 89, indigenous: 67, overall: 77.4 },
-    { month: "Mar", white: 87, black: 76, hispanic: 73, asian: 90, indigenous: 69, overall: 79.0 },
-    { month: "Apr", white: 88, black: 78, hispanic: 75, asian: 91, indigenous: 71, overall: 80.6 },
-    { month: "May", white: 89, black: 80, hispanic: 77, asian: 92, indigenous: 73, overall: 82.2 },
-    { month: "Jun", white: 90, black: 82, hispanic: 79, asian: 93, indigenous: 75, overall: 83.8 }
-  ];
+  // ────────────────────────────────────────────────────────────────────
+  // HONESTY: every series below is EMPTY until real telemetry is wired
+  // up. The chart skeletons remain so the dashboard's structure (and the
+  // econometric methodology beneath each chart) is visible — but no
+  // numbers are invented. Race-stratified, generation-stratified, and
+  // financial figures are particularly dangerous to fabricate, so they
+  // start at zero by design.
+  // ────────────────────────────────────────────────────────────────────
 
-  // Peer Mentor Effectiveness
-  const mentorEffectivenessData = [
-    { generation: "Gen Z", satisfaction: 94, sessions: 1247, retention: 89 },
-    { generation: "Millennial", satisfaction: 92, sessions: 2156, retention: 91 },
-    { generation: "Gen X", satisfaction: 88, sessions: 1834, retention: 87 },
-    { generation: "Boomer+", satisfaction: 85, sessions: 1098, retention: 82 }
-  ];
+  // Health equity by demographic — would be derived from self-reported
+  // member demographic categories crossed with consented health-outcome
+  // events. Rendered empty until consented data exists.
+  const healthEquityData: Array<{ month: string; overall: number }> = [];
 
-  // Intelligence Framework Usage
-  const intelligenceUsageData = [
-    { type: "Infinite", value: 28, color: "#8B5CF6" },
-    { type: "Multicultural", value: 32, color: "#06B6D4" },
-    { type: "Multigenerational", value: 25, color: "#10B981" },
-    { type: "Racial & Ethnic", value: 15, color: "#F59E0B" }
-  ];
+  // Peer mentor effectiveness — would be derived from session logs +
+  // post-session satisfaction surveys + 90-day retention. Empty until
+  // mentors are enrolled and sessions occur.
+  const mentorEffectivenessData: Array<{ generation: string; satisfaction: number; sessions: number; retention: number }> = [];
 
-  // Time Banking Analytics
-  const timeBankingData = [
-    { week: "Week 1", contributed: 142, received: 98, balance: 44, dividend: 18.25 },
-    { week: "Week 2", contributed: 167, received: 123, balance: 88, dividend: 29.15 },
-    { week: "Week 3", contributed: 189, received: 145, balance: 132, dividend: 41.80 },
-    { week: "Week 4", contributed: 205, received: 167, balance: 170, dividend: 52.90 }
-  ];
+  // Intelligence framework usage — would be derived from feature-tap
+  // telemetry, opt-in. Empty until consented telemetry exists.
+  const intelligenceUsageData: Array<{ type: string; value: number; color: string }> = [];
 
-  // DALY (Disability-Adjusted Life Years) Economic Impact
-  const dalyData = [
-    { category: "Sexual Health Education", dalysSaved: 2847, economicValue: 284700, costPerDaly: 100 },
-    { category: "STI Prevention", dalysSaved: 1923, economicValue: 192300, costPerDaly: 100 },
-    { category: "Reproductive Health", dalysSaved: 3156, economicValue: 315600, costPerDaly: 100 },
-    { category: "Mental Health Support", dalysSaved: 2234, economicValue: 223400, costPerDaly: 100 },
-    { category: "Peer Mentorship", dalysSaved: 1876, economicValue: 187600, costPerDaly: 100 }
-  ];
+  // Time banking — would be derived from the time-tracker + dividend
+  // ledger. Empty until ledger has entries.
+  const timeBankingData: Array<{ week: string; contributed: number; received: number; balance: number; dividend: number }> = [];
 
-  // Community Engagement Metrics
-  const engagementData = [
-    { platform: "Peer Network", users: 15847, engagement: 87, growth: 12 },
-    { platform: "Educational Wiki", users: 23412, engagement: 72, growth: 18 },
-    { platform: "Health Screening", users: 8934, engagement: 94, growth: 25 },
-    { platform: "Product Customization", users: 6723, engagement: 89, growth: 15 }
-  ];
+  // DALY economic impact — would be computed from the WHO DALY framework
+  // (YLL + YLD with disability weights from the Global Burden of Disease
+  // study) applied to consented intervention outcomes. Cost-per-DALY is
+  // the operational ratio, not a fabricated impact claim.
+  const dalyData: Array<{ category: string; dalysSaved: number; economicValue: number; costPerDaly: number }> = [];
+
+  // Community engagement — would be derived from session telemetry
+  // (opt-in) and active-user counts. Empty until telemetry exists.
+  const engagementData: Array<{ platform: string; users: number; engagement: number; growth: number }> = [];
 
   const totalDALYs = dalyData.reduce((sum, item) => sum + item.dalysSaved, 0);
   const totalEconomicImpact = dalyData.reduce((sum, item) => sum + item.economicValue, 0);
+  const hasAnyData = healthEquityData.length + mentorEffectivenessData.length + intelligenceUsageData.length + timeBankingData.length + dalyData.length + engagementData.length > 0;
 
   return (
     <div className="min-h-screen bg-background py-12 px-4 sm:px-6 lg:px-8">
@@ -148,33 +135,39 @@ export default function Analytics() {
             </Button>
           </div>
 
+          <Alert className="mb-4 border-amber-500 bg-amber-50 dark:bg-amber-950/30">
+            <AlertDescription className="text-sm text-amber-900 dark:text-amber-200">
+              <strong>No fabricated numbers.</strong> Until consented member telemetry, mentor session logs, and DALY-weighted intervention outcomes are wired in, every figure on this page reads <code>—</code>. The chart structure and the methodology beneath each one stay visible so the econometric framework is auditable; the values do not. Race-stratified, generation-stratified, and financial figures are particularly costly to fabricate, so they are zero by design.
+            </AlertDescription>
+          </Alert>
+
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
             <Card>
               <CardContent className="p-4 text-center">
                 <TrendingUp className="h-8 w-8 text-primary mx-auto mb-2" />
-                <p className="text-2xl font-bold">{totalDALYs.toLocaleString()}</p>
-                <p className="text-sm text-muted-foreground">DALYs Saved</p>
+                <p className="text-2xl font-bold">{hasAnyData ? totalDALYs.toLocaleString() : "—"}</p>
+                <p className="text-sm text-muted-foreground">DALYs averted (WHO framework)</p>
               </CardContent>
             </Card>
             <Card>
               <CardContent className="p-4 text-center">
                 <DollarSign className="h-8 w-8 text-aquamarine mx-auto mb-2" />
-                <p className="text-2xl font-bold">${(totalEconomicImpact / 1000000).toFixed(1)}M</p>
-                <p className="text-sm text-muted-foreground">Economic Impact</p>
+                <p className="text-2xl font-bold">{hasAnyData ? `$${(totalEconomicImpact / 1000000).toFixed(1)}M` : "—"}</p>
+                <p className="text-sm text-muted-foreground">Economic value (cost-per-DALY × DALYs)</p>
               </CardContent>
             </Card>
             <Card>
               <CardContent className="p-4 text-center">
                 <Users className="h-8 w-8 text-secondary mx-auto mb-2" />
-                <p className="text-2xl font-bold">54,916</p>
-                <p className="text-sm text-muted-foreground">Active Users</p>
+                <p className="text-2xl font-bold">—</p>
+                <p className="text-sm text-muted-foreground">Active members (consented telemetry)</p>
               </CardContent>
             </Card>
             <Card>
               <CardContent className="p-4 text-center">
                 <Heart className="h-8 w-8 text-primary mx-auto mb-2" />
-                <p className="text-2xl font-bold">83.8%</p>
-                <p className="text-sm text-muted-foreground">Health Equity Score</p>
+                <p className="text-2xl font-bold">—</p>
+                <p className="text-sm text-muted-foreground">Health equity index (composite)</p>
               </CardContent>
             </Card>
           </div>
