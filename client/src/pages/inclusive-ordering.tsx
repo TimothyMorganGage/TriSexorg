@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
+import { Checkbox } from "@/components/ui/checkbox";
 
 import { PrecisionSizing } from "@/components/MyONESizing";
 import { 
@@ -28,10 +29,40 @@ interface BrandingPreference {
   messaging: string;
 }
 
+type RoleBalance = "receptive" | "penetrative" | "versatile";
+type ProcreativeMode = "barrier-only" | "procreative-permeable" | "fertility-only";
+
+const CONTACT_ZONES = [
+  { id: "oral", label: "Oral (mouth-side contact, throat coating)" },
+  { id: "anal", label: "Anal (rectal canal or oral-anal)" },
+  { id: "vaginal", label: "Endosex vaginal canal" },
+  { id: "frontal", label: "Frontal opening / front hole (transmasc, non-binary, intersex frontal anatomy)" },
+  { id: "neovaginal", label: "Post-vaginoplasty neovagina (shallower depth honoured)" },
+] as const;
+
+type ContactZoneId = typeof CONTACT_ZONES[number]["id"];
+
 export default function InclusiveOrdering() {
   const [brandingPreference, setBrandingPreference] = useState("pride-inclusive");
   const [orderStep, setOrderStep] = useState(1);
   const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
+  const [roleBalance, setRoleBalance] = useState<RoleBalance>("versatile");
+  const [contactZones, setContactZones] = useState<ContactZoneId[]>(["oral", "anal", "vaginal"]);
+  const [procreativeMode, setProcreativeMode] = useState<ProcreativeMode>("barrier-only");
+
+  const toggleContactZone = (zoneId: ContactZoneId) => {
+    setContactZones((prev) =>
+      prev.includes(zoneId) ? prev.filter((z) => z !== zoneId) : [...prev, zoneId]
+    );
+  };
+
+  const balanceConfigCode = () => {
+    const zoneCode = contactZones.length > 0 ? contactZones.map((z) => z[0].toUpperCase()).sort().join("") : "—";
+    const roleCode = roleBalance === "versatile" ? "V" : roleBalance === "receptive" ? "R" : "P";
+    const procCode =
+      procreativeMode === "barrier-only" ? "B" : procreativeMode === "procreative-permeable" ? "PP" : "FO";
+    return `${roleCode}-${zoneCode}-${procCode}`;
+  };
 
   const brandingOptions: BrandingPreference[] = [
     {
@@ -246,6 +277,145 @@ export default function InclusiveOrdering() {
                 ))}
               </div>
 
+              {selectedProduct && (
+                <div className="mt-6 p-4 border rounded-lg bg-muted/30 space-y-5" data-testid="multi-use-balance-panel">
+                  <div>
+                    <h4 className="font-semibold mb-1 flex items-center">
+                      <Settings className="mr-2 h-4 w-4" /> Multi-use balance
+                    </h4>
+                    <p className="text-xs text-muted-foreground">
+                      One unit, configured to flex across the roles, contact zones, and procreative
+                      modes you actually use. The fitting profile, material thickness, and surface
+                      treatment are tuned to whatever combination you select below.
+                    </p>
+                  </div>
+
+                  <div>
+                    <Label className="text-sm font-medium">Role balance</Label>
+                    <p className="text-xs text-muted-foreground mb-2">
+                      How the same unit should perform if you flip roles inside one session.
+                    </p>
+                    <RadioGroup
+                      value={roleBalance}
+                      onValueChange={(value) => setRoleBalance(value as RoleBalance)}
+                      className="space-y-2"
+                    >
+                      <div className="flex items-start space-x-2">
+                        <RadioGroupItem value="receptive" id="role-receptive" className="mt-1" />
+                        <Label htmlFor="role-receptive" className="text-xs cursor-pointer leading-snug">
+                          <span className="font-medium">Receptive only</span> — designed for being penetrated; inner
+                          surface tuned for receiving comfort.
+                        </Label>
+                      </div>
+                      <div className="flex items-start space-x-2">
+                        <RadioGroupItem value="penetrative" id="role-penetrative" className="mt-1" />
+                        <Label htmlFor="role-penetrative" className="text-xs cursor-pointer leading-snug">
+                          <span className="font-medium">Penetrative only</span> — designed for penetrating; outer
+                          surface tuned for the receiving partner's comfort.
+                        </Label>
+                      </div>
+                      <div className="flex items-start space-x-2">
+                        <RadioGroupItem value="versatile" id="role-versatile" className="mt-1" />
+                        <Label htmlFor="role-versatile" className="text-xs cursor-pointer leading-snug">
+                          <span className="font-medium">Versatile (flips mid-session)</span> — symmetric inner / outer
+                          treatment so the unit performs equally if roles switch, without removing or replacing it.
+                        </Label>
+                      </div>
+                    </RadioGroup>
+                  </div>
+
+                  <div>
+                    <Label className="text-sm font-medium">Contact zones the unit must cover</Label>
+                    <p className="text-xs text-muted-foreground mb-2">
+                      Pick every zone you want this single unit to be valid against. Material spec is
+                      built to the strictest zone selected.
+                    </p>
+                    <div className="space-y-2">
+                      {CONTACT_ZONES.map((zone) => (
+                        <div key={zone.id} className="flex items-start space-x-2">
+                          <Checkbox
+                            id={`zone-${zone.id}`}
+                            checked={contactZones.includes(zone.id)}
+                            onCheckedChange={() => toggleContactZone(zone.id)}
+                            className="mt-0.5"
+                          />
+                          <Label htmlFor={`zone-${zone.id}`} className="text-xs cursor-pointer leading-snug">
+                            {zone.label}
+                          </Label>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <Label className="text-sm font-medium">Procreative balance</Label>
+                    <p className="text-xs text-muted-foreground mb-2">
+                      Whether this unit is barrier-only, sperm-permeable for trying-to-conceive, or
+                      fertility-only with no STI barrier.
+                    </p>
+                    <RadioGroup
+                      value={procreativeMode}
+                      onValueChange={(value) => setProcreativeMode(value as ProcreativeMode)}
+                      className="space-y-2"
+                    >
+                      <div className="flex items-start space-x-2">
+                        <RadioGroupItem value="barrier-only" id="proc-barrier" className="mt-1" />
+                        <Label htmlFor="proc-barrier" className="text-xs cursor-pointer leading-snug">
+                          <span className="font-medium">Barrier-only</span> — full sperm and STI barrier (default).
+                        </Label>
+                      </div>
+                      <div className="flex items-start space-x-2">
+                        <RadioGroupItem value="procreative-permeable" id="proc-permeable" className="mt-1" />
+                        <Label htmlFor="proc-permeable" className="text-xs cursor-pointer leading-snug">
+                          <span className="font-medium">Procreative-permeable</span> — sperm-permitted opening with
+                          STI barrier still in place around the rest of the contact surface.{" "}
+                          <span className="text-amber-700 dark:text-amber-300">
+                            Experimental: not yet manufactured or independently validated.
+                          </span>
+                        </Label>
+                      </div>
+                      <div className="flex items-start space-x-2">
+                        <RadioGroupItem value="fertility-only" id="proc-fertility" className="mt-1" />
+                        <Label htmlFor="proc-fertility" className="text-xs cursor-pointer leading-snug">
+                          <span className="font-medium">Fertility-only</span> — anatomical-fit aid for trying-to-conceive
+                          with no STI barrier function. Use only with a partner whose recent STI status you have
+                          jointly verified.
+                        </Label>
+                      </div>
+                    </RadioGroup>
+                  </div>
+
+                  <div className="flex items-center justify-between p-3 bg-background rounded border">
+                    <span className="text-xs text-muted-foreground">Configured balance code</span>
+                    <Badge variant="outline" data-testid="balance-config-code" className="font-mono">
+                      {balanceConfigCode()}
+                    </Badge>
+                  </div>
+
+                  <div className="p-3 border border-dashed border-amber-500/60 bg-amber-50/40 dark:bg-amber-900/10 rounded text-xs text-amber-900 dark:text-amber-200 space-y-1">
+                    <p>
+                      <strong>Honesty notes:</strong>
+                    </p>
+                    <ul className="list-disc list-inside space-y-1">
+                      <li>
+                        Multi-use balance means <strong>one unit can flex across roles and zones inside a single
+                        session</strong>. Each unit is still single-use per session and must be replaced between
+                        partners or between sessions.
+                      </li>
+                      <li>
+                        The <strong>Procreative-permeable</strong> mode is a design hypothesis — TriSex.org has not
+                        manufactured it, has not run clinical validation on it, and is not claiming any conception
+                        rate or STI-blocking efficacy for it.
+                      </li>
+                      <li>
+                        The <strong>Fertility-only</strong> mode does not block STIs. Selecting it is not a substitute
+                        for testing.
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              )}
+
               <div className="flex space-x-3 mt-6">
                 <Button 
                   variant="outline" 
@@ -256,8 +426,9 @@ export default function InclusiveOrdering() {
                 </Button>
                 <Button 
                   onClick={() => setOrderStep(3)} 
-                  disabled={!selectedProduct}
+                  disabled={!selectedProduct || contactZones.length === 0}
                   className="flex-1"
+                  data-testid="continue-to-sizing-button"
                 >
                   Continue to Sizing
                 </Button>
@@ -343,6 +514,43 @@ export default function InclusiveOrdering() {
                   <div className="flex justify-between items-center pb-3 border-b">
                     <span className="font-medium">Messaging:</span>
                     <span className="text-sm">{getCurrentBranding().messaging}</span>
+                  </div>
+
+                  <div className="flex justify-between items-center pb-3 border-b">
+                    <span className="font-medium">Role balance:</span>
+                    <span className="text-sm capitalize">{roleBalance}</span>
+                  </div>
+
+                  <div className="flex justify-between items-start pb-3 border-b gap-3">
+                    <span className="font-medium">Contact zones (one unit covers all):</span>
+                    <span className="text-sm text-right">
+                      {contactZones.length === 0
+                        ? "—"
+                        : contactZones
+                            .map(
+                              (z) =>
+                                CONTACT_ZONES.find((cz) => cz.id === z)?.label.split(" (")[0] ?? z
+                            )
+                            .join(", ")}
+                    </span>
+                  </div>
+
+                  <div className="flex justify-between items-center pb-3 border-b">
+                    <span className="font-medium">Procreative mode:</span>
+                    <span className="text-sm">
+                      {procreativeMode === "barrier-only"
+                        ? "Barrier-only (sperm + STI)"
+                        : procreativeMode === "procreative-permeable"
+                        ? "Procreative-permeable (experimental)"
+                        : "Fertility-only (no STI barrier)"}
+                    </span>
+                  </div>
+
+                  <div className="flex justify-between items-center pb-3 border-b">
+                    <span className="font-medium">Balance code:</span>
+                    <Badge variant="outline" className="font-mono">
+                      {balanceConfigCode()}
+                    </Badge>
                   </div>
                 </div>
 
