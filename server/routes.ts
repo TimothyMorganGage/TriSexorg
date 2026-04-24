@@ -2170,6 +2170,53 @@ END:VEVENT
     }
   });
 
+  app.get('/api/feed/recent-team', async (_req, res) => {
+    const safe = async <T,>(p: Promise<T>, fallback: T): Promise<T> => {
+      try { return await p; } catch { return fallback; }
+    };
+    try {
+      const [
+        products, education, partnerships, budget, dividends,
+        orders, forumCats, forumPostsRecent, herbalEntries,
+        platformComp, coopInterest,
+      ] = await Promise.all([
+        safe(storage.getProducts(), [] as any[]),
+        safe(storage.getEducationalContent(), [] as any[]),
+        safe(storage.getPartnershipRequests(), [] as any[]),
+        safe(storage.getBudgetItems(), [] as any[]),
+        safe(storage.getCommunityDividends(), [] as any[]),
+        safe(storage.getOrders(), [] as any[]),
+        safe(storage.getForumCategories(), [] as any[]),
+        safe(storage.getForumPosts(undefined, 1000, 0), [] as any[]),
+        safe(storage.listHerbalEntries(), [] as any[]),
+        safe(storage.listPlatformCompensation(), [] as any[]),
+        safe(storage.countXCoopPricingInterest(), { total: 0, premium: 0, pornOptOut: 0, byPlatform: {} as Record<string, { total: number; premium: number }> }),
+      ]);
+
+      const pulse = [
+        { feature: "Configurable Protection Products", count: products.length, route: "/products", category: "products" },
+        { feature: "Educational Articles", count: education.length, route: "/education", category: "education" },
+        { feature: "Partnership Requests", count: partnerships.length, route: "/partnership", category: "co-op" },
+        { feature: "Budget Items (Cooperative Voting)", count: budget.length, route: "/open-books", category: "co-op" },
+        { feature: "Community Dividends Distributed", count: dividends.length, route: "/trisex-stablecoin", category: "co-op" },
+        { feature: "Orders Placed", count: orders.length, route: "/products", category: "commerce" },
+        { feature: "Community Forum Categories", count: forumCats.length, route: "/community-forum", category: "community" },
+        { feature: "Community Forum Posts (recent 1k window)", count: forumPostsRecent.length, route: "/community-forum", category: "community" },
+        { feature: "Herbal Knowledge Entries", count: herbalEntries.length, route: "/herbal-knowledge", category: "knowledge" },
+        { feature: "Platform Compensation Attestations", count: platformComp.length, route: "/social-integration", category: "federation" },
+        { feature: "Co-op Pricing Interest Registrations (X / Truth Social)", count: coopInterest.total, route: "/social-integration", category: "federation" },
+      ].sort((a, b) => b.count - a.count);
+
+      res.json({
+        pulse,
+        generatedAt: new Date().toISOString(),
+        methodology: "Counts are derived from the live storage interface (no telemetry pixel, no analytics SDK). Numbers reflect rows currently held in the cooperative's data store. Empty values mean the feature exists but no co-op activity has been recorded — they are not placeholders.",
+      });
+    } catch (err: any) {
+      res.status(500).json({ message: "Failed to compute feature pulse", error: err.message });
+    }
+  });
+
   app.get('/api/forum/posts/trending', async (req, res) => {
     try {
       const limit = req.query.limit ? parseInt(req.query.limit as string) : 10;
