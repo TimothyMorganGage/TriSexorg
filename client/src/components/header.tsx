@@ -18,6 +18,7 @@ export function Header() {
     { name: "Boundaries", href: "/boundaries-background-check" },
     { name: "Meta Lens Scan", href: "/meta-lens-scan" },
     { name: "Herbal Knowledge", href: "/herbal-knowledge" },
+    { name: "Sniffies Policy", href: "/sniffies-policy" },
   ];
 
   const isActive = (path: string) => location === path;

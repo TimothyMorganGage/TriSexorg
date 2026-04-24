@@ -1621,3 +1621,26 @@ export const insertXShareAttestationSchema = createInsertSchema(xShareAttestatio
 
 export type InsertXShareAttestation = z.infer<typeof insertXShareAttestationSchema>;
 export type XShareAttestation = typeof xShareAttestations.$inferSelect;
+
+export const platformCompensationAttestations = pgTable("platform_compensation_attestations", {
+  id: serial("id").primaryKey(),
+  platformName: text("platform_name").notNull(),
+  proprietorEntity: text("proprietor_entity"),
+  compensationActive: boolean("compensation_active").notNull().default(false),
+  compensationProgramUrl: text("compensation_program_url"),
+  verifiedBy: text("verified_by"),
+  evidenceNotes: text("evidence_notes"),
+  affectedPersonRegistryUrl: text("affected_person_registry_url"),
+  lastReviewed: timestamp("last_reviewed").defaultNow().notNull(),
+  updatedById: integer("updated_by_id").references(() => users.id),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const insertPlatformCompensationAttestationSchema = createInsertSchema(platformCompensationAttestations).omit({
+  id: true,
+  createdAt: true,
+  lastReviewed: true,
+});
+
+export type InsertPlatformCompensationAttestation = z.infer<typeof insertPlatformCompensationAttestationSchema>;
+export type PlatformCompensationAttestation = typeof platformCompensationAttestations.$inferSelect;

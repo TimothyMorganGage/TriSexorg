@@ -39,6 +39,8 @@ import {
   herbalKnowledgeEntries,
   type XShareAttestation, type InsertXShareAttestation,
   xShareAttestations,
+  type PlatformCompensationAttestation, type InsertPlatformCompensationAttestation,
+  platformCompensationAttestations,
 } from "@shared/schema";
 
 export interface IStorage {
@@ -228,6 +230,11 @@ export interface IStorage {
   getActiveXAttestation(userId: number): Promise<XShareAttestation | undefined>;
   createXAttestation(data: InsertXShareAttestation): Promise<XShareAttestation>;
   revokeXAttestation(id: number, userId: number): Promise<boolean>;
+
+  // Inbound platform-access compensation gate (Sniffies, etc.)
+  listPlatformCompensation(): Promise<PlatformCompensationAttestation[]>;
+  getPlatformCompensation(platformName: string): Promise<PlatformCompensationAttestation | undefined>;
+  upsertPlatformCompensation(data: InsertPlatformCompensationAttestation): Promise<PlatformCompensationAttestation>;
 
   // Clinic Inventory methods
   getClinicInventory(): Promise<any[]>;
@@ -3029,6 +3036,29 @@ export class MemStorage implements IStorage {
       .where(and(eq(xShareAttestations.id, id), eq(xShareAttestations.userId, userId)))
       .returning();
     return result.length > 0;
+  }
+
+  async listPlatformCompensation(): Promise<PlatformCompensationAttestation[]> {
+    return await db.select().from(platformCompensationAttestations).orderBy(platformCompensationAttestations.platformName);
+  }
+
+  async getPlatformCompensation(platformName: string): Promise<PlatformCompensationAttestation | undefined> {
+    const [row] = await db.select().from(platformCompensationAttestations)
+      .where(eq(platformCompensationAttestations.platformName, platformName));
+    return row;
+  }
+
+  async upsertPlatformCompensation(data: InsertPlatformCompensationAttestation): Promise<PlatformCompensationAttestation> {
+    const existing = await this.getPlatformCompensation(data.platformName);
+    if (existing) {
+      const [updated] = await db.update(platformCompensationAttestations)
+        .set({ ...data, lastReviewed: new Date() })
+        .where(eq(platformCompensationAttestations.id, existing.id))
+        .returning();
+      return updated;
+    }
+    const [created] = await db.insert(platformCompensationAttestations).values(data).returning();
+    return created;
   }
 }
 
