@@ -42,6 +42,73 @@ const CONTACT_ZONES = [
 
 type ContactZoneId = typeof CONTACT_ZONES[number]["id"];
 
+interface FoldState {
+  id: string;
+  glyph: string;
+  name: string;
+  metaphor: string;
+  acts: string;
+  zonesCovered: ContactZoneId[];
+  reFoldStep: string;
+}
+
+const FOLD_LIBRARY: FoldState[] = [
+  {
+    id: "folded-square",
+    glyph: "▢",
+    name: "Folded Square",
+    metaphor: "Storage / wallet fold — the resting state, like a closed origami crane.",
+    acts: "Idle. Not in contact. Used between acts as a clean re-set point.",
+    zonesCovered: [],
+    reFoldStep: "Flatten. Smooth corners. Hold by the outer tab so the inner face never touches a partner.",
+  },
+  {
+    id: "wing-dam",
+    glyph: "▭",
+    name: "Wing-Extended Dam",
+    metaphor: "Crane unfolded into wide wings — a planar barrier sheet held flat across a contact surface.",
+    acts: "Oral-vulva, oral-anal (rim), oral-frontal — any external mouth-on-skin act.",
+    zonesCovered: ["oral", "anal", "vaginal", "frontal", "neovaginal"],
+    reFoldStep: "Pull the two opposite tabs outward; the central panel pops flat. Anchor with finger loops on each tab.",
+  },
+  {
+    id: "inverted-sleeve",
+    glyph: "◖",
+    name: "Inverted Sleeve",
+    metaphor: "Wing folds inward and rolls into a tube — a hollow origami straw, closed at one end.",
+    acts: "Penetrative role: shaft-side cover for penises, T-dicks, micropenises, or post-phalloplasty shafts.",
+    zonesCovered: ["vaginal", "anal", "frontal", "neovaginal"],
+    reFoldStep: "Lift the central panel, invert through the anchor ring, roll downward like an origami waterbomb base.",
+  },
+  {
+    id: "cup-pouch",
+    glyph: "◓",
+    name: "Cup-Pouch",
+    metaphor: "Sleeve everted and re-pinched at the base — a receiving cup, like an origami fortune-teller flipped inside-out.",
+    acts: "Receptive role: lines a vaginal canal, neovagina, frontal opening, or anal canal as an internal barrier.",
+    zonesCovered: ["vaginal", "neovaginal", "frontal", "anal"],
+    reFoldStep: "Push the sleeve's closed end through itself; fold the rim outward so the new outer face was previously the unused side.",
+  },
+  {
+    id: "hammock-cradle",
+    glyph: "◡",
+    name: "Hammock-Cradle",
+    metaphor: "Two opposite tabs anchored, central panel suspended — a slung origami hammock spanning two contact zones at once.",
+    acts: "Two-zone simultaneous coverage: e.g. oral + frontal, or oral + anal, where one partner is bridging two acts.",
+    zonesCovered: ["oral", "anal", "vaginal", "frontal", "neovaginal"],
+    reFoldStep: "Anchor first tab to upper zone, second tab to lower zone; let central panel sag into a U so it hugs both surfaces.",
+  },
+  {
+    id: "finger-cot",
+    glyph: "◉",
+    name: "Finger Cot Spire",
+    metaphor: "Single corner pulled into a tall cone — an origami spire, sealed-tip and narrow.",
+    acts: "Manual / digital contact: covers a finger or thumb for internal exploration without changing units.",
+    zonesCovered: ["vaginal", "anal", "frontal", "neovaginal"],
+    reFoldStep: "Pinch one corner up, twist 90° so it crowns into a sealed cone; the rest of the unit hangs as a skirt-anchor at the wrist.",
+  },
+];
+
 export default function InclusiveOrdering() {
   const [brandingPreference, setBrandingPreference] = useState("pride-inclusive");
   const [orderStep, setOrderStep] = useState(1);
@@ -49,6 +116,24 @@ export default function InclusiveOrdering() {
   const [roleBalance, setRoleBalance] = useState<RoleBalance>("versatile");
   const [contactZones, setContactZones] = useState<ContactZoneId[]>(["oral", "anal", "vaginal"]);
   const [procreativeMode, setProcreativeMode] = useState<ProcreativeMode>("barrier-only");
+  const [currentFoldIndex, setCurrentFoldIndex] = useState(0);
+
+  const compatibleFolds = FOLD_LIBRARY.filter(
+    (fold) =>
+      fold.zonesCovered.length === 0 ||
+      fold.zonesCovered.some((zone) => contactZones.includes(zone))
+  );
+
+  const safeFoldIndex = compatibleFolds.length === 0 ? 0 : currentFoldIndex % compatibleFolds.length;
+  const activeFold = compatibleFolds[safeFoldIndex] ?? null;
+
+  const cycleFold = (direction: 1 | -1) => {
+    if (compatibleFolds.length === 0) return;
+    setCurrentFoldIndex((prev) => {
+      const next = (prev + direction + compatibleFolds.length) % compatibleFolds.length;
+      return next;
+    });
+  };
 
   const toggleContactZone = (zoneId: ContactZoneId) => {
     setContactZones((prev) =>
@@ -392,6 +477,122 @@ export default function InclusiveOrdering() {
                     </Badge>
                   </div>
 
+                  <div className="space-y-3 pt-2 border-t">
+                    <div>
+                      <h4 className="font-semibold mb-1 flex items-center">
+                        <Package className="mr-2 h-4 w-4" /> Origami fold sequence — "hammocks of the mind"
+                      </h4>
+                      <p className="text-xs text-muted-foreground">
+                        One physical unit, multiple named fold-states. A sexual puppeteer transitions the
+                        unit through these origami-style folds during a session so a range of acts can be
+                        served by the same one (or two) unit(s) — never by changing units mid-act.
+                      </p>
+                    </div>
+
+                    {compatibleFolds.length === 0 ? (
+                      <div className="p-3 border border-dashed border-muted-foreground/40 bg-muted/20 rounded text-xs text-muted-foreground">
+                        Pick at least one contact zone above to see the fold states this unit can serve.
+                      </div>
+                    ) : (
+                      <>
+                        <div className="flex flex-wrap gap-2">
+                          {compatibleFolds.map((fold, idx) => (
+                            <button
+                              key={fold.id}
+                              type="button"
+                              onClick={() => setCurrentFoldIndex(idx)}
+                              className={`px-3 py-2 rounded border text-xs flex items-center gap-2 transition-colors ${
+                                idx === safeFoldIndex
+                                  ? "border-primary bg-primary/10 text-foreground"
+                                  : "border-muted-foreground/30 hover:border-primary/50 text-muted-foreground"
+                              }`}
+                              data-testid={`fold-pill-${fold.id}`}
+                            >
+                              <span className="text-base leading-none">{fold.glyph}</span>
+                              <span>{fold.name}</span>
+                            </button>
+                          ))}
+                        </div>
+
+                        {activeFold && (
+                          <div className="p-4 bg-background border rounded-lg space-y-3" data-testid="active-fold-card">
+                            <div className="flex items-start gap-4">
+                              <div
+                                className="w-16 h-16 rounded-md border-2 border-primary/40 bg-primary/5 flex items-center justify-center text-4xl"
+                                aria-hidden
+                              >
+                                {activeFold.glyph}
+                              </div>
+                              <div className="flex-1 space-y-1">
+                                <div className="flex items-center justify-between gap-2">
+                                  <h5 className="font-semibold text-sm">
+                                    Fold {safeFoldIndex + 1} of {compatibleFolds.length}: {activeFold.name}
+                                  </h5>
+                                  <div className="flex gap-1">
+                                    <Button
+                                      type="button"
+                                      size="sm"
+                                      variant="outline"
+                                      className="h-7 px-2 text-xs"
+                                      onClick={() => cycleFold(-1)}
+                                      data-testid="fold-prev-button"
+                                    >
+                                      ← Prev fold
+                                    </Button>
+                                    <Button
+                                      type="button"
+                                      size="sm"
+                                      variant="outline"
+                                      className="h-7 px-2 text-xs"
+                                      onClick={() => cycleFold(1)}
+                                      data-testid="fold-next-button"
+                                    >
+                                      Next fold →
+                                    </Button>
+                                  </div>
+                                </div>
+                                <p className="text-xs text-muted-foreground italic">{activeFold.metaphor}</p>
+                              </div>
+                            </div>
+
+                            <div className="grid sm:grid-cols-2 gap-3 text-xs">
+                              <div>
+                                <div className="font-medium mb-1">Acts this fold serves</div>
+                                <p className="text-muted-foreground">{activeFold.acts}</p>
+                              </div>
+                              <div>
+                                <div className="font-medium mb-1">Re-fold step (puppeteer instruction)</div>
+                                <p className="text-muted-foreground">{activeFold.reFoldStep}</p>
+                              </div>
+                            </div>
+
+                            {activeFold.zonesCovered.length > 0 && (
+                              <div className="text-xs">
+                                <div className="font-medium mb-1">Zones this fold can be applied to</div>
+                                <div className="flex flex-wrap gap-1">
+                                  {activeFold.zonesCovered
+                                    .filter((z) => contactZones.includes(z))
+                                    .map((z) => (
+                                      <Badge key={z} variant="secondary" className="text-[10px]">
+                                        {CONTACT_ZONES.find((cz) => cz.id === z)?.label.split(" (")[0] ?? z}
+                                      </Badge>
+                                    ))}
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        )}
+
+                        <div className="text-xs text-muted-foreground">
+                          Suggested session sequence: start at <strong>Folded Square</strong>, transition
+                          forward as acts change, return to <strong>Folded Square</strong> before any pause.
+                          One unit can usually handle <strong>3–4 fold transitions</strong> before tactile
+                          fatigue — for sessions with more transitions than that, plan a second unit.
+                        </div>
+                      </>
+                    )}
+                  </div>
+
                   <div className="p-3 border border-dashed border-amber-500/60 bg-amber-50/40 dark:bg-amber-900/10 rounded text-xs text-amber-900 dark:text-amber-200 space-y-1">
                     <p>
                       <strong>Honesty notes:</strong>
@@ -401,6 +602,18 @@ export default function InclusiveOrdering() {
                         Multi-use balance means <strong>one unit can flex across roles and zones inside a single
                         session</strong>. Each unit is still single-use per session and must be replaced between
                         partners or between sessions.
+                      </li>
+                      <li>
+                        The <strong>origami fold sequence</strong> ("hammocks of the mind") is a design
+                        hypothesis. TriSex.org has not manufactured a fold-cycling unit, has not measured
+                        barrier integrity across fold transitions, and is not claiming that any specific
+                        fold preserves STI-blocking efficacy. The named folds (Folded Square, Wing-Extended
+                        Dam, Inverted Sleeve, Cup-Pouch, Hammock-Cradle, Finger Cot Spire) are
+                        co-operator-designed shapes pending prototyping and independent validation.
+                      </li>
+                      <li>
+                        The "3–4 fold transitions before tactile fatigue" guidance is a working
+                        co-operator estimate for design conversations, not a measured product spec.
                       </li>
                       <li>
                         The <strong>Procreative-permeable</strong> mode is a design hypothesis — TriSex.org has not
