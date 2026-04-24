@@ -19,6 +19,7 @@ export function Header() {
     { name: "Meta Lens Scan", href: "/meta-lens-scan" },
     { name: "Herbal Knowledge", href: "/herbal-knowledge" },
     { name: "Sniffies Policy", href: "/sniffies-policy" },
+    { name: "TriSexPort", href: "/trisexport" },
   ];
 
   const isActive = (path: string) => location === path;

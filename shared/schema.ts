@@ -1644,3 +1644,26 @@ export const insertPlatformCompensationAttestationSchema = createInsertSchema(pl
 
 export type InsertPlatformCompensationAttestation = z.infer<typeof insertPlatformCompensationAttestationSchema>;
 export type PlatformCompensationAttestation = typeof platformCompensationAttestations.$inferSelect;
+
+export const trisexportPartnerSlots = pgTable("trisexport_partner_slots", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  pseudonym: text("pseudonym").notNull(),
+  encounterDate: timestamp("encounter_date").notNull(),
+  barrierUsage: text("barrier_usage").notNull(),
+  consentQuality: text("consent_quality").notNull(),
+  diseaseVectorStatus: text("disease_vector_status").notNull(),
+  partnerLastTestDate: timestamp("partner_last_test_date"),
+  partnerAnonymousHandle: text("partner_anonymous_handle"),
+  fluidBondedFlag: boolean("fluid_bonded_flag").notNull().default(false),
+  notes: text("notes"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const insertTrisexportPartnerSlotSchema = createInsertSchema(trisexportPartnerSlots).omit({
+  id: true,
+  createdAt: true,
+});
+
+export type InsertTrisexportPartnerSlot = z.infer<typeof insertTrisexportPartnerSlotSchema>;
+export type TrisexportPartnerSlot = typeof trisexportPartnerSlots.$inferSelect;

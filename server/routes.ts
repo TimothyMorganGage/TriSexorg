@@ -2656,6 +2656,81 @@ END:VEVENT
     }
   });
 
+  // TriSexPort — recent-6 sexual-partner consent & disease lattice
+  app.get('/api/trisexport', async (req, res) => {
+    try {
+      if (!req.session?.userId) return res.status(401).json({ message: "Must be logged in" });
+      const slots = await storage.listTrisexportSlots(req.session.userId);
+      res.json(slots);
+    } catch (e: any) {
+      res.status(500).json({ message: e.message });
+    }
+  });
+
+  app.post('/api/trisexport', async (req, res) => {
+    try {
+      if (!req.session?.userId) return res.status(401).json({ message: "Must be logged in" });
+      const { insertTrisexportPartnerSlotSchema } = await import("@shared/schema");
+      const parsed = insertTrisexportPartnerSlotSchema.parse({
+        ...req.body,
+        userId: req.session.userId,
+        encounterDate: req.body.encounterDate ? new Date(req.body.encounterDate) : new Date(),
+        partnerLastTestDate: req.body.partnerLastTestDate ? new Date(req.body.partnerLastTestDate) : null,
+      });
+      const created = await storage.addTrisexportSlot(parsed);
+      res.status(201).json(created);
+    } catch (e: any) {
+      res.status(400).json({ message: e.message });
+    }
+  });
+
+  app.delete('/api/trisexport/:id', async (req, res) => {
+    try {
+      if (!req.session?.userId) return res.status(401).json({ message: "Must be logged in" });
+      const ok = await storage.deleteTrisexportSlot(parseInt(req.params.id), req.session.userId);
+      if (!ok) return res.status(404).json({ message: "Slot not found" });
+      res.json({ success: true });
+    } catch (e: any) {
+      res.status(500).json({ message: e.message });
+    }
+  });
+
+  app.get('/api/trisexport/lattice', async (req, res) => {
+    try {
+      if (!req.session?.userId) return res.status(401).json({ message: "Must be logged in" });
+      const slots = await storage.listTrisexportSlots(req.session.userId);
+      const total = slots.length;
+      const summary = {
+        slotsUsed: total,
+        slotsAvailable: 6 - total,
+        consentBreakdown: {
+          enthusiastic: slots.filter(s => s.consentQuality === "enthusiastic").length,
+          negotiated: slots.filter(s => s.consentQuality === "negotiated").length,
+          ambiguous: slots.filter(s => s.consentQuality === "ambiguous").length,
+          regretted: slots.filter(s => s.consentQuality === "regretted").length,
+          violated: slots.filter(s => s.consentQuality === "violated").length,
+        },
+        barrierBreakdown: {
+          full: slots.filter(s => s.barrierUsage === "full").length,
+          partial: slots.filter(s => s.barrierUsage === "partial").length,
+          none: slots.filter(s => s.barrierUsage === "none").length,
+          unknown: slots.filter(s => s.barrierUsage === "unknown").length,
+        },
+        diseaseVectorBreakdown: {
+          knownNegative: slots.filter(s => s.diseaseVectorStatus === "known-negative").length,
+          knownPositive: slots.filter(s => s.diseaseVectorStatus === "known-positive").length,
+          untested: slots.filter(s => s.diseaseVectorStatus === "untested").length,
+          declined: slots.filter(s => s.diseaseVectorStatus === "declined").length,
+        },
+        fluidBondedCount: slots.filter(s => s.fluidBondedFlag).length,
+        recommendsTesting: slots.some(s => s.barrierUsage !== "full" && (s.diseaseVectorStatus === "untested" || s.diseaseVectorStatus === "declined")),
+      };
+      res.json(summary);
+    } catch (e: any) {
+      res.status(500).json({ message: e.message });
+    }
+  });
+
   // Inbound platform-access compensation gate (Sniffies and similar)
   app.get('/api/platform-compensation', async (_req, res) => {
     try {

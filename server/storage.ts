@@ -41,6 +41,8 @@ import {
   xShareAttestations,
   type PlatformCompensationAttestation, type InsertPlatformCompensationAttestation,
   platformCompensationAttestations,
+  type TrisexportPartnerSlot, type InsertTrisexportPartnerSlot,
+  trisexportPartnerSlots,
 } from "@shared/schema";
 
 export interface IStorage {
@@ -235,6 +237,11 @@ export interface IStorage {
   listPlatformCompensation(): Promise<PlatformCompensationAttestation[]>;
   getPlatformCompensation(platformName: string): Promise<PlatformCompensationAttestation | undefined>;
   upsertPlatformCompensation(data: InsertPlatformCompensationAttestation): Promise<PlatformCompensationAttestation>;
+
+  // TriSexPort recent-6 partner mapping
+  listTrisexportSlots(userId: number): Promise<TrisexportPartnerSlot[]>;
+  addTrisexportSlot(data: InsertTrisexportPartnerSlot): Promise<TrisexportPartnerSlot>;
+  deleteTrisexportSlot(id: number, userId: number): Promise<boolean>;
 
   // Clinic Inventory methods
   getClinicInventory(): Promise<any[]>;
@@ -3046,6 +3053,29 @@ export class MemStorage implements IStorage {
     const [row] = await db.select().from(platformCompensationAttestations)
       .where(eq(platformCompensationAttestations.platformName, platformName));
     return row;
+  }
+
+  async listTrisexportSlots(userId: number): Promise<TrisexportPartnerSlot[]> {
+    return await db.select().from(trisexportPartnerSlots)
+      .where(eq(trisexportPartnerSlots.userId, userId))
+      .orderBy(desc(trisexportPartnerSlots.encounterDate));
+  }
+
+  async addTrisexportSlot(data: InsertTrisexportPartnerSlot): Promise<TrisexportPartnerSlot> {
+    const existing = await this.listTrisexportSlots(data.userId);
+    if (existing.length >= 6) {
+      const oldest = existing[existing.length - 1];
+      await db.delete(trisexportPartnerSlots).where(eq(trisexportPartnerSlots.id, oldest.id));
+    }
+    const [created] = await db.insert(trisexportPartnerSlots).values(data).returning();
+    return created;
+  }
+
+  async deleteTrisexportSlot(id: number, userId: number): Promise<boolean> {
+    const result = await db.delete(trisexportPartnerSlots)
+      .where(and(eq(trisexportPartnerSlots.id, id), eq(trisexportPartnerSlots.userId, userId)))
+      .returning();
+    return result.length > 0;
   }
 
   async upsertPlatformCompensation(data: InsertPlatformCompensationAttestation): Promise<PlatformCompensationAttestation> {

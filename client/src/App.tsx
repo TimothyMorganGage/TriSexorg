@@ -96,6 +96,7 @@ const BoundariesBackgroundCheck = lazy(() => import("@/pages/boundaries-backgrou
 const MetaLensScan = lazy(() => import("@/pages/meta-lens-scan"));
 const HerbalKnowledge = lazy(() => import("@/pages/herbal-knowledge"));
 const SniffiesPolicy = lazy(() => import("@/pages/sniffies-policy"));
+const TriSexPort = lazy(() => import("@/pages/trisexport"));
 const Contact = lazy(() => import("@/pages/contact"));
 
 function PWAWrapper({ children }: { children: React.ReactNode }) {
@@ -165,6 +166,7 @@ function Router() {
             <Route path="/meta-lens-scan" component={MetaLensScan} />
             <Route path="/herbal-knowledge" component={HerbalKnowledge} />
             <Route path="/sniffies-policy" component={SniffiesPolicy} />
+            <Route path="/trisexport" component={TriSexPort} />
             <Route path="/saved-configurations" component={SavedConfigurations} />
             <Route path="/contact" component={Contact} />
             <Route path="/login" component={Login} />
