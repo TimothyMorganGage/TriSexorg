@@ -1687,9 +1687,9 @@ Every scan runs entirely on your device. No images leave the phone or computer. 
 
 | Metric | Specification |
 | --- | --- |
-| Length accuracy | ±1 mm |
-| Girth accuracy | ±0.5 mm |
-| Repeatability | 99.5% consistency |
+| Length accuracy | Target spec — value pending validation |
+| Girth accuracy | Target spec — value pending validation |
+| Repeatability | Pending in-house validation; published precision figures will be cited from the validation report when available |
 
 ---
 
@@ -2245,12 +2245,7 @@ NanoHeal ⚧️ combines intersectional naturopathic medicine with precision-eng
 
 ### Effectiveness Comparison
 
-| STI Category | Standalone | Combined |
-| --- | --- | --- |
-| HIV prevention | 89.4% | 98.9% |
-| Bacterial STI reduction | 82.7% | 97.1% |
-| Fungal prevention | 94.8% | 99.2% |
-| HSV reduction | 76.2% | 94.8% |
+> ⚠️ **No published efficacy figures.** Earlier wiki revisions printed a table of percent-reduction numbers (HIV 89.4% / 98.9%, bacterial STI 82.7% / 97.1%, fungal 94.8% / 99.2%, HSV 76.2% / 94.8%) for "Standalone" vs "Combined" use. **Those figures were fabricated** — there is no clinical trial of NanoHeal behind them. They have been removed. Real efficacy figures will only appear here when paired with a peer-reviewed citation. Until then, treat NanoHeal as **experimental and unproven for STI prevention**, and use medical-grade barriers as the primary line of defense.
 
 ### Relationship Commitment Levels
 
@@ -2325,13 +2320,7 @@ Penile-vaginal options include comfort fit (52–65mm), couple's harmony dual-se
 
 ## Clinical Results
 
-| Metric | Score |
-| --- | --- |
-| HIV reduction | 96.7% (p<0.001) |
-| Bacterial STI reduction | 94.2% (p<0.001) |
-| Fungal prevention | 98.1% (p<0.001) |
-| Comfort rating | 4.8/5.0 |
-| Sensation preservation | 4.6/5.0 |
+> ⚠️ **No clinical trial has been conducted.** A previous version of this wiki article published a "Clinical Results" table with reduction percentages and *p*-values (HIV 96.7% p<0.001, bacterial STI 94.2% p<0.001, fungal 98.1% p<0.001) plus comfort and sensation ratings. **None of those numbers were drawn from a real study.** Formatting fabricated numbers as peer-reviewed clinical results is the most dangerous form of misinformation a sexual-health wiki can publish, so the table is gone. Clinical results, when they exist, will be presented here with the trial registration number, sample size, methodology, and a link to the published paper. Until then: assume no clinical evidence.
 
 ---
 

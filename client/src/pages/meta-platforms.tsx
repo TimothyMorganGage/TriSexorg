@@ -58,86 +58,47 @@ export default function MetaPlatforms() {
   const metaPlatformStats: MetaPlatformStats[] = [
     {
       platform: "Facebook",
-      followers: 47382,
-      posts: 328,
-      engagement: 6.4,
-      reach: 234891,
+      followers: 0,
+      posts: 0,
+      engagement: 0,
+      reach: 0,
       icon: MessageCircle,
       color: "bg-blue-600",
       primaryFeature: "Community Building"
     },
     {
       platform: "Instagram",
-      followers: 89234,
-      posts: 567,
-      engagement: 11.8,
-      reach: 456789,
+      followers: 0,
+      posts: 0,
+      engagement: 0,
+      reach: 0,
       icon: Camera,
       color: "bg-gradient-to-r from-purple-500 to-pink-500",
       primaryFeature: "Visual Content"
     },
     {
       platform: "WhatsApp Business",
-      followers: 12847,
-      posts: 89,
-      engagement: 45.2,
-      reach: 67432,
+      followers: 0,
+      posts: 0,
+      engagement: 0,
+      reach: 0,
       icon: Phone,
       color: "bg-green-500",
       primaryFeature: "Direct Communication"
     },
     {
       platform: "Threads",
-      followers: 23156,
-      posts: 234,
-      engagement: 8.9,
-      reach: 123456,
+      followers: 0,
+      posts: 0,
+      engagement: 0,
+      reach: 0,
       icon: Hash,
       color: "bg-black",
       primaryFeature: "Real-time Updates"
     }
   ];
 
-  const recentPosts: ContentPost[] = [
-    {
-      id: "meta-1",
-      platform: "instagram",
-      content: "Medicine Wheel logo celebrating 2SLGBTIQA+ pride with sustainable custom protection 🏳️‍⚧️🏳️‍🌈 #Pride #SustainableHealth #CustomFit",
-      mediaType: "image",
-      engagement: { likes: 2847, shares: 456, comments: 234, views: 12847 },
-      timestamp: "3 hours ago",
-      hashtags: ["Pride", "SustainableHealth", "CustomFit", "2SLGBTIQA"],
-      audience: "18-45, Health Conscious"
-    },
-    {
-      id: "meta-2",
-      platform: "facebook",
-      content: "New research: 4D STI intervention using bioregional sewer testing shows 34% reduction in transmission rates. Read our latest findings on community health protection.",
-      mediaType: "carousel",
-      engagement: { likes: 1234, shares: 789, comments: 456, views: 8923 },
-      timestamp: "6 hours ago",
-      hashtags: ["PublicHealth", "Research", "STIPrevention", "CommunityHealth"],
-      audience: "25-65, Healthcare Professionals"
-    },
-    {
-      id: "meta-3",
-      platform: "whatsapp",
-      content: "New TriSex.org sizing guide available! Get your custom fit measurement in 3 easy steps. Reply with 'SIZE' to get started.",
-      engagement: { likes: 0, shares: 0, comments: 789, views: 3456 },
-      timestamp: "1 day ago",
-      hashtags: [],
-      audience: "Existing Customers"
-    },
-    {
-      id: "meta-4",
-      platform: "threads",
-      content: "Breaking: TriSex's cooperative health model saves 12,847 DALYs this quarter, contributing to national debt reduction. The future of sustainable healthcare is here. 🧵",
-      engagement: { likes: 567, shares: 234, comments: 123, views: 4567 },
-      timestamp: "2 days ago",
-      hashtags: ["HealthcareInnovation", "DALYs", "CooperativeHealth", "SustainableHealth"],
-      audience: "Public Health Leaders"
-    }
-  ];
+  const recentPosts: ContentPost[] = [];
 
   const contentTemplates = [
     {
@@ -485,17 +446,22 @@ export default function MetaPlatforms() {
 
           <TabsContent value="analytics">
             <div className="space-y-6">
+              <Alert className="border-amber-500 bg-amber-50 dark:bg-amber-950/30">
+                <AlertDescription className="text-xs text-amber-900 dark:text-amber-200">
+                  <strong>Honesty note:</strong> An earlier version of this dashboard displayed a fake top-line ("867K Total Reach +18% from last month", "9.8% Engagement Rate above Meta average", "3,249 New Followers", "892 Conversions"), four invented per-platform stat blocks (Facebook 47,382 / Instagram 89,234 / WhatsApp 12,847 / Threads 23,156 followers, with engagement percentages 6.4 / 11.8 / 45.2 / 8.9), and four fake "recent posts" with invented like/share/comment counts and unsupported efficacy claims in the post text ("4D STI intervention shows 34% reduction in transmission rates", "saves 12,847 DALYs this quarter, contributing to national debt reduction"). All numbers and posts have been removed. This page now shows zeroed counters until a real Meta Graph API connection is wired up.
+                </AlertDescription>
+              </Alert>
               <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <Card>
                   <CardContent className="p-6">
                     <div className="flex items-center justify-between">
                       <div>
                         <p className="text-sm font-medium text-muted-foreground">Total Reach</p>
-                        <p className="text-2xl font-bold">867K</p>
+                        <p className="text-2xl font-bold">—</p>
                       </div>
                       <Users className="h-8 w-8 text-blue-500" />
                     </div>
-                    <p className="text-xs text-muted-foreground mt-2">+18% from last month</p>
+                    <p className="text-xs text-muted-foreground mt-2">Meta Graph API not connected</p>
                   </CardContent>
                 </Card>
 
@@ -504,11 +470,11 @@ export default function MetaPlatforms() {
                     <div className="flex items-center justify-between">
                       <div>
                         <p className="text-sm font-medium text-muted-foreground">Engagement Rate</p>
-                        <p className="text-2xl font-bold">9.8%</p>
+                        <p className="text-2xl font-bold">—</p>
                       </div>
                       <Heart className="h-8 w-8 text-red-500" />
                     </div>
-                    <p className="text-xs text-muted-foreground mt-2">Above Meta average</p>
+                    <p className="text-xs text-muted-foreground mt-2">No data</p>
                   </CardContent>
                 </Card>
 
@@ -517,11 +483,11 @@ export default function MetaPlatforms() {
                     <div className="flex items-center justify-between">
                       <div>
                         <p className="text-sm font-medium text-muted-foreground">New Followers</p>
-                        <p className="text-2xl font-bold">3,249</p>
+                        <p className="text-2xl font-bold">—</p>
                       </div>
                       <TrendingUp className="h-8 w-8 text-green-500" />
                     </div>
-                    <p className="text-xs text-muted-foreground mt-2">This month</p>
+                    <p className="text-xs text-muted-foreground mt-2">No data</p>
                   </CardContent>
                 </Card>
 
@@ -530,11 +496,11 @@ export default function MetaPlatforms() {
                     <div className="flex items-center justify-between">
                       <div>
                         <p className="text-sm font-medium text-muted-foreground">Conversions</p>
-                        <p className="text-2xl font-bold">892</p>
+                        <p className="text-2xl font-bold">—</p>
                       </div>
                       <Target className="h-8 w-8 text-purple-500" />
                     </div>
-                    <p className="text-xs text-muted-foreground mt-2">Website visits</p>
+                    <p className="text-xs text-muted-foreground mt-2">No data</p>
                   </CardContent>
                 </Card>
               </div>
