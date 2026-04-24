@@ -24,13 +24,14 @@ import {
   Download,
   FileText,
   Star,
-  Network
+  Network,
+  Megaphone
 } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
 interface SocialPost {
   id: string;
-  platform: "bluesky" | "pixelfed" | "loops" | "mastodon";
+  platform: "bluesky" | "pixelfed" | "loops" | "mastodon" | "truthsocial";
   content: string;
   mediaUrl?: string;
   engagement: {
@@ -57,7 +58,7 @@ interface PlatformStats {
 export default function SocialIntegration() {
   const [activeTab, setActiveTab] = useState("overview");
   const [postContent, setPostContent] = useState("");
-  const [selectedPlatforms, setSelectedPlatforms] = useState<string[]>(["bluesky", "mastodon", "pixelfed"]);
+  const [selectedPlatforms, setSelectedPlatforms] = useState<string[]>(["bluesky", "mastodon", "pixelfed", "truthsocial"]);
 
   const platformStats: PlatformStats[] = [
     {
@@ -99,6 +100,16 @@ export default function SocialIntegration() {
       icon: Video,
       color: "bg-green-500",
       protocol: "ActivityPub"
+    },
+    {
+      platform: "Truth Social",
+      followers: 0,
+      posts: 0,
+      engagement: 0,
+      reach: 0,
+      icon: Megaphone,
+      color: "bg-red-600",
+      protocol: "Mastodon-compatible API (non-federated)"
     }
   ];
 
@@ -571,7 +582,7 @@ export default function SocialIntegration() {
                         Platforms
                       </label>
                       <div className="flex flex-wrap gap-2">
-                        {["bluesky", "mastodon", "pixelfed", "loops"].map((platform) => (
+                        {["bluesky", "mastodon", "pixelfed", "loops", "truthsocial"].map((platform) => (
                           <Button
                             key={platform}
                             variant={selectedPlatforms.includes(platform) ? "default" : "outline"}
@@ -588,7 +599,8 @@ export default function SocialIntegration() {
                             {platform === "mastodon" && <Network className="h-4 w-4 mr-1" />}
                             {platform === "pixelfed" && <Camera className="h-4 w-4 mr-1" />}
                             {platform === "loops" && <Video className="h-4 w-4 mr-1" />}
-                            {platform}
+                            {platform === "truthsocial" && <Megaphone className="h-4 w-4 mr-1" />}
+                            {platform === "truthsocial" ? "Truth Social" : platform}
                           </Button>
                         ))}
                       </div>
