@@ -500,26 +500,21 @@ export default function BadCoopDashboard() {
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="space-y-3">
+                      <div className="p-3 bg-amber-50 dark:bg-amber-950/30 border border-amber-300 rounded text-sm">
+                        <strong>Possibility template — not populated.</strong> No fabricated people are listed here. The roles a care circle <em>can</em> hold are: Primary Caregiver, Secondary Caregiver, Emergency Contact, Backup Caregiver, Healthcare Provider. Once you add real members below, they appear here with the contact details <em>you</em> enter — TriSex.org never seeds names or phone numbers.
+                      </div>
                       {[
-                        { name: "Primary Caregiver", person: "Sarah M.", role: "Spouse/Partner", status: "active", contact: "+1 (503) 555-0123" },
-                        { name: "Secondary Caregiver", person: "Michael T.", role: "Adult Child", status: "active", contact: "+1 (503) 555-0124" },
-                        { name: "Emergency Contact", person: "Dr. Rebecca L.", role: "Healthcare Provider", status: "verified", contact: "+1 (503) 555-0125" },
-                        { name: "Backup Caregiver", person: "James W.", role: "Sibling", status: "pending", contact: "+1 (503) 555-0126" }
-                      ].map((member, i) => (
-                        <div key={i} className="p-3 bg-muted/30 rounded-lg">
-                          <div className="flex justify-between items-start mb-2">
-                            <div>
-                              <div className="font-semibold">{member.name}</div>
-                              <div className="text-sm text-muted-foreground">{member.person} • {member.role}</div>
-                            </div>
-                            <Badge variant={member.status === "active" ? "default" : member.status === "verified" ? "secondary" : "outline"}>
-                              {member.status}
-                            </Badge>
+                        { role: "Primary Caregiver", typicalRelation: "Spouse / partner / chosen kin" },
+                        { role: "Secondary Caregiver", typicalRelation: "Adult child / sibling / close friend" },
+                        { role: "Emergency Contact", typicalRelation: "Healthcare provider or named clinician" },
+                        { role: "Backup Caregiver", typicalRelation: "Cooperative member or extended kin" },
+                      ].map((slot, i) => (
+                        <div key={i} className="p-3 bg-muted/30 rounded-lg flex justify-between items-center">
+                          <div>
+                            <div className="font-semibold text-sm">{slot.role}</div>
+                            <div className="text-xs text-muted-foreground">Typical: {slot.typicalRelation}</div>
                           </div>
-                          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                            <Phone className="h-3 w-3" />
-                            <span>{member.contact}</span>
-                          </div>
+                          <Badge variant="outline">empty</Badge>
                         </div>
                       ))}
                     </div>
@@ -539,19 +534,22 @@ export default function BadCoopDashboard() {
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="space-y-3">
+                      <div className="p-3 bg-amber-50 dark:bg-amber-950/30 border border-amber-300 rounded text-xs">
+                        <strong>Schedule template.</strong> The week is divided into Morning / Afternoon / Evening / Full-Day shifts across seven days. Once you assign real care-circle members above, their names appear here — no shifts are pre-filled with fabricated caregivers.
+                      </div>
                       {[
-                        { day: "Monday", shift: "Morning", caregiver: "Sarah M.", tasks: "Medication, Meals, PT" },
-                        { day: "Monday", shift: "Evening", caregiver: "Michael T.", tasks: "Dinner, Evening routine" },
-                        { day: "Tuesday", shift: "Full Day", caregiver: "Professional Aide", tasks: "Full care coverage" },
-                        { day: "Wednesday", shift: "Morning", caregiver: "Sarah M.", tasks: "Doctor visit, Labs" },
-                        { day: "Thursday", shift: "Afternoon", caregiver: "James W.", tasks: "Respite, Activities" }
+                        { day: "Mon", shift: "Morning", tasks: "e.g., medication, meals, PT" },
+                        { day: "Mon", shift: "Evening", tasks: "e.g., dinner, evening routine" },
+                        { day: "Tue", shift: "Full Day", tasks: "e.g., professional-aide coverage" },
+                        { day: "Wed", shift: "Morning", tasks: "e.g., clinic visit, labs" },
+                        { day: "Thu", shift: "Afternoon", tasks: "e.g., respite, activities" },
                       ].map((schedule, i) => (
-                        <div key={i} className="p-3 bg-muted/30 rounded-lg flex justify-between items-center">
+                        <div key={i} className="p-3 bg-muted/30 rounded-lg flex justify-between items-center opacity-70">
                           <div>
-                            <div className="font-semibold text-sm">{schedule.day} - {schedule.shift}</div>
-                            <div className="text-xs text-muted-foreground">{schedule.caregiver}</div>
+                            <div className="font-semibold text-sm">{schedule.day} — {schedule.shift}</div>
+                            <div className="text-xs text-muted-foreground">{schedule.tasks}</div>
                           </div>
-                          <Badge variant="secondary" className="text-xs">{schedule.tasks}</Badge>
+                          <Badge variant="outline" className="text-xs">unassigned</Badge>
                         </div>
                       ))}
                     </div>
@@ -973,17 +971,20 @@ export default function BadCoopDashboard() {
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-3">
+                    <div className="p-2 bg-amber-50 dark:bg-amber-950/30 border border-amber-300 rounded text-xs">
+                      <strong>Possibility list.</strong> Member counts and meeting times are <em>not</em> shown — they would be fabricated until a real group exists. Below are the categories the platform <em>can</em> host once members organize them.
+                    </div>
                     {[
-                      { name: "Chronic Illness Support", members: 48, meeting: "Tues 7PM" },
-                      { name: "LGBTQIA+ Healthcare", members: 72, meeting: "Wed 6PM" },
-                      { name: "Caregiver Burnout", members: 35, meeting: "Sat 10AM" },
-                      { name: "End-of-Life Planning", members: 29, meeting: "Mon 5PM" }
-                    ].map((group, i) => (
+                      "Chronic Illness Support",
+                      "LGBTQIA+ Healthcare",
+                      "Caregiver Burnout",
+                      "End-of-Life Planning",
+                    ].map((groupName, i) => (
                       <div key={i} className="p-2 bg-muted/30 rounded">
-                        <div className="font-medium text-sm">{group.name}</div>
+                        <div className="font-medium text-sm">{groupName}</div>
                         <div className="flex justify-between text-xs text-muted-foreground">
-                          <span>{group.members} members</span>
-                          <span>{group.meeting}</span>
+                          <span>category — no group yet</span>
+                          <span>start one</span>
                         </div>
                       </div>
                     ))}
@@ -1001,18 +1002,21 @@ export default function BadCoopDashboard() {
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-3">
+                    <div className="p-2 bg-amber-50 dark:bg-amber-950/30 border border-amber-300 rounded text-xs">
+                      <strong>Proposal categories — no live ballots.</strong> Vote counts are not invented. Once members file actual proposals, the Rochdale one-member-one-vote tally appears here. Quorum formula: ≥10% of active patron-members or 25 absolute, whichever is greater.
+                    </div>
                     {[
-                      { proposal: "Expand Mental Health Coverage", votes: 847, status: "voting" },
-                      { proposal: "New Community Center Location", votes: 623, status: "passed" },
-                      { proposal: "Youth Program Funding", votes: 445, status: "voting" },
-                      { proposal: "Elder Care Initiative", votes: 912, status: "passed" }
-                    ].map((item, i) => (
+                      "Expand Mental Health Coverage",
+                      "New Community Center Location",
+                      "Youth Program Funding",
+                      "Elder Care Initiative",
+                    ].map((proposal, i) => (
                       <div key={i} className="p-2 bg-muted/30 rounded">
-                        <div className="font-medium text-sm">{item.proposal}</div>
+                        <div className="font-medium text-sm">{proposal}</div>
                         <div className="flex justify-between text-xs">
-                          <span className="text-muted-foreground">{item.votes} votes</span>
-                          <Badge variant={item.status === "voting" ? "default" : "secondary"}>
-                            {item.status}
+                          <span className="text-muted-foreground">no ballot filed</span>
+                          <Badge variant="outline">
+                            template
                           </Badge>
                         </div>
                       </div>

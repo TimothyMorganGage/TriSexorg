@@ -174,74 +174,9 @@ export default function GoodPeople() {
     "Music", "Reading", "Hiking", "Cooking", "Activism", "Education"
   ];
 
-  const mockMatches = [
-    {
-      id: 1,
-      displayName: "Alex Chen",
-      age: 28,
-      location: "Portland, OR",
-      profileImageUrl: "https://api.dicebear.com/9.x/avataaars/svg?seed=AlexChen&backgroundColor=b6e3f4",
-      bio: "Worker-owner at a tech cooperative. Passionate about sustainable living and community organizing.",
-      interests: ["Worker Cooperatives", "Permaculture", "Music"],
-      cooperativePrinciples: ["Democratic Member Control", "Concern for Community"],
-      matchType: "romance",
-      compatibilityScore: 92,
-      cooperativePrincipleAlignment: 9,
-      connectionStatus: "potential",
-      currentStage: "nonsexual",
-      stageStartDate: "2025-02-01",
-      healthStatus: "screened",
-      trisexBalance: 1000,
-      agreedToProgression: true,
-      genealogicalStatus: "verified",
-      relationshipDegree: null,
-      blockedByGenealogy: false
-    },
-    {
-      id: 2,
-      displayName: "Morgan Rivera",
-      age: 32,
-      location: "Madison, WI",
-      profileImageUrl: "https://api.dicebear.com/9.x/avataaars/svg?seed=MorganRivera&backgroundColor=c0aede",
-      bio: "Credit union board member and community garden coordinator. Believes in economic democracy.",
-      interests: ["Credit Unions", "Community Gardens", "Social Justice"],
-      cooperativePrinciples: ["Member Economic Participation", "Education, Training & Information"],
-      matchType: "networking",
-      compatibilityScore: 88,
-      cooperativePrincipleAlignment: 8,
-      connectionStatus: "potential",
-      currentStage: "kissing",
-      stageStartDate: "2025-01-15",
-      healthStatus: "pending",
-      trisexBalance: 950,
-      agreedToProgression: true,
-      genealogicalStatus: "pending",
-      relationshipDegree: "7th cousin",
-      blockedByGenealogy: false
-    },
-    {
-      id: 3,
-      displayName: "Sam Okafor",
-      age: 26,
-      location: "Ithaca, NY",
-      profileImageUrl: "https://api.dicebear.com/9.x/avataaars/svg?seed=SamOkafor&backgroundColor=d1d4f9",
-      bio: "Housing cooperative member and renewable energy advocate. Looking for meaningful connections.",
-      interests: ["Housing Cooperation", "Renewable Energy", "Hiking"],
-      cooperativePrinciples: ["Voluntary & Open Membership", "Cooperation Among Cooperatives"],
-      matchType: "friendship",
-      compatibilityScore: 85,
-      cooperativePrincipleAlignment: 7,
-      connectionStatus: "potential",
-      currentStage: "manual",
-      stageStartDate: "2024-12-01",
-      healthStatus: "screened",
-      trisexBalance: 1000,
-      agreedToProgression: true,
-      genealogicalStatus: "verified",
-      relationshipDegree: null,
-      blockedByGenealogy: false
-    }
-  ];
+  // No fabricated matches. The matching algorithm is described below;
+  // until real members enroll and consent to being shown, the list is empty.
+  const mockMatches: any[] = [];
 
   const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -529,7 +464,7 @@ export default function GoodPeople() {
                             <div>
                               <h5 className="text-xs font-medium text-muted-foreground mb-1">Interests:</h5>
                               <div className="flex flex-wrap gap-1">
-                                {match.interests.slice(0, 3).map((interest, idx) => (
+                                {match.interests.slice(0, 3).map((interest: string, idx: number) => (
                                   <Badge key={idx} variant="outline" className="text-xs">
                                     {interest}
                                   </Badge>
@@ -540,7 +475,7 @@ export default function GoodPeople() {
                             <div>
                               <h5 className="text-xs font-medium text-muted-foreground mb-1">Cooperative Values:</h5>
                               <div className="flex flex-wrap gap-1">
-                                {match.cooperativePrinciples.slice(0, 2).map((principle, idx) => (
+                                {match.cooperativePrinciples.slice(0, 2).map((principle: string, idx: number) => (
                                   <Badge key={idx} variant="secondary" className="text-xs bg-secondary/20">
                                     {principle}
                                   </Badge>

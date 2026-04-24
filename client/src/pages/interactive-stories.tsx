@@ -111,7 +111,7 @@ export default function InteractiveStories() {
     {
       id: "story-1",
       title: "Journey Through the Medicine Wheel: A Teaching Story",
-      author: "Elder Maria Crow Feather",
+      author: "Open call — co-author this story under CC BY-SA 4.0",
       category: "Indigenous Wisdom",
       difficulty: "Beginner",
       estimatedTime: 15,
@@ -154,16 +154,16 @@ export default function InteractiveStories() {
         }
       ],
       isCompleted: false,
-      progress: 33,
-      likes: 127,
-      comments: 23,
+      progress: 0,
+      likes: 0,
+      comments: 0,
       culturalTags: ["Indigenous", "Holistic Health", "Traditional Medicine"],
       intelligenceTypes: ["Multicultural", "Infinite"]
     },
     {
       id: "story-2",
       title: "Ubuntu and Sexual Wellness: A South African Perspective",
-      author: "Dr. Nomsa Mbeki",
+      author: "Open call — co-author this story under CC BY-SA 4.0",
       category: "African Philosophy",
       difficulty: "Intermediate", 
       estimatedTime: 20,
@@ -179,8 +179,8 @@ export default function InteractiveStories() {
       ],
       isCompleted: false,
       progress: 0,
-      likes: 89,
-      comments: 16,
+      likes: 0,
+      comments: 0,
       culturalTags: ["African", "Philosophy", "Community Health"],
       intelligenceTypes: ["Multicultural", "Racial & Ethnic"]
     }
@@ -567,24 +567,8 @@ export default function InteractiveStories() {
                     <Separator />
                     
                     <div className="space-y-4">
-                      <div className="p-4 border rounded-lg">
-                        <div className="flex items-center justify-between mb-2">
-                          <span className="font-medium">Sarah Chen</span>
-                          <span className="text-sm text-muted-foreground">2 hours ago</span>
-                        </div>
-                        <p className="text-sm">
-                          The Medicine Wheel story really helped me understand how Indigenous perspectives on health are so holistic. Thank you for sharing this wisdom.
-                        </p>
-                        <div className="flex items-center space-x-4 mt-3">
-                          <Button variant="ghost" size="sm">
-                            <ThumbsUp className="h-4 w-4 mr-1" />
-                            12
-                          </Button>
-                          <Button variant="ghost" size="sm">
-                            <MessageCircle className="h-4 w-4 mr-1" />
-                            Reply
-                          </Button>
-                        </div>
+                      <div className="p-4 border border-dashed rounded-lg text-center text-sm text-muted-foreground">
+                        No comments yet. Be the first — TriSex.org does not seed fabricated reactions.
                       </div>
                     </div>
                   </div>

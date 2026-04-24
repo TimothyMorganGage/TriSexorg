@@ -63,59 +63,63 @@ export default function PeerMentor() {
     equityMultiplier: 1.34
   });
 
+  // No fabricated mentors. These are possibility-profile slots showing the
+  // skill bundles the matching algorithm CAN match once real members enroll
+  // as mentors. Names, hours, equity scores, and match percentages are
+  // omitted — they would be invented until real data exists.
   const availableMentors: PeerMentor[] = [
     {
-      id: "mentor-1",
-      name: "Dr. Aiyana Crow Feather",
-      avatar: "AC",
+      id: "profile-a",
+      name: "Possibility profile — Sexual Health & Trauma Recovery",
+      avatar: "SH",
       specialties: ["Sexual Health", "Indigenous Medicine", "Trauma Recovery"],
-      hoursContributed: 847,
-      equityScore: 96,
+      hoursContributed: 0,
+      equityScore: 0,
       intelligenceTypes: ["Cultural", "Emotional", "Spiritual"],
-      availability: "online",
-      culturalBackground: ["Lakota", "Cherokee"],
-      generationalCohort: "Elder (65+)",
-      matchScore: 94
+      availability: "offline",
+      culturalBackground: ["matched on enrolled-mentor self-disclosure"],
+      generationalCohort: "any cohort with self-disclosed elder status",
+      matchScore: 0,
     },
     {
-      id: "mentor-2", 
-      name: "Marcus Williams",
-      avatar: "MW",
+      id: "profile-b",
+      name: "Possibility profile — Reproductive Justice & Community Organizing",
+      avatar: "RJ",
       specialties: ["Reproductive Justice", "Community Organizing", "Healthcare Access"],
-      hoursContributed: 623,
-      equityScore: 89,
+      hoursContributed: 0,
+      equityScore: 0,
       intelligenceTypes: ["Social", "Political", "Kinesthetic"],
-      availability: "online",
-      culturalBackground: ["African American", "Southern"],
-      generationalCohort: "Millennial (28-43)",
-      matchScore: 88
+      availability: "offline",
+      culturalBackground: ["matched on enrolled-mentor self-disclosure"],
+      generationalCohort: "any",
+      matchScore: 0,
     },
     {
-      id: "mentor-3",
-      name: "Priya Sharma",
-      avatar: "PS", 
+      id: "profile-c",
+      name: "Possibility profile — LGBTQ+ Health & Mental Wellness",
+      avatar: "LH",
       specialties: ["LGBTQ+ Health", "Mental Wellness", "Tech Innovation"],
-      hoursContributed: 712,
-      equityScore: 92,
+      hoursContributed: 0,
+      equityScore: 0,
       intelligenceTypes: ["Technical", "Linguistic", "Interpersonal"],
-      availability: "busy",
-      culturalBackground: ["South Asian", "Hindu"],
-      generationalCohort: "Gen Z (18-27)",
-      matchScore: 85
+      availability: "offline",
+      culturalBackground: ["matched on enrolled-mentor self-disclosure"],
+      generationalCohort: "any",
+      matchScore: 0,
     },
     {
-      id: "mentor-4",
-      name: "Rosa Elena Gutierrez",
-      avatar: "RG",
+      id: "profile-d",
+      name: "Possibility profile — Family Planning & Language Access",
+      avatar: "FP",
       specialties: ["Family Planning", "Immigration Health", "Language Access"],
-      hoursContributed: 934,
-      equityScore: 95,
+      hoursContributed: 0,
+      equityScore: 0,
       intelligenceTypes: ["Linguistic", "Cultural", "Practical"],
-      availability: "online",
-      culturalBackground: ["Mexican", "Indigenous Maya"],
-      generationalCohort: "Gen X (44-59)",
-      matchScore: 91
-    }
+      availability: "offline",
+      culturalBackground: ["matched on enrolled-mentor self-disclosure"],
+      generationalCohort: "any",
+      matchScore: 0,
+    },
   ];
 
   const intelligenceFramework = {
@@ -146,9 +150,9 @@ export default function PeerMentor() {
   };
 
   const findRandomMentor = () => {
-    const availableOnline = availableMentors.filter(m => m.availability === "online");
-    const randomMentor = availableOnline[Math.floor(Math.random() * availableOnline.length)];
-    setCurrentMentor(randomMentor);
+    // No real mentors enrolled yet — surface the first possibility profile
+    // so the UI shows what the matcher CAN return rather than a fake person.
+    setCurrentMentor(availableMentors[0]);
   };
 
   const calculateDividend = () => {
