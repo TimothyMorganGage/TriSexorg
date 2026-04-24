@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DOMPurify from "isomorphic-dompurify";
 import { BetaDisclaimer } from "@/components/BetaDisclaimer";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -1273,6 +1273,12 @@ export default function Wiki() {
   const [activeCategory, setActiveCategory] = useState("all");
   const [selectedArticle, setSelectedArticle] = useState<WikiArticle | null>(null);
   const [showInteroperability, setShowInteroperability] = useState(false);
+
+  useEffect(() => {
+    if (selectedArticle) {
+      window.scrollTo({ top: 0, behavior: "auto" });
+    }
+  }, [selectedArticle]);
 
   const categories = [
     { id: "all", name: "All Topics", icon: BookOpen, count: 13 },
