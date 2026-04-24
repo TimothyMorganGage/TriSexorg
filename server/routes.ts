@@ -2462,12 +2462,17 @@ END:VEVENT
     }
   });
 
-  // X cooperative-pricing interest registry
+  // Cooperative-pricing interest registry — X Premium + Truth Social paid
   app.get('/api/x-coop/interest', async (req, res) => {
     try {
       if (!req.session?.userId) return res.status(401).json({ message: "Must be logged in" });
-      const row = await storage.getXCoopPricingInterest(req.session.userId);
-      res.json(row || null);
+      const platform = (req.query.platform as string) || undefined;
+      if (platform) {
+        const row = await storage.getXCoopPricingInterest(req.session.userId, platform);
+        return res.json(row || null);
+      }
+      const rows = await storage.getAllXCoopPricingInterestForUser(req.session.userId);
+      res.json(rows);
     } catch (e: any) {
       res.status(500).json({ message: e.message || "Failed to fetch interest" });
     }
@@ -2485,14 +2490,19 @@ END:VEVENT
   app.post('/api/x-coop/interest', async (req, res) => {
     try {
       if (!req.session?.userId) return res.status(401).json({ message: "Must be logged in" });
-      const { xHandle, isXPremium, pornOptOut } = req.body;
-      if (!xHandle) return res.status(400).json({ message: "xHandle required" });
+      const { xHandle, isXPremium, pornOptOut, platform } = req.body;
+      const plat = platform || "x";
+      if (!["x", "truthsocial"].includes(plat)) {
+        return res.status(400).json({ message: "platform must be 'x' or 'truthsocial'" });
+      }
+      if (!xHandle) return res.status(400).json({ message: "handle required" });
       const row = await storage.upsertXCoopPricingInterest({
         userId: req.session.userId,
+        platform: plat,
         xHandle: xHandle.replace(/^@/, ""),
         isXPremium: !!isXPremium,
         pornOptOut: pornOptOut !== false,
-      });
+      } as any);
       res.json(row);
     } catch (e: any) {
       res.status(500).json({ message: e.message || "Failed to register interest" });

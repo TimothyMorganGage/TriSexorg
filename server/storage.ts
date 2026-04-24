@@ -195,9 +195,10 @@ export interface IStorage {
   revokeBoundaryCheckConsent(id: number, userId: number): Promise<boolean>;
 
   // X cooperative-pricing interest registry
-  getXCoopPricingInterest(userId: number): Promise<XCoopPricingInterest | undefined>;
+  getXCoopPricingInterest(userId: number, platform?: string): Promise<XCoopPricingInterest | undefined>;
+  getAllXCoopPricingInterestForUser(userId: number): Promise<XCoopPricingInterest[]>;
   upsertXCoopPricingInterest(data: InsertXCoopPricingInterest): Promise<XCoopPricingInterest>;
-  countXCoopPricingInterest(): Promise<{ total: number; premium: number; pornOptOut: number }>;
+  countXCoopPricingInterest(): Promise<{ total: number; premium: number; pornOptOut: number; byPlatform: Record<string, { total: number; premium: number }> }>;
 
   // Clinic Inventory methods
   getClinicInventory(): Promise<any[]>;
@@ -2865,31 +2866,49 @@ export class MemStorage implements IStorage {
     return result.length > 0;
   }
 
-  // X cooperative-pricing interest registry
-  async getXCoopPricingInterest(userId: number): Promise<XCoopPricingInterest | undefined> {
-    const [row] = await db.select().from(xCoopPricingInterest).where(eq(xCoopPricingInterest.userId, userId));
-    return row;
+  // Cooperative-pricing interest registry (X Premium + Truth Social paid)
+  async getXCoopPricingInterest(userId: number, platform: string = "x"): Promise<XCoopPricingInterest | undefined> {
+    const rows = await db.select().from(xCoopPricingInterest).where(eq(xCoopPricingInterest.userId, userId));
+    return rows.find(r => (r.platform || "x") === platform);
+  }
+
+  async getAllXCoopPricingInterestForUser(userId: number): Promise<XCoopPricingInterest[]> {
+    return await db.select().from(xCoopPricingInterest).where(eq(xCoopPricingInterest.userId, userId));
   }
 
   async upsertXCoopPricingInterest(data: InsertXCoopPricingInterest): Promise<XCoopPricingInterest> {
-    const existing = await this.getXCoopPricingInterest(data.userId);
+    const platform = (data as any).platform || "x";
+    const existing = await this.getXCoopPricingInterest(data.userId, platform);
     if (existing) {
       const [updated] = await db.update(xCoopPricingInterest)
-        .set({ xHandle: data.xHandle, isXPremium: data.isXPremium ?? false, pornOptOut: data.pornOptOut ?? true })
-        .where(eq(xCoopPricingInterest.userId, data.userId))
+        .set({
+          xHandle: data.xHandle,
+          isXPremium: data.isXPremium ?? false,
+          pornOptOut: data.pornOptOut ?? true,
+          platform,
+        })
+        .where(eq(xCoopPricingInterest.id, existing.id))
         .returning();
       return updated;
     }
-    const [created] = await db.insert(xCoopPricingInterest).values(data).returning();
+    const [created] = await db.insert(xCoopPricingInterest).values({ ...data, platform } as any).returning();
     return created;
   }
 
-  async countXCoopPricingInterest(): Promise<{ total: number; premium: number; pornOptOut: number }> {
+  async countXCoopPricingInterest(): Promise<{ total: number; premium: number; pornOptOut: number; byPlatform: Record<string, { total: number; premium: number }> }> {
     const rows = await db.select().from(xCoopPricingInterest);
+    const byPlatform: Record<string, { total: number; premium: number }> = {};
+    for (const r of rows) {
+      const p = r.platform || "x";
+      if (!byPlatform[p]) byPlatform[p] = { total: 0, premium: 0 };
+      byPlatform[p].total += 1;
+      if (r.isXPremium) byPlatform[p].premium += 1;
+    }
     return {
       total: rows.length,
       premium: rows.filter(r => r.isXPremium).length,
       pornOptOut: rows.filter(r => r.pornOptOut).length,
+      byPlatform,
     };
   }
 }

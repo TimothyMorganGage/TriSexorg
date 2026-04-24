@@ -1513,6 +1513,7 @@ export type BoundaryCheckConsent = typeof boundaryCheckConsents.$inferSelect;
 export const xCoopPricingInterest = pgTable("x_coop_pricing_interest", {
   id: serial("id").primaryKey(),
   userId: integer("user_id").references(() => users.id).notNull(),
+  platform: text("platform").notNull().default("x"),
   xHandle: text("x_handle").notNull(),
   isXPremium: boolean("is_x_premium").notNull().default(false),
   pornOptOut: boolean("porn_opt_out").notNull().default(true),

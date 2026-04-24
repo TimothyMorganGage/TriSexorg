@@ -76,7 +76,7 @@ export function FediverseShare({
       icon: Megaphone,
       color: "bg-red-600",
       post: `${title}\n\n${description || ''}\n\n${hashtagString}\n\n${shareUrl}`,
-      instructions: `1. Copy the post (Truths are limited to 500 chars — trim if needed)\n2. Visit truthsocial.com or open the app\n3. Tap "Create a Truth"\n4. Paste and post!\n\nNote: Truth Social runs a Mastodon-compatible API but does not federate via ActivityPub, so reach is limited to the Truth Social network.`
+      instructions: `1. Copy the post (Truths are limited to 500 chars — trim if needed)\n2. Visit truthsocial.com or open the app\n3. Tap "Create a Truth"\n4. Paste and post!\n\nNote: Truth Social runs a Mastodon-compatible API but does not federate via ActivityPub, so reach is limited to the Truth Social network.\n\nCO-OP PRICING (in outreach): TriSex.org is in early outreach to negotiate cooperative pricing for paid Truth Social members ("Truth+" subscribers) who are verified $BAD members. Register interest on the Social Integration page — we publish progress publicly, no promises until a deal lands.`
     },
     hylo: {
       name: "Hylo",

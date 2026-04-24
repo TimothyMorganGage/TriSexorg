@@ -1,4 +1,12 @@
 import { useState } from "react";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import { apiRequest, queryClient } from "@/lib/queryClient";
+import { useAuth } from "@/lib/auth";
+import { useToast } from "@/hooks/use-toast";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import { Alert as Alert2, AlertDescription as AlertDescription2, AlertTitle as AlertTitle2 } from "@/components/ui/alert";
+import { Loader2, Handshake, ShieldCheck } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -344,13 +352,18 @@ export default function SocialIntegration() {
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="grid w-full grid-cols-5 mb-8">
+          <TabsList className="grid w-full grid-cols-6 mb-8">
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="syndication">Syndication</TabsTrigger>
             <TabsTrigger value="posting">Create Post</TabsTrigger>
+            <TabsTrigger value="coop-pricing" data-testid="tab-coop-pricing">Co-op Pricing</TabsTrigger>
             <TabsTrigger value="analytics">Analytics</TabsTrigger>
             <TabsTrigger value="settings">Settings</TabsTrigger>
           </TabsList>
+
+          <TabsContent value="coop-pricing">
+            <CoopPricingPanel />
+          </TabsContent>
 
           <TabsContent value="syndication">
             <div className="space-y-6">
@@ -847,5 +860,174 @@ export default function SocialIntegration() {
         </Tabs>
       </div>
     </div>
+  );
+}
+interface CoopInterestRow {
+  id: number;
+  userId: number;
+  platform: string;
+  xHandle: string;
+  isXPremium: boolean;
+  pornOptOut: boolean;
+  registeredAt: string;
+}
+
+function CoopPricingPanel() {
+  const { user } = useAuth();
+  const { toast } = useToast();
+  const { data: rows = [], isLoading } = useQuery<CoopInterestRow[]>({
+    queryKey: ['/api/x-coop/interest'],
+    enabled: !!user,
+  });
+  const { data: stats } = useQuery<{ total: number; premium: number; pornOptOut: number; byPlatform: Record<string, { total: number; premium: number }> }>({
+    queryKey: ['/api/x-coop/stats'],
+  });
+
+  const xRow = rows.find(r => r.platform === "x");
+  const tsRow = rows.find(r => r.platform === "truthsocial");
+
+  const upsert = useMutation({
+    mutationFn: async (data: { platform: string; xHandle: string; isXPremium: boolean; pornOptOut: boolean }) => {
+      const res = await apiRequest("POST", "/api/x-coop/interest", data);
+      return await res.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/x-coop/interest'] });
+      queryClient.invalidateQueries({ queryKey: ['/api/x-coop/stats'] });
+      toast({ title: "Interest recorded", description: "We'll publish outreach progress publicly." });
+    },
+    onError: (e: any) => toast({ title: "Failed to register", description: e.message, variant: "destructive" }),
+  });
+
+  if (!user) {
+    return <Card><CardContent className="p-8 text-center text-muted-foreground">Log in to register cooperative-pricing interest.</CardContent></Card>;
+  }
+
+  return (
+    <div className="space-y-6">
+      <Alert2 className="border-amber-500 bg-amber-50 dark:bg-amber-950/30" data-testid="alert-coop-honesty">
+        <Handshake className="h-5 w-5 text-amber-600" />
+        <AlertTitle2 className="font-bold">Honesty: no pricing deal exists yet</AlertTitle2>
+        <AlertDescription2 className="text-sm">
+          TriSex.org is in <strong>early outreach</strong> to negotiate cooperative pricing for paid subscribers on X (Premium) and Truth Social ("Truth+"). Registering interest helps us show real demand to those platforms. We publish all outreach progress publicly. No pricing is guaranteed until a deal is signed and announced.
+        </AlertDescription2>
+      </Alert2>
+
+      <div className="grid md:grid-cols-2 gap-6">
+        <CoopPlatformCard
+          platform="x"
+          title="X Premium"
+          color="bg-black"
+          description="X Premium / Premium+ subscribers"
+          handlePlaceholder="@yourhandle"
+          existing={xRow}
+          onSubmit={(d) => upsert.mutate({ platform: "x", ...d })}
+          isPending={upsert.isPending}
+        />
+        <CoopPlatformCard
+          platform="truthsocial"
+          title="Truth Social Paid"
+          color="bg-red-600"
+          description="Truth+ paid subscribers"
+          handlePlaceholder="@yourhandle"
+          existing={tsRow}
+          onSubmit={(d) => upsert.mutate({ platform: "truthsocial", ...d })}
+          isPending={upsert.isPending}
+        />
+      </div>
+
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2"><ShieldCheck className="h-5 w-5" />Live demand totals</CardTitle>
+        </CardHeader>
+        <CardContent>
+          {!stats ? <Loader2 className="h-5 w-5 animate-spin" /> : (
+            <div className="grid sm:grid-cols-3 gap-4 text-sm">
+              <div className="p-3 rounded border">
+                <div className="text-muted-foreground text-xs">Total registered</div>
+                <div className="text-2xl font-bold" data-testid="stat-total">{stats.total}</div>
+              </div>
+              <div className="p-3 rounded border">
+                <div className="text-muted-foreground text-xs">X Premium</div>
+                <div className="text-2xl font-bold" data-testid="stat-x-premium">{stats.byPlatform?.x?.premium ?? 0}</div>
+                <div className="text-xs text-muted-foreground">of {stats.byPlatform?.x?.total ?? 0} X-linked</div>
+              </div>
+              <div className="p-3 rounded border">
+                <div className="text-muted-foreground text-xs">Truth+ paid</div>
+                <div className="text-2xl font-bold" data-testid="stat-ts-premium">{stats.byPlatform?.truthsocial?.premium ?? 0}</div>
+                <div className="text-xs text-muted-foreground">of {stats.byPlatform?.truthsocial?.total ?? 0} TS-linked</div>
+              </div>
+            </div>
+          )}
+          <p className="text-xs text-muted-foreground mt-4">
+            Aggregate counts only — your handle is never shown publicly. We share these totals with platform business teams to demonstrate cooperative buying power.
+          </p>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
+function CoopPlatformCard({ platform, title, color, description, handlePlaceholder, existing, onSubmit, isPending }: {
+  platform: string;
+  title: string;
+  color: string;
+  description: string;
+  handlePlaceholder: string;
+  existing?: CoopInterestRow;
+  onSubmit: (d: { xHandle: string; isXPremium: boolean; pornOptOut: boolean }) => void;
+  isPending: boolean;
+}) {
+  const [handle, setHandle] = useState(existing?.xHandle || "");
+  const [isPaid, setIsPaid] = useState(existing?.isXPremium ?? false);
+  const [optOut, setOptOut] = useState(existing?.pornOptOut ?? true);
+
+  return (
+    <Card data-testid={`coop-card-${platform}`}>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <span className={`inline-block w-3 h-3 rounded-full ${color}`} />
+          {title}
+        </CardTitle>
+        <p className="text-sm text-muted-foreground">{description}</p>
+      </CardHeader>
+      <CardContent className="space-y-3">
+        <div>
+          <Label>Handle</Label>
+          <Input
+            value={handle}
+            onChange={(e) => setHandle(e.target.value)}
+            placeholder={handlePlaceholder}
+            data-testid={`input-handle-${platform}`}
+          />
+        </div>
+        <div className="flex items-center justify-between">
+          <Label htmlFor={`paid-${platform}`} className="cursor-pointer text-sm">
+            I am a paid subscriber
+          </Label>
+          <Switch id={`paid-${platform}`} checked={isPaid} onCheckedChange={setIsPaid} data-testid={`switch-paid-${platform}`} />
+        </div>
+        <div className="flex items-center justify-between">
+          <Label htmlFor={`optout-${platform}`} className="cursor-pointer text-sm">
+            Opt out of adult content (recommended for scan-product privacy)
+          </Label>
+          <Switch id={`optout-${platform}`} checked={optOut} onCheckedChange={setOptOut} data-testid={`switch-optout-${platform}`} />
+        </div>
+        <Button
+          className="w-full"
+          onClick={() => onSubmit({ xHandle: handle, isXPremium: isPaid, pornOptOut: optOut })}
+          disabled={!handle || isPending}
+          data-testid={`button-submit-${platform}`}
+        >
+          {isPending ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Handshake className="h-4 w-4 mr-2" />}
+          {existing ? "Update interest" : "Register interest"}
+        </Button>
+        {existing && (
+          <p className="text-xs text-muted-foreground">
+            Registered {new Date(existing.registeredAt).toLocaleDateString()}
+          </p>
+        )}
+      </CardContent>
+    </Card>
   );
 }
