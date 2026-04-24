@@ -471,6 +471,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.get("/api/orders/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (Number.isNaN(id)) {
+        return res.status(400).json({ message: "Invalid order id" });
+      }
+      const order = await storage.getOrder(id);
+      if (!order) {
+        return res.status(404).json({ message: "Order not found" });
+      }
+      res.json(order);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch order" });
+    }
+  });
+
   app.patch("/api/orders/:id/status", async (req, res) => {
     try {
       const id = parseInt(req.params.id);
