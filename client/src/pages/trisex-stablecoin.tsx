@@ -363,29 +363,11 @@ export default function TrisexStablecoin() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="space-y-3">
-                    {[
-                      { type: "received", from: "Time Bank", amount: 35.00, date: "2 hours ago", icon: Clock },
-                      { type: "received", from: "Upcycle Credit", amount: 18.00, date: "3 days ago", icon: Recycle },
-                      { type: "sent", from: "@PeerMentor", amount: -15.00, date: "5 days ago", icon: Users },
-                      { type: "received", from: "Dividend Q4", amount: 89.25, date: "1 week ago", icon: Award },
-                      { type: "received", from: "Referral Bonus", amount: 25.00, date: "2 weeks ago", icon: Gift }
-                    ].map((tx, i) => (
-                      <div key={i} className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
-                        <div className="flex items-center gap-3">
-                          <div className={`p-2 rounded-full ${tx.amount > 0 ? 'bg-green-100' : 'bg-red-100'}`}>
-                            <tx.icon className={`h-4 w-4 ${tx.amount > 0 ? 'text-green-600' : 'text-red-600'}`} />
-                          </div>
-                          <div>
-                            <div className="font-medium">{tx.from}</div>
-                            <div className="text-xs text-muted-foreground">{tx.date}</div>
-                          </div>
-                        </div>
-                        <div className={`font-semibold ${tx.amount > 0 ? 'text-green-600' : 'text-red-600'}`}>
-                          {tx.amount > 0 ? '+' : ''}{tx.amount.toFixed(2)}
-                        </div>
-                      </div>
-                    ))}
+                  <div className="p-6 border-2 border-dashed border-muted-foreground/30 rounded text-center">
+                    <p className="font-semibold text-sm">No transactions yet</p>
+                    <p className="text-xs text-muted-foreground mt-2">
+                      An earlier version showed staged sample transactions ("Time Bank +35.00 2 hours ago", "Dividend Q4 +89.25 1 week ago", "Referral Bonus +25.00 2 weeks ago", etc.) on every member's wallet view. They have been removed. Real $TRISEXORG transactions will appear here once the wallet is connected to the cooperative ledger.
+                    </p>
                   </div>
                 </CardContent>
               </Card>

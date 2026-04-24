@@ -127,80 +127,7 @@ export default function Newsletter() {
   const [ghostConnected, setGhostConnected] = useState(false);
 
   // Sample data for the newsletter system
-  const currentIssues: NewsletterIssue[] = [
-    {
-      id: "weekly-2024-03",
-      title: "Good TriSexing Weekly: Indigenous Wisdom & Health Equity",
-      frequency: "weekly",
-      publishDate: "2024-01-22",
-      status: "published",
-      subscribers: 2847,
-      openRate: 67.3,
-      clickRate: 24.1,
-      content: {
-        wikiHighlights: [
-          {
-            id: "1",
-            title: "Medicine Wheel Teachings for Sexual Health",
-            category: "Indigenous Wisdom",
-            summary: "Exploring holistic approaches to reproductive health through traditional Indigenous teachings",
-            readingTime: "8 min",
-            engagement: 89,
-            culturalFocus: ["Lakota", "Cherokee", "Traditional Healing"]
-          }
-        ],
-        dalyMetrics: {
-          totalDALYsSaved: 12036,
-          economicImpact: 1203600,
-          topCategories: [
-            { category: "Sexual Health Education", dalys: 3247, impact: 324700 },
-            { category: "Reproductive Justice", dalys: 2856, impact: 285600 },
-            { category: "Mental Health Support", dalys: 2134, impact: 213400 }
-          ],
-          trend: "up",
-          percentChange: 12.4
-        },
-        dividendUpdate: {
-          totalDistributed: 18472.50,
-          averagePerUser: 156.80,
-          stablecoinValue: 4.27,
-          topContributors: [
-            {
-              name: "Dr. Aiyana Crow Feather",
-              hoursContributed: 67,
-              dividend: 425.30,
-              intelligenceTypes: ["Multicultural", "Infinite", "Racial & Ethnic"]
-            }
-          ],
-          equityMultiplier: 1.34
-        },
-        communityStats: {
-          totalMembers: 54916,
-          newMembers: 1247,
-          activeStories: 23,
-          mentorConnections: 892,
-          culturalRepresentation: {
-            "Indigenous": 18,
-            "African Diaspora": 22,
-            "Latin American": 25,
-            "Asian": 19,
-            "European": 16
-          }
-        },
-        featuredStories: [
-          {
-            id: "story-1",
-            title: "Journey Through the Medicine Wheel",
-            author: "Elder Maria Crow Feather",
-            culturalBackground: "Lakota Nation",
-            completions: 284,
-            rating: 4.8,
-            excerpt: "A teaching story about holistic health through the four directions..."
-          }
-        ]
-      }
-    }
-  ];
+  const currentIssues: NewsletterIssue[] = [];
 
   const newsletterTemplates: NewsletterTemplate[] = [
     {
@@ -303,20 +230,26 @@ export default function Newsletter() {
             </div>
           </div>
           
-          <div className="flex justify-center space-x-4 mb-8">
+          <div className="flex justify-center space-x-4 mb-6">
             <Badge variant={ghostConnected ? "default" : "secondary"} className="px-4 py-2">
               <Zap className="w-4 h-4 mr-2" />
               {ghostConnected ? "Ghost.org Connected" : "Ghost.org Not Connected"}
             </Badge>
             <Badge variant="outline" className="px-4 py-2">
               <Users className="w-4 h-4 mr-2" />
-              2,847 Subscribers
+              — Subscribers
             </Badge>
             <Badge variant="outline" className="px-4 py-2">
               <TrendingUp className="w-4 h-4 mr-2" />
-              67.3% Open Rate
+              — Open Rate
             </Badge>
           </div>
+
+          <Alert className="max-w-3xl mx-auto mb-8 border-amber-500 bg-amber-50 dark:bg-amber-950/30 text-left">
+            <AlertDescription className="text-xs text-amber-900 dark:text-amber-200">
+              <strong>Honesty note:</strong> An earlier version of this page shipped a fake published issue ("Good TriSexing Weekly — 2,847 subscribers, 67.3% open rate"), invented DALY totals (12,036 saved / $1,203,600 impact), invented dividend distributions ($18,472.50 totalled, $156.80/user, $4.27 stablecoin value), invented member counts (54,916 total / 1,247 new), invented cultural-representation percentages by race (Indigenous 18%, African Diaspora 22%, etc.), and — most seriously — fabricated Indigenous elders by name ("Dr. Aiyana Crow Feather", "Elder Maria Crow Feather" attributed to "Lakota Nation") credited as authors of "Medicine Wheel" teachings. Inventing Indigenous elders to lend cultural authority to a platform's content is cultural appropriation. All of it has been removed. The page now starts empty: no past issues, no synthesized metrics, no fictional contributors. Real issues will populate here only when sent through a real Ghost integration with real opt-in subscribers.
+            </AlertDescription>
+          </Alert>
 
           {!ghostConnected && (
             <Card className="max-w-2xl mx-auto mb-8 bg-gradient-to-r from-purple-50 to-blue-50 dark:from-purple-900/20 dark:to-blue-900/20">
