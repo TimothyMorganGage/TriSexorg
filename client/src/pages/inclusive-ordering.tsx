@@ -60,28 +60,58 @@ export default function InclusiveOrdering() {
     }
   ];
 
-  const products = [
+  const products: Array<{
+    id: string;
+    name: string;
+    description: string;
+    priceRange: string;
+    customization: string;
+    variants?: string[];
+    honestyNote?: string;
+  }> = [
     {
       id: "external-protection",
       name: "TriSex.org External Protection",
-      description: "Custom-fit external protection with precision sizing for better love-making",
+      description: "Custom-fit external protection with precision sizing — covers phallic anatomy across the full intersex range (penises, T-dicks / hormonally enlarged clitorises, micropenises, post-phalloplasty shafts, and ambiguous external genitalia) rather than assuming a single shape.",
       priceRange: "$12-18 per unit",
-      customization: "60+ size options, multiple materials"
+      customization: "60+ length and girth options, multiple materials, optional sleeve adapters for shorter or differently-shaped shafts",
+      variants: [
+        "Endosex penile shaft",
+        "T-dick / hormonally enlarged clitoris (with shorter sleeve adapter)",
+        "Micropenis / hypospadias-aware fit",
+        "Post-phalloplasty / metoidioplasty shaft",
+      ],
     },
     {
       id: "internal-protection",
       name: "TriSex.org Internal Protection",
-      description: "Innovative internal protection designed for all anatomies",
+      description: "Internal barrier sized to the actual receiving canal — not just an assumed vaginal canal opposite a phallus. Covers vaginal canals, front holes, post-vaginoplasty neovaginas, anal canals, and intersex internal-canal variants. Each variant has its own depth, width, and ring-tension profile.",
       priceRange: "$15-22 per unit",
-      customization: "Anatomy-specific sizing, biocompatible materials"
+      customization: "Per-anatomy depth (mm) and width (mm), inner-ring vs anchor-ring choice, biocompatible materials, optional shorter-depth fit for post-surgical canals or smaller frontal openings",
+      variants: [
+        "Endosex vaginal canal",
+        "Frontal opening / front hole (transmasc, non-binary, intersex frontal anatomy)",
+        "Post-vaginoplasty neovagina (shallower depth profile honoured)",
+        "Anal canal (separate ring tension and length spec)",
+        "Intersex internal-canal variants (e.g. partial canal, blind-ending pouch, urogenital sinus) — fitting consult required",
+      ],
+      honestyNote: "Earlier copy described this as 'innovative internal protection designed for all anatomies' without naming the actual variants — that wording erased intersex, transmasc, and post-surgical canal differences and is replaced here.",
     },
     {
       id: "dental-dams",
-      name: "TriSex.org Dental Protection",
-      description: "Premium dental dams for oral protection",
+      name: "TriSex.org Oral Barriers",
+      description: "Oral-health barriers covering the full range of oral contact — not only the historic 'dental dam over a vulva' use case. Each variant is sized and shaped for its actual contact surface (vulva, anus, penis shaft / glans, frontal opening, post-extraction or oral-surgery site).",
       priceRange: "$8-12 per unit",
-      customization: "Multiple sizes, flavored and unflavored options"
-    }
+      customization: "Square-sheet, contoured-sheet, finger-cot, glans-cap, and rim-collar formats; flavoured and unflavoured; latex-free and latex options; sized small / medium / large per surface",
+      variants: [
+        "Oral-vulva (classic dental-dam square — vulval contact)",
+        "Oral-anal / rim (larger sheet, anchored grip pattern, anus contact)",
+        "Oral-penile (glans cap or full-shaft sleeve — pre-cum and throat-coating barrier)",
+        "Oral-frontal (sized for front-hole / T-dick contact, smaller contoured sheet)",
+        "Oral-surgery / post-extraction shield (intra-oral wound coverage during recovery, not a sex-context use)",
+      ],
+      honestyNote: "Earlier copy framed this product as 'premium dental dams for oral protection' — that single-use framing left out oral-anal (rim), oral-penile, oral-frontal, and post-oral-surgery uses and is replaced here.",
+    },
   ];
 
   const getCurrentBranding = () => {
@@ -181,6 +211,7 @@ export default function InclusiveOrdering() {
                         : "hover:border-primary/50"
                     }`}
                     onClick={() => setSelectedProduct(product.id)}
+                    data-testid={`product-card-${product.id}`}
                   >
                     <div className="flex items-center justify-between mb-2">
                       <h3 className="font-medium">{product.name}</h3>
@@ -188,12 +219,29 @@ export default function InclusiveOrdering() {
                         {product.priceRange}
                       </div>
                     </div>
-                    <p className="text-sm text-muted-foreground mb-2">
+                    <p className="text-sm text-muted-foreground mb-3">
                       {product.description}
                     </p>
-                    <div className="text-xs text-muted-foreground">
+                    {product.variants && product.variants.length > 0 && (
+                      <div className="mb-3">
+                        <div className="text-xs font-semibold text-foreground mb-1">
+                          Anatomy / use-case variants:
+                        </div>
+                        <ul className="text-xs text-muted-foreground space-y-1 list-disc list-inside">
+                          {product.variants.map((variant) => (
+                            <li key={variant}>{variant}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                    <div className="text-xs text-muted-foreground mb-2">
                       <strong>Customization:</strong> {product.customization}
                     </div>
+                    {product.honestyNote && (
+                      <div className="mt-3 p-2 border border-dashed border-amber-500/60 bg-amber-50/40 dark:bg-amber-900/10 rounded text-xs text-amber-900 dark:text-amber-200">
+                        <strong>Honesty note:</strong> {product.honestyNote}
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
