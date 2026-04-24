@@ -109,7 +109,7 @@ export default function AnatomyScanning() {
       id: "photogrammetry",
       label: "3D Photogrammetry",
       description: "Multiple photos processed into 3D model",
-      accuracy: "98%",
+      accuracy: "Method-dependent; pending validation",
       time: "5-10 minutes",
       privacy: "Local processing",
       equipment: "Smartphone camera"
@@ -118,7 +118,7 @@ export default function AnatomyScanning() {
       id: "structured_light",
       label: "Structured Light Scanning",
       description: "Professional-grade 3D scanning",
-      accuracy: "99.5%",
+      accuracy: "Hardware-dependent; pending validation",
       time: "2-5 minutes",
       privacy: "Clinic-based",
       equipment: "Clinical scanner"
@@ -127,7 +127,7 @@ export default function AnatomyScanning() {
       id: "ultrasound",
       label: "Medical Ultrasound",
       description: "Internal anatomy mapping via ultrasound",
-      accuracy: "95%",
+      accuracy: "Operator-dependent; pending validation",
       time: "10-15 minutes",
       privacy: "Medical standard",
       equipment: "Medical ultrasound"
@@ -136,7 +136,7 @@ export default function AnatomyScanning() {
       id: "manual_measurement",
       label: "Guided Manual Measurement",
       description: "Self-measurement with guided instructions",
-      accuracy: "90%",
+      accuracy: "User-dependent; pending validation",
       time: "15-20 minutes",
       privacy: "Completely private",
       equipment: "Measurement tools"
@@ -1172,10 +1172,10 @@ export default function AnatomyScanning() {
                   <CardContent>
                     <div className="grid md:grid-cols-4 gap-4">
                       {[
-                        { method: "Smartphone Camera", accuracy: "98%", time: "30 sec", desc: "iOS 14+ or Android 10+", available: true },
-                        { method: "Tablet Scanner", accuracy: "99%", time: "20 sec", desc: "iPad Pro LiDAR", available: true },
-                        { method: "Clinical Scanner", accuracy: "99.9%", time: "10 sec", desc: "Partner clinic network", available: true },
-                        { method: "Manual Entry", accuracy: "95%", time: "5 min", desc: "Guided self-measurement", available: true }
+                        { method: "Smartphone Camera", accuracy: "Pending validation", time: "30 sec", desc: "iOS 14+ or Android 10+", available: true },
+                        { method: "Tablet Scanner", accuracy: "Pending validation", time: "20 sec", desc: "iPad Pro LiDAR", available: true },
+                        { method: "Clinical Scanner", accuracy: "Pending validation", time: "10 sec", desc: "Partner clinic network", available: true },
+                        { method: "Manual Entry", accuracy: "Pending validation", time: "5 min", desc: "Guided self-measurement", available: true }
                       ].map((item, i) => (
                         <Card key={i} className={`border-t-4 ${item.available ? "border-t-purple-500" : "border-t-gray-300"}`}>
                           <CardContent className="p-4 text-center">
@@ -1465,10 +1465,10 @@ export default function AnatomyScanning() {
                   <CardContent className="space-y-6">
                     <div className="grid md:grid-cols-4 gap-4">
                       {[
-                        { metric: "Days Since Last Test", value: "23", status: "good", target: "<90" },
-                        { metric: "Protection Usage Rate", value: "98%", status: "excellent", target: ">95%" },
-                        { metric: "Partner Notifications", value: "100%", status: "excellent", target: "100%" },
-                        { metric: "DALY Impact Score", value: "+2.3", status: "positive", target: "Positive" }
+                        { metric: "Days Since Last Test", value: "—", status: "good", target: "<90" },
+                        { metric: "Protection Usage Rate", value: "—", status: "good", target: ">95%" },
+                        { metric: "Partner Notifications", value: "—", status: "good", target: "100%" },
+                        { metric: "DALY Impact Score", value: "—", status: "good", target: "Positive" }
                       ].map((item, i) => (
                         <Card key={i} className={`border-t-4 ${item.status === "excellent" || item.status === "positive" ? "border-t-green-500" : item.status === "good" ? "border-t-blue-500" : "border-t-yellow-500"}`}>
                           <CardContent className="p-4 text-center">
@@ -1486,13 +1486,7 @@ export default function AnatomyScanning() {
                           <CardTitle className="text-lg">Recent Test Results (via MyChart)</CardTitle>
                         </CardHeader>
                         <CardContent className="space-y-3">
-                          {[
-                            { test: "HIV Antibody/Antigen", result: "Negative", date: "Nov 15, 2025", source: "Epic MyChart" },
-                            { test: "Chlamydia/Gonorrhea", result: "Negative", date: "Nov 15, 2025", source: "Epic MyChart" },
-                            { test: "Syphilis RPR", result: "Negative", date: "Nov 15, 2025", source: "Epic MyChart" },
-                            { test: "Hepatitis B Surface Ag", result: "Immune", date: "Oct 1, 2025", source: "Epic MyChart" },
-                            { test: "HPV (if applicable)", result: "Not Detected", date: "Sep 20, 2025", source: "Epic MyChart" }
-                          ].map((item, i) => (
+                          {([] as Array<{ test: string; result: string; date: string; source: string }>).map((item, i) => (
                             <div key={i} className="p-3 bg-muted/30 rounded-lg">
                               <div className="flex justify-between items-center mb-1">
                                 <span className="font-medium text-sm">{item.test}</span>
@@ -1525,10 +1519,10 @@ export default function AnatomyScanning() {
                             </p>
                           </div>
                           {[
-                            { outcome: "Barrier Effectiveness", score: "99.7%", trend: "stable" },
-                            { outcome: "Custom Fit Compliance", score: "100%", trend: "up" },
-                            { outcome: "Partner Communication", score: "95%", trend: "up" },
-                            { outcome: "Testing Adherence", score: "100%", trend: "stable" }
+                            { outcome: "Barrier Effectiveness", score: "—", trend: "stable" },
+                            { outcome: "Custom Fit Compliance", score: "—", trend: "stable" },
+                            { outcome: "Partner Communication", score: "—", trend: "stable" },
+                            { outcome: "Testing Adherence", score: "—", trend: "stable" }
                           ].map((item, i) => (
                             <div key={i} className="flex justify-between items-center p-2 bg-muted/30 rounded">
                               <span className="text-sm">{item.outcome}</span>

@@ -37,22 +37,22 @@ export default function Clinics() {
     {
       title: "Increased Patient Satisfaction",
       description: "Offer personalized solutions that improve comfort and compliance.",
-      metric: "95% satisfaction rate",
+      metric: "Pending — earlier copy claimed '95% satisfaction rate' without survey data",
     },
     {
       title: "Revenue Growth",
-      description: "New revenue stream with high-margin custom products.",
-      metric: "30% average increase",
+      description: "New revenue stream with custom products.",
+      metric: "Pending — earlier copy claimed '30% average increase' without partner financials",
     },
     {
       title: "Streamlined Operations",
       description: "Automated ordering and inventory management reduces staff workload.",
-      metric: "50% time savings",
+      metric: "Pending — earlier copy claimed '50% time savings' without time-study data",
     },
     {
       title: "Educational Resources",
-      description: "Access to comprehensive health education materials for patients.",
-      metric: "100+ resources",
+      description: "Access to health education materials for patients.",
+      metric: "Library size will be reported once content is published",
     },
   ];
 

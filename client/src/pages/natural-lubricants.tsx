@@ -1115,7 +1115,7 @@ export default function NaturalLubricants() {
                     <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold">2</div>
                     <div className="flex-1">
                       <h4 className="font-medium">Establish Manufacturing Facility</h4>
-                      <p className="text-sm text-muted-foreground">Set up GMP-certified production line with nano-encapsulation capabilities</p>
+                      <p className="text-sm text-muted-foreground">Plan: stand up a production line that pursues GMP certification with nano-encapsulation capabilities. No GMP certification has been obtained yet.</p>
                     </div>
                     <Badge className="bg-blue-100 text-blue-800">6 months</Badge>
                   </div>

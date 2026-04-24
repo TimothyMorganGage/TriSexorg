@@ -614,19 +614,11 @@ export default function ClinicDashboard() {
                   <CardTitle className="font-recoleta">Inventory Turnover</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="space-y-4">
-                    <div className="flex justify-between items-center">
-                      <span>Fast Moving Items</span>
-                      <span className="font-bold">23 items</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span>Slow Moving Items</span>
-                      <span className="font-bold">8 items</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span>Average Turnover Rate</span>
-                      <span className="font-bold">4.2x/month</span>
-                    </div>
+                  <div className="p-4 border-2 border-dashed border-amber-500/40 bg-amber-50/30 dark:bg-amber-950/10 rounded text-sm">
+                    <p className="font-semibold text-amber-700 dark:text-amber-400 mb-1">Turnover analytics not yet computed</p>
+                    <p className="text-xs text-muted-foreground">
+                      An earlier build hard-coded "Fast Moving Items: 23", "Slow Moving Items: 8", and "Average Turnover Rate: 4.2x/month". Those numbers were placeholders, not derived from your inventory. Real turnover stats will appear once the analytics pipeline runs against actual stock movements.
+                    </p>
                   </div>
                 </CardContent>
               </Card>
@@ -636,19 +628,11 @@ export default function ClinicDashboard() {
                   <CardTitle className="font-recoleta">Cost Analysis</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="space-y-4">
-                    <div className="flex justify-between items-center">
-                      <span>Monthly Inventory Cost</span>
-                      <span className="font-bold">${(dashboardMetrics.totalValue * 0.08).toLocaleString()}</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span>Waste from Expiration</span>
-                      <span className="font-bold">$2,340</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span>Cost Savings (Automation)</span>
-                      <span className="font-bold text-green-600">+$8,920</span>
-                    </div>
+                  <div className="p-4 border-2 border-dashed border-amber-500/40 bg-amber-50/30 dark:bg-amber-950/10 rounded text-sm">
+                    <p className="font-semibold text-amber-700 dark:text-amber-400 mb-1">Cost analysis not yet computed</p>
+                    <p className="text-xs text-muted-foreground">
+                      An earlier build displayed "Monthly Inventory Cost" as 8% of total inventory value (an arbitrary multiplier), plus "Waste from Expiration: $2,340" and "Cost Savings (Automation): +$8,920". Those were placeholders, not real ledger entries. Cost analysis will appear once the accounting pipeline is connected.
+                    </p>
                   </div>
                 </CardContent>
               </Card>

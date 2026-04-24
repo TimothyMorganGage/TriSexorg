@@ -66,7 +66,7 @@ export default function MaterialsScience() {
         "Contamination level assessment and batch tracking"
       ],
       timeframe: "8-16 hours for mixed waste batches",
-      yield: "90% pure plastic by polymer type, 95% contaminant removal"
+      yield: "Pending validation — earlier copy claimed 90% plastic purity / 95% contaminant removal without lab data"
     },
     {
       id: "breakdown",
@@ -84,7 +84,7 @@ export default function MaterialsScience() {
         "Advanced purification removes all additives, colorants, and degradation products"
       ],
       timeframe: "4-10 hours depending on polymer complexity",
-      yield: "80-95% monomer recovery across all plastic types"
+      yield: "Pending validation — earlier copy claimed 80–95% monomer recovery without lab data"
     },
     {
       id: "biopolymer",
@@ -98,7 +98,7 @@ export default function MaterialsScience() {
         "Natural crosslinking agents from seaweed"
       ],
       timeframe: "4-8 hours",
-      yield: "90% biopolymer integration success"
+      yield: "Pending validation — earlier copy claimed 90% integration success without lab data"
     },
     {
       id: "hydrogel",
@@ -126,7 +126,7 @@ export default function MaterialsScience() {
         "Sterile packaging in biodegradable materials"
       ],
       timeframe: "1-3 hours per product",
-      yield: "99.9% dimensional accuracy"
+      yield: "Pending validation — earlier copy claimed 99.9% dimensional accuracy without measurement data"
     }
   ];
 
@@ -149,22 +149,22 @@ export default function MaterialsScience() {
   };
 
   const sustainabilityMetrics = [
-    { metric: "Total plastic waste diverted", value: "15+ tons/month", impact: "Prevents landfill and environmental contamination" },
-    { metric: "Waterway microplastic recovery", value: "2.5 tons/month", impact: "Prevents aquatic ecosystem damage across all waterways" },
-    { metric: "Municipal waste reduction", value: "8 tons/month", impact: "Reduces landfill burden and incineration" },
-    { metric: "Industrial scrap utilization", value: "5 tons/month", impact: "Circular economy integration" },
-    { metric: "Carbon footprint reduction", value: "85% vs virgin plastic", impact: "Lower greenhouse gas emissions" },
-    { metric: "Water usage efficiency", value: "90% less than traditional", impact: "Conserves freshwater resources" },
-    { metric: "Energy from renewable sources", value: "60% renewable energy", impact: "Sustainable manufacturing process" },
-    { metric: "Biodegradation timeline", value: "6-12 months", impact: "Reduces long-term waste accumulation" }
+    { metric: "Total plastic waste diverted", value: "—", impact: "No production at scale yet; the previously displayed '15+ tons/month' figure was fabricated" },
+    { metric: "Waterway microplastic recovery", value: "—", impact: "No recovery operation in place yet; the previously displayed '2.5 tons/month' figure was fabricated" },
+    { metric: "Municipal waste reduction", value: "—", impact: "No municipal contracts in place yet; the previously displayed '8 tons/month' figure was fabricated" },
+    { metric: "Industrial scrap utilization", value: "—", impact: "No supplier agreements in place yet; the previously displayed '5 tons/month' figure was fabricated" },
+    { metric: "Carbon footprint reduction", value: "—", impact: "No life-cycle assessment has been completed; the previously displayed '85% vs virgin plastic' figure was an unverified marketing claim" },
+    { metric: "Water usage efficiency", value: "—", impact: "No water-use audit has been completed; the previously displayed '90% less than traditional' figure was unverified" },
+    { metric: "Energy from renewable sources", value: "—", impact: "Energy mix depends on the manufacturing site once selected; the previously displayed '60% renewable energy' figure was aspirational, not measured" },
+    { metric: "Biodegradation timeline", value: "Pending lab data", impact: "ASTM D5511 / D5338 testing has not been performed; the previously displayed '6–12 months' window was a guess" }
   ];
 
   const qualityStandards = [
-    { standard: "ISO 10993", description: "Biological evaluation of medical devices", status: "Certified" },
-    { standard: "ASTM D6400", description: "Biodegradable plastic specifications", status: "Certified" },
-    { standard: "FDA 21 CFR 177", description: "Food contact substance regulations", status: "Certified" },
-    { standard: "USP Class VI", description: "Plastic materials biocompatibility", status: "Certified" },
-    { standard: "RoHS Compliance", description: "Restriction of hazardous substances", status: "Certified" }
+    { standard: "ISO 10993", description: "Biological evaluation of medical devices", status: "Not yet certified — earlier copy falsely listed this as Certified" },
+    { standard: "ASTM D6400", description: "Biodegradable plastic specifications", status: "Not yet certified — earlier copy falsely listed this as Certified" },
+    { standard: "FDA 21 CFR 177", description: "Food contact substance regulations", status: "Not yet certified — earlier copy falsely listed this as Certified" },
+    { standard: "USP Class VI", description: "Plastic materials biocompatibility", status: "Not yet certified — earlier copy falsely listed this as Certified" },
+    { standard: "RoHS Compliance", description: "Restriction of hazardous substances", status: "Not yet certified — earlier copy falsely listed this as Certified" }
   ];
 
   return (
