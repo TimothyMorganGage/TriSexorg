@@ -2899,6 +2899,64 @@ END:VEVENT
     }
   });
 
+  app.get('/api/wiki/activity', async (_req, res) => {
+    try {
+      const activity = await storage.listWikiActivity();
+      res.json(activity);
+    } catch (e: any) {
+      res.status(500).json({ message: e.message || "Failed to load wiki activity" });
+    }
+  });
+
+  app.get('/api/wiki/articles/:articleId/contributions', async (req, res) => {
+    try {
+      const rows = await storage.listWikiContributions(req.params.articleId);
+      res.json(rows);
+    } catch (e: any) {
+      res.status(500).json({ message: e.message || "Failed to load contributions" });
+    }
+  });
+
+  app.get('/api/wiki/articles/:articleId/me', requireAuth, async (req, res) => {
+    try {
+      const userId = req.session.userId!;
+      const hasVoted = await storage.hasUserVotedWiki(req.params.articleId, userId);
+      res.json({ hasVoted });
+    } catch (e: any) {
+      res.status(500).json({ message: e.message || "Failed to load vote status" });
+    }
+  });
+
+  app.post('/api/wiki/articles/:articleId/contribute', requireAuth, async (req, res) => {
+    try {
+      const userId = req.session.userId!;
+      const { insertWikiContributionSchema } = await import("@shared/schema");
+      const parsed = insertWikiContributionSchema.parse({
+        articleId: req.params.articleId,
+        userId,
+        summary: req.body?.summary,
+      });
+      if (!parsed.summary || parsed.summary.trim().length < 4) {
+        return res.status(400).json({ message: "Contribution summary must be at least 4 characters." });
+      }
+      const created = await storage.recordWikiContribution(parsed);
+      res.status(201).json(created);
+    } catch (e: any) {
+      res.status(400).json({ message: e.message || "Failed to record contribution" });
+    }
+  });
+
+  app.post('/api/wiki/articles/:articleId/vote', requireAuth, async (req, res) => {
+    try {
+      const userId = req.session.userId!;
+      const contributionId = req.body?.contributionId ? Number(req.body.contributionId) : null;
+      const result = await storage.recordWikiVote(req.params.articleId, userId, contributionId);
+      res.status(result.alreadyVoted ? 200 : 201).json(result);
+    } catch (e: any) {
+      res.status(400).json({ message: e.message || "Failed to record vote" });
+    }
+  });
+
   app.get('/api/herbal-policy', (_req, res) => {
     res.json({
       framework: "American Herbalists Guild (AHG)",

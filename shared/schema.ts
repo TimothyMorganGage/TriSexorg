@@ -1456,6 +1456,37 @@ export type ForumReply = typeof forumReplies.$inferSelect;
 export type ForumLike = typeof forumLikes.$inferSelect;
 export type ForumBookmark = typeof forumBookmarks.$inferSelect;
 
+export const wikiContributions = pgTable("wiki_contributions", {
+  id: serial("id").primaryKey(),
+  articleId: text("article_id").notNull(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  summary: text("summary").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const wikiVotes = pgTable("wiki_votes", {
+  id: serial("id").primaryKey(),
+  articleId: text("article_id").notNull(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  contributionId: integer("contribution_id").references(() => wikiContributions.id),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const insertWikiContributionSchema = createInsertSchema(wikiContributions).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertWikiVoteSchema = createInsertSchema(wikiVotes).omit({
+  id: true,
+  createdAt: true,
+});
+
+export type InsertWikiContribution = z.infer<typeof insertWikiContributionSchema>;
+export type WikiContribution = typeof wikiContributions.$inferSelect;
+export type InsertWikiVote = z.infer<typeof insertWikiVoteSchema>;
+export type WikiVote = typeof wikiVotes.$inferSelect;
+
 export const filingDocuments = pgTable("filing_documents", {
   id: serial("id").primaryKey(),
   userId: integer("user_id").references(() => users.id).notNull(),

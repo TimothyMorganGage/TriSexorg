@@ -6,6 +6,9 @@ import {
   moodEntries, wellnessGoals, moodInsights, timeEntries, timeGoals, timeInsights,
   calendarConnections, scheduledTasks, taskTemplates, savedProductConfigurations,
   forumCategories, forumPosts, forumReplies, forumLikes, forumBookmarks,
+  wikiContributions, wikiVotes,
+  type WikiContribution, type InsertWikiContribution,
+  type WikiVote, type InsertWikiVote,
   filingDocuments, boundaryCheckConsents, xCoopPricingInterest, metaLensScans,
   blueskyShareAttestations,
   type User, type InsertUser, type Product, type InsertProduct,
@@ -227,6 +230,13 @@ export interface IStorage {
   listHerbalEntries(category?: string): Promise<HerbalKnowledgeEntry[]>;
   getHerbalEntry(id: number): Promise<HerbalKnowledgeEntry | undefined>;
   createHerbalEntry(data: InsertHerbalKnowledgeEntry): Promise<HerbalKnowledgeEntry>;
+
+  // Wiki dynamic dates — co-operator contributions and upvotes
+  listWikiActivity(): Promise<Array<{ articleId: string; lastContributedAt: string | null; lastVotedAt: string | null; contributionCount: number; voteCount: number }>>;
+  listWikiContributions(articleId: string): Promise<WikiContribution[]>;
+  recordWikiContribution(data: InsertWikiContribution): Promise<WikiContribution>;
+  recordWikiVote(articleId: string, userId: number, contributionId?: number | null): Promise<{ vote: WikiVote; alreadyVoted: boolean }>;
+  hasUserVotedWiki(articleId: string, userId: number): Promise<boolean>;
 
   // X (Twitter) share attestation (ethics gate, mirrors Bluesky)
   getActiveXAttestation(userId: number): Promise<XShareAttestation | undefined>;
@@ -3023,6 +3033,84 @@ export class MemStorage implements IStorage {
   async createHerbalEntry(data: InsertHerbalKnowledgeEntry): Promise<HerbalKnowledgeEntry> {
     const [created] = await db.insert(herbalKnowledgeEntries).values(data).returning();
     return created;
+  }
+
+  async listWikiActivity(): Promise<Array<{ articleId: string; lastContributedAt: string | null; lastVotedAt: string | null; contributionCount: number; voteCount: number }>> {
+    const contribAgg = await db
+      .select({
+        articleId: wikiContributions.articleId,
+        lastAt: sql<Date | null>`max(${wikiContributions.createdAt})`.as("last_at"),
+        cnt: sql<number>`count(*)::int`.as("cnt"),
+      })
+      .from(wikiContributions)
+      .groupBy(wikiContributions.articleId);
+
+    const voteAgg = await db
+      .select({
+        articleId: wikiVotes.articleId,
+        lastAt: sql<Date | null>`max(${wikiVotes.createdAt})`.as("last_at"),
+        cnt: sql<number>`count(*)::int`.as("cnt"),
+      })
+      .from(wikiVotes)
+      .groupBy(wikiVotes.articleId);
+
+    const map = new Map<string, { articleId: string; lastContributedAt: string | null; lastVotedAt: string | null; contributionCount: number; voteCount: number }>();
+    for (const c of contribAgg) {
+      map.set(c.articleId, {
+        articleId: c.articleId,
+        lastContributedAt: c.lastAt ? new Date(c.lastAt).toISOString() : null,
+        lastVotedAt: null,
+        contributionCount: Number(c.cnt) || 0,
+        voteCount: 0,
+      });
+    }
+    for (const v of voteAgg) {
+      const existing = map.get(v.articleId);
+      if (existing) {
+        existing.lastVotedAt = v.lastAt ? new Date(v.lastAt).toISOString() : null;
+        existing.voteCount = Number(v.cnt) || 0;
+      } else {
+        map.set(v.articleId, {
+          articleId: v.articleId,
+          lastContributedAt: null,
+          lastVotedAt: v.lastAt ? new Date(v.lastAt).toISOString() : null,
+          contributionCount: 0,
+          voteCount: Number(v.cnt) || 0,
+        });
+      }
+    }
+    return Array.from(map.values());
+  }
+
+  async listWikiContributions(articleId: string): Promise<WikiContribution[]> {
+    return await db.select().from(wikiContributions)
+      .where(eq(wikiContributions.articleId, articleId))
+      .orderBy(desc(wikiContributions.createdAt));
+  }
+
+  async recordWikiContribution(data: InsertWikiContribution): Promise<WikiContribution> {
+    const [created] = await db.insert(wikiContributions).values(data).returning();
+    return created;
+  }
+
+  async recordWikiVote(articleId: string, userId: number, contributionId?: number | null): Promise<{ vote: WikiVote; alreadyVoted: boolean }> {
+    const [existing] = await db.select().from(wikiVotes)
+      .where(and(eq(wikiVotes.articleId, articleId), eq(wikiVotes.userId, userId)));
+    if (existing) {
+      return { vote: existing, alreadyVoted: true };
+    }
+    const [created] = await db.insert(wikiVotes).values({
+      articleId,
+      userId,
+      contributionId: contributionId ?? null,
+    }).returning();
+    return { vote: created, alreadyVoted: false };
+  }
+
+  async hasUserVotedWiki(articleId: string, userId: number): Promise<boolean> {
+    const [existing] = await db.select().from(wikiVotes)
+      .where(and(eq(wikiVotes.articleId, articleId), eq(wikiVotes.userId, userId)));
+    return !!existing;
   }
 
   async getActiveXAttestation(userId: number): Promise<XShareAttestation | undefined> {

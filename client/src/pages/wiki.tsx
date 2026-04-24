@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
 import DOMPurify from "isomorphic-dompurify";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { apiRequest, queryClient } from "@/lib/queryClient";
+import { useAuth } from "@/lib/auth";
+import { useToast } from "@/hooks/use-toast";
+import { Textarea } from "@/components/ui/textarea";
 import { BetaDisclaimer } from "@/components/BetaDisclaimer";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -30,7 +35,10 @@ import {
   Smartphone,
   Monitor,
   Share,
-  ExternalLink
+  ExternalLink,
+  ThumbsUp,
+  Pencil,
+  Loader2
 } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { FediverseShare } from "@/components/FediverseShare";
@@ -1273,12 +1281,91 @@ export default function Wiki() {
   const [activeCategory, setActiveCategory] = useState("all");
   const [selectedArticle, setSelectedArticle] = useState<WikiArticle | null>(null);
   const [showInteroperability, setShowInteroperability] = useState(false);
+  const [contributionDraft, setContributionDraft] = useState("");
+  const { user } = useAuth();
+  const { toast } = useToast();
 
   useEffect(() => {
     if (selectedArticle) {
       window.scrollTo({ top: 0, behavior: "auto" });
+      setContributionDraft("");
     }
   }, [selectedArticle]);
+
+  type WikiActivity = {
+    articleId: string;
+    lastContributedAt: string | null;
+    lastVotedAt: string | null;
+    contributionCount: number;
+    voteCount: number;
+  };
+
+  const { data: activityList = [] } = useQuery<WikiActivity[]>({
+    queryKey: ['/api/wiki/activity'],
+  });
+
+  const activityById = new Map(activityList.map(a => [a.articleId, a]));
+
+  const { data: voteState } = useQuery<{ hasVoted: boolean }>({
+    queryKey: ['/api/wiki/articles', selectedArticle?.id, 'me'],
+    enabled: !!selectedArticle && !!user,
+  });
+
+  const voteMutation = useMutation({
+    mutationFn: async (articleId: string) => {
+      const res = await apiRequest("POST", `/api/wiki/articles/${articleId}/vote`, {});
+      return res.json();
+    },
+    onSuccess: (data: { alreadyVoted: boolean }) => {
+      queryClient.invalidateQueries({ queryKey: ['/api/wiki/activity'] });
+      queryClient.invalidateQueries({ queryKey: ['/api/wiki/articles', selectedArticle?.id, 'me'] });
+      toast({
+        title: data.alreadyVoted ? "Upvote already recorded" : "Upvote recorded",
+        description: data.alreadyVoted
+          ? "Your earlier upvote on this article still stands — one vote per co-operator."
+          : "The article's last-updated date now reflects your upvote.",
+      });
+    },
+    onError: (e: any) => toast({ title: "Could not record upvote", description: e.message, variant: "destructive" }),
+  });
+
+  const contributeMutation = useMutation({
+    mutationFn: async ({ articleId, summary }: { articleId: string; summary: string }) => {
+      const res = await apiRequest("POST", `/api/wiki/articles/${articleId}/contribute`, { summary });
+      return res.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/wiki/activity'] });
+      setContributionDraft("");
+      toast({
+        title: "Contribution recorded",
+        description: "Your contribution summary is now in the article's public log and the article date is updated.",
+      });
+    },
+    onError: (e: any) => toast({ title: "Could not record contribution", description: e.message, variant: "destructive" }),
+  });
+
+  function isoDay(s: string | null | undefined): string | null {
+    if (!s) return null;
+    return s.slice(0, 10);
+  }
+
+  function getDisplayedUpdate(article: WikiArticle): { displayedDate: string; source: "seed" | "co-op"; voteCount: number; contributionCount: number } {
+    const a = activityById.get(article.id);
+    const candidates: string[] = [article.lastUpdated];
+    const cAt = isoDay(a?.lastContributedAt);
+    const vAt = isoDay(a?.lastVotedAt);
+    if (cAt) candidates.push(cAt);
+    if (vAt) candidates.push(vAt);
+    const displayedDate = candidates.sort().slice(-1)[0];
+    const source = displayedDate === article.lastUpdated && !cAt && !vAt ? "seed" : (cAt || vAt ? "co-op" : "seed");
+    return {
+      displayedDate,
+      source,
+      voteCount: a?.voteCount ?? 0,
+      contributionCount: a?.contributionCount ?? 0,
+    };
+  }
 
   const categories = [
     { id: "all", name: "All Topics", icon: BookOpen, count: 13 },
@@ -3004,20 +3091,88 @@ Post-surgical anatomy may require custom barrier sizing. HRT affects genital tis
                 </Badge>
               </div>
               <h1 className="text-2xl md:text-3xl font-bold mb-4 text-foreground leading-tight font-display">{selectedArticle.title}</h1>
-              <div className="flex items-center flex-wrap gap-3 text-sm text-foreground/40 mb-4">
-                <span>By {selectedArticle.author}</span>
-                <span className="text-foreground/20">•</span>
-                <span>Updated {selectedArticle.lastUpdated}</span>
-                <span className="text-foreground/20">•</span>
-                <span>{selectedArticle.readTime} read</span>
-              </div>
-              <div className="flex flex-wrap gap-1 mb-4">
-                {selectedArticle.tags.map((tag) => (
-                  <Badge key={tag} variant="secondary" className="text-xs bg-white/5 text-foreground/50 border border-white/10">
-                    {tag}
-                  </Badge>
-                ))}
-              </div>
+              {(() => {
+                const update = getDisplayedUpdate(selectedArticle);
+                return (
+                  <>
+                    <div className="flex items-center flex-wrap gap-3 text-sm text-foreground/40 mb-4">
+                      <span>By {selectedArticle.author}</span>
+                      <span className="text-foreground/20">•</span>
+                      <span data-testid="text-displayed-date">
+                        {update.source === "co-op" ? "Updated by co-operators" : "Originally published"} {update.displayedDate}
+                      </span>
+                      {update.source === "co-op" && (
+                        <span className="text-xs text-foreground/30">(originally published {selectedArticle.lastUpdated})</span>
+                      )}
+                      <span className="text-foreground/20">•</span>
+                      <span>{selectedArticle.readTime} read</span>
+                      <span className="text-foreground/20">•</span>
+                      <span className="inline-flex items-center gap-1" data-testid="text-vote-count">
+                        <ThumbsUp className="h-3.5 w-3.5" /> {update.voteCount} upvote{update.voteCount === 1 ? "" : "s"}
+                      </span>
+                      <span className="text-foreground/20">•</span>
+                      <span className="inline-flex items-center gap-1" data-testid="text-contribution-count">
+                        <Pencil className="h-3.5 w-3.5" /> {update.contributionCount} contribution{update.contributionCount === 1 ? "" : "s"}
+                      </span>
+                    </div>
+                    <div className="flex flex-wrap gap-1 mb-4">
+                      {selectedArticle.tags.map((tag) => (
+                        <Badge key={tag} variant="secondary" className="text-xs bg-white/5 text-foreground/50 border border-white/10">
+                          {tag}
+                        </Badge>
+                      ))}
+                    </div>
+
+                    <Card className="mb-4 bg-white/3 border border-white/10">
+                      <CardContent className="p-4 space-y-3">
+                        <div className="flex items-center flex-wrap gap-2">
+                          {user ? (
+                            <Button
+                              size="sm"
+                              variant={voteState?.hasVoted ? "secondary" : "default"}
+                              disabled={voteMutation.isPending || voteState?.hasVoted}
+                              onClick={() => voteMutation.mutate(selectedArticle.id)}
+                              data-testid="button-upvote-article"
+                            >
+                              {voteMutation.isPending ? <Loader2 className="h-4 w-4 mr-1 animate-spin" /> : <ThumbsUp className="h-4 w-4 mr-1" />}
+                              {voteState?.hasVoted ? "Upvote recorded" : "Upvote this article"}
+                            </Button>
+                          ) : (
+                            <p className="text-xs text-foreground/40">Sign in to upvote or contribute. Upvotes and contributions update the displayed date.</p>
+                          )}
+                        </div>
+                        {user && (
+                          <div className="space-y-2">
+                            <Textarea
+                              value={contributionDraft}
+                              onChange={(e) => setContributionDraft(e.target.value)}
+                              placeholder="Summarize your contribution to this article (4–500 chars). Will be recorded with your account and timestamp; the article's displayed date will move forward."
+                              rows={3}
+                              maxLength={500}
+                              data-testid="input-contribution-summary"
+                            />
+                            <div className="flex items-center justify-between gap-2">
+                              <span className="text-xs text-foreground/30">{contributionDraft.length}/500</span>
+                              <Button
+                                size="sm"
+                                disabled={contributeMutation.isPending || contributionDraft.trim().length < 4}
+                                onClick={() => contributeMutation.mutate({ articleId: selectedArticle.id, summary: contributionDraft.trim() })}
+                                data-testid="button-record-contribution"
+                              >
+                                {contributeMutation.isPending ? <Loader2 className="h-4 w-4 mr-1 animate-spin" /> : <Pencil className="h-4 w-4 mr-1" />}
+                                Record contribution
+                              </Button>
+                            </div>
+                          </div>
+                        )}
+                        <p className="text-xs text-foreground/30 border-t border-white/8 pt-2">
+                          Honesty note: the displayed update date is the most recent of (a) the article's original publication date, (b) the most recent recorded co-operator contribution, and (c) the most recent co-operator upvote. Counts above are the actual database row counts — there are no seeded or fabricated upvotes or contributions.
+                        </p>
+                      </CardContent>
+                    </Card>
+                  </>
+                );
+              })()}
               <div>
                 <FediverseShare
                   title={`📚 ${selectedArticle.title}`}
@@ -3423,6 +3578,7 @@ Post-surgical anatomy may require custom barrier sizing. HRT affects genital tis
             <div className="space-y-4">
               {filteredArticles.map((article) => {
                 const IconComponent = getCategoryIcon(article.category);
+                const update = getDisplayedUpdate(article);
                 return (
                   <Card key={article.id} className="group hover:border-white/20 transition-all duration-200 border border-white/10 bg-white/3 overflow-hidden">
                     <CardHeader className="pb-3">
@@ -3441,10 +3597,21 @@ Post-surgical anatomy may require custom barrier sizing. HRT affects genital tis
                       <CardTitle className="text-lg font-bold text-foreground mb-1.5 font-display">
                         {article.title}
                       </CardTitle>
-                      <div className="flex items-center space-x-3 text-xs text-foreground/30">
+                      <div className="flex items-center flex-wrap gap-x-3 gap-y-1 text-xs text-foreground/30">
                         <span>By {article.author}</span>
                         <span className="text-foreground/15">•</span>
-                        <span>Updated {article.lastUpdated}</span>
+                        <span title={update.source === "co-op" ? `Originally published ${article.lastUpdated}` : "No co-operator contributions or upvotes recorded yet"}>
+                          {update.source === "co-op" ? "Updated by co-operators" : "Originally published"} {update.displayedDate}
+                        </span>
+                        {(update.contributionCount > 0 || update.voteCount > 0) && (
+                          <>
+                            <span className="text-foreground/15">•</span>
+                            <span className="inline-flex items-center gap-1" data-testid={`activity-counts-${article.id}`}>
+                              <ThumbsUp className="h-3 w-3" /> {update.voteCount}
+                              <Pencil className="h-3 w-3 ml-1.5" /> {update.contributionCount}
+                            </span>
+                          </>
+                        )}
                       </div>
                     </CardHeader>
                     <CardContent className="pt-0">
