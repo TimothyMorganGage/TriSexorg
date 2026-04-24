@@ -107,6 +107,8 @@ export const contactZoneEnum = z.enum(["oral", "anal", "vaginal", "frontal", "ne
 export const roleBalanceEnum = z.enum(["receptive", "penetrative", "versatile"]);
 export const procreativeModeEnum = z.enum(["barrier-only", "procreative-permeable", "fertility-only"]);
 
+export const fittingParamValueSchema = z.union([z.number(), z.string(), z.boolean()]);
+
 export const multiUseBalanceSchema = z.object({
   roleBalance: roleBalanceEnum,
   contactZones: z.array(contactZoneEnum),
@@ -116,6 +118,8 @@ export const multiUseBalanceSchema = z.object({
   activeFoldId: z.string().nullable().optional(),
   balanceCode: z.string(),
   brandingPreference: z.string().optional(),
+  // Per-variation custom-order parameters: { [variationId]: { [paramId]: value } }
+  variationCustomizations: z.record(z.string(), z.record(z.string(), fittingParamValueSchema)).default({}),
 });
 
 export type MultiUseBalance = z.infer<typeof multiUseBalanceSchema>;

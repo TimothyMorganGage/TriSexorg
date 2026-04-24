@@ -15,6 +15,215 @@ export interface IntersexVariation {
   consultRequired: boolean;
 }
 
+export type FittingParamId =
+  | "shaftLengthMm"
+  | "shaftGirthMm"
+  | "canalDepthMm"
+  | "canalGirthMm"
+  | "dualSleeveCount"
+  | "urethralPosition"
+  | "surfaceTreatment"
+  | "materialFlex"
+  | "anchorPattern"
+  | "consultRequest"
+  | "metaLensScanRef";
+
+export type FittingParamValue = number | string | boolean;
+
+export interface FittingParamSpec {
+  id: FittingParamId;
+  label: string;
+  kind: "slider" | "select" | "boolean" | "text";
+  unit?: string;
+  min?: number;
+  max?: number;
+  step?: number;
+  defaultValue: FittingParamValue;
+  options?: Array<{ value: string; label: string }>;
+  helper?: string;
+}
+
+export const FITTING_PARAMS: Record<FittingParamId, FittingParamSpec> = {
+  shaftLengthMm: {
+    id: "shaftLengthMm",
+    label: "Shaft sleeve length",
+    kind: "slider",
+    unit: "mm",
+    min: 30,
+    max: 200,
+    step: 5,
+    defaultValue: 130,
+    helper: "End-to-base length of the Inverted Sleeve fold for this variation.",
+  },
+  shaftGirthMm: {
+    id: "shaftGirthMm",
+    label: "Shaft sleeve girth",
+    kind: "slider",
+    unit: "mm",
+    min: 80,
+    max: 180,
+    step: 2,
+    defaultValue: 115,
+    helper: "Circumference of the Inverted Sleeve fold at mid-shaft.",
+  },
+  canalDepthMm: {
+    id: "canalDepthMm",
+    label: "Receptive canal depth",
+    kind: "slider",
+    unit: "mm",
+    min: 30,
+    max: 180,
+    step: 5,
+    defaultValue: 110,
+    helper: "Depth from opening to deepest point of the Cup-Pouch fold.",
+  },
+  canalGirthMm: {
+    id: "canalGirthMm",
+    label: "Receptive canal girth",
+    kind: "slider",
+    unit: "mm",
+    min: 80,
+    max: 150,
+    step: 2,
+    defaultValue: 110,
+    helper: "Mid-canal circumference of the Cup-Pouch fold.",
+  },
+  dualSleeveCount: {
+    id: "dualSleeveCount",
+    label: "Sleeve count in this unit",
+    kind: "select",
+    defaultValue: "1",
+    options: [
+      { value: "1", label: "1 sleeve (single phallus)" },
+      { value: "2", label: "2 sleeves (paired diphallia fit)" },
+    ],
+    helper: "Diphallia and paired-anatomy fits ship as a paired sleeve unit.",
+  },
+  urethralPosition: {
+    id: "urethralPosition",
+    label: "Urethral opening position",
+    kind: "select",
+    defaultValue: "distal",
+    options: [
+      { value: "distal", label: "Distal (glans / distal shaft)" },
+      { value: "midshaft", label: "Mid-shaft" },
+      { value: "proximal", label: "Proximal / penoscrotal" },
+      { value: "perineal", label: "Perineal" },
+    ],
+    helper: "Drives the hypospadias-aware liner cut for the Inverted Sleeve.",
+  },
+  surfaceTreatment: {
+    id: "surfaceTreatment",
+    label: "Surface treatment",
+    kind: "select",
+    defaultValue: "standard",
+    options: [
+      { value: "standard", label: "Standard surface" },
+      { value: "extra-lubricated", label: "Extra-lubricated (post-surgical / atrophic)" },
+      { value: "textured", label: "Textured (sensory amplification)" },
+      { value: "hypoallergenic-medical", label: "Hypoallergenic medical-grade" },
+    ],
+  },
+  materialFlex: {
+    id: "materialFlex",
+    label: "Material flex",
+    kind: "select",
+    defaultValue: "standard",
+    options: [
+      { value: "rigid-supportive", label: "Rigid-supportive (post-phalloplasty / micropenis)" },
+      { value: "standard", label: "Standard flex" },
+      { value: "extra-soft", label: "Extra-soft (atypical anchors / scar-aware)" },
+    ],
+  },
+  anchorPattern: {
+    id: "anchorPattern",
+    label: "Anchor / strap pattern",
+    kind: "select",
+    defaultValue: "standard-base",
+    options: [
+      { value: "standard-base", label: "Standard base ring" },
+      { value: "wide-base", label: "Wide base (bifid / webbed)" },
+      { value: "asymmetric", label: "Asymmetric (transposition / reconstruction)" },
+      { value: "strap", label: "External strap (aphallia / harness-mounted)" },
+    ],
+  },
+  consultRequest: {
+    id: "consultRequest",
+    label: "Request a one-to-one fitting consult",
+    kind: "boolean",
+    defaultValue: false,
+    helper: "Pre-checked for variations with a consult flag; you can opt out.",
+  },
+  metaLensScanRef: {
+    id: "metaLensScanRef",
+    label: "Meta Lens scan reference (optional)",
+    kind: "text",
+    defaultValue: "",
+    helper: "Paste a Meta Lens scan reference ID if you've already captured measurements.",
+  },
+};
+
+const UNIVERSAL_PARAMS: FittingParamId[] = [
+  "surfaceTreatment",
+  "materialFlex",
+  "consultRequest",
+  "metaLensScanRef",
+];
+
+const PARAMS_BY_ZONE: Partial<Record<ContactZoneId, FittingParamId[]>> = {
+  vaginal: ["canalDepthMm", "canalGirthMm"],
+  neovaginal: ["canalDepthMm", "canalGirthMm"],
+  anal: ["canalDepthMm", "canalGirthMm"],
+  frontal: ["shaftLengthMm", "shaftGirthMm"],
+  oral: [],
+};
+
+const VARIATION_OVERRIDES: Record<string, FittingParamId[]> = {
+  "diphallia": ["dualSleeveCount", "shaftLengthMm", "shaftGirthMm"],
+  "distal-hypospadias": ["urethralPosition", "shaftLengthMm", "shaftGirthMm"],
+  "midshaft-hypospadias": ["urethralPosition", "shaftLengthMm", "shaftGirthMm"],
+  "proximal-hypospadias": ["urethralPosition", "shaftLengthMm", "shaftGirthMm"],
+  "perineal-hypospadias": ["urethralPosition", "anchorPattern"],
+  "penoscrotal-transposition": ["anchorPattern", "shaftLengthMm", "shaftGirthMm"],
+  "bifid-scrotum": ["anchorPattern", "shaftLengthMm", "shaftGirthMm"],
+  "webbed-penis": ["anchorPattern", "shaftLengthMm", "shaftGirthMm"],
+  "buried-concealed-penis": ["anchorPattern", "shaftLengthMm", "shaftGirthMm"],
+  "aphallia": ["anchorPattern"],
+  "micropenis": ["shaftLengthMm", "shaftGirthMm"],
+  "chordee": ["shaftLengthMm", "shaftGirthMm"],
+  "tdick-hormonal": ["shaftLengthMm", "shaftGirthMm"],
+  "clitoromegaly": ["shaftLengthMm", "shaftGirthMm"],
+  "post-phalloplasty": ["shaftLengthMm", "shaftGirthMm", "anchorPattern"],
+  "post-vaginoplasty": ["canalDepthMm", "canalGirthMm"],
+  "post-vaginal-construction": ["canalDepthMm", "canalGirthMm"],
+  "post-clitoral-recession": ["anchorPattern"],
+  "mrkh": ["canalDepthMm", "canalGirthMm"],
+  "cervico-vaginal-agenesis": ["canalDepthMm", "canalGirthMm"],
+  "vaginal-septum-long": ["canalDepthMm", "canalGirthMm"],
+  "vaginal-septum-trans": ["canalDepthMm"],
+  "uterine-didelphys": ["canalDepthMm", "canalGirthMm"],
+  "cais": ["canalDepthMm", "canalGirthMm"],
+  "swyer": ["canalDepthMm", "canalGirthMm"],
+  "45-x-turner": ["canalDepthMm", "canalGirthMm"],
+};
+
+export function getApplicableParams(variation: IntersexVariation): FittingParamId[] {
+  const zoneParams = variation.relevantZones.flatMap((z) => PARAMS_BY_ZONE[z] ?? []);
+  const overrideParams = VARIATION_OVERRIDES[variation.id] ?? [];
+  const merged = [...overrideParams, ...zoneParams, ...UNIVERSAL_PARAMS];
+  return Array.from(new Set(merged));
+}
+
+export function getDefaultCustomization(variation: IntersexVariation): Record<string, FittingParamValue> {
+  const params = getApplicableParams(variation);
+  const defaults: Record<string, FittingParamValue> = {};
+  for (const pid of params) {
+    const spec = FITTING_PARAMS[pid];
+    defaults[pid] = pid === "consultRequest" ? variation.consultRequired : spec.defaultValue;
+  }
+  return defaults;
+}
+
 export type IntersexCategoryId =
   | "sex-chromosome"
   | "46xx-dsd"

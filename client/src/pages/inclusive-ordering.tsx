@@ -12,6 +12,9 @@ import { Separator } from "@/components/ui/separator";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Slider } from "@/components/ui/slider";
+import { Switch } from "@/components/ui/switch";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 import { PrecisionSizing } from "@/components/MyONESizing";
 import { 
@@ -26,7 +29,16 @@ import {
   Search
 } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { INTERSEX_VARIATIONS, INTERSEX_CATEGORIES } from "@/data/intersex-variations";
+import {
+  INTERSEX_VARIATIONS,
+  INTERSEX_CATEGORIES,
+  FITTING_PARAMS,
+  getApplicableParams,
+  getDefaultCustomization,
+  type FittingParamId,
+  type FittingParamValue,
+  type IntersexVariation,
+} from "@/data/intersex-variations";
 
 interface BrandingPreference {
   id: string;
@@ -128,11 +140,39 @@ export default function InclusiveOrdering() {
   const [selectedVariations, setSelectedVariations] = useState<string[]>([]);
   const [variationSearch, setVariationSearch] = useState("");
   const [activeVariationCategory, setActiveVariationCategory] = useState<string>(INTERSEX_CATEGORIES[0].id);
+  const [variationCustomizations, setVariationCustomizations] = useState<
+    Record<string, Record<string, FittingParamValue>>
+  >({});
 
   const toggleVariation = (id: string) => {
-    setSelectedVariations((prev) =>
-      prev.includes(id) ? prev.filter((v) => v !== id) : [...prev, id]
-    );
+    setSelectedVariations((prev) => {
+      if (prev.includes(id)) {
+        setVariationCustomizations((prevCustom) => {
+          const next = { ...prevCustom };
+          delete next[id];
+          return next;
+        });
+        return prev.filter((v) => v !== id);
+      }
+      const variation = INTERSEX_VARIATIONS.find((v) => v.id === id);
+      if (variation) {
+        setVariationCustomizations((prevCustom) => ({
+          ...prevCustom,
+          [id]: getDefaultCustomization(variation),
+        }));
+      }
+      return [...prev, id];
+    });
+  };
+
+  const updateCustomization = (variationId: string, paramId: FittingParamId, value: FittingParamValue) => {
+    setVariationCustomizations((prev) => ({
+      ...prev,
+      [variationId]: {
+        ...(prev[variationId] ?? {}),
+        [paramId]: value,
+      },
+    }));
   };
 
   const filteredVariations = INTERSEX_VARIATIONS.filter((v) => {
@@ -161,6 +201,7 @@ export default function InclusiveOrdering() {
         activeFoldId: activeFold?.id ?? null,
         balanceCode: balanceConfigCode(),
         brandingPreference,
+        variationCustomizations,
       };
       const productConfigId = selectedProduct
         ? Math.abs(
@@ -650,6 +691,151 @@ export default function InclusiveOrdering() {
                         </div>
                       )}
                     </ScrollArea>
+
+                    {selectedVariationDetails.length > 0 && (
+                      <div className="space-y-2" data-testid="variation-customization-stack">
+                        <div className="text-xs font-semibold flex items-center justify-between">
+                          <span>Per-variation custom-order parameters</span>
+                          <span className="text-[10px] text-muted-foreground font-normal">
+                            One card per selected variation — each ships with its own fitting spec
+                          </span>
+                        </div>
+                        {selectedVariationDetails.map((v) => {
+                          const params = getApplicableParams(v);
+                          const customs = variationCustomizations[v.id] ?? {};
+                          return (
+                            <div
+                              key={v.id}
+                              className="p-3 border rounded bg-background space-y-3"
+                              data-testid={`variation-custom-card-${v.id}`}
+                            >
+                              <div className="flex items-start justify-between gap-2">
+                                <div className="flex-1">
+                                  <div className="text-xs font-semibold leading-snug">{v.name}</div>
+                                  <div className="text-[10px] text-muted-foreground mt-0.5">{v.fittingNote}</div>
+                                </div>
+                                <div className="flex items-center gap-1 shrink-0">
+                                  {v.consultRequired && (
+                                    <Badge variant="outline" className="text-[10px] border-amber-500 text-amber-700 dark:text-amber-300">
+                                      consult
+                                    </Badge>
+                                  )}
+                                  <button
+                                    type="button"
+                                    onClick={() => toggleVariation(v.id)}
+                                    className="text-[10px] text-muted-foreground hover:text-foreground underline"
+                                    data-testid={`variation-remove-${v.id}`}
+                                  >
+                                    remove
+                                  </button>
+                                </div>
+                              </div>
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                {params.map((pid) => {
+                                  const spec = FITTING_PARAMS[pid];
+                                  const value = customs[pid] ?? spec.defaultValue;
+                                  if (spec.kind === "slider") {
+                                    const numericValue = typeof value === "number" ? value : Number(spec.defaultValue);
+                                    return (
+                                      <div key={pid} className="space-y-1.5" data-testid={`param-${v.id}-${pid}`}>
+                                        <div className="flex items-center justify-between text-[11px]">
+                                          <Label className="font-medium">{spec.label}</Label>
+                                          <span className="font-mono text-muted-foreground">
+                                            {numericValue}
+                                            {spec.unit ? ` ${spec.unit}` : ""}
+                                          </span>
+                                        </div>
+                                        <Slider
+                                          min={spec.min}
+                                          max={spec.max}
+                                          step={spec.step}
+                                          value={[numericValue]}
+                                          onValueChange={(vals) =>
+                                            updateCustomization(v.id, pid, vals[0] ?? spec.defaultValue as number)
+                                          }
+                                          data-testid={`slider-${v.id}-${pid}`}
+                                        />
+                                        {spec.helper && (
+                                          <p className="text-[10px] text-muted-foreground italic">{spec.helper}</p>
+                                        )}
+                                      </div>
+                                    );
+                                  }
+                                  if (spec.kind === "select") {
+                                    const stringValue = typeof value === "string" ? value : String(spec.defaultValue);
+                                    return (
+                                      <div key={pid} className="space-y-1.5" data-testid={`param-${v.id}-${pid}`}>
+                                        <Label className="font-medium text-[11px]">{spec.label}</Label>
+                                        <Select
+                                          value={stringValue}
+                                          onValueChange={(val) => updateCustomization(v.id, pid, val)}
+                                        >
+                                          <SelectTrigger
+                                            className="h-8 text-xs"
+                                            data-testid={`select-${v.id}-${pid}`}
+                                          >
+                                            <SelectValue />
+                                          </SelectTrigger>
+                                          <SelectContent>
+                                            {spec.options?.map((opt) => (
+                                              <SelectItem key={opt.value} value={opt.value} className="text-xs">
+                                                {opt.label}
+                                              </SelectItem>
+                                            ))}
+                                          </SelectContent>
+                                        </Select>
+                                        {spec.helper && (
+                                          <p className="text-[10px] text-muted-foreground italic">{spec.helper}</p>
+                                        )}
+                                      </div>
+                                    );
+                                  }
+                                  if (spec.kind === "boolean") {
+                                    const boolValue = typeof value === "boolean" ? value : Boolean(spec.defaultValue);
+                                    return (
+                                      <div
+                                        key={pid}
+                                        className="flex items-start justify-between gap-2 p-2 rounded border bg-muted/30"
+                                        data-testid={`param-${v.id}-${pid}`}
+                                      >
+                                        <div className="flex-1">
+                                          <Label className="font-medium text-[11px] cursor-pointer">{spec.label}</Label>
+                                          {spec.helper && (
+                                            <p className="text-[10px] text-muted-foreground italic mt-0.5">{spec.helper}</p>
+                                          )}
+                                        </div>
+                                        <Switch
+                                          checked={boolValue}
+                                          onCheckedChange={(checked) => updateCustomization(v.id, pid, checked)}
+                                          data-testid={`switch-${v.id}-${pid}`}
+                                        />
+                                      </div>
+                                    );
+                                  }
+                                  // text
+                                  const textValue = typeof value === "string" ? value : "";
+                                  return (
+                                    <div key={pid} className="space-y-1.5" data-testid={`param-${v.id}-${pid}`}>
+                                      <Label className="font-medium text-[11px]">{spec.label}</Label>
+                                      <Input
+                                        value={textValue}
+                                        onChange={(e) => updateCustomization(v.id, pid, e.target.value)}
+                                        className="h-8 text-xs"
+                                        placeholder="(optional)"
+                                        data-testid={`input-${v.id}-${pid}`}
+                                      />
+                                      {spec.helper && (
+                                        <p className="text-[10px] text-muted-foreground italic">{spec.helper}</p>
+                                      )}
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
 
                     {selectedVariationDetails.length > 0 && (
                       <div className="p-3 border rounded bg-background space-y-2" data-testid="variation-synthesis">
