@@ -58,7 +58,7 @@ export default function BadCoopDashboard() {
       description: "Complete living wills, healthcare proxies, and end-of-life planning",
       icon: FileText,
       color: "bg-blue-500",
-      progress: 85,
+      progress: 0,
       priority: "critical",
       features: [
         "Living Will Creation & Management",
@@ -77,7 +77,7 @@ export default function BadCoopDashboard() {
       description: "Integrated sexual health planning with TriSex.org protection systems",
       icon: Heart,
       color: "bg-pink-500",
-      progress: 92,
+      progress: 0,
       priority: "high",
       features: [
         "Sexual Health Emergency Protocols",
@@ -96,7 +96,7 @@ export default function BadCoopDashboard() {
       description: "Community-driven healthcare decision making and collective action",
       icon: Users,
       color: "bg-green-500",
-      progress: 78,
+      progress: 0,
       priority: "high",
       features: [
         "Community Health Councils",
@@ -115,7 +115,7 @@ export default function BadCoopDashboard() {
       description: "Comprehensive financial planning for healthcare costs and insurance",
       icon: DollarSign,
       color: "bg-yellow-500",
-      progress: 45,
+      progress: 0,
       priority: "medium",
       features: [
         "Healthcare Cost Planning",
@@ -134,7 +134,7 @@ export default function BadCoopDashboard() {
       description: "Psychiatric advance directives and mental health crisis planning",
       icon: Brain,
       color: "bg-purple-500",
-      progress: 67,
+      progress: 0,
       priority: "high",
       features: [
         "Psychiatric Advance Directives",
@@ -153,7 +153,7 @@ export default function BadCoopDashboard() {
       description: "Family planning, caregiving directives, and multigenerational care",
       icon: User,
       color: "bg-orange-500",
-      progress: 89,
+      progress: 0,
       priority: "high",
       features: [
         "Family Care Coordination",
@@ -168,63 +168,9 @@ export default function BadCoopDashboard() {
     }
   ];
 
-  const recentActivity = [
-    {
-      action: "Sexual health directives updated",
-      module: "Sexual Health Integration",
-      time: "2 hours ago",
-      status: "completed",
-      details: "Integrated new contraception preferences with TriSex.org protection systems"
-    },
-    {
-      action: "Community health council meeting",
-      module: "Cooperative Advocacy", 
-      time: "1 day ago",
-      status: "attended",
-      details: "Participated in democratic healthcare governance session"
-    },
-    {
-      action: "Healthcare proxy verification",
-      module: "Advance Directives",
-      time: "3 days ago", 
-      status: "verified",
-      details: "Emergency contact confirmed and healthcare proxy signed"
-    },
-    {
-      action: "Mental health crisis plan review",
-      module: "Mental Health",
-      time: "1 week ago",
-      status: "needs-update",
-      details: "Annual review scheduled for psychiatric advance directives"
-    }
-  ];
+  const recentActivity: Array<{ action: string; module: string; time: string; status: string; details: string }> = [];
 
-  const upcomingTasks = [
-    {
-      task: "Annual directive comprehensive review",
-      dueDate: "In 2 months",
-      priority: "critical",
-      module: "Advance Directives"
-    },
-    {
-      task: "Sexual health education workshop",
-      dueDate: "Next week",
-      priority: "medium", 
-      module: "Sexual Health Integration"
-    },
-    {
-      task: "Cooperative insurance enrollment",
-      dueDate: "In 3 weeks",
-      priority: "high",
-      module: "Financial Planning"
-    },
-    {
-      task: "Mental health support group check-in",
-      dueDate: "Tomorrow",
-      priority: "medium",
-      module: "Mental Health"
-    }
-  ];
+  const upcomingTasks: Array<{ task: string; dueDate: string; priority: string; module: string }> = [];
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -873,7 +819,14 @@ export default function BadCoopDashboard() {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
-                    {recentActivity.map((activity, index) => (
+                    {recentActivity.length === 0 ? (
+                      <div className="p-4 border-2 border-dashed border-muted-foreground/30 rounded text-center">
+                        <p className="text-sm font-medium">No activity yet</p>
+                        <p className="text-xs text-muted-foreground mt-1 max-w-md mx-auto">
+                          A previous build of this card displayed four invented activity entries (e.g. "Sexual health directives updated · 2 hours ago", "Community health council meeting · 1 day ago"). Those were placeholders, not real account activity. Removed.
+                        </p>
+                      </div>
+                    ) : recentActivity.map((activity, index) => (
                       <div key={index} className="flex items-start space-x-3 p-3 bg-muted/30 rounded-lg">
                         <div className={`w-3 h-3 rounded-full mt-2 ${getStatusColor(activity.status)}`} />
                         <div className="flex-1">
@@ -897,7 +850,14 @@ export default function BadCoopDashboard() {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
-                    {upcomingTasks.map((task, index) => (
+                    {upcomingTasks.length === 0 ? (
+                      <div className="p-4 border-2 border-dashed border-muted-foreground/30 rounded text-center">
+                        <p className="text-sm font-medium">No upcoming tasks</p>
+                        <p className="text-xs text-muted-foreground mt-1 max-w-md mx-auto">
+                          Earlier shipped fake tasks ("Annual directive comprehensive review · In 2 months", "Sexual health education workshop · Next week", etc.). Tasks will populate from your real planning workflows.
+                        </p>
+                      </div>
+                    ) : upcomingTasks.map((task, index) => (
                       <div key={index} className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
                         <div className="flex-1">
                           <p className="font-medium text-sm">{task.task}</p>
@@ -944,19 +904,21 @@ export default function BadCoopDashboard() {
                   </CardHeader>
                   <CardContent className="space-y-3">
                     {[
-                      { topic: "Advance Directive Updates", posts: 234, active: true },
-                      { topic: "Sexual Health Planning", posts: 189, active: true },
-                      { topic: "Mental Health Support", posts: 312, active: false },
-                      { topic: "Elder Care Strategies", posts: 156, active: true }
+                      { topic: "Advance Directive Updates" },
+                      { topic: "Sexual Health Planning" },
+                      { topic: "Mental Health Support" },
+                      { topic: "Elder Care Strategies" }
                     ].map((forum, i) => (
                       <div key={i} className="p-2 bg-muted/30 rounded flex justify-between items-center">
                         <div>
                           <span className="text-sm font-medium">{forum.topic}</span>
-                          <div className="text-xs text-muted-foreground">{forum.posts} posts</div>
+                          <div className="text-xs text-muted-foreground">No posts yet</div>
                         </div>
-                        {forum.active && <Badge className="bg-green-500 text-white text-xs">Active</Badge>}
                       </div>
                     ))}
+                    <p className="text-xs text-muted-foreground italic">
+                      Earlier shipped fake post counts (234 / 189 / 312 / 156) and "Active" badges. Removed; counts will reflect real forum activity.
+                    </p>
                     <Button variant="outline" size="sm" className="w-full">
                       View All Forums
                     </Button>
@@ -1116,28 +1078,11 @@ export default function BadCoopDashboard() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="grid md:grid-cols-4 gap-4">
-                    {[
-                      { name: "Maria C.", specialty: "Sexual Health Navigation", rating: 4.9, sessions: 234 },
-                      { name: "James T.", specialty: "Mental Health Advocacy", rating: 4.8, sessions: 189 },
-                      { name: "Dr. Lee S.", specialty: "Elder Care Planning", rating: 5.0, sessions: 312 },
-                      { name: "Alex R.", specialty: "LGBTQIA+ Healthcare", rating: 4.9, sessions: 267 }
-                    ].map((advocate, i) => (
-                      <Card key={i} className="border-t-4 border-t-teal-500">
-                        <CardContent className="p-4 text-center">
-                          <div className="w-12 h-12 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-2">
-                            <User className="h-6 w-6 text-teal-600" />
-                          </div>
-                          <div className="font-semibold">{advocate.name}</div>
-                          <div className="text-xs text-muted-foreground mb-2">{advocate.specialty}</div>
-                          <div className="flex justify-center gap-2 mb-3">
-                            <Badge variant="secondary">★ {advocate.rating}</Badge>
-                            <Badge variant="outline">{advocate.sessions} sessions</Badge>
-                          </div>
-                          <Button size="sm" variant="outline" className="w-full">Connect</Button>
-                        </CardContent>
-                      </Card>
-                    ))}
+                  <div className="p-6 border-2 border-dashed border-muted-foreground/30 rounded text-center">
+                    <p className="font-semibold text-sm">No advocates listed yet</p>
+                    <p className="text-xs text-muted-foreground mt-2 max-w-xl mx-auto">
+                      An earlier version of this card listed four invented advocates ("Maria C." 4.9★ / 234 sessions, "James T." 4.8★ / 189 sessions, "Dr. Lee S." 5.0★ / 312 sessions, "Alex R." 4.9★ / 267 sessions) under specialties like Sexual Health Navigation and Elder Care Planning. They were not real people. They've been removed. Real advocates will appear here once verified clinicians and peer advocates opt in.
+                    </p>
                   </div>
                 </CardContent>
               </Card>
@@ -1192,9 +1137,9 @@ export default function BadCoopDashboard() {
                   </CardHeader>
                   <CardContent className="space-y-3">
                     {[
-                      { title: "Understanding Advance Directives", duration: "45 min", level: "Beginner", progress: 100 },
-                      { title: "Sexual Health Planning Essentials", duration: "1hr 20min", level: "Intermediate", progress: 65 },
-                      { title: "Mental Health Crisis Management", duration: "2hr", level: "Advanced", progress: 30 },
+                      { title: "Understanding Advance Directives", duration: "45 min", level: "Beginner", progress: 0 },
+                      { title: "Sexual Health Planning Essentials", duration: "1hr 20min", level: "Intermediate", progress: 0 },
+                      { title: "Mental Health Crisis Management", duration: "2hr", level: "Advanced", progress: 0 },
                       { title: "Family Care Coordination", duration: "1hr", level: "Beginner", progress: 0 },
                       { title: "Legal Rights in Healthcare", duration: "55 min", level: "Intermediate", progress: 0 }
                     ].map((course, i) => (
@@ -1229,23 +1174,26 @@ export default function BadCoopDashboard() {
                   </CardHeader>
                   <CardContent className="space-y-3">
                     {[
-                      { name: "Living Will Template", downloads: 12453, format: "PDF/DOCX" },
-                      { name: "Healthcare Power of Attorney", downloads: 9876, format: "PDF/DOCX" },
-                      { name: "POLST Form (State-Specific)", downloads: 7654, format: "PDF" },
-                      { name: "Mental Health Advance Directive", downloads: 5432, format: "PDF/DOCX" },
-                      { name: "Sexual Health Planning Worksheet", downloads: 4321, format: "PDF" },
-                      { name: "Family Care Agreement", downloads: 3210, format: "PDF/DOCX" }
+                      { name: "Living Will Template", format: "PDF/DOCX" },
+                      { name: "Healthcare Power of Attorney", format: "PDF/DOCX" },
+                      { name: "POLST Form (State-Specific)", format: "PDF" },
+                      { name: "Mental Health Advance Directive", format: "PDF/DOCX" },
+                      { name: "Sexual Health Planning Worksheet", format: "PDF" },
+                      { name: "Family Care Agreement", format: "PDF/DOCX" }
                     ].map((doc, i) => (
                       <div key={i} className="p-3 bg-muted/30 rounded-lg flex justify-between items-center">
                         <div>
                           <div className="font-medium text-sm">{doc.name}</div>
-                          <div className="text-xs text-muted-foreground">{doc.downloads.toLocaleString()} downloads • {doc.format}</div>
+                          <div className="text-xs text-muted-foreground">Template not yet available · {doc.format}</div>
                         </div>
-                        <Button size="sm" variant="outline">
+                        <Button size="sm" variant="outline" disabled>
                           <Download className="h-4 w-4" />
                         </Button>
                       </div>
                     ))}
+                    <p className="text-xs text-muted-foreground italic pt-2">
+                      Earlier shipped fake download counts (12,453 / 9,876 / 7,654 / 5,432 / 4,321 / 3,210) on templates that don't exist yet. Counts removed; downloads disabled until real templates land.
+                    </p>
                   </CardContent>
                 </Card>
               </div>

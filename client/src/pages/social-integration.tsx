@@ -72,40 +72,40 @@ export default function SocialIntegration() {
   const platformStats: PlatformStats[] = [
     {
       platform: "Bluesky",
-      followers: 12847,
-      posts: 234,
-      engagement: 8.7,
-      reach: 156392,
+      followers: 0,
+      posts: 0,
+      engagement: 0,
+      reach: 0,
       icon: Globe,
       color: "bg-blue-500",
       protocol: "AT Protocol"
     },
     {
       platform: "Mastodon",
-      followers: 15632,
-      posts: 312,
-      engagement: 14.2,
-      reach: 198456,
+      followers: 0,
+      posts: 0,
+      engagement: 0,
+      reach: 0,
       icon: Network,
       color: "bg-indigo-500",
       protocol: "ActivityPub"
     },
     {
       platform: "Pixelfed",
-      followers: 8923,
-      posts: 156,
-      engagement: 12.3,
-      reach: 89754,
+      followers: 0,
+      posts: 0,
+      engagement: 0,
+      reach: 0,
       icon: Camera,
       color: "bg-purple-500",
       protocol: "ActivityPub"
     },
     {
       platform: "Loops",
-      followers: 4567,
-      posts: 67,
-      engagement: 15.8,
-      reach: 43289,
+      followers: 0,
+      posts: 0,
+      engagement: 0,
+      reach: 0,
       icon: Video,
       color: "bg-green-500",
       protocol: "ActivityPub"
@@ -142,42 +142,7 @@ export default function SocialIntegration() {
     }
   ];
 
-  const recentPosts: SocialPost[] = [
-    {
-      id: "1",
-      platform: "bluesky",
-      content: "New 4D STI intervention data shows 23% reduction in transmission rates using bioregional monitoring. #PublicHealth #STIPrevention #DataDriven",
-      engagement: { likes: 234, shares: 67, comments: 43, views: 2341 },
-      timestamp: "2 hours ago",
-      hashtags: ["PublicHealth", "STIPrevention", "DataDriven"]
-    },
-    {
-      id: "2",
-      platform: "mastodon",
-      content: "CW: sexual health (educational)\n\n🌌 Infinitely Affirmative Protection reviews are live! Real co-op members share how intersex-centered sizing changed their lives.\n\n#SexualHealth #Intersex #Fediverse",
-      engagement: { likes: 412, shares: 98, comments: 67, views: 3892 },
-      timestamp: "4 hours ago",
-      hashtags: ["SexualHealth", "Intersex", "Fediverse"]
-    },
-    {
-      id: "3", 
-      platform: "pixelfed",
-      content: "Medicine Wheel logo design celebrating 2SLGBTIQ+ community with sustainable protection. #Pride #InclusiveDesign #Sustainability",
-      mediaUrl: "/api/assets/medicine-wheel-pride.jpg",
-      engagement: { likes: 567, shares: 123, comments: 89, views: 4567 },
-      timestamp: "5 hours ago",
-      hashtags: ["Pride", "InclusiveDesign", "Sustainability"]
-    },
-    {
-      id: "4",
-      platform: "loops",
-      content: "3D anatomy scanning process - privacy-preserving custom fit technology in action",
-      mediaUrl: "/api/assets/3d-scanning-demo.mp4",
-      engagement: { likes: 789, shares: 234, comments: 156, views: 8923 },
-      timestamp: "1 day ago",
-      hashtags: ["TechForGood", "Privacy", "Innovation"]
-    }
-  ];
+  const recentPosts: SocialPost[] = [];
 
   const suggestedContent = [
     {
@@ -212,17 +177,17 @@ export default function SocialIntegration() {
   const exportReviewSyndication = () => {
     const syndicationData = {
       bluesky: {
-        post: "🌌 Real co-op member reviews are in! Our intersex-centered sizing system is changing lives. Read authentic testimonials from the TriSex.org community.\n\n#SexualHealth #Intersex #IntersexInclusion #CooperativeHealth",
+        post: "🌌 The TriSex.org member-reviews page is live and currently empty — by design. We removed the staged testimonials that were there before. Real reviews from real co-op members will appear when members write them.\n\n#SexualHealth #Intersex #IntersexInclusion #CooperativeHealth",
         url: window.location.origin + "/infinitely-affirmative-protection",
         format: "text + link card"
       },
       mastodon: {
-        post: "🌌 Infinitely Affirmative Protection: Real reviews from TriSex.org co-op members\n\nOur intersex-centered sizing, NanoHeal lubricant, and Medicaid EPD integration are transforming sexual health care.\n\n✅ 12 verified member testimonials\n⭐ 5.0 average rating\n🏥 100% verified members\n\n#SexualHealth #Intersex #Fediverse #CooperativeOwnership\n\n" + window.location.origin + "/infinitely-affirmative-protection",
+        post: "🌌 Infinitely Affirmative Protection — TriSex.org's member-review page\n\nIntersex-centered sizing. NanoHeal lubricant (experimental, no clinical trial yet). Medicaid EPD integration framework.\n\nReview count today: 0 — empty until real members post. We removed the 12 fake five-star reviews that used to live here.\n\n#SexualHealth #Intersex #Fediverse #CooperativeOwnership\n\n" + window.location.origin + "/infinitely-affirmative-protection",
         format: "long-form + hashtags",
         contentWarning: "sexual health (educational)"
       },
       pixelfed: {
-        post: "🌌 See what our co-op members are saying!\n\nIntersex-centered sizing • NanoHeal protection • 100% verified reviews\n\n#SexualHealth #IntersexInclusion #CoopPower #HealthEquity",
+        post: "🌌 TriSex.org member-review page is open for real reviews.\n\nIntersex-centered sizing • NanoHeal (experimental) • Verified-member-only posting\n\n#SexualHealth #IntersexInclusion #CoopPower #HealthEquity",
         imagePrompt: "Design graphic showing review statistics with galaxy background",
         url: window.location.origin + "/infinitely-affirmative-protection"
       },
@@ -376,14 +341,14 @@ export default function SocialIntegration() {
                 </CardHeader>
                 <CardContent>
                   <p className="text-sm text-muted-foreground mb-4">
-                    Share authentic co-op member testimonials across the fediverse. Export pre-formatted posts optimized for each platform's character limits, features, and community norms.
+                    Share the member-review page across the fediverse. Export pre-formatted posts optimized for each platform's character limits, features, and community norms. The review page itself is currently empty — these share templates link to it honestly.
                   </p>
                   <div className="grid md:grid-cols-2 gap-4 mb-4">
                     <div className="p-3 border rounded-lg bg-muted/30">
                       <div className="font-medium text-sm mb-1">Content Includes:</div>
                       <ul className="text-xs text-muted-foreground space-y-1">
-                        <li>• 12 verified member testimonials</li>
-                        <li>• 5.0 ⭐ average rating</li>
+                        <li>• Reviews currently posted: 0 (verified-member-only)</li>
+                        <li>• Average rating: — (no reviews yet)</li>
                         <li>• Product category highlights</li>
                         <li>• Platform-specific hashtags</li>
                       </ul>
@@ -531,6 +496,14 @@ export default function SocialIntegration() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
+                  {recentPosts.length === 0 && (
+                    <div className="p-4 border-2 border-dashed border-amber-500/40 bg-amber-50/30 dark:bg-amber-950/10 rounded">
+                      <p className="text-sm font-semibold text-amber-700 dark:text-amber-400">No federated posts yet</p>
+                      <p className="text-xs text-muted-foreground mt-1">
+                        Earlier shipped four invented posts with fabricated likes/shares/views (e.g. a Bluesky post claiming "23% reduction in transmission rates", a Mastodon post hyping nonexistent reviews, plus pixelfed/loops posts with engagement of 567/789 likes). Removed. Real posts will appear once cross-posting is wired to actual accounts.
+                      </p>
+                    </div>
+                  )}
                   {recentPosts.map((post) => (
                     <div key={post.id} className="p-4 border rounded-lg">
                       <div className="flex items-center justify-between mb-3">

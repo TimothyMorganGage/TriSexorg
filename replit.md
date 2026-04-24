@@ -46,6 +46,7 @@ The application employs a modern full-stack architecture with a clear separation
     -   Herbal Knowledge Base for co-operators to contribute peer-reviewed entries on foraging and co-crafting protection materials, grounded in the American Herbalists Guild (AHG) framework.
     -   Honesty refactors across analytics, economic-impact, monogamy-economics, 4D-STI-intervention, open-books, infinitely-affirmative-protection, newsletter, and trisex-stablecoin features to remove fabricated data and introduce transparent, framework-based approaches.
     -   Filing Preparation system for the $BAD cooperative, generating downloadable, filing-ready packets for IRS and financial compliance with clear disclaimers.
+    -   Honesty refactors extended to bad-coop-dashboard (4 fake "Community Health Advocates" with ratings/sessions, 6 fake legal-template download counts in the 3,210–12,453 range, fabricated 45–92% module progress, four invented recent-activity entries, fabricated upcoming tasks, four fake forum post counts, and fake video-course completion %s — all replaced with empty states + named-removal disclaimers) and social-integration (zeroed Bluesky/Mastodon/Pixelfed/Loops follower / post / engagement / reach numbers and removed four fabricated cross-platform posts with invented likes/shares/views).
 
 ## External Dependencies
 -   **Database Driver**: `@neondatabase/serverless`
