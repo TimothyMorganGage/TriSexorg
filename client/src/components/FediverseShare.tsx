@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Share2, Globe, Network, Camera, Video, Copy, CheckCircle, Megaphone } from "lucide-react";
+import { Share2, Globe, Network, Camera, Video, Copy, CheckCircle, Megaphone, Users } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -69,6 +69,13 @@ export function FediverseShare({
       color: "bg-red-600",
       post: `${title}\n\n${description || ''}\n\n${hashtagString}\n\n${shareUrl}`,
       instructions: `1. Copy the post (Truths are limited to 500 chars — trim if needed)\n2. Visit truthsocial.com or open the app\n3. Tap "Create a Truth"\n4. Paste and post!\n\nNote: Truth Social runs a Mastodon-compatible API but does not federate via ActivityPub, so reach is limited to the Truth Social network.`
+    },
+    hylo: {
+      name: "Hylo",
+      icon: Users,
+      color: "bg-amber-600",
+      post: `${title}\n\n${description || ''}\n\n${hashtagString}\n\n${shareUrl}`,
+      instructions: `1. Copy the post text\n2. Visit hylo.com and open your group (or join the TriSex.org group)\n3. Click "Create" → choose Discussion, Resource, or Project as the post type\n4. Paste the text into the body, set a topic, and add a content warning if needed\n5. Post to your group, a federation, or to Public\n\nHylo is open-source, cooperative-owned community infrastructure — a strong fit for $BAD / $TRISEXORG governance discussions.`
     }
   };
 
