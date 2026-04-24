@@ -6,7 +6,7 @@ import {
   moodEntries, wellnessGoals, moodInsights, timeEntries, timeGoals, timeInsights,
   calendarConnections, scheduledTasks, taskTemplates, savedProductConfigurations,
   forumCategories, forumPosts, forumReplies, forumLikes, forumBookmarks,
-  filingDocuments, boundaryCheckConsents, xCoopPricingInterest,
+  filingDocuments, boundaryCheckConsents, xCoopPricingInterest, metaLensScans,
   type User, type InsertUser, type Product, type InsertProduct,
   type ProductConfiguration, type InsertProductConfiguration,
   type Order, type InsertOrder, type EducationalContent, type InsertEducationalContent,
@@ -32,6 +32,7 @@ import {
   type FilingDocument, type InsertFilingDocument,
   type BoundaryCheckConsent, type InsertBoundaryCheckConsent,
   type XCoopPricingInterest, type InsertXCoopPricingInterest,
+  type MetaLensScan, type InsertMetaLensScan,
 } from "@shared/schema";
 
 export interface IStorage {
@@ -199,6 +200,13 @@ export interface IStorage {
   getAllXCoopPricingInterestForUser(userId: number): Promise<XCoopPricingInterest[]>;
   upsertXCoopPricingInterest(data: InsertXCoopPricingInterest): Promise<XCoopPricingInterest>;
   countXCoopPricingInterest(): Promise<{ total: number; premium: number; pornOptOut: number; byPlatform: Record<string, { total: number; premium: number }> }>;
+
+  // Meta Lens scan import
+  getMetaLensScansByUser(userId: number): Promise<MetaLensScan[]>;
+  getMetaLensScan(id: number): Promise<MetaLensScan | undefined>;
+  createMetaLensScan(data: InsertMetaLensScan): Promise<MetaLensScan>;
+  linkMetaLensScanToConfig(scanId: number, configId: number): Promise<MetaLensScan | undefined>;
+  deleteMetaLensScan(id: number, userId: number): Promise<boolean>;
 
   // Clinic Inventory methods
   getClinicInventory(): Promise<any[]>;
@@ -2910,6 +2918,36 @@ export class MemStorage implements IStorage {
       pornOptOut: rows.filter(r => r.pornOptOut).length,
       byPlatform,
     };
+  }
+
+  // Meta Lens scan import
+  async getMetaLensScansByUser(userId: number): Promise<MetaLensScan[]> {
+    return await db.select().from(metaLensScans).where(eq(metaLensScans.userId, userId)).orderBy(desc(metaLensScans.createdAt));
+  }
+
+  async getMetaLensScan(id: number): Promise<MetaLensScan | undefined> {
+    const [row] = await db.select().from(metaLensScans).where(eq(metaLensScans.id, id));
+    return row;
+  }
+
+  async createMetaLensScan(data: InsertMetaLensScan): Promise<MetaLensScan> {
+    const [created] = await db.insert(metaLensScans).values(data).returning();
+    return created;
+  }
+
+  async linkMetaLensScanToConfig(scanId: number, configId: number): Promise<MetaLensScan | undefined> {
+    const [updated] = await db.update(metaLensScans)
+      .set({ generatedConfigId: configId, status: "configured" })
+      .where(eq(metaLensScans.id, scanId))
+      .returning();
+    return updated;
+  }
+
+  async deleteMetaLensScan(id: number, userId: number): Promise<boolean> {
+    const result = await db.delete(metaLensScans)
+      .where(and(eq(metaLensScans.id, id), eq(metaLensScans.userId, userId)))
+      .returning();
+    return result.length > 0;
   }
 }
 

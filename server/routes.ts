@@ -2509,6 +2509,99 @@ END:VEVENT
     }
   });
 
+  // Meta Lens scan import → product configuration
+  app.get('/api/meta-lens-scans', async (req, res) => {
+    try {
+      if (!req.session?.userId) return res.status(401).json({ message: "Must be logged in" });
+      const scans = await storage.getMetaLensScansByUser(req.session.userId);
+      res.json(scans);
+    } catch (e: any) {
+      res.status(500).json({ message: e.message || "Failed to fetch scans" });
+    }
+  });
+
+  app.post('/api/meta-lens-scans', async (req, res) => {
+    try {
+      if (!req.session?.userId) return res.status(401).json({ message: "Must be logged in" });
+      const {
+        sourceDevice, anatomyType, capturedAt, lengthMm, girthMm, widthMm, depthMm,
+        rawTranscript, scanImageRef, measurementMethod, confidenceLevel, notes,
+      } = req.body;
+      if (!anatomyType || !measurementMethod || !capturedAt) {
+        return res.status(400).json({ message: "anatomyType, measurementMethod, and capturedAt are required" });
+      }
+      const scan = await storage.createMetaLensScan({
+        userId: req.session.userId,
+        sourceDevice: sourceDevice || "ray-ban-meta",
+        anatomyType,
+        capturedAt: new Date(capturedAt),
+        lengthMm: lengthMm ? parseInt(lengthMm) : null,
+        girthMm: girthMm ? parseInt(girthMm) : null,
+        widthMm: widthMm ? parseInt(widthMm) : null,
+        depthMm: depthMm ? parseInt(depthMm) : null,
+        rawTranscript: rawTranscript || null,
+        scanImageRef: scanImageRef || null,
+        measurementMethod,
+        confidenceLevel: confidenceLevel || "medium",
+        notes: notes || null,
+        status: "imported",
+      } as any);
+      res.status(201).json(scan);
+    } catch (e: any) {
+      res.status(500).json({ message: e.message || "Failed to import scan" });
+    }
+  });
+
+  app.post('/api/meta-lens-scans/:id/generate-configuration', async (req, res) => {
+    try {
+      if (!req.session?.userId) return res.status(401).json({ message: "Must be logged in" });
+      const scan = await storage.getMetaLensScan(parseInt(req.params.id));
+      if (!scan || scan.userId !== req.session.userId) return res.status(404).json({ message: "Scan not found" });
+      const { productId, material, features, culturalTerms, languagePreference } = req.body;
+      if (!productId || !material) {
+        return res.status(400).json({ message: "productId and material are required" });
+      }
+      const config = await storage.createProductConfiguration({
+        userId: req.session.userId,
+        productId: parseInt(productId),
+        anatomyType: scan.anatomyType,
+        lengthMm: scan.lengthMm,
+        girthMm: scan.girthMm,
+        widthMm: scan.widthMm,
+        depthMm: scan.depthMm,
+        customMeasurements: JSON.stringify({
+          source: "meta-lens-scan",
+          scanId: scan.id,
+          sourceDevice: scan.sourceDevice,
+          measurementMethod: scan.measurementMethod,
+          confidenceLevel: scan.confidenceLevel,
+          rawTranscript: scan.rawTranscript,
+          capturedAt: scan.capturedAt,
+        }),
+        material,
+        features: features || [],
+        culturalTerms: culturalTerms || [],
+        languagePreference: languagePreference || "en",
+        status: "draft",
+      } as any);
+      await storage.linkMetaLensScanToConfig(scan.id, config.id);
+      res.status(201).json({ scan: { ...scan, generatedConfigId: config.id, status: "configured" }, configuration: config });
+    } catch (e: any) {
+      res.status(500).json({ message: e.message || "Failed to generate configuration" });
+    }
+  });
+
+  app.delete('/api/meta-lens-scans/:id', async (req, res) => {
+    try {
+      if (!req.session?.userId) return res.status(401).json({ message: "Must be logged in" });
+      const ok = await storage.deleteMetaLensScan(parseInt(req.params.id), req.session.userId);
+      if (!ok) return res.status(404).json({ message: "Scan not found" });
+      res.json({ success: true });
+    } catch (e: any) {
+      res.status(500).json({ message: e.message || "Failed to delete scan" });
+    }
+  });
+
   app.delete('/api/filings/:id', async (req, res) => {
     try {
       if (!req.session?.userId) return res.status(401).json({ message: "Must be logged in" });

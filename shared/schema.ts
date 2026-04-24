@@ -1510,6 +1510,35 @@ export const insertBoundaryCheckConsentSchema = createInsertSchema(boundaryCheck
 export type InsertBoundaryCheckConsent = z.infer<typeof insertBoundaryCheckConsentSchema>;
 export type BoundaryCheckConsent = typeof boundaryCheckConsents.$inferSelect;
 
+export const metaLensScans = pgTable("meta_lens_scans", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  sourceDevice: text("source_device").notNull().default("ray-ban-meta"), // ray-ban-meta, meta-view-app, oakley-meta, manual-meta-ai
+  anatomyType: text("anatomy_type").notNull(), // penis, vagina, anus, front_hole, multi_anatomy
+  capturedAt: timestamp("captured_at").notNull(),
+  lengthMm: integer("length_mm"),
+  girthMm: integer("girth_mm"),
+  widthMm: integer("width_mm"),
+  depthMm: integer("depth_mm"),
+  rawTranscript: text("raw_transcript"), // what the user got from Meta AI verbatim
+  scanImageRef: text("scan_image_ref"), // optional uploaded reference image URL
+  measurementMethod: text("measurement_method").notNull(), // meta-ai-verbal, meta-ai-photo-tape, manual-tape-via-glasses
+  confidenceLevel: text("confidence_level").notNull().default("medium"), // low, medium, high
+  notes: text("notes"),
+  generatedConfigId: integer("generated_config_id").references(() => productConfigurations.id),
+  status: text("status").notNull().default("imported"), // imported, configured, ordered, archived
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const insertMetaLensScanSchema = createInsertSchema(metaLensScans).omit({
+  id: true,
+  generatedConfigId: true,
+  createdAt: true,
+});
+
+export type InsertMetaLensScan = z.infer<typeof insertMetaLensScanSchema>;
+export type MetaLensScan = typeof metaLensScans.$inferSelect;
+
 export const xCoopPricingInterest = pgTable("x_coop_pricing_interest", {
   id: serial("id").primaryKey(),
   userId: integer("user_id").references(() => users.id).notNull(),

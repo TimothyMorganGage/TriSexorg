@@ -16,6 +16,7 @@ export function Header() {
     { name: "STI Tracking", href: "/partner-sti-tracking" },
     { name: "Filings", href: "/filing-preparation" },
     { name: "Boundaries", href: "/boundaries-background-check" },
+    { name: "Meta Lens Scan", href: "/meta-lens-scan" },
   ];
 
   const isActive = (path: string) => location === path;
