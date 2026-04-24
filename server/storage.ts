@@ -37,6 +37,8 @@ import {
   type BlueskyShareAttestation, type InsertBlueskyShareAttestation,
   type HerbalKnowledgeEntry, type InsertHerbalKnowledgeEntry,
   herbalKnowledgeEntries,
+  type XShareAttestation, type InsertXShareAttestation,
+  xShareAttestations,
 } from "@shared/schema";
 
 export interface IStorage {
@@ -221,6 +223,11 @@ export interface IStorage {
   listHerbalEntries(category?: string): Promise<HerbalKnowledgeEntry[]>;
   getHerbalEntry(id: number): Promise<HerbalKnowledgeEntry | undefined>;
   createHerbalEntry(data: InsertHerbalKnowledgeEntry): Promise<HerbalKnowledgeEntry>;
+
+  // X (Twitter) share attestation (ethics gate, mirrors Bluesky)
+  getActiveXAttestation(userId: number): Promise<XShareAttestation | undefined>;
+  createXAttestation(data: InsertXShareAttestation): Promise<XShareAttestation>;
+  revokeXAttestation(id: number, userId: number): Promise<boolean>;
 
   // Clinic Inventory methods
   getClinicInventory(): Promise<any[]>;
@@ -3002,6 +3009,26 @@ export class MemStorage implements IStorage {
   async createHerbalEntry(data: InsertHerbalKnowledgeEntry): Promise<HerbalKnowledgeEntry> {
     const [created] = await db.insert(herbalKnowledgeEntries).values(data).returning();
     return created;
+  }
+
+  async getActiveXAttestation(userId: number): Promise<XShareAttestation | undefined> {
+    const rows = await db.select().from(xShareAttestations)
+      .where(eq(xShareAttestations.userId, userId))
+      .orderBy(desc(xShareAttestations.attestedAt));
+    return rows.find(r => !r.revokedAt && r.adultContentDisabled && r.usesQoolNftStudio);
+  }
+
+  async createXAttestation(data: InsertXShareAttestation): Promise<XShareAttestation> {
+    const [created] = await db.insert(xShareAttestations).values(data).returning();
+    return created;
+  }
+
+  async revokeXAttestation(id: number, userId: number): Promise<boolean> {
+    const result = await db.update(xShareAttestations)
+      .set({ revokedAt: new Date() })
+      .where(and(eq(xShareAttestations.id, id), eq(xShareAttestations.userId, userId)))
+      .returning();
+    return result.length > 0;
   }
 }
 

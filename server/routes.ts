@@ -2656,6 +2656,61 @@ END:VEVENT
     }
   });
 
+  // X (Twitter) share ethics gate — mirrors Bluesky pattern
+  app.get('/api/x/policy', (_req, res) => {
+    res.json({
+      compensationActive: false,
+      rationale: "TriSex.org gates X cross-posting on either (a) the member self-attesting they have adult content disabled on their X account AND that they use the qool.wtf NFT Studio for creative-control / on-chain attribution of any depicted persons, OR (b) X publicly compensating individuals depicted in pornographic content on the platform. Neither is currently in place.",
+      requiredUserConditions: ["adult_content_disabled_on_x", "uses_qool_wtf_nft_studio"],
+      qoolStudioUrl: "https://qool.wtf",
+      qoolStudioDisclosure: "qool.wtf is an external NFT studio specified by the platform stewards as a creative-control / attribution requirement for X cross-posting. TriSex.org is not the operator of qool.wtf and does not earn commissions from it. Member use is self-attested — there is no API verification.",
+      lastReviewed: "2026-04-24",
+    });
+  });
+
+  app.get('/api/x/attestation', async (req, res) => {
+    try {
+      if (!req.session?.userId) return res.json(null);
+      const att = await storage.getActiveXAttestation(req.session.userId);
+      res.json(att ?? null);
+    } catch (e: any) {
+      res.status(500).json({ message: e.message });
+    }
+  });
+
+  app.post('/api/x/attestation', async (req, res) => {
+    try {
+      if (!req.session?.userId) return res.status(401).json({ message: "Must be logged in" });
+      const { xHandle, adultContentDisabled, usesQoolNftStudio, qoolStudioHandle } = req.body ?? {};
+      if (!xHandle || typeof xHandle !== "string") return res.status(400).json({ message: "X handle required" });
+      if (!adultContentDisabled || !usesQoolNftStudio) {
+        return res.status(400).json({ message: "Both conditions (adult content disabled AND qool.wtf NFT Studio use) must be attested." });
+      }
+      const created = await storage.createXAttestation({
+        userId: req.session.userId,
+        xHandle: xHandle.trim().replace(/^@/, ""),
+        adultContentDisabled: true,
+        usesQoolNftStudio: true,
+        qoolStudioHandle: qoolStudioHandle ?? null,
+        attestationStatement: `I, @${xHandle}, attest on ${new Date().toISOString()} that adult content is disabled on my X account and that I use the qool.wtf NFT Studio for creative-control and attribution of any depicted persons in content I share from TriSex.org.`,
+      });
+      res.status(201).json(created);
+    } catch (e: any) {
+      res.status(400).json({ message: e.message || "Failed to record attestation" });
+    }
+  });
+
+  app.post('/api/x/attestation/:id/revoke', async (req, res) => {
+    try {
+      if (!req.session?.userId) return res.status(401).json({ message: "Must be logged in" });
+      const ok = await storage.revokeXAttestation(parseInt(req.params.id), req.session.userId);
+      if (!ok) return res.status(404).json({ message: "Attestation not found" });
+      res.json({ success: true });
+    } catch (e: any) {
+      res.status(500).json({ message: e.message });
+    }
+  });
+
   // Herbal knowledge base (American Herbalists Guild framework)
   app.get('/api/herbal-entries', async (req, res) => {
     try {

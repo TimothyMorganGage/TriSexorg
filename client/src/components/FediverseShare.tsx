@@ -40,6 +40,10 @@ export function FediverseShare({
   const [xPornOptOut, setXPornOptOut] = useState(true);
   const [bskyHandle, setBskyHandle] = useState("");
   const [bskyAdultDisabled, setBskyAdultDisabled] = useState(false);
+  const [xHandleInput, setXHandleInput] = useState("");
+  const [xAdultDisabled, setXAdultDisabled] = useState(false);
+  const [xUsesQool, setXUsesQool] = useState(false);
+  const [qoolHandle, setQoolHandle] = useState("");
   const { user } = useAuth();
   const { toast } = useToast();
 
@@ -76,6 +80,43 @@ export function FediverseShare({
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['/api/bluesky/attestation'] });
       toast({ title: "Attestation revoked", description: "Bluesky cross-posting is gated again." });
+    },
+  });
+
+  const { data: xPolicy } = useQuery<{ compensationActive: boolean; rationale: string; qoolStudioUrl: string; qoolStudioDisclosure: string }>({
+    queryKey: ['/api/x/policy'],
+  });
+  const { data: xAttestation } = useQuery<{ id: number; xHandle: string; adultContentDisabled: boolean; usesQoolNftStudio: boolean; qoolStudioHandle: string | null } | null>({
+    queryKey: ['/api/x/attestation'],
+    enabled: !!user,
+  });
+  const xAllowed = (xPolicy?.compensationActive === true) || (!!xAttestation && xAttestation.adultContentDisabled && xAttestation.usesQoolNftStudio);
+
+  const xAttestMutation = useMutation({
+    mutationFn: async () => {
+      const res = await apiRequest("POST", "/api/x/attestation", {
+        xHandle: xHandleInput,
+        adultContentDisabled: xAdultDisabled,
+        usesQoolNftStudio: xUsesQool,
+        qoolStudioHandle: qoolHandle || null,
+      });
+      return await res.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/x/attestation'] });
+      toast({ title: "X attestation recorded", description: "X cross-posting is now unlocked." });
+    },
+    onError: (e: any) => toast({ title: "Could not record attestation", description: e.message, variant: "destructive" }),
+  });
+
+  const xRevokeMutation = useMutation({
+    mutationFn: async () => {
+      if (!xAttestation) return;
+      await apiRequest("POST", `/api/x/attestation/${xAttestation.id}/revoke`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/x/attestation'] });
+      toast({ title: "Attestation revoked", description: "X cross-posting is gated again." });
     },
   });
 
@@ -294,15 +335,83 @@ export function FediverseShare({
                           data-testid="switch-x-porn-opt-out"
                         />
                       </div>
-                      <Button
-                        size="sm"
-                        className="w-full"
-                        onClick={() => window.open(xIntentUrl, "_blank", "noopener,noreferrer")}
-                        data-testid="button-open-x-intent"
-                      >
-                        <XIcon className="h-4 w-4 mr-1" />
-                        Open X with this post
-                      </Button>
+
+                      {xAllowed ? (
+                        <>
+                          <div className="flex items-start gap-2 text-xs text-green-700 dark:text-green-400 border-t pt-2">
+                            <CheckCircle className="h-4 w-4 flex-shrink-0 mt-0.5" />
+                            <div>
+                              <strong>X cross-posting unlocked</strong>
+                              {xPolicy?.compensationActive ? (
+                                <p>The platform-level gate is OFF — X now compensates depicted persons.</p>
+                              ) : (
+                                <p>You attested @{xAttestation?.xHandle} has adult content disabled and uses qool.wtf NFT Studio.</p>
+                              )}
+                              {xAttestation && (
+                                <Button size="sm" variant="ghost" className="h-6 px-2 mt-1 text-xs" onClick={() => xRevokeMutation.mutate()} data-testid="button-revoke-x-attestation">
+                                  Revoke attestation
+                                </Button>
+                              )}
+                            </div>
+                          </div>
+                          <Button
+                            size="sm"
+                            className="w-full"
+                            onClick={() => window.open(xIntentUrl, "_blank", "noopener,noreferrer")}
+                            data-testid="button-open-x-intent"
+                          >
+                            <XIcon className="h-4 w-4 mr-1" /> Open X with this post
+                          </Button>
+                        </>
+                      ) : (
+                        <div className="space-y-2 border-t pt-2">
+                          <div className="flex items-start gap-2 text-xs">
+                            <Lock className="h-4 w-4 text-amber-600 flex-shrink-0 mt-0.5" />
+                            <div className="text-amber-800 dark:text-amber-300">
+                              <strong>X share is gated.</strong> TriSex.org only allows posting to X if you (1) have <em>adult content disabled</em> on X <strong>AND</strong> (2) use the <a href={xPolicy?.qoolStudioUrl ?? "https://qool.wtf"} target="_blank" rel="noopener noreferrer" className="underline">qool.wtf NFT Studio</a> for creative-control / on-chain attribution of depicted persons — OR until X publicly compensates individuals depicted in pornographic content on the platform. Neither is currently in place.
+                            </div>
+                          </div>
+                          <p className="text-[11px] text-muted-foreground italic">
+                            Disclosure: {xPolicy?.qoolStudioDisclosure}
+                          </p>
+                          {!user ? (
+                            <p className="text-xs text-muted-foreground">Log in to attest and unlock X sharing.</p>
+                          ) : (
+                            <>
+                              <div>
+                                <Label htmlFor="x-handle" className="text-xs">Your X handle</Label>
+                                <Input id="x-handle" value={xHandleInput} onChange={e => setXHandleInput(e.target.value)} placeholder="yourhandle" className="h-8 text-sm" data-testid="input-x-handle" />
+                              </div>
+                              <div className="flex items-center justify-between gap-2">
+                                <Label htmlFor="x-adult-disabled" className="text-xs cursor-pointer">
+                                  I have set X <strong>Settings → Privacy & safety → Content you see → Adult content</strong> to <strong>OFF</strong>
+                                </Label>
+                                <Switch id="x-adult-disabled" checked={xAdultDisabled} onCheckedChange={setXAdultDisabled} data-testid="switch-x-adult-disabled" />
+                              </div>
+                              <div className="flex items-center justify-between gap-2">
+                                <Label htmlFor="x-uses-qool" className="text-xs cursor-pointer">
+                                  I use <a href="https://qool.wtf" target="_blank" rel="noopener noreferrer" className="underline">qool.wtf NFT Studio</a> for attribution of depicted persons
+                                </Label>
+                                <Switch id="x-uses-qool" checked={xUsesQool} onCheckedChange={setXUsesQool} data-testid="switch-x-uses-qool" />
+                              </div>
+                              <div>
+                                <Label htmlFor="qool-handle" className="text-xs">qool.wtf studio handle / wallet (optional)</Label>
+                                <Input id="qool-handle" value={qoolHandle} onChange={e => setQoolHandle(e.target.value)} placeholder="qool.wtf/yourstudio or 0x…" className="h-8 text-sm" data-testid="input-qool-handle" />
+                              </div>
+                              <Button
+                                size="sm"
+                                className="w-full"
+                                disabled={!xHandleInput || !xAdultDisabled || !xUsesQool || xAttestMutation.isPending}
+                                onClick={() => xAttestMutation.mutate()}
+                                data-testid="button-x-attest"
+                              >
+                                {xAttestMutation.isPending ? <Loader2 className="h-4 w-4 mr-1 animate-spin" /> : <ShieldAlert className="h-4 w-4 mr-1" />}
+                                Attest both conditions & unlock X sharing
+                              </Button>
+                            </>
+                          )}
+                        </div>
+                      )}
                     </div>
                   )}
                 </CardContent>

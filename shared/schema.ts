@@ -1600,3 +1600,24 @@ export const insertHerbalKnowledgeEntrySchema = createInsertSchema(herbalKnowled
 
 export type InsertHerbalKnowledgeEntry = z.infer<typeof insertHerbalKnowledgeEntrySchema>;
 export type HerbalKnowledgeEntry = typeof herbalKnowledgeEntries.$inferSelect;
+
+export const xShareAttestations = pgTable("x_share_attestations", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  xHandle: text("x_handle").notNull(),
+  adultContentDisabled: boolean("adult_content_disabled").notNull().default(false),
+  usesQoolNftStudio: boolean("uses_qool_nft_studio").notNull().default(false),
+  qoolStudioHandle: text("qool_studio_handle"),
+  attestationStatement: text("attestation_statement").notNull(),
+  attestedAt: timestamp("attested_at").defaultNow().notNull(),
+  revokedAt: timestamp("revoked_at"),
+});
+
+export const insertXShareAttestationSchema = createInsertSchema(xShareAttestations).omit({
+  id: true,
+  attestedAt: true,
+  revokedAt: true,
+});
+
+export type InsertXShareAttestation = z.infer<typeof insertXShareAttestationSchema>;
+export type XShareAttestation = typeof xShareAttestations.$inferSelect;
