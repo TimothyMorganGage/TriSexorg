@@ -6,6 +6,8 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 import { PrecisionSizing } from "@/components/MyONESizing";
 import { 
@@ -16,9 +18,11 @@ import {
   Package,
   Truck,
   Settings,
-  Info
+  Info,
+  Search
 } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { INTERSEX_VARIATIONS, INTERSEX_CATEGORIES } from "@/data/intersex-variations";
 
 interface BrandingPreference {
   id: string;
@@ -117,6 +121,27 @@ export default function InclusiveOrdering() {
   const [contactZones, setContactZones] = useState<ContactZoneId[]>(["oral", "anal", "vaginal"]);
   const [procreativeMode, setProcreativeMode] = useState<ProcreativeMode>("barrier-only");
   const [currentFoldIndex, setCurrentFoldIndex] = useState(0);
+  const [selectedVariations, setSelectedVariations] = useState<string[]>([]);
+  const [variationSearch, setVariationSearch] = useState("");
+  const [activeVariationCategory, setActiveVariationCategory] = useState<string>(INTERSEX_CATEGORIES[0].id);
+
+  const toggleVariation = (id: string) => {
+    setSelectedVariations((prev) =>
+      prev.includes(id) ? prev.filter((v) => v !== id) : [...prev, id]
+    );
+  };
+
+  const filteredVariations = INTERSEX_VARIATIONS.filter((v) => {
+    if (variationSearch.trim().length === 0) return v.category === activeVariationCategory;
+    const q = variationSearch.toLowerCase();
+    return v.name.toLowerCase().includes(q) || (v.alsoKnownAs?.toLowerCase().includes(q) ?? false);
+  });
+
+  const selectedVariationDetails = INTERSEX_VARIATIONS.filter((v) => selectedVariations.includes(v.id));
+  const consultRequiredCount = selectedVariationDetails.filter((v) => v.consultRequired).length;
+  const synthesizedZones = Array.from(
+    new Set(selectedVariationDetails.flatMap((v) => v.relevantZones))
+  );
 
   const compatibleFolds = FOLD_LIBRARY.filter(
     (fold) =>
@@ -470,6 +495,193 @@ export default function InclusiveOrdering() {
                     </RadioGroup>
                   </div>
 
+                  <div className="space-y-3 pt-2 border-t">
+                    <div>
+                      <h4 className="font-semibold mb-1 flex items-center">
+                        <Users className="mr-2 h-4 w-4" /> Intersex variation configurator (86 named variations)
+                      </h4>
+                      <p className="text-xs text-muted-foreground">
+                        Pick the intersex variation(s) that describe the body the unit is being fitted for.
+                        Each variation maps to relevant contact zones and a fitting note. Multi-select is
+                        intended for mosaic / chimeric bodies and for partners-of-different-bodies orders.
+                        Variation names follow the Chicago Consensus 2006 DSD nomenclature, with overlay
+                        labels from InterACT and Organisation Intersex International (OII).
+                      </p>
+                    </div>
+
+                    <div className="relative">
+                      <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
+                      <Input
+                        placeholder="Search 86 variations (e.g. CAIS, MRKH, hypospadias, mosaic)…"
+                        value={variationSearch}
+                        onChange={(e) => setVariationSearch(e.target.value)}
+                        className="pl-7 h-8 text-xs"
+                        data-testid="variation-search-input"
+                      />
+                    </div>
+
+                    {variationSearch.trim().length === 0 && (
+                      <div className="flex flex-wrap gap-1.5">
+                        {INTERSEX_CATEGORIES.map((cat) => {
+                          const count = INTERSEX_VARIATIONS.filter((v) => v.category === cat.id).length;
+                          const isActive = cat.id === activeVariationCategory;
+                          return (
+                            <button
+                              key={cat.id}
+                              type="button"
+                              onClick={() => setActiveVariationCategory(cat.id)}
+                              className={`px-2 py-1 rounded border text-xs transition-colors ${
+                                isActive
+                                  ? "border-primary bg-primary/10 text-foreground"
+                                  : "border-muted-foreground/30 hover:border-primary/50 text-muted-foreground"
+                              }`}
+                              data-testid={`variation-category-${cat.id}`}
+                            >
+                              {cat.label} <span className="opacity-70">({count})</span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    )}
+
+                    {variationSearch.trim().length === 0 && (
+                      <p className="text-[11px] text-muted-foreground italic">
+                        {INTERSEX_CATEGORIES.find((c) => c.id === activeVariationCategory)?.blurb}
+                      </p>
+                    )}
+
+                    <ScrollArea className="h-64 border rounded p-2 bg-background" data-testid="variation-scroll-area">
+                      {filteredVariations.length === 0 ? (
+                        <div className="text-xs text-muted-foreground p-2">
+                          No variations match this search. Try another keyword, or clear the search to browse by category.
+                        </div>
+                      ) : (
+                        <div className="space-y-1.5">
+                          {filteredVariations.map((v) => {
+                            const checked = selectedVariations.includes(v.id);
+                            return (
+                              <div
+                                key={v.id}
+                                className={`flex items-start gap-2 p-2 rounded border text-xs cursor-pointer transition-colors ${
+                                  checked
+                                    ? "border-primary bg-primary/5"
+                                    : "border-transparent hover:border-muted-foreground/30"
+                                }`}
+                                onClick={() => toggleVariation(v.id)}
+                                data-testid={`variation-row-${v.id}`}
+                              >
+                                <Checkbox
+                                  checked={checked}
+                                  onCheckedChange={() => toggleVariation(v.id)}
+                                  className="mt-0.5"
+                                  data-testid={`variation-check-${v.id}`}
+                                />
+                                <div className="flex-1 leading-snug">
+                                  <div className="font-medium">
+                                    {v.name}
+                                    {v.consultRequired && (
+                                      <Badge variant="outline" className="ml-2 text-[10px] border-amber-500 text-amber-700 dark:text-amber-300">
+                                        consult
+                                      </Badge>
+                                    )}
+                                  </div>
+                                  <div className="text-muted-foreground text-[11px] mt-0.5">{v.fittingNote}</div>
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </ScrollArea>
+
+                    {selectedVariationDetails.length > 0 && (
+                      <div className="p-3 border rounded bg-background space-y-2" data-testid="variation-synthesis">
+                        <div className="flex items-center justify-between">
+                          <div className="text-xs font-semibold">
+                            Synthesized fitting profile ({selectedVariationDetails.length}{" "}
+                            variation{selectedVariationDetails.length === 1 ? "" : "s"} selected)
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => setSelectedVariations([])}
+                            className="text-[11px] text-muted-foreground hover:text-foreground underline"
+                            data-testid="variation-clear-button"
+                          >
+                            Clear all
+                          </button>
+                        </div>
+                        <div className="flex flex-wrap gap-1">
+                          {selectedVariationDetails.map((v) => (
+                            <Badge
+                              key={v.id}
+                              variant="secondary"
+                              className="text-[10px] cursor-pointer"
+                              onClick={() => toggleVariation(v.id)}
+                              data-testid={`variation-chip-${v.id}`}
+                            >
+                              {v.name} ✕
+                            </Badge>
+                          ))}
+                        </div>
+                        <div className="grid grid-cols-2 gap-3 text-[11px] pt-1 border-t">
+                          <div>
+                            <div className="font-medium text-muted-foreground mb-0.5">Relevant zones (union)</div>
+                            <div className="flex flex-wrap gap-1">
+                              {synthesizedZones.length === 0 ? (
+                                <span className="text-muted-foreground italic">None</span>
+                              ) : (
+                                synthesizedZones.map((z) => (
+                                  <Badge key={z} variant="outline" className="text-[10px]">
+                                    {z}
+                                  </Badge>
+                                ))
+                              )}
+                            </div>
+                          </div>
+                          <div>
+                            <div className="font-medium text-muted-foreground mb-0.5">Consult flag</div>
+                            <div>
+                              {consultRequiredCount > 0 ? (
+                                <span className="text-amber-700 dark:text-amber-300">
+                                  Fitting consult recommended ({consultRequiredCount} of{" "}
+                                  {selectedVariationDetails.length} selected variation{selectedVariationDetails.length === 1 ? "" : "s"})
+                                </span>
+                              ) : (
+                                <span className="text-muted-foreground">
+                                  Standard fit usually applies; consult optional.
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="p-3 border border-dashed border-amber-500/60 bg-amber-50 dark:bg-amber-950/20 rounded text-[11px] text-amber-900 dark:text-amber-200 space-y-1">
+                      <div className="font-semibold">Honesty notes — intersex variation configurator</div>
+                      <p>
+                        The 86 named variations are a working catalogue assembled from the Chicago Consensus
+                        2006 DSD nomenclature, InterACT Advocates for Intersex Youth, Organisation Intersex
+                        International (OII), and the archived Intersex Society of North America (ISNA).
+                        TriSex.org has not independently validated the catalogue's medical accuracy or
+                        completeness, and the count may grow as co-operators contribute.
+                      </p>
+                      <p>
+                        Each fitting note is a <strong>design hypothesis</strong>. TriSex.org has not
+                        manufactured custom-fit units for every named variation, has not measured barrier
+                        integrity or comfort across these specific anatomies, and is not claiming that
+                        selecting a variation here guarantees an off-the-shelf fit. Variations marked{" "}
+                        <em>consult</em> mean a fitting conversation (Meta Lens scan or one-to-one
+                        consultation) is recommended before the unit is configured for shipping.
+                      </p>
+                      <p>
+                        Selecting a variation is <strong>self-reported</strong>. TriSex.org does not require
+                        medical proof, does not store or share the selection outside the order summary, and
+                        does not use the selection for any registry, research, or insurance purpose.
+                      </p>
+                    </div>
+                  </div>
+
                   <div className="flex items-center justify-between p-3 bg-background rounded border">
                     <span className="text-xs text-muted-foreground">Configured balance code</span>
                     <Badge variant="outline" data-testid="balance-config-code" className="font-mono">
@@ -764,6 +976,40 @@ export default function InclusiveOrdering() {
                     <Badge variant="outline" className="font-mono">
                       {balanceConfigCode()}
                     </Badge>
+                  </div>
+
+                  <div className="pb-3 border-b">
+                    <div className="flex justify-between items-start mb-2">
+                      <span className="font-medium">Intersex variations:</span>
+                      <span className="text-xs text-muted-foreground">
+                        {selectedVariationDetails.length === 0
+                          ? "None selected (standard fit)"
+                          : `${selectedVariationDetails.length} selected${
+                              consultRequiredCount > 0 ? ` · ${consultRequiredCount} consult` : ""
+                            }`}
+                      </span>
+                    </div>
+                    {selectedVariationDetails.length > 0 && (
+                      <div
+                        className="flex flex-wrap gap-1"
+                        data-testid="summary-variation-chips"
+                      >
+                        {selectedVariationDetails.map((v) => (
+                          <Badge
+                            key={v.id}
+                            variant="secondary"
+                            className="text-[10px]"
+                          >
+                            {v.name}
+                            {v.consultRequired && (
+                              <span className="ml-1 text-amber-700 dark:text-amber-300">
+                                ★
+                              </span>
+                            )}
+                          </Badge>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </div>
 
