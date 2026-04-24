@@ -1,4 +1,8 @@
 import { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { apiRequest, queryClient } from "@/lib/queryClient";
+import { useToast } from "@/hooks/use-toast";
+import type { MultiUseBalance, Order } from "@shared/schema";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -142,6 +146,59 @@ export default function InclusiveOrdering() {
   const synthesizedZones = Array.from(
     new Set(selectedVariationDetails.flatMap((v) => v.relevantZones))
   );
+
+  const { toast } = useToast();
+  const [placedOrder, setPlacedOrder] = useState<Order | null>(null);
+
+  const placeOrderMutation = useMutation({
+    mutationFn: async () => {
+      const balance: MultiUseBalance = {
+        roleBalance,
+        contactZones,
+        procreativeMode,
+        intersexVariations: selectedVariations,
+        consultRequiredCount,
+        activeFoldId: activeFold?.id ?? null,
+        balanceCode: balanceConfigCode(),
+        brandingPreference,
+      };
+      const productConfigId = selectedProduct
+        ? Math.abs(
+            selectedProduct.split("").reduce((a, c) => a + c.charCodeAt(0), 0)
+          ) % 1000 + 1
+        : 1;
+      const res = await apiRequest("POST", "/api/orders", {
+        userId: 1,
+        configurationId: productConfigId,
+        orderNumber: `TSO-${Date.now()}`,
+        status: "pending",
+        totalAmount: "0.00",
+        notes: selectedProduct ? `Inclusive ordering: ${selectedProduct}` : null,
+        brandingPreference,
+        multiUseBalance: balance,
+      });
+      return (await res.json()) as Order;
+    },
+    onSuccess: (order) => {
+      setPlacedOrder(order);
+      queryClient.invalidateQueries({ queryKey: ["/api/orders"] });
+      toast({
+        title: "Order placed",
+        description: `Order ${order.orderNumber} saved with the full multi-use balance configuration${
+          consultRequiredCount > 0
+            ? ` and ${consultRequiredCount} consult-flagged variation${consultRequiredCount === 1 ? "" : "s"}`
+            : ""
+        }.`,
+      });
+    },
+    onError: (err: Error) => {
+      toast({
+        title: "Order could not be placed",
+        description: err.message,
+        variant: "destructive",
+      });
+    },
+  });
 
   const compatibleFolds = FOLD_LIBRARY.filter(
     (fold) =>
@@ -1026,17 +1083,50 @@ export default function InclusiveOrdering() {
                   </p>
                 </div>
 
+                {placedOrder && (
+                  <div
+                    className="p-4 border border-dashed border-blue-500/60 bg-blue-50 dark:bg-blue-950/20 rounded space-y-2 text-sm"
+                    data-testid="order-persisted-confirmation"
+                  >
+                    <div className="font-semibold text-blue-900 dark:text-blue-100">
+                      Order persisted: {placedOrder.orderNumber} (id #{placedOrder.id})
+                    </div>
+                    <div className="text-xs text-blue-800 dark:text-blue-200">
+                      The full multi-use balance configuration — role balance, contact zones,
+                      procreative mode, intersex variation selection, consult flag count, active fold,
+                      and balance code — is saved on the order record and visible at{" "}
+                      <code className="font-mono">GET /api/orders/{placedOrder.id}</code>.
+                    </div>
+                    <div className="text-[11px] text-blue-700 dark:text-blue-300 italic">
+                      Honesty: persisted to in-memory storage on this server instance only — not a
+                      production fulfilment record, not shared with any third party, and cleared on
+                      server restart.
+                    </div>
+                  </div>
+                )}
+
                 <div className="flex space-x-3">
-                  <Button 
-                    variant="outline" 
+                  <Button
+                    variant="outline"
                     onClick={() => setOrderStep(3)}
                     className="flex-1"
+                    disabled={placeOrderMutation.isPending}
+                    data-testid="modify-order-button"
                   >
                     Modify Order
                   </Button>
-                  <Button className="flex-1">
+                  <Button
+                    className="flex-1"
+                    onClick={() => placeOrderMutation.mutate()}
+                    disabled={placeOrderMutation.isPending}
+                    data-testid="place-order-button"
+                  >
                     <Truck className="mr-2 h-4 w-4" />
-                    Proceed to Checkout
+                    {placeOrderMutation.isPending
+                      ? "Saving order…"
+                      : placedOrder
+                      ? "Re-save with current configuration"
+                      : "Place order with this configuration"}
                   </Button>
                 </div>
               </div>

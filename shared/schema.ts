@@ -55,6 +55,8 @@ export const orders = pgTable("orders", {
   totalAmount: decimal("total_amount", { precision: 10, scale: 2 }).notNull(),
   shippingAddress: text("shipping_address"),
   notes: text("notes"),
+  brandingPreference: text("branding_preference"),
+  multiUseBalance: jsonb("multi_use_balance"), // MultiUseBalance — see schema below
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
@@ -101,10 +103,29 @@ export const insertProductConfigurationSchema = createInsertSchema(productConfig
   createdAt: true,
 });
 
+export const contactZoneEnum = z.enum(["oral", "anal", "vaginal", "frontal", "neovaginal"]);
+export const roleBalanceEnum = z.enum(["receptive", "penetrative", "versatile"]);
+export const procreativeModeEnum = z.enum(["barrier-only", "procreative-permeable", "fertility-only"]);
+
+export const multiUseBalanceSchema = z.object({
+  roleBalance: roleBalanceEnum,
+  contactZones: z.array(contactZoneEnum),
+  procreativeMode: procreativeModeEnum,
+  intersexVariations: z.array(z.string()).default([]),
+  consultRequiredCount: z.number().int().nonnegative().default(0),
+  activeFoldId: z.string().nullable().optional(),
+  balanceCode: z.string(),
+  brandingPreference: z.string().optional(),
+});
+
+export type MultiUseBalance = z.infer<typeof multiUseBalanceSchema>;
+
 export const insertOrderSchema = createInsertSchema(orders).omit({
   id: true,
   createdAt: true,
   updatedAt: true,
+}).extend({
+  multiUseBalance: multiUseBalanceSchema.optional().nullable(),
 });
 
 export const insertEducationalContentSchema = createInsertSchema(educationalContent).omit({
