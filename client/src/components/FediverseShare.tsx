@@ -1,7 +1,12 @@
 import { useState } from "react";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import { apiRequest, queryClient } from "@/lib/queryClient";
+import { useAuth } from "@/lib/auth";
+import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Share2, Globe, Network, Camera, Video, Copy, CheckCircle, Megaphone, Users, X as XIcon } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Share2, Globe, Network, Camera, Video, Copy, CheckCircle, Megaphone, Users, X as XIcon, ShieldAlert, Lock, Loader2 } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import {
@@ -33,6 +38,46 @@ export function FediverseShare({
 }: FediverseShareProps) {
   const [copied, setCopied] = useState<string | null>(null);
   const [xPornOptOut, setXPornOptOut] = useState(true);
+  const [bskyHandle, setBskyHandle] = useState("");
+  const [bskyAdultDisabled, setBskyAdultDisabled] = useState(false);
+  const { user } = useAuth();
+  const { toast } = useToast();
+
+  const { data: bskyPolicy } = useQuery<{ compensationActive: boolean; rationale: string }>({
+    queryKey: ['/api/bluesky/policy'],
+  });
+  const { data: bskyAttestation } = useQuery<{ id: number; blueskyHandle: string; adultContentDisabled: boolean; attestedAt: string } | null>({
+    queryKey: ['/api/bluesky/attestation'],
+    enabled: !!user,
+  });
+
+  const blueskyAllowed = (bskyPolicy?.compensationActive === true) || (!!bskyAttestation && bskyAttestation.adultContentDisabled);
+
+  const attestMutation = useMutation({
+    mutationFn: async () => {
+      const res = await apiRequest("POST", "/api/bluesky/attestation", {
+        blueskyHandle: bskyHandle,
+        adultContentDisabled: bskyAdultDisabled,
+      });
+      return await res.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/bluesky/attestation'] });
+      toast({ title: "Bluesky attestation recorded", description: "Cross-posting to Bluesky is now unlocked." });
+    },
+    onError: (e: any) => toast({ title: "Could not record attestation", description: e.message, variant: "destructive" }),
+  });
+
+  const revokeMutation = useMutation({
+    mutationFn: async () => {
+      if (!bskyAttestation) return;
+      await apiRequest("POST", `/api/bluesky/attestation/${bskyAttestation.id}/revoke`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/bluesky/attestation'] });
+      toast({ title: "Attestation revoked", description: "Bluesky cross-posting is gated again." });
+    },
+  });
 
   const shareUrl = url || (typeof window !== 'undefined' ? window.location.href : '');
   const hashtagString = hashtags.map(tag => `#${tag}`).join(' ');
@@ -165,6 +210,76 @@ export function FediverseShare({
                   <div className="text-xs text-muted-foreground whitespace-pre-line">
                     {platform.instructions}
                   </div>
+
+                  {key === "bluesky" && (
+                    <div className="mt-3 space-y-2 border-t pt-3">
+                      {blueskyAllowed ? (
+                        <div className="flex items-start gap-2 text-xs text-green-700 dark:text-green-400">
+                          <CheckCircle className="h-4 w-4 flex-shrink-0 mt-0.5" />
+                          <div>
+                            <strong>Bluesky cross-posting unlocked</strong>
+                            {bskyPolicy?.compensationActive ? (
+                              <p>The platform-level gate is OFF — Bluesky / AT Protocol now compensates depicted persons.</p>
+                            ) : (
+                              <p>You attested that <code>@{bskyAttestation?.blueskyHandle}</code> has adult content disabled.</p>
+                            )}
+                            {bskyAttestation && (
+                              <Button size="sm" variant="ghost" className="h-6 px-2 mt-1 text-xs" onClick={() => revokeMutation.mutate()} data-testid="button-revoke-bsky-attestation">
+                                Revoke attestation
+                              </Button>
+                            )}
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="space-y-2">
+                          <div className="flex items-start gap-2 text-xs">
+                            <Lock className="h-4 w-4 text-amber-600 flex-shrink-0 mt-0.5" />
+                            <div className="text-amber-800 dark:text-amber-300">
+                              <strong>Bluesky share is gated.</strong> TriSex.org only allows posting to Bluesky if you have <em>adult content disabled</em> on your Bluesky account, OR until Bluesky / the AT Protocol publicly compensates individuals depicted in pornographic content on the network. Neither is currently in place.
+                            </div>
+                          </div>
+                          {!user ? (
+                            <p className="text-xs text-muted-foreground">Log in to attest and unlock Bluesky sharing.</p>
+                          ) : (
+                            <>
+                              <div>
+                                <Label htmlFor="bsky-handle" className="text-xs">Your Bluesky handle</Label>
+                                <Input
+                                  id="bsky-handle"
+                                  value={bskyHandle}
+                                  onChange={e => setBskyHandle(e.target.value)}
+                                  placeholder="yourname.bsky.social"
+                                  className="h-8 text-sm"
+                                  data-testid="input-bsky-handle"
+                                />
+                              </div>
+                              <div className="flex items-center justify-between gap-2">
+                                <Label htmlFor="bsky-adult-disabled" className="text-xs cursor-pointer">
+                                  I have set <strong>Moderation → Adult Content</strong> to <strong>OFF (Disabled)</strong> on @{bskyHandle || "my-handle"}
+                                </Label>
+                                <Switch
+                                  id="bsky-adult-disabled"
+                                  checked={bskyAdultDisabled}
+                                  onCheckedChange={setBskyAdultDisabled}
+                                  data-testid="switch-bsky-adult-disabled"
+                                />
+                              </div>
+                              <Button
+                                size="sm"
+                                className="w-full"
+                                disabled={!bskyHandle || !bskyAdultDisabled || attestMutation.isPending}
+                                onClick={() => attestMutation.mutate()}
+                                data-testid="button-bsky-attest"
+                              >
+                                {attestMutation.isPending ? <Loader2 className="h-4 w-4 mr-1 animate-spin" /> : <ShieldAlert className="h-4 w-4 mr-1" />}
+                                Attest & unlock Bluesky sharing
+                              </Button>
+                            </>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  )}
 
                   {key === "x" && (
                     <div className="mt-3 space-y-2 border-t pt-3">

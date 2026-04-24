@@ -7,6 +7,7 @@ import {
   calendarConnections, scheduledTasks, taskTemplates, savedProductConfigurations,
   forumCategories, forumPosts, forumReplies, forumLikes, forumBookmarks,
   filingDocuments, boundaryCheckConsents, xCoopPricingInterest, metaLensScans,
+  blueskyShareAttestations,
   type User, type InsertUser, type Product, type InsertProduct,
   type ProductConfiguration, type InsertProductConfiguration,
   type Order, type InsertOrder, type EducationalContent, type InsertEducationalContent,
@@ -33,6 +34,7 @@ import {
   type BoundaryCheckConsent, type InsertBoundaryCheckConsent,
   type XCoopPricingInterest, type InsertXCoopPricingInterest,
   type MetaLensScan, type InsertMetaLensScan,
+  type BlueskyShareAttestation, type InsertBlueskyShareAttestation,
 } from "@shared/schema";
 
 export interface IStorage {
@@ -207,6 +209,11 @@ export interface IStorage {
   createMetaLensScan(data: InsertMetaLensScan): Promise<MetaLensScan>;
   linkMetaLensScanToConfig(scanId: number, configId: number): Promise<MetaLensScan | undefined>;
   deleteMetaLensScan(id: number, userId: number): Promise<boolean>;
+
+  // Bluesky share attestation (ethics gate)
+  getActiveBlueskyAttestation(userId: number): Promise<BlueskyShareAttestation | undefined>;
+  createBlueskyAttestation(data: InsertBlueskyShareAttestation): Promise<BlueskyShareAttestation>;
+  revokeBlueskyAttestation(id: number, userId: number): Promise<boolean>;
 
   // Clinic Inventory methods
   getClinicInventory(): Promise<any[]>;
@@ -2946,6 +2953,27 @@ export class MemStorage implements IStorage {
   async deleteMetaLensScan(id: number, userId: number): Promise<boolean> {
     const result = await db.delete(metaLensScans)
       .where(and(eq(metaLensScans.id, id), eq(metaLensScans.userId, userId)))
+      .returning();
+    return result.length > 0;
+  }
+
+  // Bluesky share attestation (ethics gate)
+  async getActiveBlueskyAttestation(userId: number): Promise<BlueskyShareAttestation | undefined> {
+    const rows = await db.select().from(blueskyShareAttestations)
+      .where(eq(blueskyShareAttestations.userId, userId))
+      .orderBy(desc(blueskyShareAttestations.attestedAt));
+    return rows.find(r => !r.revokedAt && r.adultContentDisabled);
+  }
+
+  async createBlueskyAttestation(data: InsertBlueskyShareAttestation): Promise<BlueskyShareAttestation> {
+    const [created] = await db.insert(blueskyShareAttestations).values(data).returning();
+    return created;
+  }
+
+  async revokeBlueskyAttestation(id: number, userId: number): Promise<boolean> {
+    const result = await db.update(blueskyShareAttestations)
+      .set({ revokedAt: new Date() })
+      .where(and(eq(blueskyShareAttestations.id, id), eq(blueskyShareAttestations.userId, userId)))
       .returning();
     return result.length > 0;
   }

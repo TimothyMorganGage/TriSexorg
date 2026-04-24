@@ -2509,6 +2509,60 @@ END:VEVENT
     }
   });
 
+  // Bluesky share ethics gate — policy + per-user attestation
+  app.get('/api/bluesky/policy', async (_req, res) => {
+    res.json({
+      compensationActive: false,
+      rationale:
+        "TriSex.org gates cross-posting to Bluesky behind one of two conditions: (1) the posting member self-attests their own Bluesky account has adult content disabled, OR (2) Bluesky / the AT Protocol implements a public, auditable compensation program for individuals depicted in pornographic content hosted on the network. Neither corporate Bluesky nor any third-party PDS currently operates such a program, so condition (2) is OFF. We will flip this flag publicly when verifiable evidence of compensation appears. This gate is about consent and compensation for depicted persons — not about policing what consenting adults post.",
+      lastReviewed: "2026-04-24",
+      sources: [
+        "https://bsky.social/about/support/community-guidelines",
+        "https://atproto.com/",
+      ],
+    });
+  });
+
+  app.get('/api/bluesky/attestation', async (req, res) => {
+    try {
+      if (!req.session?.userId) return res.status(401).json({ message: "Must be logged in" });
+      const att = await storage.getActiveBlueskyAttestation(req.session.userId);
+      res.json(att || null);
+    } catch (e: any) {
+      res.status(500).json({ message: e.message || "Failed to fetch attestation" });
+    }
+  });
+
+  app.post('/api/bluesky/attestation', async (req, res) => {
+    try {
+      if (!req.session?.userId) return res.status(401).json({ message: "Must be logged in" });
+      const { blueskyHandle, adultContentDisabled } = req.body;
+      if (!blueskyHandle) return res.status(400).json({ message: "blueskyHandle required" });
+      if (!adultContentDisabled) return res.status(400).json({ message: "adultContentDisabled must be true to attest" });
+      const attestationStatement = `I, the holder of Bluesky account "${blueskyHandle.replace(/^@/, "")}", attest that I have set the "Adult Content" toggle in my Bluesky moderation preferences to OFF (Disabled). I understand TriSex.org gates cross-posting on this attestation as a stand-in for the absent platform-level compensation of individuals depicted in pornographic content on the AT Protocol. I will revoke this attestation if I re-enable adult content on my Bluesky account.`;
+      const att = await storage.createBlueskyAttestation({
+        userId: req.session.userId,
+        blueskyHandle: blueskyHandle.replace(/^@/, ""),
+        adultContentDisabled: true,
+        attestationStatement,
+      } as any);
+      res.status(201).json(att);
+    } catch (e: any) {
+      res.status(500).json({ message: e.message || "Failed to record attestation" });
+    }
+  });
+
+  app.post('/api/bluesky/attestation/:id/revoke', async (req, res) => {
+    try {
+      if (!req.session?.userId) return res.status(401).json({ message: "Must be logged in" });
+      const ok = await storage.revokeBlueskyAttestation(parseInt(req.params.id), req.session.userId);
+      if (!ok) return res.status(404).json({ message: "Attestation not found" });
+      res.json({ success: true });
+    } catch (e: any) {
+      res.status(500).json({ message: e.message || "Failed to revoke" });
+    }
+  });
+
   // Meta Lens scan import → product configuration
   app.get('/api/meta-lens-scans', async (req, res) => {
     try {

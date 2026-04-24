@@ -1510,6 +1510,25 @@ export const insertBoundaryCheckConsentSchema = createInsertSchema(boundaryCheck
 export type InsertBoundaryCheckConsent = z.infer<typeof insertBoundaryCheckConsentSchema>;
 export type BoundaryCheckConsent = typeof boundaryCheckConsents.$inferSelect;
 
+export const blueskyShareAttestations = pgTable("bluesky_share_attestations", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  blueskyHandle: text("bluesky_handle").notNull(),
+  adultContentDisabled: boolean("adult_content_disabled").notNull().default(false),
+  attestationStatement: text("attestation_statement").notNull(),
+  attestedAt: timestamp("attested_at").defaultNow().notNull(),
+  revokedAt: timestamp("revoked_at"),
+});
+
+export const insertBlueskyShareAttestationSchema = createInsertSchema(blueskyShareAttestations).omit({
+  id: true,
+  attestedAt: true,
+  revokedAt: true,
+});
+
+export type InsertBlueskyShareAttestation = z.infer<typeof insertBlueskyShareAttestationSchema>;
+export type BlueskyShareAttestation = typeof blueskyShareAttestations.$inferSelect;
+
 export const metaLensScans = pgTable("meta_lens_scans", {
   id: serial("id").primaryKey(),
   userId: integer("user_id").references(() => users.id).notNull(),
