@@ -20,6 +20,7 @@ export function Header() {
     { name: "Herbal Knowledge", href: "/herbal-knowledge" },
     { name: "Sniffies Policy", href: "/sniffies-policy" },
     { name: "TriSexPort", href: "/trisexport" },
+    { name: "Team Changes", href: "/recent-team-changes" },
   ];
 
   const isActive = (path: string) => location === path;

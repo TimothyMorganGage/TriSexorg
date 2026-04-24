@@ -88,6 +88,7 @@ const MonogamyEconomics = lazy(() => import("@/pages/monogamy-economics"));
 const SavedConfigurations = lazy(() => import("@/pages/saved-configs"));
 const PrivacyPolicy = lazy(() => import("@/pages/privacy-policy"));
 const TermsOfService = lazy(() => import("@/pages/terms-of-service"));
+const RecentTeamChanges = lazy(() => import("@/pages/recent-team-changes"));
 const Accessibility = lazy(() => import("@/pages/accessibility"));
 const CommunityForum = lazy(() => import("@/pages/community-forum"));
 const TrisexStablecoin = lazy(() => import("@/pages/trisex-stablecoin"));
@@ -158,6 +159,7 @@ function Router() {
             <Route path="/monogamy-economics" component={MonogamyEconomics} />
             <Route path="/privacy-policy" component={PrivacyPolicy} />
             <Route path="/terms-of-service" component={TermsOfService} />
+            <Route path="/recent-team-changes" component={RecentTeamChanges} />
             <Route path="/accessibility" component={Accessibility} />
             <Route path="/community-forum" component={CommunityForum} />
             <Route path="/trisex-stablecoin" component={TrisexStablecoin} />
