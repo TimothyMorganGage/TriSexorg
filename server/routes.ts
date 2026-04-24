@@ -2656,6 +2656,51 @@ END:VEVENT
     }
   });
 
+  // Herbal knowledge base (American Herbalists Guild framework)
+  app.get('/api/herbal-entries', async (req, res) => {
+    try {
+      const category = typeof req.query.category === 'string' ? req.query.category : undefined;
+      const entries = await storage.listHerbalEntries(category);
+      res.json(entries);
+    } catch (e: any) {
+      res.status(500).json({ message: e.message || "Failed to load herbal entries" });
+    }
+  });
+
+  app.get('/api/herbal-entries/:id', async (req, res) => {
+    try {
+      const entry = await storage.getHerbalEntry(parseInt(req.params.id));
+      if (!entry) return res.status(404).json({ message: "Entry not found" });
+      res.json(entry);
+    } catch (e: any) {
+      res.status(500).json({ message: e.message || "Failed to load entry" });
+    }
+  });
+
+  app.post('/api/herbal-entries', async (req, res) => {
+    try {
+      if (!req.session?.userId) return res.status(401).json({ message: "Must be logged in to contribute" });
+      const { insertHerbalKnowledgeEntrySchema } = await import("@shared/schema");
+      const parsed = insertHerbalKnowledgeEntrySchema.parse({ ...req.body, contributorId: req.session.userId });
+      const created = await storage.createHerbalEntry(parsed);
+      res.status(201).json(created);
+    } catch (e: any) {
+      res.status(400).json({ message: e.message || "Failed to create entry" });
+    }
+  });
+
+  app.get('/api/herbal-policy', (_req, res) => {
+    res.json({
+      framework: "American Herbalists Guild (AHG)",
+      ahgUrl: "https://www.americanherbalistsguild.com/",
+      directoryUrl: "https://www.americanherbalistsguild.com/herbalist-directory",
+      credentialNote: "Registered Herbalist (RH(AHG)) is a peer-reviewed credential. TriSex.org is not affiliated with or endorsed by AHG; we reference their public framework, scope of practice, and code of ethics.",
+      barrierSubstituteWarning: "No foraged or hand-crafted material is a clinically validated substitute for medical-grade barriers (latex, polyisoprene, polyurethane, nitrile) for STI or pregnancy prevention. Herbal knowledge here supports aftercare, washes, lubricant ingredients (with caveats), and ritual — not primary barrier function.",
+      contentLicense: "Member-contributed entries on TriSex.org are licensed CC BY-SA 4.0. AHG's own copyrighted publications are not reproduced here — consult the AHG library directly.",
+      lastReviewed: "2026-04-24",
+    });
+  });
+
   app.delete('/api/filings/:id', async (req, res) => {
     try {
       if (!req.session?.userId) return res.status(401).json({ message: "Must be logged in" });

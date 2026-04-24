@@ -1575,3 +1575,28 @@ export const insertXCoopPricingInterestSchema = createInsertSchema(xCoopPricingI
 
 export type InsertXCoopPricingInterest = z.infer<typeof insertXCoopPricingInterestSchema>;
 export type XCoopPricingInterest = typeof xCoopPricingInterest.$inferSelect;
+
+export const herbalKnowledgeEntries = pgTable("herbal_knowledge_entries", {
+  id: serial("id").primaryKey(),
+  commonName: text("common_name").notNull(),
+  latinName: text("latin_name").notNull(),
+  partUsed: text("part_used").notNull(),
+  category: text("category").notNull(),
+  traditionalUses: text("traditional_uses").notNull(),
+  foragingNotes: text("foraging_notes").notNull(),
+  safetyWarnings: text("safety_warnings").notNull(),
+  sustainabilityNotes: text("sustainability_notes").notNull(),
+  ahgScopeNote: text("ahg_scope_note").notNull(),
+  requiresRhConsult: boolean("requires_rh_consult").notNull().default(false),
+  contributorId: integer("contributor_id").references(() => users.id),
+  citationUrl: text("citation_url"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const insertHerbalKnowledgeEntrySchema = createInsertSchema(herbalKnowledgeEntries).omit({
+  id: true,
+  createdAt: true,
+});
+
+export type InsertHerbalKnowledgeEntry = z.infer<typeof insertHerbalKnowledgeEntrySchema>;
+export type HerbalKnowledgeEntry = typeof herbalKnowledgeEntries.$inferSelect;

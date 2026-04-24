@@ -94,6 +94,7 @@ const TrisexStablecoin = lazy(() => import("@/pages/trisex-stablecoin"));
 const FilingPreparation = lazy(() => import("@/pages/filing-preparation"));
 const BoundariesBackgroundCheck = lazy(() => import("@/pages/boundaries-background-check"));
 const MetaLensScan = lazy(() => import("@/pages/meta-lens-scan"));
+const HerbalKnowledge = lazy(() => import("@/pages/herbal-knowledge"));
 const Contact = lazy(() => import("@/pages/contact"));
 
 function PWAWrapper({ children }: { children: React.ReactNode }) {
@@ -161,6 +162,7 @@ function Router() {
             <Route path="/filing-preparation" component={FilingPreparation} />
             <Route path="/boundaries-background-check" component={BoundariesBackgroundCheck} />
             <Route path="/meta-lens-scan" component={MetaLensScan} />
+            <Route path="/herbal-knowledge" component={HerbalKnowledge} />
             <Route path="/saved-configurations" component={SavedConfigurations} />
             <Route path="/contact" component={Contact} />
             <Route path="/login" component={Login} />

@@ -35,6 +35,8 @@ import {
   type XCoopPricingInterest, type InsertXCoopPricingInterest,
   type MetaLensScan, type InsertMetaLensScan,
   type BlueskyShareAttestation, type InsertBlueskyShareAttestation,
+  type HerbalKnowledgeEntry, type InsertHerbalKnowledgeEntry,
+  herbalKnowledgeEntries,
 } from "@shared/schema";
 
 export interface IStorage {
@@ -214,6 +216,11 @@ export interface IStorage {
   getActiveBlueskyAttestation(userId: number): Promise<BlueskyShareAttestation | undefined>;
   createBlueskyAttestation(data: InsertBlueskyShareAttestation): Promise<BlueskyShareAttestation>;
   revokeBlueskyAttestation(id: number, userId: number): Promise<boolean>;
+
+  // Herbal knowledge base (American Herbalists Guild framework)
+  listHerbalEntries(category?: string): Promise<HerbalKnowledgeEntry[]>;
+  getHerbalEntry(id: number): Promise<HerbalKnowledgeEntry | undefined>;
+  createHerbalEntry(data: InsertHerbalKnowledgeEntry): Promise<HerbalKnowledgeEntry>;
 
   // Clinic Inventory methods
   getClinicInventory(): Promise<any[]>;
@@ -2976,6 +2983,25 @@ export class MemStorage implements IStorage {
       .where(and(eq(blueskyShareAttestations.id, id), eq(blueskyShareAttestations.userId, userId)))
       .returning();
     return result.length > 0;
+  }
+
+  async listHerbalEntries(category?: string): Promise<HerbalKnowledgeEntry[]> {
+    if (category) {
+      return await db.select().from(herbalKnowledgeEntries)
+        .where(eq(herbalKnowledgeEntries.category, category))
+        .orderBy(herbalKnowledgeEntries.commonName);
+    }
+    return await db.select().from(herbalKnowledgeEntries).orderBy(herbalKnowledgeEntries.commonName);
+  }
+
+  async getHerbalEntry(id: number): Promise<HerbalKnowledgeEntry | undefined> {
+    const [row] = await db.select().from(herbalKnowledgeEntries).where(eq(herbalKnowledgeEntries.id, id));
+    return row;
+  }
+
+  async createHerbalEntry(data: InsertHerbalKnowledgeEntry): Promise<HerbalKnowledgeEntry> {
+    const [created] = await db.insert(herbalKnowledgeEntries).values(data).returning();
+    return created;
   }
 }
 

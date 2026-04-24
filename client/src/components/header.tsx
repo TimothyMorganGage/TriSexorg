@@ -17,6 +17,7 @@ export function Header() {
     { name: "Filings", href: "/filing-preparation" },
     { name: "Boundaries", href: "/boundaries-background-check" },
     { name: "Meta Lens Scan", href: "/meta-lens-scan" },
+    { name: "Herbal Knowledge", href: "/herbal-knowledge" },
   ];
 
   const isActive = (path: string) => location === path;
