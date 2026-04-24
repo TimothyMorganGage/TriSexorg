@@ -15,6 +15,7 @@ export function Header() {
     { name: "Community", href: "/community-forum" },
     { name: "STI Tracking", href: "/partner-sti-tracking" },
     { name: "Filings", href: "/filing-preparation" },
+    { name: "Boundaries", href: "/boundaries-background-check" },
   ];
 
   const isActive = (path: string) => location === path;

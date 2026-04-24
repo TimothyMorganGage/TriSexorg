@@ -26,13 +26,13 @@ import {
   Star,
   Network,
   Megaphone,
-  Users
+  X as XIcon
 } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
 interface SocialPost {
   id: string;
-  platform: "bluesky" | "pixelfed" | "loops" | "mastodon" | "truthsocial" | "hylo";
+  platform: "bluesky" | "pixelfed" | "loops" | "mastodon" | "truthsocial" | "hylo" | "x";
   content: string;
   mediaUrl?: string;
   engagement: {
@@ -59,7 +59,7 @@ interface PlatformStats {
 export default function SocialIntegration() {
   const [activeTab, setActiveTab] = useState("overview");
   const [postContent, setPostContent] = useState("");
-  const [selectedPlatforms, setSelectedPlatforms] = useState<string[]>(["bluesky", "mastodon", "pixelfed", "truthsocial", "hylo"]);
+  const [selectedPlatforms, setSelectedPlatforms] = useState<string[]>(["bluesky", "mastodon", "pixelfed", "truthsocial", "hylo", "x"]);
 
   const platformStats: PlatformStats[] = [
     {
@@ -121,6 +121,16 @@ export default function SocialIntegration() {
       icon: Users,
       color: "bg-amber-600",
       protocol: "Hylo GraphQL API (cooperative-owned, open source)"
+    },
+    {
+      platform: "X (Twitter)",
+      followers: 0,
+      posts: 0,
+      engagement: 0,
+      reach: 0,
+      icon: XIcon,
+      color: "bg-black",
+      protocol: "X API v2 — adult-content opt-out enforced for $BAD members"
     }
   ];
 
@@ -593,7 +603,7 @@ export default function SocialIntegration() {
                         Platforms
                       </label>
                       <div className="flex flex-wrap gap-2">
-                        {["bluesky", "mastodon", "pixelfed", "loops", "truthsocial", "hylo"].map((platform) => (
+                        {["bluesky", "mastodon", "pixelfed", "loops", "truthsocial", "hylo", "x"].map((platform) => (
                           <Button
                             key={platform}
                             variant={selectedPlatforms.includes(platform) ? "default" : "outline"}
@@ -612,7 +622,8 @@ export default function SocialIntegration() {
                             {platform === "loops" && <Video className="h-4 w-4 mr-1" />}
                             {platform === "truthsocial" && <Megaphone className="h-4 w-4 mr-1" />}
                             {platform === "hylo" && <Users className="h-4 w-4 mr-1" />}
-                            {platform === "truthsocial" ? "Truth Social" : platform === "hylo" ? "Hylo" : platform}
+                            {platform === "x" && <XIcon className="h-4 w-4 mr-1" />}
+                            {platform === "truthsocial" ? "Truth Social" : platform === "hylo" ? "Hylo" : platform === "x" ? "X" : platform}
                           </Button>
                         ))}
                       </div>

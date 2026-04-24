@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Share2, Globe, Network, Camera, Video, Copy, CheckCircle, Megaphone, Users } from "lucide-react";
+import { Share2, Globe, Network, Camera, Video, Copy, CheckCircle, Megaphone, Users, X as XIcon } from "lucide-react";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 import {
   Dialog,
   DialogContent,
@@ -30,9 +32,15 @@ export function FediverseShare({
   imagePrompt
 }: FediverseShareProps) {
   const [copied, setCopied] = useState<string | null>(null);
-  
+  const [xPornOptOut, setXPornOptOut] = useState(true);
+
   const shareUrl = url || (typeof window !== 'undefined' ? window.location.href : '');
   const hashtagString = hashtags.map(tag => `#${tag}`).join(' ');
+  const xPostBase = `${title}\n\n${description ? description + '\n\n' : ''}${hashtagString}\n\n${shareUrl}`;
+  const xPost = xPornOptOut
+    ? `[Educational sexual-health post — please mark your account "Hide sensitive content: ON" before viewing]\n\n${xPostBase}`
+    : xPostBase;
+  const xIntentUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(xPost)}`;
 
   const platforms = {
     bluesky: {
@@ -76,6 +84,13 @@ export function FediverseShare({
       color: "bg-amber-600",
       post: `${title}\n\n${description || ''}\n\n${hashtagString}\n\n${shareUrl}`,
       instructions: `1. Copy the post text\n2. Visit hylo.com and open your group (or join the TriSex.org group)\n3. Click "Create" → choose Discussion, Resource, or Project as the post type\n4. Paste the text into the body, set a topic, and add a content warning if needed\n5. Post to your group, a federation, or to Public\n\nHylo is open-source, cooperative-owned community infrastructure — a strong fit for $BAD / $TRISEXORG governance discussions.`
+    },
+    x: {
+      name: "X (Twitter)",
+      icon: XIcon,
+      color: "bg-black",
+      post: xPost,
+      instructions: `1. Copy the post (X limit: 280 chars free / 25,000 X Premium — trim if needed)\n2. Click "Open X with this post" below, OR visit x.com\n3. Verify your settings: Privacy → "Hide sensitive content" should be ON if you opted out of adult content\n4. Post the Tweet\n\nPRIVACY NOTE: TriSex.org never publishes scan or product-fit data to X. Sharing here is text/link only.\n\nCO-OP PRICING (in outreach): TriSex.org is in early outreach to negotiate cooperative pricing on X Premium for verified $BAD members. Sign up on the Social Integration page to register interest — we publish progress publicly, no promises until a deal lands.`
     }
   };
 
@@ -150,6 +165,31 @@ export function FediverseShare({
                   <div className="text-xs text-muted-foreground whitespace-pre-line">
                     {platform.instructions}
                   </div>
+
+                  {key === "x" && (
+                    <div className="mt-3 space-y-2 border-t pt-3">
+                      <div className="flex items-center justify-between gap-2">
+                        <Label htmlFor="x-porn-opt-out" className="text-xs cursor-pointer">
+                          I have <strong>opted out of adult content</strong> on X (recommended for sexual-health posts)
+                        </Label>
+                        <Switch
+                          id="x-porn-opt-out"
+                          checked={xPornOptOut}
+                          onCheckedChange={setXPornOptOut}
+                          data-testid="switch-x-porn-opt-out"
+                        />
+                      </div>
+                      <Button
+                        size="sm"
+                        className="w-full"
+                        onClick={() => window.open(xIntentUrl, "_blank", "noopener,noreferrer")}
+                        data-testid="button-open-x-intent"
+                      >
+                        <XIcon className="h-4 w-4 mr-1" />
+                        Open X with this post
+                      </Button>
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             );

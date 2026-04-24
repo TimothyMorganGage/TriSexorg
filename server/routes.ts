@@ -2415,6 +2415,90 @@ END:VEVENT
     }
   });
 
+  // Boundary background-check consent routes (WhatsApp / Signal opt-in)
+  app.get('/api/boundary-checks/consents', async (req, res) => {
+    try {
+      if (!req.session?.userId) return res.status(401).json({ message: "Must be logged in" });
+      const consents = await storage.getBoundaryCheckConsents(req.session.userId);
+      res.json(consents);
+    } catch (e: any) {
+      res.status(500).json({ message: e.message || "Failed to fetch consents" });
+    }
+  });
+
+  app.post('/api/boundary-checks/consents', async (req, res) => {
+    try {
+      if (!req.session?.userId) return res.status(401).json({ message: "Must be logged in" });
+      const { platform, handle, scope, purpose, consentStatement, expiresAt } = req.body;
+      if (!["whatsapp", "signal"].includes(platform)) {
+        return res.status(400).json({ message: "platform must be 'whatsapp' or 'signal'" });
+      }
+      if (!handle || !scope || !consentStatement) {
+        return res.status(400).json({ message: "handle, scope, and consentStatement are required" });
+      }
+      const consent = await storage.createBoundaryCheckConsent({
+        userId: req.session.userId,
+        platform,
+        handle,
+        scope,
+        purpose: purpose || null,
+        consentStatement,
+        expiresAt: expiresAt ? new Date(expiresAt) : null,
+      } as any);
+      res.status(201).json(consent);
+    } catch (e: any) {
+      res.status(500).json({ message: e.message || "Failed to record consent" });
+    }
+  });
+
+  app.post('/api/boundary-checks/consents/:id/revoke', async (req, res) => {
+    try {
+      if (!req.session?.userId) return res.status(401).json({ message: "Must be logged in" });
+      const ok = await storage.revokeBoundaryCheckConsent(parseInt(req.params.id), req.session.userId);
+      if (!ok) return res.status(404).json({ message: "Consent not found" });
+      res.json({ success: true });
+    } catch (e: any) {
+      res.status(500).json({ message: e.message || "Failed to revoke consent" });
+    }
+  });
+
+  // X cooperative-pricing interest registry
+  app.get('/api/x-coop/interest', async (req, res) => {
+    try {
+      if (!req.session?.userId) return res.status(401).json({ message: "Must be logged in" });
+      const row = await storage.getXCoopPricingInterest(req.session.userId);
+      res.json(row || null);
+    } catch (e: any) {
+      res.status(500).json({ message: e.message || "Failed to fetch interest" });
+    }
+  });
+
+  app.get('/api/x-coop/stats', async (_req, res) => {
+    try {
+      const stats = await storage.countXCoopPricingInterest();
+      res.json(stats);
+    } catch (e: any) {
+      res.status(500).json({ message: e.message || "Failed to fetch stats" });
+    }
+  });
+
+  app.post('/api/x-coop/interest', async (req, res) => {
+    try {
+      if (!req.session?.userId) return res.status(401).json({ message: "Must be logged in" });
+      const { xHandle, isXPremium, pornOptOut } = req.body;
+      if (!xHandle) return res.status(400).json({ message: "xHandle required" });
+      const row = await storage.upsertXCoopPricingInterest({
+        userId: req.session.userId,
+        xHandle: xHandle.replace(/^@/, ""),
+        isXPremium: !!isXPremium,
+        pornOptOut: pornOptOut !== false,
+      });
+      res.json(row);
+    } catch (e: any) {
+      res.status(500).json({ message: e.message || "Failed to register interest" });
+    }
+  });
+
   app.delete('/api/filings/:id', async (req, res) => {
     try {
       if (!req.session?.userId) return res.status(401).json({ message: "Must be logged in" });

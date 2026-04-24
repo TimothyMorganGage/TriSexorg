@@ -92,6 +92,7 @@ const Accessibility = lazy(() => import("@/pages/accessibility"));
 const CommunityForum = lazy(() => import("@/pages/community-forum"));
 const TrisexStablecoin = lazy(() => import("@/pages/trisex-stablecoin"));
 const FilingPreparation = lazy(() => import("@/pages/filing-preparation"));
+const BoundariesBackgroundCheck = lazy(() => import("@/pages/boundaries-background-check"));
 const Contact = lazy(() => import("@/pages/contact"));
 
 function PWAWrapper({ children }: { children: React.ReactNode }) {
@@ -157,6 +158,7 @@ function Router() {
             <Route path="/community-forum" component={CommunityForum} />
             <Route path="/trisex-stablecoin" component={TrisexStablecoin} />
             <Route path="/filing-preparation" component={FilingPreparation} />
+            <Route path="/boundaries-background-check" component={BoundariesBackgroundCheck} />
             <Route path="/saved-configurations" component={SavedConfigurations} />
             <Route path="/contact" component={Contact} />
             <Route path="/login" component={Login} />

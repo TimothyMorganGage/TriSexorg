@@ -6,7 +6,7 @@ import {
   moodEntries, wellnessGoals, moodInsights, timeEntries, timeGoals, timeInsights,
   calendarConnections, scheduledTasks, taskTemplates, savedProductConfigurations,
   forumCategories, forumPosts, forumReplies, forumLikes, forumBookmarks,
-  filingDocuments,
+  filingDocuments, boundaryCheckConsents, xCoopPricingInterest,
   type User, type InsertUser, type Product, type InsertProduct,
   type ProductConfiguration, type InsertProductConfiguration,
   type Order, type InsertOrder, type EducationalContent, type InsertEducationalContent,
@@ -29,7 +29,9 @@ import {
   type ForumPost, type InsertForumPost,
   type ForumReply, type InsertForumReply,
   type ForumLike, type ForumBookmark,
-  type FilingDocument, type InsertFilingDocument
+  type FilingDocument, type InsertFilingDocument,
+  type BoundaryCheckConsent, type InsertBoundaryCheckConsent,
+  type XCoopPricingInterest, type InsertXCoopPricingInterest,
 } from "@shared/schema";
 
 export interface IStorage {
@@ -186,6 +188,16 @@ export interface IStorage {
   createFilingDocument(data: InsertFilingDocument & { documentBody: string }): Promise<FilingDocument>;
   updateFilingDocumentStatus(id: number, status: string, fields?: { confirmationNumber?: string; agencyResponse?: string; notes?: string }): Promise<FilingDocument | undefined>;
   deleteFilingDocument(id: number): Promise<boolean>;
+
+  // Boundary background-check consent methods
+  getBoundaryCheckConsents(userId: number): Promise<BoundaryCheckConsent[]>;
+  createBoundaryCheckConsent(data: InsertBoundaryCheckConsent): Promise<BoundaryCheckConsent>;
+  revokeBoundaryCheckConsent(id: number, userId: number): Promise<boolean>;
+
+  // X cooperative-pricing interest registry
+  getXCoopPricingInterest(userId: number): Promise<XCoopPricingInterest | undefined>;
+  upsertXCoopPricingInterest(data: InsertXCoopPricingInterest): Promise<XCoopPricingInterest>;
+  countXCoopPricingInterest(): Promise<{ total: number; premium: number; pornOptOut: number }>;
 
   // Clinic Inventory methods
   getClinicInventory(): Promise<any[]>;
@@ -2831,6 +2843,54 @@ export class MemStorage implements IStorage {
   async deleteFilingDocument(id: number): Promise<boolean> {
     const result = await db.delete(filingDocuments).where(eq(filingDocuments.id, id)).returning();
     return result.length > 0;
+  }
+
+  // Boundary background-check consent methods
+  async getBoundaryCheckConsents(userId: number): Promise<BoundaryCheckConsent[]> {
+    return await db.select().from(boundaryCheckConsents)
+      .where(eq(boundaryCheckConsents.userId, userId))
+      .orderBy(desc(boundaryCheckConsents.consentedAt));
+  }
+
+  async createBoundaryCheckConsent(data: InsertBoundaryCheckConsent): Promise<BoundaryCheckConsent> {
+    const [created] = await db.insert(boundaryCheckConsents).values(data).returning();
+    return created;
+  }
+
+  async revokeBoundaryCheckConsent(id: number, userId: number): Promise<boolean> {
+    const result = await db.update(boundaryCheckConsents)
+      .set({ revokedAt: new Date() })
+      .where(and(eq(boundaryCheckConsents.id, id), eq(boundaryCheckConsents.userId, userId)))
+      .returning();
+    return result.length > 0;
+  }
+
+  // X cooperative-pricing interest registry
+  async getXCoopPricingInterest(userId: number): Promise<XCoopPricingInterest | undefined> {
+    const [row] = await db.select().from(xCoopPricingInterest).where(eq(xCoopPricingInterest.userId, userId));
+    return row;
+  }
+
+  async upsertXCoopPricingInterest(data: InsertXCoopPricingInterest): Promise<XCoopPricingInterest> {
+    const existing = await this.getXCoopPricingInterest(data.userId);
+    if (existing) {
+      const [updated] = await db.update(xCoopPricingInterest)
+        .set({ xHandle: data.xHandle, isXPremium: data.isXPremium ?? false, pornOptOut: data.pornOptOut ?? true })
+        .where(eq(xCoopPricingInterest.userId, data.userId))
+        .returning();
+      return updated;
+    }
+    const [created] = await db.insert(xCoopPricingInterest).values(data).returning();
+    return created;
+  }
+
+  async countXCoopPricingInterest(): Promise<{ total: number; premium: number; pornOptOut: number }> {
+    const rows = await db.select().from(xCoopPricingInterest);
+    return {
+      total: rows.length,
+      premium: rows.filter(r => r.isXPremium).length,
+      pornOptOut: rows.filter(r => r.pornOptOut).length,
+    };
   }
 }
 

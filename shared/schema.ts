@@ -1487,3 +1487,42 @@ export const insertFilingDocumentSchema = createInsertSchema(filingDocuments).om
 
 export type InsertFilingDocument = z.infer<typeof insertFilingDocumentSchema>;
 export type FilingDocument = typeof filingDocuments.$inferSelect;
+
+export const boundaryCheckConsents = pgTable("boundary_check_consents", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  platform: text("platform").notNull(),
+  handle: text("handle").notNull(),
+  scope: text("scope").notNull(),
+  purpose: text("purpose"),
+  consentStatement: text("consent_statement").notNull(),
+  consentedAt: timestamp("consented_at").defaultNow().notNull(),
+  expiresAt: timestamp("expires_at"),
+  revokedAt: timestamp("revoked_at"),
+});
+
+export const insertBoundaryCheckConsentSchema = createInsertSchema(boundaryCheckConsents).omit({
+  id: true,
+  consentedAt: true,
+  revokedAt: true,
+});
+
+export type InsertBoundaryCheckConsent = z.infer<typeof insertBoundaryCheckConsentSchema>;
+export type BoundaryCheckConsent = typeof boundaryCheckConsents.$inferSelect;
+
+export const xCoopPricingInterest = pgTable("x_coop_pricing_interest", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  xHandle: text("x_handle").notNull(),
+  isXPremium: boolean("is_x_premium").notNull().default(false),
+  pornOptOut: boolean("porn_opt_out").notNull().default(true),
+  registeredAt: timestamp("registered_at").defaultNow().notNull(),
+});
+
+export const insertXCoopPricingInterestSchema = createInsertSchema(xCoopPricingInterest).omit({
+  id: true,
+  registeredAt: true,
+});
+
+export type InsertXCoopPricingInterest = z.infer<typeof insertXCoopPricingInterestSchema>;
+export type XCoopPricingInterest = typeof xCoopPricingInterest.$inferSelect;
