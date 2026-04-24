@@ -18,7 +18,7 @@ export function Header() {
     { name: "Boundaries", href: "/boundaries-background-check" },
     { name: "Meta Lens Scan", href: "/meta-lens-scan" },
     { name: "Herbal Knowledge", href: "/herbal-knowledge" },
-    { name: "Sniffies Policy", href: "/sniffies-policy" },
+    { name: "LETS Framework", href: "/lets-framework" },
     { name: "TriSexPort", href: "/trisexport" },
     { name: "Team Changes", href: "/recent-team-changes" },
   ];

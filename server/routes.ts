@@ -2811,28 +2811,6 @@ END:VEVENT
     }
   });
 
-  app.get('/api/sniffies/policy', async (_req, res) => {
-    const existing = await storage.getPlatformCompensation("sniffies");
-    res.json({
-      platformName: "Sniffies",
-      proprietorEntity: existing?.proprietorEntity ?? "Sniffies, Inc. (and its proprietors)",
-      compensationActive: existing?.compensationActive ?? false,
-      compensationProgramUrl: existing?.compensationProgramUrl ?? null,
-      gateStatement: "If Sniffies or its proprietors want to use the TriSex.org platform — including any API access, federated integration, data import, or co-marketing — they may do so only after operating a verifiable compensation program for individuals who contracted STIs through encounters originated on Sniffies, including harm from 'bareback' absentmindedness within fluid-bonded relationships where consent boundaries were not fully understood, communicated, or maintained.",
-      harmContext: "Fluid-bonded relationships often have negotiated agreements about barrier use with outside partners. Hookup platforms that normalize unbarriered ('bareback') sex without surfacing the affected fluid-bonded partner's interests can produce downstream STI transmission to people who never used the platform and never consented to the risk. This gate names that harm and asks the platform — not the individuals — to bear the compensation cost.",
-      honestyDisclosures: [
-        "TriSex.org has not contacted Sniffies or its proprietors. This is a unilaterally published policy, not a negotiated agreement.",
-        "STI transmission causation is rarely traceable to a single platform with legal certainty; this gate uses an evidentiary standard appropriate to a cooperative ethics policy, not a courtroom.",
-        "TriSex.org cannot enforce this policy on third-party platforms generally; it only governs whether TriSex.org will grant Sniffies access to the TriSex.org platform.",
-        "The compensation flag is administered by TriSex.org admins based on publicly verifiable evidence of a Sniffies compensation program; it is not auto-detected.",
-      ],
-      affectedPersonProcess: existing?.affectedPersonRegistryUrl ?? "Affected persons may contact TriSex.org via the public contact form to be added to the documented harm record. TriSex.org will not publish identifying information without explicit, revocable consent.",
-      lastReviewed: existing?.lastReviewed?.toISOString().slice(0, 10) ?? "2026-04-24",
-      verifiedBy: existing?.verifiedBy ?? null,
-      evidenceNotes: existing?.evidenceNotes ?? null,
-    });
-  });
-
   // X (Twitter) share ethics gate — mirrors Bluesky pattern
   app.get('/api/x/policy', (_req, res) => {
     res.json({
