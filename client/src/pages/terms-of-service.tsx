@@ -281,11 +281,11 @@ export default function TermsOfService() {
                       We guarantee custom-fit, intersex-centered products manufactured to your exact specifications:
                     </p>
                     <ul className="text-sm text-muted-foreground space-y-2">
-                      <li>• <strong>Quality guarantee:</strong> 97.8% STI prevention efficacy rate</li>
-                      <li>• <strong>Custom sizing:</strong> Based on your anatomical measurements</li>
-                      <li>• <strong>Material choice:</strong> Vegan or Traditional Ecoculture sourcing</li>
-                      <li>• <strong>Return policy:</strong> 30-day satisfaction guarantee</li>
-                      <li>• <strong>Cooperative pricing:</strong> $0.99/unit for bulk orders (500+ units, 83% savings)</li>
+                      <li>• <strong>No efficacy guarantee:</strong> An earlier draft of this section claimed a "97.8% STI prevention efficacy rate." That number was fabricated and has been removed. No clinical trial of TriSex.org products has been conducted, so we cannot make any efficacy claim.</li>
+                      <li>• <strong>Custom sizing:</strong> Based on the anatomical measurements you provide.</li>
+                      <li>• <strong>Material choice:</strong> Vegan or Traditional Ecoculture sourcing.</li>
+                      <li>• <strong>Return policy:</strong> 30-day satisfaction guarantee.</li>
+                      <li>• <strong>Cooperative pricing:</strong> Bulk-order pricing is set by member vote and is currently aspirational; the previously published "$0.99/unit, 83% savings" figure has not been validated against actual cost-of-goods.</li>
                     </ul>
                   </div>
 
