@@ -224,6 +224,113 @@ export function getDefaultCustomization(variation: IntersexVariation): Record<st
   return defaults;
 }
 
+export type AssignmentMarker = "AMAB" | "AFAB" | "AXAB";
+
+export const ASSIGNMENT_MARKERS: Array<{ id: AssignmentMarker; label: string; expansion: string; blurb: string }> = [
+  {
+    id: "AMAB",
+    label: "AMAB",
+    expansion: "Assigned Male At Birth",
+    blurb: "Variations most commonly recorded as male on the birth certificate.",
+  },
+  {
+    id: "AFAB",
+    label: "AFAB",
+    expansion: "Assigned Female At Birth",
+    blurb: "Variations most commonly recorded as female on the birth certificate.",
+  },
+  {
+    id: "AXAB",
+    label: "AXAB",
+    expansion: "Assigned X / Intersex At Birth",
+    blurb: "Variations where the M/F assignment is itself contested or where 'X' / intersex is recordable in the relevant jurisdiction.",
+  },
+];
+
+const ASSIGNMENT_DEFAULTS_BY_CATEGORY: Record<IntersexCategoryId, AssignmentMarker[]> = {
+  "sex-chromosome": ["AXAB"],
+  "46xx-dsd": ["AFAB"],
+  "46xy-dsd": ["AMAB"],
+  "gonadal-dysgenesis": ["AXAB"],
+  "external-genital": ["AMAB"],
+  "internal-canal": ["AFAB"],
+  "endocrine-presentation": ["AXAB"],
+  "post-surgical": ["AXAB"],
+};
+
+const ASSIGNMENT_OVERRIDES: Record<string, AssignmentMarker[]> = {
+  // --- Sex chromosome (17) ---
+  "47-xxy": ["AMAB"],
+  "48-xxxy": ["AMAB", "AXAB"],
+  "49-xxxxy": ["AMAB", "AXAB"],
+  "48-xxyy": ["AMAB"],
+  "47-xyy": ["AMAB"],
+  "45-x-turner": ["AFAB"],
+  "45-x-mosaic": ["AFAB", "AXAB"],
+  "47-xxx": ["AFAB"],
+  "48-xxxx": ["AFAB"],
+  "49-xxxxx": ["AFAB"],
+  "46xx-46xy-chimera": ["AXAB", "AMAB", "AFAB"],
+  "45x-46xy-mosaic": ["AXAB"],
+  "45x-47xyy-mosaic": ["AXAB"],
+  "46xx-47xxy-mosaic": ["AXAB"],
+  "ring-x": ["AFAB"],
+  "iso-xq": ["AFAB"],
+  "tetrasomy-12p": ["AXAB"],
+  // --- 46,XX DSD (12) overrides ---
+  "cah-salt-wasting": ["AFAB", "AXAB"],
+  "cah-simple-virilizing": ["AFAB", "AXAB"],
+  "cah-11b": ["AFAB", "AXAB"],
+  "46xx-testicular": ["AMAB"],
+  "46xx-ovotesticular": ["AXAB"],
+  // --- 46,XY DSD (18) overrides ---
+  "cais": ["AFAB"],
+  "pais": ["AXAB"],
+  "5ard": ["AXAB"],
+  "17b-hsd3": ["AXAB"],
+  "3b-hsd2": ["AXAB"],
+  "cyp17": ["AFAB"],
+  "lipoid-cah": ["AFAB"],
+  "leydig-hypoplasia": ["AXAB"],
+  "swyer": ["AFAB"],
+  "sf1-mutation": ["AXAB"],
+  "wt1-mutation": ["AXAB"],
+  "sox9-mutation": ["AXAB", "AFAB"],
+  "dax1-dup": ["AFAB"],
+  "dhh-mutation": ["AXAB"],
+  // --- Gonadal dysgenesis (5) overrides ---
+  "pure-46xx-gd": ["AFAB"],
+  "pure-46xy-gd": ["AFAB"],
+  "vanishing-testes": ["AMAB"],
+  // --- External genital (15) overrides ---
+  "aphallia": ["AXAB", "AMAB"],
+  "clitoromegaly": ["AFAB"],
+  "tdick-hormonal": ["AFAB"],
+  "labial-fusion": ["AFAB"],
+  // --- Internal canal (11) overrides ---
+  "cloacal-exstrophy": ["AXAB"],
+  "bladder-exstrophy": ["AXAB"],
+  "persistent-cloaca": ["AXAB"],
+  "urogenital-sinus": ["AXAB"],
+  // --- Endocrine presentation (4) overrides ---
+  "pcos-intersex": ["AFAB"],
+  "kallmann-intersex": ["AMAB"],
+  "hyperprolactinemia-gyn": ["AMAB"],
+  // --- Post-surgical (4) overrides ---
+  "post-vaginoplasty": ["AFAB", "AXAB"],
+  "post-clitoral-recession": ["AFAB"],
+  "post-vaginal-construction": ["AFAB"],
+  "post-phalloplasty": ["AMAB", "AXAB"],
+};
+
+export function getAssignmentMarkers(variation: IntersexVariation): AssignmentMarker[] {
+  return ASSIGNMENT_OVERRIDES[variation.id] ?? ASSIGNMENT_DEFAULTS_BY_CATEGORY[variation.category];
+}
+
+export function countVariationsByMarker(marker: AssignmentMarker): number {
+  return INTERSEX_VARIATIONS.filter((v) => getAssignmentMarkers(v).includes(marker)).length;
+}
+
 export type IntersexCategoryId =
   | "sex-chromosome"
   | "46xx-dsd"

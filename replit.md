@@ -64,6 +64,7 @@ The application uses a modern full-stack architecture with a focus on accessibil
 -   Inclusive-ordering product catalogue with expanded descriptions for internal, oral, and external protection.
 -   Sex-marker offerings section ("Offerings for AMAB, AFAB & AXAB Intersex People") on homepage and products page, detailing configurator controls and catalogue variations for each assignment.
 -   Inclusive-ordering intersex variation configurator: a searchable, categorised, multi-select catalogue of 86 named intersex variations mapped to fitting implications, including relevant zones, fitting notes, and consultation recommendations.
+-   Inclusive-ordering AMAB/AFAB/AXAB sex-marker filter: above the existing category pills, co-operators can narrow the 86-variation catalogue by recorded birth assignment (All / AMAB / AFAB / AXAB). Markers derive from a category-default + per-variation overrides map (`getAssignmentMarkers` in `client/src/data/intersex-variations.ts`); variations spanning more than one assignment appear under each, with overlap counts surfaced in the pill labels and a per-marker honesty blurb explaining that markers describe recorded birth assignment rather than anatomy.
 
 ## External Dependencies
 -   **Database Driver**: `@neondatabase/serverless`

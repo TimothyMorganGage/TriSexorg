@@ -35,6 +35,10 @@ import {
   FITTING_PARAMS,
   getApplicableParams,
   getDefaultCustomization,
+  ASSIGNMENT_MARKERS,
+  getAssignmentMarkers,
+  countVariationsByMarker,
+  type AssignmentMarker,
   type FittingParamId,
   type FittingParamValue,
   type IntersexVariation,
@@ -140,6 +144,7 @@ export default function InclusiveOrdering() {
   const [selectedVariations, setSelectedVariations] = useState<string[]>([]);
   const [variationSearch, setVariationSearch] = useState("");
   const [activeVariationCategory, setActiveVariationCategory] = useState<string>(INTERSEX_CATEGORIES[0].id);
+  const [activeMarkerFilter, setActiveMarkerFilter] = useState<AssignmentMarker | "all">("all");
   const [variationCustomizations, setVariationCustomizations] = useState<
     Record<string, Record<string, FittingParamValue>>
   >({});
@@ -176,6 +181,9 @@ export default function InclusiveOrdering() {
   };
 
   const filteredVariations = INTERSEX_VARIATIONS.filter((v) => {
+    const markerMatch =
+      activeMarkerFilter === "all" || getAssignmentMarkers(v).includes(activeMarkerFilter);
+    if (!markerMatch) return false;
     if (variationSearch.trim().length === 0) return v.category === activeVariationCategory;
     const q = variationSearch.toLowerCase();
     return v.name.toLowerCase().includes(q) || (v.alsoKnownAs?.toLowerCase().includes(q) ?? false);
@@ -616,6 +624,47 @@ export default function InclusiveOrdering() {
                         className="pl-7 h-8 text-xs"
                         data-testid="variation-search-input"
                       />
+                    </div>
+
+                    <div className="space-y-1.5" data-testid="marker-filter-row">
+                      <div className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wide">
+                        Filter by sex-marker assignment
+                      </div>
+                      <div className="flex flex-wrap gap-1.5">
+                        {[
+                          { id: "all" as const, label: "All", count: INTERSEX_VARIATIONS.length, blurb: "Show every variation in the catalogue across all assignment pathways." },
+                          ...ASSIGNMENT_MARKERS.map((m) => ({
+                            id: m.id,
+                            label: `${m.label} · ${m.expansion}`,
+                            count: countVariationsByMarker(m.id),
+                            blurb: m.blurb,
+                          })),
+                        ].map((opt) => {
+                          const isActive = activeMarkerFilter === opt.id;
+                          return (
+                            <button
+                              key={opt.id}
+                              type="button"
+                              onClick={() => setActiveMarkerFilter(opt.id)}
+                              className={`px-2.5 py-1 rounded border text-xs transition-colors ${
+                                isActive
+                                  ? "border-primary bg-primary/10 text-foreground font-medium"
+                                  : "border-muted-foreground/30 hover:border-primary/50 text-muted-foreground"
+                              }`}
+                              data-testid={`marker-filter-${opt.id}`}
+                              title={opt.blurb}
+                            >
+                              {opt.label} <span className="opacity-70">({opt.count})</span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                      {activeMarkerFilter !== "all" && (
+                        <p className="text-[10px] text-muted-foreground italic" data-testid="marker-filter-blurb">
+                          {ASSIGNMENT_MARKERS.find((m) => m.id === activeMarkerFilter)?.blurb}{" "}
+                          Counts overlap — variations assigned across more than one marker appear under each.
+                        </p>
+                      )}
                     </div>
 
                     {variationSearch.trim().length === 0 && (
