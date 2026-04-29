@@ -46,6 +46,8 @@ import {
   platformCompensationAttestations,
   type TrisexportPartnerSlot, type InsertTrisexportPartnerSlot,
   trisexportPartnerSlots,
+  type InclusiveOrderingAdopter, type InsertInclusiveOrderingAdopter,
+  inclusiveOrderingAdopters,
 } from "@shared/schema";
 
 export interface IStorage {
@@ -252,6 +254,10 @@ export interface IStorage {
   listTrisexportSlots(userId: number): Promise<TrisexportPartnerSlot[]>;
   addTrisexportSlot(data: InsertTrisexportPartnerSlot): Promise<TrisexportPartnerSlot>;
   deleteTrisexportSlot(id: number, userId: number): Promise<boolean>;
+
+  // Inclusive Ordering framework adopters (self-reported registry)
+  listInclusiveOrderingAdopters(): Promise<InclusiveOrderingAdopter[]>;
+  createInclusiveOrderingAdopter(data: InsertInclusiveOrderingAdopter): Promise<InclusiveOrderingAdopter>;
 
   // Clinic Inventory methods
   getClinicInventory(): Promise<any[]>;
@@ -3176,6 +3182,17 @@ export class MemStorage implements IStorage {
       return updated;
     }
     const [created] = await db.insert(platformCompensationAttestations).values(data).returning();
+    return created;
+  }
+
+  // --- Inclusive Ordering framework adopters (self-reported registry) ---
+  async listInclusiveOrderingAdopters(): Promise<InclusiveOrderingAdopter[]> {
+    return await db.select().from(inclusiveOrderingAdopters)
+      .orderBy(desc(inclusiveOrderingAdopters.createdAt));
+  }
+
+  async createInclusiveOrderingAdopter(data: InsertInclusiveOrderingAdopter): Promise<InclusiveOrderingAdopter> {
+    const [created] = await db.insert(inclusiveOrderingAdopters).values(data).returning();
     return created;
   }
 }

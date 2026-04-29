@@ -1723,3 +1723,29 @@ export const insertTrisexportPartnerSlotSchema = createInsertSchema(trisexportPa
 
 export type InsertTrisexportPartnerSlot = z.infer<typeof insertTrisexportPartnerSlotSchema>;
 export type TrisexportPartnerSlot = typeof trisexportPartnerSlots.$inferSelect;
+
+// Inclusive Ordering framework adopters — self-reported registry of apps using the framework
+export const inclusiveOrderingAdopters = pgTable("inclusive_ordering_adopters", {
+  id: serial("id").primaryKey(),
+  appName: text("app_name").notNull(),
+  appUrl: text("app_url").notNull(),
+  appDescription: text("app_description").notNull(),
+  adoptedSurfaces: text("adopted_surfaces").array().notNull(), // ["catalogue", "marker-filter", "fitting-params", "multi-use-balance", "fold-sequence", "schema"]
+  contactEmail: text("contact_email"),
+  cooperativeStatus: text("cooperative_status"), // "cooperative" | "nonprofit" | "for-profit" | "informal" | "individual"
+  honestyAttestation: boolean("honesty_attestation").notNull().default(false),
+  ccBySaCompliance: boolean("cc_by_sa_compliance").notNull().default(false),
+  status: text("status").notNull().default("pending"), // pending | verified | withdrawn
+  submittedBy: text("submitted_by"),
+  notes: text("notes"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const insertInclusiveOrderingAdopterSchema = createInsertSchema(inclusiveOrderingAdopters).omit({
+  id: true,
+  status: true,
+  createdAt: true,
+});
+
+export type InsertInclusiveOrderingAdopter = z.infer<typeof insertInclusiveOrderingAdopterSchema>;
+export type InclusiveOrderingAdopter = typeof inclusiveOrderingAdopters.$inferSelect;

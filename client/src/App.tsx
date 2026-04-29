@@ -66,6 +66,8 @@ const MetaPlatforms = lazy(() => import("@/pages/meta-platforms"));
 const EconomicImpact = lazy(() => import("@/pages/economic-impact"));
 const Wiki = lazy(() => import("@/pages/wiki"));
 const InclusiveOrdering = lazy(() => import("@/pages/inclusive-ordering"));
+const ForkTheFramework = lazy(() => import("@/pages/fork-the-framework"));
+const InclusiveOrderingRegistry = lazy(() => import("@/pages/inclusive-ordering-registry"));
 const PeerMentor = lazy(() => import("@/pages/peer-mentor"));
 const Analytics = lazy(() => import("@/pages/analytics"));
 const InteractiveStories = lazy(() => import("@/pages/interactive-stories"));
@@ -138,6 +140,8 @@ function Router() {
             <Route path="/economic-impact" component={EconomicImpact} />
             <Route path="/wiki" component={Wiki} />
             <Route path="/inclusive-ordering" component={InclusiveOrdering} />
+            <Route path="/fork-the-framework" component={ForkTheFramework} />
+            <Route path="/inclusive-ordering-registry" component={InclusiveOrderingRegistry} />
             <Route path="/peer-mentor" component={PeerMentor} />
             <Route path="/analytics" component={Analytics} />
             <Route path="/interactive-stories" component={InteractiveStories} />

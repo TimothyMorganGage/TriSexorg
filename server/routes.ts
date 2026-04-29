@@ -2999,6 +2999,35 @@ END:VEVENT
     }
   });
 
+  // --- Inclusive Ordering framework adopters (self-reported registry) ---
+  app.get('/api/inclusive-ordering-adopters', async (_req, res) => {
+    try {
+      const adopters = await storage.listInclusiveOrderingAdopters();
+      res.json(adopters);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to list adopters" });
+    }
+  });
+
+  app.post('/api/inclusive-ordering-adopters', async (req, res) => {
+    try {
+      const { insertInclusiveOrderingAdopterSchema } = await import("@shared/schema");
+      const parsed = insertInclusiveOrderingAdopterSchema.safeParse(req.body);
+      if (!parsed.success) {
+        return res.status(400).json({ message: "Invalid submission", errors: parsed.error.flatten() });
+      }
+      if (!parsed.data.honestyAttestation || !parsed.data.ccBySaCompliance) {
+        return res.status(400).json({
+          message: "Both the honesty attestation and CC BY-SA 4.0 compliance checkbox must be confirmed before submission.",
+        });
+      }
+      const adopter = await storage.createInclusiveOrderingAdopter(parsed.data);
+      res.status(201).json(adopter);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to record adopter submission" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
