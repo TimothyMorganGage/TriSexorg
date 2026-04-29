@@ -9,7 +9,8 @@ import {
   Leaf, Heart, Box, CheckCircle,
   Printer, Truck, Hospital, UserCheck, Store,
   Building, Ruler, Droplets, TestTube,
-  Coins, BookOpen, Lightbulb, Users, Package, ArrowRight
+  Coins, BookOpen, Lightbulb, Users, Package, ArrowRight,
+  Shapes
 } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
@@ -117,6 +118,140 @@ export default function Home() {
                 </Card>
               ))}
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Offerings for AMAB / AFAB / AXAB Intersex People */}
+      <section className="py-20 bg-surface border-b border-white/10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <Badge className="bg-primary/15 text-primary border border-primary/30 mb-4 text-xs">
+              <Shapes className="w-3 h-3 mr-1" /> 86 named intersex variations · 8 categories
+            </Badge>
+            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-3 font-display">
+              Offerings for AMAB, AFAB & AXAB Intersex People
+            </h2>
+            <p className="text-white/60 text-base max-w-3xl mx-auto leading-relaxed">
+              Intersex bodies are assigned a sex marker at birth — but that marker rarely matches the
+              body's actual anatomy. Every fold, sleeve, pouch, and dam in our catalogue is sized for
+              the anatomy you have, not the letter on your birth certificate.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6 mb-10">
+            {[
+              {
+                marker: "AMAB",
+                expansion: "Assigned Male At Birth",
+                accent: "border-sky-400/30 hover:border-sky-400/50",
+                accentText: "text-sky-300",
+                pathways: "Often 46,XY DSD pathways: PAIS, MAIS, 5α-reductase, hypospadias spectrum, micropenis, chordee, diphallia, penoscrotal transposition, Klinefelter (47,XXY).",
+                fits: [
+                  "Inverted Sleeve sized to your shaft length & girth (30–200 mm)",
+                  "Urethral position select for distal / mid-shaft / proximal / perineal hypospadias",
+                  "Anchor pattern (standard / wide / asymmetric / strap) for penoscrotal & bifid scrotum",
+                  "Dual-sleeve option (1 or 2) for diphallia",
+                  "Shorter-default sleeves for micropenis & post-orchiectomy bodies",
+                ],
+                count: "≈ 24 catalogue variations commonly assigned M",
+              },
+              {
+                marker: "AFAB",
+                expansion: "Assigned Female At Birth",
+                accent: "border-pink-400/30 hover:border-pink-400/50",
+                accentText: "text-pink-300",
+                pathways: "Often 46,XX DSD pathways: classic & non-classic CAH, MRKH, Müllerian agenesis, longitudinal/transverse vaginal septa, uterine didelphys, clitoromegaly, ovotesticular DSD, Turner (45,X).",
+                fits: [
+                  "Cup-Pouch sized to canal depth (30–180 mm) for shortened, blind-ending or constructed canals",
+                  "Canal-girth slider (80–150 mm) for variable receptive fits",
+                  "Frontal sliders for clitoromegaly & virilized phenotypes",
+                  "Shallower-depth defaults for MRKH, cervico-vaginal agenesis, CAIS, Swyer, Turner",
+                  "Wing-Extended Dam for oral-frontal & oral-vulva acts",
+                ],
+                count: "≈ 28 catalogue variations commonly assigned F",
+              },
+              {
+                marker: "AXAB",
+                expansion: "Assigned X / Intersex At Birth",
+                accent: "border-amber-400/30 hover:border-amber-400/50",
+                accentText: "text-amber-300",
+                pathways: "Legally recordable in some jurisdictions (Germany, Australia, Aotearoa NZ, Iceland, Argentina, India third-gender, parts of Canada). Often ovotesticular DSD, mixed gonadal dysgenesis, 46,XX/46,XY chimerism, ambiguous external genitalia.",
+                fits: [
+                  "No presumed default zone — both Inverted Sleeve and Cup-Pouch are first-class options",
+                  "Multi-fold balance (versatile / receptive / penetrative) selectable per session",
+                  "Open zone selection across oral / anal / vaginal / frontal / neovaginal",
+                  "Variation-specific sliders for asymmetric external anatomy",
+                  "Amber consult flag offered for any variation where measurement matters",
+                ],
+                count: "≈ 34 catalogue variations where M/F assignment is itself contested",
+              },
+            ].map((card) => (
+              <Card key={card.marker} className={`bg-white/3 border ${card.accent} transition-all`}>
+                <CardContent className="p-6 flex flex-col h-full" data-testid={`marker-card-${card.marker.toLowerCase()}`}>
+                  <div className="flex items-baseline gap-2 mb-1">
+                    <span className={`text-3xl font-black font-display ${card.accentText}`}>{card.marker}</span>
+                    <span className="text-white/40 text-xs font-mono">{card.expansion}</span>
+                  </div>
+                  <p className="text-white/55 text-xs italic mb-4 leading-relaxed">{card.pathways}</p>
+                  <ul className="space-y-2 mb-4 flex-1">
+                    {card.fits.map((fit) => (
+                      <li key={fit} className="flex items-start gap-2 text-xs text-white/70 leading-snug">
+                        <CheckCircle className={`h-3.5 w-3.5 ${card.accentText} mt-0.5 flex-shrink-0`} />
+                        <span>{fit}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <Badge variant="outline" className="border-white/15 text-white/45 text-[10px] self-start">
+                    {card.count}
+                  </Badge>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          <div className="grid lg:grid-cols-3 gap-4 mb-8">
+            <Link href="/inclusive-ordering">
+              <Button className="w-full bg-white text-black hover:bg-white/90 font-semibold" data-testid="cta-marker-configure">
+                <Shapes className="mr-2 h-4 w-4" />
+                Open the 86-variation configurator
+              </Button>
+            </Link>
+            <Link href="/anatomy-scanning">
+              <Button variant="outline" className="w-full border-white/20 text-white hover:bg-white/10" data-testid="cta-marker-scan">
+                <Ruler className="mr-2 h-4 w-4" />
+                Body-measurement scan flow
+              </Button>
+            </Link>
+            <Link href="/infinitely-affirmative-protection">
+              <Button variant="ghost" className="w-full text-white/60 hover:text-white hover:bg-white/5" data-testid="cta-marker-affirmative">
+                <Heart className="mr-2 h-4 w-4" />
+                Infinitely affirmative protection
+              </Button>
+            </Link>
+          </div>
+
+          <div className="p-4 border border-dashed border-amber-500/50 bg-amber-500/5 rounded-lg text-xs text-amber-200/90 leading-relaxed space-y-1.5">
+            <div className="font-semibold text-amber-300">Honesty notes — sex-marker offerings</div>
+            <p>
+              <strong>AMAB / AFAB / AXAB are recorded sex-marker assignments, not anatomy descriptors.</strong>{" "}
+              Many intersex people are assigned M or F at birth despite intersex bodies, often without
+              their own informed consent and sometimes accompanied by surgical "normalization" the
+              person did not request. AXAB / "X" is legally available in only some jurisdictions.
+            </p>
+            <p>
+              The category counts above are TriSex.org's own grouping of how the 86 variations in our
+              co-operator-assembled catalogue most commonly map to assignment pathways. They are not
+              clinical statistics, not population estimates, and not a registry. Your variation may sit
+              in more than one card or none of them.
+            </p>
+            <p>
+              Every fitting note in the configurator is a design hypothesis. TriSex.org has not
+              manufactured custom-fit units for every named variation, has not measured barrier
+              integrity across these specific anatomies, and is not claiming an off-the-shelf fit.
+              Variation selection is self-reported, not stored or shared outside the order summary,
+              and not used for any registry, research, or insurance purpose.
+            </p>
           </div>
         </div>
       </section>

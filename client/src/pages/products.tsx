@@ -21,7 +21,9 @@ import {
   BookOpen,
   ArrowRight,
   Sprout,
-  Flower2
+  Flower2,
+  Shapes,
+  Ruler
 } from "lucide-react";
 import { Link } from "wouter";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -345,6 +347,153 @@ export default function Products() {
               <strong>Intersex Healthcare IS Everyone's Affirmation:</strong> All products use intersex anatomy as the sizing baseline—trans, non-binary, genderqueer, and quare embodiment are all respected within this participatory budgeting framework. There is no separate "transgender healthcare" category—custom-fit protection serves ALL bodies by design.
             </AlertDescription>
           </Alert>
+
+          {/* Offerings for AMAB / AFAB / AXAB Intersex People */}
+          <Card className="mb-12 border-2 border-primary/30 bg-gradient-to-br from-primary/5 via-white to-amber-50 dark:from-primary/10 dark:via-gray-950 dark:to-amber-950/20" data-testid="card-marker-offerings">
+            <CardHeader>
+              <div className="flex flex-wrap items-center gap-2 mb-2">
+                <Badge className="bg-primary/15 text-primary border border-primary/30 text-xs">
+                  <Shapes className="w-3 h-3 mr-1" /> 86 named intersex variations · 8 categories
+                </Badge>
+                <Badge variant="outline" className="text-xs">Per-variation custom orders</Badge>
+              </div>
+              <CardTitle className="text-2xl lg:text-3xl">
+                Offerings for AMAB, AFAB & AXAB Intersex People
+              </CardTitle>
+              <CardDescription className="text-base mt-2 max-w-3xl">
+                Intersex bodies are assigned a sex marker at birth — but that marker rarely matches
+                the body's actual anatomy. Every package below is sized from the same 86-variation
+                catalogue, so the same Universal Protection, Super Sides Oral Barriers, NanoHeal
+                lubricant, sustainable materials, and smart-health products serve all three
+                assignment pathways without fragmenting the catalogue into a separate "men's,"
+                "women's," or "intersex" SKU line.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid md:grid-cols-3 gap-4 mb-6">
+                {[
+                  {
+                    marker: "AMAB",
+                    expansion: "Assigned Male At Birth",
+                    accent: "border-sky-300 dark:border-sky-500/40 bg-sky-50/60 dark:bg-sky-950/20",
+                    accentText: "text-sky-700 dark:text-sky-300",
+                    pathways: "Often 46,XY DSD pathways: PAIS, MAIS, 5α-reductase, hypospadias spectrum, micropenis, chordee, diphallia, penoscrotal transposition, Klinefelter (47,XXY).",
+                    fits: [
+                      "Inverted Sleeve sized to your shaft length & girth (30–200 mm)",
+                      "Urethral position select for distal / mid-shaft / proximal / perineal hypospadias",
+                      "Anchor pattern (standard / wide / asymmetric / strap) for penoscrotal & bifid scrotum",
+                      "Dual-sleeve option (1 or 2) for diphallia",
+                      "Shorter-default sleeves for micropenis & post-orchiectomy bodies",
+                    ],
+                    count: "≈ 24 catalogue variations commonly assigned M",
+                  },
+                  {
+                    marker: "AFAB",
+                    expansion: "Assigned Female At Birth",
+                    accent: "border-pink-300 dark:border-pink-500/40 bg-pink-50/60 dark:bg-pink-950/20",
+                    accentText: "text-pink-700 dark:text-pink-300",
+                    pathways: "Often 46,XX DSD pathways: classic & non-classic CAH, MRKH, Müllerian agenesis, longitudinal/transverse vaginal septa, uterine didelphys, clitoromegaly, ovotesticular DSD, Turner (45,X).",
+                    fits: [
+                      "Cup-Pouch sized to canal depth (30–180 mm) for shortened, blind-ending or constructed canals",
+                      "Canal-girth slider (80–150 mm) for variable receptive fits",
+                      "Frontal sliders for clitoromegaly & virilized phenotypes",
+                      "Shallower-depth defaults for MRKH, cervico-vaginal agenesis, CAIS, Swyer, Turner",
+                      "Wing-Extended Dam for oral-frontal & oral-vulva acts",
+                    ],
+                    count: "≈ 28 catalogue variations commonly assigned F",
+                  },
+                  {
+                    marker: "AXAB",
+                    expansion: "Assigned X / Intersex At Birth",
+                    accent: "border-amber-300 dark:border-amber-500/40 bg-amber-50/60 dark:bg-amber-950/20",
+                    accentText: "text-amber-700 dark:text-amber-300",
+                    pathways: "Legally recordable in some jurisdictions (Germany, Australia, Aotearoa NZ, Iceland, Argentina, India third-gender, parts of Canada). Often ovotesticular DSD, mixed gonadal dysgenesis, 46,XX/46,XY chimerism, ambiguous external genitalia.",
+                    fits: [
+                      "No presumed default zone — both Inverted Sleeve and Cup-Pouch are first-class options",
+                      "Multi-fold balance (versatile / receptive / penetrative) selectable per session",
+                      "Open zone selection across oral / anal / vaginal / frontal / neovaginal",
+                      "Variation-specific sliders for asymmetric external anatomy",
+                      "Amber consult flag offered for any variation where measurement matters",
+                    ],
+                    count: "≈ 34 catalogue variations where M/F assignment is itself contested",
+                  },
+                ].map((card) => (
+                  <div
+                    key={card.marker}
+                    className={`p-5 rounded-lg border-2 ${card.accent} flex flex-col h-full`}
+                    data-testid={`marker-card-${card.marker.toLowerCase()}`}
+                  >
+                    <div className="flex items-baseline gap-2 mb-1">
+                      <span className={`text-3xl font-black ${card.accentText}`}>{card.marker}</span>
+                      <span className="text-gray-500 text-xs font-mono">{card.expansion}</span>
+                    </div>
+                    <p className="text-gray-600 dark:text-gray-400 text-xs italic mb-3 leading-relaxed">
+                      {card.pathways}
+                    </p>
+                    <ul className="space-y-1.5 mb-3 flex-1">
+                      {card.fits.map((fit) => (
+                        <li key={fit} className="flex items-start gap-2 text-xs text-gray-700 dark:text-gray-300 leading-snug">
+                          <CheckCircle2 className={`h-3.5 w-3.5 ${card.accentText} mt-0.5 flex-shrink-0`} />
+                          <span>{fit}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <Badge variant="outline" className="text-[10px] self-start">
+                      {card.count}
+                    </Badge>
+                  </div>
+                ))}
+              </div>
+
+              <div className="grid sm:grid-cols-3 gap-3 mb-6">
+                <Link href="/inclusive-ordering">
+                  <Button className="w-full" data-testid="cta-marker-configure">
+                    <Shapes className="mr-2 h-4 w-4" />
+                    Open the configurator
+                  </Button>
+                </Link>
+                <Link href="/anatomy-scanning">
+                  <Button variant="outline" className="w-full" data-testid="cta-marker-scan">
+                    <Ruler className="mr-2 h-4 w-4" />
+                    Body-measurement scan
+                  </Button>
+                </Link>
+                <Link href="/infinitely-affirmative-protection">
+                  <Button variant="ghost" className="w-full" data-testid="cta-marker-affirmative">
+                    <Heart className="mr-2 h-4 w-4" />
+                    Affirmative protection
+                  </Button>
+                </Link>
+              </div>
+
+              <Alert className="border-2 border-dashed border-amber-500/60 bg-amber-50 dark:bg-amber-950/20">
+                <AlertDescription className="text-amber-900 dark:text-amber-200 text-xs leading-relaxed space-y-1.5">
+                  <div className="font-semibold">Honesty notes — sex-marker offerings</div>
+                  <p>
+                    <strong>AMAB / AFAB / AXAB are recorded sex-marker assignments, not anatomy
+                    descriptors.</strong> Many intersex people are assigned M or F at birth despite
+                    intersex bodies, often without their own informed consent and sometimes
+                    accompanied by surgical "normalization" the person did not request. AXAB / "X"
+                    is legally available in only some jurisdictions.
+                  </p>
+                  <p>
+                    The category counts above are TriSex.org's own grouping of how the 86 variations
+                    in our co-operator-assembled catalogue most commonly map to assignment pathways.
+                    They are not clinical statistics, not population estimates, and not a registry.
+                    Your variation may sit in more than one card or none of them.
+                  </p>
+                  <p>
+                    Every fitting note in the configurator is a design hypothesis. TriSex.org has
+                    not manufactured custom-fit units for every named variation, has not measured
+                    barrier integrity across these specific anatomies, and is not claiming an
+                    off-the-shelf fit. Variation selection is self-reported, not stored or shared
+                    outside the order summary, and not used for any registry, research, or
+                    insurance purpose.
+                  </p>
+                </AlertDescription>
+              </Alert>
+            </CardContent>
+          </Card>
 
           {/* Header */}
           <div className="text-center mb-12">
