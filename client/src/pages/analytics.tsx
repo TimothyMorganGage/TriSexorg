@@ -325,45 +325,6 @@ export default function Analytics() {
                 </CardContent>
               </Card>
 
-              <Card className="lg:col-span-2">
-                <CardHeader>
-                  <CardTitle>Stablecoin Dividend Distribution</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid md:grid-cols-4 gap-4 mb-6">
-                    <div className="text-center">
-                      <Clock className="h-8 w-8 text-primary mx-auto mb-2" />
-                      <p className="text-xl font-bold">708</p>
-                      <p className="text-sm text-muted-foreground">Total Hours</p>
-                    </div>
-                    <div className="text-center">
-                      <DollarSign className="h-8 w-8 text-aquamarine mx-auto mb-2" />
-                      <p className="text-xl font-bold">$142.10</p>
-                      <p className="text-sm text-muted-foreground">Avg Dividend</p>
-                    </div>
-                    <div className="text-center">
-                      <Award className="h-8 w-8 text-secondary mx-auto mb-2" />
-                      <p className="text-xl font-bold">1.34x</p>
-                      <p className="text-sm text-muted-foreground">Equity Multiplier</p>
-                    </div>
-                    <div className="text-center">
-                      <TrendingUp className="h-8 w-8 text-primary mx-auto mb-2" />
-                      <p className="text-xl font-bold">18%</p>
-                      <p className="text-sm text-muted-foreground">Weekly Growth</p>
-                    </div>
-                  </div>
-                  
-                  <ResponsiveContainer width="100%" height={200}>
-                    <LineChart data={timeBankingData}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="week" />
-                      <YAxis />
-                      <Tooltip />
-                      <Line type="monotone" dataKey="dividend" stroke="#06B6D4" strokeWidth={3} />
-                    </LineChart>
-                  </ResponsiveContainer>
-                </CardContent>
-              </Card>
             </div>
           </TabsContent>
 

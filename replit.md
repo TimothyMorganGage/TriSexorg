@@ -3,6 +3,9 @@
 ## Overview
 TriSex.org is a full-stack web application focused on personalized sexual health protection for the 2SLGBTIQA+ community, emphasizing reproductive justice. It provides custom-fit products, educational resources, peer mentoring, and community analytics. The platform aims to empower users and foster a supportive community, aspiring to be a leader in inclusive sexual health technologies.
 
+## Removed Surfaces
+-   **$TRISEXORG stablecoin (removed 2026-05-01).** The dedicated `/trisex-stablecoin` page, wallet UI, dividend math, time-to-coin conversion, send dialog, USDC/DAI withdrawal copy, $1-USD-backed reserve claims, nav/footer links, home hero badge, peer-mentor "earn stablecoin dividends" copy, wiki dividend reference, LETS-framework cross-LETS clearing-token section, analytics "Stablecoin Dividend Distribution" card with its fabricated 708 hrs / $142.10 / 1.34x / 18% figures, the newsletter dividend card with its fabricated $18,472 / $156.80 / 4,234 hrs / 1.34x / $4.27 figures, the Terms-of-Service "Stablecoin dividends (USDC, DAI)" payment-method line, the BetaDisclaimer fork pitch and Coins badge, the FediverseShare/Hylo $TRISEXORG governance reference, and the cooperative-governance forum-category $TRISEXORG description were all removed. `TimeBank.stablecoinValue` + `pendingDividends` fields, the `calculateDividend` helper, and good-people's `trisexBalance` form field plus its "$TRISEXORG penalties" violation copy were dropped. **The $BAD filing-preparation system is intentionally retained** because it is real legal/compliance tooling for cooperative incorporation (FinCEN MSB / state MTL / 501(c)(12) prep), not speculative currency UI. No real $TRISEXORG ledger ever existed.
+
 ## User Preferences
 Preferred communication style: Simple, everyday language.
 
@@ -48,7 +51,6 @@ The application uses a modern full-stack architecture with a focus on accessibil
 -   Federated syndication system for content distribution across decentralized social networks (Mastodon, Bluesky, Pixelfed, Loops), including ethical gates for Bluesky and X (Twitter) cross-posting.
 -   "Remix to Replit" feature for user-created platform copies.
 -   Community Forum for peer support, knowledge sharing, and cooperative governance discussions.
--   $TRISEXORG stablecoin system integrated with Time Banking for cooperative dividends and health impact rewards.
 -   Expired product upcycling program.
 -   Meta Lens scan-to-product workflow for importing body measurements for custom product configuration.
 -   Boundaries Background-Check Consent system for sexual-boundaries conflict review, opt-in via WhatsApp or Signal.

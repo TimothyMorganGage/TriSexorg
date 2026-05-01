@@ -78,7 +78,6 @@ interface DALYMetrics {
 interface DividendUpdate {
   totalDistributed: number;
   averagePerUser: number;
-  stablecoinValue: number;
   topContributors: {
     name: string;
     hoursContributed: number;
@@ -698,54 +697,6 @@ export default function Newsletter() {
                     <Button variant="outline" className="w-full">
                       <BarChart3 className="mr-2 h-4 w-4" />
                       View Full Analytics
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Dividend Updates */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <Coins className="mr-2 h-6 w-6 text-secondary" />
-                    Dividend Distribution Data
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <p className="text-muted-foreground">
-                      Stablecoin dividend distributions and time banking metrics
-                    </p>
-                    
-                    <div className="grid grid-cols-2 gap-4 text-center">
-                      <div>
-                        <p className="text-xl font-bold text-secondary">$18,472</p>
-                        <p className="text-xs text-muted-foreground">Total Distributed</p>
-                      </div>
-                      <div>
-                        <p className="text-xl font-bold text-primary">$156.80</p>
-                        <p className="text-xs text-muted-foreground">Avg Per User</p>
-                      </div>
-                    </div>
-                    
-                    <div className="space-y-2">
-                      <div className="flex justify-between text-sm">
-                        <span>Hours Contributed</span>
-                        <span className="font-medium">4,234</span>
-                      </div>
-                      <div className="flex justify-between text-sm">
-                        <span>Equity Multiplier</span>
-                        <span className="font-medium">1.34x</span>
-                      </div>
-                      <div className="flex justify-between text-sm">
-                        <span>Stablecoin Value</span>
-                        <span className="font-medium">$4.27</span>
-                      </div>
-                    </div>
-                    
-                    <Button variant="outline" className="w-full">
-                      <DollarSign className="mr-2 h-4 w-4" />
-                      View Dividend Details
                     </Button>
                   </div>
                 </CardContent>

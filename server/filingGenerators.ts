@@ -3,7 +3,7 @@ export interface FilingInput {
   entityName: string;
   taxYear?: number;
   jurisdiction?: string;
-  stablecoin?: string; // "$BAD" | "$TRISEXORG" | "$BAD + $TRISEXORG"
+  stablecoin?: string; // "$BAD" — only $BAD is in scope for this cooperative's filings
   data: Record<string, any>;
 }
 

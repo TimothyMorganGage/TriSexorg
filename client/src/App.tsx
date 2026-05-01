@@ -93,7 +93,6 @@ const TermsOfService = lazy(() => import("@/pages/terms-of-service"));
 const RecentTeamChanges = lazy(() => import("@/pages/recent-team-changes"));
 const Accessibility = lazy(() => import("@/pages/accessibility"));
 const CommunityForum = lazy(() => import("@/pages/community-forum"));
-const TrisexStablecoin = lazy(() => import("@/pages/trisex-stablecoin"));
 const FilingPreparation = lazy(() => import("@/pages/filing-preparation"));
 const BoundariesBackgroundCheck = lazy(() => import("@/pages/boundaries-background-check"));
 const MetaLensScan = lazy(() => import("@/pages/meta-lens-scan"));
@@ -166,7 +165,6 @@ function Router() {
             <Route path="/recent-team-changes" component={RecentTeamChanges} />
             <Route path="/accessibility" component={Accessibility} />
             <Route path="/community-forum" component={CommunityForum} />
-            <Route path="/trisex-stablecoin" component={TrisexStablecoin} />
             <Route path="/filing-preparation" component={FilingPreparation} />
             <Route path="/boundaries-background-check" component={BoundariesBackgroundCheck} />
             <Route path="/meta-lens-scan" component={MetaLensScan} />

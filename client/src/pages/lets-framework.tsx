@@ -73,7 +73,7 @@ export default function LetsFramework() {
         <Coins className="h-8 w-8 text-amber-700 mt-1" />
         <div>
           <h1 className="text-3xl font-bold" data-testid="heading-lets-framework">Local Economy Trading Systems (LETS) Framework</h1>
-          <p className="text-muted-foreground">A mutual-credit framework the TriSex.org co-operative is studying as a basis for $TRISEXORG and Time Banking.</p>
+          <p className="text-muted-foreground">A mutual-credit framework the TriSex.org co-operative is studying as a basis for Time Banking.</p>
         </div>
       </div>
 
@@ -160,10 +160,6 @@ export default function LetsFramework() {
             <p className="text-muted-foreground">An hour logged on the Time Banking page could become one credit unit, redeemable by any member for an hour of any other member's listed offering.</p>
           </div>
           <div>
-            <p className="font-semibold">$TRISEXORG stablecoin → optional cross-LETS clearing token</p>
-            <p className="text-muted-foreground">$TRISEXORG could serve as the unit used to settle balances when two local circles want to trade with each other, without changing how either circle operates internally.</p>
-          </div>
-          <div>
             <p className="font-semibold">Forum + dividends → governance surface</p>
             <p className="text-muted-foreground">Commitment limits, dispute rules, and any decision to mint, freeze, or retire units would be discussed in the Community Forum and ratified through the same cooperative dividend / voting flow used elsewhere on the platform.</p>
           </div>
@@ -210,7 +206,6 @@ export default function LetsFramework() {
         <CardContent className="flex flex-wrap gap-2">
           <Button asChild variant="outline" size="sm" data-testid="link-forum"><Link href="/forum">Open the Community Forum</Link></Button>
           <Button asChild variant="outline" size="sm" data-testid="link-time-banking"><Link href="/wise-time">Wise Time TriSex (time tracking)</Link></Button>
-          <Button asChild variant="outline" size="sm" data-testid="link-stablecoin"><Link href="/trisex-stablecoin">$TRISEXORG stablecoin</Link></Button>
         </CardContent>
       </Card>
     </div>

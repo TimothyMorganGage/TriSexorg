@@ -169,7 +169,7 @@ export function FediverseShare({
       icon: Users,
       color: "bg-amber-600",
       post: `${title}\n\n${description || ''}\n\n${hashtagString}\n\n${shareUrl}`,
-      instructions: `1. Copy the post text\n2. Visit hylo.com and open your group (or join the TriSex.org group)\n3. Click "Create" → choose Discussion, Resource, or Project as the post type\n4. Paste the text into the body, set a topic, and add a content warning if needed\n5. Post to your group, a federation, or to Public\n\nHylo is open-source, cooperative-owned community infrastructure — a strong fit for $BAD / $TRISEXORG governance discussions.`
+      instructions: `1. Copy the post text\n2. Visit hylo.com and open your group (or join the TriSex.org group)\n3. Click "Create" → choose Discussion, Resource, or Project as the post type\n4. Paste the text into the body, set a topic, and add a content warning if needed\n5. Post to your group, a federation, or to Public\n\nHylo is open-source, cooperative-owned community infrastructure — a strong fit for $BAD cooperative governance discussions.`
     },
     x: {
       name: "X (Twitter)",

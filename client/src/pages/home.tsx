@@ -75,9 +75,6 @@ export default function Home() {
                 <Badge className="bg-white/10 text-white/80 border border-white/20 hover:bg-white/15">
                   <TestTube className="w-3 h-3 mr-1" /> 3D Scanning
                 </Badge>
-                <Badge className="bg-white/10 text-white/80 border border-white/20 hover:bg-white/15">
-                  <Coins className="w-3 h-3 mr-1" /> $TRISEXORG Stablecoin
-                </Badge>
               </div>
 
               <div className="flex flex-col sm:flex-row gap-3">
@@ -353,9 +350,9 @@ export default function Home() {
               {
                 href: "/peer-mentor",
                 title: "Peer Mentor Network",
-                desc: "Connect with mentors using intelligence frameworks and earn stablecoin dividends for contributions.",
+                desc: "Connect with mentors using intelligence frameworks and contribute time through cooperative time banking.",
                 tags: ["Infinite Intelligence", "Multicultural", "Time Banking"],
-                badge: "Earn Dividends",
+                badge: "Time Banking",
                 color: "border-secondary/20 hover:border-secondary/40",
                 btnClass: "bg-secondary text-black hover:bg-secondary/90",
                 btnLabel: "Find Mentors",

@@ -29,7 +29,7 @@ A comprehensive wellness and sexual health platform designed to support diverse 
 ### Cooperative Features
 - **Financial Tracking**: Budget voting and dividend distribution
 - **Mentor & Facilitator System**: Co-editing with multi-platform messaging
-- **Progressive Dating Stages**: Mandatory safety protocols with $TRISEX penalty system
+- **Progressive Dating Stages**: Mandatory safety protocols with cooperative review for violations
 - **Cross-Platform Integration**: Google Calendar, iCal, Outlook, healthcare systems
 
 ### Accessibility & Inclusion

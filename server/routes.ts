@@ -2214,7 +2214,7 @@ END:VEVENT
         { feature: "Educational Articles", count: education.length, route: "/education", category: "education" },
         { feature: "Partnership Requests", count: partnerships.length, route: "/partnership", category: "co-op" },
         { feature: "Budget Items (Cooperative Voting)", count: budget.length, route: "/open-books", category: "co-op" },
-        { feature: "Community Dividends Distributed", count: dividends.length, route: "/trisex-stablecoin", category: "co-op" },
+        { feature: "Community Dividends Distributed", count: dividends.length, route: "/economic-impact", category: "co-op" },
         { feature: "Orders Placed", count: orders.length, route: "/products", category: "commerce" },
         { feature: "Community Forum Categories", count: forumCats.length, route: "/community-forum", category: "community" },
         { feature: "Community Forum Posts (recent 1k window)", count: forumPostsRecent.length, route: "/community-forum", category: "community" },
@@ -2371,7 +2371,7 @@ END:VEVENT
         { name: "Peer Support", slug: "peer-support", description: "Connect with others, share experiences, and find community support", icon: "Users", color: "pink", sortOrder: 3 },
         { name: "Intersex & Gender Diversity", slug: "intersex-gender-diversity", description: "Discussions centering intersex anatomy and gender-diverse experiences", icon: "Sparkles", color: "blue", sortOrder: 4 },
         { name: "Relationships & Communication", slug: "relationships-communication", description: "Navigate conversations about sexual health with partners", icon: "Globe", color: "green", sortOrder: 5 },
-        { name: "Cooperative & Governance", slug: "cooperative-governance", description: "Participatory budgeting, $TRISEXORG stablecoin proposals, and cooperative decisions", icon: "Leaf", color: "orange", sortOrder: 6 },
+        { name: "Cooperative & Governance", slug: "cooperative-governance", description: "Participatory budgeting, $BAD cooperative filings, and cooperative decisions", icon: "Leaf", color: "orange", sortOrder: 6 },
         { name: "NanoHeal & Naturopathic", slug: "nanoheal-naturopathic", description: "Discuss NanoHeal lubricant research, naturopathic STI treatments, and biomaterials", icon: "Brain", color: "teal", sortOrder: 7 },
         { name: "Accessibility & Inclusion", slug: "accessibility-inclusion", description: "ASL/BSL support, braille translation, and making sexual health accessible to all", icon: "Accessibility", color: "emerald", sortOrder: 8 }
       ];

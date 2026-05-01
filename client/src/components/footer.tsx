@@ -51,7 +51,6 @@ export function Footer() {
                 { label: "Healthcare Providers", href: "/clinics" },
                 { label: "Partner with Us", href: "/partnership" },
                 { label: "Community Forum", href: "/community-forum" },
-                { label: "$TRISEXORG Stablecoin", href: "/trisex-stablecoin" },
               ].map(({ label, href }) => (
                 <li key={label}>
                   <Link href={href} className="text-white/40 hover:text-white transition-colors block py-0.5">

@@ -10,7 +10,6 @@ import {
   MessageCircle, 
   Users, 
   Clock, 
-  Coins,
   Heart,
   Brain,
   Star,
@@ -44,8 +43,6 @@ interface TimeBank {
   hoursContributed: number;
   hoursReceived: number;
   currentBalance: number;
-  stablecoinValue: number;
-  pendingDividends: number;
   equityMultiplier: number;
 }
 
@@ -58,8 +55,6 @@ export default function PeerMentor() {
     hoursContributed: 156,
     hoursReceived: 98,
     currentBalance: 58,
-    stablecoinValue: 4.25,
-    pendingDividends: 24.67,
     equityMultiplier: 1.34
   });
 
@@ -155,13 +150,6 @@ export default function PeerMentor() {
     setCurrentMentor(availableMentors[0]);
   };
 
-  const calculateDividend = () => {
-    const baseRate = 0.15; // $0.15 per hour base
-    const equityBonus = timeBank.equityMultiplier;
-    const hoursValue = timeBank.hoursContributed * baseRate * equityBonus;
-    return hoursValue * timeBank.stablecoinValue;
-  };
-
   useEffect(() => {
     findRandomMentor();
   }, []);
@@ -195,10 +183,6 @@ export default function PeerMentor() {
             <Badge variant="secondary" className="bg-primary text-black">
               <Brain className="w-4 h-4 mr-1" />
               {timeBank.hoursContributed} Hours Contributed
-            </Badge>
-            <Badge variant="secondary" className="bg-aquamarine text-black">
-              <Coins className="w-4 h-4 mr-1" />
-              ${calculateDividend().toFixed(2)} Pending
             </Badge>
             <Badge variant="secondary" className="bg-secondary text-black">
               <Users className="w-4 h-4 mr-1" />
@@ -392,58 +376,7 @@ export default function PeerMentor() {
                         <span>Equity Multiplier:</span>
                         <span className="font-medium text-primary">{timeBank.equityMultiplier}x</span>
                       </div>
-                      <div className="flex justify-between">
-                        <span>Stablecoin Rate:</span>
-                        <span className="font-medium">${timeBank.stablecoinValue}/hour</span>
-                      </div>
                     </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <Coins className="mr-2 h-6 w-6 text-aquamarine" />
-                    Stablecoin Dividends
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-6">
-                    <div className="text-center">
-                      <p className="text-4xl font-bold text-aquamarine">
-                        ${calculateDividend().toFixed(2)}
-                      </p>
-                      <p className="text-sm text-muted-foreground">Pending Dividend</p>
-                    </div>
-
-                    <div className="space-y-3 text-sm">
-                      <h4 className="font-medium">Dividend Calculation:</h4>
-                      <div className="bg-muted/30 p-3 rounded-lg space-y-1">
-                        <div className="flex justify-between">
-                          <span>Base Hours:</span>
-                          <span>{timeBank.hoursContributed} hrs</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span>Equity Multiplier:</span>
-                          <span>{timeBank.equityMultiplier}x</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span>Stablecoin Value:</span>
-                          <span>${timeBank.stablecoinValue}</span>
-                        </div>
-                        <hr className="my-2" />
-                        <div className="flex justify-between font-medium">
-                          <span>Total Dividend:</span>
-                          <span>${calculateDividend().toFixed(2)}</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <Button className="w-full bg-aquamarine hover:bg-aquamarine/90 text-black">
-                      <Award className="mr-2 h-4 w-4" />
-                      Claim Dividend
-                    </Button>
                   </div>
                 </CardContent>
               </Card>

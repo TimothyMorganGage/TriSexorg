@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { AlertTriangle, ChevronDown, ChevronUp, GitBranch, Users, Calendar, Sparkles, Coins, Package, Share2 } from "lucide-react";
+import { AlertTriangle, ChevronDown, ChevronUp, GitBranch, Users, Calendar, Sparkles, Package, Share2 } from "lucide-react";
 
 interface TeamChange {
   date: string;
@@ -46,13 +46,12 @@ export function BetaDisclaimer({ showExpanded = false }: { showExpanded?: boolea
                 ⚧️ Open Source Sexual Health Platform — Remix & Build Your Own!
               </p>
               <p className="text-xs text-white/40">
-                Fork this Replit to create your own stablecoin, product line & interoperable STI data network
+                Fork this Replit to create your own product line & interoperable STI data network
               </p>
             </div>
           </div>
           <div className="flex items-center space-x-2 flex-shrink-0">
             <div className="flex items-center gap-3 text-xs text-white/30 hidden sm:flex">
-              <span className="flex items-center gap-1"><Coins className="h-3 w-3" /> Stablecoin</span>
               <span className="flex items-center gap-1"><Package className="h-3 w-3" /> Products</span>
               <span className="flex items-center gap-1"><Share2 className="h-3 w-3" /> STI Data</span>
               <span className="flex items-center gap-1 text-amber-400/60"><AlertTriangle className="h-3 w-3" /> Beta</span>

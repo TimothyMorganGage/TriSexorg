@@ -2197,7 +2197,7 @@ Legislative priorities include comprehensive sex education, healthcare insurance
 
 ## Overview
 
-TriSex.org's peer mentor network recognizes diverse forms of wisdom beyond traditional IQ measurements. Four intelligence frameworks ensure equitable representation in healthcare decision-making and inform the $TRISEXORG dividend system.
+TriSex.org's peer mentor network recognizes diverse forms of wisdom beyond traditional IQ measurements. Four intelligence frameworks ensure equitable representation in healthcare decision-making and inform how Time Banking contributions are recognised across the cooperative.
 
 ---
 

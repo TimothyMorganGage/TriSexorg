@@ -388,16 +388,14 @@ export default function FilingPreparation() {
                   )}
                   {(selectedFormId === "FinCEN-107" || selectedFormId === "State-MTL") && (
                     <div>
-                      <Label>Stablecoin(s) covered by this filing</Label>
+                      <Label>Stablecoin covered by this filing</Label>
                       <Select value={stablecoin} onValueChange={setStablecoin}>
                         <SelectTrigger data-testid="select-stablecoin"><SelectValue /></SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="$BAD">$BAD only</SelectItem>
-                          <SelectItem value="$TRISEXORG">$TRISEXORG only</SelectItem>
-                          <SelectItem value="$BAD + $TRISEXORG">$BAD + $TRISEXORG (both)</SelectItem>
+                          <SelectItem value="$BAD">$BAD</SelectItem>
                         </SelectContent>
                       </Select>
-                      <p className="text-xs text-muted-foreground mt-1">Most state regulators expect a separate registration per distinct token. Generate one packet per coin if your counsel advises.</p>
+                      <p className="text-xs text-muted-foreground mt-1">$BAD is the only stablecoin this cooperative is preparing to file for.</p>
                     </div>
                   )}
                 </div>

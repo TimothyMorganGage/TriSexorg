@@ -341,7 +341,6 @@ export default function TermsOfService() {
                       <h4 className="font-bold mb-2">Payment Methods</h4>
                       <ul className="text-sm space-y-2 text-muted-foreground">
                         <li>• Credit/debit cards</li>
-                        <li>• Stablecoin dividends (USDC, DAI)</li>
                         <li>• Health savings accounts (HSA/FSA)</li>
                         <li>• Insurance billing (where applicable)</li>
                         <li>• Sliding scale for financial hardship</li>
