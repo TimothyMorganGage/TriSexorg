@@ -26,8 +26,10 @@ export function ReplitBadge({ variant = "default", theme = "dark", className = "
         rel="noopener noreferrer"
         className={`${baseClasses} ${themeClasses} ${className}`}
         title="Made on Replit"
+        aria-label="Made on Replit"
       >
         <ReplitIcon />
+        <span className="sr-only">Made on Replit</span>
       </a>
     );
   }
