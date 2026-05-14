@@ -144,7 +144,7 @@ export default function Partnership() {
                   Submit Another Request
                 </Button>
                 <Button variant="outline" asChild>
-                  <a href="/clinics">Learn More About Our Platform</a>
+                  <a href="/clinics" aria-label="Learn more about TriSex.org's clinic partnership platform">Learn more about our clinic platform</a>
                 </Button>
               </div>
             </CardContent>

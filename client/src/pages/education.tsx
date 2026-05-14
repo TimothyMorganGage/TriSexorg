@@ -219,8 +219,8 @@ export default function Education() {
                               <Clock className="h-4 w-4 mr-1" />
                               {new Date(article.createdAt).toLocaleDateString()}
                             </div>
-                            <Button variant="link" className="p-0 h-auto">
-                              Read More
+                            <Button variant="link" className="p-0 h-auto" aria-label={`Read the full article: ${article.title}`}>
+                              Read full article
                               <ArrowRight className="h-4 w-4 ml-1" />
                             </Button>
                           </div>
@@ -260,9 +260,9 @@ export default function Education() {
                     </p>
                     <div className="flex justify-between items-center">
                       <span className="text-xs text-gray-500">22 min read</span>
-                      <Link href="/wiki">
+                      <Link href="/wiki" aria-label="Read the Anatomy Education guide">
                         <Button variant="outline" size="sm" className="text-xs">
-                          Read <ArrowRight className="ml-1 h-3 w-3" />
+                          Read anatomy guide <ArrowRight className="ml-1 h-3 w-3" />
                         </Button>
                       </Link>
                     </div>
@@ -283,9 +283,9 @@ export default function Education() {
                     </p>
                     <div className="flex justify-between items-center">
                       <span className="text-xs text-gray-500">18 min read</span>
-                      <Link href="/wiki">
+                      <Link href="/wiki" aria-label="Read the 4D STI Intervention guide">
                         <Button variant="outline" size="sm" className="text-xs">
-                          Read <ArrowRight className="ml-1 h-3 w-3" />
+                          Read 4D STI guide <ArrowRight className="ml-1 h-3 w-3" />
                         </Button>
                       </Link>
                     </div>
@@ -306,9 +306,9 @@ export default function Education() {
                     </p>
                     <div className="flex justify-between items-center">
                       <span className="text-xs text-gray-500">14 min read</span>
-                      <Link href="/wiki">
+                      <Link href="/wiki" aria-label="Read the Inclusive Terminology guide">
                         <Button variant="outline" size="sm" className="text-xs">
-                          Read <ArrowRight className="ml-1 h-3 w-3" />
+                          Read terminology guide <ArrowRight className="ml-1 h-3 w-3" />
                         </Button>
                       </Link>
                     </div>
@@ -329,9 +329,9 @@ export default function Education() {
                     </p>
                     <div className="flex justify-between items-center">
                       <span className="text-xs text-gray-500">22 min read</span>
-                      <Link href="/wiki">
+                      <Link href="/wiki" aria-label="Read the Peer Mentor Network guide">
                         <Button variant="outline" size="sm" className="text-xs">
-                          Read <ArrowRight className="ml-1 h-3 w-3" />
+                          Read peer mentor guide <ArrowRight className="ml-1 h-3 w-3" />
                         </Button>
                       </Link>
                     </div>

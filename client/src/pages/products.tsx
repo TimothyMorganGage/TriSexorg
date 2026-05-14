@@ -854,9 +854,9 @@ export default function Products() {
                   <p className="text-sm text-gray-600 mb-4">
                     Learn about democratic ownership, member benefits, and how cooperatives lower costs for communities.
                   </p>
-                  <Link href="/wiki">
+                  <Link href="/wiki" aria-label="Read the wiki article on cooperative ownership">
                     <Button variant="outline" size="sm" className="w-full">
-                      Learn More <ArrowRight className="ml-2 h-3 w-3" />
+                      Read about cooperative ownership <ArrowRight className="ml-2 h-3 w-3" />
                     </Button>
                   </Link>
                 </CardContent>

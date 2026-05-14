@@ -97,10 +97,10 @@ export default function Home() {
                       4D STI System
                     </Button>
                   </Link>
-                  <Link href="/education" className="flex-1">
+                  <Link href="/education" className="flex-1" aria-label="Learn more about sexual health education resources">
                     <Button size="lg" variant="ghost" className="text-white/60 hover:text-white hover:bg-white/5 w-full">
                       <BookOpen className="mr-2 h-5 w-5" />
-                      Learn More
+                      Explore Education Resources
                     </Button>
                   </Link>
                 </div>

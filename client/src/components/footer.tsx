@@ -113,8 +113,9 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-1 hover:text-white transition-colors"
+                aria-label="Built on Replit — visit replit.com (opens in new tab)"
               >
-                <svg className="w-3.5 h-3.5" viewBox="0 0 32 32" fill="currentColor">
+                <svg className="w-3.5 h-3.5" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true" focusable="false">
                   <path d="M7 5.5C7 4.67 7.67 4 8.5 4h15C24.33 4 25 4.67 25 5.5v21c0 .83-.67 1.5-1.5 1.5h-15c-.83 0-1.5-.67-1.5-1.5v-21zM14 10v12l6-6-6-6z"/>
                 </svg>
                 Built on Replit

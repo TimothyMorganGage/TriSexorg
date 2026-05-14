@@ -347,8 +347,8 @@ export default function DomainPurchase() {
                             </Button>
                           </div>
                         ) : (
-                          <Button variant="outline" className="w-full">
-                            Learn More
+                          <Button variant="outline" className="w-full" aria-label={`Learn more about the ${plan.name} domain plan`}>
+                            Learn More About {plan.name}
                           </Button>
                         )}
                       </div>
