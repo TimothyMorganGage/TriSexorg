@@ -151,6 +151,7 @@ function Router() {
             <Route path="/materials-science" component={MaterialsScience} />
             <Route path="/mood-logging" component={MoodLogging} />
             <Route path="/time-tracker" component={TimeTracker} />
+            <Route path="/wise-time" component={TimeTracker} />
             <Route path="/calendar-integration" component={CalendarIntegration} />
             <Route path="/smart-break-system" component={SmartBreakSystem} />
             <Route path="/mentor-facilitator" component={MentorFacilitator} />
