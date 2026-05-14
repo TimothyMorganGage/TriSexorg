@@ -3028,6 +3028,36 @@ END:VEVENT
     }
   });
 
+  // --- Manufacturing partners (self-reported registry; scaffolding for honest sourcing) ---
+  app.get('/api/manufacturing-partners', async (_req, res) => {
+    try {
+      const partners = await storage.listManufacturingPartners();
+      res.json(partners);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to list manufacturing partners" });
+    }
+  });
+
+  app.post('/api/manufacturing-partners', async (req, res) => {
+    try {
+      const { insertManufacturingPartnerSchema } = await import("@shared/schema");
+      const parsed = insertManufacturingPartnerSchema.safeParse(req.body);
+      if (!parsed.success) {
+        return res.status(400).json({ message: "Invalid submission", errors: parsed.error.flatten() });
+      }
+      const d = parsed.data;
+      if (!d.honestyAttestation || !d.ccBySaCompliance || !d.shareAlikeDesignsAttestation || !d.publicSpecSheetsAttestation || !d.fairLabourAttestation) {
+        return res.status(400).json({
+          message: "All five attestations (honesty, CC BY-SA 4.0 compliance, share-alike on derivative designs, public spec sheets, fair-labour conditions) must be confirmed before submission.",
+        });
+      }
+      const partner = await storage.createManufacturingPartner(d);
+      res.status(201).json(partner);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to record manufacturing partner submission" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

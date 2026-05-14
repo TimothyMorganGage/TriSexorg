@@ -1749,3 +1749,37 @@ export const insertInclusiveOrderingAdopterSchema = createInsertSchema(inclusive
 
 export type InsertInclusiveOrderingAdopter = z.infer<typeof insertInclusiveOrderingAdopterSchema>;
 export type InclusiveOrderingAdopter = typeof inclusiveOrderingAdopters.$inferSelect;
+
+// Manufacturing partners — self-reported registry of factories / co-ops willing to
+// fulfil TriSex.org-spec orders under CC BY-SA 4.0-compatible manufacturing terms.
+// Empty by default. Entries land as "pending" until manually verified by stewards.
+// This is scaffolding for honest sourcing; nothing in this table is implied to be
+// a signed contract or active supplier.
+export const manufacturingPartners = pgTable("manufacturing_partners", {
+  id: serial("id").primaryKey(),
+  companyName: text("company_name").notNull(),
+  country: text("country").notNull(),
+  websiteUrl: text("website_url").notNull(),
+  productCategories: text("product_categories").array().notNull(), // ["external-barriers", "internal-barriers", "oral-dams", "lubricants", "custom-sizing", "packaging", "other"]
+  description: text("description").notNull(),
+  organisationType: text("organisation_type"), // "cooperative" | "b-corp" | "nonprofit" | "for-profit" | "informal"
+  contactEmail: text("contact_email"),
+  shareAlikeDesignsAttestation: boolean("share_alike_designs_attestation").notNull().default(false),
+  publicSpecSheetsAttestation: boolean("public_spec_sheets_attestation").notNull().default(false),
+  fairLabourAttestation: boolean("fair_labour_attestation").notNull().default(false),
+  ccBySaCompliance: boolean("cc_by_sa_compliance").notNull().default(false),
+  honestyAttestation: boolean("honesty_attestation").notNull().default(false),
+  status: text("status").notNull().default("pending"), // pending | verified | declined | withdrawn
+  submittedBy: text("submitted_by"),
+  notes: text("notes"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const insertManufacturingPartnerSchema = createInsertSchema(manufacturingPartners).omit({
+  id: true,
+  status: true,
+  createdAt: true,
+});
+
+export type InsertManufacturingPartner = z.infer<typeof insertManufacturingPartnerSchema>;
+export type ManufacturingPartner = typeof manufacturingPartners.$inferSelect;

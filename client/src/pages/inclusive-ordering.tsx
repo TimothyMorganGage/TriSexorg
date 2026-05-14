@@ -1378,10 +1378,27 @@ export default function InclusiveOrdering() {
     <div className="min-h-screen bg-background py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
         {/* Intersex Healthcare Affirmation */}
-        <Alert className="mb-8 bg-white dark:bg-gray-950 border-2 border-black dark:border-white">
+        <Alert className="mb-4 bg-white dark:bg-gray-950 border-2 border-black dark:border-white">
           <Heart className="h-5 w-5 text-black dark:text-white" />
           <AlertDescription className="ml-2 text-black dark:text-white">
             <strong>Intersex Healthcare IS Everyone's Affirmation:</strong> Inclusive ordering centers intersex anatomy as the universal baseline—trans, non-binary, genderqueer, and quare embodiment are all respected within this participatory budgeting framework. There is no separate "transgender healthcare" category—all orders serve ALL bodies by design.
+          </AlertDescription>
+        </Alert>
+
+        {/* Operational status — honest framing of what an order currently is */}
+        <Alert className="mb-8 border-2 border-amber-500/60 bg-amber-50 dark:bg-amber-950/30" data-testid="ordering-operational-status">
+          <Info className="h-5 w-5 text-amber-600 dark:text-amber-400" />
+          <AlertDescription className="ml-2 text-amber-900 dark:text-amber-100">
+            <strong>Operational status — please read before ordering.</strong> No
+            CC&nbsp;BY-SA&nbsp;4.0–compatible manufacturing partners have signed on yet.
+            For now, every order you submit here is captured as an open-source{" "}
+            <strong>design specification</strong>, not a shipment: your sizing, fold-balance,
+            variation overrides, and zone selections are recorded so a future signed
+            manufacturer (or your own fork) can fulfil them. <strong>You will not be
+            charged and nothing will ship today.</strong> See the{" "}
+            <a href="/manufacturing" className="underline font-semibold" data-testid="link-manufacturing-from-banner">manufacturing
+            sourcing page</a> for the current candidate list, the partner covenant, and
+            self-application form.
           </AlertDescription>
         </Alert>
 

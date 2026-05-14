@@ -48,6 +48,9 @@ import {
   trisexportPartnerSlots,
   type InclusiveOrderingAdopter, type InsertInclusiveOrderingAdopter,
   inclusiveOrderingAdopters,
+  manufacturingPartners,
+  type ManufacturingPartner,
+  type InsertManufacturingPartner,
 } from "@shared/schema";
 
 export interface IStorage {
@@ -258,6 +261,10 @@ export interface IStorage {
   // Inclusive Ordering framework adopters (self-reported registry)
   listInclusiveOrderingAdopters(): Promise<InclusiveOrderingAdopter[]>;
   createInclusiveOrderingAdopter(data: InsertInclusiveOrderingAdopter): Promise<InclusiveOrderingAdopter>;
+
+  // Manufacturing partners (self-reported registry of candidate / signed factories)
+  listManufacturingPartners(): Promise<ManufacturingPartner[]>;
+  createManufacturingPartner(data: InsertManufacturingPartner): Promise<ManufacturingPartner>;
 
   // Clinic Inventory methods
   getClinicInventory(): Promise<any[]>;
@@ -3193,6 +3200,17 @@ export class MemStorage implements IStorage {
 
   async createInclusiveOrderingAdopter(data: InsertInclusiveOrderingAdopter): Promise<InclusiveOrderingAdopter> {
     const [created] = await db.insert(inclusiveOrderingAdopters).values(data).returning();
+    return created;
+  }
+
+  // --- Manufacturing partners (self-reported registry) ---
+  async listManufacturingPartners(): Promise<ManufacturingPartner[]> {
+    return await db.select().from(manufacturingPartners)
+      .orderBy(desc(manufacturingPartners.createdAt));
+  }
+
+  async createManufacturingPartner(data: InsertManufacturingPartner): Promise<ManufacturingPartner> {
+    const [created] = await db.insert(manufacturingPartners).values(data).returning();
     return created;
   }
 }
