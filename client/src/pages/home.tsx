@@ -77,25 +77,33 @@ export default function Home() {
                 </Badge>
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-3">
+              <div className="flex flex-col gap-3">
                 <Link href="/inclusive-ordering">
-                  <Button size="lg" className="bg-white text-black hover:bg-white/90 font-bold shadow-lg w-full sm:w-auto">
+                  <Button size="lg" className="bg-white text-black hover:bg-white/90 font-bold shadow-lg w-full" data-testid="home-order-cta">
                     <Package className="mr-2 h-5 w-5" />
-                    Start Inclusive Order
+                    Start your custom fit condoms/dams/lubricants order now‽
                   </Button>
                 </Link>
-                <Link href="/4d-sti-intervention">
-                  <Button size="lg" variant="outline" className="border-white/25 text-white hover:bg-white/10 w-full sm:w-auto">
-                    <Droplets className="mr-2 h-5 w-5" />
-                    4D STI System
+                <Link href="/remix-replit">
+                  <Button size="lg" variant="outline" className="border-primary/50 bg-primary/10 text-white hover:bg-primary/20 font-bold w-full" data-testid="home-remix-inline-cta">
+                    <GitBranch className="mr-2 h-5 w-5" />
+                    Remix this work in(ter;)dependently 🥰
                   </Button>
                 </Link>
-                <Link href="/education">
-                  <Button size="lg" variant="ghost" className="text-white/60 hover:text-white hover:bg-white/5 w-full sm:w-auto">
-                    <BookOpen className="mr-2 h-5 w-5" />
-                    Learn More
-                  </Button>
-                </Link>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <Link href="/4d-sti-intervention" className="flex-1">
+                    <Button size="lg" variant="outline" className="border-white/25 text-white hover:bg-white/10 w-full">
+                      <Droplets className="mr-2 h-5 w-5" />
+                      4D STI System
+                    </Button>
+                  </Link>
+                  <Link href="/education" className="flex-1">
+                    <Button size="lg" variant="ghost" className="text-white/60 hover:text-white hover:bg-white/5 w-full">
+                      <BookOpen className="mr-2 h-5 w-5" />
+                      Learn More
+                    </Button>
+                  </Link>
+                </div>
               </div>
             </div>
 
