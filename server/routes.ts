@@ -2836,6 +2836,11 @@ END:VEVENT
       if (d.ageRangeMin < 18) {
         return res.status(400).json({ message: "Minimum age must be 18 or older." });
       }
+      if ((d.ageRangeMax - d.ageRangeMin) > 4) {
+        return res.status(400).json({
+          message: "Age range width cannot exceed 4 years (±2 years from the minimum you choose). Same cap as Good People.",
+        });
+      }
       const manageToken = randomUUID();
       const profile = await storage.createPolyglamorousProfile({ ...d, manageToken } as any);
       // Returned ONCE on creation so the submitter can save it. Never returned via GET.

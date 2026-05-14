@@ -1767,6 +1767,9 @@ export const insertPolyglamorousProfileSchema = createInsertSchema(polyglamorous
   status: true,
   manageToken: true,
   createdAt: true,
+}).refine((data) => (data.ageRangeMax - data.ageRangeMin) <= 4, {
+  message: "Age range width cannot exceed 4 years (±2 years from the minimum you choose). Same cap as Good People.",
+  path: ["ageRangeMax"],
 });
 
 export type InsertPolyglamorousProfile = z.infer<typeof insertPolyglamorousProfileSchema>;

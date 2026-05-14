@@ -171,7 +171,7 @@ export default function PolyglamorousPeople() {
       displayName: "",
       pronouns: "",
       ageRangeMin: 18,
-      ageRangeMax: 99,
+      ageRangeMax: 22,
       relationshipStructure: "",
       currentPartnerCount: null,
       metamourDisclosurePreference: "",
@@ -368,7 +368,7 @@ export default function PolyglamorousPeople() {
                 <h3 className="font-semibold mb-2">Polyglamorous People (here)</h3>
                 <ul className="space-y-1 text-muted-foreground leading-relaxed">
                   <li>• Continuous-exposure risk modelling</li>
-                  <li>• Member-chosen age range (no 2-year cap)</li>
+                  <li>• ±2-year age-range cap (max − min ≤ 4, minimum ≥ 18), hard-coded — matches Good People</li>
                   <li>• Shorter STI testing cadence options (every 3 / 6 / 12 months / after each new partner)</li>
                   <li>• Metamour disclosure preference: kitchen-table / parallel / garden-party / DADT</li>
                   <li>• Consent disclosure cadence and barrier posture declared up-front</li>
@@ -669,7 +669,7 @@ export default function PolyglamorousPeople() {
                         <FormControl>
                           <Input type="number" min={18} {...field} onChange={(e) => field.onChange(parseInt(e.target.value, 10))} data-testid="input-poly-age-max" />
                         </FormControl>
-                        <FormDescription>Member-chosen. No 2-year cap here.</FormDescription>
+                        <FormDescription>±2-year cap from the minimum you choose. Maximum − minimum must be ≤ 4. Minimum must be ≥ 18. Same cap as Good People.</FormDescription>
                         <FormMessage />
                       </FormItem>
                     )} />
