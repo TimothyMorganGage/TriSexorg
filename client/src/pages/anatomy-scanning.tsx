@@ -849,8 +849,7 @@ export default function AnatomyScanning() {
                         {[
                           { account: "TriSex.org Account", connected: true, syncs: "Product orders, preferences" },
                           { account: "Healthcare Portal (Epic/MyChart)", connected: false, syncs: "Medical records" },
-                          { account: "Apple Health", connected: false, syncs: "Health data" },
-                          { account: "BAD Co-op Dashboard", connected: true, syncs: "Cooperative benefits" }
+                          { account: "Apple Health", connected: false, syncs: "Health data" }
                         ].map((acc, i) => (
                           <div key={i} className="p-3 bg-muted/30 rounded-lg">
                             <div className="flex justify-between items-center mb-1">

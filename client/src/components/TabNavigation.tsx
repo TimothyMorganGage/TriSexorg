@@ -64,31 +64,6 @@ export function TabNavigation({ children }: TabNavigationProps) {
       route: "/products"
     },
     {
-      id: "advance-directive",
-      title: "Sexual Health Advance Directive Empowerment",
-      description: "Empowering advance healthcare directives",
-      icon: Heart,
-      color: "bg-aquamarine",
-      route: "/bad-good-sex"
-    },
-    {
-      id: "bad-coop-dashboard",
-      title: "BAD Co-op Dashboard",
-      description: "Complete healthcare planning and cooperative management",
-      icon: InfinityIcon,
-      color: "bg-primary",
-      route: "https://glad.wtf",
-      external: true
-    },
-    {
-      id: "balanced-directives",
-      title: "Balanced Advance Directives",
-      description: "Comprehensive healthcare planning and education",
-      icon: YinYangIcon,
-      color: "bg-primary",
-      route: "/bad-good-health"
-    },
-    {
       id: "cooperative-matchmaking",
       title: "Co-operative Matchmaking",
       description: "Community-driven relationship building",

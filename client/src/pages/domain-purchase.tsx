@@ -33,7 +33,7 @@ export default function DomainPurchase() {
       domain: "trisex.coop",
       price: "$29.99/year", 
       status: "available",
-      description: "Cooperative domain - aligns with BAD Co-op principles"
+      description: "Cooperative domain - aligns with LETS Framework cooperative principles"
     },
     {
       domain: "trisex.health",

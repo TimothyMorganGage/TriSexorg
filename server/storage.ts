@@ -9,7 +9,7 @@ import {
   wikiContributions, wikiVotes,
   type WikiContribution, type InsertWikiContribution,
   type WikiVote, type InsertWikiVote,
-  filingDocuments, boundaryCheckConsents, xCoopPricingInterest, metaLensScans,
+  boundaryCheckConsents, xCoopPricingInterest, metaLensScans,
   blueskyShareAttestations,
   type User, type InsertUser, type Product, type InsertProduct,
   type ProductConfiguration, type InsertProductConfiguration,
@@ -33,7 +33,6 @@ import {
   type ForumPost, type InsertForumPost,
   type ForumReply, type InsertForumReply,
   type ForumLike, type ForumBookmark,
-  type FilingDocument, type InsertFilingDocument,
   type BoundaryCheckConsent, type InsertBoundaryCheckConsent,
   type XCoopPricingInterest, type InsertXCoopPricingInterest,
   type MetaLensScan, type InsertMetaLensScan,
@@ -206,13 +205,6 @@ export interface IStorage {
   toggleForumBookmark(userId: number, postId: number): Promise<boolean>;
   searchForumPosts(query: string): Promise<ForumPost[]>;
   getTrendingForumPosts(limit?: number): Promise<ForumPost[]>;
-
-  // Filing Preparation methods
-  getFilingDocuments(userId: number): Promise<FilingDocument[]>;
-  getFilingDocument(id: number): Promise<FilingDocument | undefined>;
-  createFilingDocument(data: InsertFilingDocument & { documentBody: string }): Promise<FilingDocument>;
-  updateFilingDocumentStatus(id: number, status: string, fields?: { confirmationNumber?: string; agencyResponse?: string; notes?: string }): Promise<FilingDocument | undefined>;
-  deleteFilingDocument(id: number): Promise<boolean>;
 
   // Boundary background-check consent methods
   getBoundaryCheckConsents(userId: number): Promise<BoundaryCheckConsent[]>;
@@ -397,10 +389,6 @@ export interface IStorage {
   sendPartnerNotification(notification: any): Promise<any>;
   respondToNotification(notificationId: number, response: any): Promise<any>;
 
-  // BAD Co-op Integration methods
-  getBadCoopIntegration(userId: number): Promise<any>;
-  createBadCoopIntegration(data: any): Promise<any>;
-  updateBadCoopIntegration(id: number, data: any): Promise<any>;
 }
 
 export class MemStorage implements IStorage {
@@ -2761,19 +2749,6 @@ export class MemStorage implements IStorage {
     };
   }
 
-  // BAD Co-op Integration methods
-  async getBadCoopIntegration(userId: number): Promise<any> {
-    return null;
-  }
-
-  async createBadCoopIntegration(data: any): Promise<any> {
-    return { id: Date.now(), ...data, createdAt: new Date() };
-  }
-
-  async updateBadCoopIntegration(id: number, data: any): Promise<any> {
-    return { id, ...data, updatedAt: new Date() };
-  }
-
   // Forum methods
   async getForumCategories(): Promise<ForumCategory[]> {
     return await db.select().from(forumCategories).orderBy(forumCategories.sortOrder);
@@ -2888,43 +2863,6 @@ export class MemStorage implements IStorage {
     return await db.select().from(forumPosts)
       .orderBy(desc(forumPosts.likeCount), desc(forumPosts.replyCount), desc(forumPosts.viewCount))
       .limit(limit);
-  }
-
-  // Filing Preparation methods
-  async getFilingDocuments(userId: number): Promise<FilingDocument[]> {
-    return await db.select().from(filingDocuments)
-      .where(eq(filingDocuments.userId, userId))
-      .orderBy(desc(filingDocuments.generatedAt));
-  }
-
-  async getFilingDocument(id: number): Promise<FilingDocument | undefined> {
-    const [doc] = await db.select().from(filingDocuments).where(eq(filingDocuments.id, id));
-    return doc;
-  }
-
-  async createFilingDocument(data: InsertFilingDocument & { documentBody: string }): Promise<FilingDocument> {
-    const [created] = await db.insert(filingDocuments).values(data).returning();
-    return created;
-  }
-
-  async updateFilingDocumentStatus(
-    id: number,
-    status: string,
-    fields?: { confirmationNumber?: string; agencyResponse?: string; notes?: string }
-  ): Promise<FilingDocument | undefined> {
-    const update: any = { status };
-    if (status === "submitted") update.submittedAt = new Date();
-    if (status === "acknowledged" || status === "approved") update.acknowledgedAt = new Date();
-    if (fields?.confirmationNumber !== undefined) update.confirmationNumber = fields.confirmationNumber;
-    if (fields?.agencyResponse !== undefined) update.agencyResponse = fields.agencyResponse;
-    if (fields?.notes !== undefined) update.notes = fields.notes;
-    const [updated] = await db.update(filingDocuments).set(update).where(eq(filingDocuments.id, id)).returning();
-    return updated;
-  }
-
-  async deleteFilingDocument(id: number): Promise<boolean> {
-    const result = await db.delete(filingDocuments).where(eq(filingDocuments.id, id)).returning();
-    return result.length > 0;
   }
 
   // Boundary background-check consent methods

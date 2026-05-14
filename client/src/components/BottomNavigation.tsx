@@ -59,7 +59,6 @@ const allNavItems: NavItem[] = [
   { name: "Anatomy Scanning", href: "/anatomy-scanning", icon: Scan, category: "health", priority: 8, keywords: ["scan", "anatomy", "3d", "custom"] },
   { name: "Education", href: "/education", icon: BookOpen, category: "education", priority: 7, keywords: ["learn", "education", "health", "info"] },
   { name: "Interactive Stories", href: "/interactive-stories", icon: Sparkles, category: "education", priority: 6, keywords: ["stories", "interactive", "learn"] },
-  { name: "BAD Co-op", href: "https://glad.wtf", icon: Building2, category: "community", priority: 8, keywords: ["coop", "cooperative", "dashboard", "bad", "glad"] },
   { name: "Community Forum", href: "/community-forum", icon: MessageCircle, category: "community", priority: 7, keywords: ["forum", "community", "discuss", "chat"] },
   { name: "Peer Mentor", href: "/peer-mentor", icon: HandHeart, category: "community", priority: 6, keywords: ["mentor", "peer", "support", "help"] },
   { name: "Partnership", href: "/partnership", icon: Users, category: "community", priority: 5, keywords: ["partner", "clinic", "healthcare"] },

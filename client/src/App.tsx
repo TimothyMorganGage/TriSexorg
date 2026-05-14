@@ -55,8 +55,6 @@ const Partnership = lazy(() => import("@/pages/partnership"));
 const Login = lazy(() => import("./pages/login"));
 const Register = lazy(() => import("./pages/register"));
 const NotFound = lazy(() => import("@/pages/not-found"));
-const BadGoodSex = lazy(() => import("@/pages/bad-good-sex"));
-const BadGoodHealth = lazy(() => import("@/pages/bad-good-health"));
 const GoodPeople = lazy(() => import("@/pages/good-people"));
 const AnatomyScanning = lazy(() => import("@/pages/anatomy-scanning"));
 const FourDSTIIntervention = lazy(() => import("@/pages/4d-sti-intervention"));
@@ -84,7 +82,6 @@ const MentorFacilitator = lazy(() => import("@/pages/mentor-facilitator"));
 const PartnerSTITracking = lazy(() => import("@/pages/partner-sti-tracking"));
 const AgeVerification = lazy(() => import("@/pages/age-verification"));
 const ParentalConsentResponse = lazy(() => import("@/pages/parental-consent-response"));
-const BadCoopDashboard = lazy(() => import("@/pages/bad-coop-dashboard"));
 const InfinitelyAffirmativeProtection = lazy(() => import("@/pages/infinitely-affirmative-protection"));
 const RemixReplit = lazy(() => import("@/pages/remix-replit"));
 const OralBarriers = lazy(() => import("@/pages/oral-barriers"));
@@ -95,7 +92,6 @@ const TermsOfService = lazy(() => import("@/pages/terms-of-service"));
 const RecentTeamChanges = lazy(() => import("@/pages/recent-team-changes"));
 const Accessibility = lazy(() => import("@/pages/accessibility"));
 const CommunityForum = lazy(() => import("@/pages/community-forum"));
-const FilingPreparation = lazy(() => import("@/pages/filing-preparation"));
 const BoundariesBackgroundCheck = lazy(() => import("@/pages/boundaries-background-check"));
 const MetaLensScan = lazy(() => import("@/pages/meta-lens-scan"));
 const HerbalKnowledge = lazy(() => import("@/pages/herbal-knowledge"));
@@ -130,8 +126,6 @@ function Router() {
             <Route path="/clinics" component={Clinics} />
             <Route path="/clinic-dashboard" component={ClinicDashboard} />
             <Route path="/partnership" component={Partnership} />
-            <Route path="/bad-good-sex" component={BadGoodSex} />
-            <Route path="/bad-good-health" component={BadGoodHealth} />
             <Route path="/good-people" component={GoodPeople} />
             <Route path="/anatomy-scanning" component={AnatomyScanning} />
             <Route path="/4d-sti-intervention" component={FourDSTIIntervention} />
@@ -160,7 +154,6 @@ function Router() {
             <Route path="/partner-sti-tracking" component={PartnerSTITracking} />
             <Route path="/age-verification" component={AgeVerification} />
             <Route path="/parental-consent/:consentId" component={ParentalConsentResponse} />
-            <Route path="/bad-coop-dashboard" component={BadCoopDashboard} />
             <Route path="/infinitely-affirmative-protection" component={InfinitelyAffirmativeProtection} />
             <Route path="/remix-replit" component={RemixReplit} />
             <Route path="/oral-barriers" component={OralBarriers} />
@@ -170,7 +163,6 @@ function Router() {
             <Route path="/recent-team-changes" component={RecentTeamChanges} />
             <Route path="/accessibility" component={Accessibility} />
             <Route path="/community-forum" component={CommunityForum} />
-            <Route path="/filing-preparation" component={FilingPreparation} />
             <Route path="/boundaries-background-check" component={BoundariesBackgroundCheck} />
             <Route path="/meta-lens-scan" component={MetaLensScan} />
             <Route path="/herbal-knowledge" component={HerbalKnowledge} />

@@ -1604,16 +1604,6 @@ All reporting is aggregate-only with no individual identification. The system us
 
 ---
 
-## BAD Co-op Integration
-
-| Program | Focus |
-| --- | --- |
-| "for GOOD Sex" | Advance directives, consent documentation, preference communication |
-| "for GOOD Health" | Member-directed health planning, mutual aid networks |
-| "for Good People" | Consent-focused matchmaking, community-supported connections |
-
----
-
 ## Implementation
 
 ### Governance
@@ -1627,7 +1617,7 @@ Membership uses a sliding scale fee structure. Surplus is distributed to members
 ### Service Delivery
 
 Member-owned health centers deliver cooperative education programs, democratic service planning, and community-controlled resources, all subject to member satisfaction surveys and peer accountability.`,
-      tags: ["cooperative", "bad-coop", "governance", "community", "democracy"],
+      tags: ["cooperative", "governance", "community", "democracy"],
       lastUpdated: "2024-01-13",
       author: "Cooperative Development Team",
       difficulty: "Intermediate",

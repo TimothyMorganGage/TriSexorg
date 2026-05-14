@@ -138,7 +138,7 @@ export default function SocialIntegration() {
       reach: 0,
       icon: XIcon,
       color: "bg-black",
-      protocol: "X API v2 — adult-content opt-out enforced for $BAD members"
+      protocol: "X API v2 — adult-content opt-out enforced for verified co-operators"
     }
   ];
 
@@ -162,7 +162,7 @@ export default function SocialIntegration() {
     {
       type: "community",
       title: "Cooperative Health Principles",
-      description: "Video explaining BAD Co-op integration and community benefits",
+      description: "Video explaining LETS mutual-credit cooperative economics and community benefits",
       platforms: ["loops", "bluesky"],
       hashtags: ["Cooperative", "Community", "HealthEquity"]
     }

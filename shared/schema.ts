@@ -341,22 +341,6 @@ export const printJobs = pgTable("print_jobs", {
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
 
-// BAD Co-op Integration Tables
-export const badCoopIntegration = pgTable("bad_coop_integration", {
-  id: serial("id").primaryKey(),
-  userId: integer("user_id").notNull(),
-  badCoopUserId: text("bad_coop_user_id"),
-  integrationStatus: text("integration_status").notNull().default("pending"),
-  consentForDataSharing: boolean("consent_for_data_sharing").default(false),
-  advanceDirectivesLinked: boolean("advance_directives_linked").default(false),
-  healthPlanningConnected: boolean("health_planning_connected").default(false),
-  sexualHealthPreferences: text("sexual_health_preferences"),
-  communicationPreferences: text("communication_preferences"),
-  emergencyContacts: text("emergency_contacts").array(),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-  updatedAt: timestamp("updated_at").notNull().defaultNow(),
-});
-
 // Matchmaking System following Alovoa model
 export const userProfiles = pgTable("user_profiles", {
   id: serial("id").primaryKey(),
@@ -454,12 +438,6 @@ export const insertPrintJobSchema = createInsertSchema(printJobs).omit({
   updatedAt: true,
 });
 
-export const insertBadCoopIntegrationSchema = createInsertSchema(badCoopIntegration).omit({
-  id: true,
-  createdAt: true,
-  updatedAt: true,
-});
-
 export const insertUserProfileSchema = createInsertSchema(userProfiles).omit({
   id: true,
   createdAt: true,
@@ -503,9 +481,6 @@ export type PrintingService = typeof printingServices.$inferSelect;
 
 export type InsertPrintJob = z.infer<typeof insertPrintJobSchema>;
 export type PrintJob = typeof printJobs.$inferSelect;
-
-export type InsertBadCoopIntegration = z.infer<typeof insertBadCoopIntegrationSchema>;
-export type BadCoopIntegration = typeof badCoopIntegration.$inferSelect;
 
 export type InsertUserProfile = z.infer<typeof insertUserProfileSchema>;
 export type UserProfile = typeof userProfiles.$inferSelect;
@@ -1512,37 +1487,9 @@ export type WikiContribution = typeof wikiContributions.$inferSelect;
 export type InsertWikiVote = z.infer<typeof insertWikiVoteSchema>;
 export type WikiVote = typeof wikiVotes.$inferSelect;
 
-export const filingDocuments = pgTable("filing_documents", {
-  id: serial("id").primaryKey(),
-  userId: integer("user_id").references(() => users.id).notNull(),
-  formType: text("form_type").notNull(),
-  entityName: text("entity_name").notNull(),
-  status: text("status").notNull().default("drafted"),
-  documentBody: text("document_body").notNull(),
-  payload: text("payload"),
-  taxYear: integer("tax_year"),
-  jurisdiction: text("jurisdiction"),
-  confirmationNumber: text("confirmation_number"),
-  agencyResponse: text("agency_response"),
-  generatedAt: timestamp("generated_at").defaultNow().notNull(),
-  submittedAt: timestamp("submitted_at"),
-  acknowledgedAt: timestamp("acknowledged_at"),
-  notes: text("notes"),
-});
-
-export const insertFilingDocumentSchema = createInsertSchema(filingDocuments).omit({
-  id: true,
-  documentBody: true,
-  generatedAt: true,
-  submittedAt: true,
-  acknowledgedAt: true,
-  confirmationNumber: true,
-  agencyResponse: true,
-  status: true,
-});
-
-export type InsertFilingDocument = z.infer<typeof insertFilingDocumentSchema>;
-export type FilingDocument = typeof filingDocuments.$inferSelect;
+// Removed 2026-05-14: filing_documents table + InsertFilingDocument/FilingDocument
+// types backed the $BAD MSB / state-MTL / 501(c)(12) filing-preparation system,
+// which was dropped alongside the rest of the $BAD cooperative scaffolding.
 
 export const boundaryCheckConsents = pgTable("boundary_check_consents", {
   id: serial("id").primaryKey(),

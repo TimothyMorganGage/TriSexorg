@@ -8,7 +8,6 @@ import helmet from "helmet";
 import cors from "cors";
 import rateLimit from "express-rate-limit";
 import { storage } from "./storage";
-import { generateFiling, SUPPORTED_FORMS } from "./filingGenerators";
 import { 
   insertUserSchema, insertProductConfigurationSchema, insertOrderSchema,
   insertEducationalContentSchema, insertPartnershipRequestSchema,
@@ -2000,169 +1999,12 @@ END:VEVENT
     }
   });
 
-  // BAD Co-op Dashboard API routes
-  app.get('/api/bad-coop-dashboard/:userId', async (req, res) => {
-    try {
-      const userId = parseInt(req.params.userId);
-      const dashboardData = {
-        userProgress: {
-          completionRate: 85,
-          activeModules: 6,
-          communityScore: 4.8,
-          nextReviewDate: new Date(Date.now() + 60 * 24 * 60 * 60 * 1000) // 2 months
-        },
-        modules: [
-          {
-            id: "advance-directives",
-            progress: 85,
-            status: "complete",
-            lastUpdated: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
-            priority: "critical"
-          },
-          {
-            id: "sexual-health-integration", 
-            progress: 92,
-            status: "complete",
-            lastUpdated: new Date(Date.now() - 2 * 60 * 60 * 1000),
-            priority: "high"
-          },
-          {
-            id: "cooperative-advocacy",
-            progress: 78,
-            status: "active",
-            lastUpdated: new Date(),
-            priority: "high"
-          },
-          {
-            id: "financial-planning",
-            progress: 45,
-            status: "incomplete",
-            lastUpdated: null,
-            priority: "medium"
-          },
-          {
-            id: "mental-health",
-            progress: 67,
-            status: "in-progress",
-            lastUpdated: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
-            priority: "high"
-          },
-          {
-            id: "family-care",
-            progress: 89,
-            status: "complete",
-            lastUpdated: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
-            priority: "high"
-          }
-        ],
-        recentActivity: [
-          {
-            action: "Sexual health directives updated",
-            module: "Sexual Health Integration",
-            time: new Date(Date.now() - 2 * 60 * 60 * 1000),
-            status: "completed",
-            details: "Integrated new contraception preferences with TriSex.org protection systems"
-          },
-          {
-            action: "Community health council meeting",
-            module: "Cooperative Advocacy",
-            time: new Date(Date.now() - 24 * 60 * 60 * 1000),
-            status: "attended",
-            details: "Participated in democratic healthcare governance session"
-          },
-          {
-            action: "Healthcare proxy verification",
-            module: "Advance Directives",
-            time: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000),
-            status: "verified",
-            details: "Emergency contact confirmed and healthcare proxy signed"
-          },
-          {
-            action: "Mental health crisis plan review",
-            module: "Mental Health",
-            time: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
-            status: "needs-update",
-            details: "Annual review scheduled for psychiatric advance directives"
-          }
-        ],
-        upcomingTasks: [
-          {
-            task: "Annual directive comprehensive review",
-            dueDate: "In 2 months",
-            priority: "critical",
-            module: "Advance Directives"
-          },
-          {
-            task: "Sexual health education workshop",
-            dueDate: "Next week",
-            priority: "medium",
-            module: "Sexual Health Integration"
-          },
-          {
-            task: "Cooperative insurance enrollment",
-            dueDate: "In 3 weeks", 
-            priority: "high",
-            module: "Financial Planning"
-          },
-          {
-            task: "Mental health support group check-in",
-            dueDate: "Tomorrow",
-            priority: "medium",
-            module: "Mental Health"
-          }
-        ]
-      };
-      res.json(dashboardData);
-    } catch (error) {
-      res.status(500).json({ message: "Failed to load dashboard data" });
-    }
-  });
-
-  // BAD Co-op Integration API routes
-  app.get('/api/bad-coop-integration', async (req, res) => {
-    try {
-      const integration = await storage.getBadCoopIntegration(1); // Using demo user ID
-      res.json(integration);
-    } catch (error) {
-      res.status(404).json({ message: "Integration not found" });
-    }
-  });
-
-  app.post('/api/bad-coop-integration', async (req, res) => {
-    try {
-      const integration = await storage.createBadCoopIntegration({
-        userId: 1, // Using demo user ID
-        consentForDataSharing: req.body.consentForDataSharing || false,
-        advanceDirectivesLinked: req.body.advanceDirectivesLinked || false,
-        healthPlanningConnected: req.body.healthPlanningConnected || false,
-        sexualHealthPreferences: req.body.sexualHealthPreferences || '',
-        communicationPreferences: req.body.communicationPreferences || '',
-        emergencyContacts: req.body.emergencyContacts || []
-      });
-      res.json(integration);
-    } catch (error) {
-      res.status(500).json({ message: "Failed to create integration" });
-    }
-  });
-
-  app.put('/api/bad-coop-integration/:id', async (req, res) => {
-    try {
-      const id = parseInt(req.params.id);
-      const updatedData = {
-        consentForDataSharing: req.body.consentForDataSharing,
-        advanceDirectivesLinked: req.body.advanceDirectivesLinked,
-        healthPlanningConnected: req.body.healthPlanningConnected,
-        sexualHealthPreferences: req.body.sexualHealthPreferences,
-        communicationPreferences: req.body.communicationPreferences,
-        emergencyContacts: req.body.emergencyContacts
-      };
-      
-      const integration = await storage.updateBadCoopIntegration(id, updatedData);
-      res.json(integration);
-    } catch (error) {
-      res.status(500).json({ message: "Failed to update integration" });
-    }
-  });
+  // ─── Removed 2026-05-14: $BAD cooperative scaffolding ───
+  // BAD Co-op dashboard, BAD Co-op integration CRUD, and the stablecoin /
+  // MSB / state-MTL / 501(c)(12) filing-preparation routes were all dropped
+  // in favour of the LETS Framework as the platform's cooperative-economics
+  // surface. The filing_documents and bad_coop_integration tables were
+  // dropped alongside them. No real $BAD ledger or filings ever existed.
 
   // Forum API routes
   app.get('/api/forum/categories', async (_req, res) => {
@@ -2371,7 +2213,7 @@ END:VEVENT
         { name: "Peer Support", slug: "peer-support", description: "Connect with others, share experiences, and find community support", icon: "Users", color: "pink", sortOrder: 3 },
         { name: "Intersex & Gender Diversity", slug: "intersex-gender-diversity", description: "Discussions centering intersex anatomy and gender-diverse experiences", icon: "Sparkles", color: "blue", sortOrder: 4 },
         { name: "Relationships & Communication", slug: "relationships-communication", description: "Navigate conversations about sexual health with partners", icon: "Globe", color: "green", sortOrder: 5 },
-        { name: "Cooperative & Governance", slug: "cooperative-governance", description: "Participatory budgeting, $BAD cooperative filings, and cooperative decisions", icon: "Leaf", color: "orange", sortOrder: 6 },
+        { name: "Cooperative & Governance", slug: "cooperative-governance", description: "Participatory budgeting, LETS mutual-credit, and cooperative decisions", icon: "Leaf", color: "orange", sortOrder: 6 },
         { name: "NanoHeal & Naturopathic", slug: "nanoheal-naturopathic", description: "Discuss NanoHeal lubricant research, naturopathic STI treatments, and biomaterials", icon: "Brain", color: "teal", sortOrder: 7 },
         { name: "Accessibility & Inclusion", slug: "accessibility-inclusion", description: "ASL/BSL support, braille translation, and making sexual health accessible to all", icon: "Accessibility", color: "emerald", sortOrder: 8 }
       ];
@@ -2383,98 +2225,6 @@ END:VEVENT
       res.status(201).json({ message: "Categories seeded", categories: created });
     } catch (error) {
       res.status(500).json({ message: "Failed to seed categories" });
-    }
-  });
-
-  // Filing Preparation API routes (real, downloadable, filing-ready packets)
-  app.get('/api/filings/forms', (_req, res) => {
-    res.json(SUPPORTED_FORMS);
-  });
-
-  app.get('/api/filings', async (req, res) => {
-    try {
-      if (!req.session?.userId) return res.status(401).json({ message: "Must be logged in" });
-      const docs = await storage.getFilingDocuments(req.session.userId);
-      res.json(docs);
-    } catch (error) {
-      res.status(500).json({ message: "Failed to fetch filings" });
-    }
-  });
-
-  app.post('/api/filings/generate', async (req, res) => {
-    try {
-      if (!req.session?.userId) return res.status(401).json({ message: "Must be logged in" });
-      const { formType, entityName, taxYear, jurisdiction, stablecoin, data } = req.body;
-      if (!formType || !entityName) {
-        return res.status(400).json({ message: "formType and entityName are required" });
-      }
-      const generated = generateFiling({
-        formType,
-        entityName,
-        taxYear,
-        jurisdiction,
-        stablecoin,
-        data: data || {},
-      });
-      const doc = await storage.createFilingDocument({
-        userId: req.session.userId,
-        formType,
-        entityName,
-        taxYear: taxYear || null,
-        jurisdiction: jurisdiction || null,
-        payload: generated.payload,
-        notes: null,
-        documentBody: generated.documentBody,
-      } as any);
-      res.status(201).json({ ...doc, agencyUrl: generated.agencyUrl, formNumber: generated.formNumber, filingMethod: generated.filingMethod });
-    } catch (error: any) {
-      res.status(500).json({ message: error.message || "Failed to generate filing" });
-    }
-  });
-
-  app.get('/api/filings/:id', async (req, res) => {
-    try {
-      if (!req.session?.userId) return res.status(401).json({ message: "Must be logged in" });
-      const doc = await storage.getFilingDocument(parseInt(req.params.id));
-      if (!doc) return res.status(404).json({ message: "Filing not found" });
-      if (doc.userId !== req.session.userId) return res.status(403).json({ message: "Forbidden" });
-      res.json(doc);
-    } catch (error) {
-      res.status(500).json({ message: "Failed to fetch filing" });
-    }
-  });
-
-  app.get('/api/filings/:id/download', async (req, res) => {
-    try {
-      if (!req.session?.userId) return res.status(401).json({ message: "Must be logged in" });
-      const doc = await storage.getFilingDocument(parseInt(req.params.id));
-      if (!doc) return res.status(404).json({ message: "Filing not found" });
-      if (doc.userId !== req.session.userId) return res.status(403).json({ message: "Forbidden" });
-      const safeName = doc.formType.replace(/[^a-z0-9-]/gi, "_");
-      res.setHeader("Content-Type", "text/plain; charset=utf-8");
-      res.setHeader("Content-Disposition", `attachment; filename="${safeName}_${doc.id}.txt"`);
-      res.send(doc.documentBody);
-    } catch (error) {
-      res.status(500).json({ message: "Failed to download filing" });
-    }
-  });
-
-  app.patch('/api/filings/:id/status', async (req, res) => {
-    try {
-      if (!req.session?.userId) return res.status(401).json({ message: "Must be logged in" });
-      const id = parseInt(req.params.id);
-      const existing = await storage.getFilingDocument(id);
-      if (!existing) return res.status(404).json({ message: "Filing not found" });
-      if (existing.userId !== req.session.userId) return res.status(403).json({ message: "Forbidden" });
-      const { status, confirmationNumber, agencyResponse, notes } = req.body;
-      const allowed = ["drafted", "reviewed", "submitted", "acknowledged", "approved", "rejected", "withdrawn"];
-      if (!allowed.includes(status)) {
-        return res.status(400).json({ message: `status must be one of ${allowed.join(", ")}` });
-      }
-      const updated = await storage.updateFilingDocumentStatus(id, status, { confirmationNumber, agencyResponse, notes });
-      res.json(updated);
-    } catch (error: any) {
-      res.status(500).json({ message: error.message || "Failed to update filing status" });
     }
   });
 
@@ -2983,20 +2733,6 @@ END:VEVENT
       contentLicense: "Member-contributed entries on TriSex.org are licensed CC BY-SA 4.0. AHG's own copyrighted publications are not reproduced here — consult the AHG library directly.",
       lastReviewed: "2026-04-24",
     });
-  });
-
-  app.delete('/api/filings/:id', async (req, res) => {
-    try {
-      if (!req.session?.userId) return res.status(401).json({ message: "Must be logged in" });
-      const id = parseInt(req.params.id);
-      const existing = await storage.getFilingDocument(id);
-      if (!existing) return res.status(404).json({ message: "Filing not found" });
-      if (existing.userId !== req.session.userId) return res.status(403).json({ message: "Forbidden" });
-      await storage.deleteFilingDocument(id);
-      res.json({ success: true });
-    } catch (error) {
-      res.status(500).json({ message: "Failed to delete filing" });
-    }
   });
 
   // --- Inclusive Ordering framework adopters (self-reported registry) ---

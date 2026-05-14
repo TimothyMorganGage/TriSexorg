@@ -162,21 +162,21 @@ export function FediverseShare({
       icon: Megaphone,
       color: "bg-red-600",
       post: `${title}\n\n${description || ''}\n\n${hashtagString}\n\n${shareUrl}`,
-      instructions: `1. Copy the post (Truths are limited to 500 chars — trim if needed)\n2. Visit truthsocial.com or open the app\n3. Tap "Create a Truth"\n4. Paste and post!\n\nNote: Truth Social runs a Mastodon-compatible API but does not federate via ActivityPub, so reach is limited to the Truth Social network.\n\nCO-OP PRICING (in outreach): TriSex.org is in early outreach to negotiate cooperative pricing for paid Truth Social members ("Truth+" subscribers) who are verified $BAD members. Register interest on the Social Integration page — we publish progress publicly, no promises until a deal lands.`
+      instructions: `1. Copy the post (Truths are limited to 500 chars — trim if needed)\n2. Visit truthsocial.com or open the app\n3. Tap "Create a Truth"\n4. Paste and post!\n\nNote: Truth Social runs a Mastodon-compatible API but does not federate via ActivityPub, so reach is limited to the Truth Social network.`
     },
     hylo: {
       name: "Hylo",
       icon: Users,
       color: "bg-amber-600",
       post: `${title}\n\n${description || ''}\n\n${hashtagString}\n\n${shareUrl}`,
-      instructions: `1. Copy the post text\n2. Visit hylo.com and open your group (or join the TriSex.org group)\n3. Click "Create" → choose Discussion, Resource, or Project as the post type\n4. Paste the text into the body, set a topic, and add a content warning if needed\n5. Post to your group, a federation, or to Public\n\nHylo is open-source, cooperative-owned community infrastructure — a strong fit for $BAD cooperative governance discussions.`
+      instructions: `1. Copy the post text\n2. Visit hylo.com and open your group (or join the TriSex.org group)\n3. Click "Create" → choose Discussion, Resource, or Project as the post type\n4. Paste the text into the body, set a topic, and add a content warning if needed\n5. Post to your group, a federation, or to Public\n\nHylo is open-source, cooperative-owned community infrastructure — a strong fit for cooperative governance discussions grounded in the LETS Framework.`
     },
     x: {
       name: "X (Twitter)",
       icon: XIcon,
       color: "bg-black",
       post: xPost,
-      instructions: `1. Copy the post (X limit: 280 chars free / 25,000 X Premium — trim if needed)\n2. Click "Open X with this post" below, OR visit x.com\n3. Verify your settings: Privacy → "Hide sensitive content" should be ON if you opted out of adult content\n4. Post the Tweet\n\nPRIVACY NOTE: TriSex.org never publishes scan or product-fit data to X. Sharing here is text/link only.\n\nCO-OP PRICING (in outreach): TriSex.org is in early outreach to negotiate cooperative pricing on X Premium for verified $BAD members. Sign up on the Social Integration page to register interest — we publish progress publicly, no promises until a deal lands.`
+      instructions: `1. Copy the post (X limit: 280 chars free / 25,000 X Premium — trim if needed)\n2. Click "Open X with this post" below, OR visit x.com\n3. Verify your settings: Privacy → "Hide sensitive content" should be ON if you opted out of adult content\n4. Post the Tweet\n\nPRIVACY NOTE: TriSex.org never publishes scan or product-fit data to X. Sharing here is text/link only.`
     }
   };
 

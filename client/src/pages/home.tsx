@@ -140,9 +140,10 @@ export default function Home() {
               </h2>
               <p className="text-white/65 text-base leading-relaxed max-w-2xl">
                 The whole platform — inclusive-ordering framework, 86-variation intersex catalogue,
-                4D STI tracking, peer-mentor time banking, $BAD cooperative filings — is published
-                under CC BY-SA 4.0. Fork it on Replit, swap our brand for yours, and run your own
-                cooperative protection line. No licence fee. No locked-in dependency.
+                4D STI tracking, peer-mentor time banking, and the LETS Framework for mutual-credit
+                cooperative economics — is published under CC BY-SA 4.0. Fork it on Replit, swap
+                our brand for yours, and run your own cooperative protection line. No licence fee.
+                No locked-in dependency.
               </p>
               <div className="flex flex-wrap items-center gap-3 text-xs text-white/50">
                 <span className="inline-flex items-center gap-1.5"><Code2 className="w-3.5 h-3.5" /> Full source on Replit</span>
@@ -175,7 +176,7 @@ export default function Home() {
               {[
                 { icon: Package, title: "Inclusive Ordering Framework", desc: "Catalogue, fitting params, marker filter, multi-use balance, fold sequence — versioned barrel re-export at shared/inclusive-ordering." },
                 { icon: Heart, title: "Honest by default", desc: "No fabricated stats, no fake adopters. The registry stays empty until real forks self-report." },
-                { icon: Building, title: "$BAD cooperative scaffolding", desc: "Real FinCEN MSB / state MTL / 501(c)(12) filing-prep packets — ready for your own co-op incorporation." },
+                { icon: Building, title: "LETS Framework", desc: "Local Economy Trading Systems — mutual-credit, time-banking, and cooperative-clearing primitives for your own co-op, no speculative currency required." },
               ].map(({ icon: Icon, title, desc }) => (
                 <Card key={title} className="bg-white/5 border-white/10">
                   <CardContent className="p-4 flex items-start gap-3">

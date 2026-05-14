@@ -14,7 +14,6 @@ export function Header() {
     { name: "Education", href: "/education" },
     { name: "Community", href: "/community-forum" },
     { name: "STI Tracking", href: "/partner-sti-tracking" },
-    { name: "Filings", href: "/filing-preparation" },
     { name: "Boundaries", href: "/boundaries-background-check" },
     { name: "Meta Lens Scan", href: "/meta-lens-scan" },
     { name: "Herbal Knowledge", href: "/herbal-knowledge" },

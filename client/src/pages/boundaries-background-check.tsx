@@ -47,7 +47,6 @@ const SCOPE_OPTIONS = [
   { value: "moderator-review", label: "Moderator-initiated background check (forum / event)" },
   { value: "partner-history", label: "Partner-history confirmation (mutually requested)" },
   { value: "sti-disclosure", label: "STI disclosure cross-verification (clinic-supervised)" },
-  { value: "co-op-trust-circle", label: "$BAD co-op trust-circle membership review" },
 ];
 
 const STANDARD_CONSENT = (platform: string, handle: string, scope: string) => `I, the holder of ${platform} account "${handle}", give TriSex.org's authorized boundaries-review process explicit, time-limited, revocable consent to:
@@ -276,7 +275,7 @@ export default function BoundariesBackgroundCheck() {
                       rows={2}
                       value={purpose}
                       onChange={e => setPurpose(e.target.value)}
-                      placeholder="e.g., 'Active in $BAD co-op trust circle, available for member-initiated reviews.'"
+                      placeholder="e.g., 'Active in LETS mutual-credit cooperative, available for member-initiated reviews.'"
                       data-testid="input-purpose"
                     />
                   </div>

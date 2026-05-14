@@ -44,7 +44,7 @@ export default function RemixReplit() {
     {
       icon: Users,
       title: "Community Features",
-      description: "Member reviews, BAD Co-op dashboard, cooperative ownership tools"
+      description: "Member reviews, LETS Framework mutual-credit primitives, cooperative ownership tools"
     },
     {
       icon: Heart,
