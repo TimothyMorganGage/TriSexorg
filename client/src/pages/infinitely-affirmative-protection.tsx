@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Star, MapPin, Calendar, Heart, AlertTriangle, MessageSquare } from "lucide-react";
+import { Star, MapPin, Calendar, Heart, MessageSquare } from "lucide-react";
 import { FediverseShare } from "@/components/FediverseShare";
 
 interface Review {
@@ -49,13 +49,6 @@ export default function InfinitelyAffirmativeProtection() {
           <Heart className="h-5 w-5 text-black dark:text-white" />
           <AlertDescription className="ml-2 text-black dark:text-white">
             <strong>Intersex Healthcare IS Everyone's Affirmation:</strong> Reviews on this page center intersex anatomy as the universal baseline. Every reviewer's body is respected without categorization.
-          </AlertDescription>
-        </Alert>
-
-        <Alert className="mb-8 border-amber-500 bg-amber-50 dark:bg-amber-950/30">
-          <AlertTriangle className="h-5 w-5 text-amber-700 dark:text-amber-400" />
-          <AlertDescription className="text-sm text-amber-900 dark:text-amber-200">
-            <strong>This page used to be staged.</strong> An earlier version contained 14 fabricated five-star reviews under invented names (Alex Chen, Jordan Martinez, Sam Patel, Riley Thompson, Casey Kim, Dakota Lee, and others), invented cities, invented "helpful" counts, and invented efficacy claims attributed to those reviewers (e.g., "89.4% HIV prevention and 82.7% bacterial STI reduction"). All reviewers were marked <code>verified: true</code> despite being fictional. Every fake reviewer has been removed. The HTML/JSON export buttons that bundled those fakes into a downloadable file have also been removed. This page now reads from a real reviews endpoint and stays empty until real members write real reviews.
           </AlertDescription>
         </Alert>
 
