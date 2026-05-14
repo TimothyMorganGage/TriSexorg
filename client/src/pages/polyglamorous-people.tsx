@@ -425,8 +425,26 @@ export default function PolyglamorousPeople() {
                 <Loader2 className="h-5 w-5 animate-spin mr-2" /> Loading…
               </div>
             ) : profiles.length === 0 ? (
-              <div className="text-center py-8 text-muted-foreground">
-                <p className="text-sm">No active profiles yet. This is the honest state of the directory today.</p>
+              <div className="py-8 space-y-4">
+                <p className="text-sm text-center text-muted-foreground">
+                  No active profiles yet. This is the honest state of the directory today.
+                </p>
+                <div className="text-xs text-muted-foreground bg-muted/30 border rounded-md p-3 max-w-xl mx-auto space-y-2">
+                  <p>
+                    <strong>Already submitted?</strong> Use the sections below this card to manage what you've
+                    started — they work even while the directory is empty:
+                  </p>
+                  <ul className="list-disc pl-5 space-y-1">
+                    <li>
+                      <strong>Owners</strong> — paste your one-time management token in
+                      {" "}<em>"Manage my profile (owner)"</em> to see and act on incoming contact requests.
+                    </li>
+                    <li>
+                      <strong>Requesters</strong> — paste your one-time requester token in
+                      {" "}<em>"Check my request status"</em> to see if the recipient has accepted yet.
+                    </li>
+                  </ul>
+                </div>
               </div>
             ) : (
               <div className="space-y-3">
