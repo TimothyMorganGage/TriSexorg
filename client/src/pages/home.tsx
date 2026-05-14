@@ -10,7 +10,7 @@ import {
   Printer, Truck, Hospital, UserCheck, Store,
   Building, Ruler, Droplets, TestTube,
   Coins, BookOpen, Lightbulb, Users, Package, ArrowRight,
-  Shapes
+  Shapes, GitBranch, Code2, Sparkles
 } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
@@ -111,6 +111,71 @@ export default function Home() {
                     <Icon className={`${color} h-6 w-6 mb-3`} />
                     <h3 className="text-white font-semibold text-sm mb-1">{title}</h3>
                     <p className="text-white/50 text-xs leading-relaxed">{desc}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Remix this Replit — featured after the Inclusive Order CTA */}
+      <section className="py-16 bg-gradient-to-br from-primary/10 via-black to-secondary/10 border-b border-white/10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-5 gap-8 items-center">
+            <div className="lg:col-span-3 space-y-5">
+              <Badge className="bg-primary/15 text-primary border border-primary/30 text-xs">
+                <GitBranch className="w-3 h-3 mr-1" /> Open Source · CC BY-SA 4.0
+              </Badge>
+              <h2 className="text-3xl lg:text-4xl font-bold text-white font-display leading-tight">
+                Already ordered? Remix this Replit and build your own.
+              </h2>
+              <p className="text-white/65 text-base leading-relaxed max-w-2xl">
+                The whole platform — inclusive-ordering framework, 86-variation intersex catalogue,
+                4D STI tracking, peer-mentor time banking, $BAD cooperative filings — is published
+                under CC BY-SA 4.0. Fork it on Replit, swap our brand for yours, and run your own
+                cooperative protection line. No licence fee. No locked-in dependency.
+              </p>
+              <div className="flex flex-wrap items-center gap-3 text-xs text-white/50">
+                <span className="inline-flex items-center gap-1.5"><Code2 className="w-3.5 h-3.5" /> Full source on Replit</span>
+                <span className="inline-flex items-center gap-1.5"><GitBranch className="w-3.5 h-3.5" /> One-click fork</span>
+                <span className="inline-flex items-center gap-1.5"><Sparkles className="w-3.5 h-3.5" /> Share-alike licence</span>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                <Link href="/remix-replit">
+                  <Button size="lg" className="bg-white text-black hover:bg-white/90 font-bold shadow-lg w-full sm:w-auto" data-testid="home-remix-cta">
+                    <GitBranch className="mr-2 h-5 w-5" />
+                    Remix this Replit
+                  </Button>
+                </Link>
+                <Link href="/fork-the-framework">
+                  <Button size="lg" variant="outline" className="border-white/25 text-white hover:bg-white/10 w-full sm:w-auto" data-testid="home-fork-framework-cta">
+                    <BookOpen className="mr-2 h-5 w-5" />
+                    Fork the Framework
+                  </Button>
+                </Link>
+                <Link href="/inclusive-ordering-registry">
+                  <Button size="lg" variant="ghost" className="text-white/60 hover:text-white hover:bg-white/5 w-full sm:w-auto" data-testid="home-registry-cta">
+                    <Users className="mr-2 h-5 w-5" />
+                    Adopter Registry
+                  </Button>
+                </Link>
+              </div>
+            </div>
+
+            <div className="lg:col-span-2 grid grid-cols-1 gap-3">
+              {[
+                { icon: Package, title: "Inclusive Ordering Framework", desc: "Catalogue, fitting params, marker filter, multi-use balance, fold sequence — versioned barrel re-export at shared/inclusive-ordering." },
+                { icon: Heart, title: "Honest by default", desc: "No fabricated stats, no fake adopters. The registry stays empty until real forks self-report." },
+                { icon: Building, title: "$BAD cooperative scaffolding", desc: "Real FinCEN MSB / state MTL / 501(c)(12) filing-prep packets — ready for your own co-op incorporation." },
+              ].map(({ icon: Icon, title, desc }) => (
+                <Card key={title} className="bg-white/5 border-white/10">
+                  <CardContent className="p-4 flex items-start gap-3">
+                    <Icon className="text-primary h-5 w-5 mt-0.5 flex-shrink-0" />
+                    <div>
+                      <h3 className="text-white font-semibold text-sm mb-1">{title}</h3>
+                      <p className="text-white/55 text-xs leading-relaxed">{desc}</p>
+                    </div>
                   </CardContent>
                 </Card>
               ))}
