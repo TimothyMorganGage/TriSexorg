@@ -3058,17 +3058,16 @@ END:VEVENT
     }
   });
 
+  // Strip private fields from a profile before exposing it in the public directory.
+  const scrubPolyForPublic = (p: any) => {
+    const { contactHandle, currentPartnerCount, manageToken, ...rest } = p;
+    return { ...rest, contactHandle: null, currentPartnerCount: null };
+  };
+
   app.get('/api/polyglamorous-profiles', async (_req, res) => {
     try {
       const profiles = await storage.listPolyglamorousProfiles();
-      // Honesty boundary: scrub fields that must never leak without per-match consent.
-      // The contactHandle and currentPartnerCount are private even when polyculeVisibility is broad.
-      const scrubbed = profiles.map((p) => ({
-        ...p,
-        contactHandle: null,
-        currentPartnerCount: null,
-      }));
-      res.json(scrubbed);
+      res.json(profiles.map(scrubPolyForPublic));
     } catch (error) {
       res.status(500).json({ message: "Failed to list polyglamorous profiles" });
     }
@@ -3076,6 +3075,7 @@ END:VEVENT
 
   app.post('/api/polyglamorous-profiles', async (req, res) => {
     try {
+      const { randomUUID } = await import("crypto");
       const { insertPolyglamorousProfileSchema } = await import("@shared/schema");
       const parsed = insertPolyglamorousProfileSchema.safeParse(req.body);
       if (!parsed.success) {
@@ -3100,10 +3100,117 @@ END:VEVENT
       if (d.ageRangeMin < 18) {
         return res.status(400).json({ message: "Minimum age must be 18 or older." });
       }
-      const profile = await storage.createPolyglamorousProfile(d);
-      res.status(201).json(profile);
+      const manageToken = randomUUID();
+      const profile = await storage.createPolyglamorousProfile({ ...d, manageToken } as any);
+      // Returned ONCE on creation so the submitter can save it. Never returned via GET.
+      res.status(201).json({ id: profile.id, status: profile.status, manageToken });
     } catch (error) {
       res.status(500).json({ message: "Failed to record polyglamorous profile submission" });
+    }
+  });
+
+  // Per-match consent gate: request to connect with an active profile.
+  app.post('/api/polyglamorous-profiles/:id/contact-requests', async (req, res) => {
+    try {
+      const { randomUUID } = await import("crypto");
+      const { insertPolyglamorousContactRequestSchema } = await import("@shared/schema");
+      const targetId = parseInt(req.params.id, 10);
+      if (!Number.isFinite(targetId)) {
+        return res.status(400).json({ message: "Invalid target profile id." });
+      }
+      const target = await storage.getPolyglamorousProfileById(targetId);
+      if (!target || target.status !== "active") {
+        return res.status(404).json({ message: "Profile not found or not currently accepting requests." });
+      }
+      const parsed = insertPolyglamorousContactRequestSchema.safeParse({ ...req.body, targetProfileId: targetId });
+      if (!parsed.success) {
+        return res.status(400).json({ message: "Invalid submission", errors: parsed.error.flatten() });
+      }
+      const d = parsed.data;
+      if (!d.honestyAttestation || !d.noOutingAttestation) {
+        return res.status(400).json({
+          message: "Both attestations (honesty about your identity, no-outing of the other member) are required.",
+        });
+      }
+      if (!d.requesterDisplayName.trim() || !d.requesterContactHandle.trim()) {
+        return res.status(400).json({ message: "Display name and contact handle are required." });
+      }
+      const requesterToken = randomUUID();
+      const created = await storage.createPolyglamorousContactRequest({ ...d, requesterToken });
+      // Returned ONCE on creation so the requester can poll status. Never returned via GET list.
+      res.status(201).json({ id: created.id, status: created.status, requesterToken });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to record contact request." });
+    }
+  });
+
+  // Owner management view via manageToken.
+  app.get('/api/polyglamorous-profiles/manage/:manageToken', async (req, res) => {
+    try {
+      const profile = await storage.getPolyglamorousProfileByManageToken(req.params.manageToken);
+      if (!profile) {
+        return res.status(404).json({ message: "Invalid management token." });
+      }
+      const requests = await storage.listPolyglamorousContactRequestsForProfile(profile.id);
+      // Owner sees their own profile in full (own contact handle / partner count visible
+      // to themself) but the manageToken is not echoed back.
+      const { manageToken, ...profileForOwner } = profile;
+      res.json({ profile: profileForOwner, requests });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to load management view." });
+    }
+  });
+
+  // Owner accept/decline.
+  app.post('/api/polyglamorous-profiles/manage/:manageToken/requests/:id', async (req, res) => {
+    try {
+      const profile = await storage.getPolyglamorousProfileByManageToken(req.params.manageToken);
+      if (!profile) {
+        return res.status(404).json({ message: "Invalid management token." });
+      }
+      const requestId = parseInt(req.params.id, 10);
+      const action = String(req.body?.action ?? "").toLowerCase();
+      if (action !== "accept" && action !== "decline") {
+        return res.status(400).json({ message: "action must be 'accept' or 'decline'." });
+      }
+      const existing = await storage.getPolyglamorousContactRequestById(requestId);
+      if (!existing || existing.targetProfileId !== profile.id) {
+        return res.status(404).json({ message: "Request not found for this profile." });
+      }
+      const updated = await storage.updatePolyglamorousContactRequestStatus(
+        requestId,
+        action === "accept" ? "accepted" : "declined",
+      );
+      res.json(updated);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to update request." });
+    }
+  });
+
+  // Requester status check. Only on accepted status is the owner's contact handle revealed.
+  app.get('/api/polyglamorous-contact-requests/:requesterToken', async (req, res) => {
+    try {
+      const reqRow = await storage.getPolyglamorousContactRequestByRequesterToken(req.params.requesterToken);
+      if (!reqRow) {
+        return res.status(404).json({ message: "Invalid requester token." });
+      }
+      const base = {
+        id: reqRow.id,
+        status: reqRow.status,
+        createdAt: reqRow.createdAt,
+        targetProfileId: reqRow.targetProfileId,
+      };
+      if (reqRow.status !== "accepted") {
+        return res.json({ ...base, ownerDisplayName: null, ownerContactHandle: null });
+      }
+      const owner = await storage.getPolyglamorousProfileById(reqRow.targetProfileId);
+      res.json({
+        ...base,
+        ownerDisplayName: owner?.displayName ?? null,
+        ownerContactHandle: owner?.contactHandle ?? null,
+      });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to load request status." });
     }
   });
 

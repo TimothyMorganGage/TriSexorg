@@ -54,6 +54,9 @@ import {
   polyglamorousProfiles,
   type PolyglamorousProfile,
   type InsertPolyglamorousProfile,
+  polyglamorousContactRequests,
+  type PolyglamorousContactRequest,
+  type InsertPolyglamorousContactRequest,
 } from "@shared/schema";
 
 export interface IStorage {
@@ -270,6 +273,13 @@ export interface IStorage {
   createManufacturingPartner(data: InsertManufacturingPartner): Promise<ManufacturingPartner>;
   listPolyglamorousProfiles(): Promise<PolyglamorousProfile[]>;
   createPolyglamorousProfile(data: InsertPolyglamorousProfile): Promise<PolyglamorousProfile>;
+  getPolyglamorousProfileById(id: number): Promise<PolyglamorousProfile | undefined>;
+  getPolyglamorousProfileByManageToken(token: string): Promise<PolyglamorousProfile | undefined>;
+  createPolyglamorousContactRequest(data: InsertPolyglamorousContactRequest & { requesterToken: string }): Promise<PolyglamorousContactRequest>;
+  listPolyglamorousContactRequestsForProfile(profileId: number): Promise<PolyglamorousContactRequest[]>;
+  getPolyglamorousContactRequestById(id: number): Promise<PolyglamorousContactRequest | undefined>;
+  getPolyglamorousContactRequestByRequesterToken(token: string): Promise<PolyglamorousContactRequest | undefined>;
+  updatePolyglamorousContactRequestStatus(id: number, status: "accepted" | "declined"): Promise<PolyglamorousContactRequest | undefined>;
 
   // Clinic Inventory methods
   getClinicInventory(): Promise<any[]>;
@@ -3228,6 +3238,45 @@ export class MemStorage implements IStorage {
   async createPolyglamorousProfile(data: InsertPolyglamorousProfile): Promise<PolyglamorousProfile> {
     const [created] = await db.insert(polyglamorousProfiles).values(data).returning();
     return created;
+  }
+
+  async getPolyglamorousProfileById(id: number): Promise<PolyglamorousProfile | undefined> {
+    const [row] = await db.select().from(polyglamorousProfiles).where(eq(polyglamorousProfiles.id, id));
+    return row;
+  }
+
+  async getPolyglamorousProfileByManageToken(token: string): Promise<PolyglamorousProfile | undefined> {
+    const [row] = await db.select().from(polyglamorousProfiles).where(eq(polyglamorousProfiles.manageToken, token));
+    return row;
+  }
+
+  async createPolyglamorousContactRequest(data: InsertPolyglamorousContactRequest & { requesterToken: string }): Promise<PolyglamorousContactRequest> {
+    const [created] = await db.insert(polyglamorousContactRequests).values(data).returning();
+    return created;
+  }
+
+  async listPolyglamorousContactRequestsForProfile(profileId: number): Promise<PolyglamorousContactRequest[]> {
+    return await db.select().from(polyglamorousContactRequests)
+      .where(eq(polyglamorousContactRequests.targetProfileId, profileId))
+      .orderBy(desc(polyglamorousContactRequests.createdAt));
+  }
+
+  async getPolyglamorousContactRequestById(id: number): Promise<PolyglamorousContactRequest | undefined> {
+    const [row] = await db.select().from(polyglamorousContactRequests).where(eq(polyglamorousContactRequests.id, id));
+    return row;
+  }
+
+  async getPolyglamorousContactRequestByRequesterToken(token: string): Promise<PolyglamorousContactRequest | undefined> {
+    const [row] = await db.select().from(polyglamorousContactRequests).where(eq(polyglamorousContactRequests.requesterToken, token));
+    return row;
+  }
+
+  async updatePolyglamorousContactRequestStatus(id: number, status: "accepted" | "declined"): Promise<PolyglamorousContactRequest | undefined> {
+    const [row] = await db.update(polyglamorousContactRequests)
+      .set({ status })
+      .where(eq(polyglamorousContactRequests.id, id))
+      .returning();
+    return row;
   }
 }
 

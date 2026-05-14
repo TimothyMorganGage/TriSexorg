@@ -1811,14 +1811,43 @@ export const polyglamorousProfiles = pgTable("polyglamorous_profiles", {
   honestyAttestation: boolean("honesty_attestation").notNull().default(false),
   consentToBeContacted: boolean("consent_to_be_contacted").notNull().default(false),
   status: text("status").notNull().default("pending"), // pending | active | paused | withdrawn
+  manageToken: text("manage_token"), // server-generated one-time token shown to the owner; null in public feed
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
 export const insertPolyglamorousProfileSchema = createInsertSchema(polyglamorousProfiles).omit({
   id: true,
   status: true,
+  manageToken: true,
   createdAt: true,
 });
 
 export type InsertPolyglamorousProfile = z.infer<typeof insertPolyglamorousProfileSchema>;
 export type PolyglamorousProfile = typeof polyglamorousProfiles.$inferSelect;
+
+// Per-match consent gate. Anyone may request to connect with an active polyglamorous
+// profile. The owner sees the request via their manageToken; only on accept is the
+// requester's contact handle revealed to the owner, and only then is the owner's
+// contact handle revealed to the requester (who polls via their requesterToken).
+export const polyglamorousContactRequests = pgTable("polyglamorous_contact_requests", {
+  id: serial("id").primaryKey(),
+  targetProfileId: integer("target_profile_id").notNull(),
+  requesterDisplayName: text("requester_display_name").notNull(),
+  requesterContactHandle: text("requester_contact_handle").notNull(),
+  message: text("message"),
+  requesterToken: text("requester_token").notNull().unique(),
+  status: text("status").notNull().default("pending"), // pending | accepted | declined
+  honestyAttestation: boolean("honesty_attestation").notNull().default(false),
+  noOutingAttestation: boolean("no_outing_attestation").notNull().default(false),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const insertPolyglamorousContactRequestSchema = createInsertSchema(polyglamorousContactRequests).omit({
+  id: true,
+  requesterToken: true,
+  status: true,
+  createdAt: true,
+});
+
+export type InsertPolyglamorousContactRequest = z.infer<typeof insertPolyglamorousContactRequestSchema>;
+export type PolyglamorousContactRequest = typeof polyglamorousContactRequests.$inferSelect;

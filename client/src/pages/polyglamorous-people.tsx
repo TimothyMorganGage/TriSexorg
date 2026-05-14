@@ -13,6 +13,14 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
   Select,
   SelectContent,
   SelectItem,
@@ -40,10 +48,17 @@ import {
   Loader2,
   PlusCircle,
   AlertTriangle,
+  MessageSquare,
+  KeyRound,
+  Check,
+  X as XIcon,
+  Copy,
+  Mail,
 } from "lucide-react";
 import {
   insertPolyglamorousProfileSchema,
   type PolyglamorousProfile,
+  type PolyglamorousContactRequest,
 } from "@shared/schema";
 
 const RELATIONSHIP_STRUCTURES: Array<{ value: string; label: string; blurb: string }> = [
@@ -122,6 +137,29 @@ const METAMOUR_LABEL = (v: string) => METAMOUR_PREFS.find((r) => r.value === v)?
 export default function PolyglamorousPeople() {
   const { toast } = useToast();
   const [showForm, setShowForm] = useState(false);
+  const [revealedManageToken, setRevealedManageToken] = useState<string | null>(null);
+  const [revealedRequesterToken, setRevealedRequesterToken] = useState<string | null>(null);
+  const [contactDialogProfile, setContactDialogProfile] = useState<PolyglamorousProfile | null>(null);
+  const [contactForm, setContactForm] = useState({
+    requesterDisplayName: "",
+    requesterContactHandle: "",
+    message: "",
+    honestyAttestation: false,
+    noOutingAttestation: false,
+  });
+  const [manageTokenInput, setManageTokenInput] = useState("");
+  const [activeManageToken, setActiveManageToken] = useState<string | null>(null);
+  const [requesterTokenInput, setRequesterTokenInput] = useState("");
+  const [activeRequesterToken, setActiveRequesterToken] = useState<string | null>(null);
+
+  const copy = async (text: string, label: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      toast({ title: `${label} copied`, description: "Save it somewhere safe — it won't be shown again." });
+    } catch {
+      toast({ title: "Copy failed", description: "Select the token and copy manually.", variant: "destructive" });
+    }
+  };
 
   const { data: profiles = [], isLoading } = useQuery<PolyglamorousProfile[]>({
     queryKey: ["/api/polyglamorous-profiles"],
@@ -171,13 +209,15 @@ export default function PolyglamorousPeople() {
             ? values.currentPartnerCount
             : null,
       };
-      return await apiRequest("POST", "/api/polyglamorous-profiles", payload);
+      const res = await apiRequest("POST", "/api/polyglamorous-profiles", payload);
+      return (await res.json()) as { id: number; status: string; manageToken: string };
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["/api/polyglamorous-profiles"] });
+      setRevealedManageToken(data.manageToken);
       toast({
-        title: "Profile submitted",
-        description: "Your profile has been recorded as pending. Stewards will review before it appears in the directory.",
+        title: "Profile submitted (pending)",
+        description: "Save your one-time management token before closing this page.",
       });
       form.reset();
       setShowForm(false);
@@ -189,6 +229,61 @@ export default function PolyglamorousPeople() {
         variant: "destructive",
       });
     },
+  });
+
+  // Contact-request mutation (per-match consent gate)
+  const contactMutation = useMutation({
+    mutationFn: async ({ profileId, body }: { profileId: number; body: typeof contactForm }) => {
+      const res = await apiRequest("POST", `/api/polyglamorous-profiles/${profileId}/contact-requests`, body);
+      return (await res.json()) as { id: number; status: string; requesterToken: string };
+    },
+    onSuccess: (data) => {
+      setRevealedRequesterToken(data.requesterToken);
+      setContactDialogProfile(null);
+      setContactForm({
+        requesterDisplayName: "",
+        requesterContactHandle: "",
+        message: "",
+        honestyAttestation: false,
+        noOutingAttestation: false,
+      });
+      toast({ title: "Request submitted", description: "Save your requester token to poll status later." });
+    },
+    onError: (err: any) => {
+      toast({ title: "Request failed", description: err?.message ?? "Please retry.", variant: "destructive" });
+    },
+  });
+
+  // Owner-side: load manage view by token.
+  const manageView = useQuery<{ profile: PolyglamorousProfile; requests: PolyglamorousContactRequest[] }>({
+    queryKey: ["/api/polyglamorous-profiles/manage", activeManageToken],
+    enabled: !!activeManageToken,
+  });
+
+  const decideMutation = useMutation({
+    mutationFn: async ({ requestId, action }: { requestId: number; action: "accept" | "decline" }) => {
+      const res = await apiRequest(
+        "POST",
+        `/api/polyglamorous-profiles/manage/${activeManageToken}/requests/${requestId}`,
+        { action },
+      );
+      return await res.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/polyglamorous-profiles/manage", activeManageToken] });
+    },
+  });
+
+  // Requester-side: poll status by requesterToken.
+  const requesterStatus = useQuery<{
+    id: number;
+    status: string;
+    targetProfileId: number;
+    ownerDisplayName: string | null;
+    ownerContactHandle: string | null;
+  }>({
+    queryKey: ["/api/polyglamorous-contact-requests", activeRequesterToken],
+    enabled: !!activeRequesterToken,
   });
 
   return (
@@ -337,12 +432,17 @@ export default function PolyglamorousPeople() {
               <div className="space-y-3">
                 {profiles.map((p) => (
                   <div key={p.id} className="p-4 rounded-md border bg-muted/30 space-y-2" data-testid={`profile-${p.id}`}>
-                    <div className="flex justify-between items-start gap-2">
+                    <div className="flex justify-between items-start gap-2 flex-wrap">
                       <div>
                         <h3 className="font-semibold">{p.displayName}{p.pronouns ? <span className="text-xs text-muted-foreground ml-2">({p.pronouns})</span> : null}</h3>
                         <p className="text-xs text-muted-foreground">Age range sought: {p.ageRangeMin}–{p.ageRangeMax}</p>
                       </div>
-                      <Badge variant="outline">{STRUCTURE_LABEL(p.relationshipStructure)}</Badge>
+                      <div className="flex items-center gap-2">
+                        <Badge variant="outline">{STRUCTURE_LABEL(p.relationshipStructure)}</Badge>
+                        <Button size="sm" variant="outline" onClick={() => setContactDialogProfile(p)} data-testid={`button-request-${p.id}`}>
+                          <MessageSquare className="h-3.5 w-3.5 mr-1" /> Request to connect
+                        </Button>
+                      </div>
                     </div>
                     <div className="grid sm:grid-cols-2 gap-2 text-xs">
                       <p><strong>Metamour preference:</strong> {METAMOUR_LABEL(p.metamourDisclosurePreference)}</p>
@@ -640,7 +740,286 @@ export default function PolyglamorousPeople() {
           )}
         </Card>
 
+        {/* Owner side: manage my requests via manageToken */}
+        <Card className="border-2">
+          <CardHeader>
+            <div className="flex items-center gap-2">
+              <KeyRound className="h-5 w-5 text-primary" />
+              <CardTitle className="text-xl font-display">Manage my profile (owner)</CardTitle>
+            </div>
+            <CardDescription>
+              Paste the one-time management token you received when submitting your profile to see and act on
+              contact requests. The token never leaves your device unencrypted on the server.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="flex flex-col sm:flex-row gap-2">
+              <Input
+                placeholder="Paste manage token (UUID)"
+                value={manageTokenInput}
+                onChange={(e) => setManageTokenInput(e.target.value)}
+                data-testid="input-manage-token"
+              />
+              <Button
+                onClick={() => setActiveManageToken(manageTokenInput.trim() || null)}
+                disabled={!manageTokenInput.trim()}
+                data-testid="button-load-manage"
+              >
+                Load my requests
+              </Button>
+              {activeManageToken && (
+                <Button variant="outline" onClick={() => { setActiveManageToken(null); setManageTokenInput(""); }}>
+                  Clear
+                </Button>
+              )}
+            </div>
+            {activeManageToken && manageView.isLoading && (
+              <p className="text-sm text-muted-foreground flex items-center gap-2"><Loader2 className="h-4 w-4 animate-spin" /> Loading…</p>
+            )}
+            {activeManageToken && manageView.isError && (
+              <Alert variant="destructive"><AlertDescription>Invalid management token, or no profile matches it.</AlertDescription></Alert>
+            )}
+            {manageView.data && (
+              <div className="space-y-3">
+                <div className="p-3 rounded-md border bg-muted/20 text-sm">
+                  <p><strong>Profile:</strong> {manageView.data.profile.displayName}</p>
+                  <p className="text-xs text-muted-foreground">Status: <Badge variant="outline">{manageView.data.profile.status}</Badge></p>
+                </div>
+                {manageView.data.requests.length === 0 ? (
+                  <p className="text-sm text-muted-foreground text-center py-4">No contact requests yet.</p>
+                ) : (
+                  manageView.data.requests.map((r) => (
+                    <div key={r.id} className="p-3 rounded-md border space-y-2" data-testid={`manage-request-${r.id}`}>
+                      <div className="flex justify-between items-start flex-wrap gap-2">
+                        <div>
+                          <p className="font-semibold text-sm">{r.requesterDisplayName}</p>
+                          <p className="text-xs text-muted-foreground">Submitted: {new Date(r.createdAt as any).toLocaleString()}</p>
+                        </div>
+                        <Badge variant={r.status === "accepted" ? "default" : r.status === "declined" ? "destructive" : "outline"}>
+                          {r.status}
+                        </Badge>
+                      </div>
+                      {r.message && <p className="text-sm text-foreground/80">{r.message}</p>}
+                      {r.status === "accepted" && (
+                        <div className="text-xs p-2 rounded bg-primary/10 border border-primary/30 flex items-center gap-2">
+                          <Mail className="h-3.5 w-3.5" />
+                          <span>Their contact handle: <strong>{r.requesterContactHandle}</strong></span>
+                        </div>
+                      )}
+                      {r.status === "pending" && (
+                        <div className="flex gap-2">
+                          <Button size="sm" onClick={() => decideMutation.mutate({ requestId: r.id, action: "accept" })} disabled={decideMutation.isPending} data-testid={`button-accept-${r.id}`}>
+                            <Check className="h-3.5 w-3.5 mr-1" /> Accept
+                          </Button>
+                          <Button size="sm" variant="outline" onClick={() => decideMutation.mutate({ requestId: r.id, action: "decline" })} disabled={decideMutation.isPending} data-testid={`button-decline-${r.id}`}>
+                            <XIcon className="h-3.5 w-3.5 mr-1" /> Decline
+                          </Button>
+                        </div>
+                      )}
+                    </div>
+                  ))
+                )}
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
+        {/* Requester side: check status by requesterToken */}
+        <Card className="border-2">
+          <CardHeader>
+            <div className="flex items-center gap-2">
+              <KeyRound className="h-5 w-5 text-primary" />
+              <CardTitle className="text-xl font-display">Check my request status</CardTitle>
+            </div>
+            <CardDescription>
+              If you submitted a contact request, paste the requester token you were given to see whether the
+              recipient has accepted. The recipient's contact handle is revealed only after they accept.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="flex flex-col sm:flex-row gap-2">
+              <Input
+                placeholder="Paste requester token (UUID)"
+                value={requesterTokenInput}
+                onChange={(e) => setRequesterTokenInput(e.target.value)}
+                data-testid="input-requester-token"
+              />
+              <Button
+                onClick={() => setActiveRequesterToken(requesterTokenInput.trim() || null)}
+                disabled={!requesterTokenInput.trim()}
+                data-testid="button-check-status"
+              >
+                Check status
+              </Button>
+              {activeRequesterToken && (
+                <Button variant="outline" onClick={() => { setActiveRequesterToken(null); setRequesterTokenInput(""); }}>
+                  Clear
+                </Button>
+              )}
+            </div>
+            {activeRequesterToken && requesterStatus.isLoading && (
+              <p className="text-sm text-muted-foreground flex items-center gap-2"><Loader2 className="h-4 w-4 animate-spin" /> Loading…</p>
+            )}
+            {activeRequesterToken && requesterStatus.isError && (
+              <Alert variant="destructive"><AlertDescription>Invalid requester token.</AlertDescription></Alert>
+            )}
+            {requesterStatus.data && (
+              <div className="p-3 rounded-md border space-y-2" data-testid="requester-status-display">
+                <p className="text-sm">Status: <Badge variant={requesterStatus.data.status === "accepted" ? "default" : requesterStatus.data.status === "declined" ? "destructive" : "outline"}>{requesterStatus.data.status}</Badge></p>
+                {requesterStatus.data.status === "accepted" && requesterStatus.data.ownerContactHandle ? (
+                  <div className="text-xs p-2 rounded bg-primary/10 border border-primary/30 flex items-center gap-2">
+                    <Mail className="h-3.5 w-3.5" />
+                    <span>
+                      <strong>{requesterStatus.data.ownerDisplayName}</strong> has accepted. Their contact handle:{" "}
+                      <strong>{requesterStatus.data.ownerContactHandle}</strong>
+                    </span>
+                  </div>
+                ) : requesterStatus.data.status === "declined" ? (
+                  <p className="text-xs text-muted-foreground">The recipient has declined this request. Please respect their decision.</p>
+                ) : (
+                  <p className="text-xs text-muted-foreground">Still pending. Check back later — the recipient has not acted yet.</p>
+                )}
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
       </div>
+
+      {/* Per-match contact-request Dialog */}
+      <Dialog open={!!contactDialogProfile} onOpenChange={(open) => { if (!open) setContactDialogProfile(null); }}>
+        <DialogContent className="max-w-lg">
+          <DialogHeader>
+            <DialogTitle>Request to connect with {contactDialogProfile?.displayName}</DialogTitle>
+            <DialogDescription>
+              Your contact handle is stored privately and is <strong>only</strong> revealed to{" "}
+              {contactDialogProfile?.displayName} if they accept. They are never shown your name or handle
+              unless you submit this form.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-3">
+            <div>
+              <Label className="text-sm">Your display name *</Label>
+              <Input
+                value={contactForm.requesterDisplayName}
+                onChange={(e) => setContactForm({ ...contactForm, requesterDisplayName: e.target.value })}
+                data-testid="input-contact-display-name"
+              />
+            </div>
+            <div>
+              <Label className="text-sm">Your contact handle *</Label>
+              <Input
+                placeholder="Signal / Matrix / email of your choice"
+                value={contactForm.requesterContactHandle}
+                onChange={(e) => setContactForm({ ...contactForm, requesterContactHandle: e.target.value })}
+                data-testid="input-contact-handle"
+              />
+            </div>
+            <div>
+              <Label className="text-sm">Short message (optional)</Label>
+              <Textarea
+                rows={3}
+                value={contactForm.message}
+                onChange={(e) => setContactForm({ ...contactForm, message: e.target.value })}
+                data-testid="textarea-contact-message"
+              />
+            </div>
+            <div className="space-y-2 p-3 rounded-md border-2 border-primary/40 bg-primary/5">
+              <div className="flex items-start gap-2">
+                <Checkbox
+                  checked={contactForm.honestyAttestation}
+                  onCheckedChange={(v) => setContactForm({ ...contactForm, honestyAttestation: !!v })}
+                  data-testid="checkbox-contact-honesty"
+                />
+                <Label className="text-xs leading-relaxed cursor-pointer">
+                  The display name and contact handle above are mine. I am not impersonating anyone.
+                </Label>
+              </div>
+              <div className="flex items-start gap-2">
+                <Checkbox
+                  checked={contactForm.noOutingAttestation}
+                  onCheckedChange={(v) => setContactForm({ ...contactForm, noOutingAttestation: !!v })}
+                  data-testid="checkbox-contact-no-outing"
+                />
+                <Label className="text-xs leading-relaxed cursor-pointer">
+                  I will not out this member — not by screenshotting, linking their profile, or sharing their
+                  existence on this surface to anyone, regardless of whether they accept or decline.
+                </Label>
+              </div>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setContactDialogProfile(null)}>Cancel</Button>
+            <Button
+              onClick={() => contactDialogProfile && contactMutation.mutate({ profileId: contactDialogProfile.id, body: contactForm })}
+              disabled={
+                contactMutation.isPending ||
+                !contactForm.requesterDisplayName.trim() ||
+                !contactForm.requesterContactHandle.trim() ||
+                !contactForm.honestyAttestation ||
+                !contactForm.noOutingAttestation
+              }
+              data-testid="button-submit-contact-request"
+            >
+              {contactMutation.isPending ? <><Loader2 className="h-4 w-4 mr-2 animate-spin" /> Submitting…</> : "Submit request"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* One-time manageToken reveal */}
+      <Dialog open={!!revealedManageToken} onOpenChange={(open) => { if (!open) setRevealedManageToken(null); }}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2"><KeyRound className="h-5 w-5" /> Your one-time management token</DialogTitle>
+            <DialogDescription>
+              This token is shown <strong>once</strong>. Copy it now and store it somewhere only you can access
+              (password manager, encrypted note). You will need it to view and accept contact requests once
+              stewards approve your profile. Losing it means you cannot manage your profile.
+            </DialogDescription>
+          </DialogHeader>
+          {revealedManageToken && (
+            <div className="space-y-3">
+              <div className="p-3 rounded border bg-muted/30 font-mono text-xs break-all" data-testid="revealed-manage-token">
+                {revealedManageToken}
+              </div>
+              <Button onClick={() => copy(revealedManageToken, "Manage token")} className="w-full" data-testid="button-copy-manage-token">
+                <Copy className="h-4 w-4 mr-2" /> Copy to clipboard
+              </Button>
+            </div>
+          )}
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setRevealedManageToken(null)}>I've saved it — close</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* One-time requesterToken reveal */}
+      <Dialog open={!!revealedRequesterToken} onOpenChange={(open) => { if (!open) setRevealedRequesterToken(null); }}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2"><KeyRound className="h-5 w-5" /> Your one-time requester token</DialogTitle>
+            <DialogDescription>
+              This token is shown <strong>once</strong>. Copy it now. You will use it later in the
+              "Check my request status" section to see if the recipient has accepted. Their contact handle is
+              only revealed to you on acceptance.
+            </DialogDescription>
+          </DialogHeader>
+          {revealedRequesterToken && (
+            <div className="space-y-3">
+              <div className="p-3 rounded border bg-muted/30 font-mono text-xs break-all" data-testid="revealed-requester-token">
+                {revealedRequesterToken}
+              </div>
+              <Button onClick={() => copy(revealedRequesterToken, "Requester token")} className="w-full" data-testid="button-copy-requester-token">
+                <Copy className="h-4 w-4 mr-2" /> Copy to clipboard
+              </Button>
+            </div>
+          )}
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setRevealedRequesterToken(null)}>I've saved it — close</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
