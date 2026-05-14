@@ -3058,6 +3058,55 @@ END:VEVENT
     }
   });
 
+  app.get('/api/polyglamorous-profiles', async (_req, res) => {
+    try {
+      const profiles = await storage.listPolyglamorousProfiles();
+      // Honesty boundary: scrub fields that must never leak without per-match consent.
+      // The contactHandle and currentPartnerCount are private even when polyculeVisibility is broad.
+      const scrubbed = profiles.map((p) => ({
+        ...p,
+        contactHandle: null,
+        currentPartnerCount: null,
+      }));
+      res.json(scrubbed);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to list polyglamorous profiles" });
+    }
+  });
+
+  app.post('/api/polyglamorous-profiles', async (req, res) => {
+    try {
+      const { insertPolyglamorousProfileSchema } = await import("@shared/schema");
+      const parsed = insertPolyglamorousProfileSchema.safeParse(req.body);
+      if (!parsed.success) {
+        return res.status(400).json({ message: "Invalid submission", errors: parsed.error.flatten() });
+      }
+      const d = parsed.data;
+      if (
+        !d.metamourDisclosureAttestation ||
+        !d.stiCadenceAttestation ||
+        !d.noOutingAttestation ||
+        !d.honestyAttestation ||
+        !d.consentToBeContacted
+      ) {
+        return res.status(400).json({
+          message:
+            "All five attestations (metamour-disclosure posture, STI testing cadence commitment, no-outing of other members, honesty, consent to be contacted) must be confirmed before submission.",
+        });
+      }
+      if (d.ageRangeMax < d.ageRangeMin) {
+        return res.status(400).json({ message: "Maximum age must be greater than or equal to minimum age." });
+      }
+      if (d.ageRangeMin < 18) {
+        return res.status(400).json({ message: "Minimum age must be 18 or older." });
+      }
+      const profile = await storage.createPolyglamorousProfile(d);
+      res.status(201).json(profile);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to record polyglamorous profile submission" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

@@ -93,9 +93,9 @@ export default function TermsOfService() {
                   <div className="flex items-start p-3 bg-muted/30 rounded">
                     <CheckCircle className="mr-3 h-5 w-5 text-green-600 mt-0.5" />
                     <div>
-                      <strong className="block mb-1">Monogamy-Only Platform</strong>
+                      <strong className="block mb-1">Two-Surface Matchmaking (updated 2026-05-14)</strong>
                       <span className="text-sm text-muted-foreground">
-                        Good People Cooperative Matchmaking is exclusively for users seeking monogamous relationships with 2-year maximum age differences. Non-monogamous relationship structures are not supported on this platform.
+                        Good People Cooperative Matchmaking is exclusively for users seeking monogamous relationships with 2-year maximum age differences. Polyamorous, polyglamorous, open, swinging, monogamish, and relationship-anarchy members are served by a separate sibling surface at <a href="/polyglamorous-people" className="underline">/polyglamorous-people</a>, which uses different consent-disclosure, STI cadence, and metamour-visibility infrastructure. A given member uses one surface at a time; cross-surface profile mirroring is not provided.
                       </span>
                     </div>
                   </div>
@@ -203,7 +203,7 @@ export default function TermsOfService() {
                       <li>❌ Lying about STI status or test results</li>
                       <li>❌ Sharing others' private health information</li>
                       <li>❌ Uploading pornographic or sexually explicit images</li>
-                      <li>❌ Seeking non-monogamous relationships</li>
+                      <li>❌ Seeking non-monogamous relationships <em className="text-xs">(use <a href="/polyglamorous-people" className="underline">/polyglamorous-people</a> instead — sibling surface for poly / open / RA members, with the infrastructure those structures actually require)</em></li>
                       <li>❌ Harassment, discrimination, or hate speech</li>
                       <li>❌ Creating fake accounts or catfishing</li>
                       <li>❌ Bypassing age verification systems</li>

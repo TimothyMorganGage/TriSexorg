@@ -69,6 +69,7 @@ const InclusiveOrdering = lazy(() => import("@/pages/inclusive-ordering"));
 const ForkTheFramework = lazy(() => import("@/pages/fork-the-framework"));
 const InclusiveOrderingRegistry = lazy(() => import("@/pages/inclusive-ordering-registry"));
 const Manufacturing = lazy(() => import("@/pages/manufacturing"));
+const PolyglamorousPeople = lazy(() => import("@/pages/polyglamorous-people"));
 const PeerMentor = lazy(() => import("@/pages/peer-mentor"));
 const Analytics = lazy(() => import("@/pages/analytics"));
 const InteractiveStories = lazy(() => import("@/pages/interactive-stories"));
@@ -143,6 +144,7 @@ function Router() {
             <Route path="/fork-the-framework" component={ForkTheFramework} />
             <Route path="/inclusive-ordering-registry" component={InclusiveOrderingRegistry} />
             <Route path="/manufacturing" component={Manufacturing} />
+            <Route path="/polyglamorous-people" component={PolyglamorousPeople} />
             <Route path="/peer-mentor" component={PeerMentor} />
             <Route path="/analytics" component={Analytics} />
             <Route path="/interactive-stories" component={InteractiveStories} />

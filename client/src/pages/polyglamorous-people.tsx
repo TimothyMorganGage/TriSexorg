@@ -1,0 +1,646 @@
+import { useState } from "react";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { apiRequest, queryClient } from "@/lib/queryClient";
+import { useToast } from "@/hooks/use-toast";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Badge } from "@/components/ui/badge";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import {
+  Sparkles,
+  ShieldCheck,
+  Heart,
+  Lock,
+  Users,
+  Eye,
+  EyeOff,
+  Info,
+  Loader2,
+  PlusCircle,
+  AlertTriangle,
+} from "lucide-react";
+import {
+  insertPolyglamorousProfileSchema,
+  type PolyglamorousProfile,
+} from "@shared/schema";
+
+const RELATIONSHIP_STRUCTURES: Array<{ value: string; label: string; blurb: string }> = [
+  { value: "solo-poly", label: "Solo polyamory", blurb: "Multiple partners, no nesting / cohabitation as a relationship anchor." },
+  { value: "hierarchical-poly", label: "Hierarchical polyamory", blurb: "Primary / secondary / etc. structure. Optional veto-posture field appears." },
+  { value: "non-hierarchical-poly", label: "Non-hierarchical polyamory", blurb: "Multiple partners treated as co-equal; no primary." },
+  { value: "relationship-anarchy", label: "Relationship anarchy", blurb: "Each connection negotiated on its own terms; no hierarchy applied across them." },
+  { value: "open", label: "Open relationship", blurb: "Anchor pair plus negotiated outside connections." },
+  { value: "swinging", label: "Swinging", blurb: "Recreational partner exchange, often within a paired primary structure." },
+  { value: "monogamish", label: "Monogamish", blurb: "Mostly monogamous with explicit, negotiated exceptions." },
+  { value: "unsure-exploring", label: "Unsure / exploring", blurb: "Figuring it out. Valid; no pressure to pick a label." },
+];
+
+const METAMOUR_PREFS: Array<{ value: string; label: string; blurb: string }> = [
+  { value: "kitchen-table", label: "Kitchen-table", blurb: "Want to know and meet metamours; whole-polycule social closeness." },
+  { value: "parallel", label: "Parallel", blurb: "Aware they exist, no contact required; partners run side-by-side." },
+  { value: "garden-party", label: "Garden-party", blurb: "Occasional, low-key metamour contact at shared events." },
+  { value: "dadt", label: "DADT (don't ask / don't tell)", blurb: "No information exchanged about other partners. Higher operational risk; surfaced here for honesty, not endorsement." },
+];
+
+const CONSENT_CADENCES: Array<{ value: string; label: string }> = [
+  { value: "immediately", label: "Immediately — disclose any new partner before sexual contact" },
+  { value: "weekly", label: "Weekly check-in cadence" },
+  { value: "case-by-case", label: "Case-by-case as negotiated per partner" },
+  { value: "never-required", label: "Not required by my current agreements" },
+];
+
+const STI_CADENCES: Array<{ value: string; label: string }> = [
+  { value: "every-3-months", label: "Every 3 months (recommended default for active polycules)" },
+  { value: "every-6-months", label: "Every 6 months" },
+  { value: "every-12-months", label: "Every 12 months" },
+  { value: "after-each-new-partner", label: "After each new sexual partner" },
+];
+
+const BARRIER_POSTURES: Array<{ value: string; label: string }> = [
+  { value: "barriers-with-all", label: "Barriers with all partners" },
+  { value: "barriers-with-non-fluid-bonded", label: "Barriers with non-fluid-bonded partners only" },
+  { value: "case-by-case", label: "Case-by-case negotiation per partner" },
+  { value: "prefer-not-to-disclose", label: "Prefer not to disclose here" },
+];
+
+const VISIBILITY_OPTIONS: Array<{ value: string; label: string; icon: typeof Eye }> = [
+  { value: "nobody", label: "Nobody — profile hidden by default, only contactable manually", icon: EyeOff },
+  { value: "matched-partners-only", label: "Matched partners only (after a mutual match)", icon: Lock },
+  { value: "declared-metamours", label: "Declared metamours of partners I'm matched with", icon: Users },
+  { value: "cooperative-members", label: "All verified cooperative members", icon: Eye },
+];
+
+type FormValues = {
+  displayName: string;
+  pronouns: string;
+  ageRangeMin: number;
+  ageRangeMax: number;
+  relationshipStructure: string;
+  currentPartnerCount: number | null;
+  metamourDisclosurePreference: string;
+  hierarchyPosture: string;
+  consentDisclosureCadence: string;
+  stiTestingCadenceCommitment: string;
+  barrierUsePosture: string;
+  polyculeVisibility: string;
+  vetoPosture: string;
+  notLookingFor: string;
+  bio: string;
+  contactHandle: string;
+  metamourDisclosureAttestation: boolean;
+  stiCadenceAttestation: boolean;
+  noOutingAttestation: boolean;
+  honestyAttestation: boolean;
+  consentToBeContacted: boolean;
+};
+
+const STRUCTURE_LABEL = (v: string) => RELATIONSHIP_STRUCTURES.find((r) => r.value === v)?.label ?? v;
+const METAMOUR_LABEL = (v: string) => METAMOUR_PREFS.find((r) => r.value === v)?.label ?? v;
+
+export default function PolyglamorousPeople() {
+  const { toast } = useToast();
+  const [showForm, setShowForm] = useState(false);
+
+  const { data: profiles = [], isLoading } = useQuery<PolyglamorousProfile[]>({
+    queryKey: ["/api/polyglamorous-profiles"],
+  });
+
+  const form = useForm<FormValues>({
+    resolver: zodResolver(insertPolyglamorousProfileSchema.extend({})) as never,
+    defaultValues: {
+      displayName: "",
+      pronouns: "",
+      ageRangeMin: 18,
+      ageRangeMax: 99,
+      relationshipStructure: "",
+      currentPartnerCount: null,
+      metamourDisclosurePreference: "",
+      hierarchyPosture: "",
+      consentDisclosureCadence: "",
+      stiTestingCadenceCommitment: "",
+      barrierUsePosture: "",
+      polyculeVisibility: "matched-partners-only",
+      vetoPosture: "",
+      notLookingFor: "",
+      bio: "",
+      contactHandle: "",
+      metamourDisclosureAttestation: false,
+      stiCadenceAttestation: false,
+      noOutingAttestation: false,
+      honestyAttestation: false,
+      consentToBeContacted: false,
+    },
+  });
+
+  const structure = form.watch("relationshipStructure");
+  const showHierarchy = structure === "hierarchical-poly";
+
+  const createMutation = useMutation({
+    mutationFn: async (values: FormValues) => {
+      const payload = {
+        ...values,
+        pronouns: values.pronouns.trim() || null,
+        hierarchyPosture: showHierarchy ? values.hierarchyPosture.trim() || null : null,
+        vetoPosture: showHierarchy ? values.vetoPosture.trim() || null : null,
+        bio: values.bio.trim() || null,
+        contactHandle: values.contactHandle.trim() || null,
+        currentPartnerCount:
+          typeof values.currentPartnerCount === "number" && !Number.isNaN(values.currentPartnerCount)
+            ? values.currentPartnerCount
+            : null,
+      };
+      return await apiRequest("POST", "/api/polyglamorous-profiles", payload);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/polyglamorous-profiles"] });
+      toast({
+        title: "Profile submitted",
+        description: "Your profile has been recorded as pending. Stewards will review before it appears in the directory.",
+      });
+      form.reset();
+      setShowForm(false);
+    },
+    onError: (err: any) => {
+      toast({
+        title: "Submission failed",
+        description: err?.message ?? "Please confirm all five attestations are checked.",
+        variant: "destructive",
+      });
+    },
+  });
+
+  return (
+    <div className="min-h-screen bg-background py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-5xl mx-auto space-y-8">
+
+        {/* Intersex Healthcare Affirmation — shared frame across matchmaking surfaces */}
+        <Alert className="bg-white dark:bg-gray-950 border-2 border-black dark:border-white">
+          <Heart className="h-5 w-5 text-black dark:text-white" />
+          <AlertDescription className="ml-2 text-black dark:text-white">
+            <strong>Intersex Healthcare IS Everyone's Affirmation:</strong> This sibling
+            surface centers intersex anatomy as the universal baseline. Trans,
+            non-binary, genderqueer, and quare embodiment are all respected by design.
+          </AlertDescription>
+        </Alert>
+
+        {/* Header */}
+        <div className="text-center space-y-3">
+          <Badge className="bg-primary/15 text-primary border border-primary/30">
+            <Sparkles className="w-3 h-3 mr-1" /> Sibling Surface · CC BY-SA 4.0
+          </Badge>
+          <h1 className="text-4xl font-bold font-display">Polyglamorous People</h1>
+          <p className="text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+            Cooperative matchmaking for polyamorous, polyglamorous, open, swinging,
+            monogamish, and relationship-anarchy members. Sibling to{" "}
+            <a href="/good-people" className="underline">Good People</a> (which is
+            monogamy-only by design). The two surfaces use different infrastructure and
+            are kept honestly separate rather than pretending one tuning fits both.
+          </p>
+        </div>
+
+        {/* Honesty banner */}
+        <Alert className="border-2 border-amber-500/60 bg-amber-50 dark:bg-amber-950/30" data-testid="poly-honesty-banner">
+          <AlertTriangle className="h-5 w-5 text-amber-600 dark:text-amber-400" />
+          <AlertTitle className="text-amber-900 dark:text-amber-100">
+            Empty by default. No fabricated profiles. No synthetic matches.
+          </AlertTitle>
+          <AlertDescription className="ml-0 mt-2 text-amber-900 dark:text-amber-100 leading-relaxed space-y-2">
+            <p>
+              The directory below is empty until real members submit. There are no
+              seeded profiles, no decorative "23 polyamorous members near you" counters,
+              and no inferred profiles built from anyone's behaviour. Submissions land
+              as <strong>pending</strong> and are reviewed by stewards before they
+              appear publicly.
+            </p>
+            <p>
+              <strong>What is never shown to other members without an explicit per-match
+              toggle:</strong> your current partner count, your contact handle, your
+              precise location, and any field you skipped. Poly status is grounds for
+              custody loss in some jurisdictions; this platform treats outing as the
+              real-world harm it is.
+            </p>
+          </AlertDescription>
+        </Alert>
+
+        {/* Two-surface boundary card */}
+        <Card className="border-2">
+          <CardHeader>
+            <div className="flex items-center gap-2">
+              <Info className="h-5 w-5 text-primary" />
+              <CardTitle className="text-xl font-display">How this surface differs from Good People</CardTitle>
+            </div>
+            <CardDescription>
+              Operational differences, not moral ones. The infrastructure is different
+              because the relationship structures are different.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="grid md:grid-cols-2 gap-4 text-sm">
+              <div className="p-4 rounded-md border bg-muted/30">
+                <h3 className="font-semibold mb-2">Good People (/good-people)</h3>
+                <ul className="space-y-1 text-muted-foreground leading-relaxed">
+                  <li>• Closed-dyad assumptions throughout</li>
+                  <li>• 2-year age-range cap, hard-coded</li>
+                  <li>• Monthly STI screening default</li>
+                  <li>• Progressive-stage barrier work optimised for two people</li>
+                  <li>• No metamour disclosure tooling</li>
+                  <li>• Genealogical verification (GEDCOM) prevents incest within 8 degrees</li>
+                </ul>
+              </div>
+              <div className="p-4 rounded-md border-2 border-primary/40 bg-primary/5">
+                <h3 className="font-semibold mb-2">Polyglamorous People (here)</h3>
+                <ul className="space-y-1 text-muted-foreground leading-relaxed">
+                  <li>• Continuous-exposure risk modelling</li>
+                  <li>• Member-chosen age range (no 2-year cap)</li>
+                  <li>• Shorter STI testing cadence options (every 3 / 6 / 12 months / after each new partner)</li>
+                  <li>• Metamour disclosure preference: kitchen-table / parallel / garden-party / DADT</li>
+                  <li>• Consent disclosure cadence and barrier posture declared up-front</li>
+                  <li>• Optional hierarchy & veto posture (only for hierarchical-poly)</li>
+                  <li>• Polycule visibility chosen by you, default most-private</li>
+                </ul>
+              </div>
+            </div>
+            <p className="text-xs text-muted-foreground italic pt-3">
+              A member uses one surface at a time. Cross-surface profile mirroring is
+              not provided. See{" "}
+              <a href="/monogamy-economics" className="underline">/monogamy-economics</a>{" "}
+              for the operational-scope reasoning.
+            </p>
+          </CardContent>
+        </Card>
+
+        {/* Data-collection promises */}
+        <Card className="border-2">
+          <CardHeader>
+            <div className="flex items-center gap-2">
+              <ShieldCheck className="h-5 w-5 text-primary" />
+              <CardTitle className="text-xl font-display">How we handle your data</CardTitle>
+            </div>
+            <CardDescription>The promises that govern every field on the form below.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <ul className="space-y-2 text-sm text-muted-foreground leading-relaxed">
+              <li><strong className="text-foreground">Opt-in per field.</strong> Skipping is always allowed. Sparse profiles are valid; the directory must work for people who only share a little.</li>
+              <li><strong className="text-foreground">Self-declared, not inferred.</strong> We never derive your relationship structure from your behaviour or partner data. We always ask.</li>
+              <li><strong className="text-foreground">No outing.</strong> Partner count and contact handle are stripped from the directory feed entirely. They are only revealed after you toggle disclosure on a specific match.</li>
+              <li><strong className="text-foreground">Retention minimisation.</strong> Old partner counts are aged out on a 12-month rolling window unless you explicitly pin them for STI-network use.</li>
+              <li><strong className="text-foreground">Honest empty state.</strong> No fabricated members. The directory says "empty" when it is empty.</li>
+              <li><strong className="text-foreground">Server-enforced attestations.</strong> Five checkboxes (metamour-disclosure posture, STI cadence commitment, no-outing of other members, honesty, consent to be contacted) are validated server-side; a submission that misses any of them is rejected with a 400.</li>
+            </ul>
+          </CardContent>
+        </Card>
+
+        {/* Directory */}
+        <Card className="border-2">
+          <CardHeader>
+            <div className="flex items-center gap-2">
+              <Users className="h-5 w-5 text-primary" />
+              <CardTitle className="text-xl font-display">Active profiles</CardTitle>
+            </div>
+            <CardDescription>
+              The directory stays empty until real members submit. Pending submissions
+              are not shown.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            {isLoading ? (
+              <div className="flex items-center justify-center py-8 text-muted-foreground">
+                <Loader2 className="h-5 w-5 animate-spin mr-2" /> Loading…
+              </div>
+            ) : profiles.length === 0 ? (
+              <div className="text-center py-8 text-muted-foreground">
+                <p className="text-sm">No active profiles yet. This is the honest state of the directory today.</p>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {profiles.map((p) => (
+                  <div key={p.id} className="p-4 rounded-md border bg-muted/30 space-y-2" data-testid={`profile-${p.id}`}>
+                    <div className="flex justify-between items-start gap-2">
+                      <div>
+                        <h3 className="font-semibold">{p.displayName}{p.pronouns ? <span className="text-xs text-muted-foreground ml-2">({p.pronouns})</span> : null}</h3>
+                        <p className="text-xs text-muted-foreground">Age range sought: {p.ageRangeMin}–{p.ageRangeMax}</p>
+                      </div>
+                      <Badge variant="outline">{STRUCTURE_LABEL(p.relationshipStructure)}</Badge>
+                    </div>
+                    <div className="grid sm:grid-cols-2 gap-2 text-xs">
+                      <p><strong>Metamour preference:</strong> {METAMOUR_LABEL(p.metamourDisclosurePreference)}</p>
+                      <p><strong>STI cadence:</strong> {p.stiTestingCadenceCommitment.replace(/-/g, " ")}</p>
+                      <p><strong>Barrier posture:</strong> {p.barrierUsePosture.replace(/-/g, " ")}</p>
+                      <p><strong>Consent disclosure:</strong> {p.consentDisclosureCadence.replace(/-/g, " ")}</p>
+                    </div>
+                    {p.bio && <p className="text-sm text-foreground/80 leading-relaxed">{p.bio}</p>}
+                    {p.notLookingFor && (
+                      <p className="text-xs text-muted-foreground"><strong>Not looking for:</strong> {p.notLookingFor}</p>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
+        {/* Application form */}
+        <Card className="border-2 border-primary/40">
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <PlusCircle className="h-5 w-5 text-primary" />
+                <CardTitle className="text-xl font-display">Submit your profile</CardTitle>
+              </div>
+              <Button onClick={() => setShowForm(!showForm)} variant="outline" data-testid="button-toggle-poly-form">
+                {showForm ? "Hide form" : "Open form"}
+              </Button>
+            </div>
+            <CardDescription>
+              Every field below is opt-in except the ones marked with *. Submissions
+              land as <strong>pending</strong> until manually reviewed by stewards.
+            </CardDescription>
+          </CardHeader>
+          {showForm && (
+            <CardContent>
+              <Form {...form}>
+                <form
+                  onSubmit={form.handleSubmit((v) => createMutation.mutate(v))}
+                  className="space-y-5"
+                >
+                  <FormField control={form.control} name="displayName" render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Display name *</FormLabel>
+                      <FormControl><Input {...field} data-testid="input-poly-display-name" /></FormControl>
+                      <FormDescription>How you'd like to appear in the directory. Doesn't need to be your legal name.</FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )} />
+
+                  <FormField control={form.control} name="pronouns" render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Pronouns</FormLabel>
+                      <FormControl><Input placeholder="optional — e.g. they/them, she/her, ze/zir" {...field} data-testid="input-poly-pronouns" /></FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )} />
+
+                  <FormField control={form.control} name="relationshipStructure" render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Relationship structure *</FormLabel>
+                      <FormDescription>Self-declared. Free to change at any time.</FormDescription>
+                      <Select onValueChange={field.onChange} value={field.value}>
+                        <FormControl>
+                          <SelectTrigger data-testid="select-poly-structure"><SelectValue placeholder="Choose how you describe your relationship structure" /></SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {RELATIONSHIP_STRUCTURES.map((s) => (
+                            <SelectItem key={s.value} value={s.value}>{s.label}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      {field.value && (
+                        <p className="text-xs text-muted-foreground mt-1 italic">{RELATIONSHIP_STRUCTURES.find((s) => s.value === field.value)?.blurb}</p>
+                      )}
+                      <FormMessage />
+                    </FormItem>
+                  )} />
+
+                  {showHierarchy && (
+                    <div className="grid md:grid-cols-2 gap-4 p-4 rounded-md border bg-muted/30">
+                      <FormField control={form.control} name="hierarchyPosture" render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Hierarchy posture</FormLabel>
+                          <FormControl><Input placeholder="open to being a primary / secondary / nesting / non-nesting / comet — your own words" {...field} data-testid="input-poly-hierarchy" /></FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )} />
+                      <FormField control={form.control} name="vetoPosture" render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Veto posture</FormLabel>
+                          <FormControl><Input placeholder="veto rights for existing partners? — your own framing" {...field} data-testid="input-poly-veto" /></FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )} />
+                    </div>
+                  )}
+
+                  <FormField control={form.control} name="metamourDisclosurePreference" render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Metamour disclosure preference *</FormLabel>
+                      <FormDescription>How much contact you want with your partners' other partners.</FormDescription>
+                      <Select onValueChange={field.onChange} value={field.value}>
+                        <FormControl>
+                          <SelectTrigger data-testid="select-poly-metamour"><SelectValue placeholder="Choose your metamour posture" /></SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {METAMOUR_PREFS.map((s) => (
+                            <SelectItem key={s.value} value={s.value}>{s.label}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      {field.value && (
+                        <p className="text-xs text-muted-foreground mt-1 italic">{METAMOUR_PREFS.find((s) => s.value === field.value)?.blurb}</p>
+                      )}
+                      <FormMessage />
+                    </FormItem>
+                  )} />
+
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <FormField control={form.control} name="consentDisclosureCadence" render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Consent disclosure cadence *</FormLabel>
+                        <Select onValueChange={field.onChange} value={field.value}>
+                          <FormControl>
+                            <SelectTrigger data-testid="select-poly-consent-cadence"><SelectValue placeholder="How often you disclose new partners to existing ones" /></SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            {CONSENT_CADENCES.map((s) => (
+                              <SelectItem key={s.value} value={s.value}>{s.label}</SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )} />
+
+                    <FormField control={form.control} name="stiTestingCadenceCommitment" render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>STI testing cadence commitment *</FormLabel>
+                        <Select onValueChange={field.onChange} value={field.value}>
+                          <FormControl>
+                            <SelectTrigger data-testid="select-poly-sti-cadence"><SelectValue placeholder="How often you commit to test" /></SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            {STI_CADENCES.map((s) => (
+                              <SelectItem key={s.value} value={s.value}>{s.label}</SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )} />
+                  </div>
+
+                  <FormField control={form.control} name="barrierUsePosture" render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Barrier-use posture across the polycule *</FormLabel>
+                      <Select onValueChange={field.onChange} value={field.value}>
+                        <FormControl>
+                          <SelectTrigger data-testid="select-poly-barrier"><SelectValue placeholder="Declared, not enforced" /></SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {BARRIER_POSTURES.map((s) => (
+                            <SelectItem key={s.value} value={s.value}>{s.label}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <FormDescription>Feeds into the TriSexPort partner-network lattice if you opt in.</FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )} />
+
+                  <FormField control={form.control} name="polyculeVisibility" render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Polycule visibility *</FormLabel>
+                      <FormDescription>Who can see that you're on this surface. Default is most-private.</FormDescription>
+                      <Select onValueChange={field.onChange} value={field.value}>
+                        <FormControl>
+                          <SelectTrigger data-testid="select-poly-visibility"><SelectValue /></SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {VISIBILITY_OPTIONS.map((s) => (
+                            <SelectItem key={s.value} value={s.value}>{s.label}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )} />
+
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <FormField control={form.control} name="ageRangeMin" render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Age range — minimum *</FormLabel>
+                        <FormControl>
+                          <Input type="number" min={18} {...field} onChange={(e) => field.onChange(parseInt(e.target.value, 10))} data-testid="input-poly-age-min" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )} />
+                    <FormField control={form.control} name="ageRangeMax" render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Age range — maximum *</FormLabel>
+                        <FormControl>
+                          <Input type="number" min={18} {...field} onChange={(e) => field.onChange(parseInt(e.target.value, 10))} data-testid="input-poly-age-max" />
+                        </FormControl>
+                        <FormDescription>Member-chosen. No 2-year cap here.</FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )} />
+                  </div>
+
+                  <FormField control={form.control} name="currentPartnerCount" render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Current partner count</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="number"
+                          min={0}
+                          placeholder="optional — leave blank for 'prefer not to say'"
+                          value={field.value ?? ""}
+                          onChange={(e) => {
+                            const v = e.target.value;
+                            field.onChange(v === "" ? null : parseInt(v, 10));
+                          }}
+                          data-testid="input-poly-partner-count"
+                        />
+                      </FormControl>
+                      <FormDescription>
+                        Stored privately for your own STI-network risk modelling. <strong>Never shown to other
+                        members.</strong> Skip this if you'd prefer.
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )} />
+
+                  <FormField control={form.control} name="notLookingFor" render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>What you're not looking for *</FormLabel>
+                      <FormControl><Textarea rows={3} placeholder="e.g. no triads, no closed polycules, no DADT, no hierarchy, no fluid-bonding asks early on…" {...field} data-testid="textarea-poly-not-looking-for" /></FormControl>
+                      <FormDescription>At least as important as what you are looking for. Free text.</FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )} />
+
+                  <FormField control={form.control} name="bio" render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Bio</FormLabel>
+                      <FormControl><Textarea rows={4} placeholder="optional — anything you'd like potential matches to know" {...field} data-testid="textarea-poly-bio" /></FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )} />
+
+                  <FormField control={form.control} name="contactHandle" render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Contact handle</FormLabel>
+                      <FormControl><Input placeholder="optional — Signal / Matrix / email of your choice" {...field} data-testid="input-poly-contact" /></FormControl>
+                      <FormDescription>
+                        Stored privately. <strong>Never returned by the public directory feed.</strong>
+                        Only released through a future per-match consent gate (not yet built — submissions
+                        today are directory-only).
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )} />
+
+                  <div className="space-y-3 p-4 rounded-md border-2 border-primary/40 bg-primary/5">
+                    <p className="text-sm font-semibold">All five attestations must be checked to submit.</p>
+                    {[
+                      { name: "metamourDisclosureAttestation", label: "The metamour-disclosure preference I have selected is my actual current posture and I will honour it in good faith." },
+                      { name: "stiCadenceAttestation", label: "I commit to the STI testing cadence I selected and will update my profile if my cadence changes." },
+                      { name: "noOutingAttestation", label: "I will not out other members of this surface — not by linking profiles, screenshotting, sharing partner counts, or cross-posting their existence to monogamy-only spaces, partners, family, or any third party." },
+                      { name: "honestyAttestation", label: "Everything in this profile is truthful. No fabricated partner counts, no exaggerated postures, no claims I cannot back up." },
+                      { name: "consentToBeContacted", label: "I consent to be contacted by matched members through the platform's future per-match consent gate. I understand my contact handle is not exposed in the directory itself." },
+                    ].map(({ name, label }) => (
+                      <FormField key={name} control={form.control} name={name as keyof FormValues} render={({ field }) => (
+                        <FormItem className="flex items-start gap-2 space-y-0">
+                          <FormControl>
+                            <Checkbox checked={!!field.value} onCheckedChange={field.onChange} data-testid={`checkbox-poly-${name}`} />
+                          </FormControl>
+                          <Label className="text-xs leading-relaxed cursor-pointer">{label}</Label>
+                        </FormItem>
+                      )} />
+                    ))}
+                  </div>
+
+                  <Button type="submit" disabled={createMutation.isPending} data-testid="button-submit-poly" className="w-full">
+                    {createMutation.isPending ? <><Loader2 className="h-4 w-4 mr-2 animate-spin" /> Submitting…</> : "Submit profile (lands as pending)"}
+                  </Button>
+                </form>
+              </Form>
+            </CardContent>
+          )}
+        </Card>
+
+      </div>
+    </div>
+  );
+}

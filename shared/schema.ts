@@ -1783,3 +1783,42 @@ export const insertManufacturingPartnerSchema = createInsertSchema(manufacturing
 
 export type InsertManufacturingPartner = z.infer<typeof insertManufacturingPartnerSchema>;
 export type ManufacturingPartner = typeof manufacturingPartners.$inferSelect;
+
+// Polyglamorous People — sibling surface to Good People (which is monogamy-only by policy).
+// Self-declared, opt-in per field, no inference, no outing. Sparse profiles are valid.
+// Empty by default and stays empty until real members submit.
+export const polyglamorousProfiles = pgTable("polyglamorous_profiles", {
+  id: serial("id").primaryKey(),
+  displayName: text("display_name").notNull(),
+  pronouns: text("pronouns"), // optional
+  ageRangeMin: integer("age_range_min").notNull(),
+  ageRangeMax: integer("age_range_max").notNull(),
+  relationshipStructure: text("relationship_structure").notNull(), // solo-poly | hierarchical-poly | non-hierarchical-poly | relationship-anarchy | open | swinging | monogamish | unsure-exploring
+  currentPartnerCount: integer("current_partner_count"), // null = prefer-not-to-say
+  metamourDisclosurePreference: text("metamour_disclosure_preference").notNull(), // kitchen-table | parallel | garden-party | dadt
+  hierarchyPosture: text("hierarchy_posture"), // only relevant if hierarchical-poly
+  consentDisclosureCadence: text("consent_disclosure_cadence").notNull(), // immediately | weekly | never-required | case-by-case
+  stiTestingCadenceCommitment: text("sti_testing_cadence_commitment").notNull(), // every-3-months | every-6-months | every-12-months | after-each-new-partner
+  barrierUsePosture: text("barrier_use_posture").notNull(), // barriers-with-all | barriers-with-non-fluid-bonded | case-by-case | prefer-not-to-disclose
+  polyculeVisibility: text("polycule_visibility").notNull(), // nobody | matched-partners-only | declared-metamours | cooperative-members
+  vetoPosture: text("veto_posture"), // optional; only relevant if hierarchical-poly
+  notLookingFor: text("not_looking_for").notNull(), // free text + tag-like content
+  bio: text("bio"),
+  contactHandle: text("contact_handle"), // optional email / matrix / signal — member's choice
+  metamourDisclosureAttestation: boolean("metamour_disclosure_attestation").notNull().default(false),
+  stiCadenceAttestation: boolean("sti_cadence_attestation").notNull().default(false),
+  noOutingAttestation: boolean("no_outing_attestation").notNull().default(false),
+  honestyAttestation: boolean("honesty_attestation").notNull().default(false),
+  consentToBeContacted: boolean("consent_to_be_contacted").notNull().default(false),
+  status: text("status").notNull().default("pending"), // pending | active | paused | withdrawn
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const insertPolyglamorousProfileSchema = createInsertSchema(polyglamorousProfiles).omit({
+  id: true,
+  status: true,
+  createdAt: true,
+});
+
+export type InsertPolyglamorousProfile = z.infer<typeof insertPolyglamorousProfileSchema>;
+export type PolyglamorousProfile = typeof polyglamorousProfiles.$inferSelect;

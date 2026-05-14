@@ -51,6 +51,9 @@ import {
   manufacturingPartners,
   type ManufacturingPartner,
   type InsertManufacturingPartner,
+  polyglamorousProfiles,
+  type PolyglamorousProfile,
+  type InsertPolyglamorousProfile,
 } from "@shared/schema";
 
 export interface IStorage {
@@ -265,6 +268,8 @@ export interface IStorage {
   // Manufacturing partners (self-reported registry of candidate / signed factories)
   listManufacturingPartners(): Promise<ManufacturingPartner[]>;
   createManufacturingPartner(data: InsertManufacturingPartner): Promise<ManufacturingPartner>;
+  listPolyglamorousProfiles(): Promise<PolyglamorousProfile[]>;
+  createPolyglamorousProfile(data: InsertPolyglamorousProfile): Promise<PolyglamorousProfile>;
 
   // Clinic Inventory methods
   getClinicInventory(): Promise<any[]>;
@@ -3211,6 +3216,17 @@ export class MemStorage implements IStorage {
 
   async createManufacturingPartner(data: InsertManufacturingPartner): Promise<ManufacturingPartner> {
     const [created] = await db.insert(manufacturingPartners).values(data).returning();
+    return created;
+  }
+
+  async listPolyglamorousProfiles(): Promise<PolyglamorousProfile[]> {
+    return await db.select().from(polyglamorousProfiles)
+      .where(eq(polyglamorousProfiles.status, "active"))
+      .orderBy(desc(polyglamorousProfiles.createdAt));
+  }
+
+  async createPolyglamorousProfile(data: InsertPolyglamorousProfile): Promise<PolyglamorousProfile> {
+    const [created] = await db.insert(polyglamorousProfiles).values(data).returning();
     return created;
   }
 }

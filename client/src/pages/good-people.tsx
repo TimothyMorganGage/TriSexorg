@@ -306,10 +306,30 @@ export default function GoodPeople() {
     <div className="min-h-screen bg-background text-foreground py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         {/* Intersex Healthcare Affirmation */}
-        <Alert className="mb-8 bg-white dark:bg-gray-950 border-2 border-black dark:border-white">
+        <Alert className="mb-4 bg-white dark:bg-gray-950 border-2 border-black dark:border-white">
           <Heart className="h-5 w-5 text-black dark:text-white" />
           <AlertDescription className="ml-2 text-black dark:text-white">
             <strong>Intersex Healthcare IS Everyone's Affirmation:</strong> Cooperative matchmaking centers intersex anatomy as the universal baseline—trans, non-binary, genderqueer, and quare embodiment are all respected within this participatory budgeting framework. There is no separate "transgender healthcare" category—relationship compatibility serves ALL bodies by design.
+          </AlertDescription>
+        </Alert>
+
+        {/* Two-surface honesty banner — this page is monogamy-only by design */}
+        <Alert className="mb-8 border-2 border-blue-500/60 bg-blue-50 dark:bg-blue-950/30" data-testid="good-people-monogamy-scope-banner">
+          <Info className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+          <AlertDescription className="ml-2 text-blue-900 dark:text-blue-100">
+            <strong>This surface is monogamy-tuned by design.</strong> Good People uses
+            closed-dyad assumptions throughout: 2-year age-range caps, monthly STI
+            screening defaults, no metamour disclosure tooling, and progressive-stage
+            barrier work optimised for two people. Polyamorous, polyglamorous, open,
+            swinging, monogamish, and relationship-anarchy members are served by a
+            separate sibling surface at{" "}
+            <a href="/polyglamorous-people" className="underline font-semibold" data-testid="link-polyglamorous-from-goodpeople">
+              /polyglamorous-people
+            </a>{" "}
+            with the infrastructure those structures actually require (shorter testing
+            cadences, metamour disclosure, continuous-exposure risk modelling). See{" "}
+            <a href="/monogamy-economics" className="underline">/monogamy-economics</a>{" "}
+            for the operational-scope reasoning.
           </AlertDescription>
         </Alert>
 
