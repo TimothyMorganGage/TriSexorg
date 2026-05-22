@@ -2755,7 +2755,7 @@ END:VEVENT
           shortName: "MedlinePlus (NLM)",
           url: "https://medlineplus.gov/druginfo/herb_All.html",
           role: "Consumer-level NLM monographs on herbal preparations, drawn from the Natural Medicines Comprehensive Database.",
-          searchTemplate: "https://medlineplus.gov/druginfo/herb_All.html?query={query}",
+          searchTemplate: "https://medlineplus.gov/site-search?query={query}",
         },
         {
           id: "lactmed",
@@ -2763,7 +2763,7 @@ END:VEVENT
           shortName: "LactMed (NLM)",
           url: "https://www.ncbi.nlm.nih.gov/books/NBK501922/",
           role: "NLM database of evidence on botanicals and drugs during lactation — used for safety warnings on entries that may affect chest/breastfeeding co-operators.",
-          searchTemplate: "https://www.ncbi.nlm.nih.gov/books/NBK501922/?term={query}",
+          searchTemplate: "https://www.ncbi.nlm.nih.gov/books/?term={query}+AND+lactmed%5Bbook%5D",
         },
       ],
       evidencePolicy: "Co-operator-contributed entries draw upon the NIH National Library of Medicine (NLM) databases — PubMed, MedlinePlus, and LactMed — and the NIH National Center for Complementary and Integrative Health (NCCIH) \"Herbs at a Glance\" monographs. Stewards expect at least one citation from an NLM or NCCIH resource before an entry is marked verified. TriSex.org is not affiliated with NIH, NLM, or NCCIH; we link to their public databases and do not reproduce their copyrighted content.",
