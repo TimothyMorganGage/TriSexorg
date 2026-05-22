@@ -2731,7 +2731,42 @@ END:VEVENT
       credentialNote: "Registered Herbalist (RH(AHG)) is a peer-reviewed credential. TriSex.org is not affiliated with or endorsed by AHG; we reference their public framework, scope of practice, and code of ethics.",
       barrierSubstituteWarning: "No foraged or hand-crafted material is a clinically validated substitute for medical-grade barriers (latex, polyisoprene, polyurethane, nitrile) for STI or pregnancy prevention. Herbal knowledge here supports aftercare, washes, lubricant ingredients (with caveats), and ritual — not primary barrier function.",
       contentLicense: "Member-contributed entries on TriSex.org are licensed CC BY-SA 4.0. AHG's own copyrighted publications are not reproduced here — consult the AHG library directly.",
-      lastReviewed: "2026-04-24",
+      lastReviewed: "2026-05-22",
+      evidenceSources: [
+        {
+          id: "nccih",
+          name: "NIH National Center for Complementary and Integrative Health (NCCIH)",
+          shortName: "NCCIH",
+          url: "https://www.nccih.nih.gov/health/herbsataglance",
+          role: "Plain-language, evidence-graded \"Herbs at a Glance\" monographs maintained by the U.S. National Institutes of Health.",
+          searchTemplate: "https://www.nccih.nih.gov/search?keyword={query}",
+        },
+        {
+          id: "pubmed",
+          name: "NIH National Library of Medicine — PubMed",
+          shortName: "PubMed (NLM)",
+          url: "https://pubmed.ncbi.nlm.nih.gov/",
+          role: "Peer-reviewed biomedical literature index, the canonical NLM database for clinical and pharmacological evidence on botanicals.",
+          searchTemplate: "https://pubmed.ncbi.nlm.nih.gov/?term={query}",
+        },
+        {
+          id: "medlineplus",
+          name: "NIH National Library of Medicine — MedlinePlus Herbs and Supplements",
+          shortName: "MedlinePlus (NLM)",
+          url: "https://medlineplus.gov/druginfo/herb_All.html",
+          role: "Consumer-level NLM monographs on herbal preparations, drawn from the Natural Medicines Comprehensive Database.",
+          searchTemplate: "https://medlineplus.gov/druginfo/herb_All.html?query={query}",
+        },
+        {
+          id: "lactmed",
+          name: "NIH NLM — LactMed (Drugs and Lactation Database)",
+          shortName: "LactMed (NLM)",
+          url: "https://www.ncbi.nlm.nih.gov/books/NBK501922/",
+          role: "NLM database of evidence on botanicals and drugs during lactation — used for safety warnings on entries that may affect chest/breastfeeding co-operators.",
+          searchTemplate: "https://www.ncbi.nlm.nih.gov/books/NBK501922/?term={query}",
+        },
+      ],
+      evidencePolicy: "Co-operator-contributed entries draw upon the NIH National Library of Medicine (NLM) databases — PubMed, MedlinePlus, and LactMed — and the NIH National Center for Complementary and Integrative Health (NCCIH) \"Herbs at a Glance\" monographs. Stewards expect at least one citation from an NLM or NCCIH resource before an entry is marked verified. TriSex.org is not affiliated with NIH, NLM, or NCCIH; we link to their public databases and do not reproduce their copyrighted content.",
     });
   });
 
