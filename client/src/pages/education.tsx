@@ -219,12 +219,12 @@ export default function Education() {
                               <Clock className="h-4 w-4 mr-1" />
                               {new Date(article.createdAt).toLocaleDateString()}
                             </div>
-                            <Link href={`/education/${article.slug}`}>
-                              <Button variant="link" className="p-0 h-auto" aria-label={`Read the full article: ${article.title}`} data-testid={`link-article-${article.slug}`}>
+                            <Button variant="link" className="p-0 h-auto" asChild aria-label={`Read the full article: ${article.title}`} data-testid={`link-article-${article.slug}`}>
+                              <Link href={`/education/${article.slug}`}>
                                 Read full article
                                 <ArrowRight className="h-4 w-4 ml-1" />
-                              </Button>
-                            </Link>
+                              </Link>
+                            </Button>
                           </div>
                         </div>
                       </div>

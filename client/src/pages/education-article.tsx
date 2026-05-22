@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useRoute, Link } from "wouter";
 import { BetaDisclaimer } from "@/components/BetaDisclaimer";
@@ -18,39 +19,71 @@ const categoryNames: Record<string, string> = {
 
 function renderMarkdown(md: string) {
   const blocks = md.split(/\n\n+/);
-  return blocks.map((block, i) => {
+  const nodes: React.ReactNode[] = [];
+  blocks.forEach((block, i) => {
     const trimmed = block.trim();
-    if (!trimmed) return null;
+    if (!trimmed) return;
     if (trimmed.startsWith("## ")) {
-      return (
-        <h2 key={i} className="text-2xl font-semibold text-neutral mt-8 mb-3">
+      nodes.push(
+        <h2 key={`h2-${i}`} className="text-2xl font-semibold text-neutral mt-8 mb-3">
           {trimmed.replace(/^##\s+/, "")}
-        </h2>
+        </h2>,
       );
+      return;
     }
     if (trimmed.startsWith("### ")) {
-      return (
-        <h3 key={i} className="text-xl font-semibold text-neutral mt-6 mb-2">
+      nodes.push(
+        <h3 key={`h3-${i}`} className="text-xl font-semibold text-neutral mt-6 mb-2">
           {trimmed.replace(/^###\s+/, "")}
-        </h3>
+        </h3>,
       );
+      return;
     }
-    if (/^[-*]\s+/.test(trimmed)) {
-      const items = trimmed.split(/\n/).map((l) => l.replace(/^[-*]\s+/, ""));
-      return (
-        <ul key={i} className="list-disc pl-6 space-y-1 text-gray-700 my-3">
-          {items.map((it, j) => (
-            <li key={j}>{it}</li>
-          ))}
-        </ul>
-      );
+    const lines = trimmed.split(/\n/);
+    const paraLines: string[] = [];
+    const listLines: string[] = [];
+    let mode: "para" | "list" = "para";
+    const flush = () => {
+      if (mode === "para" && paraLines.length) {
+        nodes.push(
+          <p key={`p-${i}-${nodes.length}`} className="text-gray-700 leading-relaxed my-3">
+            {paraLines.join(" ")}
+          </p>,
+        );
+        paraLines.length = 0;
+      } else if (mode === "list" && listLines.length) {
+        const items = [...listLines];
+        nodes.push(
+          <ul
+            key={`ul-${i}-${nodes.length}`}
+            className="list-disc pl-6 space-y-1 text-gray-700 my-3"
+          >
+            {items.map((it, j) => (
+              <li key={j}>{it}</li>
+            ))}
+          </ul>,
+        );
+        listLines.length = 0;
+      }
+    };
+    for (const line of lines) {
+      if (/^[-*]\s+/.test(line)) {
+        if (mode !== "list") {
+          flush();
+          mode = "list";
+        }
+        listLines.push(line.replace(/^[-*]\s+/, ""));
+      } else {
+        if (mode !== "para") {
+          flush();
+          mode = "para";
+        }
+        paraLines.push(line);
+      }
     }
-    return (
-      <p key={i} className="text-gray-700 leading-relaxed my-3">
-        {trimmed}
-      </p>
-    );
+    flush();
   });
+  return nodes;
 }
 
 export default function EducationArticle() {
@@ -58,9 +91,22 @@ export default function EducationArticle() {
   const slug = params?.slug;
 
   const { data: article, isLoading, error } = useQuery<EducationalContent>({
-    queryKey: ["/api/education", slug],
+    queryKey: [`/api/education/${slug}`],
     enabled: !!slug,
   });
+
+  useEffect(() => {
+    if (!article) return;
+    const previousTitle = document.title;
+    document.title = `${article.title} | TriSex.org Education`;
+    const meta = document.querySelector('meta[name="description"]');
+    const previousDesc = meta?.getAttribute("content") ?? null;
+    if (meta) meta.setAttribute("content", article.excerpt);
+    return () => {
+      document.title = previousTitle;
+      if (meta && previousDesc !== null) meta.setAttribute("content", previousDesc);
+    };
+  }, [article]);
 
   if (isLoading) {
     return (
@@ -82,12 +128,12 @@ export default function EducationArticle() {
           <p className="text-gray-600 mb-6">
             This article may have been moved or is not yet published.
           </p>
-          <Link href="/education">
-            <Button variant="outline" data-testid="button-back-education">
+          <Button variant="outline" asChild data-testid="button-back-education">
+            <Link href="/education">
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back to Education Hub
-            </Button>
-          </Link>
+            </Link>
+          </Button>
         </div>
       </div>
     );
@@ -98,12 +144,12 @@ export default function EducationArticle() {
       <BetaDisclaimer />
       <div className="py-12">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Link href="/education">
-            <Button variant="link" className="p-0 mb-6" data-testid="link-back-education">
+          <Button variant="link" className="p-0 mb-6" asChild data-testid="link-back-education">
+            <Link href="/education">
               <ArrowLeft className="h-4 w-4 mr-1" />
               Back to Education Hub
-            </Button>
-          </Link>
+            </Link>
+          </Button>
           <Card>
             <CardContent className="p-6 sm:p-10">
               <div className="flex flex-wrap items-center gap-2 mb-4">

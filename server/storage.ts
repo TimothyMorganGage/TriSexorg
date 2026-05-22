@@ -541,25 +541,236 @@ export class MemStorage implements IStorage {
       });
     });
 
-    // Create sample educational content
+    // Create sample educational content — full 2SLGBTIQA+ articles (CC BY-SA 4.0)
     const defaultContent: InsertEducationalContent[] = [
       {
-        title: "STI Prevention Best Practices",
-        slug: "sti-prevention-best-practices",
-        content: "Comprehensive guide to sexually transmitted infection prevention...",
-        excerpt: "Learn about the latest research and best practices for STI prevention.",
+        title: "STI Prevention for the 2SLGBTIQA+ Community",
+        slug: "sti-prevention-2slgbtiqa",
+        content: `## Why 2SLGBTIQA+-centred STI prevention matters
+
+Two-Spirit, lesbian, gay, bisexual, transgender, intersex, queer/questioning, asexual, and all expansive community members have been chronically under-served by mainstream sexual-health guidance written for cisgender, dyadic, heteronormative bodies. This article centres the actual mix of anatomies, partner configurations, and contact zones our co-operators report — without collapsing anyone into a "high-risk group" label.
+
+## The contact-zone framework (not the "identity" framework)
+
+Risk attaches to specific contact zones, not to identities. The same person may engage receptive oral, insertive frontal, and shared-toy contact within a single encounter. Prevention planning therefore lives at the act level, not the label level.
+
+- Oral contact (giving or receiving) — barrier options: external condoms, oral dams, Gaynal-style cut barriers, internal condoms repurposed as dams.
+- Frontal/vaginal/neovaginal contact — barrier options: internal or external condoms sized to the receptive partner, fingercots for manual.
+- Anal contact — barrier options: thicker external or internal condoms, plus generous water- or silicone-based lubricant; never numbing lube as it masks tissue tears.
+- Shared toys — barrier change between partners and between zones, or single-user toys per partner.
+
+## Testing cadences our co-operators commit to
+
+- Every 3 months: sexually active with multiple partners, on PrEP, or in a polycule with ongoing new contacts.
+- Every 6 months: sexually active with one or two regular partners outside a closed agreement.
+- Every 12 months: in a closed monogamous or polyfidelitous agreement with documented mutual baseline testing.
+- After each new partner: a small-but-meaningful posture especially common on /polyglamorous-people.
+
+A full panel for most 2SLGBTIQA+ co-operators includes HIV, syphilis, gonorrhoea + chlamydia (throat + rectal + frontal swabs, not urine alone), hepatitis B and C, plus HPV-related cervical or anal screening where anatomically relevant. Trichomoniasis and mycoplasma genitalium are worth requesting when symptomatic.
+
+## Pre- and post-exposure tools
+
+- PrEP (oral or injectable) for HIV prevention — accessible to anyone with HIV-negative status, regardless of gender or assignment at birth.
+- DoxyPEP (doxycycline taken within 72 hours of condomless sex) reduces bacterial STI acquisition for many MSM and trans-feminine co-operators; discuss with a clinician.
+- PEP within 72 hours of a suspected HIV exposure.
+- HPV and hepatitis B vaccination through age 45.
+
+## Intersex-centred fitting reduces breakage
+
+Condom and barrier breakage is a prevention failure. Our inclusive-ordering framework treats 86 named intersex variations as the anatomical baseline, which means fit is matched to the body, not the body forced to a stock size. Better fit = fewer slips, fewer tears, more consistent protection.
+
+## What this article does not pretend
+
+We do not have a manufacturing partner yet (see /manufacturing for the honest status). Orders captured today become open-source CC BY-SA 4.0 design specifications. Prevention guidance here is grounded in WHO, CDC, and BASHH public guidelines as of 2026; verify with your local clinician for your jurisdiction.`,
+        excerpt: "Contact-zone-based STI prevention written for Two-Spirit, lesbian, gay, bisexual, transgender, intersex, queer, asexual, and expansive co-operators — testing cadences, barriers, PrEP/PEP/DoxyPEP, and intersex-fitted protection.",
         category: "sti_prevention",
-        tags: ["prevention", "health", "safety"],
+        tags: ["2slgbtiqa", "prep", "doxypep", "testing-cadence", "barriers"],
         isPublished: true,
         authorId: 1,
       },
       {
-        title: "Inclusive Sexual Health for LGBTQ+ Communities",
-        slug: "inclusive-sexual-health-lgbtq",
-        content: "Health information specifically for LGBTQ+ individuals...",
-        excerpt: "Inclusive health information for transgender, intersex, and gender-diverse individuals.",
+        title: "Inclusive Health: Trans, Intersex, and Non-binary Embodiment",
+        slug: "inclusive-health-trans-intersex-nonbinary",
+        content: `## Centring intersex anatomy as the baseline
+
+TriSex.org treats intersex anatomy as the universal baseline rather than a footnote. Sex-marker assignment (AMAB, AFAB, AXAB) describes what was recorded at birth — it does not describe anatomy, gender, or who you are. Across the 2SLGBTIQA+ community, the same recorded marker can correspond to a wide range of bodies, hormones, and surgical histories.
+
+## Trans-affirming sexual-health care
+
+- Hormonal context matters: oestradiol, testosterone, GnRH agonists, spironolactone, and progesterone each shift tissue elasticity, lubrication, and bleeding patterns. Plan barriers and lube accordingly.
+- Post-op anatomy (vaginoplasty, phalloplasty, metoidioplasty, mastectomy, orchiectomy, hysterectomy) deserves its own fitting conversation. Our inclusive-ordering configurator includes neovaginal contact-zone selection and post-surgical fitting overrides.
+- "Pre-op", "post-op", and "non-op" are equally valid. None require disclosure to access care here.
+
+## Intersex co-operators are not a monolith
+
+The 86 named intersex variations in our catalogue map to specific fitting implications — for example, hypospadias shifts urethral landmarks relevant to internal-condom seating; MRKH or Swyer syndrome affects neovaginal versus natal vaginal selection; CAH may correlate with clitoromegaly relevant to external-barrier choice. Each variation in the configurator has its own fitting notes and, where appropriate, a consultation flag.
+
+## Non-binary, agender, genderqueer, two-spirit framings
+
+Gender does not predict anatomy and anatomy does not predict gender. Our forms ask for the data we actually need (contact zones, fitting parameters, testing cadence) and not for gender as a proxy. Two-Spirit co-operators may carry ceremonial and kinship roles that mainstream forms erase; the platform respects that those roles are not ours to translate.
+
+## What inclusive health looks like in practice
+
+- Forms ask zone-of-contact, not "what kind of sex do gay people have".
+- Defaults assume nothing about partners' genders or numbers.
+- Pronoun and name fields are editable any time and never required to access care content.
+- Sex-marker filters on the variations catalogue are honest: markers describe recorded birth assignment, not anatomy.
+
+## Where to go next
+
+- /inclusive-ordering — the configurator built on these principles.
+- /anatomy-scanning and /meta-lens-scan — for body-measurement import (always optional).
+- /accessibility — ASL/BSL, braille, and screen-reader support.`,
+        excerpt: "How TriSex.org centres trans, intersex, non-binary, agender, and Two-Spirit embodiment — hormonal context, post-op anatomy, the 86-variation intersex baseline, and forms that ask for data not identity.",
         category: "inclusive_health",
-        tags: ["lgbtq", "inclusive", "health"],
+        tags: ["trans-health", "intersex", "non-binary", "two-spirit", "86-variations"],
+        isPublished: true,
+        authorId: 1,
+      },
+      {
+        title: "Sustainable Sexual Health: Materials, Reuse, and Upcycling",
+        slug: "sustainable-sexual-health-materials",
+        content: `## Why sustainability is a 2SLGBTIQA+ issue
+
+Disposable protection products generate substantial waste, and the 2SLGBTIQA+ community uses a wider range of barriers (dams, internal condoms, finger cots, gloves, dental cuts) than mainstream guidance assumes. Sustainable design means barriers that fit the actual mix of acts our co-operators have.
+
+## Material families we work with
+
+- Natural rubber latex — biodegradable in industrial composting, but allergenic for many co-operators.
+- Polyisoprene — synthetic, latex-free, recyclable in specialised streams only.
+- Polyurethane — thinner, conducts heat well, not biodegradable.
+- Nitrile (gloves, some dams) — latex-free, durable, not biodegradable.
+- Lambskin — porous to viruses; only suitable for pregnancy prevention, not STI prevention.
+
+## The multi-use fold framework
+
+Our inclusive-ordering origami fold sequence lets a single unit serve multiple acts through defined fold states. This is documented in the multi-use balance schema and is intentionally honest about its limits: a barrier folded for oral after frontal is not safe; fold states are designed for sequential acts that share zone and partner.
+
+## The expired-product upcycling programme
+
+When latex and polyisoprene barriers reach expiry without being used, they can be redirected into:
+- Material-science research samples for the open-source materials database.
+- Educational dissection kits for clinician training.
+- Industrial composting (latex only) where regional facilities exist.
+
+This is an opt-in programme, not an obligation, and no co-operator data travels with the upcycled material.
+
+## What "sustainable" does not mean
+
+It does not mean reusing single-use barriers between encounters or between partners. It does not mean skipping barriers to reduce waste. Prevention always comes first; sustainability is the design constraint, never the override.`,
+        excerpt: "Material choices, multi-use fold sequences, and the expired-product upcycling programme — sustainability framed around the wider mix of barriers 2SLGBTIQA+ co-operators actually use.",
+        category: "sustainable_health",
+        tags: ["materials", "upcycling", "multi-use-fold", "cc-by-sa"],
+        isPublished: true,
+        authorId: 1,
+      },
+      {
+        title: "Communication, Consent, and Disclosure Across the 2SLGBTIQA+ Community",
+        slug: "communication-consent-disclosure",
+        content: `## Consent is layered, not binary
+
+Affirmative, ongoing, informed, specific, and revocable — five layers our co-operators agree on. Each layer is a conversation, not a checkbox. The platform's Boundaries Background-Check Consent surface (/boundaries-background-check) operationalises this for sexual-boundaries conflict review, opt-in via WhatsApp or Signal.
+
+## STI disclosure conversations
+
+- Disclose before contact, not after. Distress about disclosure timing is real; defaulting to "before" protects both parties.
+- Lead with the cadence of your testing, not just the result. "I tested two weeks ago, here is what I tested for" is more informative than "I am clean" (a phrase to retire).
+- Status is a snapshot. PrEP, undetectable HIV viral load, vaccination history, and last-test date all add context.
+
+## Polycule and metamour disclosure postures
+
+The /polyglamorous-people surface formalises four common postures:
+- Kitchen-table: metamours know each other and may share space.
+- Parallel: metamours acknowledge each other's existence but do not interact.
+- Garden-party: occasional shared events, otherwise parallel.
+- DADT (don't ask don't tell): no information shared; this posture is honest but raises specific STI-cadence considerations.
+
+## Outing is never consent
+
+Disclosing a partner's gender, trans or intersex status, HIV status, kink, or relationship structure to a third party without their explicit consent is outing. Our community standards treat outing as a serious harm. The polyglamorous and Good People surfaces include explicit no-outing attestations enforced at profile creation and at every contact request.
+
+## Communication tools we recommend
+
+- Signal or WhatsApp for end-to-end-encrypted boundary conversations.
+- Shared documents (Cryptpad, Standard Notes) for polycule agreements that need versioning.
+- The community forum (/community-forum) Cooperative & Governance category for participatory budgeting, LETS mutual-credit, and cooperative decisions — not for outing or callouts.`,
+        excerpt: "Five-layer consent, retiring \"I'm clean\", four metamour-disclosure postures, and no-outing as community standard — communication scripts for the 2SLGBTIQA+ co-operator community.",
+        category: "communication",
+        tags: ["consent", "disclosure", "metamours", "no-outing"],
+        isPublished: true,
+        authorId: 1,
+      },
+      {
+        title: "Community Support and Peer Mentoring for 2SLGBTIQA+ Co-operators",
+        slug: "community-support-peer-mentoring",
+        content: `## What "co-operator" means here
+
+A co-operator is anyone using the platform — there are no "users" being mined for engagement. The community-support surfaces are designed around mutual aid, not influencer dynamics.
+
+## Peer mentor and facilitator co-editing
+
+The /peer-mentor and /mentor-facilitator surfaces let a co-operator invite a mentor to co-edit their fitting profile, testing log, or polycule agreement. Mentors are themselves co-operators who have completed onboarding and accepted explicit non-disclosure commitments. Co-editing is logged and revocable at any time.
+
+## Healthcare-system bridges (always opt-in)
+
+Where regionally available, the platform can connect with MyChart, Apple Health, and similar systems to import test results and immunisation history. The default is disconnected. Connecting requires the co-operator's own credentials; no broker, no resold data.
+
+## Community forum categories
+
+The community forum (/community-forum) hosts:
+- Sexual Health Q&A — questions about STI testing, prevention, treatment.
+- Product Reviews & Sizing — fit feedback that loops back into the open-source design specs.
+- Peer Support — connection and shared experience.
+- Intersex & Gender Diversity — discussions centring intersex anatomy and gender-diverse experiences.
+- Relationships & Communication — partner conversations.
+- Cooperative & Governance — participatory budgeting, LETS mutual-credit, and cooperative decisions.
+- NanoHeal & Naturopathic — biomaterials and naturopathic STI research.
+- Accessibility & Inclusion — ASL/BSL, braille, screen reader.
+
+## Crisis and high-acuity support
+
+The platform is not a crisis line. For mental-health crisis, please reach a regional resource: 988 in the US/Canada (Suicide & Crisis Lifeline), Trans Lifeline (877-565-8860 US / 877-330-6366 Canada), The Trevor Project for under-25 2SLGBTIQA+ youth, and Switchboard LGBT+ in the UK. The community forum does not replace these services.`,
+        excerpt: "Co-operator-not-user framing, peer mentor co-editing, healthcare-system bridges, and the eight community-forum categories — how the 2SLGBTIQA+ peer-support stack is structured.",
+        category: "community_support",
+        tags: ["peer-mentoring", "co-operator", "community-forum", "mutual-aid"],
+        isPublished: true,
+        authorId: 1,
+      },
+      {
+        title: "Research and Science: Open-source Sexual Health for the 2SLGBTIQA+ Community",
+        slug: "research-science-open-source",
+        content: `## Why open-source
+
+Every fitting parameter, every variation override, every order spec captured through /inclusive-ordering is published under CC BY-SA 4.0. Closed-source sexual-health products have historically excluded 2SLGBTIQA+ bodies — open-source design specs make exclusion visible and correctable in public.
+
+## The 86-named-variation evidence base
+
+The intersex variation catalogue (shared/inclusive-ordering/) draws on intersex-community-authored resources, peer-reviewed urology and gynaecology literature, and the InterACT advocacy framework. Each variation entry cites its evidence and surfaces its fitting implications.
+
+## Materials-science research
+
+The /materials-science surface tracks ongoing research on:
+- Latex, polyisoprene, polyurethane, nitrile barrier performance.
+- NanoHeal lubricant candidates (peer-reviewed sources only; the surface is honest that no NanoHeal product has shipped).
+- Biomaterials for the expired-product upcycling programme.
+
+## Naturopathic and herbal knowledge
+
+The /herbal-knowledge surface lets co-operators contribute peer-reviewed entries on foraging and co-crafting protection materials, grounded in the American Herbalists Guild (AHG) framework. Entries require citation and steward review before publication.
+
+## Honest limits of our research surface
+
+- No clinical trials have been conducted by TriSex.org.
+- No manufacturing partner has signed on (see /manufacturing).
+- No NanoHeal product has shipped.
+- Test cadence and PrEP recommendations follow WHO, CDC, and BASHH guidance as of 2026; we do not generate clinical guidelines.
+
+## Fork the framework
+
+The /fork-the-framework page documents the public API of the inclusive-ordering framework v1.0.0 — adopters can re-use the catalogue, marker derivation, fitting parameters, multi-use balance schema, and fold sequence under CC BY-SA 4.0. The /inclusive-ordering-registry tracks real adopters as they self-report.`,
+        excerpt: "Open-source design specs, the 86-variation evidence base, materials-science and naturopathic research surfaces, and the honest limits of what TriSex.org research does and does not claim.",
+        category: "research",
+        tags: ["open-source", "cc-by-sa", "materials-science", "86-variations", "herbalism"],
         isPublished: true,
         authorId: 1,
       },
