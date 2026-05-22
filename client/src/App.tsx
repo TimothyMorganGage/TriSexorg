@@ -49,6 +49,7 @@ const PageLoader = () => (
 const Home = lazy(() => import("@/pages/home"));
 const Products = lazy(() => import("@/pages/products"));
 const Education = lazy(() => import("@/pages/education"));
+const EducationArticle = lazy(() => import("@/pages/education-article"));
 const Clinics = lazy(() => import("@/pages/clinics"));
 const ClinicDashboard = lazy(() => import("@/pages/clinic-dashboard"));
 const Partnership = lazy(() => import("@/pages/partnership"));
@@ -123,6 +124,7 @@ function Router() {
             <Route path="/" component={Home} />
             <Route path="/products" component={Products} />
             <Route path="/education" component={Education} />
+            <Route path="/education/:slug" component={EducationArticle} />
             <Route path="/clinics" component={Clinics} />
             <Route path="/clinic-dashboard" component={ClinicDashboard} />
             <Route path="/partnership" component={Partnership} />
