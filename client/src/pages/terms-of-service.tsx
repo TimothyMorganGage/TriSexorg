@@ -276,9 +276,9 @@ export default function TermsOfService() {
               <CardContent className="space-y-6">
                 <div className="space-y-4">
                   <div className="p-4 border rounded-lg">
-                    <h4 className="font-bold mb-3">Custom-Fit Protection Products</h4>
+                    <h4 className="font-bold mb-3">TriSex Perfect Protection Products</h4>
                     <p className="text-sm text-muted-foreground mb-3">
-                      We guarantee custom-fit, intersex-centered products manufactured to your exact specifications:
+                      We guarantee TriSex Perfect Protection, intersex-centered and manufactured to your exact specifications:
                     </p>
                     <ul className="text-sm text-muted-foreground space-y-2">
                       <li>• <strong>No efficacy guarantee:</strong> An earlier draft of this section claimed a "97.8% STI prevention efficacy rate." That number was fabricated and has been removed. No clinical trial of TriSex.org products has been conducted, so we cannot make any efficacy claim.</li>

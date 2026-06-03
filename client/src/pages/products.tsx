@@ -344,7 +344,7 @@ export default function Products() {
           <Alert className="mb-8 bg-white dark:bg-gray-950 border-2 border-black dark:border-white">
             <Heart className="h-5 w-5 text-black dark:text-white" />
             <AlertDescription className="ml-2 text-black dark:text-white">
-              <strong>Intersex Healthcare IS Everyone's Affirmation:</strong> All products use intersex anatomy as the sizing baseline—trans, non-binary, genderqueer, and quare embodiment are all respected within this participatory budgeting framework. There is no separate "transgender healthcare" category—custom-fit protection serves ALL bodies by design.
+              <strong>Intersex Healthcare IS Everyone's Affirmation:</strong> All products use intersex anatomy as the sizing baseline—trans, non-binary, genderqueer, and quare embodiment are all respected within this participatory budgeting framework. There is no separate "transgender healthcare" category—TriSex Perfect Protection serves ALL bodies by design.
             </AlertDescription>
           </Alert>
 

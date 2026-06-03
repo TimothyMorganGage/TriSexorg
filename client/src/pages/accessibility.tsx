@@ -88,7 +88,7 @@ export default function Accessibility() {
               </CardHeader>
               <CardContent className="prose dark:prose-invert max-w-none">
                 <p className="text-muted-foreground">
-                  <strong>Sexual health is a human right.</strong> Disability should never be a barrier to accessing custom-fit protection, STI testing resources, or relationship matchmaking. TriSex.org is built from the ground up with accessibility as a core feature, not an afterthought.
+                  <strong>Sexual health is a human right.</strong> Disability should never be a barrier to accessing TriSex Perfect Protection, STI testing resources, or relationship matchmaking. TriSex.org is built from the ground up with accessibility as a core feature, not an afterthought.
                 </p>
 
                 <h3 className="text-lg font-bold mt-6 mb-3">Our Accessibility Principles</h3>

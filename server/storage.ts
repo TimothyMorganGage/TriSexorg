@@ -495,7 +495,7 @@ export class MemStorage implements IStorage {
     const defaultProducts: InsertProduct[] = [
       {
         name: "TriSex External Protection - Ocean Plastic",
-        description: "3D-printed custom-fit external protection made from recycled ocean plastic and hydrogel. Fits penis anatomy 4.5-11.5 inches.",
+        description: "3D-printed TriSex Perfect Protection for external anatomy, made from recycled ocean plastic and hydrogel. Fits penis anatomy 4.5-11.5 inches.",
         category: "penis_protection",
         bodyCompatibility: ["penis"],
         sizeRange: "custom",
@@ -504,7 +504,7 @@ export class MemStorage implements IStorage {
       },
       {
         name: "TriSex Internal Protection - Natural Blend",
-        description: "3D-printed custom-fit internal protection made from natural plant-based materials. Compatible with vaginal and anal anatomy.",
+        description: "3D-printed TriSex Perfect Protection for internal anatomy, made from natural plant-based materials. Compatible with vaginal and anal anatomy.",
         category: "multi_anatomical",
         bodyCompatibility: ["vagina", "anus", "front_hole"],
         sizeRange: "custom",

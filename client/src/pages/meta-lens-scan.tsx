@@ -129,7 +129,7 @@ export default function MetaLensScanPage() {
             <CardContent className="p-8 text-center">
               <Glasses className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
               <h2 className="text-2xl font-bold mb-2">Log in to import Meta Lens scans</h2>
-              <p className="text-muted-foreground">Your scans become your custom-fit product configurations.</p>
+              <p className="text-muted-foreground">Your scans become your TriSex Perfect Protection configurations.</p>
             </CardContent>
           </Card>
         </div>
@@ -143,10 +143,10 @@ export default function MetaLensScanPage() {
         <div>
           <h1 className="text-4xl font-bold mb-2 flex items-center gap-3">
             <Glasses className="h-9 w-9" />
-            Meta Lens → Custom-Fit Products
+            Meta Lens → TriSex Perfect Protection
           </h1>
           <p className="text-lg text-muted-foreground">
-            Use your Ray-Ban Meta or Oakley Meta glasses to measure, then generate intersex-baseline custom-fit barriers from the scan.
+            Use your Ray-Ban Meta or Oakley Meta glasses to measure, then generate intersex-baseline TriSex Perfect Protection from the scan.
           </p>
         </div>
 

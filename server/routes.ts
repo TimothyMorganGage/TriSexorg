@@ -2209,7 +2209,7 @@ END:VEVENT
       }
       const defaultCategories = [
         { name: "Sexual Health Q&A", slug: "sexual-health-qa", description: "Ask questions about STI testing, prevention, and treatment in a supportive environment", icon: "Stethoscope", color: "red", sortOrder: 1 },
-        { name: "Product Reviews & Sizing", slug: "product-reviews-sizing", description: "Share experiences with custom-fit products, sizing tips, and material preferences", icon: "Heart", color: "purple", sortOrder: 2 },
+        { name: "Product Reviews & Sizing", slug: "product-reviews-sizing", description: "Share experiences with TriSex Perfect Protection, sizing tips, and material preferences", icon: "Heart", color: "purple", sortOrder: 2 },
         { name: "Peer Support", slug: "peer-support", description: "Connect with others, share experiences, and find community support", icon: "Users", color: "pink", sortOrder: 3 },
         { name: "Intersex & Gender Diversity", slug: "intersex-gender-diversity", description: "Discussions centering intersex anatomy and gender-diverse experiences", icon: "Sparkles", color: "blue", sortOrder: 4 },
         { name: "Relationships & Communication", slug: "relationships-communication", description: "Navigate conversations about sexual health with partners", icon: "Globe", color: "green", sortOrder: 5 },

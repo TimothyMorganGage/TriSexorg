@@ -1782,7 +1782,7 @@ The scanner supports multiple scanning positions for mobility accommodation, vis
 
 ## Manufacturing Integration
 
-Scan data flows directly into production workflows with quality control integration, batch processing efficiency, and sustainable material optimization for each custom-fit product.`,
+Scan data flows directly into production workflows with quality control integration, batch processing efficiency, and sustainable material optimization for each TriSex Perfect Protection unit.`,
       tags: ["3d-scanning", "privacy", "technology", "anatomy", "custom-fit"],
       lastUpdated: "2024-01-11",
       author: "Technology Development Team",

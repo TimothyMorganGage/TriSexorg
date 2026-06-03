@@ -402,7 +402,7 @@ export default function DomainPurchase() {
               <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
                 Your comprehensive sexual health platform is ready for deployment. 
                 Register your domain and connect it to start serving the 2SLGBTIQ+ community 
-                with custom-fit protection and 4D STI intervention.
+                with TriSex Perfect Protection and 4D STI intervention.
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center">

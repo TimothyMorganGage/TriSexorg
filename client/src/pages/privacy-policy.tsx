@@ -205,7 +205,7 @@ export default function PrivacyPolicy() {
                       <div>
                         <strong>Why we need it:</strong>
                         <ul className="mt-2 space-y-1 text-muted-foreground">
-                          <li>• Custom-fit product design</li>
+                          <li>• TriSex Perfect Protection design</li>
                           <li>• STI exposure notifications</li>
                           <li>• Good People Cooperative matching</li>
                           <li>• Public health analytics (anonymized)</li>

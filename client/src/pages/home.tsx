@@ -81,7 +81,7 @@ export default function Home() {
                 <Link href="/inclusive-ordering">
                   <Button size="lg" className="bg-white text-black hover:bg-white/90 font-bold shadow-lg w-full" data-testid="home-order-cta">
                     <Package className="mr-2 h-5 w-5" />
-                    Start your custom fit condoms/dams/lubricants order now‽
+                    Start your TriSex Perfect Protection order now‽
                   </Button>
                 </Link>
                 <Link href="/remix-replit">
@@ -332,7 +332,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
             <h2 className="text-3xl lg:text-4xl font-bold text-white mb-3 font-display">
-              How CustomFit Works
+              How TriSex Perfect Protection Works
             </h2>
             <p className="text-white/50 text-lg max-w-2xl mx-auto">
               A simple, private process for your perfect fit

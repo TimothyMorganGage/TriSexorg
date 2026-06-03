@@ -121,7 +121,7 @@ export default function MetaPlatforms() {
       platform: "WhatsApp Business",
       type: "Customer Service",
       title: "Sizing Support Bot",
-      description: "Automated sizing assistance and custom fit consultation",
+      description: "Automated sizing assistance and TriSex Perfect Protection consultation",
       hashtags: [],
       mediaType: "text"
     },

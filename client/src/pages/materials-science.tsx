@@ -118,7 +118,7 @@ export default function MaterialsScience() {
       id: "manufacturing",
       title: "3D Printing & Manufacturing",
       icon: Factory,
-      description: "Precision manufacturing of custom-fit products",
+      description: "Precision manufacturing of TriSex Perfect Protection",
       details: [
         "Layer-by-layer 3D printing with 0.1mm precision",
         "Custom molds for specific anatomical measurements",

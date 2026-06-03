@@ -70,14 +70,14 @@ export default function AnatomyScanning() {
     {
       id: "penis",
       label: "Penis/External",
-      description: "External anatomy scanning for custom-fit external protection",
+      description: "External anatomy scanning for TriSex Perfect Protection (external)",
       scanPoints: ["Length", "Girth at base", "Girth at mid-shaft", "Girth at head", "Curvature", "Surface texture"],
       languages: ["English", "Spanish", "French", "Mandarin", "Arabic", "Swahili", "Cherokee", "Navajo"]
     },
     {
       id: "vagina",
       label: "Vaginal",
-      description: "Internal anatomy scanning for custom-fit internal protection",
+      description: "Internal anatomy scanning for TriSex Perfect Protection (internal)",
       scanPoints: ["Depth", "Width at entrance", "Width at mid-point", "Cervical position", "Muscle tone", "Sensitivity mapping"],
       languages: ["English", "Spanish", "Portuguese", "Hindi", "Tagalog", "Lakota", "Cree", "Inuktitut"]
     },
@@ -166,7 +166,7 @@ export default function AnatomyScanning() {
       { progress: 40, message: "Capturing anatomical data points..." },
       { progress: 60, message: "Processing 3D measurements..." },
       { progress: 80, message: "Applying cultural terminology preferences..." },
-      { progress: 95, message: "Generating custom-fit specifications..." },
+      { progress: 95, message: "Generating TriSex Perfect Protection specifications..." },
       { progress: 100, message: "Scan complete! Ready for 3D printing." }
     ];
 
@@ -207,7 +207,7 @@ export default function AnatomyScanning() {
         <Alert className="mb-8 bg-white dark:bg-gray-950 border-2 border-black dark:border-white">
           <Heart className="h-5 w-5 text-black dark:text-white" />
           <AlertDescription className="ml-2 text-black dark:text-white">
-            <strong>Intersex Healthcare IS Everyone's Affirmation:</strong> 3D anatomy scanning uses intersex anatomy as the universal baseline—trans, non-binary, genderqueer, and quare embodiment are all respected within this participatory budgeting framework. There is no separate "transgender healthcare" category—custom-fit products serve ALL bodies by design.
+            <strong>Intersex Healthcare IS Everyone's Affirmation:</strong> 3D anatomy scanning uses intersex anatomy as the universal baseline—trans, non-binary, genderqueer, and quare embodiment are all respected within this participatory budgeting framework. There is no separate "transgender healthcare" category—TriSex Perfect Protection serves ALL bodies by design.
           </AlertDescription>
         </Alert>
 
@@ -821,7 +821,7 @@ export default function AnatomyScanning() {
                         <h4 className="font-semibold">Sharing Controls</h4>
                         {[
                           { partner: "3D Printing Partner", purpose: "Manufacturing only", status: "Required", editable: false },
-                          { partner: "Healthcare Provider", purpose: "Custom fit records", status: "Optional", editable: true },
+                          { partner: "Healthcare Provider", purpose: "TriSex Perfect Protection records", status: "Optional", editable: true },
                           { partner: "Partner/Spouse", purpose: "Shared ordering", status: "Disabled", editable: true },
                           { partner: "Research (Anonymous)", purpose: "Size analytics", status: "Disabled", editable: true },
                           { partner: "Quality Assurance", purpose: "Product improvement", status: "Enabled", editable: true }
@@ -1074,7 +1074,7 @@ export default function AnatomyScanning() {
                     <h2 className="text-2xl font-bold mb-2">3D Anatomy Scanning</h2>
                     <p className="text-muted-foreground">
                       Advanced photogrammetry technology captures precise measurements for your 
-                      custom-fit protection products. All processing happens locally on your device.
+                      TriSex Perfect Protection. All processing happens locally on your device.
                     </p>
                   </div>
                 </div>
@@ -1232,7 +1232,7 @@ export default function AnatomyScanning() {
                       {scanProgress >= 20 && scanProgress < 40 && "Capturing high-resolution anatomical data points using photogrammetry..."}
                       {scanProgress >= 40 && scanProgress < 60 && "Processing 3D mesh and calculating precise measurements..."}
                       {scanProgress >= 60 && scanProgress < 80 && "Validating data integrity and applying cultural terminology preferences..."}
-                      {scanProgress >= 80 && scanProgress < 100 && "Generating custom-fit specifications for 3D printing..."}
+                      {scanProgress >= 80 && scanProgress < 100 && "Generating TriSex Perfect Protection specifications for 3D printing..."}
                       {scanProgress === 100 && "Scan complete! Your custom specifications are ready."}
                     </p>
                   </div>
@@ -1264,7 +1264,7 @@ export default function AnatomyScanning() {
                   <div>
                     <h2 className="text-2xl font-bold mb-2">Scan Complete - Custom Specifications Ready</h2>
                     <p className="text-muted-foreground">
-                      Your anatomical measurements have been securely processed. Custom-fit products 
+                      Your anatomical measurements have been securely processed. TriSex Perfect Protection units 
                       are ready for 3D printing and can be synced with your healthcare records.
                     </p>
                   </div>
@@ -1342,7 +1342,7 @@ export default function AnatomyScanning() {
                       <CardHeader>
                         <CardTitle className="flex items-center gap-2">
                           <Lock className="h-5 w-5 text-blue-600" />
-                          Custom Fit Recommendations
+                          TriSex Perfect Protection Recommendations
                         </CardTitle>
                       </CardHeader>
                       <CardContent className="space-y-3">
@@ -1381,7 +1381,7 @@ export default function AnatomyScanning() {
                     <Alert className="bg-blue-50 dark:bg-blue-900/20 border-blue-200">
                       <Lock className="h-4 w-4 text-blue-600" />
                       <AlertDescription>
-                        Sync your custom-fit specifications and STI testing data with your healthcare 
+                        Sync your TriSex Perfect Protection specifications and STI testing data with your healthcare 
                         provider's electronic health records for coordinated care and healthy outcomes tracking.
                       </AlertDescription>
                     </Alert>
@@ -1415,7 +1415,7 @@ export default function AnatomyScanning() {
                       <div className="space-y-4">
                         <h4 className="font-semibold">Data Sync Options</h4>
                         {[
-                          { data: "Custom Fit Specifications", sync: "On Order", privacy: "Encrypted" },
+                          { data: "TriSex Perfect Protection Specifications", sync: "On Order", privacy: "Encrypted" },
                           { data: "STI Test Results", sync: "Real-time", privacy: "HIPAA Compliant" },
                           { data: "Treatment Outcomes", sync: "Weekly", privacy: "Provider Access" },
                           { data: "Product Usage Analytics", sync: "Optional", privacy: "Anonymized" },
@@ -1519,7 +1519,7 @@ export default function AnatomyScanning() {
                           </div>
                           {[
                             { outcome: "Barrier Effectiveness", score: "—", trend: "stable" },
-                            { outcome: "Custom Fit Compliance", score: "—", trend: "stable" },
+                            { outcome: "TriSex Perfect Protection Compliance", score: "—", trend: "stable" },
                             { outcome: "Partner Communication", score: "—", trend: "stable" },
                             { outcome: "Testing Adherence", score: "—", trend: "stable" }
                           ].map((item, i) => (
