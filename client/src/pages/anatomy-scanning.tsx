@@ -104,7 +104,7 @@ export default function AnatomyScanning() {
       label: "3D Photogrammetry",
       description: "Multiple photos processed into 3D model",
       accuracy: "Method-dependent; pending validation",
-      time: "5-10 minutes",
+      status: "Not operational yet",
       privacy: "Local processing",
       equipment: "Smartphone camera"
     },
@@ -113,7 +113,7 @@ export default function AnatomyScanning() {
       label: "Structured Light Scanning",
       description: "Professional-grade 3D scanning",
       accuracy: "Hardware-dependent; pending validation",
-      time: "2-5 minutes",
+      status: "Not operational yet",
       privacy: "Clinic-based",
       equipment: "Clinical scanner"
     },
@@ -122,7 +122,7 @@ export default function AnatomyScanning() {
       label: "Medical Ultrasound",
       description: "Internal anatomy mapping via ultrasound",
       accuracy: "Operator-dependent; pending validation",
-      time: "10-15 minutes",
+      status: "Not operational yet",
       privacy: "Medical standard",
       equipment: "Medical ultrasound"
     },
@@ -131,7 +131,7 @@ export default function AnatomyScanning() {
       label: "Guided Manual Measurement",
       description: "Self-measurement with guided instructions",
       accuracy: "User-dependent; pending validation",
-      time: "15-20 minutes",
+      status: "Not operational yet",
       privacy: "Completely private",
       equipment: "Measurement tools"
     }
@@ -362,8 +362,8 @@ export default function AnatomyScanning() {
                                   <span className="ml-1 font-medium">{method.accuracy}</span>
                                 </div>
                                 <div>
-                                  <span className="text-muted-foreground">Time:</span>
-                                  <span className="ml-1 font-medium">{method.time}</span>
+                                  <span className="text-muted-foreground">Status:</span>
+                                  <span className="ml-1 font-medium">{method.status}</span>
                                 </div>
                                 <div>
                                   <span className="text-muted-foreground">Privacy:</span>
@@ -1100,8 +1100,8 @@ export default function AnatomyScanning() {
                     <div className="space-y-3">
                       {[
                         { step: 1, instruction: "Ensure good lighting - natural daylight is best", icon: Eye },
-                        { step: 2, instruction: "Position device 12-18 inches from anatomy", icon: Smartphone },
-                        { step: 3, instruction: "Hold steady - scanning takes 10-15 seconds", icon: Scan },
+                        { step: 2, instruction: "Position the device in front of the anatomy", icon: Smartphone },
+                        { step: 3, instruction: "Hold steady while scanning runs", icon: Scan },
                         { step: 4, instruction: "Follow on-screen positioning guides", icon: CheckCircle },
                         { step: 5, instruction: "Review captured data before confirmation", icon: Lock }
                       ].map((item, i) => (
@@ -1156,19 +1156,18 @@ export default function AnatomyScanning() {
                   <CardContent>
                     <div className="grid md:grid-cols-4 gap-4">
                       {[
-                        { method: "Smartphone Camera", accuracy: "Pending validation", time: "30 sec", desc: "iOS 14+ or Android 10+", available: true },
-                        { method: "Tablet Scanner", accuracy: "Pending validation", time: "20 sec", desc: "iPad Pro LiDAR", available: true },
-                        { method: "Clinical Scanner", accuracy: "Pending validation", time: "10 sec", desc: "Partner clinic network", available: true },
-                        { method: "Manual Entry", accuracy: "Pending validation", time: "5 min", desc: "Guided self-measurement", available: true }
+                        { method: "Smartphone Camera", desc: "iOS 14+ or Android 10+" },
+                        { method: "Tablet Scanner", desc: "iPad Pro LiDAR" },
+                        { method: "Clinical Scanner", desc: "Partner clinic network" },
+                        { method: "Manual Entry", desc: "Guided self-measurement" }
                       ].map((item, i) => (
-                        <Card key={i} className={`border-t-4 ${item.available ? "border-t-purple-500" : "border-t-gray-300"}`}>
+                        <Card key={i} className="border-t-4 border-t-gray-300">
                           <CardContent className="p-4 text-center">
                             <Smartphone className="h-8 w-8 mx-auto mb-2 text-purple-600" />
                             <div className="font-semibold text-sm mb-1">{item.method}</div>
                             <div className="text-xs text-muted-foreground mb-2">{item.desc}</div>
                             <div className="flex justify-center gap-2">
-                              <Badge variant="secondary" className="text-xs">{item.accuracy}</Badge>
-                              <Badge variant="outline" className="text-xs">{item.time}</Badge>
+                              <Badge variant="outline" className="text-xs">Not operational yet</Badge>
                             </div>
                           </CardContent>
                         </Card>
@@ -1545,18 +1544,18 @@ export default function AnatomyScanning() {
                     <div className="grid md:grid-cols-3 gap-4">
                       <h4 className="md:col-span-3 font-semibold text-lg">Anatomical Diversity Library</h4>
                       {[
-                        { model: "Intersex Spectrum Models", desc: "Complete anatomical variations as foundational baseline", count: 47, featured: true },
-                        { model: "Two-Spirit Anatomy", desc: "Indigenous gender expressions and embodiment", count: 12, featured: true },
-                        { model: "Gay Male Anatomy", desc: "MSM-specific anatomical education", count: 8, featured: false },
-                        { model: "Queer Embodiment", desc: "Fluid and non-categorical anatomical forms", count: 15, featured: false },
-                        { model: "Lesbian Anatomy", desc: "WLW-specific anatomical education", count: 10, featured: false },
-                        { model: "Bisexual Bodies", desc: "Multi-partner anatomical considerations", count: 6, featured: false },
-                        { model: "Trans Feminine", desc: "Pre/post-surgical anatomical variations", count: 24, featured: true },
-                        { model: "Trans Masculine", desc: "Pre/post-surgical anatomical variations", count: 22, featured: true },
-                        { model: "Non-Binary Anatomy", desc: "Beyond binary anatomical presentations", count: 18, featured: false },
-                        { model: "Genderqueer Bodies", desc: "Gender-expansive anatomical forms", count: 14, featured: false },
-                        { model: "Quare Embodiment", desc: "Black queer anatomical perspectives", count: 11, featured: true },
-                        { model: "Latinx Anatomy", desc: "Culturally-informed anatomical education", count: 9, featured: false }
+                        { model: "Intersex Spectrum Models", desc: "Complete anatomical variations as foundational baseline", featured: true },
+                        { model: "Two-Spirit Anatomy", desc: "Indigenous gender expressions and embodiment", featured: true },
+                        { model: "Gay Male Anatomy", desc: "MSM-specific anatomical education", featured: false },
+                        { model: "Queer Embodiment", desc: "Fluid and non-categorical anatomical forms", featured: false },
+                        { model: "Lesbian Anatomy", desc: "WLW-specific anatomical education", featured: false },
+                        { model: "Bisexual Bodies", desc: "Multi-partner anatomical considerations", featured: false },
+                        { model: "Trans Feminine", desc: "Pre/post-surgical anatomical variations", featured: true },
+                        { model: "Trans Masculine", desc: "Pre/post-surgical anatomical variations", featured: true },
+                        { model: "Non-Binary Anatomy", desc: "Beyond binary anatomical presentations", featured: false },
+                        { model: "Genderqueer Bodies", desc: "Gender-expansive anatomical forms", featured: false },
+                        { model: "Quare Embodiment", desc: "Black queer anatomical perspectives", featured: true },
+                        { model: "Latinx Anatomy", desc: "Culturally-informed anatomical education", featured: false }
                       ].map((item, i) => (
                         <Card key={i} className={`border-l-4 ${item.featured ? "border-l-purple-500" : "border-l-gray-300"}`}>
                           <CardContent className="p-4">
@@ -1604,11 +1603,11 @@ export default function AnatomyScanning() {
                         </CardHeader>
                         <CardContent className="space-y-3">
                           {[
-                            { module: "Anatomy Fundamentals", lessons: 12, duration: "2 hrs", level: "Beginner" },
-                            { module: "Intersex Variations", lessons: 8, duration: "1.5 hrs", level: "Intermediate" },
-                            { module: "Gender-Affirming Care", lessons: 10, duration: "2 hrs", level: "All Levels" },
-                            { module: "Protection Fit Guide", lessons: 6, duration: "45 min", level: "Practical" },
-                            { module: "Partner Communication", lessons: 5, duration: "30 min", level: "Essential" }
+                            { module: "Anatomy Fundamentals", level: "Beginner" },
+                            { module: "Intersex Variations", level: "Intermediate" },
+                            { module: "Gender-Affirming Care", level: "All Levels" },
+                            { module: "Protection Fit Guide", level: "Practical" },
+                            { module: "Partner Communication", level: "Essential" }
                           ].map((item, i) => (
                             <div key={i} className="p-3 bg-muted/30 rounded-lg">
                               <div className="flex justify-between items-center mb-1">
