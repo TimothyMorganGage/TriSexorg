@@ -332,9 +332,9 @@ export default function PrivacyPolicy() {
                       Access Controls
                     </h4>
                     <ul className="text-sm space-y-2 text-muted-foreground">
-                      <li>• <strong>Role-based access:</strong> Staff can only access data necessary for their role</li>
+                      <li>• <strong>Equal co-operator access:</strong> No staff/admin hierarchy — every member shares the same access and accountability</li>
                       <li>• <strong>Audit logging:</strong> All data access is logged with timestamp and reason</li>
-                      <li>• <strong>Two-factor authentication:</strong> Required for all staff accounts</li>
+                      <li>• <strong>Two-factor authentication:</strong> Available to all member accounts</li>
                       <li>• <strong>Access reviews:</strong> Quarterly audits of who can see what</li>
                     </ul>
                   </div>

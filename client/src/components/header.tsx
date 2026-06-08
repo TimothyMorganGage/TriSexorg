@@ -56,13 +56,11 @@ export function Header() {
             <div className="hidden md:flex items-center space-x-2">
               {user ? (
                 <>
-                  {user.role === "clinic_staff" && (
-                    <Link href="/clinic-dashboard">
-                      <Button variant="outline" size="sm" className="border-white/20 text-white hover:bg-white/10" data-testid="header-dashboard-btn">
-                        Dashboard
-                      </Button>
-                    </Link>
-                  )}
+                  <Link href="/clinic-dashboard">
+                    <Button variant="outline" size="sm" className="border-white/20 text-white hover:bg-white/10" data-testid="header-dashboard-btn">
+                      Dashboard
+                    </Button>
+                  </Link>
                   <Link href="/saved-configurations">
                     <Button variant="ghost" size="sm" className="text-white/70 hover:text-white hover:bg-white/10" data-testid="header-configs-btn">
                       <User className="h-4 w-4 mr-1" />
@@ -140,15 +138,13 @@ export function Header() {
                         {user.username}
                       </span>
                     </div>
-                    {user.role === "clinic_staff" && (
-                      <Link
-                        href="/clinic-dashboard"
-                        className="block px-3 py-2 text-base font-medium text-white/70 hover:text-white"
-                        onClick={() => setIsMenuOpen(false)}
-                      >
-                        Dashboard
-                      </Link>
-                    )}
+                    <Link
+                      href="/clinic-dashboard"
+                      className="block px-3 py-2 text-base font-medium text-white/70 hover:text-white"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      Dashboard
+                    </Link>
                     <Link
                       href="/saved-configurations"
                       className="block px-3 py-2 text-base font-medium text-white/70 hover:text-white"

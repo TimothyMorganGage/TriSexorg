@@ -26,13 +26,14 @@ The application uses a modern full-stack architecture with a focus on accessibil
 -   **ORM**: Drizzle ORM with Neon serverless driver.
 
 ### Authentication
--   Custom session-based system supporting multiple user roles (consumer, clinic_staff, admin).
+-   Custom session-based email/password auth, plus "Log in with Replit" (Replit Auth / OIDC) as an extra option; both share one session and bridge to a single app identity.
+-   No role hierarchy: every member is an equal "cooperator" (the former consumer / clinic_staff / admin roles were dissolved). Access is gated only on being signed in, never on a role.
 
 ### Shared Components
 -   TypeScript with shared schemas ensures data consistency across frontend and backend.
 
 ### Key Features
--   Multi-role user system and order management for configurable protection products with custom sizing based on natural senses profiling.
+-   Unified single-tier membership (every user is an equal "cooperator") and order management for configurable protection products with custom sizing based on natural senses profiling.
 -   Categorized educational content and a partnership request system.
 -   Cooperative financial tracking and community features.
 -   Mood and wellness tracking.

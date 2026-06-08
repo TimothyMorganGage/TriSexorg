@@ -808,7 +808,7 @@ The /fork-the-framework page documents the public API of the inclusive-ordering 
     const user: User = { 
       ...insertUser, 
       id, 
-      role: insertUser.role || "consumer",
+      role: insertUser.role || "cooperator",
       organizationName: insertUser.organizationName || null,
       organizationType: insertUser.organizationType || null,
       contactName: insertUser.contactName || null,

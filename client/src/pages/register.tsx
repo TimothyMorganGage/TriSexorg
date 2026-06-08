@@ -6,7 +6,6 @@ import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/lib/auth";
@@ -18,7 +17,6 @@ const registerSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
   password: z.string().min(6, "Password must be at least 6 characters"),
   confirmPassword: z.string(),
-  role: z.string().min(1, "Please select your role"),
   organizationName: z.string().optional(),
   organizationType: z.string().optional(),
   contactName: z.string().optional(),
@@ -44,7 +42,6 @@ export default function Register() {
       email: "",
       password: "",
       confirmPassword: "",
-      role: "",
       organizationName: "",
       organizationType: "",
       contactName: "",
@@ -52,9 +49,6 @@ export default function Register() {
       phone: "",
     },
   });
-
-  const watchRole = form.watch("role");
-  const isClinicStaff = watchRole === "clinic_staff";
 
   const onSubmit = async (data: RegisterFormData) => {
     setIsLoading(true);
@@ -183,33 +177,21 @@ export default function Register() {
                   />
                 </div>
 
-                <FormField
-                  control={form.control}
-                  name="role"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>I am a...</FormLabel>
-                      <Select onValueChange={field.onChange} defaultValue={field.value}>
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select your role" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          <SelectItem value="consumer">Individual seeking protection</SelectItem>
-                          <SelectItem value="clinic_staff">Healthcare provider</SelectItem>
-                          <SelectItem value="admin">Administrator</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                <div className="rounded-lg border border-primary/20 bg-primary/5 p-4 text-sm text-gray-600">
+                  <p>
+                    Everyone here joins as an equal <strong>co-operator</strong>. There are no
+                    administrators, providers, or customers above one another — we share the
+                    same access and govern together.
+                  </p>
+                </div>
 
-                {isClinicStaff && (
-                  <div className="space-y-6 p-4 bg-gray-50 rounded-lg">
-                    <h4 className="font-medium text-neutral">Healthcare Provider Information</h4>
-                    
+                <div className="space-y-6 p-4 bg-gray-50 rounded-lg">
+                    <h4 className="font-medium text-neutral">Cooperative affiliation (optional)</h4>
+                    <p className="text-sm text-gray-500 -mt-2">
+                      If you also take part as a clinic, collective, herbalist circle, or other
+                      group, you can add those details here. Completely optional.
+                    </p>
+
                     <div className="grid md:grid-cols-2 gap-4">
                       <FormField
                         control={form.control}
@@ -283,8 +265,7 @@ export default function Register() {
                         </FormItem>
                       )}
                     />
-                  </div>
-                )}
+                </div>
 
                 <Button type="submit" className="w-full" disabled={isLoading}>
                   {isLoading ? "Creating account..." : "Create Account"}

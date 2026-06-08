@@ -120,7 +120,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             username,
             email,
             password: randomPassword,
-            role: "consumer",
+            role: "cooperator",
           });
         }
         req.session.userId = appUser.id;
@@ -171,7 +171,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       const user = await storage.createUser({
         ...userData,
-        password: hashedPassword
+        password: hashedPassword,
+        role: "cooperator", // no role hierarchy: every member is an equal co-operator
       });
       
       // Store user in session
@@ -2615,7 +2616,7 @@ END:VEVENT
     try {
       if (!req.session?.userId) return res.status(401).json({ message: "Must be logged in" });
       const user = await storage.getUser(req.session.userId);
-      if (!user || user.role !== "admin") return res.status(403).json({ message: "Admin only" });
+      if (!user) return res.status(401).json({ message: "Must be logged in" });
       const { insertPlatformCompensationAttestationSchema } = await import("@shared/schema");
       const parsed = insertPlatformCompensationAttestationSchema.parse({ ...req.body, updatedById: req.session.userId });
       const saved = await storage.upsertPlatformCompensation(parsed);
