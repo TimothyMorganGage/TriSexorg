@@ -392,7 +392,8 @@ export interface IStorage {
 }
 
 export class MemStorage implements IStorage {
-  private users: Map<number, User>;
+  // NOTE: user accounts are persisted in PostgreSQL (see User methods below),
+  // not in an in-memory map, so members survive restarts.
   private products: Map<number, Product>;
   private productConfigurations: Map<number, ProductConfiguration>;
   private orders: Map<number, Order>;
@@ -411,7 +412,6 @@ export class MemStorage implements IStorage {
   private calendarConnections: Map<number, CalendarConnection>;
   private scheduledTasks: Map<number, ScheduledTask>;
   private taskTemplates: Map<number, TaskTemplate>;
-  private currentUserId: number;
   private currentProductId: number;
   private currentConfigId: number;
   private currentOrderId: number;
@@ -440,7 +440,6 @@ export class MemStorage implements IStorage {
   private currentSavedConfigId: number;
 
   constructor() {
-    this.users = new Map();
     this.products = new Map();
     this.productConfigurations = new Map();
     this.orders = new Map();
@@ -459,7 +458,6 @@ export class MemStorage implements IStorage {
     this.calendarConnections = new Map();
     this.scheduledTasks = new Map();
     this.taskTemplates = new Map();
-    this.currentUserId = 1;
     this.currentProductId = 1;
     this.currentConfigId = 1;
     this.currentOrderId = 1;
@@ -791,37 +789,37 @@ The /fork-the-framework page documents the public API of the inclusive-ordering 
   }
 
   // User methods
+  // Accounts are persisted in PostgreSQL so members (and their logins) survive
+  // restarts. The rest of MemStorage stays in-memory by design.
   async getUser(id: number): Promise<User | undefined> {
-    return this.users.get(id);
+    const [user] = await db.select().from(users).where(eq(users.id, id));
+    return user;
   }
 
   async getUserByUsername(username: string): Promise<User | undefined> {
-    return Array.from(this.users.values()).find(user => user.username === username);
+    const [user] = await db.select().from(users).where(eq(users.username, username));
+    return user;
   }
 
   async getUserByEmail(email: string): Promise<User | undefined> {
-    return Array.from(this.users.values()).find(user => user.email === email);
+    const [user] = await db.select().from(users).where(eq(users.email, email));
+    return user;
   }
 
   async createUser(insertUser: InsertUser): Promise<User> {
-    const id = this.currentUserId++;
-    const user: User = { 
-      ...insertUser, 
-      id, 
-      role: insertUser.role || "cooperator",
-      organizationName: insertUser.organizationName || null,
-      organizationType: insertUser.organizationType || null,
-      contactName: insertUser.contactName || null,
-      title: insertUser.title || null,
-      phone: insertUser.phone || null,
-      createdAt: new Date() 
-    };
-    this.users.set(id, user);
+    const [user] = await db
+      .insert(users)
+      .values({
+        ...insertUser,
+        // Unified account model: every member is an equal "cooperator".
+        role: "cooperator",
+      })
+      .returning();
     return user;
   }
 
   async getUsersByRole(role: string): Promise<User[]> {
-    return Array.from(this.users.values()).filter(user => user.role === role);
+    return await db.select().from(users).where(eq(users.role, role));
   }
 
   // Product methods
@@ -3430,3 +3428,17 @@ The /fork-the-framework page documents the public API of the inclusive-ordering 
 }
 
 export const storage = new MemStorage();
+
+// One-time startup migration to the unified account model: any account that
+// still carries a legacy role (e.g. the old "admin"/"consumer"/"clinic_staff")
+// is normalised to the single "cooperator" tier. Safe to run on every boot.
+export async function normalizeUserRoles(): Promise<void> {
+  try {
+    await db
+      .update(users)
+      .set({ role: "cooperator" })
+      .where(sql`${users.role} <> 'cooperator'`);
+  } catch (err) {
+    console.error("normalizeUserRoles failed:", err);
+  }
+}

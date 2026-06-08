@@ -5,6 +5,7 @@ import helmet from "helmet";
 import cors from "cors";
 import rateLimit from "express-rate-limit";
 import { registerRoutes } from "./routes";
+import { normalizeUserRoles } from "./storage";
 import { setupVite, serveStatic, log } from "./vite";
 
 const app = express();
@@ -150,6 +151,7 @@ app.use((req, res, next) => {
 });
 
 (async () => {
+  await normalizeUserRoles();
   const server = await registerRoutes(app);
 
   // Healthcheck endpoint for deployment infrastructure
