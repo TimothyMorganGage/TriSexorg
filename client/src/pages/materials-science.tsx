@@ -24,7 +24,12 @@ import {
   Heart,
   Filter,
   Thermometer,
-  RotateCcw
+  RotateCcw,
+  Handshake,
+  ClipboardList,
+  Building2,
+  FileText,
+  AlertTriangle
 } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
@@ -167,6 +172,160 @@ export default function MaterialsScience() {
     { standard: "RoHS Compliance", description: "Restriction of hazardous substances", status: "Not yet certified — earlier copy falsely listed this as Certified" }
   ];
 
+  // Publicly verifiable real-world organisations in the bio-materials / recovered-plastic
+  // / biopolymer space. NONE have been contacted. Listing is a research shortlist only —
+  // it does not imply any relationship, agreement, or endorsement.
+  const supplierCandidates = [
+    {
+      name: "Bureo",
+      category: "Recovered marine plastic feedstock",
+      region: "Chile / USA",
+      offering: "NetPlus® pellets made from recovered fishing nets",
+      relevance: "Traceable ocean-bound feedstock for the recycled-plastic fraction",
+    },
+    {
+      name: "#tide ocean material",
+      category: "Recovered marine plastic feedstock",
+      region: "Switzerland / Thailand",
+      offering: "Ocean-bound PET/PP granulates and yarns",
+      relevance: "Certified ocean-bound polymer stock for compounding trials",
+    },
+    {
+      name: "Oceanworks",
+      category: "Recycled-plastic marketplace",
+      region: "USA (global supply)",
+      offering: "Verified recycled and ocean-bound plastic supply",
+      relevance: "Aggregator for sourcing small validation batches",
+    },
+    {
+      name: "NatureWorks",
+      category: "Plant-based biopolymer",
+      region: "USA",
+      offering: "Ingeo™ PLA from annually renewable feedstock",
+      relevance: "Biodegradable matrix candidate for the plant-based fraction",
+    },
+    {
+      name: "Novamont",
+      category: "Plant-based biopolymer",
+      region: "Italy",
+      offering: "Mater-Bi® starch-based bioplastics",
+      relevance: "Flexible, compostable binder candidate",
+    },
+    {
+      name: "Danimer Scientific",
+      category: "Marine-degradable biopolymer",
+      region: "USA",
+      offering: "Nodax® PHA (polyhydroxyalkanoate)",
+      relevance: "Marine-biodegradable polymer for end-of-life goals",
+    },
+    {
+      name: "Carbios",
+      category: "Enzymatic depolymerization (process licensing)",
+      region: "France",
+      offering: "Enzymatic PET biorecycling technology",
+      relevance: "Potential process partner for the depolymerization step",
+    },
+    {
+      name: "Ecovative",
+      category: "Mycelium materials",
+      region: "USA",
+      offering: "Mycelium platforms (MycoComposite™ / Forager™)",
+      relevance: "Mushroom bio-material platform referenced in the wiki",
+    },
+    {
+      name: "Notpla",
+      category: "Seaweed / algae materials",
+      region: "UK",
+      offering: "Seaweed-based films and coatings",
+      relevance: "Algae-derived film and barrier candidate",
+    },
+    {
+      name: "CelluForce",
+      category: "Cellulose nanomaterials",
+      region: "Canada",
+      offering: "Cellulose nanocrystals (CNC)",
+      relevance: "Nanofibril reinforcement for structural strength",
+    },
+  ];
+
+  // Draft, open-source (CC BY-SA 4.0) process specifications. None pilot-validated.
+  const manufacturingBlueprints = [
+    {
+      name: "Feedstock Intake & Sorting Line",
+      scope: "Receiving, NIR sorting, density separation, and batch tracking of mixed recovered plastics.",
+      inputs: "Mixed recovered plastics, ocean-bound bales",
+      outputs: "Graded single-polymer streams",
+      equipment: "NIR sorter, float-sink tank, shredder, baler",
+      status: "Draft spec — not pilot-validated",
+    },
+    {
+      name: "Depolymerization & Purification",
+      scope: "Enzymatic / chemical breakdown of sorted polymers into purified monomers or oligomers.",
+      inputs: "Graded polymer streams",
+      outputs: "Purified monomers / recyclate",
+      equipment: "Reactor train, filtration, distillation/wash stages",
+      status: "Draft spec — not pilot-validated",
+    },
+    {
+      name: "Bio-Polymer Compounding",
+      scope: "Blending recyclate with plant-based biopolymers and reinforcement into a feedstock pellet.",
+      inputs: "Recyclate, PLA/PHA/starch biopolymers, cellulose nanofibrils",
+      outputs: "Compounded composite pellets",
+      equipment: "Twin-screw extruder, pelletiser, dryer",
+      status: "Draft spec — not pilot-validated",
+    },
+    {
+      name: "Hydrogel Matrix & Dip-Forming",
+      scope: "Forming the biocompatible hydrogel composite into thin-wall barrier products.",
+      inputs: "Composite pellets, hydrogel precursors",
+      outputs: "Formed barrier units",
+      equipment: "Dip-forming mandrels, curing oven, controlled-humidity line",
+      status: "Draft spec — not pilot-validated",
+    },
+    {
+      name: "Tooling, Moulds & Quality Control",
+      scope: "Custom anatomical moulds plus inline mechanical and biocompatibility QC.",
+      inputs: "Sizing data (Inclusive Ordering Framework), formed units",
+      outputs: "Finished, QC-passed product + batch records",
+      equipment: "CNC mould tooling, burst/tensile rig, sampling station",
+      status: "Draft spec — not pilot-validated",
+    },
+  ];
+
+  // Proposed partnership frameworks only. No partners signed.
+  const partnershipModels = [
+    {
+      name: "Open-Source Blueprint Licence (CC BY-SA 4.0)",
+      how: "Any fabricator may adopt the published process blueprints under share-alike terms; improvements flow back to the commons.",
+      brings: "TriSex.org provides specs & QC criteria; partner provides facility & labour.",
+      status: "Proposed — no licensees yet",
+    },
+    {
+      name: "Toll / Contract Manufacturing",
+      how: "A certified contract manufacturer runs validation batches against the spec sheets. TriSex.org owns the design; the partner owns the line.",
+      brings: "TriSex.org provides the design & order pipeline; partner provides regulated production capacity.",
+      status: "Proposed — no manufacturer engaged",
+    },
+    {
+      name: "Cooperative Feedstock Supply (LETS-aligned)",
+      how: "Recovered-plastic and biopolymer suppliers join a mutual-credit cooperative, settling partly through the LETS Framework rather than cash.",
+      brings: "Suppliers provide traceable feedstock; the co-op provides mutual-credit settlement & demand aggregation.",
+      status: "Proposed — no suppliers enrolled",
+    },
+    {
+      name: "University R&D Consortium",
+      how: "Joint research agreement with materials-science labs to lab-validate the blueprints and publish results openly.",
+      brings: "Labs provide validation & instrumentation; TriSex.org provides specs, samples & open publication.",
+      status: "Proposed — no consortium formed",
+    },
+    {
+      name: "Regional Micro-Factory Commons",
+      how: "Community-owned micro-factories produce locally under the shared blueprint, governed through the cooperator model.",
+      brings: "Communities provide local production & stewardship; the commons provides blueprints & standards.",
+      status: "Proposed — no sites established",
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-surface py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -188,7 +347,7 @@ export default function MaterialsScience() {
         </div>
 
         <Tabs defaultValue="process" className="space-y-8">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-5">
             <TabsTrigger value="process" className="flex items-center gap-2">
               <Factory className="h-4 w-4" />
               Reprocessing Steps
@@ -204,6 +363,10 @@ export default function MaterialsScience() {
             <TabsTrigger value="quality" className="flex items-center gap-2">
               <Award className="h-4 w-4" />
               Quality Standards
+            </TabsTrigger>
+            <TabsTrigger value="sourcing" className="flex items-center gap-2">
+              <Handshake className="h-4 w-4" />
+              Sourcing & Partners
             </TabsTrigger>
           </TabsList>
 
@@ -624,6 +787,115 @@ export default function MaterialsScience() {
                 </Card>
               </div>
             </div>
+          </TabsContent>
+
+          <TabsContent value="sourcing" className="space-y-8">
+            <Alert className="border-2 border-amber-500 bg-amber-50 dark:bg-amber-950/30">
+              <AlertTriangle className="h-5 w-5 text-amber-600" />
+              <AlertDescription className="ml-2 text-amber-900 dark:text-amber-100">
+                <strong>Operational status — please read.</strong> No supplier has been contacted, no manufacturing partner has signed on, and none of the blueprints below have been pilot-validated. Everything here is honest planning material: a research shortlist, draft open-source process specifications (CC BY-SA 4.0), and proposed partnership frameworks. Company names are publicly verifiable candidates only — listing them does not imply any relationship or endorsement.
+              </AlertDescription>
+            </Alert>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="font-recoleta flex items-center gap-2">
+                  <Building2 className="h-5 w-5 text-primary" />
+                  Potential Suppliers
+                </CardTitle>
+                <p className="text-muted-foreground">
+                  Publicly verifiable research candidates across feedstock, biopolymers, and processing. Each is a shortlist entry only — none have been contacted.
+                </p>
+              </CardHeader>
+              <CardContent>
+                <div className="grid md:grid-cols-2 gap-4">
+                  {supplierCandidates.map((s, i) => (
+                    <div
+                      key={s.name}
+                      className="p-4 border rounded-lg space-y-2"
+                      data-testid={`card-supplier-${i}`}
+                    >
+                      <div className="flex items-start justify-between gap-2">
+                        <h4 className="font-medium">{s.name}</h4>
+                        <Badge variant="outline" className="text-amber-700 border-amber-400 whitespace-nowrap">
+                          Not contacted
+                        </Badge>
+                      </div>
+                      <div className="text-xs text-muted-foreground">{s.category} · {s.region}</div>
+                      <p className="text-sm"><span className="font-medium">Offers:</span> {s.offering}</p>
+                      <p className="text-sm text-muted-foreground"><span className="font-medium">Relevance:</span> {s.relevance}</p>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="font-recoleta flex items-center gap-2">
+                  <ClipboardList className="h-5 w-5 text-primary" />
+                  Manufacturing Blueprints
+                </CardTitle>
+                <p className="text-muted-foreground">
+                  Draft, open-source (CC BY-SA 4.0) process specifications. None are pilot-validated yet.
+                </p>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {manufacturingBlueprints.map((b, i) => (
+                  <div
+                    key={b.name}
+                    className="p-4 border rounded-lg space-y-2"
+                    data-testid={`card-blueprint-${i}`}
+                  >
+                    <div className="flex items-start justify-between gap-2">
+                      <h4 className="font-medium flex items-center gap-2">
+                        <FileText className="h-4 w-4 text-primary" />
+                        Blueprint {i + 1}: {b.name}
+                      </h4>
+                      <Badge variant="outline" className="text-amber-700 border-amber-400 whitespace-nowrap">
+                        {b.status}
+                      </Badge>
+                    </div>
+                    <p className="text-sm">{b.scope}</p>
+                    <div className="grid sm:grid-cols-3 gap-2 text-xs text-muted-foreground">
+                      <div><span className="font-medium">Inputs:</span> {b.inputs}</div>
+                      <div><span className="font-medium">Outputs:</span> {b.outputs}</div>
+                      <div><span className="font-medium">Key equipment:</span> {b.equipment}</div>
+                    </div>
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="font-recoleta flex items-center gap-2">
+                  <Handshake className="h-5 w-5 text-primary" />
+                  Business Partnership Models
+                </CardTitle>
+                <p className="text-muted-foreground">
+                  Proposed frameworks for how TriSex.org could work with suppliers and fabricators. No partners are signed.
+                </p>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {partnershipModels.map((m, i) => (
+                  <div
+                    key={m.name}
+                    className="p-4 border rounded-lg space-y-2"
+                    data-testid={`card-partnership-${i}`}
+                  >
+                    <div className="flex items-start justify-between gap-2">
+                      <h4 className="font-medium">{m.name}</h4>
+                      <Badge variant="outline" className="text-amber-700 border-amber-400 whitespace-nowrap">
+                        {m.status}
+                      </Badge>
+                    </div>
+                    <p className="text-sm">{m.how}</p>
+                    <p className="text-sm text-muted-foreground"><span className="font-medium">Who brings what:</span> {m.brings}</p>
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
           </TabsContent>
         </Tabs>
       </div>
