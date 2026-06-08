@@ -39,13 +39,7 @@ const scanningSchema = z.object({
 });
 
 interface ScanDataType {
-  measurements: {
-    primary: string;
-    secondary: string;
-    tertiary: string;
-  };
-  customFit: string;
-  printingSpecs: string;
+  captured: boolean;
 }
 
 export default function AnatomyScanning() {
@@ -159,39 +153,29 @@ export default function AnatomyScanning() {
   const startScanning = async () => {
     setIsScanning(true);
     setScanProgress(0);
-    
-    // Simulate scanning process
-    const intervals = [
-      { progress: 20, message: "Initializing secure scanning environment..." },
-      { progress: 40, message: "Capturing anatomical data points..." },
-      { progress: 60, message: "Processing 3D measurements..." },
-      { progress: 80, message: "Applying cultural terminology preferences..." },
-      { progress: 95, message: "Generating TriSex Perfect Protection specifications..." },
-      { progress: 100, message: "Scan complete! Ready for 3D printing." }
+
+    // Live 3D capture is not operational yet. To stay honest we never fabricate,
+    // estimate, or store measurements — this flow generates no anatomical data.
+    const steps = [
+      { progress: 33, message: "Preparing a local, on-device scan environment..." },
+      { progress: 66, message: "Live 3D capture is not operational yet..." },
+      { progress: 100, message: "No measurements generated — nothing is fabricated." },
     ];
 
-    for (const interval of intervals) {
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      setScanProgress(interval.progress);
-      
-      if (interval.progress === 100) {
-        setScanData({
-          measurements: {
-            primary: "127mm",
-            secondary: "34mm",
-            tertiary: "28mm"
-          },
-          customFit: "Generated",
-          printingSpecs: "Ready"
-        });
+    for (const step of steps) {
+      await new Promise(resolve => setTimeout(resolve, 1200));
+      setScanProgress(step.progress);
+
+      if (step.progress === 100) {
+        setScanData({ captured: false });
         setScanningStep(4);
         toast({
-          title: "Scanning Complete",
-          description: "Your custom measurements are ready for 3D printing.",
+          title: "Scan prototype",
+          description: "Live 3D capture isn't available yet, so no measurements were generated.",
         });
       }
     }
-    
+
     setIsScanning(false);
   };
 
@@ -1089,8 +1073,8 @@ export default function AnatomyScanning() {
                   <div>
                     <h2 className="text-2xl font-bold mb-2">3D Anatomy Scanning</h2>
                     <p className="text-muted-foreground">
-                      Advanced photogrammetry technology captures precise measurements for your 
-                      TriSex Perfect Protection. All processing happens locally on your device.
+                      Live 3D capture is not operational yet. When it is, processing will happen 
+                      locally on your device. Until then this flow generates no measurements.
                     </p>
                   </div>
                 </div>
@@ -1137,34 +1121,19 @@ export default function AnatomyScanning() {
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                       <Lock className="h-5 w-5 text-green-600" />
-                      Pre-Scan Checklist
+                      Scan Status
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
-                    <div className="space-y-3">
-                      {[
-                        { check: "Camera permissions enabled", status: true },
-                        { check: "Local storage available (50MB)", status: true },
-                        { check: "Privacy mode activated", status: true },
-                        { check: "Encryption keys generated", status: true },
-                        { check: "Cultural terminology loaded", status: true },
-                        { check: "Offline processing ready", status: true }
-                      ].map((item, i) => (
-                        <div key={i} className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
-                          <span className="text-sm">{item.check}</span>
-                          <Badge className={item.status ? "bg-green-500 text-white" : "bg-yellow-500 text-black"}>
-                            {item.status ? "Ready" : "Pending"}
-                          </Badge>
-                        </div>
-                      ))}
-                    </div>
-                    <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200">
+                    <div className="p-4 bg-amber-50 dark:bg-amber-900/20 rounded-lg border border-amber-200">
                       <div className="flex items-center gap-2 mb-2">
-                        <CheckCircle className="h-5 w-5 text-green-600" />
-                        <span className="font-semibold">System Ready</span>
+                        <AlertTriangle className="h-5 w-5 text-amber-600" />
+                        <span className="font-semibold">Live scanning not operational yet</span>
                       </div>
                       <p className="text-sm text-muted-foreground">
-                        All checks passed. You may begin scanning when ready.
+                        We don't fabricate measurements. Until on-device 3D capture is available, 
+                        this step won't produce any anatomical data. You can still walk through the 
+                        flow to see exactly what a real scan would measure.
                       </p>
                     </div>
                     <Button 
@@ -1216,8 +1185,8 @@ export default function AnatomyScanning() {
                       <Scan className="h-16 w-16 text-cyan-600" />
                     </div>
                     <div>
-                      <h3 className="text-2xl font-bold mb-2">Scanning in Progress</h3>
-                      <p className="text-muted-foreground">Please hold your device steady</p>
+                      <h3 className="text-2xl font-bold mb-2">Checking Scan Availability</h3>
+                      <p className="text-muted-foreground">No anatomical data is being captured</p>
                     </div>
                     <div className="max-w-md mx-auto space-y-4">
                       <Progress value={scanProgress} className="h-4" />
@@ -1244,12 +1213,9 @@ export default function AnatomyScanning() {
                       ))}
                     </div>
                     <p className="text-sm text-muted-foreground max-w-md mx-auto">
-                      {scanProgress < 20 && "Initializing secure scanning environment with end-to-end encryption..."}
-                      {scanProgress >= 20 && scanProgress < 40 && "Capturing high-resolution anatomical data points using photogrammetry..."}
-                      {scanProgress >= 40 && scanProgress < 60 && "Processing 3D mesh and calculating precise measurements..."}
-                      {scanProgress >= 60 && scanProgress < 80 && "Validating data integrity and applying cultural terminology preferences..."}
-                      {scanProgress >= 80 && scanProgress < 100 && "Generating TriSex Perfect Protection specifications for 3D printing..."}
-                      {scanProgress === 100 && "Scan complete! Your custom specifications are ready."}
+                      {scanProgress < 66 && "Preparing a local, on-device scan environment..."}
+                      {scanProgress >= 66 && scanProgress < 100 && "Live 3D capture is not operational yet..."}
+                      {scanProgress === 100 && "No measurements were generated — this prototype does not fabricate data."}
                     </p>
                   </div>
                 </CardContent>
@@ -1271,17 +1237,19 @@ export default function AnatomyScanning() {
         {/* Step 4: Scan Results */}
         {scanningStep === 4 && scanData && (
           <div className="space-y-6">
-            <Card className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 border-green-200">
+            <Card className="bg-amber-50 dark:bg-amber-900/20 border-2 border-amber-300 dark:border-amber-700">
               <CardContent className="p-6">
                 <div className="flex items-start gap-4">
-                  <div className="p-3 bg-green-500 rounded-xl">
-                    <CheckCircle className="h-8 w-8 text-white" />
+                  <div className="p-3 bg-amber-500 rounded-xl">
+                    <AlertTriangle className="h-8 w-8 text-white" />
                   </div>
                   <div>
-                    <h2 className="text-2xl font-bold mb-2">Scan Complete - Custom Specifications Ready</h2>
+                    <h2 className="text-2xl font-bold mb-2">No Measurements Generated</h2>
                     <p className="text-muted-foreground">
-                      Your anatomical measurements have been securely processed. TriSex Perfect Protection units 
-                      are ready for 3D printing and can be synced with your healthcare records.
+                      Live 3D anatomy capture is not operational yet, so this prototype does not 
+                      fabricate, estimate, or store any body measurements. When real scanning is 
+                      available, your data will be processed locally and shown here — nothing is 
+                      invented in the meantime.
                     </p>
                   </div>
                 </div>
@@ -1300,27 +1268,27 @@ export default function AnatomyScanning() {
               <TabsContent value="results">
                 <div className="space-y-6">
                   <div className="grid md:grid-cols-4 gap-4">
-                    <Card className="border-t-4 border-t-green-500">
+                    <Card className="border-t-4 border-t-muted">
                       <CardContent className="p-4 text-center">
-                        <div className="text-3xl font-bold text-green-600 mb-1">{scanData.measurements.primary}</div>
+                        <div className="text-3xl font-bold text-muted-foreground mb-1">—</div>
                         <div className="text-sm text-muted-foreground">Primary Dimension</div>
                       </CardContent>
                     </Card>
-                    <Card className="border-t-4 border-t-blue-500">
+                    <Card className="border-t-4 border-t-muted">
                       <CardContent className="p-4 text-center">
-                        <div className="text-3xl font-bold text-blue-600 mb-1">{scanData.measurements.secondary}</div>
+                        <div className="text-3xl font-bold text-muted-foreground mb-1">—</div>
                         <div className="text-sm text-muted-foreground">Secondary Dimension</div>
                       </CardContent>
                     </Card>
-                    <Card className="border-t-4 border-t-purple-500">
+                    <Card className="border-t-4 border-t-muted">
                       <CardContent className="p-4 text-center">
-                        <div className="text-3xl font-bold text-purple-600 mb-1">{scanData.measurements.tertiary}</div>
+                        <div className="text-3xl font-bold text-muted-foreground mb-1">—</div>
                         <div className="text-sm text-muted-foreground">Tertiary Dimension</div>
                       </CardContent>
                     </Card>
-                    <Card className="border-t-4 border-t-pink-500">
+                    <Card className="border-t-4 border-t-muted">
                       <CardContent className="p-4 text-center">
-                        <div className="text-3xl font-bold text-pink-600 mb-1">99.2%</div>
+                        <div className="text-3xl font-bold text-muted-foreground mb-1">—</div>
                         <div className="text-sm text-muted-foreground">Fit Confidence</div>
                       </CardContent>
                     </Card>
@@ -1336,12 +1304,12 @@ export default function AnatomyScanning() {
                       </CardHeader>
                       <CardContent className="space-y-3">
                         {[
-                          { metric: "Length (relaxed)", value: "127mm", accuracy: "±0.5mm" },
-                          { metric: "Girth (base)", value: "118mm", accuracy: "±0.3mm" },
-                          { metric: "Girth (mid-shaft)", value: "112mm", accuracy: "±0.3mm" },
-                          { metric: "Girth (head)", value: "108mm", accuracy: "±0.3mm" },
-                          { metric: "Curvature angle", value: "8° left", accuracy: "±1°" },
-                          { metric: "Surface texture", value: "Standard", accuracy: "N/A" }
+                          { metric: "Length (relaxed)", value: "—", accuracy: "Pending" },
+                          { metric: "Girth (base)", value: "—", accuracy: "Pending" },
+                          { metric: "Girth (mid-shaft)", value: "—", accuracy: "Pending" },
+                          { metric: "Girth (head)", value: "—", accuracy: "Pending" },
+                          { metric: "Curvature angle", value: "—", accuracy: "Pending" },
+                          { metric: "Surface texture", value: "—", accuracy: "Pending" }
                         ].map((item, i) => (
                           <div key={i} className="flex justify-between items-center p-2 bg-muted/30 rounded">
                             <span className="text-sm">{item.metric}</span>
@@ -1363,19 +1331,19 @@ export default function AnatomyScanning() {
                       </CardHeader>
                       <CardContent className="space-y-3">
                         {[
-                          { product: "External Barrier (Standard)", size: "Custom-127", fit: "Perfect", stock: true },
-                          { product: "External Barrier (Textured)", size: "Custom-127T", fit: "Perfect", stock: true },
-                          { product: "Internal Barrier", size: "Custom-INT", fit: "Excellent", stock: true },
-                          { product: "Oral Barrier", size: "Standard", fit: "Universal", stock: true }
+                          { product: "External Barrier (Standard)" },
+                          { product: "External Barrier (Textured)" },
+                          { product: "Internal Barrier" },
+                          { product: "Oral Barrier" }
                         ].map((item, i) => (
                           <div key={i} className="p-3 bg-muted/30 rounded-lg">
                             <div className="flex justify-between items-center mb-1">
                               <span className="font-medium text-sm">{item.product}</span>
-                              <Badge className="bg-green-500 text-white">{item.fit}</Badge>
+                              <Badge variant="outline">Awaiting scan</Badge>
                             </div>
                             <div className="flex justify-between text-xs text-muted-foreground">
-                              <span>Size: {item.size}</span>
-                              <span>{item.stock ? "In Stock" : "Made to Order"}</span>
+                              <span>Size: —</span>
+                              <span>Generated from a real scan only</span>
                             </div>
                           </div>
                         ))}
@@ -1406,12 +1374,12 @@ export default function AnatomyScanning() {
                       <div className="space-y-4">
                         <h4 className="font-semibold">Supported EHR Systems</h4>
                         {[
-                          { system: "Epic MyChart", status: "connected", features: "Full integration", icon: "🏥" },
-                          { system: "Cerner", status: "available", features: "STI tracking", icon: "🏥" },
-                          { system: "Athenahealth", status: "available", features: "Results sharing", icon: "🏥" },
-                          { system: "Allscripts", status: "available", features: "Care coordination", icon: "🏥" },
-                          { system: "eClinicalWorks", status: "available", features: "STI tracking", icon: "🏥" },
-                          { system: "NextGen Healthcare", status: "coming", features: "Q2 2026", icon: "🏥" }
+                          { system: "Epic MyChart", status: "not connected", features: "Planned integration", icon: "🏥" },
+                          { system: "Cerner", status: "not connected", features: "Planned integration", icon: "🏥" },
+                          { system: "Athenahealth", status: "not connected", features: "Planned integration", icon: "🏥" },
+                          { system: "Allscripts", status: "not connected", features: "Planned integration", icon: "🏥" },
+                          { system: "eClinicalWorks", status: "not connected", features: "Planned integration", icon: "🏥" },
+                          { system: "NextGen Healthcare", status: "not connected", features: "Planned integration", icon: "🏥" }
                         ].map((ehr, i) => (
                           <div key={i} className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
                             <div className="flex items-center gap-3">
@@ -1431,11 +1399,11 @@ export default function AnatomyScanning() {
                       <div className="space-y-4">
                         <h4 className="font-semibold">Data Sync Options</h4>
                         {[
-                          { data: "TriSex Perfect Protection Specifications", sync: "On Order", privacy: "Encrypted" },
-                          { data: "STI Test Results", sync: "Real-time", privacy: "HIPAA Compliant" },
-                          { data: "Treatment Outcomes", sync: "Weekly", privacy: "Provider Access" },
-                          { data: "Product Usage Analytics", sync: "Optional", privacy: "Anonymized" },
-                          { data: "DALY Impact Metrics", sync: "Monthly", privacy: "Aggregate Only" }
+                          { data: "TriSex Perfect Protection Specifications", sync: "Not active", privacy: "Encrypted" },
+                          { data: "STI Test Results", sync: "Not active", privacy: "HIPAA Compliant" },
+                          { data: "Treatment Outcomes", sync: "Not active", privacy: "Provider Access" },
+                          { data: "Product Usage Analytics", sync: "Not active", privacy: "Anonymized" },
+                          { data: "DALY Impact Metrics", sync: "Not active", privacy: "Aggregate Only" }
                         ].map((item, i) => (
                           <div key={i} className="p-3 bg-muted/30 rounded-lg">
                             <div className="flex justify-between items-center mb-1">
@@ -1523,14 +1491,14 @@ export default function AnatomyScanning() {
                           <CardTitle className="text-lg">Healthy Outcomes Tracking</CardTitle>
                         </CardHeader>
                         <CardContent className="space-y-3">
-                          <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 mb-4">
+                          <div className="p-4 bg-muted/30 rounded-lg border border-border mb-4">
                             <div className="flex items-center gap-2 mb-2">
-                              <CheckCircle className="h-5 w-5 text-green-600" />
-                              <span className="font-semibold">Excellent Sexual Health Status</span>
+                              <AlertTriangle className="h-5 w-5 text-amber-600" />
+                              <span className="font-semibold">No health data yet</span>
                             </div>
                             <p className="text-sm text-muted-foreground">
-                              Your consistent protection usage and regular testing contribute to 
-                              positive DALY outcomes for yourself and your community.
+                              Outcomes appear here once you connect real testing records. We don't 
+                              assign a health status without your own data.
                             </p>
                           </div>
                           {[
@@ -1598,10 +1566,7 @@ export default function AnatomyScanning() {
                             </div>
                             <p className="text-xs text-muted-foreground mb-2">{item.desc}</p>
                             <div className="flex justify-between items-center">
-                              <Badge variant="outline" className="text-xs">{item.count} models</Badge>
-                              <Button size="sm" variant="ghost" className="h-6 px-2 text-xs">
-                                View 3D
-                              </Button>
+                              <Badge variant="outline" className="text-xs">Planned</Badge>
                             </div>
                           </CardContent>
                         </Card>
@@ -1651,7 +1616,7 @@ export default function AnatomyScanning() {
                                 <Badge variant="secondary">{item.level}</Badge>
                               </div>
                               <div className="text-xs text-muted-foreground">
-                                {item.lessons} lessons • {item.duration}
+                                Curriculum in development
                               </div>
                             </div>
                           ))}
@@ -1691,9 +1656,9 @@ export default function AnatomyScanning() {
                   <CardContent className="space-y-6">
                     <div className="grid md:grid-cols-3 gap-4">
                       {[
-                        { stage: "Specifications", status: "complete", icon: CheckCircle },
-                        { stage: "Material Selection", status: "complete", icon: CheckCircle },
-                        { stage: "Partner Selection", status: "pending", icon: AlertTriangle },
+                        { stage: "Specifications", status: "waiting", icon: Printer },
+                        { stage: "Material Selection", status: "waiting", icon: Printer },
+                        { stage: "Partner Selection", status: "waiting", icon: AlertTriangle },
                         { stage: "Production", status: "waiting", icon: Printer },
                         { stage: "Quality Check", status: "waiting", icon: Eye },
                         { stage: "Shipping", status: "waiting", icon: Download }
@@ -1716,23 +1681,13 @@ export default function AnatomyScanning() {
                           <CardTitle className="text-lg">Cooperative Print Partners</CardTitle>
                         </CardHeader>
                         <CardContent className="space-y-3">
-                          {[
-                            { partner: "Portland Maker Collective", location: "OR, USA", rating: 4.9, turnaround: "3-5 days" },
-                            { partner: "Bay Area 3D Co-op", location: "CA, USA", rating: 4.8, turnaround: "2-4 days" },
-                            { partner: "NYC Fabrication Lab", location: "NY, USA", rating: 4.7, turnaround: "4-6 days" },
-                            { partner: "Chicago Print Works", location: "IL, USA", rating: 4.8, turnaround: "3-5 days" }
-                          ].map((item, i) => (
-                            <div key={i} className="p-3 bg-muted/30 rounded-lg">
-                              <div className="flex justify-between items-center mb-1">
-                                <span className="font-medium text-sm">{item.partner}</span>
-                                <Badge variant="secondary">★ {item.rating}</Badge>
-                              </div>
-                              <div className="flex justify-between text-xs text-muted-foreground">
-                                <span>{item.location}</span>
-                                <span>{item.turnaround}</span>
-                              </div>
-                            </div>
-                          ))}
+                          <div className="p-4 bg-amber-50 dark:bg-amber-900/20 rounded-lg border border-amber-200">
+                            <p className="text-sm text-muted-foreground">
+                              No print partners have been onboarded yet. We don't list partners, 
+                              ratings, or turnaround times that don't exist. See the Manufacturing 
+                              page for the current sourcing status.
+                            </p>
+                          </div>
                         </CardContent>
                       </Card>
 
@@ -1742,15 +1697,14 @@ export default function AnatomyScanning() {
                         </CardHeader>
                         <CardContent className="space-y-3">
                           {[
-                            { material: "Medical-Grade Silicone", properties: "Hypoallergenic, flexible", price: "$$$" },
-                            { material: "Natural Latex Alternative", properties: "Sustainable, biodegradable", price: "$$" },
-                            { material: "TPE (Thermoplastic)", properties: "Latex-free, recyclable", price: "$$" },
-                            { material: "Bio-based Polymer", properties: "Plant-derived, eco-friendly", price: "$$$" }
+                            { material: "Medical-Grade Silicone", properties: "Hypoallergenic, flexible" },
+                            { material: "Natural Latex Alternative", properties: "Sustainable, biodegradable" },
+                            { material: "TPE (Thermoplastic)", properties: "Latex-free, recyclable" },
+                            { material: "Bio-based Polymer", properties: "Plant-derived, eco-friendly" }
                           ].map((item, i) => (
                             <div key={i} className="p-3 bg-muted/30 rounded-lg">
                               <div className="flex justify-between items-center mb-1">
                                 <span className="font-medium text-sm">{item.material}</span>
-                                <Badge variant="outline">{item.price}</Badge>
                               </div>
                               <div className="text-xs text-muted-foreground">{item.properties}</div>
                             </div>
