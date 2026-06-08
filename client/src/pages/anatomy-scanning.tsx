@@ -1830,15 +1830,15 @@ export default function AnatomyScanning() {
                       </Card>
                     </div>
 
-                    <div className="flex space-x-4">
-                      <Button variant="outline">
-                        <Download className="mr-2 h-4 w-4" />
-                        Download Specifications
-                      </Button>
-                      <Button className="bg-teal-500 hover:bg-teal-600 text-white flex-1">
+                    <div className="space-y-2">
+                      <Button className="w-full" disabled data-testid="button-order-print">
                         <Printer className="mr-2 h-4 w-4" />
-                        Select Print Partner & Order
+                        Ordering unavailable — no print partners onboarded yet
                       </Button>
+                      <p className="text-xs text-muted-foreground text-center">
+                        We won't take a print order until a real cooperative print partner is onboarded.
+                        See the Manufacturing page for current sourcing status.
+                      </p>
                     </div>
                   </CardContent>
                 </Card>
