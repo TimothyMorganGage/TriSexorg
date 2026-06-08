@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo, lazy, Suspense } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -15,7 +15,6 @@ import {
   Scan, 
   Camera, 
   Smartphone, 
-  Upload,
   Download,
   Printer,
   CheckCircle,
@@ -26,9 +25,24 @@ import {
   Globe,
   Languages,
   Zap,
-  Heart
+  Heart,
+  Search,
+  Boxes,
+  Info,
+  Loader2
 } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import {
+  INTERSEX_VARIATIONS,
+  INTERSEX_CATEGORIES,
+  ASSIGNMENT_MARKERS,
+  getAssignmentMarkers,
+  type AssignmentMarker,
+  type IntersexCategoryId,
+} from "@/data/intersex-variations";
+
+const AnatomicalModelViewer = lazy(() => import("@/components/AnatomicalModelViewer"));
 
 const scanningSchema = z.object({
   anatomyType: z.array(z.string()).min(1, "Please select at least one anatomy type"),
@@ -48,6 +62,29 @@ export default function AnatomyScanning() {
   const [scanData, setScanData] = useState<ScanDataType | null>(null);
   const [isScanning, setIsScanning] = useState(false);
   const { toast } = useToast();
+
+  const [selectedVariationId, setSelectedVariationId] = useState<string | null>(null);
+  const [librarySearch, setLibrarySearch] = useState("");
+  const [libraryMarker, setLibraryMarker] = useState<AssignmentMarker | null>(null);
+  const [libraryCategory, setLibraryCategory] = useState<IntersexCategoryId | null>(null);
+
+  const filteredVariations = useMemo(() => {
+    const q = librarySearch.trim().toLowerCase();
+    return INTERSEX_VARIATIONS.filter((v) => {
+      if (libraryCategory && v.category !== libraryCategory) return false;
+      if (libraryMarker && !getAssignmentMarkers(v).includes(libraryMarker)) return false;
+      if (q) {
+        const hay = `${v.name} ${v.alsoKnownAs ?? ""} ${v.category}`.toLowerCase();
+        if (!hay.includes(q)) return false;
+      }
+      return true;
+    });
+  }, [librarySearch, libraryMarker, libraryCategory]);
+
+  const selectedVariation = useMemo(
+    () => INTERSEX_VARIATIONS.find((v) => v.id === selectedVariationId) ?? null,
+    [selectedVariationId]
+  );
 
   const form = useForm({
     resolver: zodResolver(scanningSchema),
@@ -1541,57 +1578,137 @@ export default function AnatomyScanning() {
                       </AlertDescription>
                     </Alert>
 
-                    <div className="grid md:grid-cols-3 gap-4">
-                      <h4 className="md:col-span-3 font-semibold text-lg">Anatomical Diversity Library</h4>
-                      {[
-                        { model: "Intersex Spectrum Models", desc: "Complete anatomical variations as foundational baseline", featured: true },
-                        { model: "Two-Spirit Anatomy", desc: "Indigenous gender expressions and embodiment", featured: true },
-                        { model: "Gay Male Anatomy", desc: "MSM-specific anatomical education", featured: false },
-                        { model: "Queer Embodiment", desc: "Fluid and non-categorical anatomical forms", featured: false },
-                        { model: "Lesbian Anatomy", desc: "WLW-specific anatomical education", featured: false },
-                        { model: "Bisexual Bodies", desc: "Multi-partner anatomical considerations", featured: false },
-                        { model: "Trans Feminine", desc: "Pre/post-surgical anatomical variations", featured: true },
-                        { model: "Trans Masculine", desc: "Pre/post-surgical anatomical variations", featured: true },
-                        { model: "Non-Binary Anatomy", desc: "Beyond binary anatomical presentations", featured: false },
-                        { model: "Genderqueer Bodies", desc: "Gender-expansive anatomical forms", featured: false },
-                        { model: "Quare Embodiment", desc: "Black queer anatomical perspectives", featured: true },
-                        { model: "Latinx Anatomy", desc: "Culturally-informed anatomical education", featured: false }
-                      ].map((item, i) => (
-                        <Card key={i} className={`border-l-4 ${item.featured ? "border-l-purple-500" : "border-l-gray-300"}`}>
-                          <CardContent className="p-4">
-                            <div className="flex justify-between items-start mb-2">
-                              <span className="font-semibold text-sm">{item.model}</span>
-                              {item.featured && <Badge className="bg-purple-500 text-white text-xs">Featured</Badge>}
+                    <div className="grid lg:grid-cols-2 gap-6">
+                      <Card>
+                        <CardHeader>
+                          <CardTitle className="text-lg flex items-center gap-2">
+                            <Boxes className="h-5 w-5 text-purple-600" />
+                            Anatomical Diversity Library
+                          </CardTitle>
+                          <p className="text-sm text-muted-foreground">
+                            {INTERSEX_VARIATIONS.length} named intersex variations across {INTERSEX_CATEGORIES.length} categories,
+                            grounded in the platform's open Inclusive Ordering dataset. Select one to load its schematic 3D fit-form.
+                          </p>
+                        </CardHeader>
+                        <CardContent className="space-y-3">
+                          <div className="relative">
+                            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                            <Input
+                              className="pl-8"
+                              placeholder="Search variations…"
+                              value={librarySearch}
+                              onChange={(e) => setLibrarySearch(e.target.value)}
+                              data-testid="input-library-search"
+                            />
+                          </div>
+                          <div className="flex flex-wrap gap-1.5">
+                            <Button type="button" size="sm" variant={libraryMarker === null ? "default" : "outline"} onClick={() => setLibraryMarker(null)} data-testid="button-marker-all">All</Button>
+                            {ASSIGNMENT_MARKERS.map((m) => (
+                              <Button key={m.id} type="button" size="sm" variant={libraryMarker === m.id ? "default" : "outline"} onClick={() => setLibraryMarker(m.id)} data-testid={`button-marker-${m.id}`}>{m.label}</Button>
+                            ))}
+                          </div>
+                          <div className="flex flex-wrap gap-1.5">
+                            <Button type="button" size="sm" variant={libraryCategory === null ? "secondary" : "ghost"} onClick={() => setLibraryCategory(null)} data-testid="button-category-all">All categories</Button>
+                            {INTERSEX_CATEGORIES.map((c) => (
+                              <Button key={c.id} type="button" size="sm" variant={libraryCategory === c.id ? "secondary" : "ghost"} onClick={() => setLibraryCategory(c.id)} data-testid={`button-category-${c.id}`}>{c.label}</Button>
+                            ))}
+                          </div>
+                          <div className="text-xs text-muted-foreground" data-testid="text-library-count">{filteredVariations.length} shown</div>
+                          <ScrollArea className="h-[420px] pr-3">
+                            <div className="space-y-2">
+                              {filteredVariations.map((v) => {
+                                const markers = getAssignmentMarkers(v);
+                                const selected = v.id === selectedVariationId;
+                                return (
+                                  <button
+                                    key={v.id}
+                                    type="button"
+                                    onClick={() => setSelectedVariationId(v.id)}
+                                    className={`w-full text-left rounded-lg border p-3 transition hover:border-purple-400 ${selected ? "border-purple-500 bg-purple-50 dark:bg-purple-900/20" : "border-border"}`}
+                                    data-testid={`button-variation-${v.id}`}
+                                  >
+                                    <div className="flex items-start justify-between gap-2 mb-1.5">
+                                      <span className="font-medium text-sm">{v.name}</span>
+                                      {v.consultRequired && <Badge variant="outline" className="text-[10px] shrink-0">Consult</Badge>}
+                                    </div>
+                                    <div className="flex flex-wrap gap-1">
+                                      {markers.map((mk) => <Badge key={mk} variant="secondary" className="text-[10px]">{mk}</Badge>)}
+                                      {v.relevantZones.map((z) => <Badge key={z} variant="outline" className="text-[10px] capitalize">{z}</Badge>)}
+                                    </div>
+                                  </button>
+                                );
+                              })}
+                              {filteredVariations.length === 0 && (
+                                <p className="text-sm text-muted-foreground py-6 text-center">No variations match your filters.</p>
+                              )}
                             </div>
-                            <p className="text-xs text-muted-foreground mb-2">{item.desc}</p>
-                            <div className="flex justify-between items-center">
-                              <Badge variant="outline" className="text-xs">Planned</Badge>
+                          </ScrollArea>
+                        </CardContent>
+                      </Card>
+
+                      <Card>
+                        <CardHeader>
+                          <CardTitle className="text-lg" data-testid="text-selected-variation">
+                            {selectedVariation ? selectedVariation.name : "Schematic 3D Fit-Form"}
+                          </CardTitle>
+                          {selectedVariation && (
+                            <p className="text-sm text-muted-foreground">
+                              {INTERSEX_CATEGORIES.find((c) => c.id === selectedVariation.category)?.label}
+                            </p>
+                          )}
+                        </CardHeader>
+                        <CardContent className="space-y-4">
+                          <Suspense fallback={<div className="h-[360px] flex items-center justify-center rounded-lg border"><Loader2 className="h-6 w-6 animate-spin text-purple-600" /></div>}>
+                            <AnatomicalModelViewer variation={selectedVariation} />
+                          </Suspense>
+                          {selectedVariation ? (
+                            <div className="space-y-3">
+                              <div>
+                                <div className="text-sm font-medium mb-1">Fitting note</div>
+                                <p className="text-sm text-muted-foreground">{selectedVariation.fittingNote}</p>
+                              </div>
+                              {selectedVariation.consultRequired && (
+                                <Alert>
+                                  <Info className="h-4 w-4" />
+                                  <AlertDescription className="text-sm">
+                                    A one-to-one fitting consult is recommended for this variation.
+                                  </AlertDescription>
+                                </Alert>
+                              )}
                             </div>
-                          </CardContent>
-                        </Card>
-                      ))}
+                          ) : (
+                            <p className="text-sm text-muted-foreground">
+                              Select a variation from the library to parameterise the fit-form with its default measurements.
+                            </p>
+                          )}
+                        </CardContent>
+                      </Card>
                     </div>
 
                     <div className="grid md:grid-cols-2 gap-6">
                       <Card>
                         <CardHeader>
-                          <CardTitle className="text-lg">Interactive Features</CardTitle>
+                          <CardTitle className="text-lg">Viewer Capabilities</CardTitle>
                         </CardHeader>
                         <CardContent className="space-y-3">
                           {[
-                            { feature: "360° Rotation", desc: "View from any angle" },
-                            { feature: "Layer Visibility", desc: "Toggle anatomical layers" },
-                            { feature: "Measurement Tools", desc: "Compare with your scan" },
-                            { feature: "Annotation Mode", desc: "Add personal notes" },
-                            { feature: "AR Overlay", desc: "View in augmented reality" },
-                            { feature: "VR Compatible", desc: "Immersive learning experience" }
+                            { feature: "360° rotation", desc: "Drag to orbit the model from any angle", available: true },
+                            { feature: "Zoom", desc: "Scroll or pinch to zoom in and out", available: true },
+                            { feature: "Layer visibility", desc: "Toggle external fit-form and receptive canal", available: true },
+                            { feature: "Wireframe mode", desc: "Reveal the underlying geometry", available: true },
+                            { feature: "Auto-rotate & reset", desc: "Spin the model or return to the default view", available: true },
+                            { feature: "AR / VR overlay", desc: "Augmented / virtual reality viewing", available: false }
                           ].map((item, i) => (
                             <div key={i} className="flex items-center justify-between p-2 bg-muted/30 rounded">
                               <div>
                                 <span className="font-medium text-sm">{item.feature}</span>
                                 <div className="text-xs text-muted-foreground">{item.desc}</div>
                               </div>
-                              <CheckCircle className="h-4 w-4 text-green-500" />
+                              {item.available ? (
+                                <CheckCircle className="h-4 w-4 text-green-500" />
+                              ) : (
+                                <Badge variant="outline" className="text-xs">Not available</Badge>
+                              )}
                             </div>
                           ))}
                         </CardContent>
@@ -1624,20 +1741,21 @@ export default function AnatomyScanning() {
                     </div>
 
                     <div className="p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border border-purple-200">
-                      <h4 className="font-semibold mb-2">Community-Created Content</h4>
-                      <p className="text-sm text-muted-foreground mb-4">
-                        These 3D models were developed in collaboration with intersex advocates, 
-                        Two-Spirit elders, trans healthcare providers, and queer community educators. 
-                        All content is reviewed by the TriSex.org Anatomical Accuracy Council.
-                      </p>
-                      <div className="flex gap-2">
-                        <Button variant="outline" size="sm">
-                          <Upload className="h-4 w-4 mr-2" />
-                          Submit Model
-                        </Button>
-                        <Button variant="outline" size="sm">
-                          Join Review Council
-                        </Button>
+                      <h4 className="font-semibold mb-2">How these models are made</h4>
+                      <div className="space-y-2 text-sm text-muted-foreground">
+                        <p>
+                          Each fit-form is generated procedurally in your browser from the selected
+                          variation's default fitting parameters — sleeve length and girth, and receptive
+                          canal depth and girth — in the platform's open Inclusive Ordering dataset.
+                        </p>
+                        <p>
+                          They are deliberately schematic: proportional envelopes for product fitting, not
+                          photorealistic medical models or scans of any person.
+                        </p>
+                        <p>
+                          The dataset and these generated forms are released under CC BY-SA 4.0. No external
+                          "accuracy council" reviews them; corrections are made in the open via the dataset.
+                        </p>
                       </div>
                     </div>
                   </CardContent>

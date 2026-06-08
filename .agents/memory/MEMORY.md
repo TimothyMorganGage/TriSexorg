@@ -1,4 +1,1 @@
-# Memory Index
-
-- [db:push is unsafe to run blind](db-push-drift.md) — schema drifts from DB (MemStorage app) + orphan connect-pg `session` table → false rename prompts; create single tables via SQL.
-- [Two parallel auth systems](dual-auth-setup.md) — custom email/pw (`users`) + Replit Auth (`auth_users`) share ONE session; cookie sameSite must stay 'lax' for OIDC.
+- [react-three-fiber on React 18](react-three-fiber-react18.md) — pin fiber@8/drei@9/three@0.169 (fiber@9 needs React 19); lazy-load the heavy viewer chunk.
