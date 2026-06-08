@@ -58,8 +58,7 @@ export default function Register() {
   const onSubmit = async (data: RegisterFormData) => {
     setIsLoading(true);
     try {
-      const { confirmPassword, ...userData } = data;
-      await register(userData);
+      await register(data);
       toast({
         title: "Account created successfully!",
         description: "Welcome to TriSex.org. You can now start customizing your protection.",
