@@ -25,33 +25,40 @@ export function PrecisionSizing() {
   const [recommendedSize, setRecommendedSize] = useState<SizeData | null>(null);
   const [activeTab, setActiveTab] = useState("measure");
 
-  // TriSex.org precision sizing system with 60+ sizes
-  const sizeChart: SizeData[] = [
-    { nominal: "A1", width: 45, length: 160, description: "Ultra snug fit, shorter length", fitCategory: "Snug" },
-    { nominal: "A3", width: 45, length: 170, description: "Ultra snug fit, standard length", fitCategory: "Snug" },
-    { nominal: "A5", width: 45, length: 180, description: "Ultra snug fit, longer length", fitCategory: "Snug" },
-    { nominal: "B1", width: 47, length: 160, description: "Snug fit, shorter length", fitCategory: "Snug" },
-    { nominal: "B3", width: 47, length: 170, description: "Snug fit, standard length", fitCategory: "Snug" },
-    { nominal: "B5", width: 47, length: 180, description: "Snug fit, longer length", fitCategory: "Snug" },
-    { nominal: "C1", width: 49, length: 160, description: "Comfortable fit, shorter length", fitCategory: "Standard" },
-    { nominal: "C3", width: 49, length: 170, description: "Comfortable fit, standard length", fitCategory: "Standard" },
-    { nominal: "C5", width: 49, length: 180, description: "Comfortable fit, longer length", fitCategory: "Standard" },
-    { nominal: "D1", width: 51, length: 160, description: "Relaxed fit, shorter length", fitCategory: "Standard" },
-    { nominal: "D3", width: 51, length: 170, description: "Relaxed fit, standard length", fitCategory: "Standard" },
-    { nominal: "D5", width: 51, length: 180, description: "Relaxed fit, longer length", fitCategory: "Standard" },
-    { nominal: "E1", width: 53, length: 160, description: "Roomy fit, shorter length", fitCategory: "Large" },
-    { nominal: "E3", width: 53, length: 170, description: "Roomy fit, standard length", fitCategory: "Large" },
-    { nominal: "E5", width: 53, length: 180, description: "Roomy fit, longer length", fitCategory: "Large" },
-    { nominal: "F1", width: 55, length: 160, description: "Extra roomy fit, shorter length", fitCategory: "Large" },
-    { nominal: "F3", width: 55, length: 170, description: "Extra roomy fit, standard length", fitCategory: "Large" },
-    { nominal: "F5", width: 55, length: 180, description: "Extra roomy fit, longer length", fitCategory: "Large" },
-    { nominal: "G1", width: 57, length: 160, description: "Ultra roomy fit, shorter length", fitCategory: "XL" },
-    { nominal: "G3", width: 57, length: 170, description: "Ultra roomy fit, standard length", fitCategory: "XL" },
-    { nominal: "G5", width: 57, length: 180, description: "Ultra roomy fit, longer length", fitCategory: "XL" },
-    { nominal: "H1", width: 60, length: 160, description: "Maximum fit, shorter length", fitCategory: "XXL" },
-    { nominal: "H3", width: 60, length: 170, description: "Maximum fit, standard length", fitCategory: "XXL" },
-    { nominal: "H5", width: 60, length: 180, description: "Maximum fit, longer length", fitCategory: "XXL" },
+  // TriSex.org precision sizing system. Width and length categories are expanded
+  // to cover the full spectrum of anatomical diversity rather than a narrow band.
+  // Width = flat nominal width in mm (≈ circumference / π); length = mm.
+  const SIZE_WIDTHS_MM = [22, 26, 30, 34, 38, 42, 46, 50, 54, 58, 62, 66, 70];
+  const SIZE_LENGTHS_MM = [
+    90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240, 250,
   ];
+
+  const widthCategory = (w: number): string => {
+    if (w <= 30) return "Snug";
+    if (w <= 42) return "Standard";
+    if (w <= 54) return "Large";
+    if (w <= 62) return "XL";
+    return "XXL";
+  };
+  const lengthLabel = (l: number): string => {
+    if (l <= 110) return "short";
+    if (l <= 150) return "standard";
+    if (l <= 200) return "long";
+    return "extra-long";
+  };
+
+  const sizeChart: SizeData[] = SIZE_WIDTHS_MM.flatMap((width, wi) =>
+    SIZE_LENGTHS_MM.map((length, li) => {
+      const cat = widthCategory(width);
+      return {
+        nominal: `${String.fromCharCode(65 + wi)}${li + 1}`,
+        width,
+        length,
+        description: `${cat} width, ${lengthLabel(length)} length`,
+        fitCategory: cat,
+      };
+    })
+  );
 
   const calculateRecommendedSize = () => {
     if (!measurements.length || !measurements.baseGirth) return;
@@ -260,6 +267,12 @@ export function PrecisionSizing() {
 
             <TabsContent value="sizes">
               <div className="space-y-4">
+                <p className="text-sm text-muted-foreground" data-testid="text-size-count">
+                  {sizeChart.length} precise sizes · {SIZE_WIDTHS_MM.length} widths
+                  ({SIZE_WIDTHS_MM[0]}–{SIZE_WIDTHS_MM[SIZE_WIDTHS_MM.length - 1]}mm)
+                  × {SIZE_LENGTHS_MM.length} lengths
+                  ({SIZE_LENGTHS_MM[0]}–{SIZE_LENGTHS_MM[SIZE_LENGTHS_MM.length - 1]}mm)
+                </p>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mb-6">
                   <div className="text-center">
                     <Badge className="bg-blue-100 text-blue-800 w-full">Snug Fit</Badge>
@@ -387,9 +400,9 @@ export function PrecisionSizing() {
                       <div className="text-center">
                         <h4 className="font-medium mb-2">TriSex.org ⚧️</h4>
                         <div className="bg-green-50 dark:bg-green-900/20 p-3 rounded">
-                          <p>60+ intersex-centered sizes</p>
+                          <p>{sizeChart.length} intersex-centered sizes</p>
                           <p className="text-green-600 text-xs mt-1">
-                            Honors all anatomies, intersex variations as baseline
+                            {SIZE_WIDTHS_MM.length} widths × {SIZE_LENGTHS_MM.length} lengths — honors all anatomies, intersex variations as baseline
                           </p>
                         </div>
                       </div>
