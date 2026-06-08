@@ -16,12 +16,35 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Check for stored user session
+    // Optimistically show the locally stored user for instant UI...
     const storedUser = localStorage.getItem("customfit_user");
     if (storedUser) {
-      setUser(JSON.parse(storedUser));
+      try {
+        setUser(JSON.parse(storedUser));
+      } catch {
+        localStorage.removeItem("customfit_user");
+      }
     }
-    setIsLoading(false);
+
+    // ...then confirm with the server session. This also hydrates users who
+    // signed in via "Log in with Replit" (no localStorage entry of their own).
+    (async () => {
+      try {
+        const response = await fetch("/api/auth/me", { credentials: "include" });
+        if (response.ok) {
+          const { user: serverUser } = await response.json();
+          setUser(serverUser);
+          localStorage.setItem("customfit_user", JSON.stringify(serverUser));
+        } else if (response.status === 401) {
+          setUser(null);
+          localStorage.removeItem("customfit_user");
+        }
+      } catch {
+        // Network error — keep optimistic state.
+      } finally {
+        setIsLoading(false);
+      }
+    })();
   }, []);
 
   const login = async (email: string, password: string) => {
@@ -61,6 +84,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const logout = () => {
     setUser(null);
     localStorage.removeItem("customfit_user");
+    // Destroy the server session (clears both custom and Replit Auth identity).
+    fetch("/api/auth/logout", { method: "POST", credentials: "include" }).catch(
+      () => {},
+    );
   };
 
   return (

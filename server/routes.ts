@@ -17,6 +17,7 @@ import { z } from "zod";
 import { genealogyService, RelationshipUtils } from "./genealogy";
 import { ageVerificationService, DocumentType, VerificationStatus, AgeVerificationUtils } from "./ageVerification";
 import { requireAuth } from "./middleware/auth";
+import { setupAuth, registerAuthRoutes } from "./replit_integrations/auth";
 import { sendContactEmail } from "./email";
 import { Storage } from "@google-cloud/storage";
 import { fileTypeFromBuffer } from "file-type";
@@ -83,6 +84,53 @@ const gcsStorage = new Storage();
 const bucketName = process.env.DEFAULT_OBJECT_STORAGE_BUCKET_ID || '';
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Replit Auth ("Log in with Replit") — extra login option alongside
+  // the existing custom email/password auth. Reuses the session middleware
+  // mounted in server/index.ts.
+  await setupAuth(app);
+  registerAuthRoutes(app);
+
+  // Bridge: when a user is authenticated via "Log in with Replit" (Passport
+  // populates req.user from the OIDC session) but the app's own session-based
+  // identity isn't set yet, find-or-create a matching app user and set
+  // req.session.userId. This lets Replit-logged-in users use every existing
+  // route/middleware that relies on req.session.userId (and /api/auth/me).
+  app.use(async (req, _res, next) => {
+    try {
+      const replitUser = req.user as any;
+      const claims = replitUser?.claims;
+      if (claims?.sub && !req.session.userId) {
+        const email: string =
+          claims.email || `replit_${claims.sub}@users.noreply.replit.com`;
+        let appUser = await storage.getUserByEmail(email);
+        if (!appUser) {
+          const base = (claims.email?.split("@")[0] || `replit_user`)
+            .replace(/[^a-zA-Z0-9_]/g, "")
+            .slice(0, 20) || "replit_user";
+          let username = `${base}_${String(claims.sub).slice(0, 6)}`;
+          if (await storage.getUserByUsername(username)) {
+            username = `${username}_${Date.now().toString(36)}`;
+          }
+          // Random unusable password — this account logs in via Replit only.
+          const randomPassword = await bcrypt.hash(
+            `${claims.sub}:${Math.random().toString(36)}:${Date.now()}`,
+            10,
+          );
+          appUser = await storage.createUser({
+            username,
+            email,
+            password: randomPassword,
+            role: "consumer",
+          });
+        }
+        req.session.userId = appUser.id;
+      }
+    } catch (err) {
+      console.error("Replit auth bridge error:", err);
+    }
+    next();
+  });
+
   // Contact form (public, rate-limited)
   const contactLimiter = rateLimit({ windowMs: 60 * 60 * 1000, max: 10, message: "Too many contact requests, please try again later" });
   app.post("/api/contact", contactLimiter, async (req, res) => {

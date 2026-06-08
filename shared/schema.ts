@@ -1801,3 +1801,7 @@ export const insertPolyglamorousContactRequestSchema = createInsertSchema(polygl
 
 export type InsertPolyglamorousContactRequest = z.infer<typeof insertPolyglamorousContactRequestSchema>;
 export type PolyglamorousContactRequest = typeof polyglamorousContactRequests.$inferSelect;
+
+// Replit Auth ("Log in with Replit") tables — see shared/models/auth.ts.
+// Namespaced separately so they coexist with the custom email/password auth.
+export * from "./models/auth";

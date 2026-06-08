@@ -75,7 +75,9 @@ app.use(session({
     secure: process.env.NODE_ENV === 'production',
     httpOnly: true,
     maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
-    sameSite: 'strict',
+    // 'lax' (not 'strict') so the session cookie survives the top-level
+    // OIDC redirect back to /api/callback for "Log in with Replit".
+    sameSite: 'lax',
   }
 }));
 

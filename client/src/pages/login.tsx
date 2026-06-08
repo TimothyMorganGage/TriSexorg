@@ -10,6 +10,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/lib/auth";
 import { Lock, Mail } from "lucide-react";
+import { SiReplit } from "react-icons/si";
 
 const loginSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -117,6 +118,26 @@ export default function Login() {
                 </Button>
               </form>
             </Form>
+
+            <div className="relative my-6">
+              <div className="absolute inset-0 flex items-center">
+                <span className="w-full border-t border-gray-200" />
+              </div>
+              <div className="relative flex justify-center text-xs uppercase">
+                <span className="bg-white px-2 text-gray-400">Or</span>
+              </div>
+            </div>
+
+            <Button
+              type="button"
+              variant="outline"
+              className="w-full"
+              onClick={() => { window.location.href = "/api/login"; }}
+              data-testid="button-login-replit"
+            >
+              <SiReplit className="h-4 w-4 mr-2 text-[#F26207]" />
+              Continue with Replit
+            </Button>
 
             <div className="mt-6 text-center">
               <p className="text-sm text-gray-600">
