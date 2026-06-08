@@ -31,7 +31,7 @@ import {
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const scanningSchema = z.object({
-  anatomyType: z.string().min(1, "Please select anatomy type"),
+  anatomyType: z.array(z.string()).min(1, "Please select at least one anatomy type"),
   scanningMethod: z.string().min(1, "Please select scanning method"),
   privacyLevel: z.string().min(1, "Please select privacy level"),
   languagePreference: z.string().min(1, "Please select language"),
@@ -58,7 +58,7 @@ export default function AnatomyScanning() {
   const form = useForm({
     resolver: zodResolver(scanningSchema),
     defaultValues: {
-      anatomyType: "",
+      anatomyType: [] as string[],
       scanningMethod: "",
       privacyLevel: "maximum",
       languagePreference: "en",
@@ -291,20 +291,35 @@ export default function AnatomyScanning() {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Anatomy Type</FormLabel>
+                        <p className="text-sm text-muted-foreground -mt-1 mb-1">
+                          Select all that apply — co-operators can scan more than one anatomy type.
+                        </p>
                         <div className="grid md:grid-cols-2 gap-4">
-                          {anatomyTypes.map((type) => (
+                          {anatomyTypes.map((type) => {
+                            const selected = (field.value ?? []).includes(type.id);
+                            return (
                             <div
                               key={type.id}
+                              role="checkbox"
+                              aria-checked={selected}
+                              data-testid={`anatomy-type-${type.id}`}
                               className={`p-4 border border-border rounded-lg cursor-pointer transition-all ${
-                                field.value === type.id 
+                                selected 
                                   ? "border-neon-pink bg-neon-pink/10" 
                                   : "hover:border-neon-pink/50"
                               }`}
-                              onClick={() => field.onChange(type.id)}
+                              onClick={() => {
+                                const current = field.value ?? [];
+                                field.onChange(
+                                  selected
+                                    ? current.filter((id: string) => id !== type.id)
+                                    : [...current, type.id]
+                                );
+                              }}
                             >
                               <div className="flex items-center justify-between mb-2">
                                 <h4 className="font-medium">{type.label}</h4>
-                                {field.value === type.id && (
+                                {selected && (
                                   <CheckCircle className="h-5 w-5 text-neon-pink" />
                                 )}
                               </div>
@@ -325,7 +340,8 @@ export default function AnatomyScanning() {
                                 </div>
                               </div>
                             </div>
-                          ))}
+                            );
+                          })}
                         </div>
                         <FormMessage />
                       </FormItem>
