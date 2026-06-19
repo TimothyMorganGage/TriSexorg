@@ -52,7 +52,7 @@ export default function HandBarriers() {
     {
       value: "nitrile_standard",
       label: "Nitrile (Latex-Free)",
-      description: "Strong, puncture-resistant, latex-allergy safe. The default for manual play and fisting.",
+      description: "Strong, puncture-resistant, latex-allergy safe. The default for manual play.",
       price: 12.99,
       features: ["No latex proteins", "High puncture resistance", "Compatible with silicone & water lube"],
     },
@@ -81,8 +81,8 @@ export default function HandBarriers() {
 
   const featureOptions = [
     { value: "pre_lubricated", label: "Pre-Lubricated Interior", description: "Easier to put on; reduces friction on the wearer's skin", price: 3.0 },
-    { value: "extended_cuff", label: "Extended / Gauntlet Cuff", description: "Longer cuff covering the wrist and forearm — for fisting and deeper manual play", price: 6.0 },
-    { value: "extra_thick", label: "Extra-Thick (Fisting Grade)", description: "Reinforced thickness for durability during fisting", price: 5.0 },
+    { value: "extended_cuff", label: "Extended / Gauntlet Cuff", description: "Longer cuff covering the wrist and forearm — for deeper manual play", price: 6.0 },
+    { value: "extra_thick", label: "Extra-Thick (Heavy-Duty)", description: "Reinforced thickness for added durability during manual play", price: 5.0 },
     { value: "textured_fingertips", label: "Textured Fingertips", description: "Subtle ridges on the fingertips for added stimulation", price: 4.0 },
     { value: "powder_free", label: "Powder-Free", description: "No cornstarch powder — gentler on internal tissue (recommended)", price: 0.0 },
     { value: "antimicrobial_silver", label: "Silver Ion Coating", description: "Antimicrobial finish for added hygiene", price: 9.0 },
@@ -151,14 +151,14 @@ export default function HandBarriers() {
             Hand & Finger Barriers for Manual Sex
           </h1>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-4">
-            Gloves and finger cots for fingering, hand jobs, mutual masturbation, and fisting. A
+            Gloves and finger cots for fingering, hand jobs, and mutual masturbation. A
             hand barrier protects delicate internal tissue from nails, cuts, and hangnails — and
             both partners from STI transmission through the skin of the hands.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             <Badge variant="secondary" className="bg-teal-100 text-teal-800 px-4 py-2">
               <Hand className="w-4 h-4 mr-2" />
-              Fingering & Fisting
+              Fingering & Manual Play
             </Badge>
             <Badge variant="secondary" className="bg-cyan-100 text-cyan-800 px-4 py-2">
               <Shield className="w-4 h-4 mr-2" />
@@ -206,7 +206,7 @@ export default function HandBarriers() {
                   <li>• Shields internal tissue from fingernail scratches and micro-tears</li>
                   <li>• Makes long nails, acrylics, or rough skin safer for a partner</li>
                   <li>• A smooth barrier glides better, reducing friction injury</li>
-                  <li>• Extended-cuff gloves add durability and reach for fisting</li>
+                  <li>• Extended-cuff gloves add durability and reach for deeper play</li>
                 </ul>
               </div>
               <div>
@@ -265,7 +265,7 @@ export default function HandBarriers() {
                       </h3>
                       <p className="text-sm text-muted-foreground mb-3">
                         A <strong>glove</strong> covers the whole hand (fingering, hand jobs, mutual
-                        masturbation, fisting). A <strong>finger cot</strong> covers a single digit
+                        masturbation). A <strong>finger cot</strong> covers a single digit
                         for lighter, single-finger play.
                       </p>
                       <RadioGroup
@@ -274,7 +274,7 @@ export default function HandBarriers() {
                       >
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                           {[
-                            { value: "glove", label: "Glove", hint: "Whole hand · fisting-capable" },
+                            { value: "glove", label: "Glove", hint: "Whole hand" },
                             { value: "finger_cot", label: "Finger Cot", hint: "Single digit" },
                           ].map((opt) => (
                             <div key={opt.value} className="relative">
@@ -333,7 +333,7 @@ export default function HandBarriers() {
                     <div className="mt-4 p-4 bg-cyan-50 dark:bg-cyan-950 rounded-lg">
                       <p className="text-sm text-muted-foreground">
                         <strong>Not sure of your size?</strong> A glove that's too tight tears; too
-                        loose snags. When between sizes, size up for fisting and down for fine
+                        loose snags. When between sizes, size up for a roomier fit and down for fine
                         fingering. See the{" "}
                         <Link href="/wiki" className="text-cyan-600 hover:underline">
                           Wiki sizing guide
@@ -541,7 +541,7 @@ export default function HandBarriers() {
               <div>
                 <h3 className="font-semibold mb-2">During & After</h3>
                 <ul className="text-sm text-muted-foreground space-y-1">
-                  <li>• Use generous lube — more for anal play and fisting</li>
+                  <li>• Use generous lube — more for anal play</li>
                   <li>• Change barriers between partners</li>
                   <li>• Change between orifices (anal → vaginal/front-hole) to avoid infection</li>
                   <li>• Never reuse a barrier; dispose after the session</li>
