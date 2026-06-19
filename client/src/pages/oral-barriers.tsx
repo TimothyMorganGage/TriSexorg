@@ -672,6 +672,11 @@ export default function OralBarriers() {
               </Link>
             </Button>
             <Button variant="outline" asChild>
+              <Link href="/hand-barriers">
+                Hand & Finger Barriers
+              </Link>
+            </Button>
+            <Button variant="outline" asChild>
               <Link href="/wiki">
                 Sexual Health Wiki
               </Link>

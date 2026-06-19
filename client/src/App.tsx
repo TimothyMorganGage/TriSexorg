@@ -86,6 +86,7 @@ const ParentalConsentResponse = lazy(() => import("@/pages/parental-consent-resp
 const InfinitelyAffirmativeProtection = lazy(() => import("@/pages/infinitely-affirmative-protection"));
 const RemixReplit = lazy(() => import("@/pages/remix-replit"));
 const OralBarriers = lazy(() => import("@/pages/oral-barriers"));
+const HandBarriers = lazy(() => import("@/pages/hand-barriers"));
 const MonogamyEconomics = lazy(() => import("@/pages/monogamy-economics"));
 const SavedConfigurations = lazy(() => import("@/pages/saved-configs"));
 const PrivacyPolicy = lazy(() => import("@/pages/privacy-policy"));
@@ -159,6 +160,7 @@ function Router() {
             <Route path="/infinitely-affirmative-protection" component={InfinitelyAffirmativeProtection} />
             <Route path="/remix-replit" component={RemixReplit} />
             <Route path="/oral-barriers" component={OralBarriers} />
+            <Route path="/hand-barriers" component={HandBarriers} />
             <Route path="/monogamy-economics" component={MonogamyEconomics} />
             <Route path="/privacy-policy" component={PrivacyPolicy} />
             <Route path="/terms-of-service" component={TermsOfService} />
