@@ -988,8 +988,8 @@ export default function GoodPeople() {
                             <span className="text-sm font-medium text-orange-800">Incest Prevention System</span>
                           </div>
                           <div className="text-xs text-orange-700 space-y-1">
-                            <div>Upload your family tree (GEDCOM format) to verify no blood relations within 8 degrees of cousinship</div>
-                            <div><strong>Protected relationships:</strong> Up to 8th cousins (9th great-grandparents as common ancestors)</div>
+                            <div>Upload your family tree (GEDCOM format) to verify no blood relations within 3 degrees of cousinship</div>
+                            <div><strong>Protected relationships:</strong> Up to 3rd cousins (great-great-grandparents as common ancestors)</div>
                             <div><strong>Verification process:</strong> Cross-referenced with Gramps genealogy engine and GEDmatch database</div>
                             <div><strong>Privacy:</strong> Family tree data encrypted and only used for relationship calculations</div>
                           </div>
