@@ -1,3 +1,4 @@
 - [react-three-fiber on React 18](react-three-fiber-react18.md) — pin fiber@8/drei@9/three@0.169 (fiber@9 needs React 19); lazy-load the heavy viewer chunk.
 - [n honesty placeholders](honesty-placeholders.md) — literal "n" in page copy is a deliberate no-fabricated-count placeholder; never replace with invented numbers, derive from source arrays instead.
 - [Hybrid storage model](storage-model.md) — user accounts are DB-backed (Postgres); all other MemStorage data stays in-memory & wiped on restart.
+- [Genealogy incest-screening](genealogy-screening.md) — blocks closer than 3rd cousin (degree>=4); parser needs FAM records; matching is pre-launch/empty so no match-route to gate yet; data not encrypted, no Gramps/GEDmatch.

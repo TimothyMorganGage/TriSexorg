@@ -46,41 +46,102 @@ export class GenealogyService {
   private parseGEDCOMContent(content: string, rootPersonId: string): FamilyTree {
     const lines = content.split('\n');
     const people: Record<string, Person> = {};
+
+    // Family (FAM) records hold the actual parent/child links in GEDCOM.
+    interface RawFamily { husband?: string; wife?: string; children: string[]; }
+    const families: Record<string, RawFamily> = {};
+
     let currentPerson: Person | null = null;
+    let currentFamilyId: string | null = null;
+    let firstIndiId: string | null = null;
+    let inBirth = false;
+
+    const stripPointer = (value: string): string =>
+      value.startsWith('@') && value.endsWith('@') ? value.slice(1, -1) : value;
 
     for (const line of lines) {
       const trimmed = line.trim();
       if (!trimmed) continue;
 
-      const parts = trimmed.split(' ');
-      const level = parseInt(parts[0]);
+      const parts = trimmed.split(/\s+/);
+      const level = parseInt(parts[0], 10);
+      if (Number.isNaN(level)) continue;
       const tag = parts[1];
       const value = parts.slice(2).join(' ');
 
-      if (level === 0 && tag.startsWith('@') && parts[2] === 'INDI') {
-        // New individual record
-        const id = tag.slice(1, -1); // Remove @ symbols
-        currentPerson = { id, name: '' };
-        people[id] = currentPerson;
-      } else if (currentPerson && level === 1) {
+      if (level === 0) {
+        // A new top-level record closes any record we were reading.
+        currentPerson = null;
+        currentFamilyId = null;
+        inBirth = false;
+
+        if (tag?.startsWith('@') && parts[2] === 'INDI') {
+          const id = stripPointer(tag);
+          currentPerson = { id, name: '', parents: [], children: [] };
+          people[id] = currentPerson;
+          if (!firstIndiId) firstIndiId = id;
+        } else if (tag?.startsWith('@') && parts[2] === 'FAM') {
+          const id = stripPointer(tag);
+          currentFamilyId = id;
+          families[id] = { children: [] };
+        }
+        continue;
+      }
+
+      if (currentPerson) {
+        if (level === 1) {
+          inBirth = false;
+          switch (tag) {
+            case 'NAME':
+              currentPerson.name = value.replace(/\//g, '').trim(); // Remove GEDCOM name markers
+              break;
+            case 'BIRT':
+              inBirth = true; // The DATE arrives on the next (level 2) line
+              break;
+          }
+        } else if (level === 2 && tag === 'DATE' && inBirth) {
+          const yearMatch = value.match(/(\d{4})/);
+          if (yearMatch) currentPerson.birthYear = parseInt(yearMatch[1], 10);
+        }
+      } else if (currentFamilyId && level === 1) {
+        const fam = families[currentFamilyId];
         switch (tag) {
-          case 'NAME':
-            currentPerson.name = value.replace(/\//g, ''); // Remove GEDCOM name markers
+          case 'HUSB':
+            fam.husband = stripPointer(value);
             break;
-          case 'BIRT':
-            // Birth date will be on next line typically
+          case 'WIFE':
+            fam.wife = stripPointer(value);
             break;
-          case 'FAMC': // Family as child
-            const familyId = value.slice(1, -1);
-            // Link to parents (would need family records processing)
+          case 'CHIL':
+            fam.children.push(stripPointer(value));
             break;
+        }
+      }
+    }
+
+    // Resolve parent/child links from the family records.
+    for (const fam of Object.values(families)) {
+      const parents = [fam.husband, fam.wife].filter((p): p is string => !!p);
+      for (const childId of fam.children) {
+        const child = people[childId];
+        if (!child) continue;
+        child.parents = child.parents ?? [];
+        for (const parentId of parents) {
+          if (!child.parents.includes(parentId)) child.parents.push(parentId);
+          const parent = people[parentId];
+          if (parent) {
+            parent.children = parent.children ?? [];
+            if (!parent.children.includes(childId)) parent.children.push(childId);
+          }
         }
       }
     }
 
     return {
       people,
-      rootPerson: rootPersonId
+      // The home person (the uploader) is the first individual in the file;
+      // ancestor walks start here. Fall back to the supplied id if absent.
+      rootPerson: firstIndiId ?? rootPersonId,
     };
   }
 

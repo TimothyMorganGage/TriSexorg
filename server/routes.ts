@@ -1942,13 +1942,14 @@ END:VEVENT
   });
 
   // Genealogy verification routes
-  app.post("/api/genealogy/upload", uploadGeneology.single('gedcom'), async (req, res) => {
+  app.post("/api/genealogy/upload", requireAuth, uploadGeneology.single('gedcom'), async (req, res) => {
     try {
       if (!req.file) {
         return res.status(400).json({ message: "No GEDCOM file uploaded" });
       }
 
-      const userId = req.body.userId || 'anonymous'; // In real app, get from session
+      // Bind the tree to the authenticated user; never trust a client-supplied id.
+      const userId = String(req.session.userId!);
       const filePath = req.file.path;
 
       // Parse GEDCOM file
@@ -1971,12 +1972,14 @@ END:VEVENT
     }
   });
 
-  app.post("/api/genealogy/check-relationship", async (req, res) => {
+  app.post("/api/genealogy/check-relationship", requireAuth, async (req, res) => {
     try {
-      const { userId1, userId2 } = req.body;
-      
-      if (!userId1 || !userId2) {
-        return res.status(400).json({ message: "Both user IDs required" });
+      // One side is always the authenticated caller; only the candidate is supplied.
+      const userId1 = String(req.session.userId!);
+      const { userId2 } = req.body;
+
+      if (!userId2) {
+        return res.status(400).json({ message: "Candidate user ID required" });
       }
 
       const relationship = genealogyService.calculateRelationship(userId1, userId2);
@@ -1997,9 +2000,9 @@ END:VEVENT
     }
   });
 
-  app.get("/api/genealogy/blocked-matches/:userId", async (req, res) => {
+  app.get("/api/genealogy/blocked-matches", requireAuth, async (req, res) => {
     try {
-      const { userId } = req.params;
+      const userId = String(req.session.userId!);
       const { potentialMatches } = req.query;
 
       if (!potentialMatches) {
@@ -2025,12 +2028,13 @@ END:VEVENT
     }
   });
 
-  app.post("/api/genealogy/verify-status", async (req, res) => {
+  app.post("/api/genealogy/verify-status", requireAuth, async (req, res) => {
     try {
-      const { userId, status } = req.body;
-      
-      if (!userId || !['pending', 'verified', 'rejected'].includes(status)) {
-        return res.status(400).json({ message: "Invalid user ID or status" });
+      const userId = String(req.session.userId!);
+      const { status } = req.body;
+
+      if (!['pending', 'verified', 'rejected'].includes(status)) {
+        return res.status(400).json({ message: "Invalid status" });
       }
 
       await genealogyService.setVerificationStatus(userId, status);
