@@ -207,9 +207,9 @@ export class GenealogyService {
   }
 
   /**
-   * Get all ancestors up to 5 generations (covers 3rd cousins)
+   * Get all ancestors up to 6 generations (covers 4th cousins)
    */
-  private getAllAncestors(tree: FamilyTree, personId: string, maxGenerations: number = 5): Map<string, number> {
+  private getAllAncestors(tree: FamilyTree, personId: string, maxGenerations: number = 6): Map<string, number> {
     const ancestors = new Map<string, number>();
     const visited = new Set<string>();
     const queue: [string, number][] = [[personId, 0]];
@@ -278,14 +278,14 @@ export class GenealogyService {
   }
 
   /**
-   * Check if relationship violates the 3rd-cousin rule
+   * Check if relationship violates the 4th-cousin rule
    */
   isRelationshipAllowed(userId1: string, userId2: string): boolean {
     const result = this.calculateRelationship(userId1, userId2);
 
-    // In this model, cousin number = degree - 1 (degree 4 == 3rd cousin).
-    // Allow if not related or the relationship is 3rd cousin or more distant.
-    return !result.isRelated || (result.degree !== null && result.degree >= 4);
+    // In this model, cousin number = degree - 1 (degree 5 == 4th cousin).
+    // Allow if not related or the relationship is 4th cousin or more distant.
+    return !result.isRelated || (result.degree !== null && result.degree >= 5);
   }
 
   /**
@@ -345,12 +345,12 @@ export const genealogyService = new GenealogyService();
 // Utility functions for relationship calculations
 export const RelationshipUtils = {
   /**
-   * Calculate if two people would be closer than 3rd cousins
+   * Calculate if two people would be closer than 4th cousins
    */
-  isWithinThirdCousinLimit: (generationDistance: number): boolean => {
-    // 3rd cousins share great-great-grandparents (8 steps total);
+  isWithinFourthCousinLimit: (generationDistance: number): boolean => {
+    // 4th cousins share great-great-great-grandparents (10 steps total);
     // anything closer than that is within the blocked limit.
-    return generationDistance < 8;
+    return generationDistance < 10;
   },
 
   /**
@@ -371,6 +371,7 @@ export const RelationshipUtils = {
     const cousinDegree = degree - 1;
     if (cousinDegree === 1) return "1st cousins (share grandparents)";
     if (cousinDegree === 3) return "3rd cousins (share great-great-grandparents)";
+    if (cousinDegree === 4) return "4th cousins (share great-great-great-grandparents)";
     
     return `${cousinDegree}th cousins`;
   }

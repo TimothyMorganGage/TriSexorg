@@ -361,7 +361,7 @@ export default function PolyglamorousPeople() {
                   <li>• Monthly STI screening default</li>
                   <li>• Progressive-stage barrier work optimised for two people</li>
                   <li>• No metamour disclosure tooling</li>
-                  <li>• Genealogical verification (GEDCOM) prevents incest within 3 degrees</li>
+                  <li>• Genealogical verification (GEDCOM) prevents incest within 4 degrees</li>
                 </ul>
               </div>
               <div className="p-4 rounded-md border-2 border-primary/40 bg-primary/5">

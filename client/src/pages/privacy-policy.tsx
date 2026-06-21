@@ -254,7 +254,7 @@ export default function PrivacyPolicy() {
                         <strong>What we collect:</strong>
                         <ul className="mt-2 space-y-1 text-muted-foreground">
                           <li>• Family tree data (GEDCOM format)</li>
-                          <li>• Relationship degrees (up to 3rd cousins)</li>
+                          <li>• Relationship degrees (up to 4th cousins)</li>
                           <li>• Incest prevention verification</li>
                         </ul>
                       </div>

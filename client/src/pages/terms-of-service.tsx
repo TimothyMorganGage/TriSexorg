@@ -297,7 +297,7 @@ export default function TermsOfService() {
                     <ul className="text-sm text-muted-foreground space-y-2">
                       <li>• <strong>2-year age range limit:</strong> Matches within 2 years of your age</li>
                       <li>• <strong>STI verification:</strong> Both partners tested before matching</li>
-                      <li>• <strong>Genealogical screening:</strong> Prevents incest (up to 3rd cousins)</li>
+                      <li>• <strong>Genealogical screening:</strong> Prevents incest (up to 4th cousins)</li>
                       <li>• <strong>Values alignment:</strong> Cooperative principles and relationship goals</li>
                       <li>• <strong>No guarantees:</strong> We facilitate connections but cannot guarantee relationship success</li>
                     </ul>
