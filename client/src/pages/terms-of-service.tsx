@@ -407,8 +407,14 @@ export default function TermsOfService() {
 
                   <div className="p-4 border rounded-lg">
                     <h4 className="font-bold mb-3">Indemnification</h4>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-muted-foreground mb-3">
                       You agree to indemnify TriSex.org for any claims arising from your violation of these Terms, including knowingly transmitting STIs, sharing others' private data, or falsifying verification.
+                    </p>
+                    <p className="text-sm text-muted-foreground mb-3">
+                      <strong>Personal health decisions.</strong> You further agree to indemnify and hold harmless the TriSex operators — the cooperative, its co-operator members acting on its behalf, and its volunteers — forthwith from any claims, losses, or liabilities arising from your own personal health decisions. TriSex.org provides tools, education, and peer information, not medical advice. Every decision you make about products, barriers, testing, partners, or treatment is yours alone, made at your own risk, and you accept full responsibility for it. Always consult a qualified healthcare professional.
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      <strong>Interdependence.</strong> TriSex.org is an interdependent, cooperatively run community: members share information, screening signals (such as STI and relatedness indicators), and peer support with one another. You acknowledge that the conduct, disclosures, and accuracy of other members are outside the operators' control. You agree to indemnify and hold harmless the operators from claims arising out of your reliance on, or interactions and interdependence with, other members, peers, mentors, or third parties on the platform.
                     </p>
                   </div>
                 </div>
