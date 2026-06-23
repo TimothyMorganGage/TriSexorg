@@ -988,8 +988,8 @@ export default function GoodPeople() {
                             <span className="text-sm font-medium text-orange-800">Incest Prevention System</span>
                           </div>
                           <div className="text-xs text-orange-700 space-y-1">
-                            <div>Upload your family tree (GEDCOM format) to verify no blood relations within 4 degrees of cousinship</div>
-                            <div><strong>Protected relationships:</strong> Up to 4th cousins (great-great-great-grandparents as common ancestors)</div>
+                            <div>Upload your family tree (GEDCOM format) to verify no blood relations within 8 degrees of cousinship</div>
+                            <div><strong>Protected relationships:</strong> Up to 8th cousins — effectively no detectable blood relationship</div>
                             <div><strong>Verification process:</strong> Your uploaded GEDCOM is parsed in-house to map shared ancestors and compute the relationship degree — no third-party genealogy service or DNA database is queried</div>
                             <div><strong>Privacy:</strong> Family tree data is used only for relationship screening, never shared, and can be deleted on request</div>
                           </div>

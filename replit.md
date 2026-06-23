@@ -45,7 +45,7 @@ The application uses a modern full-stack architecture with a focus on accessibil
 -   Deaf and braille translation services with ASL/BSL support.
 -   Calendar integration (Google, iCal, Outlook, pureOS).
 -   Open-source age verification and comprehensive parental consent.
--   Genealogical verification (GEDCOM) to prevent incest within 4 degrees of cousinship.
+-   Genealogical verification (GEDCOM) to prevent incest within 8 degrees of cousinship (no blood relationship).
 -   Intersex-centered sizing system as the anatomical baseline for all products.
 -   Monogamy economics page and platform policy exclusivity for monogamous relationships.
 -   Dedicated oral barriers for MSM product page, democratically owned by MSM "sides" cooperative.

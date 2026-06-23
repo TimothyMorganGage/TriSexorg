@@ -1988,8 +1988,8 @@ END:VEVENT
       res.json({
         relationship,
         isAllowed,
-        withinFourthCousinLimit: relationship.degree ? 
-          RelationshipUtils.isWithinFourthCousinLimit(relationship.degree * 2) : 
+        withinEighthCousinLimit: relationship.degree ? 
+          RelationshipUtils.isWithinEighthCousinLimit(relationship.degree * 2) : 
           true
       });
 
