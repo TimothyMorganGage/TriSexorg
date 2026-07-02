@@ -262,6 +262,15 @@ export default function ClinicDashboard() {
           </div>
         </div>
 
+        {/* Operational status: no fabricated data */}
+        <Alert className="mb-8 border-2 border-dashed border-amber-500/50 bg-amber-50/40 dark:bg-amber-950/10">
+          <AlertTriangle className="h-4 w-4 text-amber-600" />
+          <AlertDescription className="ml-2 text-sm">
+            <strong className="text-amber-700 dark:text-amber-400">Not yet connected to a live clinic inventory.</strong>{" "}
+            No partner clinic has onboarded stock data, so inventory, alerts, and restock orders are empty. Every figure below is computed live from real records only — nothing is pre-populated with sample data.
+          </AlertDescription>
+        </Alert>
+
         {/* Dashboard Metrics */}
         <div className="grid grid-cols-2 lg:grid-cols-6 gap-4 mb-8">
           <Card>
@@ -511,10 +520,35 @@ export default function ClinicDashboard() {
                   </CardContent>
                 </Card>
               ))}
+
+              {!inventoryLoading && filteredInventory.length === 0 && (
+                <Card>
+                  <CardContent className="p-8 text-center">
+                    <Warehouse className="h-8 w-8 mx-auto mb-3 text-muted-foreground" />
+                    <p className="font-medium">No inventory items</p>
+                    <p className="text-sm text-muted-foreground mt-1">
+                      {inventory.length === 0
+                        ? "No clinic has recorded stock yet. Items will appear here once real inventory data is added — this dashboard never shows sample data."
+                        : "No items match your current search or filters."}
+                    </p>
+                  </CardContent>
+                </Card>
+              )}
             </div>
           </TabsContent>
 
           <TabsContent value="alerts" className="space-y-4">
+            {!alertsLoading && alerts.length === 0 && (
+              <Card>
+                <CardContent className="p-8 text-center">
+                  <Bell className="h-8 w-8 mx-auto mb-3 text-muted-foreground" />
+                  <p className="font-medium">No stock alerts</p>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Alerts are generated automatically from real inventory levels. With no inventory recorded, there is nothing to alert on.
+                  </p>
+                </CardContent>
+              </Card>
+            )}
             {alerts.map((alert: StockAlert) => (
               <Alert 
                 key={alert.id} 
@@ -557,6 +591,17 @@ export default function ClinicDashboard() {
           </TabsContent>
 
           <TabsContent value="orders" className="space-y-4">
+            {!ordersLoading && orders.length === 0 && (
+              <Card>
+                <CardContent className="p-8 text-center">
+                  <ShoppingCart className="h-8 w-8 mx-auto mb-3 text-muted-foreground" />
+                  <p className="font-medium">No restock orders</p>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Restock orders appear here only when they are genuinely placed. None have been created yet.
+                  </p>
+                </CardContent>
+              </Card>
+            )}
             {orders.map((order: RestockOrder) => (
               <Card key={order.id}>
                 <CardHeader>

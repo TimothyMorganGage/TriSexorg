@@ -1172,92 +1172,9 @@ The /fork-the-framework page documents the public API of the inclusive-ordering 
 
   // Clinic Inventory Management methods
   async getClinicInventory(): Promise<any[]> {
-    if (this.clinicInventory.size === 0) {
-      // Initialize sample inventory data
-      const sampleInventory = [
-        {
-          id: 1,
-          productId: 1,
-          productName: "Universal Recycled Plastic Protection - Size S",
-          category: "external_protection",
-          currentStock: 45,
-          minimumThreshold: 10,
-          maximumCapacity: 100,
-          unitCost: 29.99,
-          lastRestock: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
-          expirationDate: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString(),
-          batchNumber: "URP-2024-001",
-          supplier: "Sustainable Materials Co.",
-          location: "Storage Room A, Shelf 3",
-          status: "in_stock",
-          customConfiguration: {
-            lengthRange: "4-6 inches",
-            material: "Ocean Plastic + Hydrogel",
-            features: ["Antimicrobial coating", "Temperature responsive"]
-          }
-        },
-        {
-          id: 2,
-          productId: 1,
-          productName: "Universal Recycled Plastic Protection - Size M",
-          category: "external_protection",
-          currentStock: 8,
-          minimumThreshold: 15,
-          maximumCapacity: 100,
-          unitCost: 29.99,
-          lastRestock: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString(),
-          expirationDate: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString(),
-          batchNumber: "URP-2024-002",
-          supplier: "Sustainable Materials Co.",
-          location: "Storage Room A, Shelf 4",
-          status: "low_stock",
-          customConfiguration: {
-            lengthRange: "6-8 inches",
-            material: "Ocean Plastic + Hydrogel",
-            features: ["Antimicrobial coating", "Flexible walls"]
-          }
-        },
-        {
-          id: 3,
-          productId: 2,
-          productName: "Custom Lubricant - Plant-Based Formula",
-          category: "lubricants",
-          currentStock: 120,
-          minimumThreshold: 25,
-          maximumCapacity: 200,
-          unitCost: 15.99,
-          lastRestock: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
-          expirationDate: new Date(Date.now() + 180 * 24 * 60 * 60 * 1000).toISOString(),
-          batchNumber: "LUB-PB-2024-015",
-          supplier: "Natural Health Solutions",
-          location: "Refrigerated Storage B",
-          status: "in_stock"
-        },
-        {
-          id: 4,
-          productId: 3,
-          productName: "4D STI Testing Kit - Comprehensive Panel",
-          category: "testing_kits",
-          currentStock: 0,
-          minimumThreshold: 5,
-          maximumCapacity: 50,
-          unitCost: 85.00,
-          lastRestock: new Date(Date.now() - 21 * 24 * 60 * 60 * 1000).toISOString(),
-          batchNumber: "STI-4D-2024-008",
-          supplier: "BioMedical Diagnostics",
-          location: "Medical Supply Cabinet",
-          status: "out_of_stock"
-        }
-      ];
-
-      sampleInventory.forEach(item => {
-        this.clinicInventory.set(item.id, item);
-      });
-
-      // Generate stock alerts for low/out of stock items
-      this.generateStockAlerts();
-    }
-
+    // No sample/seed data: this dashboard is not connected to any real clinic
+    // inventory system yet, so it returns only genuinely recorded stock (empty
+    // until a real clinic's data is added). Nothing here is fabricated.
     return Array.from(this.clinicInventory.values());
   }
 
@@ -1298,28 +1215,8 @@ The /fork-the-framework page documents the public API of the inclusive-ordering 
   }
 
   async getRestockOrders(): Promise<any[]> {
-    if (this.restockOrders.size === 0) {
-      // Initialize sample restock orders
-      const sampleOrders = [
-        {
-          id: 1,
-          items: [
-            { itemId: 2, itemName: "Universal Recycled Plastic Protection - Size M", quantity: 50, unitCost: 29.99 },
-            { itemId: 4, itemName: "4D STI Testing Kit - Comprehensive Panel", quantity: 20, unitCost: 85.00 }
-          ],
-          supplier: "Sustainable Materials Co.",
-          orderDate: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
-          expectedDelivery: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString(),
-          status: "confirmed",
-          totalCost: 3199.50
-        }
-      ];
-
-      sampleOrders.forEach(order => {
-        this.restockOrders.set(order.id, order);
-      });
-    }
-
+    // No sample/seed data: restock orders are only those genuinely created
+    // through createRestockOrder (empty until a real order is placed).
     return Array.from(this.restockOrders.values());
   }
 
