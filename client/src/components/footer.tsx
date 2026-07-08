@@ -1,5 +1,6 @@
 import { Link } from "wouter";
 import { Mail, MapPin, Heart } from "lucide-react";
+import fuBadge from "@assets/fu-members-badge_1783544172691.png";
 
 export function Footer() {
   return (
@@ -19,6 +20,20 @@ export function Footer() {
               <Heart className="h-3 w-3 text-primary" />
               <span>Made with care for all bodies</span>
             </div>
+            <a
+              href="https://www.freelancersunion.org"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block mt-2 transition-opacity hover:opacity-80"
+              aria-label="Proud member of the Freelancers Union — visit freelancersunion.org (opens in new tab)"
+            >
+              <img
+                src={fuBadge}
+                alt="Proud Member of the Freelancers Union"
+                className="h-20 w-20"
+                loading="lazy"
+              />
+            </a>
           </div>
 
           {/* Products */}

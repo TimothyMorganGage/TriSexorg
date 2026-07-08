@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Heart, Gift, ExternalLink, HandHeart } from "lucide-react";
+import fuBadge from "@assets/fu-members-badge_1783544172691.png";
 
 export default function Support() {
   const supportCode = "R67-J62";
@@ -22,13 +23,37 @@ export default function Support() {
 
         <Card className="mb-6">
           <CardContent className="p-6 space-y-4 text-muted-foreground">
-            <p>
-              TriSex.org is a self-employment project built and operated by{" "}
-              <strong className="text-foreground">Timothy M Gage</strong>. It is
-              offered freely and openly under a Creative Commons BY-SA 4.0
-              licence. There is no company behind it and no paid staff — just one
-              person covering the costs of building and running it.
-            </p>
+            <div className="flex flex-col sm:flex-row items-center gap-5">
+              <a
+                href="https://www.freelancersunion.org"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="shrink-0 transition-opacity hover:opacity-80"
+                aria-label="Proud member of the Freelancers Union — visit freelancersunion.org (opens in new tab)"
+              >
+                <img
+                  src={fuBadge}
+                  alt="Proud Member of the Freelancers Union"
+                  className="h-24 w-24"
+                />
+              </a>
+              <p className="flex-1">
+                TriSex.org is a self-employment project built and operated by{" "}
+                <strong className="text-foreground">Timothy M Gage</strong>, a
+                proud member of the{" "}
+                <a
+                  href="https://www.freelancersunion.org"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary hover:underline"
+                >
+                  Freelancers Union
+                </a>
+                . It is offered freely and openly under a Creative Commons BY-SA
+                4.0 licence. There is no company behind it and no paid staff —
+                just one person covering the costs of building and running it.
+              </p>
+            </div>
             <p>
               If you've benefited from the tools, education, or community here and
               would like to give back, you can contribute through UGiftABLE and
