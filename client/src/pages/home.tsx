@@ -10,7 +10,7 @@ import {
   Printer, Truck, Hospital, UserCheck, Store,
   Building, Ruler, Droplets, TestTube,
   Coins, BookOpen, Lightbulb, Users, Package, ArrowRight,
-  Shapes, GitBranch, Code2, Sparkles
+  Shapes, GitBranch, Code2, Sparkles, HandHeart
 } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
@@ -123,6 +123,33 @@ export default function Home() {
                 </Card>
               ))}
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Support this project — fundraising notice */}
+      <section className="py-10 bg-black border-b border-white/10">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="rounded-2xl border border-primary/30 bg-primary/5 p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center gap-5">
+            <div className="flex-1 space-y-2">
+              <div className="flex items-center gap-2 text-primary">
+                <HandHeart className="h-5 w-5" />
+                <span className="text-xs font-semibold uppercase tracking-wide">Support this project</span>
+              </div>
+              <h2 className="text-2xl font-bold text-white font-display leading-tight">
+                Benefited from TriSex.org? Help keep it running.
+              </h2>
+              <p className="text-white/60 text-sm leading-relaxed max-w-2xl">
+                TriSex.org is a self-employment project run by Timothy M Gage and offered freely.
+                If it's helped you, you can defray operating costs at UGiftABLE.com using support code{" "}
+                <span className="font-mono font-semibold text-white">R67-J62</span>. Giving is always optional.
+              </p>
+            </div>
+            <Link href="/support" className="shrink-0">
+              <Button size="lg" className="whitespace-nowrap">
+                <HandHeart className="h-4 w-4 mr-2" /> How to contribute
+              </Button>
+            </Link>
           </div>
         </div>
       </section>

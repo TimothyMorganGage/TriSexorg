@@ -100,6 +100,7 @@ const HerbalKnowledge = lazy(() => import("@/pages/herbal-knowledge"));
 const LetsFramework = lazy(() => import("@/pages/lets-framework"));
 const TriSexPort = lazy(() => import("@/pages/trisexport"));
 const Contact = lazy(() => import("@/pages/contact"));
+const Support = lazy(() => import("@/pages/support"));
 
 function PWAWrapper({ children }: { children: React.ReactNode }) {
   const { registerServiceWorker } = usePWA();
@@ -174,6 +175,7 @@ function Router() {
             <Route path="/trisexport" component={TriSexPort} />
             <Route path="/saved-configurations" component={SavedConfigurations} />
             <Route path="/contact" component={Contact} />
+            <Route path="/support" component={Support} />
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
             <Route component={NotFound} />
