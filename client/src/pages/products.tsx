@@ -29,9 +29,38 @@ import {
 } from "lucide-react";
 import { Link } from "wouter";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { useAuth } from "@/lib/auth";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
+import {
+  INTERSEX_VARIATIONS,
+  INTERSEX_CATEGORIES,
+  FITTING_PARAMS,
+  ASSIGNMENT_MARKERS,
+  getApplicableParams,
+  getAssignmentMarkers,
+  type AssignmentMarker,
+} from "@/data/intersex-variations";
+
+const ZONE_LABELS: Record<string, string> = {
+  oral: "Oral",
+  anal: "Anal",
+  vaginal: "Vaginal",
+  frontal: "Frontal",
+  neovaginal: "Neovaginal",
+};
+
+const MARKER_STYLES: Record<AssignmentMarker, string> = {
+  AMAB: "bg-sky-100 text-sky-700 border-sky-300 dark:bg-sky-950/40 dark:text-sky-300 dark:border-sky-500/40",
+  AFAB: "bg-pink-100 text-pink-700 border-pink-300 dark:bg-pink-950/40 dark:text-pink-300 dark:border-pink-500/40",
+  AXAB: "bg-amber-100 text-amber-700 border-amber-300 dark:bg-amber-950/40 dark:text-amber-300 dark:border-amber-500/40",
+};
 
 interface BulkPricingTier {
   minQuantity: number;
@@ -58,6 +87,8 @@ export default function Products() {
   const { toast } = useToast();
   const [selectedProduct, setSelectedProduct] = useState<string>("protection-basics");
   const [quantity, setQuantity] = useState<number>(500);
+  const [catalogueSearch, setCatalogueSearch] = useState<string>("");
+  const [catalogueMarker, setCatalogueMarker] = useState<"ALL" | AssignmentMarker>("ALL");
   const [isVegan, setIsVegan] = useState<boolean>(true);
 
   const pricingTiers: BulkPricingTier[] = [
@@ -562,6 +593,201 @@ export default function Products() {
                     off-the-shelf fit. Variation selection is self-reported, not stored or shared
                     outside the order summary, and not used for any registry, research, or
                     insurance purpose.
+                  </p>
+                </AlertDescription>
+              </Alert>
+            </CardContent>
+          </Card>
+
+          {/* Full catalogue — all 86 named variations */}
+          <Card className="mb-12 border-2 border-primary/20" data-testid="card-full-catalogue">
+            <CardHeader>
+              <div className="flex flex-wrap items-center gap-2 mb-2">
+                <Badge className="bg-primary/15 text-primary border border-primary/30 text-xs">
+                  <Shapes className="w-3 h-3 mr-1" /> Full catalogue · all {INTERSEX_VARIATIONS.length} variations
+                </Badge>
+                <Badge variant="outline" className="text-xs">Grouped by category</Badge>
+              </div>
+              <CardTitle className="text-2xl lg:text-3xl">
+                Every named variation, in full
+              </CardTitle>
+              <CardDescription className="text-base mt-2 max-w-3xl">
+                The three cards above are our grouping of how these variations tend to map to a
+                recorded sex marker. Below is the complete catalogue — every one of the{" "}
+                {INTERSEX_VARIATIONS.length} named variations, with the assignment markers we place it
+                under, the contact zones it affects, whether we suggest a fitting consult, its design
+                fitting note, and the exact configurator controls that appear for it. Search by name
+                or filter by marker to jump to yours.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="flex flex-col sm:flex-row gap-3 mb-5">
+                <Input
+                  value={catalogueSearch}
+                  onChange={(e) => setCatalogueSearch(e.target.value)}
+                  placeholder="Search variations (e.g. CAH, MRKH, hypospadias, Klinefelter)…"
+                  className="sm:max-w-md"
+                  data-testid="input-catalogue-search"
+                />
+                <div className="flex flex-wrap gap-1.5">
+                  {(["ALL", "AMAB", "AFAB", "AXAB"] as const).map((m) => (
+                    <Button
+                      key={m}
+                      type="button"
+                      size="sm"
+                      variant={catalogueMarker === m ? "default" : "outline"}
+                      onClick={() => setCatalogueMarker(m)}
+                      data-testid={`filter-catalogue-${m.toLowerCase()}`}
+                    >
+                      {m === "ALL" ? "All markers" : m}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+
+              {(() => {
+                const q = catalogueSearch.trim().toLowerCase();
+                const matches = INTERSEX_VARIATIONS.filter((v) => {
+                  const markers = getAssignmentMarkers(v);
+                  const markerOk = catalogueMarker === "ALL" || markers.includes(catalogueMarker);
+                  const searchOk =
+                    q === "" ||
+                    v.name.toLowerCase().includes(q) ||
+                    (v.alsoKnownAs?.toLowerCase().includes(q) ?? false) ||
+                    v.id.toLowerCase().includes(q);
+                  return markerOk && searchOk;
+                });
+                const categoriesWithMatches = INTERSEX_CATEGORIES.map((cat) => ({
+                  ...cat,
+                  items: matches.filter((v) => v.category === cat.id),
+                })).filter((cat) => cat.items.length > 0);
+
+                if (matches.length === 0) {
+                  return (
+                    <div className="text-center py-10 text-muted-foreground text-sm" data-testid="catalogue-empty">
+                      No variations match your search. Try a different name or clear the filters.
+                    </div>
+                  );
+                }
+
+                return (
+                  <>
+                    <p className="text-xs text-muted-foreground mb-3" data-testid="catalogue-count">
+                      Showing {matches.length} of {INTERSEX_VARIATIONS.length} variations
+                      {catalogueMarker !== "ALL" ? ` assigned ${catalogueMarker}` : ""}
+                      {q ? ` matching "${catalogueSearch.trim()}"` : ""}.
+                    </p>
+                    <Accordion type="multiple" className="w-full">
+                      {categoriesWithMatches.map((cat) => (
+                        <AccordionItem key={cat.id} value={cat.id} data-testid={`catalogue-category-${cat.id}`}>
+                          <AccordionTrigger className="text-left hover:no-underline">
+                            <div className="flex flex-col items-start pr-3">
+                              <span className="font-semibold text-base">
+                                {cat.label}{" "}
+                                <span className="text-muted-foreground font-normal">
+                                  ({cat.items.length})
+                                </span>
+                              </span>
+                              <span className="text-xs text-muted-foreground font-normal mt-0.5">
+                                {cat.blurb}
+                              </span>
+                            </div>
+                          </AccordionTrigger>
+                          <AccordionContent>
+                            <div className="grid md:grid-cols-2 gap-3 pt-1">
+                              {cat.items.map((v) => {
+                                const markers = getAssignmentMarkers(v);
+                                const params = getApplicableParams(v);
+                                return (
+                                  <div
+                                    key={v.id}
+                                    className="rounded-lg border bg-white/60 dark:bg-gray-950/40 p-4 flex flex-col"
+                                    data-testid={`catalogue-variation-${v.id}`}
+                                  >
+                                    <div className="flex items-start justify-between gap-2 mb-2">
+                                      <h4 className="font-semibold text-sm leading-snug">{v.name}</h4>
+                                      {v.consultRequired ? (
+                                        <Badge variant="outline" className="shrink-0 text-[10px] border-amber-400 text-amber-700 dark:text-amber-300">
+                                          Consult suggested
+                                        </Badge>
+                                      ) : (
+                                        <Badge variant="outline" className="shrink-0 text-[10px] border-emerald-400 text-emerald-700 dark:text-emerald-300">
+                                          Standard fit
+                                        </Badge>
+                                      )}
+                                    </div>
+                                    {v.alsoKnownAs && (
+                                      <p className="text-xs text-muted-foreground italic mb-2">
+                                        Also known as: {v.alsoKnownAs}
+                                      </p>
+                                    )}
+                                    <div className="flex flex-wrap gap-1 mb-2">
+                                      {markers.map((m) => (
+                                        <span
+                                          key={m}
+                                          className={`text-[10px] font-medium px-1.5 py-0.5 rounded border ${MARKER_STYLES[m]}`}
+                                        >
+                                          {m}
+                                        </span>
+                                      ))}
+                                    </div>
+                                    <div className="mb-2">
+                                      <div className="text-[10px] uppercase tracking-wide text-muted-foreground mb-1">
+                                        Contact zones
+                                      </div>
+                                      <div className="flex flex-wrap gap-1">
+                                        {v.relevantZones.map((z) => (
+                                          <Badge key={z} variant="secondary" className="text-[10px]">
+                                            {ZONE_LABELS[z] ?? z}
+                                          </Badge>
+                                        ))}
+                                      </div>
+                                    </div>
+                                    <p className="text-xs text-gray-700 dark:text-gray-300 leading-relaxed mb-2 flex-1">
+                                      {v.fittingNote}
+                                    </p>
+                                    <div>
+                                      <div className="text-[10px] uppercase tracking-wide text-muted-foreground mb-1">
+                                        Configurator controls
+                                      </div>
+                                      <div className="flex flex-wrap gap-1">
+                                        {params.map((pid) => (
+                                          <span
+                                            key={pid}
+                                            className="text-[10px] px-1.5 py-0.5 rounded bg-primary/10 text-primary border border-primary/20"
+                                          >
+                                            {FITTING_PARAMS[pid].label}
+                                          </span>
+                                        ))}
+                                      </div>
+                                    </div>
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          </AccordionContent>
+                        </AccordionItem>
+                      ))}
+                    </Accordion>
+                  </>
+                );
+              })()}
+
+              <Alert className="mt-6 border-2 border-dashed border-amber-500/60 bg-amber-50 dark:bg-amber-950/20">
+                <AlertDescription className="text-amber-900 dark:text-amber-200 text-xs leading-relaxed space-y-1.5">
+                  <div className="font-semibold">Honesty notes — full catalogue</div>
+                  <p>
+                    Every fitting note and configurator control below is a <strong>design
+                    hypothesis</strong> assembled by co-operators, not a clinical spec. TriSex.org has
+                    not manufactured custom-fit units for every named variation and is not claiming an
+                    off-the-shelf fit. "Consult suggested" means measurement matters for that anatomy —
+                    it is never a gate on ordering.
+                  </p>
+                  <p>
+                    The marker tags (AMAB / AFAB / AXAB) describe a <strong>recorded birth
+                    assignment</strong>, not your anatomy or identity, and a variation may appear under
+                    more than one marker. Nothing here is a diagnosis, a registry, or population data,
+                    and your selection is never stored or shared beyond your own order summary.
                   </p>
                 </AlertDescription>
               </Alert>
