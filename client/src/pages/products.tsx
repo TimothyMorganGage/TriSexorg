@@ -42,7 +42,6 @@ import {
   INTERSEX_VARIATIONS,
   INTERSEX_CATEGORIES,
   FITTING_PARAMS,
-  ASSIGNMENT_MARKERS,
   getApplicableParams,
   getAssignmentMarkers,
   type AssignmentMarker,
@@ -629,7 +628,7 @@ export default function Products() {
                   className="sm:max-w-md"
                   data-testid="input-catalogue-search"
                 />
-                <div className="flex flex-wrap gap-1.5">
+                <div className="flex flex-wrap gap-1.5" role="group" aria-label="Filter variations by recorded birth assignment marker">
                   {(["ALL", "AMAB", "AFAB", "AXAB"] as const).map((m) => (
                     <Button
                       key={m}
