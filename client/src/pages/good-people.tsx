@@ -36,9 +36,11 @@ import {
   AlertTriangle,
   Palette,
   Ban,
-  ShieldCheck
+  ShieldCheck,
+  HeartHandshake
 } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import JointProtectionOrder from "@/components/JointProtectionOrder";
 
 const profileSchema = z.object({
   displayName: z.string().min(2, "Display name must be at least 2 characters"),
@@ -372,6 +374,7 @@ export default function GoodPeople() {
               { href: "#discover", label: "Discover", icon: Search },
               { href: "#profile", label: "My Profile", icon: UserPlus },
               { href: "#matching", label: "Matching", icon: Settings },
+              { href: "#joint-order", label: "Joint Order", icon: HeartHandshake },
               { href: "#principles", label: "Cooperative Love", icon: Heart },
             ].map(({ href, label, icon: Icon }) => (
               <a
@@ -1171,7 +1174,14 @@ export default function GoodPeople() {
             </Card>
           </section>
 
-          {/* ── COOPERATIVE LOVE ───────────────────────────────────── */}
+          {/* ── JOINT PROTECTION ORDER ─────────────────────────────── */}
+          <section id="joint-order">
+            <h2 className="text-2xl font-bold mb-6 flex items-center gap-2 border-b-2 border-black dark:border-white pb-3">
+              <HeartHandshake className="h-6 w-6" /> Joint Protection Order
+            </h2>
+            <JointProtectionOrder />
+          </section>
+
           <section id="principles">
             <h2 className="text-2xl font-bold mb-6 flex items-center gap-2 border-b-2 border-black dark:border-white pb-3">
               <Heart className="h-6 w-6" /> Cooperative Love

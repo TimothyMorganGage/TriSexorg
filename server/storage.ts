@@ -47,6 +47,8 @@ import {
   trisexportPartnerSlots,
   type InclusiveOrderingAdopter, type InsertInclusiveOrderingAdopter,
   inclusiveOrderingAdopters,
+  type JointProtectionOrder, type InsertJointProtectionOrder,
+  jointProtectionOrders,
   manufacturingPartners,
   type ManufacturingPartner,
   type InsertManufacturingPartner,
@@ -259,6 +261,8 @@ export interface IStorage {
   // Inclusive Ordering framework adopters (self-reported registry)
   listInclusiveOrderingAdopters(): Promise<InclusiveOrderingAdopter[]>;
   createInclusiveOrderingAdopter(data: InsertInclusiveOrderingAdopter): Promise<InclusiveOrderingAdopter>;
+  createJointProtectionOrder(data: InsertJointProtectionOrder): Promise<JointProtectionOrder>;
+  countJointProtectionOrders(): Promise<number>;
 
   // Manufacturing partners (self-reported registry of candidate / signed factories)
   listManufacturingPartners(): Promise<ManufacturingPartner[]>;
@@ -3260,6 +3264,17 @@ The /fork-the-framework page documents the public API of the inclusive-ordering 
   async createInclusiveOrderingAdopter(data: InsertInclusiveOrderingAdopter): Promise<InclusiveOrderingAdopter> {
     const [created] = await db.insert(inclusiveOrderingAdopters).values(data).returning();
     return created;
+  }
+
+  // --- Joint protection orders (matched-pair, two-body barrier design spec) ---
+  async createJointProtectionOrder(data: InsertJointProtectionOrder): Promise<JointProtectionOrder> {
+    const [created] = await db.insert(jointProtectionOrders).values(data as any).returning();
+    return created;
+  }
+
+  async countJointProtectionOrders(): Promise<number> {
+    const rows = await db.select({ id: jointProtectionOrders.id }).from(jointProtectionOrders);
+    return rows.length;
   }
 
   // --- Manufacturing partners (self-reported registry) ---

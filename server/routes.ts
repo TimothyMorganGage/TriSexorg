@@ -2852,6 +2852,36 @@ END:VEVENT
     }
   });
 
+  // --- Joint protection orders (Good People matched-pair, two-body barrier design spec) ---
+  // GET returns only an aggregate count — never personal fit data — to protect member privacy.
+  app.get('/api/joint-protection-orders/count', async (_req, res) => {
+    try {
+      const count = await storage.countJointProtectionOrders();
+      res.json({ count });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to count joint protection orders" });
+    }
+  });
+
+  app.post('/api/joint-protection-orders', requireAuth, async (req, res) => {
+    try {
+      const { insertJointProtectionOrderSchema } = await import("@shared/schema");
+      const parsed = insertJointProtectionOrderSchema.safeParse(req.body);
+      if (!parsed.success) {
+        return res.status(400).json({ message: "Invalid submission", errors: parsed.error.flatten() });
+      }
+      if (!parsed.data.mutualConsentAttestation || !parsed.data.honestyAttestation) {
+        return res.status(400).json({
+          message: "Both the mutual-consent attestation and the honesty attestation must be confirmed before a joint order can be captured.",
+        });
+      }
+      const order = await storage.createJointProtectionOrder(parsed.data);
+      res.status(201).json(order);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to capture joint protection order" });
+    }
+  });
+
   // --- Manufacturing partners (self-reported registry; scaffolding for honest sourcing) ---
   app.get('/api/manufacturing-partners', async (_req, res) => {
     try {

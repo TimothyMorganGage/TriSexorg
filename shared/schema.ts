@@ -1,6 +1,16 @@
-import { pgTable, text, serial, integer, boolean, timestamp, decimal, date, jsonb } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, integer, boolean, timestamp, decimal, date, jsonb, varchar, json, index } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
+
+// Session store for express-session (connect-pg-simple). Declared here so drizzle-kit
+// treats it as managed schema and does NOT attempt to drop it during db:push.
+export const session = pgTable("session", {
+  sid: varchar("sid").primaryKey(),
+  sess: json("sess").notNull(),
+  expire: timestamp("expire", { precision: 6 }).notNull(),
+}, (table) => [
+  index("IDX_session_expire").on(table.expire),
+]);
 
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),
@@ -1711,6 +1721,43 @@ export const insertInclusiveOrderingAdopterSchema = createInsertSchema(inclusive
 
 export type InsertInclusiveOrderingAdopter = z.infer<typeof insertInclusiveOrderingAdopterSchema>;
 export type InclusiveOrderingAdopter = typeof inclusiveOrderingAdopters.$inferSelect;
+
+// Joint protection orders — a matched pair in Good People captures ONE barrier-protection
+// design spec configured for BOTH partners' anatomies (supports partners of different sexes:
+// each side is an independent MultiUseBalance fit). No manufacturer has signed on yet, so
+// every joint order is captured as an open-source CC BY-SA 4.0 design spec, not a shipment.
+export const sexMarkerEnum = z.enum(["AMAB", "AFAB", "AXAB"]);
+export const jointRelationshipContextEnum = z.enum(["romance", "marriage", "networking", "friendship"]);
+
+export const jointProtectionOrders = pgTable("joint_protection_orders", {
+  id: serial("id").primaryKey(),
+  orderNumber: text("order_number").notNull().unique(),
+  relationshipContext: text("relationship_context").notNull(), // romance | marriage | networking | friendship
+  selfSexMarker: text("self_sex_marker").notNull(), // AMAB | AFAB | AXAB
+  partnerSexMarker: text("partner_sex_marker").notNull(),
+  selfBalance: jsonb("self_balance").notNull(), // MultiUseBalance — your fit
+  partnerBalance: jsonb("partner_balance").notNull(), // MultiUseBalance — your partner's fit
+  mutualConsentAttestation: boolean("mutual_consent_attestation").notNull().default(false),
+  honestyAttestation: boolean("honesty_attestation").notNull().default(false),
+  notes: text("notes"),
+  status: text("status").notNull().default("spec-captured"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const insertJointProtectionOrderSchema = createInsertSchema(jointProtectionOrders).omit({
+  id: true,
+  status: true,
+  createdAt: true,
+}).extend({
+  relationshipContext: jointRelationshipContextEnum,
+  selfSexMarker: sexMarkerEnum,
+  partnerSexMarker: sexMarkerEnum,
+  selfBalance: multiUseBalanceSchema,
+  partnerBalance: multiUseBalanceSchema,
+});
+
+export type InsertJointProtectionOrder = z.infer<typeof insertJointProtectionOrderSchema>;
+export type JointProtectionOrder = typeof jointProtectionOrders.$inferSelect;
 
 // Manufacturing partners — self-reported registry of factories / co-ops willing to
 // fulfil TriSex.org-spec orders under CC BY-SA 4.0-compatible manufacturing terms.

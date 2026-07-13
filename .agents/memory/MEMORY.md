@@ -2,3 +2,4 @@
 - [n honesty placeholders](honesty-placeholders.md) — literal "n" in page copy is a deliberate no-fabricated-count placeholder; never replace with invented numbers, derive from source arrays instead.
 - [Hybrid storage model](storage-model.md) — user accounts are DB-backed (Postgres); all other MemStorage data stays in-memory & wiped on restart.
 - [Genealogy incest-screening](genealogy-screening.md) — blocks closer than 3rd cousin (degree>=4); parser needs FAM records; matching is pre-launch/empty so no match-route to gate yet; data not encrypted, no Gramps/GEDmatch.
+- [db:push session drift](db-push-session-drift.md) — db:push is interactive (drive via pty, not piped stdin); keep the `session` table declared in schema.ts or drizzle tries to drop it and aborts the push.
