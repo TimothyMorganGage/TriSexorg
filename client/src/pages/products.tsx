@@ -23,7 +23,9 @@ import {
   Sprout,
   Flower2,
   Shapes,
-  Ruler
+  Ruler,
+  Scale,
+  ShieldCheck
 } from "lucide-react";
 import { Link } from "wouter";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -347,6 +349,77 @@ export default function Products() {
               <strong>Intersex Healthcare IS Everyone's Affirmation:</strong> All products use intersex anatomy as the sizing baseline—trans, non-binary, genderqueer, and quare embodiment are all respected within this participatory budgeting framework. There is no separate "transgender healthcare" category—TriSex Perfect Protection serves ALL bodies by design.
             </AlertDescription>
           </Alert>
+
+          {/* Intersex Bodily Autonomy — advocacy position */}
+          <Card className="mb-8 border-2 border-primary/30 bg-gradient-to-br from-amber-50 via-white to-primary/5 dark:from-amber-950/20 dark:via-gray-950 dark:to-primary/10" data-testid="card-bodily-autonomy">
+            <CardHeader>
+              <div className="flex flex-wrap items-center gap-2 mb-2">
+                <Badge className="bg-primary/15 text-primary border border-primary/30 text-xs">
+                  <Scale className="w-3 h-3 mr-1" /> Advocacy position — not yet law
+                </Badge>
+              </div>
+              <CardTitle className="text-2xl lg:text-3xl flex items-center gap-2">
+                <ShieldCheck className="w-7 h-7 text-primary shrink-0" />
+                Intersex Bodily Autonomy
+              </CardTitle>
+              <CardDescription className="text-base mt-2 max-w-3xl">
+                TriSex.org calls for a <strong>federal right to bodily autonomy for intersex people</strong>:
+                the right to grow up with your body intact and to decide for yourself about any
+                medically unnecessary, irreversible surgery meant only to force an intersex body into a
+                binary sex model.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <Alert className="bg-amber-50 dark:bg-amber-950/30 border border-amber-300 dark:border-amber-500/40">
+                <AlertDescription className="text-sm text-amber-900 dark:text-amber-200">
+                  <strong>To be honest about the law:</strong> no U.S. federal statute establishes this
+                  right yet — this is the change we advocate for. It rests on the principles of informed
+                  consent and bodily integrity, and on the human-rights positions of the UN, the WHO,
+                  Physicians for Human Rights, Human Rights Watch, and interACT, which all call for
+                  deferring these procedures until the person is old enough to consent for themselves.
+                  Malta banned them in 2015; several U.S. children's hospitals have pledged to stop or
+                  delay. It is a patchwork, not a settled federal right — yet.
+                </AlertDescription>
+              </Alert>
+              <div className="grid sm:grid-cols-3 gap-3">
+                {[
+                  {
+                    title: "Consent first",
+                    body: "No irreversible, medically unnecessary surgery on an intersex child who cannot yet consent.",
+                  },
+                  {
+                    title: "Body intact",
+                    body: "The right to grow up whole and choose any surgery — or none — for yourself.",
+                  },
+                  {
+                    title: "Self-determination",
+                    body: "Your sex characteristics are yours to define, never something to be corrected into a binary.",
+                  },
+                ].map((item) => (
+                  <div key={item.title} className="rounded-lg border bg-white/70 dark:bg-gray-950/40 p-3">
+                    <div className="flex items-center gap-1.5 font-semibold text-sm mb-1">
+                      <CheckCircle2 className="w-4 h-4 text-primary shrink-0" />
+                      {item.title}
+                    </div>
+                    <p className="text-xs text-muted-foreground leading-snug">{item.body}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="rounded-lg border-2 border-primary/30 bg-primary/5 dark:bg-primary/10 p-4">
+                <div className="flex items-center gap-2 font-semibold mb-1">
+                  <Heart className="w-5 h-5 text-primary shrink-0" />
+                  Trans people who live as binary are entitled to order anything they want
+                </div>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  Living binary — as a woman, as a man, however she/he/they live — never limits your
+                  access to a single product in this catalogue. There is no gatekeeping, no proof of
+                  anatomy, no eligibility test, and no separate "binary" or "non-binary" SKU line. Every
+                  product is sized from the intersex-anatomy baseline and is yours to order, configure,
+                  and fit exactly how you want it — for you and your partner(s).
+                </p>
+              </div>
+            </CardContent>
+          </Card>
 
           {/* Offerings for AMAB / AFAB / AXAB Intersex People */}
           <Card className="mb-12 border-2 border-primary/30 bg-gradient-to-br from-primary/5 via-white to-amber-50 dark:from-primary/10 dark:via-gray-950 dark:to-amber-950/20" data-testid="card-marker-offerings">
