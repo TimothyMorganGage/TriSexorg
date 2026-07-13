@@ -107,12 +107,27 @@ export const contactZoneEnum = z.enum(["oral", "anal", "vaginal", "frontal", "ne
 export const roleBalanceEnum = z.enum(["receptive", "penetrative", "versatile"]);
 export const procreativeModeEnum = z.enum(["barrier-only", "procreative-permeable", "fertility-only"]);
 
+// Self-declared gender-affirming care status. Purely self-attested, never verified,
+// so intersex co-operators who have (or have not) had affirming care can still get
+// an ideal fit for themselves and their partner(s).
+export const affirmingCareStatusEnum = z.enum([
+  "not-specified",
+  "no-affirming-care",
+  "hormonal",
+  "surgical",
+  "surgical-and-hormonal",
+  "self-describe",
+]);
+
 export const fittingParamValueSchema = z.union([z.number(), z.string(), z.boolean()]);
 
 export const multiUseBalanceSchema = z.object({
   roleBalance: roleBalanceEnum,
   contactZones: z.array(contactZoneEnum),
   procreativeMode: procreativeModeEnum,
+  // Self-attested affirming-care status + optional free-text context. Self-declared only.
+  affirmingCareStatus: affirmingCareStatusEnum.default("not-specified"),
+  affirmingCareNotes: z.string().max(500).optional(),
   intersexVariations: z.array(z.string()).default([]),
   consultRequiredCount: z.number().int().nonnegative().default(0),
   activeFoldId: z.string().nullable().optional(),

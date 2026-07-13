@@ -11,6 +11,7 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Slider } from "@/components/ui/slider";
 import { Switch } from "@/components/ui/switch";
@@ -55,6 +56,46 @@ interface BrandingPreference {
 
 type RoleBalance = "receptive" | "penetrative" | "versatile";
 type ProcreativeMode = "barrier-only" | "procreative-permeable" | "fertility-only";
+type AffirmingCareStatus =
+  | "not-specified"
+  | "no-affirming-care"
+  | "hormonal"
+  | "surgical"
+  | "surgical-and-hormonal"
+  | "self-describe";
+
+const AFFIRMING_CARE_OPTIONS: Array<{ value: AffirmingCareStatus; label: string; helper: string }> = [
+  {
+    value: "not-specified",
+    label: "Prefer not to specify",
+    helper: "We fit to the measurements and variations you provide, nothing assumed.",
+  },
+  {
+    value: "no-affirming-care",
+    label: "No gender-affirming care — fit my body as it is",
+    helper: "Your intersex anatomy is the baseline; no surgical or hormonal history is assumed.",
+  },
+  {
+    value: "hormonal",
+    label: "Hormonal affirming care",
+    helper: "Tissue changes from hormones (e.g. growth, softening) are factored into the fit.",
+  },
+  {
+    value: "surgical",
+    label: "Surgical affirming care",
+    helper: "Post-surgical anatomy — scar-aware surfaces and appropriate anchors are offered.",
+  },
+  {
+    value: "surgical-and-hormonal",
+    label: "Surgical + hormonal affirming care",
+    helper: "Both surgical and hormonal history are factored into the fit.",
+  },
+  {
+    value: "self-describe",
+    label: "Self-describe below",
+    helper: "Tell us in your own words so the fit matches your body.",
+  },
+];
 
 const CONTACT_ZONES = [
   { id: "oral", label: "Oral (mouth-side contact, throat coating)" },
@@ -140,6 +181,8 @@ export default function InclusiveOrdering() {
   const [roleBalance, setRoleBalance] = useState<RoleBalance>("versatile");
   const [contactZones, setContactZones] = useState<ContactZoneId[]>(["oral", "anal", "vaginal"]);
   const [procreativeMode, setProcreativeMode] = useState<ProcreativeMode>("barrier-only");
+  const [affirmingCareStatus, setAffirmingCareStatus] = useState<AffirmingCareStatus>("not-specified");
+  const [affirmingCareNotes, setAffirmingCareNotes] = useState("");
   const [currentFoldIndex, setCurrentFoldIndex] = useState(0);
   const [selectedVariations, setSelectedVariations] = useState<string[]>([]);
   const [variationSearch, setVariationSearch] = useState("");
@@ -204,6 +247,8 @@ export default function InclusiveOrdering() {
         roleBalance,
         contactZones,
         procreativeMode,
+        affirmingCareStatus,
+        affirmingCareNotes: affirmingCareNotes.trim() || undefined,
         intersexVariations: selectedVariations,
         consultRequiredCount,
         activeFoldId: activeFold?.id ?? null,
@@ -599,6 +644,75 @@ export default function InclusiveOrdering() {
                         </Label>
                       </div>
                     </RadioGroup>
+                  </div>
+
+                  <div className="pt-2 border-t">
+                    <Label className="text-sm font-medium">
+                      Gender-affirming care (self-attested)
+                    </Label>
+                    <p className="text-xs text-muted-foreground mb-2">
+                      Whether you have or have not had gender-affirming care, you can say so here so the
+                      fit matches your body today — for you and your partner(s). This is entirely
+                      self-declared, never verified, and optional. Your intersex anatomy is always the
+                      baseline; affirming care is treated as one more variation, never a special case.
+                    </p>
+                    <RadioGroup
+                      value={affirmingCareStatus}
+                      onValueChange={(value) => setAffirmingCareStatus(value as AffirmingCareStatus)}
+                      className="space-y-2"
+                    >
+                      {AFFIRMING_CARE_OPTIONS.map((option) => (
+                        <div key={option.value} className="flex items-start space-x-2">
+                          <RadioGroupItem
+                            value={option.value}
+                            id={`affirming-${option.value}`}
+                            className="mt-1"
+                            data-testid={`radio-affirming-${option.value}`}
+                          />
+                          <Label
+                            htmlFor={`affirming-${option.value}`}
+                            className="text-xs cursor-pointer leading-snug"
+                          >
+                            <span className="font-medium">{option.label}</span> — {option.helper}
+                          </Label>
+                        </div>
+                      ))}
+                    </RadioGroup>
+                    {(affirmingCareStatus === "self-describe" ||
+                      affirmingCareStatus === "surgical" ||
+                      affirmingCareStatus === "surgical-and-hormonal" ||
+                      affirmingCareStatus === "hormonal") && (
+                      <div className="mt-3">
+                        <Label htmlFor="affirming-notes" className="text-xs font-medium">
+                          {affirmingCareStatus === "self-describe"
+                            ? "Describe your anatomy and fitting needs"
+                            : "Anything else about your fit (optional)"}
+                        </Label>
+                        <Textarea
+                          id="affirming-notes"
+                          value={affirmingCareNotes}
+                          onChange={(e) => setAffirmingCareNotes(e.target.value.slice(0, 500))}
+                          placeholder="e.g. scar-tissue sensitivity, anchor preferences, depth or reach that works for you and your partner(s)…"
+                          className="mt-1 text-xs"
+                          rows={3}
+                          maxLength={500}
+                          data-testid="input-affirming-notes"
+                        />
+                        <div className="flex justify-between items-center mt-1">
+                          {affirmingCareStatus === "self-describe" &&
+                          affirmingCareNotes.trim().length === 0 ? (
+                            <p className="text-[10px] text-amber-700 dark:text-amber-300">
+                              Please add a short description so we can fit you.
+                            </p>
+                          ) : (
+                            <span />
+                          )}
+                          <p className="text-[10px] text-muted-foreground">
+                            {affirmingCareNotes.length}/500
+                          </p>
+                        </div>
+                      </div>
+                    )}
                   </div>
 
                   <div className="space-y-3 pt-2 border-t">
@@ -1143,7 +1257,11 @@ export default function InclusiveOrdering() {
                 </Button>
                 <Button 
                   onClick={() => setOrderStep(3)} 
-                  disabled={!selectedProduct || contactZones.length === 0}
+                  disabled={
+                    !selectedProduct ||
+                    contactZones.length === 0 ||
+                    (affirmingCareStatus === "self-describe" && affirmingCareNotes.trim().length === 0)
+                  }
                   className="flex-1"
                   data-testid="continue-to-sizing-button"
                 >
@@ -1269,6 +1387,21 @@ export default function InclusiveOrdering() {
                       {balanceConfigCode()}
                     </Badge>
                   </div>
+
+                  {affirmingCareStatus !== "not-specified" && (
+                    <div className="flex justify-between items-start pb-3 border-b gap-3">
+                      <span className="font-medium">Affirming care (self-attested):</span>
+                      <span className="text-sm text-right">
+                        {AFFIRMING_CARE_OPTIONS.find((o) => o.value === affirmingCareStatus)?.label ??
+                          affirmingCareStatus}
+                        {affirmingCareNotes.trim() && (
+                          <span className="block text-xs text-muted-foreground mt-0.5">
+                            “{affirmingCareNotes.trim()}”
+                          </span>
+                        )}
+                      </span>
+                    </div>
+                  )}
 
                   <div className="pb-3 border-b">
                     <div className="flex justify-between items-start mb-2">
