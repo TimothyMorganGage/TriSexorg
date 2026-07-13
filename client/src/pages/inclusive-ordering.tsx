@@ -653,8 +653,12 @@ export default function InclusiveOrdering() {
                     <p className="text-xs text-muted-foreground mb-2">
                       Whether you have or have not had gender-affirming care, you can say so here so the
                       fit matches your body today — for you and your partner(s). This is entirely
-                      self-declared, never verified, and optional. Your intersex anatomy is always the
-                      baseline; affirming care is treated as one more variation, never a special case.
+                      self-declared, never verified, and optional. Being intersex and being trans are
+                      different things: some people are both, many are one, and every combination is
+                      welcome and affirmed here. Gender-affirming care is a full, valid part of your
+                      body — it never lessens your procreative capacity or your sensuality, and we fit
+                      for both. Your intersex anatomy is the baseline; affirming care is one more
+                      variation we honour, never a defect and never a special case.
                     </p>
                     <RadioGroup
                       value={affirmingCareStatus}
