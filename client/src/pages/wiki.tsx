@@ -2028,7 +2028,7 @@ Patient assessment includes medication review, sexual health evaluation, sensiti
 Research priorities include personalized bio-materials based on genetic profiles, smart sensor integration for health monitoring, and AI-optimized material design.`,
       tags: ["bio-materials", "antipsychotics", "sustainability", "mycelium", "bacterial-cellulose", "protein-polymers", "lignin", "psychiatric-care"],
       lastUpdated: "2025-01-01", 
-      author: "Dr. Maria Rodriguez & Prof. James Chen, Bio-Materials Research Consortium",
+      author: "Bio-Materials Research Team",
       difficulty: "Advanced",
       readTime: "28 min"
     },
@@ -2094,7 +2094,7 @@ Products may not be appropriate during active addiction phase, untreated severe 
 - Digital health and AI-assisted therapy for personalized treatment`,
       tags: ["sexual-addiction", "withdrawal", "therapy", "recovery", "mental-health", "product-integration", "clinical-treatment"],
       lastUpdated: "2025-01-01",
-      author: "Dr. Sarah Mitchell, CSAT & TriSex.org Clinical Research Team",
+      author: "TriSex.org Clinical Research Team",
       difficulty: "Advanced",
       readTime: "32 min"
     },
