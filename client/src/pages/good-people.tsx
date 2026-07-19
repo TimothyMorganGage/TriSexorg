@@ -41,6 +41,8 @@ import {
 } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import JointProtectionOrder from "@/components/JointProtectionOrder";
+import PasskeyVerification from "@/components/PasskeyVerification";
+import { Fingerprint } from "lucide-react";
 
 const profileSchema = z.object({
   displayName: z.string().min(2, "Display name must be at least 2 characters"),
@@ -375,6 +377,7 @@ export default function GoodPeople() {
               { href: "#profile", label: "My Profile", icon: UserPlus },
               { href: "#matching", label: "Matching", icon: Settings },
               { href: "#joint-order", label: "Joint Order", icon: HeartHandshake },
+              { href: "#verification", label: "Verification", icon: Fingerprint },
               { href: "#principles", label: "Cooperative Love", icon: Heart },
             ].map(({ href, label, icon: Icon }) => (
               <a
@@ -1180,6 +1183,14 @@ export default function GoodPeople() {
               <HeartHandshake className="h-6 w-6" /> Joint Protection Order
             </h2>
             <JointProtectionOrder />
+          </section>
+
+          {/* ── PRIVACY-PRESERVING VERIFICATION ────────────────────── */}
+          <section id="verification">
+            <h2 className="text-2xl font-bold mb-6 flex items-center gap-2 border-b-2 border-black dark:border-white pb-3">
+              <Fingerprint className="h-6 w-6" /> Verification
+            </h2>
+            <PasskeyVerification />
           </section>
 
           <section id="principles">

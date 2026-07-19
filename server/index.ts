@@ -9,6 +9,10 @@ import { normalizeUserRoles } from "./storage";
 import { setupVite, serveStatic, log } from "./vite";
 
 const app = express();
+// Behind Replit's HTTPS proxy: trust the first proxy hop so req.protocol /
+// req.hostname reflect the real client-facing scheme and host (needed for
+// WebAuthn origin/rpID checks and secure cookies).
+app.set("trust proxy", 1);
 
 // Security headers
 app.use(helmet({

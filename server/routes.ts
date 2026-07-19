@@ -2883,6 +2883,83 @@ END:VEVENT
     }
   });
 
+  // --- Passkey (WebAuthn) OS-side verification for Good People ---
+  // Privacy model: the OS (Touch ID / Face ID / Windows Hello / Android biometrics)
+  // verifies the member locally; only a public key ever reaches the server. No
+  // biometric data, no documents. Works with both auth paths (email/password and
+  // federated Replit Auth OIDC) since both share the same session identity.
+  app.get('/api/passkey/status', requireAuth, async (req, res) => {
+    try {
+      const creds = await storage.getPasskeyCredentialsByUser(req.session.userId!);
+      res.json({ verified: creds.length > 0, credentialCount: creds.length });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch passkey status" });
+    }
+  });
+
+  app.post('/api/passkey/register-options', requireAuth, async (req, res) => {
+    try {
+      const { generateRegistrationOptions } = await import("@simplewebauthn/server");
+      const user = await storage.getUser(req.session.userId!);
+      if (!user) return res.status(404).json({ message: "User not found" });
+      const existing = await storage.getPasskeyCredentialsByUser(user.id);
+      const rpID = req.hostname;
+      const options = await generateRegistrationOptions({
+        rpName: "TriSex.org Good People",
+        rpID,
+        userName: user.username,
+        userDisplayName: user.username,
+        attestationType: "none", // privacy: no device attestation chain requested
+        excludeCredentials: existing.map((c) => ({ id: c.credentialId })),
+        authenticatorSelection: {
+          residentKey: "preferred",
+          userVerification: "required", // require the OS-side biometric/PIN check
+        },
+      });
+      (req.session as any).passkeyChallenge = options.challenge;
+      res.json(options);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to create passkey options" });
+    }
+  });
+
+  app.post('/api/passkey/register-verify', requireAuth, async (req, res) => {
+    try {
+      const { verifyRegistrationResponse } = await import("@simplewebauthn/server");
+      const expectedChallenge = (req.session as any).passkeyChallenge;
+      if (!expectedChallenge) {
+        return res.status(400).json({ message: "No pending passkey challenge — request options first" });
+      }
+      const rpID = req.hostname;
+      const expectedOrigin = `${req.protocol}://${req.get("host")}`;
+      const verification = await verifyRegistrationResponse({
+        response: req.body,
+        expectedChallenge,
+        expectedOrigin,
+        expectedRPID: rpID,
+        requireUserVerification: true,
+      });
+      delete (req.session as any).passkeyChallenge;
+      if (!verification.verified || !verification.registrationInfo) {
+        return res.status(400).json({ message: "Passkey verification failed" });
+      }
+      const { credential, credentialDeviceType, credentialBackedUp } = verification.registrationInfo;
+      await storage.createPasskeyCredential({
+        userId: req.session.userId!,
+        credentialId: credential.id,
+        publicKey: Buffer.from(credential.publicKey).toString("base64url"),
+        counter: credential.counter,
+        deviceType: credentialDeviceType,
+        backedUp: credentialBackedUp,
+      });
+      res.status(201).json({ verified: true });
+    } catch (error) {
+      res.status(400).json({
+        message: error instanceof Error ? error.message : "Passkey verification failed",
+      });
+    }
+  });
+
   // --- Manufacturing partners (self-reported registry; scaffolding for honest sourcing) ---
   app.get('/api/manufacturing-partners', async (_req, res) => {
     try {

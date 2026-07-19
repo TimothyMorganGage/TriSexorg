@@ -1759,6 +1759,29 @@ export const insertJointProtectionOrderSchema = createInsertSchema(jointProtecti
 export type InsertJointProtectionOrder = z.infer<typeof insertJointProtectionOrderSchema>;
 export type JointProtectionOrder = typeof jointProtectionOrders.$inferSelect;
 
+// Passkey (WebAuthn) verifications — privacy-preserving OS-side verification for
+// Good People. Only the public key + credential id are stored; biometrics and the
+// private key never leave the member's device. Works alongside federated Replit
+// Auth (OIDC) since both bridge to the same app identity (session userId).
+export const passkeyCredentials = pgTable("passkey_credentials", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").notNull().references(() => users.id),
+  credentialId: text("credential_id").notNull().unique(), // base64url
+  publicKey: text("public_key").notNull(), // base64url-encoded COSE public key
+  counter: integer("counter").notNull().default(0),
+  deviceType: text("device_type"), // "singleDevice" | "multiDevice"
+  backedUp: boolean("backed_up").notNull().default(false),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const insertPasskeyCredentialSchema = createInsertSchema(passkeyCredentials).omit({
+  id: true,
+  createdAt: true,
+});
+
+export type InsertPasskeyCredential = z.infer<typeof insertPasskeyCredentialSchema>;
+export type PasskeyCredential = typeof passkeyCredentials.$inferSelect;
+
 // Manufacturing partners — self-reported registry of factories / co-ops willing to
 // fulfil TriSex.org-spec orders under CC BY-SA 4.0-compatible manufacturing terms.
 // Empty by default. Entries land as "pending" until manually verified by stewards.

@@ -49,6 +49,8 @@ import {
   inclusiveOrderingAdopters,
   type JointProtectionOrder, type InsertJointProtectionOrder,
   jointProtectionOrders,
+  type PasskeyCredential, type InsertPasskeyCredential,
+  passkeyCredentials,
   manufacturingPartners,
   type ManufacturingPartner,
   type InsertManufacturingPartner,
@@ -263,6 +265,12 @@ export interface IStorage {
   createInclusiveOrderingAdopter(data: InsertInclusiveOrderingAdopter): Promise<InclusiveOrderingAdopter>;
   createJointProtectionOrder(data: InsertJointProtectionOrder): Promise<JointProtectionOrder>;
   countJointProtectionOrders(): Promise<number>;
+
+  // Passkey (WebAuthn) OS-side verification
+  getPasskeyCredentialsByUser(userId: number): Promise<PasskeyCredential[]>;
+  getPasskeyCredentialById(credentialId: string): Promise<PasskeyCredential | undefined>;
+  createPasskeyCredential(data: InsertPasskeyCredential): Promise<PasskeyCredential>;
+  updatePasskeyCounter(credentialId: string, counter: number): Promise<void>;
 
   // Manufacturing partners (self-reported registry of candidate / signed factories)
   listManufacturingPartners(): Promise<ManufacturingPartner[]>;
@@ -3275,6 +3283,25 @@ The /fork-the-framework page documents the public API of the inclusive-ordering 
   async countJointProtectionOrders(): Promise<number> {
     const rows = await db.select({ id: jointProtectionOrders.id }).from(jointProtectionOrders);
     return rows.length;
+  }
+
+  // --- Passkey (WebAuthn) OS-side verification ---
+  async getPasskeyCredentialsByUser(userId: number): Promise<PasskeyCredential[]> {
+    return await db.select().from(passkeyCredentials).where(eq(passkeyCredentials.userId, userId));
+  }
+
+  async getPasskeyCredentialById(credentialId: string): Promise<PasskeyCredential | undefined> {
+    const [row] = await db.select().from(passkeyCredentials).where(eq(passkeyCredentials.credentialId, credentialId));
+    return row;
+  }
+
+  async createPasskeyCredential(data: InsertPasskeyCredential): Promise<PasskeyCredential> {
+    const [created] = await db.insert(passkeyCredentials).values(data).returning();
+    return created;
+  }
+
+  async updatePasskeyCounter(credentialId: string, counter: number): Promise<void> {
+    await db.update(passkeyCredentials).set({ counter }).where(eq(passkeyCredentials.credentialId, credentialId));
   }
 
   // --- Manufacturing partners (self-reported registry) ---
