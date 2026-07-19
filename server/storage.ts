@@ -51,6 +51,8 @@ import {
   jointProtectionOrders,
   type PasskeyCredential, type InsertPasskeyCredential,
   passkeyCredentials,
+  type DigitalIdVerification, type InsertDigitalIdVerification,
+  digitalIdVerifications,
   manufacturingPartners,
   type ManufacturingPartner,
   type InsertManufacturingPartner,
@@ -271,6 +273,11 @@ export interface IStorage {
   getPasskeyCredentialById(credentialId: string): Promise<PasskeyCredential | undefined>;
   createPasskeyCredential(data: InsertPasskeyCredential): Promise<PasskeyCredential>;
   updatePasskeyCounter(credentialId: string, counter: number): Promise<void>;
+
+  // Digital-ID (mDL) age verification
+  getDigitalIdVerificationByUser(userId: number): Promise<DigitalIdVerification | undefined>;
+  createDigitalIdVerification(data: InsertDigitalIdVerification): Promise<DigitalIdVerification>;
+  upgradeDigitalIdVerification(id: number, data: Partial<InsertDigitalIdVerification>): Promise<DigitalIdVerification>;
 
   // Manufacturing partners (self-reported registry of candidate / signed factories)
   listManufacturingPartners(): Promise<ManufacturingPartner[]>;
@@ -3302,6 +3309,22 @@ The /fork-the-framework page documents the public API of the inclusive-ordering 
 
   async updatePasskeyCounter(credentialId: string, counter: number): Promise<void> {
     await db.update(passkeyCredentials).set({ counter }).where(eq(passkeyCredentials.credentialId, credentialId));
+  }
+
+  // --- Digital-ID (mDL) age verification ---
+  async getDigitalIdVerificationByUser(userId: number): Promise<DigitalIdVerification | undefined> {
+    const [row] = await db.select().from(digitalIdVerifications).where(eq(digitalIdVerifications.userId, userId));
+    return row;
+  }
+
+  async createDigitalIdVerification(data: InsertDigitalIdVerification): Promise<DigitalIdVerification> {
+    const [created] = await db.insert(digitalIdVerifications).values(data).returning();
+    return created;
+  }
+
+  async upgradeDigitalIdVerification(id: number, data: Partial<InsertDigitalIdVerification>): Promise<DigitalIdVerification> {
+    const [updated] = await db.update(digitalIdVerifications).set(data).where(eq(digitalIdVerifications.id, id)).returning();
+    return updated;
   }
 
   // --- Manufacturing partners (self-reported registry) ---

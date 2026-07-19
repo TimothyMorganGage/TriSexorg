@@ -1782,6 +1782,33 @@ export const insertPasskeyCredentialSchema = createInsertSchema(passkeyCredentia
 export type InsertPasskeyCredential = z.infer<typeof insertPasskeyCredentialSchema>;
 export type PasskeyCredential = typeof passkeyCredentials.$inferSelect;
 
+// Digital-ID (mobile driver's licence) age verifications via the browser's
+// Digital Credentials API. Privacy model: the OS wallet shares an ISO 18013-5
+// mdoc response scoped to the age_over_18 claim; the server parses it and stores
+// ONLY booleans about what was checked — never the document, name, birthdate,
+// photo, or licence number. Honest-verification flags record exactly which
+// cryptographic checks passed (issuer trust-chain validation requires a trust
+// list of issuing-authority certificates, configured via env when available).
+export const digitalIdVerifications = pgTable("digital_id_verifications", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").notNull().references(() => users.id),
+  ageOver18: boolean("age_over_18").notNull(),
+  docType: text("doc_type").notNull(), // e.g. org.iso.18013.5.1.mDL
+  protocol: text("protocol").notNull(), // DC API protocol used by the wallet
+  issuerVerified: boolean("issuer_verified").notNull().default(false),
+  deviceVerified: boolean("device_verified").notNull().default(false),
+  checksNote: text("checks_note").notNull(), // honest record of what was/wasn't verified
+  verifiedAt: timestamp("verified_at").defaultNow().notNull(),
+});
+
+export const insertDigitalIdVerificationSchema = createInsertSchema(digitalIdVerifications).omit({
+  id: true,
+  verifiedAt: true,
+});
+
+export type InsertDigitalIdVerification = z.infer<typeof insertDigitalIdVerificationSchema>;
+export type DigitalIdVerification = typeof digitalIdVerifications.$inferSelect;
+
 // Manufacturing partners — self-reported registry of factories / co-ops willing to
 // fulfil TriSex.org-spec orders under CC BY-SA 4.0-compatible manufacturing terms.
 // Empty by default. Entries land as "pending" until manually verified by stewards.

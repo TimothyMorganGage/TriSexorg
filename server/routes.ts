@@ -2960,6 +2960,214 @@ END:VEVENT
     }
   });
 
+  // --- Digital-ID (mobile driver's licence) age verification via the browser's
+  // Digital Credentials API ---
+  // Live, experimental: the newest Chrome/Android builds with an OS wallet can
+  // present an ISO 18013-5 mdoc response scoped to the age_over_18 claim. The
+  // server parses the mdoc and stores ONLY booleans about what was checked —
+  // never the document, name, birthdate, photo, or licence number. The response
+  // honestly reports which cryptographic checks passed: issuer trust-chain
+  // validation runs only when issuing-authority certificates (an IACA trust
+  // list) are configured via DIGITAL_ID_TRUSTED_ISSUER_CERTS_PEM.
+  app.get('/api/digital-id/status', requireAuth, async (req, res) => {
+    try {
+      const v = await storage.getDigitalIdVerificationByUser(req.session.userId!);
+      if (!v) return res.json({ recorded: false, authorityConfirmed: false });
+      res.json({
+        recorded: true,
+        // Only true when cryptographic proof succeeded: issuer signature
+        // validated against a trust list AND device binding validated.
+        authorityConfirmed: v.issuerVerified && v.deviceVerified,
+        ageOver18: v.ageOver18,
+        docType: v.docType,
+        protocol: v.protocol,
+        issuerVerified: v.issuerVerified,
+        deviceVerified: v.deviceVerified,
+        checksNote: v.checksNote,
+        verifiedAt: v.verifiedAt,
+      });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch digital-ID status" });
+    }
+  });
+
+  app.post('/api/digital-id/request-options', requireAuth, async (req, res) => {
+    try {
+      const { randomUUID } = await import("crypto");
+      const nonce = randomUUID().replace(/-/g, "");
+      (req.session as any).digitalIdNonce = nonce;
+      // Digital Credentials API request: ask the OS wallet for ONLY the
+      // age_over_18 claim from an mDL. Two protocol entries for wallet
+      // compatibility across current Chrome/Android builds.
+      res.json({
+        requests: [
+          {
+            protocol: "openid4vp",
+            data: {
+              response_type: "vp_token",
+              response_mode: "dc_api",
+              nonce,
+              dcql_query: {
+                credentials: [
+                  {
+                    id: "mdl-age",
+                    format: "mso_mdoc",
+                    meta: { doctype_value: "org.iso.18013.5.1.mDL" },
+                    claims: [
+                      { path: ["org.iso.18013.5.1", "age_over_18"] },
+                    ],
+                  },
+                ],
+              },
+            },
+          },
+          {
+            protocol: "preview",
+            data: {
+              selector: {
+                doctype: "org.iso.18013.5.1.mDL",
+                fields: [{ namespace: "org.iso.18013.5.1", name: "age_over_18", intentToRetain: false }],
+              },
+              nonce,
+            },
+          },
+        ],
+      });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to create digital-ID request" });
+    }
+  });
+
+  app.post('/api/digital-id/verify', requireAuth, async (req, res) => {
+    try {
+      const nonce = (req.session as any).digitalIdNonce;
+      if (!nonce) {
+        return res.status(400).json({ message: "No pending digital-ID request — request options first" });
+      }
+      const { protocol, data } = req.body ?? {};
+      if (!protocol || !data) {
+        return res.status(400).json({ message: "Missing wallet response" });
+      }
+
+      // Extract the base64url mdoc DeviceResponse from the wallet payload.
+      const vpToken =
+        typeof data === "string"
+          ? data
+          : data.vp_token
+            ? (typeof data.vp_token === "string" ? data.vp_token : Object.values(data.vp_token)[0])
+            : data.token ?? data.response;
+      if (!vpToken || typeof vpToken !== "string") {
+        return res.status(400).json({ message: "Wallet response did not include a credential token" });
+      }
+
+      const { parse } = await import("@auth0/mdl");
+      let encoded: Buffer;
+      try {
+        encoded = Buffer.from(vpToken, "base64url");
+      } catch {
+        return res.status(400).json({ message: "Credential token was not valid base64url" });
+      }
+      let mdoc;
+      try {
+        mdoc = parse(encoded);
+      } catch (e) {
+        return res.status(400).json({ message: "Could not parse the wallet's mdoc response" });
+      }
+      const doc: any = mdoc.documents?.[0];
+      if (!doc) return res.status(400).json({ message: "Wallet response contained no document" });
+
+      const namespaceData: any = doc.getIssuerNameSpace?.("org.iso.18013.5.1") ?? {};
+      const ageOver18 = namespaceData["age_over_18"];
+      if (typeof ageOver18 !== "boolean") {
+        return res.status(400).json({ message: "The wallet response did not include the age_over_18 claim" });
+      }
+
+      // Issuer trust-chain validation — only possible with a configured trust
+      // list of issuing-authority (IACA) certificates. Recorded honestly.
+      let issuerVerified = false;
+      let checksNote =
+        "mdoc parsed and age_over_18 claim extracted. NOT cryptographically verified: issuer trust chain NOT validated (no issuing-authority trust list configured), device binding NOT validated, and the request nonce is NOT cryptographically bound to this response. Treat strictly as a self-attested wallet response — it proves nothing about age on its own.";
+      const trustPem = process.env.DIGITAL_ID_TRUSTED_ISSUER_CERTS_PEM;
+      if (trustPem) {
+        try {
+          const { Verifier } = await import("@auth0/mdl");
+          const certs = trustPem
+            .split(/(?=-----BEGIN CERTIFICATE-----)/)
+            .filter((c) => c.includes("BEGIN CERTIFICATE"));
+          const verifier = new Verifier(certs);
+          await verifier.verify(encoded, {
+            encodedSessionTranscript: Buffer.alloc(0),
+            disableCertificateChainValidation: false,
+          } as any);
+          issuerVerified = true;
+          checksNote =
+            "mdoc parsed; age_over_18 claim extracted; issuer signature validated against the configured issuing-authority trust list. Device binding NOT validated (session-transcript verification not performed), so the request nonce is not cryptographically bound and this still falls short of full authority confirmation.";
+        } catch {
+          issuerVerified = false;
+          checksNote =
+            "mdoc parsed and age_over_18 claim extracted. A trust list of issuing-authority certificates IS configured, but issuer-signature verification against it FAILED — the credential could not be traced to a trusted issuer. Device binding NOT validated and the request nonce is NOT cryptographically bound. Treat strictly as a self-attested wallet response.";
+        }
+      }
+
+      delete (req.session as any).digitalIdNonce;
+
+      const existing = await storage.getDigitalIdVerificationByUser(req.session.userId!);
+      if (existing) {
+        // Allow a stronger re-verification to upgrade a weaker record
+        // (e.g. self-attested → issuer-verified once a trust list exists);
+        // never downgrade an already-stronger record.
+        if (issuerVerified && !existing.issuerVerified) {
+          const upgraded = await storage.upgradeDigitalIdVerification(existing.id, {
+            ageOver18,
+            issuerVerified,
+            checksNote,
+            protocol: String(protocol),
+          });
+          return res.json({
+            recorded: true,
+            authorityConfirmed: upgraded.issuerVerified && upgraded.deviceVerified,
+            ageOver18: upgraded.ageOver18,
+            issuerVerified: upgraded.issuerVerified,
+            deviceVerified: upgraded.deviceVerified,
+            checksNote: upgraded.checksNote,
+            upgraded: true,
+          });
+        }
+        return res.json({
+          recorded: true,
+          authorityConfirmed: existing.issuerVerified && existing.deviceVerified,
+          ageOver18: existing.ageOver18,
+          issuerVerified: existing.issuerVerified,
+          deviceVerified: existing.deviceVerified,
+          checksNote: existing.checksNote,
+          alreadyRecorded: true,
+        });
+      }
+
+      const record = await storage.createDigitalIdVerification({
+        userId: req.session.userId!,
+        ageOver18,
+        docType: doc.docType ?? "org.iso.18013.5.1.mDL",
+        protocol: String(protocol),
+        issuerVerified,
+        deviceVerified: false,
+        checksNote,
+      });
+      res.status(201).json({
+        recorded: true,
+        authorityConfirmed: record.issuerVerified && record.deviceVerified,
+        ageOver18: record.ageOver18,
+        issuerVerified: record.issuerVerified,
+        deviceVerified: record.deviceVerified,
+        checksNote: record.checksNote,
+      });
+    } catch (error) {
+      res.status(400).json({
+        message: error instanceof Error ? error.message : "Digital-ID verification failed",
+      });
+    }
+  });
+
   // --- Manufacturing partners (self-reported registry; scaffolding for honest sourcing) ---
   app.get('/api/manufacturing-partners', async (_req, res) => {
     try {
