@@ -262,7 +262,6 @@ export default function InclusiveOrdering() {
           ) % 1000 + 1
         : 1;
       const res = await apiRequest("POST", "/api/orders", {
-        userId: 1,
         configurationId: productConfigId,
         orderNumber: `TSO-${Date.now()}`,
         status: "pending",
@@ -286,9 +285,12 @@ export default function InclusiveOrdering() {
       });
     },
     onError: (err: Error) => {
+      const needsAuth = err.message.startsWith("401");
       toast({
-        title: "Order could not be placed",
-        description: err.message,
+        title: needsAuth ? "Please sign in first" : "Order could not be placed",
+        description: needsAuth
+          ? "Orders are private to your account, so you need to be signed in to place one."
+          : err.message,
         variant: "destructive",
       });
     },

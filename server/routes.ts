@@ -489,29 +489,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Order routes
-  app.get("/api/orders", async (req, res) => {
+  // Orders are private: they carry anatomy-fit data, so every order is visible ONLY to
+  // the signed-in account that placed it. There is no admin role and no browse-all
+  // endpoint — nobody (including platform operators) can list other members' orders here.
+  app.get("/api/orders", requireAuth, async (req, res) => {
     try {
-      const userId = req.query.userId ? parseInt(req.query.userId as string) : undefined;
-      const clinicId = req.query.clinicId ? parseInt(req.query.clinicId as string) : undefined;
-      
-      let orders;
-      if (userId) {
-        orders = await storage.getOrdersByUser(userId);
-      } else if (clinicId) {
-        orders = await storage.getOrdersByClinic(clinicId);
-      } else {
-        orders = await storage.getOrders();
-      }
-      
+      const orders = await storage.getOrdersByUser(req.session.userId!);
       res.json(orders);
     } catch (error) {
       res.status(500).json({ message: "Failed to fetch orders" });
     }
   });
 
-  app.post("/api/orders", async (req, res) => {
+  app.post("/api/orders", requireAuth, async (req, res) => {
     try {
-      const orderData = insertOrderSchema.parse(req.body);
+      // Bind the order to the authenticated account; ignore any client-supplied userId.
+      const orderData = insertOrderSchema.parse({ ...req.body, userId: req.session.userId });
       const order = await storage.createOrder(orderData);
       res.json(order);
     } catch (error) {
@@ -519,14 +512,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/orders/:id", async (req, res) => {
+  app.get("/api/orders/:id", requireAuth, async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       if (Number.isNaN(id)) {
         return res.status(400).json({ message: "Invalid order id" });
       }
       const order = await storage.getOrder(id);
-      if (!order) {
+      if (!order || order.userId !== req.session.userId) {
+        // 404 for both missing and not-owned orders so IDs can't be probed.
         return res.status(404).json({ message: "Order not found" });
       }
       res.json(order);
@@ -535,14 +529,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.patch("/api/orders/:id/status", async (req, res) => {
+  app.patch("/api/orders/:id/status", requireAuth, async (req, res) => {
     try {
       const id = parseInt(req.params.id);
-      const { status } = req.body;
-      const order = await storage.updateOrderStatus(id, status);
-      if (!order) {
+      if (Number.isNaN(id)) {
+        return res.status(400).json({ message: "Invalid order id" });
+      }
+      const existing = await storage.getOrder(id);
+      if (!existing || existing.userId !== req.session.userId) {
         return res.status(404).json({ message: "Order not found" });
       }
+      const { status } = req.body;
+      if (typeof status !== "string" || !status.trim()) {
+        return res.status(400).json({ message: "Invalid status" });
+      }
+      const order = await storage.updateOrderStatus(id, status);
       res.json(order);
     } catch (error) {
       res.status(500).json({ message: "Failed to update order" });
