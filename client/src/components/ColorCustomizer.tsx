@@ -464,7 +464,7 @@ export function ColorCustomizer() {
                   <h3 className="text-lg mb-2">TriSex.org: Custom Protection for Every Body</h3>
                   <p className="text-sm">
                     This is how your text will appear with the selected typography settings. 
-                    TriSex Perfect Protection made from sustainable materials with inclusive design.
+                    Protection designed for every body, honestly — open-source, sustainable materials with inclusive design.
                   </p>
                 </div>
               </div>

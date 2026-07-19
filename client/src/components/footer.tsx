@@ -14,7 +14,7 @@ export function Footer() {
               <span className="text-xl font-bold font-display">TriSex.org</span>
             </div>
             <p className="text-white/40 text-sm leading-relaxed">
-              TriSex Perfect Protection for every body. Sustainable waterway microplastic materials with inclusive design for the full 2SLGBTIQA+ community.
+              Protection designed for every body, honestly. Open-source, sustainable materials that respect our waterways and our whole 2SLGBTIQA+ community.
             </p>
             <div className="flex items-center space-x-2 text-xs text-white/30">
               <Heart className="h-3 w-3 text-primary" />
