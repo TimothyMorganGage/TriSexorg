@@ -167,8 +167,8 @@ export default function RemixReplit() {
                 <Link href="/our-plans" className="underline" data-testid="link-our-plans">
                   OUR Plans
                 </Link>{" "}
-                — Opportunity Unity Reality, Open United Resources, Our Universal Resilience, Obviously
-                Unitarian Research.
+                — the Opportunity Unifying Resource Plans: Opportunity Unity Reality, Open United
+                Resources, Our Universal Resilience, Obviously Unitarian Research.
               </p>
             </div>
           </CardContent>

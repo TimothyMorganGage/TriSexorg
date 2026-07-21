@@ -76,15 +76,15 @@ export default function OurPlans() {
       <div className="max-w-5xl mx-auto space-y-10">
         <div className="text-center space-y-4">
           <Badge variant="outline" className="text-sm" data-testid="badge-our-plans">
-            OUR Plans — a forkable vision
+            Opportunity Unifying Resource Plans — a forkable vision
           </Badge>
           <h1 className="text-4xl font-bold text-gray-900 dark:text-white" data-testid="text-our-plans-title">
             OUR Plans
           </h1>
           <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            Four readings of the same three letters. OUR is the plan for what happens when you fork this
-            app: Opportunity Unity Reality, Open United Resources, Our Universal Resilience, and Obviously
-            Unitarian Research.
+            Opportunity Unifying Resource Plans: four readings of the same three letters, all describing
+            what happens when you fork this app — Opportunity Unity Reality, Open United Resources, Our
+            Universal Resilience, and Obviously Unitarian Research.
           </p>
         </div>
 
