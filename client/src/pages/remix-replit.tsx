@@ -18,6 +18,7 @@ import {
   GitFork
 } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Link } from "wouter";
 
 export default function RemixReplit() {
   const features = [
@@ -160,6 +161,14 @@ export default function RemixReplit() {
               </Button>
               <p className="text-sm text-muted-foreground mt-4">
                 Opens in new tab • Creates copy in your Replit account • Free to remix
+              </p>
+              <p className="text-sm text-muted-foreground mt-2">
+                Why fork? Read the{" "}
+                <Link href="/our-plans" className="underline" data-testid="link-our-plans">
+                  OUR Plans
+                </Link>{" "}
+                — Opportunity Unity Reality, Open United Resources, Our Universal Resilience, Obviously
+                Unitarian Research.
               </p>
             </div>
           </CardContent>

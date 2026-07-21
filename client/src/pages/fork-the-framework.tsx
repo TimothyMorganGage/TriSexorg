@@ -333,6 +333,11 @@ export default function ForkTheFramework() {
               <GitFork className="h-4 w-4 mr-1.5" /> Remix to Replit
             </Button>
           </Link>
+          <Link href="/our-plans">
+            <Button variant="outline" data-testid="cta-our-plans">
+              <BookOpen className="h-4 w-4 mr-1.5" /> OUR Plans
+            </Button>
+          </Link>
         </div>
 
         <p className="text-center text-xs text-muted-foreground">
