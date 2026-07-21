@@ -1,0 +1,8 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "PoywPf2bcegLpS0SLyLbM"
+uri = "file://docs/OUR-PLANS.md"
+type = "text"
+title = "OUR Plans — written plan document for review"
