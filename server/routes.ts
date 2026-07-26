@@ -2834,6 +2834,17 @@ END:VEVENT
     }
   });
 
+  // Published fork count — aggregate only, split by verification status so the
+  // number is honest: pending entries are self-reported and unverified.
+  app.get('/api/inclusive-ordering-adopters/count', async (_req, res) => {
+    try {
+      const counts = await storage.countInclusiveOrderingAdopters();
+      res.json(counts);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to count adopters" });
+    }
+  });
+
   app.post('/api/inclusive-ordering-adopters', async (req, res) => {
     try {
       const { insertInclusiveOrderingAdopterSchema } = await import("@shared/schema");
@@ -2844,6 +2855,11 @@ END:VEVENT
       if (!parsed.data.honestyAttestation || !parsed.data.ccBySaCompliance) {
         return res.status(400).json({
           message: "Both the honesty attestation and CC BY-SA 4.0 compliance checkbox must be confirmed before submission.",
+        });
+      }
+      if (parsed.data.carriesOurName && !parsed.data.ourPlansAttestation) {
+        return res.status(400).json({
+          message: "Forks carrying the OUR name must also attest to the OUR Plans honesty commitments (no fabricated partnerships, counts, or claims).",
         });
       }
       const adopter = await storage.createInclusiveOrderingAdopter(parsed.data);

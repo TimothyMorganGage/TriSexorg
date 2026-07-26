@@ -53,6 +53,8 @@ type FormValues = {
   cooperativeStatus: string;
   honestyAttestation: boolean;
   ccBySaCompliance: boolean;
+  carriesOurName: boolean;
+  ourPlansAttestation: boolean;
   submittedBy: string;
   notes: string;
 };
@@ -78,6 +80,8 @@ export default function InclusiveOrderingRegistry() {
       cooperativeStatus: "",
       honestyAttestation: false,
       ccBySaCompliance: false,
+      carriesOurName: false,
+      ourPlansAttestation: false,
       submittedBy: "",
       notes: "",
     },
@@ -115,6 +119,12 @@ export default function InclusiveOrderingRegistry() {
   const onSubmit = (values: FormValues) => {
     if (values.adoptedSurfaces.length === 0) {
       form.setError("adoptedSurfaces", { message: "Pick at least one adopted surface." });
+      return;
+    }
+    if (values.carriesOurName && !values.ourPlansAttestation) {
+      form.setError("ourPlansAttestation", {
+        message: "Forks carrying the OUR name must attest to the OUR Plans honesty commitments.",
+      });
       return;
     }
     createMutation.mutate(values);
@@ -397,6 +407,56 @@ export default function InclusiveOrderingRegistry() {
                         </FormItem>
                       )}
                     />
+                  </div>
+
+                  <div className="space-y-3 border rounded p-3 bg-muted/30">
+                    <FormField
+                      control={form.control}
+                      name="carriesOurName"
+                      render={({ field }) => (
+                        <FormItem>
+                          <label className="flex items-start gap-2 text-sm cursor-pointer">
+                            <FormControl>
+                              <Checkbox
+                                checked={field.value}
+                                onCheckedChange={field.onChange}
+                                data-testid="checkbox-carries-our-name"
+                              />
+                            </FormControl>
+                            <span>
+                              This fork carries the OUR name (Opportunity Unifying Resource Plans).
+                            </span>
+                          </label>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    {form.watch("carriesOurName") && (
+                      <FormField
+                        control={form.control}
+                        name="ourPlansAttestation"
+                        render={({ field }) => (
+                          <FormItem>
+                            <label className="flex items-start gap-2 text-sm cursor-pointer">
+                              <FormControl>
+                                <Checkbox
+                                  checked={field.value}
+                                  onCheckedChange={field.onChange}
+                                  data-testid="checkbox-our-plans-attestation"
+                                />
+                              </FormControl>
+                              <span>
+                                I attest that this OUR-name fork upholds the OUR Plans honesty
+                                commitments: no fabricated partnerships, capacity numbers, member
+                                counts, or claims; plans labelled as plans; only shipped, verifiable
+                                features described as real. *
+                              </span>
+                            </label>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    )}
                   </div>
 
                   <Button

@@ -265,6 +265,7 @@ export interface IStorage {
   // Inclusive Ordering framework adopters (self-reported registry)
   listInclusiveOrderingAdopters(): Promise<InclusiveOrderingAdopter[]>;
   createInclusiveOrderingAdopter(data: InsertInclusiveOrderingAdopter): Promise<InclusiveOrderingAdopter>;
+  countInclusiveOrderingAdopters(): Promise<{ verified: number; pending: number; ourNameForks: number }>;
   createJointProtectionOrder(data: InsertJointProtectionOrder): Promise<JointProtectionOrder>;
   countJointProtectionOrders(): Promise<number>;
 
@@ -3279,6 +3280,19 @@ The /fork-the-framework page documents the public API of the inclusive-ordering 
   async createInclusiveOrderingAdopter(data: InsertInclusiveOrderingAdopter): Promise<InclusiveOrderingAdopter> {
     const [created] = await db.insert(inclusiveOrderingAdopters).values(data).returning();
     return created;
+  }
+
+  async countInclusiveOrderingAdopters(): Promise<{ verified: number; pending: number; ourNameForks: number }> {
+    const rows = await db.select({
+      status: inclusiveOrderingAdopters.status,
+      carriesOurName: inclusiveOrderingAdopters.carriesOurName,
+    }).from(inclusiveOrderingAdopters);
+    const active = rows.filter((r) => r.status !== "withdrawn");
+    return {
+      verified: active.filter((r) => r.status === "verified").length,
+      pending: active.filter((r) => r.status === "pending").length,
+      ourNameForks: active.filter((r) => r.carriesOurName).length,
+    };
   }
 
   // --- Joint protection orders (matched-pair, two-body barrier design spec) ---

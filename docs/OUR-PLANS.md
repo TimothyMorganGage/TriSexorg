@@ -76,11 +76,16 @@ because every method is public.
 - No funding, grants, or partner organizations are attached to these plans.
 - No fork is endorsed or verified beyond what the adopter registry honestly shows.
 
+## Decided (2026-07-21)
+
+- **Published fork count — live.** `/our-plans` shows aggregate counts from the
+  adopter registry (verified / pending self-reported / carrying the OUR name),
+  with withdrawn entries excluded and pending clearly labelled as unverified.
+- **OUR-name attestations — live.** Registry submissions that declare "this
+  fork carries the OUR name" must additionally attest to the OUR Plans honesty
+  commitments; enforced server-side, not just in the form.
+
 ## Open questions for review
 
 - Should the OUR Plans page be linked from the homepage or main navigation, or
   stay reachable only via the fork surfaces?
-- Should forks that adopt the OUR name be asked to sign the same honesty
-  attestations used elsewhere (registry-style, server-enforced)?
-- Should each pillar eventually get its own measurable, publicly auditable
-  commitment (e.g., a published fork count from the registry)?

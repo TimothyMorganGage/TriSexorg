@@ -1,4 +1,6 @@
 import { Link } from "wouter";
+import { useQuery } from "@tanstack/react-query";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -71,6 +73,14 @@ const PILLARS = [
 ];
 
 export default function OurPlans() {
+  const { data: forkCounts, isLoading: countsLoading } = useQuery<{
+    verified: number;
+    pending: number;
+    ourNameForks: number;
+  }>({
+    queryKey: ["/api/inclusive-ordering-adopters/count"],
+  });
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-blue-50 dark:from-gray-900 dark:to-emerald-950 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-5xl mx-auto space-y-10">
@@ -125,6 +135,59 @@ export default function OurPlans() {
             );
           })}
         </div>
+
+        <Card data-testid="card-fork-count">
+          <CardHeader>
+            <div className="flex items-center gap-3">
+              <Users className="h-6 w-6 text-emerald-600 dark:text-emerald-400" />
+              <CardTitle className="text-2xl">Published fork count</CardTitle>
+            </div>
+            <CardDescription>
+              Live numbers from the self-reported adopter registry — honestly zero until real forks
+              submit. Pending entries are self-reported and unverified; only steward-verified entries
+              count as confirmed.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            {countsLoading ? (
+              <div className="grid grid-cols-3 gap-4">
+                <Skeleton className="h-20" />
+                <Skeleton className="h-20" />
+                <Skeleton className="h-20" />
+              </div>
+            ) : (
+              <div className="grid grid-cols-3 gap-4 text-center">
+                <div className="p-4 rounded-lg border bg-white dark:bg-gray-950">
+                  <div className="text-3xl font-bold text-emerald-600 dark:text-emerald-400" data-testid="text-verified-count">
+                    {forkCounts?.verified ?? 0}
+                  </div>
+                  <div className="text-sm text-gray-600 dark:text-gray-400">Verified forks</div>
+                </div>
+                <div className="p-4 rounded-lg border bg-white dark:bg-gray-950">
+                  <div className="text-3xl font-bold text-amber-600 dark:text-amber-400" data-testid="text-pending-count">
+                    {forkCounts?.pending ?? 0}
+                  </div>
+                  <div className="text-sm text-gray-600 dark:text-gray-400">Pending (self-reported)</div>
+                </div>
+                <div className="p-4 rounded-lg border bg-white dark:bg-gray-950">
+                  <div className="text-3xl font-bold text-blue-600 dark:text-blue-400" data-testid="text-our-name-count">
+                    {forkCounts?.ourNameForks ?? 0}
+                  </div>
+                  <div className="text-sm text-gray-600 dark:text-gray-400">Carrying the OUR name</div>
+                </div>
+              </div>
+            )}
+            <p className="text-sm text-gray-600 dark:text-gray-400 mt-4">
+              Forks that carry the OUR name must additionally attest — server-enforced at submission —
+              to the OUR Plans honesty commitments: no fabricated partnerships, counts, or claims;
+              plans labelled as plans. Self-report at the{" "}
+              <Link href="/inclusive-ordering-registry" className="underline" data-testid="link-registry-count">
+                adopter registry
+              </Link>
+              .
+            </p>
+          </CardContent>
+        </Card>
 
         <Card className="border-2 border-emerald-500" data-testid="card-fork-the-app">
           <CardHeader>

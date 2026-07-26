@@ -1707,6 +1707,10 @@ export const inclusiveOrderingAdopters = pgTable("inclusive_ordering_adopters", 
   cooperativeStatus: text("cooperative_status"), // "cooperative" | "nonprofit" | "for-profit" | "informal" | "individual"
   honestyAttestation: boolean("honesty_attestation").notNull().default(false),
   ccBySaCompliance: boolean("cc_by_sa_compliance").notNull().default(false),
+  // OUR-name forks: forks that carry the OUR (Opportunity Unifying Resource Plans) name
+  // must additionally attest to the four pillars' honesty commitments.
+  carriesOurName: boolean("carries_our_name").notNull().default(false),
+  ourPlansAttestation: boolean("our_plans_attestation").notNull().default(false),
   status: text("status").notNull().default("pending"), // pending | verified | withdrawn
   submittedBy: text("submitted_by"),
   notes: text("notes"),
