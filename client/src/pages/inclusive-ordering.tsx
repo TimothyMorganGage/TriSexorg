@@ -30,6 +30,7 @@ import {
   Search
 } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { exportPrintablePdf, exportOpenDocument, type SpecExportData } from "@/lib/spec-export";
 import {
   INTERSEX_VARIATIONS,
   INTERSEX_CATEGORIES,
@@ -325,6 +326,44 @@ export default function InclusiveOrdering() {
     const procCode =
       procreativeMode === "barrier-only" ? "B" : procreativeMode === "procreative-permeable" ? "PP" : "FO";
     return `${roleCode}-${zoneCode}-${procCode}`;
+  };
+
+  const buildSpecExportData = (): SpecExportData => ({
+    productName: selectedProduct,
+    balanceCode: balanceConfigCode(),
+    roleBalance,
+    contactZones: [...contactZones],
+    procreativeMode,
+    brandingPreference,
+    affirmingCareStatus,
+    affirmingCareNotes,
+    activeFoldName: activeFold?.name ?? null,
+    variations: selectedVariationDetails.map((v) => ({
+      name: v.name,
+      category: INTERSEX_CATEGORIES.find((c) => c.id === v.category)?.label ?? v.category,
+      fittingNote: v.fittingNote,
+      consultRequired: v.consultRequired,
+    })),
+    consultRequiredCount,
+  });
+
+  const handlePrintablePdf = () => {
+    const ok = exportPrintablePdf(buildSpecExportData());
+    if (!ok) {
+      toast({
+        title: "Pop-up blocked",
+        description: "Allow pop-ups for this site to open the printable view, then try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleOpenDocument = () => {
+    exportOpenDocument(buildSpecExportData());
+    toast({
+      title: "Spec downloaded",
+      description: "OpenDocument (.fodt) file saved — opens in LibreOffice, OpenOffice, and most word processors.",
+    });
   };
 
   const brandingOptions: BrandingPreference[] = [
@@ -1455,6 +1494,35 @@ export default function InclusiveOrdering() {
                     Your order has been configured according to your preferences. 
                     All packaging and messaging will respect your chosen experience.
                   </p>
+                </div>
+
+                <div className="p-4 border rounded-lg space-y-3" data-testid="spec-export-section">
+                  <div className="font-medium">Take your spec with you — no account needed</div>
+                  <p className="text-sm text-muted-foreground">
+                    Your full design specification is built right here in your browser. Download it as
+                    a printable PDF or an OpenDocument file without signing up — nothing is uploaded
+                    or tracked.
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-2">
+                    <Button
+                      variant="outline"
+                      className="flex-1"
+                      onClick={handlePrintablePdf}
+                      data-testid="button-export-pdf"
+                    >
+                      <Package className="mr-2 h-4 w-4" />
+                      Printable PDF (opens print view)
+                    </Button>
+                    <Button
+                      variant="outline"
+                      className="flex-1"
+                      onClick={handleOpenDocument}
+                      data-testid="button-export-odf"
+                    >
+                      <Package className="mr-2 h-4 w-4" />
+                      OpenDocument (.fodt)
+                    </Button>
+                  </div>
                 </div>
 
                 {placedOrder && (
