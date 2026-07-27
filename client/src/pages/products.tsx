@@ -88,6 +88,18 @@ export default function Products() {
   const [quantity, setQuantity] = useState<number>(500);
   const [catalogueSearch, setCatalogueSearch] = useState<string>("");
   const [catalogueMarker, setCatalogueMarker] = useState<"ALL" | AssignmentMarker>("ALL");
+  const [legalSexNow, setLegalSexNow] = useState<string | null>(null);
+  const [birthMarker, setBirthMarker] = useState<"AMAB" | "AFAB" | "AXAB" | "not-sure" | null>(null);
+  const [genderIdentity, setGenderIdentity] = useState<string | null>(null);
+  const [genderSelfDescribe, setGenderSelfDescribe] = useState("");
+  const [isIntersex, setIsIntersex] = useState<boolean | null>(null);
+
+  const browseByBirthMarker = (marker: "AMAB" | "AFAB" | "AXAB" | "ALL") => {
+    setCatalogueMarker(marker);
+    document
+      .getElementById("full-catalogue")
+      ?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
   const [isVegan, setIsVegan] = useState<boolean>(true);
 
   const pricingTiers: BulkPricingTier[] = [
@@ -598,8 +610,206 @@ export default function Products() {
             </CardContent>
           </Card>
 
+          {/* Legal sex + gender identity helper for people with gender-affirming care */}
+          <Card className="mb-12 border-2 border-violet-300 dark:border-violet-500/40 bg-gradient-to-br from-violet-50/60 via-white to-pink-50/50 dark:from-violet-950/20 dark:via-gray-950 dark:to-pink-950/10" data-testid="card-affirming-care-helper">
+            <CardHeader>
+              <div className="flex flex-wrap items-center gap-2 mb-2">
+                <Badge className="bg-violet-100 text-violet-700 border border-violet-300 dark:bg-violet-950/40 dark:text-violet-300 dark:border-violet-500/40 text-xs">
+                  <Heart className="w-3 h-3 mr-1" /> Gender-affirming care welcome here
+                </Badge>
+                <Badge variant="outline" className="text-xs">Optional · nothing stored</Badge>
+              </div>
+              <CardTitle className="text-2xl lg:text-3xl">
+                Your legal sex, your birth marker & your gender — three different things
+              </CardTitle>
+              <CardDescription className="text-base mt-2 max-w-3xl">
+                If you've had (or are having) gender-affirming care, your <strong>current legal
+                sex</strong>, the <strong>marker recorded at birth</strong>, and your{" "}
+                <strong>gender identity</strong> may all be different — and being intersex can sit
+                alongside any chosen gender. Answer as much or as little as you like; only the
+                birth marker changes what you see below, because product fit follows your body,
+                never your paperwork.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="grid md:grid-cols-3 gap-5">
+                <div className="space-y-2">
+                  <Label className="font-semibold">1 · Current legal sex</Label>
+                  <p className="text-xs text-muted-foreground">
+                    The marker on your documents today — affirming care often includes updating it.
+                  </p>
+                  <div className="flex flex-wrap gap-1.5" role="group" aria-label="Current legal sex">
+                    {["F", "M", "X / non-binary marker", "Mixed documents", "Prefer not to say"].map((opt) => (
+                      <Button
+                        key={opt}
+                        type="button"
+                        size="sm"
+                        variant={legalSexNow === opt ? "default" : "outline"}
+                        aria-pressed={legalSexNow === opt}
+                        onClick={() => setLegalSexNow(legalSexNow === opt ? null : opt)}
+                        data-testid={`legal-sex-${opt.toLowerCase().replace(/[^a-z]+/g, "-")}`}
+                      >
+                        {opt}
+                      </Button>
+                    ))}
+                  </div>
+                  {legalSexNow && (
+                    <p className="text-xs text-violet-700 dark:text-violet-300">
+                      Noted — no product in this catalogue is gated by legal sex.
+                    </p>
+                  )}
+                </div>
+
+                <div className="space-y-2">
+                  <Label className="font-semibold">2 · Marker recorded at birth</Label>
+                  <p className="text-xs text-muted-foreground">
+                    This is the only answer that filters the catalogue, because the variation cards
+                    are grouped by birth-assignment pathway. Picking AMAB or AFAB never hides
+                    AXAB-tagged variations — states without an X marker recorded intersex people as
+                    M or F regardless of their bodies.
+                  </p>
+                  <div className="flex flex-wrap gap-1.5" role="group" aria-label="Marker recorded at birth">
+                    {([
+                      { value: "AFAB", label: "AFAB" },
+                      { value: "AMAB", label: "AMAB" },
+                      { value: "AXAB", label: "AXAB / X" },
+                      { value: "not-sure", label: "Not sure / it's complicated" },
+                    ] as const).map((opt) => (
+                      <Button
+                        key={opt.value}
+                        type="button"
+                        size="sm"
+                        variant={birthMarker === opt.value ? "default" : "outline"}
+                        aria-pressed={birthMarker === opt.value}
+                        onClick={() => {
+                          const next = birthMarker === opt.value ? null : opt.value;
+                          setBirthMarker(next);
+                          setCatalogueMarker(
+                            next && next !== "not-sure" ? next : "ALL",
+                          );
+                        }}
+                        data-testid={`birth-marker-${opt.value.toLowerCase()}`}
+                      >
+                        {opt.label}
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label className="font-semibold">3 · Gender identity (chosen, always yours)</Label>
+                  <p className="text-xs text-muted-foreground">
+                    Intersex is a body, not a gender — you can be intersex <em>and</em> any of these.
+                  </p>
+                  <div className="flex flex-wrap gap-1.5" role="group" aria-label="Gender identity">
+                    {["Woman", "Man", "Non-binary", "Genderqueer", "Agender", "Two-Spirit", "Self-describe"].map((opt) => (
+                      <Button
+                        key={opt}
+                        type="button"
+                        size="sm"
+                        variant={genderIdentity === opt ? "default" : "outline"}
+                        aria-pressed={genderIdentity === opt}
+                        onClick={() => setGenderIdentity(genderIdentity === opt ? null : opt)}
+                        data-testid={`gender-identity-${opt.toLowerCase().replace(/[^a-z]+/g, "-")}`}
+                      >
+                        {opt}
+                      </Button>
+                    ))}
+                  </div>
+                  {genderIdentity === "Self-describe" && (
+                    <Input
+                      value={genderSelfDescribe}
+                      onChange={(e) => setGenderSelfDescribe(e.target.value)}
+                      placeholder="Your words, your gender"
+                      aria-label="Self-described gender identity"
+                      maxLength={80}
+                      data-testid="input-gender-self-describe"
+                    />
+                  )}
+                  <div className="flex flex-wrap gap-1.5 pt-1" role="group" aria-label="Intersex connection">
+                    {([
+                      { value: true, label: "I am intersex" },
+                      { value: false, label: "I'm not / not sure" },
+                    ] as const).map((opt) => (
+                      <Button
+                        key={String(opt.value)}
+                        type="button"
+                        size="sm"
+                        variant={isIntersex === opt.value ? "secondary" : "ghost"}
+                        className="border"
+                        aria-pressed={isIntersex === opt.value}
+                        onClick={() => setIsIntersex(isIntersex === opt.value ? null : opt.value)}
+                        data-testid={`intersex-${opt.value ? "yes" : "no"}`}
+                      >
+                        {opt.label}
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {(legalSexNow || birthMarker || genderIdentity || isIntersex !== null) && (
+                <div className="p-4 rounded-lg border-2 border-violet-300/70 dark:border-violet-500/30 bg-white/70 dark:bg-gray-950/50 space-y-3" data-testid="helper-result">
+                  <p className="text-sm leading-relaxed">
+                    {isIntersex === true && genderIdentity && genderIdentity !== "Self-describe" && (
+                      <>You can be intersex and a {genderIdentity.toLowerCase()} — full stop. </>
+                    )}
+                    {isIntersex === true && genderIdentity === "Self-describe" && genderSelfDescribe.trim() && (
+                      <>You can be intersex and {genderSelfDescribe.trim()} — full stop. </>
+                    )}
+                    {legalSexNow && birthMarker && birthMarker !== "not-sure" && (
+                      <>
+                        Your current legal sex ({legalSexNow}) and your birth marker ({birthMarker}) don't
+                        have to match, and neither one decides your fit.{" "}
+                      </>
+                    )}
+                    Every product here is sized from your actual anatomy in the configurator —
+                    hormonal and surgical affirming care are first-class fit inputs there, not
+                    exceptions.
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {birthMarker && birthMarker !== "not-sure" ? (
+                      <Button
+                        size="sm"
+                        onClick={() => browseByBirthMarker(birthMarker)}
+                        data-testid="cta-helper-browse-marker"
+                      >
+                        <Shapes className="mr-1.5 h-4 w-4" />
+                        Browse the {birthMarker} variation catalogue
+                      </Button>
+                    ) : (
+                      <Button
+                        size="sm"
+                        onClick={() => browseByBirthMarker("ALL")}
+                        data-testid="cta-helper-browse-all"
+                      >
+                        <Shapes className="mr-1.5 h-4 w-4" />
+                        Browse all 86 variations
+                      </Button>
+                    )}
+                    <Link href="/inclusive-ordering">
+                      <Button size="sm" variant="outline" data-testid="cta-helper-configurator">
+                        <ArrowRight className="mr-1.5 h-4 w-4" />
+                        Open the configurator (affirming-care aware)
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+              )}
+
+              <Alert className="border-2 border-dashed border-violet-400/60 bg-violet-50/60 dark:bg-violet-950/20">
+                <AlertDescription className="text-xs leading-relaxed text-violet-900 dark:text-violet-200">
+                  <strong>Honesty note:</strong> these answers live only on this page while it's open —
+                  nothing is stored, sent, or attached to any account or order. They exist purely to
+                  route you to the right part of the catalogue. Legal sex is never used to gate,
+                  verify, or restrict anything on TriSex.org.
+                </AlertDescription>
+              </Alert>
+            </CardContent>
+          </Card>
+
           {/* Full catalogue — all 86 named variations */}
-          <Card className="mb-12 border-2 border-primary/20" data-testid="card-full-catalogue">
+          <Card id="full-catalogue" className="mb-12 border-2 border-primary/20" data-testid="card-full-catalogue">
             <CardHeader>
               <div className="flex flex-wrap items-center gap-2 mb-2">
                 <Badge className="bg-primary/15 text-primary border border-primary/30 text-xs">
@@ -648,7 +858,14 @@ export default function Products() {
                 const q = catalogueSearch.trim().toLowerCase();
                 const matches = INTERSEX_VARIATIONS.filter((v) => {
                   const markers = getAssignmentMarkers(v);
-                  const markerOk = catalogueMarker === "ALL" || markers.includes(catalogueMarker);
+                  // Anti-binarist filtering: filtering by AMAB or AFAB always also
+                  // includes AXAB-tagged variations, because in jurisdictions with no
+                  // X marker on IDs, intersex people were recorded M or F regardless
+                  // of their bodies. A binary filter must never hide those variations.
+                  const markerOk =
+                    catalogueMarker === "ALL" ||
+                    markers.includes(catalogueMarker) ||
+                    (catalogueMarker !== "AXAB" && markers.includes("AXAB"));
                   const searchOk =
                     q === "" ||
                     v.name.toLowerCase().includes(q) ||
@@ -673,7 +890,11 @@ export default function Products() {
                   <>
                     <p className="text-xs text-muted-foreground mb-3" data-testid="catalogue-count">
                       Showing {matches.length} of {INTERSEX_VARIATIONS.length} variations
-                      {catalogueMarker !== "ALL" ? ` assigned ${catalogueMarker}` : ""}
+                      {catalogueMarker === "AXAB"
+                        ? " assigned AXAB / X"
+                        : catalogueMarker !== "ALL"
+                          ? ` assigned ${catalogueMarker} — plus every AXAB-tagged variation, because states without an X marker recorded intersex people as M or F regardless of their bodies`
+                          : ""}
                       {q ? ` matching "${catalogueSearch.trim()}"` : ""}.
                     </p>
                     <Accordion type="multiple" className="w-full">
