@@ -1581,6 +1581,23 @@ END:VEVENT
     }
   });
 
+  // Reminder settings: opt in/out of in-app due-soon/overdue reminders.
+  // Reminders are derived locally from the owner's own data and shown only
+  // to the owner — nothing leaves the account.
+  app.patch("/api/health-circle/settings", requireAuth, async (req, res) => {
+    try {
+      const userId = req.session.userId!;
+      const { remindersEnabled } = z
+        .object({ remindersEnabled: z.boolean() })
+        .parse(req.body);
+      const circle = await storage.getOrCreateHealthCircle(userId);
+      const updated = await storage.updatePartnerNetwork(circle.id, { remindersEnabled });
+      res.json({ circle: updated });
+    } catch (error) {
+      res.status(400).json({ message: error instanceof Error ? error.message : "Failed to update settings" });
+    }
+  });
+
   // Add a contact to the circle (user-entered record, not a linked account)
   app.post("/api/health-circle/contacts", requireAuth, async (req, res) => {
     try {

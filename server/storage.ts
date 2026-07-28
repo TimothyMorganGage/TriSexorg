@@ -2418,7 +2418,11 @@ The /fork-the-framework page documents the public API of the inclusive-ordering 
     const existing = Array.from(this.partnerNetworksMap.values()).find(
       (n) => n.userId === userId && n.isActive,
     );
-    if (existing) return existing;
+    if (existing) {
+      // Older circles predate the reminders flag; default to enabled (opt-out model)
+      if (existing.remindersEnabled === undefined) existing.remindersEnabled = true;
+      return existing;
+    }
     return this.createPartnerNetwork({
       userId,
       networkName: "My Health Circle",
@@ -2426,6 +2430,7 @@ The /fork-the-framework page documents the public API of the inclusive-ordering 
       privacyLevel: "private",
       consentGiven: true,
       dataRetentionDays: 90,
+      remindersEnabled: true,
     });
   }
 

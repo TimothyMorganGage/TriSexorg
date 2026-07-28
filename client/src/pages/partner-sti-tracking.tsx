@@ -153,6 +153,30 @@ export default function PartnerSTITracking() {
     },
   });
 
+  const setReminders = useMutation({
+    mutationFn: async (remindersEnabled: boolean) => {
+      const response = await fetch("/api/health-circle/settings", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ remindersEnabled }),
+      });
+      if (!response.ok) throw new Error("Failed to update reminder settings");
+      return response.json();
+    },
+    onSuccess: (_data, remindersEnabled) => {
+      queryClient.invalidateQueries({ queryKey: ["/api/health-circle"] });
+      toast({
+        title: remindersEnabled ? "Reminders on" : "Reminders off",
+        description: remindersEnabled
+          ? "You'll see a prompt here when a test is due soon or overdue."
+          : "You won't see testing reminders. You can turn them back on anytime.",
+      });
+    },
+    onError: (error: Error) => {
+      toast({ title: "Could not update reminders", description: error.message, variant: "destructive" });
+    },
+  });
+
   const removeContact = useMutation({
     mutationFn: async (id: number) => {
       const response = await fetch(`/api/health-circle/contacts/${id}`, { method: "DELETE" });
@@ -312,6 +336,59 @@ export default function PartnerSTITracking() {
 
           {/* Shared Health Circle Tab */}
           <TabsContent value="health-circle" className="space-y-6">
+            {(() => {
+              if (!healthCircle) return null;
+              const remindersEnabled = healthCircle.circle?.remindersEnabled !== false;
+              const overdue = healthCircle.contacts.filter((c: any) => c.status === "overdue");
+              const dueSoon = healthCircle.contacts.filter((c: any) => c.status === "due-soon");
+              if (remindersEnabled && (overdue.length > 0 || dueSoon.length > 0)) {
+                const parts: string[] = [];
+                if (overdue.length > 0)
+                  parts.push(`${overdue.length} contact${overdue.length > 1 ? "s are" : " is"} overdue for a test`);
+                if (dueSoon.length > 0)
+                  parts.push(`${dueSoon.length} contact${dueSoon.length > 1 ? "s are" : " is"} due soon`);
+                return (
+                  <Alert
+                    className={overdue.length > 0 ? "border-red-300 bg-red-50 dark:bg-red-950/30" : "border-amber-300 bg-amber-50 dark:bg-amber-950/30"}
+                    data-testid="banner-testing-reminder"
+                  >
+                    <Bell className="h-4 w-4" />
+                    <AlertDescription className="flex flex-wrap items-center justify-between gap-2">
+                      <span>
+                        <span className="font-medium">Testing reminder:</span>{" "}
+                        {parts.join(" and ")}. This reminder is private to you.
+                      </span>
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        data-testid="button-disable-reminders"
+                        onClick={() => setReminders.mutate(false)}
+                        disabled={setReminders.isPending}
+                      >
+                        Turn off reminders
+                      </Button>
+                    </AlertDescription>
+                  </Alert>
+                );
+              }
+              if (!remindersEnabled) {
+                return (
+                  <div className="flex items-center justify-between text-xs text-muted-foreground px-1" data-testid="row-reminders-off">
+                    <span>Testing reminders are off.</span>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      data-testid="button-enable-reminders"
+                      onClick={() => setReminders.mutate(true)}
+                      disabled={setReminders.isPending}
+                    >
+                      Turn on reminders
+                    </Button>
+                  </div>
+                );
+              }
+              return null;
+            })()}
             <Alert>
               <Lock className="h-4 w-4" />
               <AlertDescription>
