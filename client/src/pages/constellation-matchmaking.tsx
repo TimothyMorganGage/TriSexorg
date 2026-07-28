@@ -295,7 +295,7 @@ export default function ConstellationPeople() {
     const previousDescription = meta?.getAttribute("content") ?? null;
     meta?.setAttribute(
       "content",
-      "Consent-first matchmaking for polyamorous, open, and relationship-anarchist community. No algorithms, no outing, no fabricated profiles — connection held to spiritual justice: consent as sacred, honesty as covenant.",
+      "Consent-first matchmaking for polyamorous, polyglamorous, open, and relationship-anarchist community. No algorithms, no outing, no fabricated profiles — connection held to spiritual justice: consent as sacred, honesty as covenant.",
     );
     return () => {
       document.title = previousTitle;
