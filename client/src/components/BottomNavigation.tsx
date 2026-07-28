@@ -55,7 +55,6 @@ const allNavItems: NavItem[] = [
   { name: "Home", href: "/", icon: Home, category: "core", priority: 10, keywords: ["home", "start", "main"] },
   { name: "Products", href: "/products", icon: Package, category: "products", priority: 9, keywords: ["products", "protection", "buy", "shop"] },
   { name: "Manufacturing", href: "/manufacturing", icon: Building2, category: "products", priority: 7, keywords: ["manufacturing", "sourcing", "factory", "supply", "fulfilment", "production"] },
-  { name: "Polyglamorous People", href: "/polyglamorous-people", icon: Users, category: "community", priority: 6, keywords: ["polyglamorous", "polyamorous", "polyamory", "poly", "open", "swinging", "monogamish", "relationship-anarchy", "RA", "ENM"] },
   { name: "Oral Barriers", href: "/oral-barriers", icon: CircleDot, category: "products", priority: 8, keywords: ["oral", "barriers", "msm", "sides"] },
   { name: "Hand Barriers", href: "/hand-barriers", icon: Hand, category: "products", priority: 8, keywords: ["hand", "finger", "gloves", "glove", "finger cot", "fingering", "manual", "barriers"] },
   { name: "Anatomy Scanning", href: "/anatomy-scanning", icon: Scan, category: "health", priority: 8, keywords: ["scan", "anatomy", "3d", "custom"] },

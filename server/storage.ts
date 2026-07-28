@@ -56,12 +56,6 @@ import {
   manufacturingPartners,
   type ManufacturingPartner,
   type InsertManufacturingPartner,
-  polyglamorousProfiles,
-  type PolyglamorousProfile,
-  type InsertPolyglamorousProfile,
-  polyglamorousContactRequests,
-  type PolyglamorousContactRequest,
-  type InsertPolyglamorousContactRequest,
 } from "@shared/schema";
 
 export interface IStorage {
@@ -283,15 +277,6 @@ export interface IStorage {
   // Manufacturing partners (self-reported registry of candidate / signed factories)
   listManufacturingPartners(): Promise<ManufacturingPartner[]>;
   createManufacturingPartner(data: InsertManufacturingPartner): Promise<ManufacturingPartner>;
-  listPolyglamorousProfiles(): Promise<PolyglamorousProfile[]>;
-  createPolyglamorousProfile(data: InsertPolyglamorousProfile): Promise<PolyglamorousProfile>;
-  getPolyglamorousProfileById(id: number): Promise<PolyglamorousProfile | undefined>;
-  getPolyglamorousProfileByManageToken(token: string): Promise<PolyglamorousProfile | undefined>;
-  createPolyglamorousContactRequest(data: InsertPolyglamorousContactRequest & { requesterToken: string }): Promise<PolyglamorousContactRequest>;
-  listPolyglamorousContactRequestsForProfile(profileId: number): Promise<PolyglamorousContactRequest[]>;
-  getPolyglamorousContactRequestById(id: number): Promise<PolyglamorousContactRequest | undefined>;
-  getPolyglamorousContactRequestByRequesterToken(token: string): Promise<PolyglamorousContactRequest | undefined>;
-  updatePolyglamorousContactRequestStatus(id: number, status: "accepted" | "declined"): Promise<PolyglamorousContactRequest | undefined>;
 
   // Clinic Inventory methods
   getClinicInventory(): Promise<any[]>;
@@ -582,7 +567,7 @@ Risk attaches to specific contact zones, not to identities. The same person may 
 - Every 3 months: sexually active with multiple partners, on PrEP, or in a polycule with ongoing new contacts.
 - Every 6 months: sexually active with one or two regular partners outside a closed agreement.
 - Every 12 months: in a closed monogamous or polyfidelitous agreement with documented mutual baseline testing.
-- After each new partner: a small-but-meaningful posture especially common on /polyglamorous-people.
+- After each new partner: a small-but-meaningful posture common among members with multiple partners.
 
 A full panel for most 2SLGBTIQA+ co-operators includes HIV, syphilis, gonorrhoea + chlamydia (throat + rectal + frontal swabs, not urine alone), hepatitis B and C, plus HPV-related cervical or anal screening where anatomically relevant. Trichomoniasis and mycoplasma genitalium are worth requesting when symptomatic.
 
@@ -697,7 +682,7 @@ Affirmative, ongoing, informed, specific, and revocable — five layers our co-o
 
 ## Polycule and metamour disclosure postures
 
-The /polyglamorous-people surface formalises four common postures:
+Four common metamour disclosure postures:
 - Kitchen-table: metamours know each other and may share space.
 - Parallel: metamours acknowledge each other's existence but do not interact.
 - Garden-party: occasional shared events, otherwise parallel.
@@ -705,7 +690,7 @@ The /polyglamorous-people surface formalises four common postures:
 
 ## Outing is never consent
 
-Disclosing a partner's gender, trans or intersex status, HIV status, kink, or relationship structure to a third party without their explicit consent is outing. Our community standards treat outing as a serious harm. The polyglamorous and Good People surfaces include explicit no-outing attestations enforced at profile creation and at every contact request.
+Disclosing a partner's gender, trans or intersex status, HIV status, kink, or relationship structure to a third party without their explicit consent is outing. Our community standards treat outing as a serious harm. The Good People surface includes an explicit no-outing attestation enforced at profile creation.
 
 ## Communication tools we recommend
 
@@ -3352,55 +3337,6 @@ The /fork-the-framework page documents the public API of the inclusive-ordering 
     return created;
   }
 
-  async listPolyglamorousProfiles(): Promise<PolyglamorousProfile[]> {
-    return await db.select().from(polyglamorousProfiles)
-      .where(eq(polyglamorousProfiles.status, "active"))
-      .orderBy(desc(polyglamorousProfiles.createdAt));
-  }
-
-  async createPolyglamorousProfile(data: InsertPolyglamorousProfile): Promise<PolyglamorousProfile> {
-    const [created] = await db.insert(polyglamorousProfiles).values(data).returning();
-    return created;
-  }
-
-  async getPolyglamorousProfileById(id: number): Promise<PolyglamorousProfile | undefined> {
-    const [row] = await db.select().from(polyglamorousProfiles).where(eq(polyglamorousProfiles.id, id));
-    return row;
-  }
-
-  async getPolyglamorousProfileByManageToken(token: string): Promise<PolyglamorousProfile | undefined> {
-    const [row] = await db.select().from(polyglamorousProfiles).where(eq(polyglamorousProfiles.manageToken, token));
-    return row;
-  }
-
-  async createPolyglamorousContactRequest(data: InsertPolyglamorousContactRequest & { requesterToken: string }): Promise<PolyglamorousContactRequest> {
-    const [created] = await db.insert(polyglamorousContactRequests).values(data).returning();
-    return created;
-  }
-
-  async listPolyglamorousContactRequestsForProfile(profileId: number): Promise<PolyglamorousContactRequest[]> {
-    return await db.select().from(polyglamorousContactRequests)
-      .where(eq(polyglamorousContactRequests.targetProfileId, profileId))
-      .orderBy(desc(polyglamorousContactRequests.createdAt));
-  }
-
-  async getPolyglamorousContactRequestById(id: number): Promise<PolyglamorousContactRequest | undefined> {
-    const [row] = await db.select().from(polyglamorousContactRequests).where(eq(polyglamorousContactRequests.id, id));
-    return row;
-  }
-
-  async getPolyglamorousContactRequestByRequesterToken(token: string): Promise<PolyglamorousContactRequest | undefined> {
-    const [row] = await db.select().from(polyglamorousContactRequests).where(eq(polyglamorousContactRequests.requesterToken, token));
-    return row;
-  }
-
-  async updatePolyglamorousContactRequestStatus(id: number, status: "accepted" | "declined"): Promise<PolyglamorousContactRequest | undefined> {
-    const [row] = await db.update(polyglamorousContactRequests)
-      .set({ status })
-      .where(eq(polyglamorousContactRequests.id, id))
-      .returning();
-    return row;
-  }
 }
 
 export const storage = new MemStorage();
