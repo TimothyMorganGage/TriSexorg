@@ -325,7 +325,7 @@ export default function GoodPeople() {
             closed-dyad assumptions throughout: 2-year age-range caps, monthly STI
             screening defaults, no metamour disclosure tooling, and progressive-stage
             barrier work optimised for two people. Polyamorous, open, swinging,
-            monogamish, and relationship-anarchy members are served by a sibling
+            monogamish, and relative-autonomy (RA) members are served by a sibling
             surface,{" "}
             <a href="/constellation-matchmaking" className="underline font-semibold" data-testid="link-constellation-from-goodpeople">
               Constellation Matchmaking

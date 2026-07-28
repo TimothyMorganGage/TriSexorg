@@ -95,7 +95,7 @@ export default function TermsOfService() {
                     <div>
                       <strong className="block mb-1">Two-Surface Matchmaking (updated 2026-05-14)</strong>
                       <span className="text-sm text-muted-foreground">
-                        Good People Cooperative Matchmaking is exclusively for users seeking monogamous relationships with 2-year maximum age differences. Polyamorous, open, swinging, monogamish, and relationship-anarchy members are served by a sibling surface at <a href="/constellation-matchmaking" className="underline">/constellation-matchmaking</a>, which uses different consent-disclosure, STI cadence, and metamour-visibility infrastructure. A given member uses one surface at a time; cross-surface profile mirroring is not provided.
+                        Good People Cooperative Matchmaking is exclusively for users seeking monogamous relationships with 2-year maximum age differences. Polyamorous, open, swinging, monogamish, and relative-autonomy (RA) members are served by a sibling surface at <a href="/constellation-matchmaking" className="underline">/constellation-matchmaking</a>, which uses different consent-disclosure, STI cadence, and metamour-visibility infrastructure. A given member uses one surface at a time; cross-surface profile mirroring is not provided.
                       </span>
                     </div>
                   </div>

@@ -65,7 +65,7 @@ const RELATIONSHIP_STRUCTURES: Array<{ value: string; label: string; blurb: stri
   { value: "solo-poly", label: "Solo polyamory", blurb: "Multiple partners, no nesting / cohabitation as a relationship anchor." },
   { value: "hierarchical-poly", label: "Hierarchical polyamory", blurb: "Primary / secondary / etc. structure. Optional veto-posture field appears." },
   { value: "non-hierarchical-poly", label: "Non-hierarchical polyamory", blurb: "Multiple partners treated as co-equal; no primary." },
-  { value: "relationship-anarchy", label: "Relationship anarchy", blurb: "Each connection negotiated on its own terms; no hierarchy applied across them." },
+  { value: "relationship-anarchy", label: "Relative autonomy (RA)", blurb: "Each connection negotiated on its own terms; no hierarchy applied across them." },
   { value: "open", label: "Open relationship", blurb: "Anchor pair plus negotiated outside connections." },
   { value: "swinging", label: "Swinging", blurb: "Recreational partner exchange, often within a paired primary structure." },
   { value: "monogamish", label: "Monogamish", blurb: "Mostly monogamous with explicit, negotiated exceptions." },
@@ -295,7 +295,7 @@ export default function ConstellationPeople() {
     const previousDescription = meta?.getAttribute("content") ?? null;
     meta?.setAttribute(
       "content",
-      "Consent-first matchmaking for polyamorous, polyglamorous, open, and relationship-anarchist community. No algorithms, no outing, no fabricated profiles — connection held to spiritual justice: consent as sacred, honesty as covenant.",
+      "Consent-first matchmaking for polyamorous, polyglamorous, open, and relative-autonomy community. No algorithms, no outing, no fabricated profiles — connection held to spiritual justice: consent as sacred, honesty as covenant.",
     );
     return () => {
       document.title = previousTitle;
@@ -328,7 +328,7 @@ export default function ConstellationPeople() {
             practice of <strong>spiritual justice</strong>: consent held as sacred,
             honesty as covenant, and no one's existence disclosed without their
             blessing. It serves members whose love takes the shape of a constellation —
-            polyamorous, open, monogamish, relationship-anarchist, or simply
+            polyamorous, open, monogamish, relative-autonomy (RA), or simply
             many-connected. Sibling to{" "}
             <a href="/good-people" className="underline">Good People</a> (which is
             monogamy-only by design); the two surfaces are kept honestly separate
