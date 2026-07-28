@@ -1362,6 +1362,31 @@ export const insertStiTrackingEventSchema = createInsertSchema(stiTrackingEvents
   createdAt: true,
 });
 
+// Minimized, whitelisted input for user-submitted STI events. Deliberately
+// excludes server-controlled fields (userId, isAnonymized, publicHealthReported,
+// partnerNotificationStatus) and caps free text so callers cannot smuggle
+// arbitrary payloads into sensitive rows. Geographic data is capped and
+// documented as coarse (region-level) — see docs/decisions/health-circle-data-protection.md.
+export const stiTrackingEventInputSchema = z.object({
+  networkId: z.number().int().optional().nullable(),
+  eventType: z.enum(["test_result", "symptom_report", "exposure_alert", "treatment_start", "treatment_complete"]),
+  stiType: z.string().trim().max(50).optional().nullable(),
+  testResult: z.enum(["positive", "negative", "inconclusive", "pending"]).optional().nullable(),
+  severityLevel: z.number().int().min(1).max(5).optional().nullable(),
+  symptomsReported: z.array(z.string().trim().max(200)).max(20).optional(),
+  treatmentProtocol: z.string().trim().max(500).optional().nullable(),
+  testingLocation: z.string().trim().max(120).optional().nullable(),
+  geographicArea: z.string().trim().max(80).optional().nullable(), // coarse region only, never a street address
+  exposureTimeframe: z.object({
+    start: z.coerce.date().optional(),
+    end: z.coerce.date().optional(),
+  }).optional(),
+  followUpRequired: z.boolean().optional(),
+  followUpDate: z.coerce.date().optional().nullable(),
+  eventDate: z.coerce.date().optional(),
+});
+export type StiTrackingEventInput = z.infer<typeof stiTrackingEventInputSchema>;
+
 export const insertSexualProductCustomizationSchema = createInsertSchema(sexualProductCustomizations).omit({
   id: true,
   createdAt: true,

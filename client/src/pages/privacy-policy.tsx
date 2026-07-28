@@ -216,9 +216,23 @@ export default function PrivacyPolicy() {
                     <Alert className="mt-4 bg-yellow-50 dark:bg-yellow-900/20 border-yellow-200">
                       <AlertTriangle className="h-4 w-4 text-yellow-600" />
                       <AlertDescription className="text-xs">
-                        <strong>Extra Protection:</strong> Sexual health data is encrypted with separate keys, stored in isolated databases, and access-logged. Only YOU and explicitly authorized healthcare providers can view this data.
+                        <strong>Extra Protection:</strong> Sexual health data is accessible only to your own signed-in account — there is no admin view, no browse-all endpoint, and API responses on sensitive routes are excluded from server logs. Sharing a test result with a linked contact is always an explicit, per-event action you take yourself.
                       </AlertDescription>
                     </Alert>
+                  </div>
+
+                  <div className="p-4 border rounded-lg bg-blue-50/50 dark:bg-blue-900/10">
+                    <h4 className="font-bold mb-3">Shared Health Circle Data</h4>
+                    <p className="text-sm text-muted-foreground mb-3">
+                      Your health circle is private health logistics — never a directory. Here is exactly how circle data is handled:
+                    </p>
+                    <ul className="text-sm space-y-2 text-muted-foreground">
+                      <li>• <strong>What's stored:</strong> your own labels/nicknames for contacts, contact kind (ongoing/occasional/past), barrier posture, testing-cadence commitment, and self-reported last test date.</li>
+                      <li>• <strong>Who can see it:</strong> only you. Contacts are user-entered records, not linked accounts, unless both people explicitly consent to a link. Nothing about a circle is ever listed, searchable, or visible to other members.</li>
+                      <li>• <strong>Retention is enforced:</strong> STI events older than your circle's retention window (90 days by default) are automatically anonymized on a recurring schedule — STI type, result, symptoms, treatment, and location are permanently stripped, keeping only the event date so your testing-cadence status still works. Expired exposure notifications are deleted.</li>
+                      <li>• <strong>Data minimization at entry:</strong> STI event submissions accept only a fixed set of fields with strict size limits; location is coarse region-level only, never an address.</li>
+                      <li>• <strong>Current limitation, stated honestly:</strong> circle and STI data is not yet field-level encrypted with separate keys. It is protected by transport encryption (TLS), platform database encryption, and strict per-account access checks. Field-level encryption with a dedicated key is a committed requirement before circle data becomes permanently stored.</li>
+                    </ul>
                   </div>
 
                   <div className="p-4 border rounded-lg">
@@ -319,10 +333,10 @@ export default function PrivacyPolicy() {
                       Encryption
                     </h4>
                     <ul className="text-sm space-y-2 text-muted-foreground">
-                      <li>• <strong>TLS 1.3:</strong> All data in transit encrypted</li>
-                      <li>• <strong>AES-256:</strong> All data at rest encrypted</li>
-                      <li>• <strong>Separate keys:</strong> Sexual health data uses additional encryption layer</li>
-                      <li>• <strong>Key rotation:</strong> Encryption keys rotated quarterly</li>
+                      <li>• <strong>TLS:</strong> All data in transit encrypted</li>
+                      <li>• <strong>Platform encryption at rest:</strong> Database storage is encrypted by our hosting provider</li>
+                      <li>• <strong>Password hashing:</strong> Passwords stored as bcrypt hashes only, never plaintext</li>
+                      <li>• <strong>Planned:</strong> Field-level encryption with a dedicated key for sexual-health fields, committed before circle data becomes permanently stored</li>
                     </ul>
                   </div>
 
@@ -333,9 +347,9 @@ export default function PrivacyPolicy() {
                     </h4>
                     <ul className="text-sm space-y-2 text-muted-foreground">
                       <li>• <strong>Equal co-operator access:</strong> No staff/admin hierarchy — every member shares the same access and accountability</li>
-                      <li>• <strong>Audit logging:</strong> All data access is logged with timestamp and reason</li>
-                      <li>• <strong>Two-factor authentication:</strong> Available to all member accounts</li>
-                      <li>• <strong>Access reviews:</strong> Quarterly audits of who can see what</li>
+                      <li>• <strong>Owner-only data access:</strong> Every sensitive route checks that the signed-in account owns the data; there is no browse-all or admin endpoint</li>
+                      <li>• <strong>Rate limiting:</strong> Authentication endpoints are rate-limited against brute force</li>
+                      <li>• <strong>Sensitive-route log redaction:</strong> Health, circle, and STI endpoints never write response data to server logs</li>
                     </ul>
                   </div>
 
@@ -345,10 +359,10 @@ export default function PrivacyPolicy() {
                       Database Security
                     </h4>
                     <ul className="text-sm space-y-2 text-muted-foreground">
-                      <li>• <strong>Isolated databases:</strong> Sexual health data in separate database from account info</li>
-                      <li>• <strong>Automated backups:</strong> Daily encrypted backups to separate infrastructure</li>
+                      <li>• <strong>Enforced retention:</strong> A recurring job anonymizes STI events past your retention window and deletes expired notifications</li>
                       <li>• <strong>SQL injection protection:</strong> Parameterized queries only</li>
-                      <li>• <strong>No direct database access:</strong> All queries go through audited API layer</li>
+                      <li>• <strong>Schema-validated writes:</strong> Sensitive records accept only whitelisted, size-capped fields</li>
+                      <li>• <strong>No direct database access:</strong> All queries go through the API layer with ownership checks</li>
                     </ul>
                   </div>
 
@@ -358,10 +372,10 @@ export default function PrivacyPolicy() {
                       Security Audits
                     </h4>
                     <ul className="text-sm space-y-2 text-muted-foreground">
-                      <li>• <strong>Annual penetration testing:</strong> Third-party security assessments</li>
-                      <li>• <strong>Bug bounty program:</strong> Rewards for responsible disclosure</li>
                       <li>• <strong>Open source review:</strong> Community can audit our code</li>
-                      <li>• <strong>Compliance audits:</strong> GDPR, HIPAA-aligned practices</li>
+                      <li>• <strong>Documented data-protection reviews:</strong> Field-level sensitivity reviews are written down and versioned with the code</li>
+                      <li>• <strong>Responsible disclosure welcomed:</strong> Report issues via our contact page</li>
+                      <li>• <strong>GDPR-aligned practices:</strong> Access, deletion, portability, and objection rights honored</li>
                     </ul>
                   </div>
                 </div>

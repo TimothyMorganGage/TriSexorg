@@ -131,6 +131,8 @@ app.use((req, res, next) => {
         '/api/genealogy-verification',
         '/api/mood-entries',
         '/api/sti-tracking',
+        '/api/health-circle',
+        '/api/partner-networks',
         '/api/wellness-goals'
       ];
       
@@ -157,6 +159,23 @@ app.use((req, res, next) => {
 (async () => {
   await normalizeUserRoles();
   const server = await registerRoutes(app);
+
+  // Retention enforcement for sensitive partner-health data: anonymize STI
+  // events older than each circle's dataRetentionDays (default 90) and purge
+  // expired partner notifications. Runs at startup and every 6 hours.
+  const runRetentionSweep = async () => {
+    try {
+      const { storage } = await import("./storage");
+      const result = await storage.enforceHealthDataRetention();
+      if (result.eventsAnonymized || result.notificationsPurged) {
+        log(`retention sweep: ${result.eventsAnonymized} STI events anonymized, ${result.notificationsPurged} notifications purged`);
+      }
+    } catch (e) {
+      console.error("[retention] sweep failed:", e);
+    }
+  };
+  await runRetentionSweep();
+  setInterval(runRetentionSweep, 6 * 60 * 60 * 1000).unref();
 
   // Healthcheck endpoint for deployment infrastructure
   app.get("/healthz", (_req, res) => {

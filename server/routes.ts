@@ -12,7 +12,8 @@ import {
   insertUserSchema, insertProductConfigurationSchema, insertOrderSchema,
   insertEducationalContentSchema, insertPartnershipRequestSchema,
   insertSavedProductConfigurationSchema,
-  healthCircleContactInputSchema
+  healthCircleContactInputSchema,
+  stiTrackingEventInputSchema
 } from "@shared/schema";
 import { z } from "zod";
 import { genealogyService, RelationshipUtils } from "./genealogy";
@@ -1656,11 +1657,14 @@ END:VEVENT
   app.post("/api/sti-tracking", requireAuth, async (req, res) => {
     try {
       const userId = req.session.userId!;
-      const eventData = { ...req.body, userId };
-      const event = await storage.createStiTrackingEvent(eventData);
+      // Whitelisted, size-capped input: server-controlled fields (userId,
+      // isAnonymized, publicHealthReported, notification status) can never
+      // be set by the client. Data minimization for highly sensitive rows.
+      const data = stiTrackingEventInputSchema.parse(req.body);
+      const event = await storage.createStiTrackingEvent({ ...data, userId });
       
       // Generate partner notifications if positive result
-      if (req.body.testResult === 'positive') {
+      if (data.testResult === 'positive') {
         await storage.generatePartnerNotifications(event.id);
       }
       

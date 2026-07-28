@@ -4,4 +4,5 @@
 - [Genealogy incest-screening](genealogy-screening.md) — blocks closer than 3rd cousin (degree>=4); parser needs FAM records; matching is pre-launch/empty so no match-route to gate yet; data not encrypted, no Gramps/GEDmatch.
 - [db:push session drift](db-push-session-drift.md) — db:push is interactive (drive via pty, not piped stdin); keep the `session` table declared in schema.ts or drizzle tries to drop it and aborts the push.
 - [post-merge push --force is sanctioned](post-merge-push-force.md) — stdin-closed merge hook needs --force; prod drops go via Publish flow, never ad-hoc migrations.
+- [Partner-health data protection](health-data-protection.md) — retention sweep + input whitelist enforced; field-level encryption is a precondition for persisting circle/STI data; policy must stay claim-honest.
 - [WebAuthn behind Replit proxy](webauthn-proxy-origin.md) — request-derived origin/rpID needs `trust proxy` or HTTPS verification fails in production.

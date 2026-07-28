@@ -391,6 +391,7 @@ export interface IStorage {
   createStiTrackingEvent(event: any): Promise<any>;
   updateStiTrackingEvent(id: number, event: any): Promise<any>;
   generatePartnerNotifications(eventId: number): Promise<any[]>;
+  enforceHealthDataRetention(): Promise<{ eventsAnonymized: number; notificationsPurged: number }>;
   getNetworkExposureAnalysis(networkId: number, stiType: string): Promise<any>;
 
   // Sexual Product Customization methods
@@ -2574,6 +2575,72 @@ The /fork-the-framework page documents the public API of the inclusive-ordering 
     const updated = { ...existing, ...event, id, updatedAt: new Date() };
     this.stiTrackingEventsMap.set(id, updated);
     return updated;
+  }
+
+  // Retention enforcement for sensitive partner-health data.
+  // Each user's circle carries dataRetentionDays (default 90). STI events older
+  // than that window are anonymized in place: every sensitive detail (STI type,
+  // result, symptoms, treatment, location, exposure window) is stripped, keeping
+  // only the bare recency signal (eventType + eventDate) that testing-cadence
+  // status derivation needs. Expired partner notifications are deleted outright.
+  async enforceHealthDataRetention(): Promise<{ eventsAnonymized: number; notificationsPurged: number }> {
+    const now = Date.now();
+    const DEFAULT_RETENTION_DAYS = 90;
+
+    // Per-user retention window: the shortest retention across their circles.
+    const retentionByUser = new Map<number, number>();
+    for (const network of Array.from(this.partnerNetworksMap.values())) {
+      const days = network.dataRetentionDays ?? DEFAULT_RETENTION_DAYS;
+      const existing = retentionByUser.get(network.userId);
+      retentionByUser.set(network.userId, existing === undefined ? days : Math.min(existing, days));
+    }
+
+    let eventsAnonymized = 0;
+    for (const [id, event] of Array.from(this.stiTrackingEventsMap.entries())) {
+      if (event.isAnonymized) continue;
+      const days = retentionByUser.get(event.userId) ?? DEFAULT_RETENTION_DAYS;
+      const cutoff = now - days * 24 * 60 * 60 * 1000;
+      const eventTime = new Date(event.eventDate ?? event.createdAt).getTime();
+      if (eventTime < cutoff) {
+        this.stiTrackingEventsMap.set(id, {
+          id: event.id,
+          userId: event.userId,
+          networkId: event.networkId ?? null,
+          eventType: event.eventType,
+          stiType: null,
+          testResult: null,
+          severityLevel: null,
+          symptomsReported: [],
+          treatmentProtocol: null,
+          testingLocation: null,
+          geographicArea: null,
+          exposureTimeframe: {},
+          partnerNotificationStatus: "expired",
+          followUpRequired: false,
+          followUpDate: null,
+          isAnonymized: true,
+          publicHealthReported: event.publicHealthReported ?? false,
+          eventDate: event.eventDate,
+          createdAt: event.createdAt,
+          updatedAt: new Date(),
+        });
+        eventsAnonymized++;
+      }
+    }
+
+    // Purge expired partner notifications (they carry exposure messaging).
+    let notificationsPurged = 0;
+    const notificationsMap: Map<number, any> | undefined = (this as any).partnerNotificationsMap;
+    if (notificationsMap) {
+      for (const [id, n] of Array.from(notificationsMap.entries())) {
+        if (n.expiresAt && new Date(n.expiresAt).getTime() < now) {
+          notificationsMap.delete(id);
+          notificationsPurged++;
+        }
+      }
+    }
+
+    return { eventsAnonymized, notificationsPurged };
   }
 
   async generatePartnerNotifications(eventId: number): Promise<any[]> {
