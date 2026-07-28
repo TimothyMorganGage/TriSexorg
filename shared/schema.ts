@@ -1850,3 +1850,75 @@ export type ManufacturingPartner = typeof manufacturingPartners.$inferSelect;
 // Replit Auth ("Log in with Replit") tables — see shared/models/auth.ts.
 // Namespaced separately so they coexist with the custom email/password auth.
 export * from "./models/auth";
+
+// Constellation People — sibling surface to Good People (which is monogamy-only by policy).
+// Self-declared, opt-in per field, no inference, no outing. Sparse profiles are valid.
+// Empty by default and stays empty until real members submit.
+export const constellationProfiles = pgTable("constellation_profiles", {
+  id: serial("id").primaryKey(),
+  displayName: text("display_name").notNull(),
+  pronouns: text("pronouns"), // optional
+  ageRangeMin: integer("age_range_min").notNull(),
+  ageRangeMax: integer("age_range_max").notNull(),
+  relationshipStructure: text("relationship_structure").notNull(), // solo-poly | hierarchical-poly | non-hierarchical-poly | relationship-anarchy | open | swinging | monogamish | unsure-exploring
+  currentPartnerCount: integer("current_partner_count"), // null = prefer-not-to-say
+  metamourDisclosurePreference: text("metamour_disclosure_preference").notNull(), // kitchen-table | parallel | garden-party | dadt
+  hierarchyPosture: text("hierarchy_posture"), // only relevant if hierarchical-poly
+  consentDisclosureCadence: text("consent_disclosure_cadence").notNull(), // immediately | weekly | never-required | case-by-case
+  stiTestingCadenceCommitment: text("sti_testing_cadence_commitment").notNull(), // every-3-months | every-6-months | every-12-months | after-each-new-partner
+  barrierUsePosture: text("barrier_use_posture").notNull(), // barriers-with-all | barriers-with-non-fluid-bonded | case-by-case | prefer-not-to-disclose
+  polyculeVisibility: text("polycule_visibility").notNull(), // nobody | matched-partners-only | declared-metamours | cooperative-members
+  vetoPosture: text("veto_posture"), // optional; only relevant if hierarchical-poly
+  notLookingFor: text("not_looking_for").notNull(), // free text + tag-like content
+  bio: text("bio"),
+  contactHandle: text("contact_handle"), // optional email / matrix / signal — member's choice
+  metamourDisclosureAttestation: boolean("metamour_disclosure_attestation").notNull().default(false),
+  stiCadenceAttestation: boolean("sti_cadence_attestation").notNull().default(false),
+  noOutingAttestation: boolean("no_outing_attestation").notNull().default(false),
+  honestyAttestation: boolean("honesty_attestation").notNull().default(false),
+  consentToBeContacted: boolean("consent_to_be_contacted").notNull().default(false),
+  status: text("status").notNull().default("pending"), // pending | active | paused | withdrawn
+  manageToken: text("manage_token"), // server-generated one-time token shown to the owner; null in public feed
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const insertConstellationProfileSchema = createInsertSchema(constellationProfiles).omit({
+  id: true,
+  status: true,
+  manageToken: true,
+  createdAt: true,
+}).refine((data) => (data.ageRangeMax - data.ageRangeMin) <= 4, {
+  message: "Age range width cannot exceed 4 years (±2 years from the minimum you choose). Same cap as Good People.",
+  path: ["ageRangeMax"],
+});
+
+export type InsertConstellationProfile = z.infer<typeof insertConstellationProfileSchema>;
+export type ConstellationProfile = typeof constellationProfiles.$inferSelect;
+
+// Per-match consent gate. Anyone may request to connect with an active constellation
+// profile. The owner sees the request via their manageToken; only on accept is the
+// requester's contact handle revealed to the owner, and only then is the owner's
+// contact handle revealed to the requester (who polls via their requesterToken).
+export const constellationContactRequests = pgTable("constellation_contact_requests", {
+  id: serial("id").primaryKey(),
+  targetProfileId: integer("target_profile_id").notNull(),
+  requesterDisplayName: text("requester_display_name").notNull(),
+  requesterContactHandle: text("requester_contact_handle").notNull(),
+  message: text("message"),
+  requesterToken: text("requester_token").notNull().unique(),
+  status: text("status").notNull().default("pending"), // pending | accepted | declined
+  honestyAttestation: boolean("honesty_attestation").notNull().default(false),
+  noOutingAttestation: boolean("no_outing_attestation").notNull().default(false),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const insertConstellationContactRequestSchema = createInsertSchema(constellationContactRequests).omit({
+  id: true,
+  requesterToken: true,
+  status: true,
+  createdAt: true,
+});
+
+export type InsertConstellationContactRequest = z.infer<typeof insertConstellationContactRequestSchema>;
+export type ConstellationContactRequest = typeof constellationContactRequests.$inferSelect;
+

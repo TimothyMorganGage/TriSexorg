@@ -324,11 +324,14 @@ export default function GoodPeople() {
             <strong>This surface is monogamy-tuned by design.</strong> Good People uses
             closed-dyad assumptions throughout: 2-year age-range caps, monthly STI
             screening defaults, no metamour disclosure tooling, and progressive-stage
-            barrier work optimised for two people. A sibling surface for polyamorous,
-            open, swinging, monogamish, and relationship-anarchy members previously
-            existed but has been removed; the platform does not currently offer a
-            non-monogamy matchmaking surface, and this page makes no claim to serve
-            those structures well. See{" "}
+            barrier work optimised for two people. Polyamorous, open, swinging,
+            monogamish, and relationship-anarchy members are served by a sibling
+            surface,{" "}
+            <a href="/constellation-matchmaking" className="underline font-semibold" data-testid="link-constellation-from-goodpeople">
+              Constellation Matchmaking
+            </a>
+            , with the infrastructure those structures actually require (shorter
+            testing cadences, metamour disclosure, per-match consent gates). See{" "}
             <a href="/monogamy-economics" className="underline">/monogamy-economics</a>{" "}
             for the operational-scope reasoning.
           </AlertDescription>

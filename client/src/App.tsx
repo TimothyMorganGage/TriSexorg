@@ -67,6 +67,7 @@ const Wiki = lazy(() => import("@/pages/wiki"));
 const InclusiveOrdering = lazy(() => import("@/pages/inclusive-ordering"));
 const ForkTheFramework = lazy(() => import("@/pages/fork-the-framework"));
 const OurPlans = lazy(() => import("@/pages/our-plans"));
+const ConstellationMatchmaking = lazy(() => import("@/pages/constellation-matchmaking"));
 const InclusiveOrderingRegistry = lazy(() => import("@/pages/inclusive-ordering-registry"));
 const Manufacturing = lazy(() => import("@/pages/manufacturing"));
 const PeerMentor = lazy(() => import("@/pages/peer-mentor"));
@@ -141,6 +142,7 @@ function Router() {
             <Route path="/inclusive-ordering" component={InclusiveOrdering} />
             <Route path="/fork-the-framework" component={ForkTheFramework} />
             <Route path="/our-plans" component={OurPlans} />
+            <Route path="/constellation-matchmaking" component={ConstellationMatchmaking} />
             <Route path="/inclusive-ordering-registry" component={InclusiveOrderingRegistry} />
             <Route path="/manufacturing" component={Manufacturing} />
             <Route path="/peer-mentor" component={PeerMentor} />

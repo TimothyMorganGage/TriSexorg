@@ -7,6 +7,12 @@ import {
   calendarConnections, scheduledTasks, taskTemplates, savedProductConfigurations,
   forumCategories, forumPosts, forumReplies, forumLikes, forumBookmarks,
   wikiContributions, wikiVotes,
+  constellationProfiles,
+  type ConstellationProfile,
+  type InsertConstellationProfile,
+  constellationContactRequests,
+  type ConstellationContactRequest,
+  type InsertConstellationContactRequest,
   type WikiContribution, type InsertWikiContribution,
   type WikiVote, type InsertWikiVote,
   boundaryCheckConsents, xCoopPricingInterest, metaLensScans,
@@ -257,6 +263,15 @@ export interface IStorage {
   deleteTrisexportSlot(id: number, userId: number): Promise<boolean>;
 
   // Inclusive Ordering framework adopters (self-reported registry)
+  listConstellationProfiles(): Promise<ConstellationProfile[]>;
+  createConstellationProfile(data: InsertConstellationProfile): Promise<ConstellationProfile>;
+  getConstellationProfileById(id: number): Promise<ConstellationProfile | undefined>;
+  getConstellationProfileByManageToken(token: string): Promise<ConstellationProfile | undefined>;
+  createConstellationContactRequest(data: InsertConstellationContactRequest & { requesterToken: string }): Promise<ConstellationContactRequest>;
+  listConstellationContactRequestsForProfile(profileId: number): Promise<ConstellationContactRequest[]>;
+  getConstellationContactRequestById(id: number): Promise<ConstellationContactRequest | undefined>;
+  getConstellationContactRequestByRequesterToken(token: string): Promise<ConstellationContactRequest | undefined>;
+  updateConstellationContactRequestStatus(id: number, status: "accepted" | "declined"): Promise<ConstellationContactRequest | undefined>;
   listInclusiveOrderingAdopters(): Promise<InclusiveOrderingAdopter[]>;
   createInclusiveOrderingAdopter(data: InsertInclusiveOrderingAdopter): Promise<InclusiveOrderingAdopter>;
   countInclusiveOrderingAdopters(): Promise<{ verified: number; pending: number; ourNameForks: number }>;
@@ -3335,6 +3350,57 @@ The /fork-the-framework page documents the public API of the inclusive-ordering 
   async createManufacturingPartner(data: InsertManufacturingPartner): Promise<ManufacturingPartner> {
     const [created] = await db.insert(manufacturingPartners).values(data).returning();
     return created;
+  }
+
+
+  async listConstellationProfiles(): Promise<ConstellationProfile[]> {
+    return await db.select().from(constellationProfiles)
+      .where(eq(constellationProfiles.status, "active"))
+      .orderBy(desc(constellationProfiles.createdAt));
+  }
+
+  async createConstellationProfile(data: InsertConstellationProfile): Promise<ConstellationProfile> {
+    const [created] = await db.insert(constellationProfiles).values(data).returning();
+    return created;
+  }
+
+  async getConstellationProfileById(id: number): Promise<ConstellationProfile | undefined> {
+    const [row] = await db.select().from(constellationProfiles).where(eq(constellationProfiles.id, id));
+    return row;
+  }
+
+  async getConstellationProfileByManageToken(token: string): Promise<ConstellationProfile | undefined> {
+    const [row] = await db.select().from(constellationProfiles).where(eq(constellationProfiles.manageToken, token));
+    return row;
+  }
+
+  async createConstellationContactRequest(data: InsertConstellationContactRequest & { requesterToken: string }): Promise<ConstellationContactRequest> {
+    const [created] = await db.insert(constellationContactRequests).values(data).returning();
+    return created;
+  }
+
+  async listConstellationContactRequestsForProfile(profileId: number): Promise<ConstellationContactRequest[]> {
+    return await db.select().from(constellationContactRequests)
+      .where(eq(constellationContactRequests.targetProfileId, profileId))
+      .orderBy(desc(constellationContactRequests.createdAt));
+  }
+
+  async getConstellationContactRequestById(id: number): Promise<ConstellationContactRequest | undefined> {
+    const [row] = await db.select().from(constellationContactRequests).where(eq(constellationContactRequests.id, id));
+    return row;
+  }
+
+  async getConstellationContactRequestByRequesterToken(token: string): Promise<ConstellationContactRequest | undefined> {
+    const [row] = await db.select().from(constellationContactRequests).where(eq(constellationContactRequests.requesterToken, token));
+    return row;
+  }
+
+  async updateConstellationContactRequestStatus(id: number, status: "accepted" | "declined"): Promise<ConstellationContactRequest | undefined> {
+    const [row] = await db.update(constellationContactRequests)
+      .set({ status })
+      .where(eq(constellationContactRequests.id, id))
+      .returning();
+    return row;
   }
 
 }
