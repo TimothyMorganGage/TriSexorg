@@ -1193,6 +1193,15 @@ export const partnerConnections = pgTable("partner_connections", {
   connectionType: text("connection_type").notNull(), // 'sexual_partner', 'testing_partner', 'emergency_contact'
   relationshipStatus: text("relationship_status"), // 'current', 'past', 'casual', 'regular'
   mutualConsent: boolean("mutual_consent").default(false),
+  // --- Shared Health Circle fields (private per-contact health logistics) ---
+  // User-chosen label in their own words ("spouse", "partner", "J."). No
+  // relationship-structure taxonomy by design.
+  contactLabel: text("contact_label"),
+  contactNickname: text("contact_nickname"),
+  contactKind: text("contact_kind"), // 'ongoing' | 'occasional' | 'past'
+  barrierPosture: text("barrier_posture"), // 'always' | 'sometimes' | 'fluid-bonded' | 'prefer-not-to-say'
+  cadenceCommitment: text("cadence_commitment"), // 'every-3-months' | 'every-6-months' | 'every-12-months' | 'after-new-contact'
+  lastTestDate: timestamp("last_test_date"), // self-reported last shared/verified test date
   notificationPreferences: jsonb("notification_preferences").default({}),
   lastContact: timestamp("last_contact"),
   connectionStrength: integer("connection_strength").default(1), // 1-5 scale for contact frequency/intimacy
@@ -1329,6 +1338,24 @@ export const insertPartnerConnectionSchema = createInsertSchema(partnerConnectio
   createdAt: true,
   updatedAt: true,
 });
+
+// --- Shared Health Circle (private per-contact testing cadence) ---
+export const contactKindEnum = z.enum(["ongoing", "occasional", "past"]);
+export const barrierPostureEnum = z.enum(["always", "sometimes", "fluid-bonded", "prefer-not-to-say"]);
+export const cadenceCommitmentEnum = z.enum(["every-3-months", "every-6-months", "every-12-months", "after-new-contact"]);
+export const circleContactStatusEnum = z.enum(["current", "due-soon", "overdue", "unknown"]);
+
+export const healthCircleContactInputSchema = z.object({
+  contactLabel: z.string().trim().min(1, "A label is required").max(100),
+  contactNickname: z.string().trim().max(100).optional().nullable(),
+  contactKind: contactKindEnum,
+  barrierPosture: barrierPostureEnum.optional().nullable(),
+  cadenceCommitment: cadenceCommitmentEnum.optional().nullable(),
+  lastTestDate: z.coerce.date().optional().nullable(),
+});
+
+export type HealthCircleContactInput = z.infer<typeof healthCircleContactInputSchema>;
+export type CircleContactStatus = z.infer<typeof circleContactStatusEnum>;
 
 export const insertStiTrackingEventSchema = createInsertSchema(stiTrackingEvents).omit({
   id: true,

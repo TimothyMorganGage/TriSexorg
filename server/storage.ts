@@ -368,6 +368,11 @@ export interface IStorage {
   generateWebSocketToken(userId: number, sessionId: number): Promise<string>;
   validateWebSocketToken(token: string): Promise<any>;
 
+  // Shared Health Circle methods (implicit one circle per user)
+  getOrCreateHealthCircle(userId: number): Promise<any>;
+  getHealthCircleContacts(userId: number): Promise<any[]>;
+  getPartnerConnection(id: number): Promise<any | undefined>;
+
   // Partner Network methods
   getPartnerNetworks(userId: number): Promise<any[]>;
   createPartnerNetwork(network: any): Promise<any>;
@@ -382,6 +387,7 @@ export interface IStorage {
 
   // 4D STI Tracking methods
   getStiTrackingEvents(userId: number, filters?: any): Promise<any[]>;
+  getStiTrackingEvent(id: number): Promise<any | undefined>;
   createStiTrackingEvent(event: any): Promise<any>;
   updateStiTrackingEvent(id: number, event: any): Promise<any>;
   generatePartnerNotifications(eventId: number): Promise<any[]>;
@@ -458,6 +464,13 @@ export class MemStorage implements IStorage {
   private currentRestockOrderId: number;
   private savedProductConfigurations: Map<number, SavedProductConfiguration>;
   private currentSavedConfigId: number;
+  // Shared Health Circle / partner-network state (in-memory, wiped on restart)
+  private partnerNetworksMap: Map<number, any>;
+  private partnerConnectionsMap: Map<number, any>;
+  private stiTrackingEventsMap: Map<number, any>;
+  private currentPartnerNetworkId: number;
+  private currentPartnerConnectionId: number;
+  private currentStiEventId: number;
 
   constructor() {
     this.products = new Map();
@@ -504,6 +517,12 @@ export class MemStorage implements IStorage {
     this.currentRestockOrderId = 1;
     this.savedProductConfigurations = new Map();
     this.currentSavedConfigId = 1;
+    this.partnerNetworksMap = new Map();
+    this.partnerConnectionsMap = new Map();
+    this.stiTrackingEventsMap = new Map();
+    this.currentPartnerNetworkId = 1;
+    this.currentPartnerConnectionId = 1;
+    this.currentStiEventId = 1;
 
     this.initializeData();
   }
@@ -2393,146 +2412,168 @@ The /fork-the-framework page documents the public API of the inclusive-ordering 
     return `[AUDIO] Spoken message: "${text}" - Duration: ${Math.ceil(text.length / 10)} seconds`;
   }
 
+  // Shared Health Circle methods (implicit one circle per user)
+  async getOrCreateHealthCircle(userId: number): Promise<any> {
+    const existing = Array.from(this.partnerNetworksMap.values()).find(
+      (n) => n.userId === userId && n.isActive,
+    );
+    if (existing) return existing;
+    return this.createPartnerNetwork({
+      userId,
+      networkName: "My Health Circle",
+      isActive: true,
+      privacyLevel: "private",
+      consentGiven: true,
+      dataRetentionDays: 90,
+    });
+  }
+
+  async getHealthCircleContacts(userId: number): Promise<any[]> {
+    const circle = await this.getOrCreateHealthCircle(userId);
+    return this.getPartnerConnections(circle.id);
+  }
+
+  async getPartnerConnection(id: number): Promise<any | undefined> {
+    return this.partnerConnectionsMap.get(id);
+  }
+
   // Partner Network methods
   async getPartnerNetworks(userId: number): Promise<any[]> {
-    return [
-      {
-        id: 1,
-        userId,
-        networkName: "Primary Network",
-        isActive: true,
-        privacyLevel: "private",
-        consentGiven: true,
-        dataRetentionDays: 90,
-        emergencyContactId: null,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      }
-    ];
+    return Array.from(this.partnerNetworksMap.values()).filter((n) => n.userId === userId);
   }
 
   async createPartnerNetwork(network: any): Promise<any> {
-    return { id: Date.now(), ...network, createdAt: new Date(), updatedAt: new Date() };
+    const id = this.currentPartnerNetworkId++;
+    const record = {
+      isActive: true,
+      privacyLevel: "private",
+      consentGiven: false,
+      dataRetentionDays: 90,
+      emergencyContactId: null,
+      networkName: null,
+      ...network,
+      id,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+    this.partnerNetworksMap.set(id, record);
+    return record;
   }
 
   async updatePartnerNetwork(id: number, network: any): Promise<any> {
-    return { id, ...network, updatedAt: new Date() };
+    const existing = this.partnerNetworksMap.get(id);
+    if (!existing) return undefined;
+    const updated = { ...existing, ...network, id, updatedAt: new Date() };
+    this.partnerNetworksMap.set(id, updated);
+    return updated;
   }
 
   async deletePartnerNetwork(id: number): Promise<boolean> {
-    return true;
+    return this.partnerNetworksMap.delete(id);
   }
 
   // Partner Connection methods
   async getPartnerConnections(networkId: number): Promise<any[]> {
-    return [
-      {
-        id: 1,
-        networkId,
-        partnerUserId: 2,
-        partnerAnonymousId: null,
-        connectionType: "sexual_partner",
-        relationshipStatus: "current",
-        mutualConsent: true,
-        notificationPreferences: { 
-          stiAlerts: true, 
-          testReminders: true, 
-          emergencyNotifications: true 
-        },
-        lastContact: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
-        connectionStrength: 4,
-        isBlocked: false,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
-        id: 2,
-        networkId,
-        partnerUserId: null,
-        partnerAnonymousId: "anon_partner_xyz",
-        connectionType: "casual",
-        relationshipStatus: "past",
-        mutualConsent: true,
-        notificationPreferences: { 
-          stiAlerts: true, 
-          testReminders: false, 
-          emergencyNotifications: true 
-        },
-        lastContact: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000),
-        connectionStrength: 2,
-        isBlocked: false,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      }
-    ];
+    return Array.from(this.partnerConnectionsMap.values()).filter(
+      (c) => c.networkId === networkId,
+    );
   }
 
   async createPartnerConnection(connection: any): Promise<any> {
-    return { id: Date.now(), ...connection, createdAt: new Date(), updatedAt: new Date() };
+    const id = this.currentPartnerConnectionId++;
+    const record = {
+      partnerUserId: null,
+      partnerAnonymousId: null,
+      relationshipStatus: null,
+      mutualConsent: false,
+      notificationPreferences: {},
+      lastContact: null,
+      connectionStrength: 1,
+      isBlocked: false,
+      contactLabel: null,
+      contactNickname: null,
+      contactKind: null,
+      barrierPosture: null,
+      cadenceCommitment: null,
+      lastTestDate: null,
+      ...connection,
+      id,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+    this.partnerConnectionsMap.set(id, record);
+    return record;
   }
 
   async updatePartnerConnection(id: number, connection: any): Promise<any> {
-    return { id, ...connection, updatedAt: new Date() };
+    const existing = this.partnerConnectionsMap.get(id);
+    if (!existing) return undefined;
+    const updated = { ...existing, ...connection, id, updatedAt: new Date() };
+    this.partnerConnectionsMap.set(id, updated);
+    return updated;
   }
 
   async removePartnerConnection(id: number): Promise<boolean> {
-    return true;
+    return this.partnerConnectionsMap.delete(id);
   }
 
   // 4D STI Tracking methods
   async getStiTrackingEvents(userId: number, filters?: any): Promise<any[]> {
-    return [
-      {
-        id: 1,
-        userId,
-        networkId: 1,
-        eventType: "test_result",
-        stiType: "chlamydia",
-        testResult: "negative",
-        severityLevel: null,
-        symptomsReported: [],
-        treatmentProtocol: null,
-        testingLocation: "Health Center Downtown",
-        geographicArea: "Downtown District",
-        exposureTimeframe: {},
-        partnerNotificationStatus: "not_applicable",
-        followUpRequired: false,
-        followUpDate: null,
-        isAnonymized: false,
-        publicHealthReported: false,
-        eventDate: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000),
-        createdAt: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000),
-      },
-      {
-        id: 2,
-        userId,
-        networkId: 1,
-        eventType: "test_result",
-        stiType: "gonorrhea",
-        testResult: "negative",
-        severityLevel: null,
-        symptomsReported: [],
-        treatmentProtocol: null,
-        testingLocation: "Health Center Downtown",
-        geographicArea: "Downtown District",
-        exposureTimeframe: {},
-        partnerNotificationStatus: "not_applicable",
-        followUpRequired: false,
-        followUpDate: null,
-        isAnonymized: false,
-        publicHealthReported: false,
-        eventDate: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000),
-        createdAt: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000),
-      }
-    ];
+    let events = Array.from(this.stiTrackingEventsMap.values()).filter(
+      (e) => e.userId === userId,
+    );
+    if (filters?.stiType) {
+      events = events.filter((e) => e.stiType === filters.stiType);
+    }
+    if (filters?.startDate) {
+      const start = new Date(filters.startDate);
+      events = events.filter((e) => new Date(e.eventDate) >= start);
+    }
+    if (filters?.endDate) {
+      const end = new Date(filters.endDate);
+      events = events.filter((e) => new Date(e.eventDate) <= end);
+    }
+    return events.sort(
+      (a, b) => new Date(b.eventDate).getTime() - new Date(a.eventDate).getTime(),
+    );
+  }
+
+  async getStiTrackingEvent(id: number): Promise<any | undefined> {
+    return this.stiTrackingEventsMap.get(id);
   }
 
   async createStiTrackingEvent(event: any): Promise<any> {
-    return { id: Date.now(), ...event, createdAt: new Date() };
+    const id = this.currentStiEventId++;
+    const record = {
+      networkId: null,
+      stiType: null,
+      testResult: null,
+      severityLevel: null,
+      symptomsReported: [],
+      treatmentProtocol: null,
+      testingLocation: null,
+      geographicArea: null,
+      exposureTimeframe: {},
+      partnerNotificationStatus: "pending",
+      followUpRequired: false,
+      followUpDate: null,
+      isAnonymized: false,
+      publicHealthReported: false,
+      ...event,
+      eventDate: event.eventDate ? new Date(event.eventDate) : new Date(),
+      id,
+      createdAt: new Date(),
+    };
+    this.stiTrackingEventsMap.set(id, record);
+    return record;
   }
 
   async updateStiTrackingEvent(id: number, event: any): Promise<any> {
-    return { id, ...event, updatedAt: new Date() };
+    const existing = this.stiTrackingEventsMap.get(id);
+    if (!existing) return undefined;
+    const updated = { ...existing, ...event, id, updatedAt: new Date() };
+    this.stiTrackingEventsMap.set(id, updated);
+    return updated;
   }
 
   async generatePartnerNotifications(eventId: number): Promise<any[]> {

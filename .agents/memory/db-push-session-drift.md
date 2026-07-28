@@ -27,3 +27,5 @@ the create/rename prompts are answered "create".
 db:push through a pty helper that sends `\r` to each prompt. Verify with
 `psql "$DATABASE_URL" -c "\d <table>"` and confirm `SELECT count(*) FROM session;`
 is unchanged (should stay non-zero — active logins).
+
+**Update (2026-07-28):** The archived `polyglamorous_*` tables are no longer declared in schema.ts, so `db:push` now prompts to DROP them (they still hold data; removal is a separate task). Until that task lands, apply additive schema changes via direct `ALTER TABLE ... ADD COLUMN IF NOT EXISTS` SQL instead of pushing, or the push will demand a data-loss confirmation.

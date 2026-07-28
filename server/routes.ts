@@ -11,7 +11,8 @@ import { storage } from "./storage";
 import { 
   insertUserSchema, insertProductConfigurationSchema, insertOrderSchema,
   insertEducationalContentSchema, insertPartnershipRequestSchema,
-  insertSavedProductConfigurationSchema
+  insertSavedProductConfigurationSchema,
+  healthCircleContactInputSchema
 } from "@shared/schema";
 import { z } from "zod";
 import { genealogyService, RelationshipUtils } from "./genealogy";
@@ -1434,9 +1435,9 @@ END:VEVENT
   });
 
   // Partner Network routes
-  app.get("/api/partner-networks", async (req, res) => {
+  app.get("/api/partner-networks", requireAuth, async (req, res) => {
     try {
-      const userId = 1;
+      const userId = req.session.userId!;
       const networks = await storage.getPartnerNetworks(userId);
       res.json(networks);
     } catch (error) {
@@ -1444,9 +1445,9 @@ END:VEVENT
     }
   });
 
-  app.post("/api/partner-networks", async (req, res) => {
+  app.post("/api/partner-networks", requireAuth, async (req, res) => {
     try {
-      const userId = 1;
+      const userId = req.session.userId!;
       const networkData = { ...req.body, userId };
       const network = await storage.createPartnerNetwork(networkData);
       res.json(network);
@@ -1455,9 +1456,15 @@ END:VEVENT
     }
   });
 
-  app.put("/api/partner-networks/:id", async (req, res) => {
+  app.put("/api/partner-networks/:id", requireAuth, async (req, res) => {
     try {
       const { id } = req.params;
+      const existing = (await storage.getPartnerNetworks(req.session.userId!)).find(
+        (n: any) => n.id === parseInt(id),
+      );
+      if (!existing) {
+        return res.status(404).json({ message: "Network not found" });
+      }
       const network = await storage.updatePartnerNetwork(parseInt(id), req.body);
       res.json(network);
     } catch (error) {
@@ -1466,20 +1473,32 @@ END:VEVENT
   });
 
   // Partner Connection routes
-  app.get("/api/partner-networks/:networkId/connections", async (req, res) => {
+  app.get("/api/partner-networks/:networkId/connections", requireAuth, async (req, res) => {
     try {
-      const { networkId } = req.params;
-      const connections = await storage.getPartnerConnections(parseInt(networkId));
+      const networkId = parseInt(req.params.networkId);
+      const owned = (await storage.getPartnerNetworks(req.session.userId!)).some(
+        (n: any) => n.id === networkId,
+      );
+      if (!owned) {
+        return res.status(404).json({ message: "Network not found" });
+      }
+      const connections = await storage.getPartnerConnections(networkId);
       res.json(connections);
     } catch (error) {
       res.status(500).json({ message: "Failed to fetch partner connections" });
     }
   });
 
-  app.post("/api/partner-networks/:networkId/connections", async (req, res) => {
+  app.post("/api/partner-networks/:networkId/connections", requireAuth, async (req, res) => {
     try {
-      const { networkId } = req.params;
-      const connectionData = { ...req.body, networkId: parseInt(networkId) };
+      const networkId = parseInt(req.params.networkId);
+      const owned = (await storage.getPartnerNetworks(req.session.userId!)).some(
+        (n: any) => n.id === networkId,
+      );
+      if (!owned) {
+        return res.status(404).json({ message: "Network not found" });
+      }
+      const connectionData = { ...req.body, networkId };
       const connection = await storage.createPartnerConnection(connectionData);
       res.json(connection);
     } catch (error) {
@@ -1487,10 +1506,140 @@ END:VEVENT
     }
   });
 
-  // 4D STI Tracking routes
-  app.get("/api/sti-tracking", async (req, res) => {
+  // ---------------------------------------------------------------------
+  // Shared Health Circle — private per-contact STI testing cadence.
+  // One implicit circle per user. Nothing here is ever listed, searchable,
+  // or visible to any other member; every route is scoped to the signed-in
+  // owner. Account linking requires mutual consent (mutualConsent flag).
+  // ---------------------------------------------------------------------
+
+  // Derive per-contact testing status: current / due-soon / overdue / unknown
+  function deriveContactStatus(contact: any, latestTestEventDate: Date | null, contacts: any[]) {
+    const cadenceMonths: Record<string, number> = {
+      "every-3-months": 3,
+      "every-6-months": 6,
+      "every-12-months": 12,
+    };
+    // Effective last test = most recent of the self-reported per-contact date
+    // and the user's latest recorded test event (a new test event updates
+    // recency across all contacts at once).
+    const dates = [contact.lastTestDate, latestTestEventDate]
+      .filter(Boolean)
+      .map((d: any) => new Date(d));
+    const lastTest = dates.length
+      ? new Date(Math.max(...dates.map((d) => d.getTime())))
+      : null;
+
+    if (!contact.cadenceCommitment || !lastTest) {
+      return { status: "unknown" as const, nextTestDue: null, effectiveLastTestDate: lastTest };
+    }
+
+    if (contact.cadenceCommitment === "after-new-contact") {
+      // Due when a contact was added to the circle after the last test.
+      const newerContact = contacts.some(
+        (c) => c.id !== contact.id && new Date(c.createdAt) > lastTest,
+      );
+      return {
+        status: newerContact ? ("overdue" as const) : ("current" as const),
+        nextTestDue: null,
+        effectiveLastTestDate: lastTest,
+      };
+    }
+
+    const months = cadenceMonths[contact.cadenceCommitment];
+    if (!months) {
+      return { status: "unknown" as const, nextTestDue: null, effectiveLastTestDate: lastTest };
+    }
+    const due = new Date(lastTest);
+    due.setMonth(due.getMonth() + months);
+    const now = new Date();
+    const soonThreshold = new Date(now);
+    soonThreshold.setDate(soonThreshold.getDate() + 30);
+    const status = now > due ? "overdue" : due <= soonThreshold ? "due-soon" : "current";
+    return { status, nextTestDue: due, effectiveLastTestDate: lastTest };
+  }
+
+  // Circle view: implicit circle + contacts with derived testing status
+  app.get("/api/health-circle", requireAuth, async (req, res) => {
     try {
-      const userId = 1;
+      const userId = req.session.userId!;
+      const circle = await storage.getOrCreateHealthCircle(userId);
+      const contacts = await storage.getPartnerConnections(circle.id);
+      const events = await storage.getStiTrackingEvents(userId, {});
+      const latestTestEvent = events.find(
+        (e: any) => e.eventType === "test_result" && e.testResult !== "pending",
+      );
+      const latestTestEventDate = latestTestEvent ? new Date(latestTestEvent.eventDate) : null;
+      const enriched = contacts.map((c: any) => ({
+        ...c,
+        ...deriveContactStatus(c, latestTestEventDate, contacts),
+      }));
+      res.json({ circle, contacts: enriched });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch health circle" });
+    }
+  });
+
+  // Add a contact to the circle (user-entered record, not a linked account)
+  app.post("/api/health-circle/contacts", requireAuth, async (req, res) => {
+    try {
+      const userId = req.session.userId!;
+      const data = healthCircleContactInputSchema.parse(req.body);
+      const circle = await storage.getOrCreateHealthCircle(userId);
+      const contact = await storage.createPartnerConnection({
+        networkId: circle.id,
+        connectionType: "sexual_partner",
+        relationshipStatus: data.contactKind, // keep legacy field in sync
+        mutualConsent: false,
+        ...data,
+      });
+      res.json(contact);
+    } catch (error) {
+      res.status(400).json({ message: error instanceof Error ? error.message : "Failed to add contact" });
+    }
+  });
+
+  // Update a contact (label, kind, barrier posture, cadence, last test date)
+  app.patch("/api/health-circle/contacts/:id", requireAuth, async (req, res) => {
+    try {
+      const userId = req.session.userId!;
+      const id = parseInt(req.params.id);
+      const circle = await storage.getOrCreateHealthCircle(userId);
+      const existing = await storage.getPartnerConnection(id);
+      if (!existing || existing.networkId !== circle.id) {
+        return res.status(404).json({ message: "Contact not found" });
+      }
+      const data = healthCircleContactInputSchema.partial().parse(req.body);
+      const updates: any = { ...data };
+      if (data.contactKind) updates.relationshipStatus = data.contactKind;
+      const contact = await storage.updatePartnerConnection(id, updates);
+      res.json(contact);
+    } catch (error) {
+      res.status(400).json({ message: error instanceof Error ? error.message : "Failed to update contact" });
+    }
+  });
+
+  // Remove a contact from the circle
+  app.delete("/api/health-circle/contacts/:id", requireAuth, async (req, res) => {
+    try {
+      const userId = req.session.userId!;
+      const id = parseInt(req.params.id);
+      const circle = await storage.getOrCreateHealthCircle(userId);
+      const existing = await storage.getPartnerConnection(id);
+      if (!existing || existing.networkId !== circle.id) {
+        return res.status(404).json({ message: "Contact not found" });
+      }
+      await storage.removePartnerConnection(id);
+      res.json({ message: "Contact removed" });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to remove contact" });
+    }
+  });
+
+  // 4D STI Tracking routes
+  app.get("/api/sti-tracking", requireAuth, async (req, res) => {
+    try {
+      const userId = req.session.userId!;
       const { stiType, startDate, endDate } = req.query;
       
       const events = await storage.getStiTrackingEvents(userId, {
@@ -1504,9 +1653,9 @@ END:VEVENT
     }
   });
 
-  app.post("/api/sti-tracking", async (req, res) => {
+  app.post("/api/sti-tracking", requireAuth, async (req, res) => {
     try {
-      const userId = 1;
+      const userId = req.session.userId!;
       const eventData = { ...req.body, userId };
       const event = await storage.createStiTrackingEvent(eventData);
       
@@ -1521,9 +1670,49 @@ END:VEVENT
     }
   });
 
-  app.get("/api/partner-networks/:networkId/exposure-analysis/:stiType", async (req, res) => {
+  // Explicit per-event sharing: results are NEVER shared automatically.
+  // The owner explicitly shares one event with one mutually-consented,
+  // account-linked contact in their own circle.
+  app.post("/api/sti-tracking/:id/share", requireAuth, async (req, res) => {
+    try {
+      const userId = req.session.userId!;
+      const eventId = parseInt(req.params.id);
+      const { contactId } = z.object({ contactId: z.number().int() }).parse(req.body);
+
+      const event = await storage.getStiTrackingEvent(eventId);
+      if (!event || event.userId !== userId) {
+        return res.status(404).json({ message: "Event not found" });
+      }
+      const circle = await storage.getOrCreateHealthCircle(userId);
+      const contact = await storage.getPartnerConnection(contactId);
+      if (!contact || contact.networkId !== circle.id) {
+        return res.status(404).json({ message: "Contact not found" });
+      }
+      if (!contact.mutualConsent || !contact.partnerUserId) {
+        return res.status(403).json({
+          message: "Results can only be shared with a contact linked to an account with mutual consent",
+        });
+      }
+      const updated = await storage.updateStiTrackingEvent(eventId, {
+        partnerNotificationStatus: "notified",
+      });
+      res.json(updated);
+    } catch (error) {
+      res.status(400).json({ message: error instanceof Error ? error.message : "Failed to share event" });
+    }
+  });
+
+  // Owner check shared by every /api/partner-networks/:networkId/* route
+  async function userOwnsNetwork(userId: number, networkId: number): Promise<boolean> {
+    return (await storage.getPartnerNetworks(userId)).some((n: any) => n.id === networkId);
+  }
+
+  app.get("/api/partner-networks/:networkId/exposure-analysis/:stiType", requireAuth, async (req, res) => {
     try {
       const { networkId, stiType } = req.params;
+      if (!(await userOwnsNetwork(req.session.userId!, parseInt(networkId)))) {
+        return res.status(404).json({ message: "Network not found" });
+      }
       const analysis = await storage.getNetworkExposureAnalysis(parseInt(networkId), stiType);
       res.json(analysis);
     } catch (error) {
@@ -1563,9 +1752,12 @@ END:VEVENT
     }
   });
 
-  app.get("/api/partner-networks/:networkId/compatible-products", async (req, res) => {
+  app.get("/api/partner-networks/:networkId/compatible-products", requireAuth, async (req, res) => {
     try {
       const { networkId } = req.params;
+      if (!(await userOwnsNetwork(req.session.userId!, parseInt(networkId)))) {
+        return res.status(404).json({ message: "Network not found" });
+      }
       const products = await storage.getPartnerCompatibleProducts(parseInt(networkId));
       res.json(products);
     } catch (error) {
@@ -1635,9 +1827,12 @@ END:VEVENT
     }
   });
 
-  app.get("/api/partner-networks/:networkId/effectiveness-analysis", async (req, res) => {
+  app.get("/api/partner-networks/:networkId/effectiveness-analysis", requireAuth, async (req, res) => {
     try {
       const { networkId } = req.params;
+      if (!(await userOwnsNetwork(req.session.userId!, parseInt(networkId)))) {
+        return res.status(404).json({ message: "Network not found" });
+      }
       const analysis = await storage.getNetworkEffectivenessAnalysis(parseInt(networkId));
       res.json(analysis);
     } catch (error) {
@@ -1646,9 +1841,9 @@ END:VEVENT
   });
 
   // Partner Notification routes
-  app.get("/api/partner-notifications", async (req, res) => {
+  app.get("/api/partner-notifications", requireAuth, async (req, res) => {
     try {
-      const userId = 1;
+      const userId = req.session.userId!;
       const notifications = await storage.getPartnerNotifications(userId);
       res.json(notifications);
     } catch (error) {

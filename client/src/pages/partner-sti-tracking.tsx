@@ -44,8 +44,46 @@ import { useToast } from "@/hooks/use-toast";
 import { BetaDisclaimer } from "@/components/BetaDisclaimer";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
+const KIND_LABELS: Record<string, string> = {
+  ongoing: "Ongoing",
+  occasional: "Occasional",
+  past: "Past",
+};
+
+const BARRIER_LABELS: Record<string, string> = {
+  always: "Barriers: always",
+  sometimes: "Barriers: sometimes",
+  "fluid-bonded": "Fluid-bonded",
+  "prefer-not-to-say": "Barriers: not shared",
+};
+
+const CADENCE_LABELS: Record<string, string> = {
+  "every-3-months": "Tests every 3 months",
+  "every-6-months": "Tests every 6 months",
+  "every-12-months": "Tests every 12 months",
+  "after-new-contact": "Tests after a new contact",
+};
+
+const STATUS_META: Record<string, { label: string; className: string }> = {
+  current: { label: "Current", className: "bg-green-100 text-green-800 dark:bg-green-900/50 dark:text-green-200" },
+  "due-soon": { label: "Due soon", className: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/50 dark:text-yellow-200" },
+  overdue: { label: "Overdue", className: "bg-red-100 text-red-800 dark:bg-red-900/50 dark:text-red-200" },
+  unknown: { label: "Unknown", className: "bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300" },
+};
+
+const EMPTY_CONTACT_FORM = {
+  contactLabel: "",
+  contactNickname: "",
+  contactKind: "ongoing",
+  barrierPosture: "",
+  cadenceCommitment: "",
+  lastTestDate: "",
+};
+
 export default function PartnerSTITracking() {
-  const [activeTab, setActiveTab] = useState("networks");
+  const [activeTab, setActiveTab] = useState("health-circle");
+  const [contactForm, setContactForm] = useState({ ...EMPTY_CONTACT_FORM });
+  const [editingContactId, setEditingContactId] = useState<number | null>(null);
   const [selectedNetwork, setSelectedNetwork] = useState<any>(null);
   const [, setSelectedCustomization] = useState<any>(null);
   
@@ -73,6 +111,59 @@ export default function PartnerSTITracking() {
 
   const { toast } = useToast();
   const queryClient = useQueryClient();
+
+  // Fetch the private health circle (implicit, one per user)
+  const { data: healthCircle, isLoading: circleLoading } = useQuery<{ circle: any; contacts: any[] }>({
+    queryKey: ["/api/health-circle"],
+    enabled: activeTab === "health-circle",
+  });
+
+  const saveContact = useMutation({
+    mutationFn: async () => {
+      const payload: any = {
+        contactLabel: contactForm.contactLabel,
+        contactNickname: contactForm.contactNickname || null,
+        contactKind: contactForm.contactKind,
+        barrierPosture: contactForm.barrierPosture || null,
+        cadenceCommitment: contactForm.cadenceCommitment || null,
+        lastTestDate: contactForm.lastTestDate || null,
+      };
+      const url = editingContactId
+        ? `/api/health-circle/contacts/${editingContactId}`
+        : "/api/health-circle/contacts";
+      const response = await fetch(url, {
+        method: editingContactId ? "PATCH" : "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (!response.ok) {
+        const err = await response.json().catch(() => ({}));
+        throw new Error(err.message || "Failed to save contact");
+      }
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/health-circle"] });
+      setContactForm({ ...EMPTY_CONTACT_FORM });
+      setEditingContactId(null);
+      toast({ title: editingContactId ? "Contact updated" : "Contact added" });
+    },
+    onError: (error: Error) => {
+      toast({ title: "Could not save contact", description: error.message, variant: "destructive" });
+    },
+  });
+
+  const removeContact = useMutation({
+    mutationFn: async (id: number) => {
+      const response = await fetch(`/api/health-circle/contacts/${id}`, { method: "DELETE" });
+      if (!response.ok) throw new Error("Failed to remove contact");
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/health-circle"] });
+      toast({ title: "Contact removed" });
+    },
+  });
 
   // Fetch partner networks
   const { data: networks = [], isLoading: networksLoading } = useQuery<any[]>({
@@ -210,13 +301,239 @@ export default function PartnerSTITracking() {
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-5">
+          <TabsList className="grid w-full grid-cols-6">
+            <TabsTrigger value="health-circle">Health Circle</TabsTrigger>
             <TabsTrigger value="networks">Partner Networks</TabsTrigger>
             <TabsTrigger value="sti-tracking">4D STI Tracking</TabsTrigger>
             <TabsTrigger value="product-customization">Product Customization</TabsTrigger>
             <TabsTrigger value="natural-senses">Natural Senses</TabsTrigger>
             <TabsTrigger value="notifications">Notifications</TabsTrigger>
           </TabsList>
+
+          {/* Shared Health Circle Tab */}
+          <TabsContent value="health-circle" className="space-y-6">
+            <Alert>
+              <Lock className="h-4 w-4" />
+              <AlertDescription>
+                Your health circle is private. Contacts are records you enter yourself — nothing here is
+                listed, searchable, or visible to anyone else, and results are only ever shared when you
+                explicitly choose to share a specific one.
+              </AlertDescription>
+            </Alert>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Circle contacts with per-contact testing status */}
+              <Card data-testid="card-circle-contacts">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Users2 className="h-5 w-5" />
+                    Your Circle
+                  </CardTitle>
+                  <CardDescription>
+                    Per-contact testing cadence and status — current, due soon, overdue, or unknown
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  {circleLoading ? (
+                    <div className="text-center py-4">Loading your circle...</div>
+                  ) : !healthCircle || healthCircle.contacts.length === 0 ? (
+                    <div className="text-center py-8 text-muted-foreground" data-testid="text-empty-circle">
+                      No contacts yet. Add your first contact — a spouse, partner, or close contact — using the form.
+                    </div>
+                  ) : (
+                    healthCircle.contacts.map((contact: any) => {
+                      const meta = STATUS_META[contact.status] || STATUS_META.unknown;
+                      return (
+                        <div key={contact.id} className="border rounded-lg p-3" data-testid={`card-contact-${contact.id}`}>
+                          <div className="flex justify-between items-start gap-2">
+                            <div className="min-w-0">
+                              <h4 className="font-medium truncate">
+                                {contact.contactLabel || "Unnamed contact"}
+                                {contact.contactNickname && (
+                                  <span className="text-muted-foreground font-normal"> · {contact.contactNickname}</span>
+                                )}
+                              </h4>
+                              <div className="flex flex-wrap gap-2 mt-2">
+                                <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${meta.className}`} data-testid={`status-contact-${contact.id}`}>
+                                  {meta.label}
+                                </span>
+                                {contact.contactKind && (
+                                  <Badge variant="outline">{KIND_LABELS[contact.contactKind] || contact.contactKind}</Badge>
+                                )}
+                                {contact.barrierPosture && (
+                                  <Badge variant="outline">{BARRIER_LABELS[contact.barrierPosture] || contact.barrierPosture}</Badge>
+                                )}
+                              </div>
+                              <div className="text-xs text-muted-foreground mt-2 space-y-0.5">
+                                {contact.cadenceCommitment && (
+                                  <div>{CADENCE_LABELS[contact.cadenceCommitment] || contact.cadenceCommitment}</div>
+                                )}
+                                <div>
+                                  Last test:{" "}
+                                  {contact.effectiveLastTestDate
+                                    ? format(new Date(contact.effectiveLastTestDate), "MMM d, yyyy")
+                                    : "not recorded"}
+                                </div>
+                                {contact.nextTestDue && (
+                                  <div>Next test due: {format(new Date(contact.nextTestDue), "MMM d, yyyy")}</div>
+                                )}
+                              </div>
+                            </div>
+                            <div className="flex flex-col gap-1 shrink-0">
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                data-testid={`button-edit-contact-${contact.id}`}
+                                onClick={() => {
+                                  setEditingContactId(contact.id);
+                                  setContactForm({
+                                    contactLabel: contact.contactLabel || "",
+                                    contactNickname: contact.contactNickname || "",
+                                    contactKind: contact.contactKind || "ongoing",
+                                    barrierPosture: contact.barrierPosture || "",
+                                    cadenceCommitment: contact.cadenceCommitment || "",
+                                    lastTestDate: contact.lastTestDate
+                                      ? format(new Date(contact.lastTestDate), "yyyy-MM-dd")
+                                      : "",
+                                  });
+                                }}
+                              >
+                                Edit
+                              </Button>
+                              <Button
+                                size="sm"
+                                variant="ghost"
+                                className="text-destructive"
+                                data-testid={`button-remove-contact-${contact.id}`}
+                                onClick={() => removeContact.mutate(contact.id)}
+                              >
+                                Remove
+                              </Button>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })
+                  )}
+                </CardContent>
+              </Card>
+
+              {/* Add / edit contact */}
+              <Card data-testid="card-contact-form">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <UserPlus className="h-5 w-5" />
+                    {editingContactId ? "Edit Contact" : "Add a Contact"}
+                  </CardTitle>
+                  <CardDescription>
+                    Use your own words — "spouse", "partner", "J." No labels are imposed.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  <div className="space-y-2">
+                    <Label>Label</Label>
+                    <Input
+                      data-testid="input-contact-label"
+                      value={contactForm.contactLabel}
+                      onChange={(e) => setContactForm((p) => ({ ...p, contactLabel: e.target.value }))}
+                      placeholder='e.g., "spouse", "partner", "J."'
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Nickname (optional)</Label>
+                    <Input
+                      data-testid="input-contact-nickname"
+                      value={contactForm.contactNickname}
+                      onChange={(e) => setContactForm((p) => ({ ...p, contactNickname: e.target.value }))}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Contact kind</Label>
+                    <Select
+                      value={contactForm.contactKind}
+                      onValueChange={(v) => setContactForm((p) => ({ ...p, contactKind: v }))}
+                    >
+                      <SelectTrigger data-testid="select-contact-kind"><SelectValue /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="ongoing">Ongoing</SelectItem>
+                        <SelectItem value="occasional">Occasional</SelectItem>
+                        <SelectItem value="past">Past</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Barrier posture with this contact</Label>
+                    <Select
+                      value={contactForm.barrierPosture}
+                      onValueChange={(v) => setContactForm((p) => ({ ...p, barrierPosture: v }))}
+                    >
+                      <SelectTrigger data-testid="select-barrier-posture">
+                        <SelectValue placeholder="Select (optional)" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="always">Always</SelectItem>
+                        <SelectItem value="sometimes">Sometimes</SelectItem>
+                        <SelectItem value="fluid-bonded">Fluid-bonded</SelectItem>
+                        <SelectItem value="prefer-not-to-say">Prefer not to say</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Testing cadence commitment</Label>
+                    <Select
+                      value={contactForm.cadenceCommitment}
+                      onValueChange={(v) => setContactForm((p) => ({ ...p, cadenceCommitment: v }))}
+                    >
+                      <SelectTrigger data-testid="select-cadence">
+                        <SelectValue placeholder="Select (optional)" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="every-3-months">Every 3 months</SelectItem>
+                        <SelectItem value="every-6-months">Every 6 months</SelectItem>
+                        <SelectItem value="every-12-months">Every 12 months</SelectItem>
+                        <SelectItem value="after-new-contact">After a new contact</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Last test date (self-reported)</Label>
+                    <Input
+                      type="date"
+                      data-testid="input-last-test-date"
+                      value={contactForm.lastTestDate}
+                      onChange={(e) => setContactForm((p) => ({ ...p, lastTestDate: e.target.value }))}
+                    />
+                  </div>
+                  <div className="flex gap-2">
+                    <Button
+                      className="flex-1"
+                      data-testid="button-save-contact"
+                      disabled={!contactForm.contactLabel.trim() || saveContact.isPending}
+                      onClick={() => saveContact.mutate()}
+                    >
+                      {saveContact.isPending
+                        ? "Saving..."
+                        : editingContactId
+                          ? "Save Changes"
+                          : "Add Contact"}
+                    </Button>
+                    {editingContactId && (
+                      <Button
+                        variant="outline"
+                        data-testid="button-cancel-edit"
+                        onClick={() => {
+                          setEditingContactId(null);
+                          setContactForm({ ...EMPTY_CONTACT_FORM });
+                        }}
+                      >
+                        Cancel
+                      </Button>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </TabsContent>
 
           {/* Partner Networks Tab */}
           <TabsContent value="networks" className="space-y-6">
