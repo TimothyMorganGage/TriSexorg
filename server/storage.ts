@@ -999,6 +999,8 @@ The /fork-the-framework page documents the public API of the inclusive-ordering 
       clinicId: insertOrder.clinicId || null,
       shippingAddress: insertOrder.shippingAddress || null,
       notes: insertOrder.notes || null,
+      brandingPreference: insertOrder.brandingPreference ?? null,
+      multiUseBalance: insertOrder.multiUseBalance ?? null,
       createdAt: now,
       updatedAt: now 
     };
