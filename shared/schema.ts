@@ -1180,6 +1180,7 @@ export const partnerNetworks = pgTable("partner_networks", {
   privacyLevel: text("privacy_level").default("private"), // 'private', 'network_only', 'anonymous_data'
   consentGiven: boolean("consent_given").default(false),
   dataRetentionDays: integer("data_retention_days").default(90), // how long to keep sensitive data
+  remindersEnabled: boolean("reminders_enabled").default(true), // in-app testing-cadence reminders (opt-out)
   emergencyContactId: integer("emergency_contact_id").references(() => users.id),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
@@ -1979,4 +1980,3 @@ export const insertConstellationContactRequestSchema = createInsertSchema(conste
 
 export type InsertConstellationContactRequest = z.infer<typeof insertConstellationContactRequestSchema>;
 export type ConstellationContactRequest = typeof constellationContactRequests.$inferSelect;
-

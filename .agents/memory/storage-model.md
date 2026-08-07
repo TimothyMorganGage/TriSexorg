@@ -4,11 +4,11 @@ description: Why user accounts are DB-backed while the rest of storage is in-mem
 ---
 # Hybrid storage: users in Postgres, everything else in memory
 
-`server/storage.ts` exports `storage = new MemStorage()`. Despite the name, the
-**user-account methods** (`getUser`, `getUserByUsername`, `getUserByEmail`,
-`createUser`, `getUsersByRole`) are intentionally **DB-backed** (Drizzle on the
-`users` table). All other entities (products, orders, forum, etc.) remain
-in-memory and are wiped on restart.
+`server/storage.ts` exports `storage = new MemStorage()`. Despite the name,
+**user accounts, forums, and the health-circle entities (partner networks,
+partner connections, STI tracking events)** are **DB-backed** (Drizzle/Postgres).
+Other entities (products, orders, etc.) remain in-memory and are wiped on
+restart. Partner *notifications* are still in-memory.
 
 **Why:** The user asked to "preserve my account ... with the unified account
 types." MemStorage wiped all accounts on every restart. Rather than rewrite the

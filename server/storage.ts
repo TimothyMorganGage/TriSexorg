@@ -1,4 +1,4 @@
-import { eq, and, or, desc, sql, ilike } from "drizzle-orm";
+import { eq, and, or, desc, sql, ilike, gte, lte, lt } from "drizzle-orm";
 import { db } from "./db";
 import { 
   users, products, productConfigurations, orders, educationalContent, partnershipRequests,
@@ -6,6 +6,7 @@ import {
   moodEntries, wellnessGoals, moodInsights, timeEntries, timeGoals, timeInsights,
   calendarConnections, scheduledTasks, taskTemplates, savedProductConfigurations,
   forumCategories, forumPosts, forumReplies, forumLikes, forumBookmarks,
+  partnerNetworks, partnerConnections, stiTrackingEvents,
   wikiContributions, wikiVotes,
   constellationProfiles,
   type ConstellationProfile,
@@ -425,56 +426,94 @@ export class MemStorage implements IStorage {
   // NOTE: user accounts are persisted in PostgreSQL (see User methods below),
   // not in an in-memory map, so members survive restarts.
   private products: Map<number, Product>;
+
   private productConfigurations: Map<number, ProductConfiguration>;
+
   private orders: Map<number, Order>;
+
   private educationalContent: Map<number, EducationalContent>;
+
   private partnershipRequests: Map<number, PartnershipRequest>;
+
   private financialRecords: Map<number, FinancialRecord>;
+
   private budgetItems: Map<number, BudgetItem>;
+
   private budgetVotes: Map<number, BudgetVote>;
+
   private communityDividends: Map<number, CommunityDividend>;
+
   private moodEntries: Map<number, MoodEntry>;
+
   private wellnessGoals: Map<number, WellnessGoal>;
+
   private moodInsights: Map<number, MoodInsight>;
+
   private timeEntries: Map<number, TimeEntry>;
+
   private timeGoals: Map<number, TimeGoal>;
+
   private timeInsights: Map<number, TimeInsight>;
+
   private calendarConnections: Map<number, CalendarConnection>;
+
   private scheduledTasks: Map<number, ScheduledTask>;
+
   private taskTemplates: Map<number, TaskTemplate>;
+
   private currentProductId: number;
+
   private currentConfigId: number;
+
   private currentOrderId: number;
+
   private currentContentId: number;
+
   private currentRequestId: number;
+
   private currentFinancialRecordId: number;
+
   private currentBudgetItemId: number;
+
   private currentBudgetVoteId: number;
+
   private currentCommunityDividendId: number;
+
   private currentMoodEntryId: number;
+
   private currentWellnessGoalId: number;
+
   private currentMoodInsightId: number;
+
   private currentTimeEntryId: number;
+
   private currentTimeGoalId: number;
+
   private currentTimeInsightId: number;
+
   private currentCalendarConnectionId: number;
+
   private currentScheduledTaskId: number;
+
   private currentTaskTemplateId: number;
+
   private clinicInventory: Map<number, any>;
+
   private stockAlerts: Map<number, any>;
+
   private restockOrders: Map<number, any>;
+
   private currentInventoryId: number;
+
   private currentAlertId: number;
+
   private currentRestockOrderId: number;
+
   private savedProductConfigurations: Map<number, SavedProductConfiguration>;
+
   private currentSavedConfigId: number;
+
   // Shared Health Circle / partner-network state (in-memory, wiped on restart)
-  private partnerNetworksMap: Map<number, any>;
-  private partnerConnectionsMap: Map<number, any>;
-  private stiTrackingEventsMap: Map<number, any>;
-  private currentPartnerNetworkId: number;
-  private currentPartnerConnectionId: number;
-  private currentStiEventId: number;
 
   constructor() {
     this.products = new Map();
@@ -521,12 +560,6 @@ export class MemStorage implements IStorage {
     this.currentRestockOrderId = 1;
     this.savedProductConfigurations = new Map();
     this.currentSavedConfigId = 1;
-    this.partnerNetworksMap = new Map();
-    this.partnerConnectionsMap = new Map();
-    this.stiTrackingEventsMap = new Map();
-    this.currentPartnerNetworkId = 1;
-    this.currentPartnerConnectionId = 1;
-    this.currentStiEventId = 1;
 
     this.initializeData();
   }
@@ -2420,12 +2453,16 @@ The /fork-the-framework page documents the public API of the inclusive-ordering 
 
   // Shared Health Circle methods (implicit one circle per user)
   async getOrCreateHealthCircle(userId: number): Promise<any> {
-    const existing = Array.from(this.partnerNetworksMap.values()).find(
-      (n) => n.userId === userId && n.isActive,
-    );
+    const [existing] = await db
+      .select()
+      .from(partnerNetworks)
+      .where(and(eq(partnerNetworks.userId, userId), eq(partnerNetworks.isActive, true)))
+      .limit(1);
     if (existing) {
       // Older circles predate the reminders flag; default to enabled (opt-out model)
-      if (existing.remindersEnabled === undefined) existing.remindersEnabled = true;
+      if (existing.remindersEnabled === null || existing.remindersEnabled === undefined) {
+        return { ...existing, remindersEnabled: true };
+      }
       return existing;
     }
     return this.createPartnerNetwork({
@@ -2445,166 +2482,156 @@ The /fork-the-framework page documents the public API of the inclusive-ordering 
   }
 
   async getPartnerConnection(id: number): Promise<any | undefined> {
-    return this.partnerConnectionsMap.get(id);
+    const [row] = await db.select().from(partnerConnections).where(eq(partnerConnections.id, id));
+    return row;
   }
 
   async getPartnerNetwork(id: number): Promise<any | undefined> {
-    return this.partnerNetworksMap.get(id);
+    const [row] = await db.select().from(partnerNetworks).where(eq(partnerNetworks.id, id));
+    return row;
   }
 
   // Partner Network methods
   async getPartnerNetworks(userId: number): Promise<any[]> {
-    return Array.from(this.partnerNetworksMap.values()).filter((n) => n.userId === userId);
+    return await db.select().from(partnerNetworks).where(eq(partnerNetworks.userId, userId));
   }
 
   async createPartnerNetwork(network: any): Promise<any> {
-    const id = this.currentPartnerNetworkId++;
-    const record = {
-      isActive: true,
-      privacyLevel: "private",
-      consentGiven: false,
-      dataRetentionDays: 90,
-      emergencyContactId: null,
-      networkName: null,
-      ...network,
-      id,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    };
-    this.partnerNetworksMap.set(id, record);
-    return record;
+    const { id: _id, createdAt: _c, updatedAt: _u, ...data } = network;
+    const [created] = await db.insert(partnerNetworks).values(data).returning();
+    return created;
   }
 
   async updatePartnerNetwork(id: number, network: any): Promise<any> {
-    const existing = this.partnerNetworksMap.get(id);
-    if (!existing) return undefined;
-    const updated = { ...existing, ...network, id, updatedAt: new Date() };
-    this.partnerNetworksMap.set(id, updated);
+    const { id: _id, createdAt: _c, ...data } = network;
+    const [updated] = await db
+      .update(partnerNetworks)
+      .set({ ...data, updatedAt: new Date() })
+      .where(eq(partnerNetworks.id, id))
+      .returning();
     return updated;
   }
 
   async deletePartnerNetwork(id: number): Promise<boolean> {
-    return this.partnerNetworksMap.delete(id);
+    // Remove dependent rows first to satisfy FK constraints
+    await db.delete(partnerConnections).where(eq(partnerConnections.networkId, id));
+    await db
+      .update(stiTrackingEvents)
+      .set({ networkId: null })
+      .where(eq(stiTrackingEvents.networkId, id));
+    const deleted = await db.delete(partnerNetworks).where(eq(partnerNetworks.id, id)).returning();
+    return deleted.length > 0;
   }
 
   // Partner Connection methods
   async getPartnerConnections(networkId: number): Promise<any[]> {
-    return Array.from(this.partnerConnectionsMap.values()).filter(
-      (c) => c.networkId === networkId,
-    );
+    return await db
+      .select()
+      .from(partnerConnections)
+      .where(eq(partnerConnections.networkId, networkId));
   }
 
   async createPartnerConnection(connection: any): Promise<any> {
-    const id = this.currentPartnerConnectionId++;
-    const record = {
-      partnerUserId: null,
-      partnerAnonymousId: null,
-      relationshipStatus: null,
-      mutualConsent: false,
-      notificationPreferences: {},
-      lastContact: null,
-      connectionStrength: 1,
-      isBlocked: false,
-      contactLabel: null,
-      contactNickname: null,
-      contactKind: null,
-      barrierPosture: null,
-      cadenceCommitment: null,
-      lastTestDate: null,
-      linkStatus: "none",
-      invitedUserId: null,
-      invitedAt: null,
-      ...connection,
-      id,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    };
-    this.partnerConnectionsMap.set(id, record);
-    return record;
+    const { id: _id, createdAt: _c, updatedAt: _u, ...data } = this.coerceDates(connection, [
+      "lastTestDate",
+      "lastContact",
+      "invitedAt",
+    ]);
+    const [created] = await db.insert(partnerConnections).values(data).returning();
+    return created;
   }
 
   async updatePartnerConnection(id: number, connection: any): Promise<any> {
-    const existing = this.partnerConnectionsMap.get(id);
-    if (!existing) return undefined;
-    const updated = { ...existing, ...connection, id, updatedAt: new Date() };
-    this.partnerConnectionsMap.set(id, updated);
+    const { id: _id, createdAt: _c, ...data } = this.coerceDates(connection, [
+      "lastTestDate",
+      "lastContact",
+    ]);
+    const [updated] = await db
+      .update(partnerConnections)
+      .set({ ...data, updatedAt: new Date() })
+      .where(eq(partnerConnections.id, id))
+      .returning();
     return updated;
   }
 
   async removePartnerConnection(id: number): Promise<boolean> {
-    return this.partnerConnectionsMap.delete(id);
+    const deleted = await db
+      .delete(partnerConnections)
+      .where(eq(partnerConnections.id, id))
+      .returning();
+    return deleted.length > 0;
   }
 
   // Link invites addressed to a user (private — visible only to invitee)
   async getLinkInvitesForUser(userId: number): Promise<any[]> {
-    return Array.from(this.partnerConnectionsMap.values()).filter(
-      (c) => c.linkStatus === "pending" && c.invitedUserId === userId,
-    );
+    return await db
+      .select()
+      .from(partnerConnections)
+      .where(
+        and(
+          eq(partnerConnections.linkStatus, "pending"),
+          eq(partnerConnections.invitedUserId, userId),
+        ),
+      );
   }
 
   // Connections where this user is the linked account (for invitee-side unlink)
   async getConnectionsLinkedToUser(userId: number): Promise<any[]> {
-    return Array.from(this.partnerConnectionsMap.values()).filter(
-      (c) => c.linkStatus === "linked" && c.partnerUserId === userId,
-    );
+    return await db
+      .select()
+      .from(partnerConnections)
+      .where(
+        and(
+          eq(partnerConnections.linkStatus, "linked"),
+          eq(partnerConnections.partnerUserId, userId),
+        ),
+      );
   }
 
   // 4D STI Tracking methods
   async getStiTrackingEvents(userId: number, filters?: any): Promise<any[]> {
-    let events = Array.from(this.stiTrackingEventsMap.values()).filter(
-      (e) => e.userId === userId,
-    );
+    const conditions = [eq(stiTrackingEvents.userId, userId)];
     if (filters?.stiType) {
-      events = events.filter((e) => e.stiType === filters.stiType);
+      conditions.push(eq(stiTrackingEvents.stiType, filters.stiType));
     }
     if (filters?.startDate) {
-      const start = new Date(filters.startDate);
-      events = events.filter((e) => new Date(e.eventDate) >= start);
+      conditions.push(gte(stiTrackingEvents.eventDate, new Date(filters.startDate)));
     }
     if (filters?.endDate) {
-      const end = new Date(filters.endDate);
-      events = events.filter((e) => new Date(e.eventDate) <= end);
+      conditions.push(lte(stiTrackingEvents.eventDate, new Date(filters.endDate)));
     }
-    return events.sort(
-      (a, b) => new Date(b.eventDate).getTime() - new Date(a.eventDate).getTime(),
-    );
+    return await db
+      .select()
+      .from(stiTrackingEvents)
+      .where(and(...conditions))
+      .orderBy(desc(stiTrackingEvents.eventDate));
   }
 
   async getStiTrackingEvent(id: number): Promise<any | undefined> {
-    return this.stiTrackingEventsMap.get(id);
+    const [row] = await db.select().from(stiTrackingEvents).where(eq(stiTrackingEvents.id, id));
+    return row;
   }
 
   async createStiTrackingEvent(event: any): Promise<any> {
-    const id = this.currentStiEventId++;
-    const record = {
-      networkId: null,
-      stiType: null,
-      testResult: null,
-      severityLevel: null,
-      symptomsReported: [],
-      treatmentProtocol: null,
-      testingLocation: null,
-      geographicArea: null,
-      exposureTimeframe: {},
-      partnerNotificationStatus: "pending",
-      followUpRequired: false,
-      followUpDate: null,
-      isAnonymized: false,
-      publicHealthReported: false,
-      ...event,
-      eventDate: event.eventDate ? new Date(event.eventDate) : new Date(),
-      id,
-      createdAt: new Date(),
-    };
-    this.stiTrackingEventsMap.set(id, record);
-    return record;
+    const { id: _id, createdAt: _c, ...data } = this.coerceDates(event, [
+      "eventDate",
+      "followUpDate",
+    ]);
+    if (!data.eventDate) data.eventDate = new Date();
+    const [created] = await db.insert(stiTrackingEvents).values(data).returning();
+    return created;
   }
 
   async updateStiTrackingEvent(id: number, event: any): Promise<any> {
-    const existing = this.stiTrackingEventsMap.get(id);
-    if (!existing) return undefined;
-    const updated = { ...existing, ...event, id, updatedAt: new Date() };
-    this.stiTrackingEventsMap.set(id, updated);
+    const { id: _id, createdAt: _c, updatedAt: _u, ...data } = this.coerceDates(event, [
+      "eventDate",
+      "followUpDate",
+    ]);
+    const [updated] = await db
+      .update(stiTrackingEvents)
+      .set(data)
+      .where(eq(stiTrackingEvents.id, id))
+      .returning();
     return updated;
   }
 
@@ -2620,41 +2647,40 @@ The /fork-the-framework page documents the public API of the inclusive-ordering 
 
     // Per-user retention window: the shortest retention across their circles.
     const retentionByUser = new Map<number, number>();
-    for (const network of Array.from(this.partnerNetworksMap.values())) {
+    const networks = await db.select().from(partnerNetworks);
+    for (const network of networks) {
       const days = network.dataRetentionDays ?? DEFAULT_RETENTION_DAYS;
       const existing = retentionByUser.get(network.userId);
       retentionByUser.set(network.userId, existing === undefined ? days : Math.min(existing, days));
     }
 
     let eventsAnonymized = 0;
-    for (const [id, event] of Array.from(this.stiTrackingEventsMap.entries())) {
-      if (event.isAnonymized) continue;
+    const events = await db
+      .select()
+      .from(stiTrackingEvents)
+      .where(eq(stiTrackingEvents.isAnonymized, false));
+    for (const event of events) {
       const days = retentionByUser.get(event.userId) ?? DEFAULT_RETENTION_DAYS;
       const cutoff = now - days * 24 * 60 * 60 * 1000;
-      const eventTime = new Date(event.eventDate ?? event.createdAt).getTime();
+      const eventTime = new Date(event.eventDate ?? event.createdAt ?? new Date()).getTime();
       if (eventTime < cutoff) {
-        this.stiTrackingEventsMap.set(id, {
-          id: event.id,
-          userId: event.userId,
-          networkId: event.networkId ?? null,
-          eventType: event.eventType,
-          stiType: null,
-          testResult: null,
-          severityLevel: null,
-          symptomsReported: [],
-          treatmentProtocol: null,
-          testingLocation: null,
-          geographicArea: null,
-          exposureTimeframe: {},
-          partnerNotificationStatus: "expired",
-          followUpRequired: false,
-          followUpDate: null,
-          isAnonymized: true,
-          publicHealthReported: event.publicHealthReported ?? false,
-          eventDate: event.eventDate,
-          createdAt: event.createdAt,
-          updatedAt: new Date(),
-        });
+        await db
+          .update(stiTrackingEvents)
+          .set({
+            stiType: null,
+            testResult: null,
+            severityLevel: null,
+            symptomsReported: [],
+            treatmentProtocol: null,
+            testingLocation: null,
+            geographicArea: null,
+            exposureTimeframe: {},
+            partnerNotificationStatus: "expired",
+            followUpRequired: false,
+            followUpDate: null,
+            isAnonymized: true,
+          })
+          .where(eq(stiTrackingEvents.id, event.id));
         eventsAnonymized++;
       }
     }
@@ -3491,7 +3517,6 @@ The /fork-the-framework page documents the public API of the inclusive-ordering 
     return created;
   }
 
-
   async listConstellationProfiles(): Promise<ConstellationProfile[]> {
     return await db.select().from(constellationProfiles)
       .where(eq(constellationProfiles.status, "active"))
@@ -3542,6 +3567,17 @@ The /fork-the-framework page documents the public API of the inclusive-ordering 
     return row;
   }
 
+  // Coerce incoming date-ish values (ISO strings from JSON bodies) to Date
+  // objects so drizzle timestamp columns accept them. null passes through.
+  private coerceDates<T extends Record<string, any>>(data: T, fields: string[]): T {
+    const out: any = { ...data };
+    for (const f of fields) {
+      if (out[f] !== undefined && out[f] !== null && !(out[f] instanceof Date)) {
+        out[f] = new Date(out[f]);
+      }
+    }
+    return out;
+  }
 }
 
 export const storage = new MemStorage();
