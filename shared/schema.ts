@@ -1193,6 +1193,12 @@ export const partnerConnections = pgTable("partner_connections", {
   connectionType: text("connection_type").notNull(), // 'sexual_partner', 'testing_partner', 'emergency_contact'
   relationshipStatus: text("relationship_status"), // 'current', 'past', 'casual', 'regular'
   mutualConsent: boolean("mutual_consent").default(false),
+  // --- Account-link invite flow (private, mutual-consent only) ---
+  // 'none' | 'pending' | 'linked'. A pending invite targets invitedUserId;
+  // on acceptance partnerUserId is set and mutualConsent becomes true.
+  linkStatus: text("link_status").default("none"),
+  invitedUserId: integer("invited_user_id").references(() => users.id),
+  invitedAt: timestamp("invited_at"),
   // --- Shared Health Circle fields (private per-contact health logistics) ---
   // User-chosen label in their own words ("spouse", "partner", "J."). No
   // relationship-structure taxonomy by design.

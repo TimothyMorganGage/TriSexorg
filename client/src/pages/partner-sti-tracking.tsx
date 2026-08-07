@@ -84,6 +84,8 @@ export default function PartnerSTITracking() {
   const [activeTab, setActiveTab] = useState("health-circle");
   const [contactForm, setContactForm] = useState({ ...EMPTY_CONTACT_FORM });
   const [editingContactId, setEditingContactId] = useState<number | null>(null);
+  const [invitingContactId, setInvitingContactId] = useState<number | null>(null);
+  const [inviteEmail, setInviteEmail] = useState("");
   const [selectedNetwork, setSelectedNetwork] = useState<any>(null);
   const [, setSelectedCustomization] = useState<any>(null);
   
@@ -174,6 +176,95 @@ export default function PartnerSTITracking() {
     },
     onError: (error: Error) => {
       toast({ title: "Could not update reminders", description: error.message, variant: "destructive" });
+    },
+  });
+
+  // Invites addressed to me (as an invitee) and links where I'm the linked account
+  const { data: linkInvites = [] } = useQuery<any[]>({
+    queryKey: ["/api/health-circle/link-invites"],
+    enabled: activeTab === "health-circle",
+  });
+  const { data: linkedToMe = [] } = useQuery<any[]>({
+    queryKey: ["/api/health-circle/linked-to-me"],
+    enabled: activeTab === "health-circle",
+  });
+
+  const invalidateLinkQueries = () => {
+    queryClient.invalidateQueries({ queryKey: ["/api/health-circle"] });
+    queryClient.invalidateQueries({ queryKey: ["/api/health-circle/link-invites"] });
+    queryClient.invalidateQueries({ queryKey: ["/api/health-circle/linked-to-me"] });
+  };
+
+  const sendInvite = useMutation({
+    mutationFn: async ({ contactId, email }: { contactId: number; email: string }) => {
+      const response = await fetch(`/api/health-circle/contacts/${contactId}/invite`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      const body = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(body.message || "Failed to send invite");
+      return body;
+    },
+    onSuccess: (data) => {
+      invalidateLinkQueries();
+      setInvitingContactId(null);
+      setInviteEmail("");
+      toast({ title: "Invite sent", description: data.message });
+    },
+    onError: (error: Error) => {
+      toast({ title: "Could not send invite", description: error.message, variant: "destructive" });
+    },
+  });
+
+  const cancelInvite = useMutation({
+    mutationFn: async (contactId: number) => {
+      const response = await fetch(`/api/health-circle/contacts/${contactId}/invite`, { method: "DELETE" });
+      if (!response.ok) throw new Error("Failed to cancel invite");
+      return response.json();
+    },
+    onSuccess: () => {
+      invalidateLinkQueries();
+      toast({ title: "Invite cancelled" });
+    },
+  });
+
+  const respondToInvite = useMutation({
+    mutationFn: async ({ inviteId, accept }: { inviteId: number; accept: boolean }) => {
+      const response = await fetch(`/api/health-circle/link-invites/${inviteId}/respond`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ accept }),
+      });
+      const body = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(body.message || "Failed to respond to invite");
+      return body;
+    },
+    onSuccess: (_data, { accept }) => {
+      invalidateLinkQueries();
+      toast({
+        title: accept ? "Linked" : "Invite declined",
+        description: accept ? "You're now linked. Either of you can unlink at any time." : undefined,
+      });
+    },
+    onError: (error: Error) => {
+      toast({ title: "Could not respond", description: error.message, variant: "destructive" });
+    },
+  });
+
+  const unlinkContact = useMutation({
+    mutationFn: async (contactId: number) => {
+      const response = await fetch(`/api/health-circle/contacts/${contactId}/unlink`, { method: "POST" });
+      const body = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(body.message || "Failed to unlink");
+      return body;
+    },
+    onSuccess: () => {
+      invalidateLinkQueries();
+      toast({ title: "Unlinked", description: "The account link has been removed." });
+    },
+    onError: (error: Error) => {
+      toast({ title: "Could not unlink", description: error.message, variant: "destructive" });
     },
   });
 
@@ -398,6 +489,90 @@ export default function PartnerSTITracking() {
               </AlertDescription>
             </Alert>
 
+            {linkInvites.length > 0 && (
+              <Card data-testid="card-link-invites">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-base">
+                    <Bell className="h-4 w-4" />
+                    Link invites for you
+                  </CardTitle>
+                  <CardDescription>
+                    Someone asked to link one of their private circle contacts to your account. Linking only
+                    lets them explicitly share individual test results with you — nothing is shared automatically,
+                    and you can unlink at any time.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-2">
+                  {linkInvites.map((invite: any) => (
+                    <div
+                      key={invite.id}
+                      className="flex items-center justify-between gap-2 border rounded-lg p-3"
+                      data-testid={`row-link-invite-${invite.id}`}
+                    >
+                      <div className="text-sm">
+                        <span className="font-medium">{invite.inviterUsername}</span> invited you to link
+                        {invite.invitedAt && (
+                          <span className="text-muted-foreground"> · {format(new Date(invite.invitedAt), "MMM d, yyyy")}</span>
+                        )}
+                      </div>
+                      <div className="flex gap-1 shrink-0">
+                        <Button
+                          size="sm"
+                          data-testid={`button-accept-invite-${invite.id}`}
+                          disabled={respondToInvite.isPending}
+                          onClick={() => respondToInvite.mutate({ inviteId: invite.id, accept: true })}
+                        >
+                          Accept
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          data-testid={`button-decline-invite-${invite.id}`}
+                          disabled={respondToInvite.isPending}
+                          onClick={() => respondToInvite.mutate({ inviteId: invite.id, accept: false })}
+                        >
+                          Decline
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
+                </CardContent>
+              </Card>
+            )}
+
+            {linkedToMe.length > 0 && (
+              <Card data-testid="card-linked-to-me">
+                <CardHeader>
+                  <CardTitle className="text-base">Accounts linked to you</CardTitle>
+                  <CardDescription>
+                    These people have linked a contact in their circle to your account, with your consent.
+                    You can unlink at any time.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-2">
+                  {linkedToMe.map((link: any) => (
+                    <div
+                      key={link.id}
+                      className="flex items-center justify-between gap-2 border rounded-lg p-3"
+                      data-testid={`row-linked-to-me-${link.id}`}
+                    >
+                      <div className="text-sm font-medium">{link.ownerUsername}</div>
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        className="text-destructive"
+                        data-testid={`button-unlink-from-me-${link.id}`}
+                        disabled={unlinkContact.isPending}
+                        onClick={() => unlinkContact.mutate(link.id)}
+                      >
+                        Unlink
+                      </Button>
+                    </div>
+                  ))}
+                </CardContent>
+              </Card>
+            )}
+
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* Circle contacts with per-contact testing status */}
               <Card data-testid="card-circle-contacts">
@@ -440,6 +615,16 @@ export default function PartnerSTITracking() {
                                 {contact.barrierPosture && (
                                   <Badge variant="outline">{BARRIER_LABELS[contact.barrierPosture] || contact.barrierPosture}</Badge>
                                 )}
+                                {contact.linkStatus === "linked" && (
+                                  <Badge className="bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-200" data-testid={`badge-linked-${contact.id}`}>
+                                    Linked account
+                                  </Badge>
+                                )}
+                                {contact.linkStatus === "pending" && (
+                                  <Badge variant="secondary" data-testid={`badge-invite-pending-${contact.id}`}>
+                                    Invite pending
+                                  </Badge>
+                                )}
                               </div>
                               <div className="text-xs text-muted-foreground mt-2 space-y-0.5">
                                 {contact.cadenceCommitment && (
@@ -477,6 +662,41 @@ export default function PartnerSTITracking() {
                               >
                                 Edit
                               </Button>
+                              {(!contact.linkStatus || contact.linkStatus === "none") && (
+                                <Button
+                                  size="sm"
+                                  variant="outline"
+                                  data-testid={`button-invite-link-${contact.id}`}
+                                  onClick={() => {
+                                    setInvitingContactId(invitingContactId === contact.id ? null : contact.id);
+                                    setInviteEmail("");
+                                  }}
+                                >
+                                  Invite to link
+                                </Button>
+                              )}
+                              {contact.linkStatus === "pending" && (
+                                <Button
+                                  size="sm"
+                                  variant="outline"
+                                  data-testid={`button-cancel-invite-${contact.id}`}
+                                  disabled={cancelInvite.isPending}
+                                  onClick={() => cancelInvite.mutate(contact.id)}
+                                >
+                                  Cancel invite
+                                </Button>
+                              )}
+                              {contact.linkStatus === "linked" && (
+                                <Button
+                                  size="sm"
+                                  variant="outline"
+                                  data-testid={`button-unlink-contact-${contact.id}`}
+                                  disabled={unlinkContact.isPending}
+                                  onClick={() => unlinkContact.mutate(contact.id)}
+                                >
+                                  Unlink
+                                </Button>
+                              )}
                               <Button
                                 size="sm"
                                 variant="ghost"
@@ -488,6 +708,30 @@ export default function PartnerSTITracking() {
                               </Button>
                             </div>
                           </div>
+                          {invitingContactId === contact.id && (
+                            <div className="mt-3 pt-3 border-t space-y-2" data-testid={`form-invite-${contact.id}`}>
+                              <Label className="text-xs">
+                                Invite this person's account by email. They must accept before anything can be shared.
+                              </Label>
+                              <div className="flex gap-2">
+                                <Input
+                                  type="email"
+                                  placeholder="their-email@example.com"
+                                  value={inviteEmail}
+                                  onChange={(e) => setInviteEmail(e.target.value)}
+                                  data-testid={`input-invite-email-${contact.id}`}
+                                />
+                                <Button
+                                  size="sm"
+                                  data-testid={`button-send-invite-${contact.id}`}
+                                  disabled={sendInvite.isPending || !inviteEmail.trim()}
+                                  onClick={() => sendInvite.mutate({ contactId: contact.id, email: inviteEmail.trim() })}
+                                >
+                                  Send
+                                </Button>
+                              </div>
+                            </div>
+                          )}
                         </div>
                       );
                     })

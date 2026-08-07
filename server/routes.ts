@@ -1654,6 +1654,169 @@ END:VEVENT
     }
   });
 
+  // ---- Account-link invite flow (private, mutual consent only) ----
+  // Invite a specific account by email to link to one of my contacts.
+  // Anti-enumeration: the response is identical whether or not the email
+  // matches an account, so this can never be used as a user directory.
+  app.post("/api/health-circle/contacts/:id/invite", requireAuth, async (req, res) => {
+    try {
+      const userId = req.session.userId!;
+      const id = parseInt(req.params.id);
+      const { email } = z.object({ email: z.string().trim().email().max(255) }).parse(req.body);
+      const circle = await storage.getOrCreateHealthCircle(userId);
+      const contact = await storage.getPartnerConnection(id);
+      if (!contact || contact.networkId !== circle.id) {
+        return res.status(404).json({ message: "Contact not found" });
+      }
+      if (contact.linkStatus === "linked" || contact.partnerUserId) {
+        return res.status(400).json({ message: "This contact is already linked to an account" });
+      }
+      if (contact.linkStatus === "pending") {
+        return res.status(400).json({ message: "An invite is already pending for this contact. Cancel it first." });
+      }
+      const invitee =
+        (await storage.getUserByEmail(email)) ||
+        (await storage.getUserByEmail(email.toLowerCase()));
+      // Only create the invite when the email matches a real, different
+      // account — but always answer the same way (no account enumeration).
+      if (invitee && invitee.id !== userId) {
+        await storage.updatePartnerConnection(id, {
+          linkStatus: "pending",
+          invitedUserId: invitee.id,
+          invitedAt: new Date(),
+          partnerUserId: null,
+          mutualConsent: false,
+        });
+      }
+      res.json({ message: "If that email belongs to an account, they'll see your invite when they sign in." });
+    } catch (error) {
+      res.status(400).json({ message: error instanceof Error ? error.message : "Failed to send invite" });
+    }
+  });
+
+  // Owner cancels a pending invite
+  app.delete("/api/health-circle/contacts/:id/invite", requireAuth, async (req, res) => {
+    try {
+      const userId = req.session.userId!;
+      const id = parseInt(req.params.id);
+      const circle = await storage.getOrCreateHealthCircle(userId);
+      const contact = await storage.getPartnerConnection(id);
+      if (!contact || contact.networkId !== circle.id) {
+        return res.status(404).json({ message: "Contact not found" });
+      }
+      if (contact.linkStatus !== "pending") {
+        return res.status(400).json({ message: "No pending invite for this contact" });
+      }
+      await storage.updatePartnerConnection(id, {
+        linkStatus: "none",
+        invitedUserId: null,
+        invitedAt: null,
+      });
+      res.json({ message: "Invite cancelled" });
+    } catch (error) {
+      res.status(400).json({ message: error instanceof Error ? error.message : "Failed to cancel invite" });
+    }
+  });
+
+  // Invites addressed to me. Minimal disclosure: inviter's username only —
+  // never the contact record's contents.
+  app.get("/api/health-circle/link-invites", requireAuth, async (req, res) => {
+    try {
+      const userId = req.session.userId!;
+      const invites = await storage.getLinkInvitesForUser(userId);
+      const result = [];
+      for (const invite of invites) {
+        const network = await storage.getPartnerNetwork(invite.networkId);
+        const inviter = network ? await storage.getUser(network.userId) : null;
+        if (!inviter) continue;
+        result.push({
+          id: invite.id,
+          inviterUsername: inviter.username,
+          invitedAt: invite.invitedAt,
+        });
+      }
+      res.json(result);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch link invites" });
+    }
+  });
+
+  // Invitee explicitly accepts or declines
+  app.post("/api/health-circle/link-invites/:id/respond", requireAuth, async (req, res) => {
+    try {
+      const userId = req.session.userId!;
+      const id = parseInt(req.params.id);
+      const { accept } = z.object({ accept: z.boolean() }).parse(req.body);
+      const invite = await storage.getPartnerConnection(id);
+      if (!invite || invite.linkStatus !== "pending" || invite.invitedUserId !== userId) {
+        return res.status(404).json({ message: "Invite not found" });
+      }
+      if (accept) {
+        await storage.updatePartnerConnection(id, {
+          linkStatus: "linked",
+          partnerUserId: userId,
+          mutualConsent: true,
+          invitedUserId: null,
+        });
+        return res.json({ message: "Linked. Either of you can unlink at any time." });
+      }
+      await storage.updatePartnerConnection(id, {
+        linkStatus: "none",
+        invitedUserId: null,
+        invitedAt: null,
+      });
+      res.json({ message: "Invite declined" });
+    } catch (error) {
+      res.status(400).json({ message: error instanceof Error ? error.message : "Failed to respond to invite" });
+    }
+  });
+
+  // Links where I'm the linked account (so I can see and sever them)
+  app.get("/api/health-circle/linked-to-me", requireAuth, async (req, res) => {
+    try {
+      const userId = req.session.userId!;
+      const links = await storage.getConnectionsLinkedToUser(userId);
+      const result = [];
+      for (const link of links) {
+        const network = await storage.getPartnerNetwork(link.networkId);
+        const owner = network ? await storage.getUser(network.userId) : null;
+        if (!owner) continue;
+        result.push({ id: link.id, ownerUsername: owner.username });
+      }
+      res.json(result);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch links" });
+    }
+  });
+
+  // Either side can unlink at any time
+  app.post("/api/health-circle/contacts/:id/unlink", requireAuth, async (req, res) => {
+    try {
+      const userId = req.session.userId!;
+      const id = parseInt(req.params.id);
+      const contact = await storage.getPartnerConnection(id);
+      const circle = await storage.getOrCreateHealthCircle(userId);
+      const isOwner = contact && contact.networkId === circle.id;
+      const isLinkedUser = contact && contact.linkStatus === "linked" && contact.partnerUserId === userId;
+      if (!contact || (!isOwner && !isLinkedUser)) {
+        return res.status(404).json({ message: "Contact not found" });
+      }
+      if (contact.linkStatus !== "linked") {
+        return res.status(400).json({ message: "This contact is not linked to an account" });
+      }
+      await storage.updatePartnerConnection(id, {
+        linkStatus: "none",
+        partnerUserId: null,
+        mutualConsent: false,
+        invitedUserId: null,
+        invitedAt: null,
+      });
+      res.json({ message: "Unlinked" });
+    } catch (error) {
+      res.status(400).json({ message: error instanceof Error ? error.message : "Failed to unlink" });
+    }
+  });
+
   // 4D STI Tracking routes
   app.get("/api/sti-tracking", requireAuth, async (req, res) => {
     try {

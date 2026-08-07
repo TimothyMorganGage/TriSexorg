@@ -384,6 +384,9 @@ export interface IStorage {
   createPartnerConnection(connection: any): Promise<any>;
   updatePartnerConnection(id: number, connection: any): Promise<any>;
   removePartnerConnection(id: number): Promise<boolean>;
+  getPartnerNetwork(id: number): Promise<any | undefined>;
+  getLinkInvitesForUser(userId: number): Promise<any[]>;
+  getConnectionsLinkedToUser(userId: number): Promise<any[]>;
 
   // 4D STI Tracking methods
   getStiTrackingEvents(userId: number, filters?: any): Promise<any[]>;
@@ -2445,6 +2448,10 @@ The /fork-the-framework page documents the public API of the inclusive-ordering 
     return this.partnerConnectionsMap.get(id);
   }
 
+  async getPartnerNetwork(id: number): Promise<any | undefined> {
+    return this.partnerNetworksMap.get(id);
+  }
+
   // Partner Network methods
   async getPartnerNetworks(userId: number): Promise<any[]> {
     return Array.from(this.partnerNetworksMap.values()).filter((n) => n.userId === userId);
@@ -2504,6 +2511,9 @@ The /fork-the-framework page documents the public API of the inclusive-ordering 
       barrierPosture: null,
       cadenceCommitment: null,
       lastTestDate: null,
+      linkStatus: "none",
+      invitedUserId: null,
+      invitedAt: null,
       ...connection,
       id,
       createdAt: new Date(),
@@ -2523,6 +2533,20 @@ The /fork-the-framework page documents the public API of the inclusive-ordering 
 
   async removePartnerConnection(id: number): Promise<boolean> {
     return this.partnerConnectionsMap.delete(id);
+  }
+
+  // Link invites addressed to a user (private — visible only to invitee)
+  async getLinkInvitesForUser(userId: number): Promise<any[]> {
+    return Array.from(this.partnerConnectionsMap.values()).filter(
+      (c) => c.linkStatus === "pending" && c.invitedUserId === userId,
+    );
+  }
+
+  // Connections where this user is the linked account (for invitee-side unlink)
+  async getConnectionsLinkedToUser(userId: number): Promise<any[]> {
+    return Array.from(this.partnerConnectionsMap.values()).filter(
+      (c) => c.linkStatus === "linked" && c.partnerUserId === userId,
+    );
   }
 
   // 4D STI Tracking methods
